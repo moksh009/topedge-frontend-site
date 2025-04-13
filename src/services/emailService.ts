@@ -44,9 +44,7 @@ export interface MaintenanceDetails {
 export type EmailType = 'user' | 'admin';
 
 export class EmailService {
-  private baseURL = process.env.NODE_ENV === 'production'
-    ? window.location.origin // Use the current domain in production
-    : 'http://localhost:3001'; // Use the Express server port in development
+  public baseURL: string = "https://topedge-backend-site.onrender.com"
 
   private formatDate(date: Date): string {
     return format(date, 'MMMM do, yyyy');
