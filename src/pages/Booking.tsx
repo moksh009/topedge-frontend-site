@@ -381,21 +381,19 @@ const Calendar = ({ selectedDate, onSelect }: { selectedDate: Date | undefined; 
 
   return (
     <div className="calendar-wrapper p-2 sm:p-4 bg-[#0a0a0a] rounded-lg overflow-x-auto">
-      <style jsx global>{`
-        .rdp {
-          --rdp-cell-size: clamp(30px, 8vw, 40px);
-          margin: 0;
-        }
-        @media (max-width: 640px) {
-          .rdp-month {
-            width: 100%;
+      <style>
+        {`
+          .rdp {
+            --rdp-cell-size: clamp(30px, 8vw, 40px);
+            margin: 0;
           }
-          .rdp-table {
-            width: 100%;
-            max-width: 100%;
+          @media (max-width: 640px) {
+            .rdp {
+              --rdp-cell-size: 30px;
+            }
           }
-        }
-      `}</style>
+        `}
+      </style>
       <DayPicker
         mode="single"
         selected={selectedDate}

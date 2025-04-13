@@ -146,23 +146,24 @@ const ServiceTechnology = () => {
         </div>
       </div>
 
-      {/* Add some CSS for hexagon clip path */}
-      <style jsx>{`
-        .clip-hexagon {
-          clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-        }
-        .animate-spin-slow {
-          animation: spin 4s linear infinite;
-        }
-        @keyframes spin {
-          from {
-            transform: rotate(0deg);
+      <style>
+        {`
+          .clip-hexagon {
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
           }
-          to {
-            transform: rotate(360deg);
+          .animate-spin-slow {
+            animation: spin 4s linear infinite;
           }
-        }
-      `}</style>
+          @keyframes spin {
+            from {
+              transform: rotate(0deg);
+            }
+            to {
+              transform: rotate(360deg);
+            }
+          }
+        `}
+      </style>
     </section>
   );
 };
