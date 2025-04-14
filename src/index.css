@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .animation-delay-2000 {
+    animation-delay: 2s;
+  }
+  .animation-delay-4000 {
+    animation-delay: 4s;
+  }
+}
+
+/* Cursor Styles */
+* {
+  cursor: default;
+}
+
+a, button, [role="button"], input, select, textarea {
+  cursor: pointer;
+}
+
+input[type="text"], input[type="email"], textarea {
+  cursor: text;
+}
+
+/* Typography Styles */
+@font-face {
+  font-family: 'SF Pro Display';
+  src: local(-apple-system);
+  font-weight: 100 900;
+}
+
+.sf-pro-display {
+  font-family: -apple-system, 'SF Pro Display', system-ui, sans-serif;
+  font-feature-settings: "ss01" on, "ss02" on, "ss03" on;
+  letter-spacing: -0.02em;
+}
+
+.gradient-text {
+  background: linear-gradient(to right, #fff 20%, #666 80%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
