@@ -1,10 +1,11 @@
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Check, ArrowRight, Star, Zap, Sparkles, MessageSquare, User, Mail, Phone, Clock } from 'lucide-react';
+import { Check, ArrowRight, Star, Zap, Sparkles, MessageSquare, User, Mail, Phone, Clock, Calculator } from 'lucide-react';
 import { LucideIcon } from 'lucide-react';
 import { maintenanceService } from '../../../services/maintenanceService';
 import { toast } from 'react-hot-toast';
+import ROICalculator from './ROICalculator';
 
 interface Plan {
   name: string;
@@ -36,9 +37,10 @@ const plans: Plan[] = [
     shadow: "shadow-blue-500/20",
     features: [
       "FAQ",
-      "Ticket Creation/Leave Note - pass any message of user to business"
+      "Ticket Creation/Leave Note - pass any message of user to business",
+      "Dedicated Dashboard"
     ],
-    addOns: "$300 for appointment setting"
+    addOns: "$187 for appointment setting"
   },
   {
     name: "Pro",
@@ -54,8 +56,10 @@ const plans: Plan[] = [
     features: [
       "Everything in Starter +",
       "Appointment setting to calendar",
-      "Dedicated Dashboard",
-      "updates customer records in real time"
+      "updates customer records in real time",
+      "Customized AI Models",
+      "Human Hand-off",
+      "Past Call Memory"
     ]
   },
   {
@@ -72,7 +76,9 @@ const plans: Plan[] = [
       "All in Pro +",
       "Meeting management",
       "Multi Channel agent",
-      "outbound marketing"
+      "outbound marketing",
+      "Multi Language Support",
+      "Nurture Leads"
     ]
   }
 ];
@@ -91,9 +97,10 @@ const chatbotPlans: Plan[] = [
     features: [
       "FAQ",
       "Ticket Creation/Leave Note - pass any message of user to business",
-      "Single Channel"
+      "Single Channel",
+      "Birthday Remainder"
     ],
-    addOns: "$89 for additional channel eg. Whatsapp, Instagram....."
+    addOns: "Extra for additional channel eg. Whatsapp, Instagram....."
   },
   {
     name: "Advanced",
@@ -113,7 +120,8 @@ const chatbotPlans: Plan[] = [
       "outbound marketing",
       "Advanced Ai Models - ++customer support experience than Pro Plan Setup",
       "Multi Language Support",
-      "Human Hand-off"
+      "Human Hand-off",
+      "Appointment Remainder"
     ]
   }
 ];
@@ -358,8 +366,7 @@ const AICallerCalculator = () => {
           transition={{ delay: 0.5 }}
           className="mt-4 text-xs text-gray-400 text-center"
         >
-          * Pricing per minute may vary based on different service providers and features selected.
-          Contact us for detailed pricing based on your specific requirements.
+          * Pricing per minute may vary based on different APIs and features selected. Contact us for detailed pricing based on your specific requirements.
         </motion.p>
       </motion.div>
     </motion.div>
@@ -380,7 +387,6 @@ const PricingPlans = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
-  const [showPricing, setShowPricing] = useState(false);
   
   const containerRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
@@ -416,72 +422,53 @@ const PricingPlans = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      toast.error('Please enter a valid email address');
+      setIsSubmitting(false);
+      return;
+    }
+
+    // Validate phone number (10 digits)
+    const phoneRegex = /^\d{10}$/;
+    if (!phoneRegex.test(formData.phone.replace(/\D/g, ''))) {
+      toast.error('Please enter a valid 10-digit phone number');
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
-      // Get the selected plan details
-      const selectedPlanDetails = formData.section === 'voice' 
-        ? plans.find(p => p.name === formData.plan)
-        : chatbotPlans.find(p => p.name === formData.plan);
-
-      // Enhanced email template with all plans
       const emailTemplate = `
-Your Selected ${formData.section === 'voice' ? 'AI Voice Agent' : 'Chatbot'} Plan:
+Hello ${formData.name},
 
-Plan Name: ${selectedPlanDetails?.name}
-Monthly Management Fee: ${selectedPlanDetails?.monthlyFee}
-Setup Cost: FREE SETUP + DEVELOPMENT
+Thank you for your interest in our ${formData.section === 'voice' ? 'AI Voice Agent' : 'Chatbot'} solution. We're excited to help transform your business operations!
 
-Selected Plan Features:
-${selectedPlanDetails?.features.map(f => `• ${f}`).join('\n')}
-${selectedPlanDetails?.addOns ? `\nAvailable Add-ons:\n• ${selectedPlanDetails.addOns}` : ''}
+Selected Plan: ${selectedPlan}
+(Maintenance pricing will be discussed based on your specific feature requirements)
 
-=== AI Voice Agent Plans ===
-
-1. Starter Plan ($249/month)
-Features:
-${plans[0].features.map(f => `• ${f}`).join('\n')}
-${plans[0].addOns ? `\nAdd-ons:\n• ${plans[0].addOns}` : ''}
-
-2. Pro Plan ($529/month)
-Features:
-${plans[1].features.map(f => `• ${f}`).join('\n')}
-${plans[1].addOns ? `\nAdd-ons:\n• ${plans[1].addOns}` : ''}
-
-3. Premium Plan ($987/month)
-Features:
-${plans[2].features.map(f => `• ${f}`).join('\n')}
-${plans[2].addOns ? `\nAdd-ons:\n• ${plans[2].addOns}` : ''}
-
-===Advanced Chatbot Plans ===
-
-1. Starter Plan ($249/month)
-Features:
-${chatbotPlans[0].features.map(f => `• ${f}`).join('\n')}
-${chatbotPlans[0].addOns ? `\nAdd-ons:\n• ${chatbotPlans[0].addOns}` : ''}
-
-2. Advanced Plan ($549/month)
-Features:
-${chatbotPlans[1].features.map(f => `• ${f}`).join('\n')}
-${chatbotPlans[1].addOns ? `\nAdd-ons:\n• ${chatbotPlans[1].addOns}` : ''}
-
-Important Notes:
-• All operational costs are direct platform and API fees
-• TopEdge does not markup these operational costs
-• Management fees are separate from operational costs
-• Final quotation will be provided after usage analysis
-• Custom features can be added based on requirements
+What You Can Achieve:
+-------------------
+• Recover up to $10,000 in missed opportunities within 45 days
+• Increase appointment bookings by up to 2.5x
+• Save 30+ hours per week in manual work
+• Achieve 24/7 customer engagement
+• Reduce response times by over 90%
 
 Next Steps:
-1. Send Your Requirements to Our team & We will review your requirements
-2. We will analyze your usage needs
-3. You'll receive a detailed quotation
-4. We'll contact you within 24-48 business hours
+-------------------
+• Our team will contact you within 24 hours
+• We'll understand your specific requirements
+• Provide customized solution recommendations
+• Schedule a quick demo of your tailored solution
 
-For any immediate questions, please:
-• Reply to this email
-• Contact us at team@topedgeai.com
-• Schedule a consultation call
+Want to fast-track your business transformation?
+Reply "Tell me more" and we'll share success stories that will surprise you!
 
-Thank you for choosing TopEdge AI!`;
+Best regards,
+Team TopEdge AI
+
+P.S. Most of our clients see positive ROI within the first month!`;
 
       await maintenanceService.submitInquiry({
         name: formData.name,
@@ -491,14 +478,9 @@ Thank you for choosing TopEdge AI!`;
         emailTemplate: emailTemplate
       });
       
-      // Reset form and show success message
-      setFormData({ name: "", email: "", phone: "", plan: "", section: 'voice' });
       setSubmitStatus('success');
-      setShowPricing(true);
       
-      // Show success toast with specific plan type
-      const planType = formData.plan.toLowerCase().includes('chatbot') ? 'chatbot' : 'voice agent';
-      toast.success(`Thank you! We've sent detailed ${planType} pricing information to your email.`, {
+      toast.success(`Thank you! We've sent detailed information to your email.`, {
         duration: 5000,
         position: 'bottom-right',
         style: {
@@ -509,16 +491,11 @@ Thank you for choosing TopEdge AI!`;
         }
       });
       
-      // Close modal after 2 seconds
-      setTimeout(() => {
-        handleCloseModal();
-      }, 2000);
+      // Remove the automatic modal closing
+      // setTimeout(() => {
+      //   handleCloseModal();
+      // }, 2000);
 
-      // Scroll to the pricing section
-      const pricingSection = document.getElementById('pricing-plans');
-      if (pricingSection) {
-        pricingSection.scrollIntoView({ behavior: 'smooth' });
-      }
     } catch (error) {
       setSubmitStatus('error');
       toast.error('Failed to submit inquiry. Please try again.', {
@@ -540,40 +517,31 @@ Thank you for choosing TopEdge AI!`;
     window.scrollTo(0, 0);
   };
 
-  const renderPriceSection = (plan: Plan, showPricing: boolean) => {
-    if (!showPricing) {
-      return (
-        <motion.div 
-          className="backdrop-blur-lg bg-white/5 px-3 py-2 rounded-lg cursor-pointer"
-          whileHover={{ scale: 1.02 }}
-        >
-          <p className="text-sm text-gray-400">Contact for pricing details</p>
-        </motion.div>
-      );
-    }
-
+  const renderPriceSection = (plan: Plan) => {
     return (
-      <div className="space-y-1">
-        <div className="text-2xl font-bold text-white">
-          {plan.monthlyFee}
-        </div>
-        <div className="text-sm text-gray-400">{plan.managementText}</div>
-        <div className="text-sm text-purple-400">{plan.operationalText}</div>
-      </div>
+      <motion.div 
+        className="backdrop-blur-lg bg-white/5 px-3 py-2 rounded-lg cursor-pointer"
+        whileHover={{ scale: 1.02 }}
+      >
+        <p className="text-sm text-gray-400">Contact for pricing details</p>
+      </motion.div>
     );
   };
 
-  const OperationalCostCard = ({ showPricing }: { showPricing: boolean }) => {
+  const OperationalCostCard = () => {
     const [isHovered, setIsHovered] = useState(false);
     
     return (
-    <motion.div
-        className="relative flex-1"
-        onHoverStart={() => setIsHovered(true)}
-        onHoverEnd={() => setIsHovered(false)}
+      <motion.div
+        key="operational-cost"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        className="relative flex flex-col text-center"
       >
         {/* Floating sparkles */}
-        <AnimatePresence>
+        <AnimatePresence mode="wait">
           {isHovered && (
             <>
               {[...Array(5)].map((_, i) => (
@@ -591,8 +559,8 @@ Thank you for choosing TopEdge AI!`;
                 >
                   <motion.div
                     animate={{
-                      y: [0, -20, 0],
-                      opacity: [0, 1, 0],
+                      y: [-20, 0],
+                      opacity: [1, 0],
                     }}
                     transition={{
                       duration: 1.5,
@@ -608,10 +576,13 @@ Thank you for choosing TopEdge AI!`;
           )}
         </AnimatePresence>
 
+        {/* Card */}
         <motion.div
           className="relative flex-1 p-6 sm:p-8 rounded-2xl backdrop-blur-xl border border-white/10 bg-gradient-to-b from-black/80 to-blue-950/20 overflow-hidden"
-      whileHover={{ scale: 1.02, y: -5 }}
-    >
+          onHoverStart={() => setIsHovered(true)}
+          onHoverEnd={() => setIsHovered(false)}
+          whileHover={{ scale: 1.02, y: -5 }}
+        >
           {/* Animated gradient border */}
           <motion.div
             className="absolute inset-0 rounded-2xl"
@@ -633,104 +604,125 @@ Thank you for choosing TopEdge AI!`;
             }}
           />
 
-          {/* Icon */}
+          {/* Plan Icon with enhanced animation */}
           <motion.div
             className="relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 p-0.5 mb-4 sm:mb-6 mx-auto"
-            whileHover={{ rotate: [0, -5, 5, 0], scale: 1.1 }}
+            whileHover={{ rotate: -5, scale: 1.1 }}
+            transition={{ type: "spring", stiffness: 400, damping: 25 }}
           >
             <motion.div 
               className="w-full h-full bg-black rounded-xl flex items-center justify-center overflow-hidden"
-              initial={{ background: 'rgba(0,0,0,1)' }}
-              animate={isHovered ? {
-                background: ['rgba(0,0,0,1)', 'rgba(0,0,40,1)', 'rgba(0,0,0,1)']
-              } : {
-                background: 'rgba(0,0,0,1)'
-              }}
-              transition={{ 
-                duration: 2,
-                repeat: isHovered ? Infinity : 0,
-                ease: "easeInOut"
-              }}
             >
-              <motion.div
-                initial={{ scale: 1, rotate: 0 }}
-                animate={isHovered ? {
-                  scale: [1, 1.2, 1],
-                  rotate: [0, 10, -10, 0],
-                } : {
-                  scale: 1,
-                  rotate: 0
-                }}
-                transition={{ 
-                  duration: 1,
-                  repeat: isHovered ? Infinity : 0,
-                  ease: "easeInOut"
-                }}
-              >
-                <Zap className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-white" />
-              </motion.div>
+              <Calculator className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-white" />
             </motion.div>
           </motion.div>
 
           {/* Title */}
           <motion.h3 
-            className="text-lg sm:text-xl md:text-2xl font-bold mb-6 text-center text-white"
+            className="text-lg sm:text-xl md:text-2xl font-bold mb-2 sm:mb-3 text-center"
           >
             Operational Cost
           </motion.h3>
 
-          {/* Content */}
-      <div className={!showPricing ? "filter blur-sm" : ""}>
-            <div className="space-y-6">
-              {/* Software Subscriptions */}
-              <div className="space-y-4">
-                <div className="bg-white/5 rounded-xl p-4 backdrop-blur-sm border border-white/10">
-                  <h4 className="text-blue-400 font-semibold mb-3">Software Platform Subscriptions</h4>
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center">
-                      <span className="text-gray-300">VoiceFlow Basic Plan</span>
-                      <span className="text-white font-medium">$50/month</span>
-        </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-gray-300">TixaeAgents Basic Plan</span>
-                      <span className="text-white font-medium">$30/month</span>
-      </div>
-                  </div>
-                  <p className="text-gray-400 text-sm mt-2 italic">*Pricing depends on usage</p>
-                </div>
-              </div>
-
-              {/* Meta Messaging API */}
-              <div className="bg-white/5 rounded-xl p-4 backdrop-blur-sm border border-white/10">
-                <h4 className="text-blue-400 font-semibold mb-2">Meta Messaging API Fees</h4>
-                <p className="text-gray-300">Minimal - few dollars depends on usage</p>
-              </div>
-
-              {/* Final Note */}
-              <div className="bg-gradient-to-r from-blue-500/10 to-indigo-500/10 rounded-xl p-4 backdrop-blur-sm border border-blue-500/20">
-                <p className="text-blue-400 font-medium">Final Quotation can be provided after Analysis of your daily/monthly usage need</p>
-              </div>
+          {/* Price Section */}
+          <div className="mt-4 space-y-4">
+            <div className="flex flex-col items-center justify-center">
+              <div className="text-6xl font-bold text-white mb-2">$0</div>
+              <div className="text-lg text-gray-400">Free Cost Calculation</div>
             </div>
+
+            <motion.div
+              className="backdrop-blur-lg bg-white/5 px-3 py-2 rounded-lg cursor-pointer"
+              whileHover={{ scale: 1.02 }}
+            >
+              <p className="text-sm text-gray-400">Get exact pricing based on your usage</p>
+            </motion.div>
           </div>
 
-          {/* Overlay for non-pricing view */}
-      {!showPricing && (
-            <motion.div 
-              className="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-black/80 to-blue-950/80 backdrop-blur-sm"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+          {/* Features list */}
+          <ul className="space-y-3 mb-8 text-left px-2 sm:px-0 mt-6">
+            <motion.li className="flex items-start gap-2">
+              <Check className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span className="text-gray-300">Transparent pay-as-you-go pricing</span>
+            </motion.li>
+            <motion.li className="flex items-start gap-2">
+              <Check className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span className="text-gray-300">No hidden fees or charges</span>
+            </motion.li>
+            <motion.li className="flex items-start gap-2">
+              <Check className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span className="text-gray-300">Detailed cost breakdown</span>
+            </motion.li>
+            <motion.li className="flex items-start gap-2">
+              <Check className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span className="text-gray-300">Volume-based discounts</span>
+            </motion.li>
+          </ul>
+
+          {/* Button */}
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => handleGetMaintenancePrice("Operational", "voice")}
+            className="w-full py-3 px-4 sm:px-6 rounded-xl overflow-hidden bg-gradient-to-r from-blue-600/20 to-blue-600/10 border border-blue-500/20 text-white font-semibold text-center relative group"
+          >
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-r from-blue-600/0 via-blue-600/40 to-blue-600/0"
+              initial={{ x: '-100%' }}
+              animate={{ x: ['100%', '-100%'] }}
+              transition={{
+                duration: 1.5,
+                repeat: Infinity,
+                ease: "linear",
+              }}
+            />
+            <motion.div
+              className="relative z-10 flex items-center justify-center gap-2"
             >
-              <div className="text-center px-6">
-                <Sparkles className="w-8 h-8 text-blue-400 mb-4 mx-auto" />
-                <p className="text-blue-400 font-medium text-lg">Fill out the form to see operational costs</p>
-        </div>
+              Get Operational Cost
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </motion.div>
-      )}
+          </motion.button>
         </motion.div>
-    </motion.div>
-  );
+      </motion.div>
+    );
   };
+
+  const renderPlanButtons = (planName: string, type: 'voice' | 'chatbot') => (
+    <div className="flex flex-col gap-4 mt-auto">
+      <motion.button
+        className={`relative w-full py-3 px-4 sm:px-6 rounded-xl overflow-hidden bg-gradient-to-r ${
+          type === 'voice' 
+            ? 'from-purple-600/20 to-purple-600/10 border-purple-500/20' 
+            : 'from-blue-600/20 to-blue-600/10 border-blue-500/20'
+        } border text-white font-semibold text-center`}
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+        onClick={() => handleGetMaintenancePrice(planName, type)}
+      >
+        <motion.div
+          className={`absolute inset-0 bg-gradient-to-r ${
+            type === 'voice'
+              ? 'from-purple-600/0 via-purple-600/40 to-purple-600/0'
+              : 'from-blue-600/0 via-blue-600/40 to-blue-600/0'
+          }`}
+          initial={{ x: '-100%' }}
+          animate={{ x: ['100%', '-100%'] }}
+          transition={{
+            duration: 1.5,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+        />
+        <motion.div
+          className="relative z-10 flex items-center justify-center gap-2"
+        >
+          Get Maintenance Price
+          <ArrowRight className="w-5 h-5" />
+        </motion.div>
+      </motion.button>
+    </div>
+  );
 
   return (
     <motion.section
@@ -793,49 +785,8 @@ Thank you for choosing TopEdge AI!`;
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: index * 0.1 }}
-                style={{
-                  opacity,
-                  y,
-                  scale,
-                }}
                 className="relative flex flex-col text-center"
               >
-                {/* Floating sparkles */}
-                <AnimatePresence>
-                  {isHovered && (
-                    <>
-                      {[...Array(5)].map((_, i) => (
-                        <motion.div
-                          key={`sparkle-${i}`}
-                          initial={{ opacity: 0, scale: 0 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          exit={{ opacity: 0, scale: 0 }}
-                          className="absolute"
-                          style={{
-                            top: `${Math.random() * 100}%`,
-                            left: `${Math.random() * 100}%`,
-                            zIndex: 30,
-                          }}
-                        >
-                          <motion.div
-                            animate={{
-                              y: [0, -20, 0],
-                              opacity: [0, 1, 0],
-                            }}
-                            transition={{
-                              duration: 1.5,
-                              repeat: Infinity,
-                              delay: Math.random() * 0.5,
-                            }}
-                          >
-                            <Sparkles className="w-3 h-3 text-purple-400" />
-                          </motion.div>
-                        </motion.div>
-                      ))}
-                    </>
-                  )}
-                </AnimatePresence>
-
                 {/* Most Popular Badge */}
                 {plan.name === "Pro" && (
                   <motion.div
@@ -883,12 +834,49 @@ Thank you for choosing TopEdge AI!`;
                   </motion.div>
                 )}
 
+                {/* Floating sparkles */}
+                <AnimatePresence>
+                  {isHovered && (
+                    <>
+                      {[...Array(5)].map((_, i) => (
+                        <motion.div
+                          key={`sparkle-${i}`}
+                          initial={{ opacity: 0, scale: 0 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          exit={{ opacity: 0, scale: 0 }}
+                          className="absolute"
+                          style={{
+                            top: `${Math.random() * 100}%`,
+                            left: `${Math.random() * 100}%`,
+                            zIndex: 30,
+                          }}
+                        >
+                          <motion.div
+                            animate={{
+                              y: [-20, 0],
+                              opacity: [1, 0],
+                            }}
+                            transition={{
+                              duration: 1.5,
+                              repeat: Infinity,
+                              delay: Math.random() * 0.5,
+                            }}
+                          >
+                            <Sparkles className="w-3 h-3 text-purple-400" />
+                          </motion.div>
+                        </motion.div>
+                      ))}
+                    </>
+                  )}
+                </AnimatePresence>
+
                 {/* Card */}
                 <motion.div
                   className={`relative flex-1 p-6 sm:p-8 rounded-2xl backdrop-blur-xl border border-white/10 bg-gradient-to-b from-black/80 to-purple-950/20 overflow-hidden ${plan.popular ? 'md:scale-105' : ''}`}
                   onHoverStart={() => setHoveredPlan(plan.name)}
                   onHoverEnd={() => setHoveredPlan(null)}
                   whileHover={{ scale: 1.02, y: -5 }}
+                  initial={false}
                 >
                   {/* Animated gradient border */}
                   <motion.div
@@ -914,47 +902,13 @@ Thank you for choosing TopEdge AI!`;
                   {/* Plan Icon with enhanced animation */}
                   <motion.div
                     className={`relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl bg-gradient-to-r ${plan.gradient} p-0.5 mb-4 sm:mb-6 mx-auto`}
-                    whileHover={{ rotate: [0, -5, 5, 0], scale: 1.1 }}
-                    initial={{ rotate: 0, scale: 1 }}
-                    animate={{ rotate: 0, scale: 1 }}
-                    transition={{ 
-                      duration: 0.3,
-                      type: "spring",
-                      stiffness: 400,
-                      damping: 25
-                    }}
+                    whileHover={{ rotate: -5, scale: 1.1 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 25 }}
                   >
                     <motion.div 
                       className="w-full h-full bg-black rounded-xl flex items-center justify-center overflow-hidden"
-                      initial={{ background: 'rgba(0,0,0,1)' }}
-                      animate={isHovered ? {
-                        background: ['rgba(0,0,0,1)', 'rgba(20,0,40,1)', 'rgba(0,0,0,1)']
-                      } : {
-                        background: 'rgba(0,0,0,1)'
-                      }}
-                      transition={{ 
-                        duration: 2,
-                        repeat: isHovered ? Infinity : 0,
-                        ease: "easeInOut"
-                      }}
                     >
-                      <motion.div
-                        initial={{ scale: 1, rotate: 0 }}
-                        animate={isHovered ? {
-                          scale: [1, 1.2, 1],
-                          rotate: [0, 10, -10, 0],
-                        } : {
-                          scale: 1,
-                          rotate: 0
-                        }}
-                        transition={{ 
-                          duration: 1,
-                          repeat: isHovered ? Infinity : 0,
-                          ease: "easeInOut"
-                        }}
-                      >
-                        <Icon className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-white" />
-                      </motion.div>
+                      <Icon className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-white" />
                     </motion.div>
                   </motion.div>
 
@@ -968,12 +922,12 @@ Thank you for choosing TopEdge AI!`;
 
                   {/* Price Section */}
                   <div className="mt-4 space-y-4">
-                    <div className="flex items-baseline text-6xl font-bold">
-                      <span className="text-white">${plan.price}</span>
-                      <span className="ml-1 text-2xl font-medium text-gray-400">{plan.description}</span>
+                    <div className="flex flex-col items-center justify-center">
+                      <div className="text-6xl font-bold text-white mb-2">$0</div>
+                      <div className="text-lg text-gray-400">Free Development & Deployment</div>
                     </div>
 
-                    {renderPriceSection(plan, showPricing)}
+                    {renderPriceSection(plan)}
                   </div>
 
                   {/* Features list */}
@@ -997,86 +951,7 @@ Thank you for choosing TopEdge AI!`;
                   </ul>
 
                   {/* Buttons */}
-                  <div className="flex flex-col gap-4 mt-auto">
-                    <motion.button
-                      className="relative w-full py-3 px-4 sm:px-6 rounded-xl overflow-hidden bg-gradient-to-r from-purple-600/20 to-purple-600/10 border border-purple-500/20 text-white font-semibold text-center"
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      onClick={() => handleGetMaintenancePrice(plan.name, 'voice')}
-                    >
-                      <motion.div
-                        className="absolute inset-0 bg-gradient-to-r from-purple-600/0 via-purple-600/40 to-purple-600/0"
-                        initial={{ x: '-100%' }}
-                        animate={isHovered ? {
-                          x: ['-100%', '100%'],
-                        } : {
-                          x: '-100%'
-                        }}
-                        transition={{
-                          duration: 1.5,
-                          repeat: isHovered ? Infinity : 0,
-                          ease: "linear",
-                        }}
-                      />
-                      <motion.div
-                        className="relative z-10 flex items-center justify-center gap-2"
-                        initial={{ x: 0 }}
-                        animate={isHovered ? {
-                          x: [0, 5, 0],
-                        } : {
-                          x: 0
-                        }}
-                        transition={{
-                          duration: 1,
-                          repeat: isHovered ? Infinity : 0,
-                          ease: "easeInOut",
-                        }}
-                      >
-                        Get Maintenance Price
-                        <ArrowRight className="w-5 h-5" />
-                      </motion.div>
-                    </motion.button>
-                    
-                    <Link to="/booking" className="block w-full">
-                      <motion.button
-                        className="relative w-full py-3 px-4 sm:px-6 rounded-xl overflow-hidden bg-gradient-to-r from-purple-600/20 to-purple-600/10 border border-purple-500/20 text-white font-semibold text-center"
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                      >
-                        <motion.div
-                          className="absolute inset-0 bg-gradient-to-r from-purple-600/0 via-purple-600/40 to-purple-600/0"
-                          initial={{ x: '-100%' }}
-                          animate={isHovered ? {
-                            x: ['-100%', '100%'],
-                          } : {
-                            x: '-100%'
-                          }}
-                          transition={{
-                            duration: 1.5,
-                            repeat: isHovered ? Infinity : 0,
-                            ease: "linear",
-                          }}
-                        />
-                        <motion.div
-                          className="relative z-10 flex items-center justify-center gap-2"
-                          initial={{ x: 0 }}
-                          animate={isHovered ? {
-                            x: [0, 5, 0],
-                          } : {
-                            x: 0
-                          }}
-                          transition={{
-                            duration: 1,
-                            repeat: isHovered ? Infinity : 0,
-                            ease: "easeInOut",
-                          }}
-                        >
-                          Get Started
-                          <ArrowRight className="w-5 h-5" />
-                        </motion.div>
-                      </motion.button>
-                    </Link>
-                  </div>
+                  {renderPlanButtons(plan.name, 'voice')}
                 </motion.div>
               </motion.div>
             );
@@ -1116,55 +991,14 @@ Thank you for choosing TopEdge AI!`;
             const isHovered = hoveredPlan === plan.name;
 
             return (
-            <motion.div
-              key={`chatbot-${plan.name}`}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: index * 0.1 }}
-                style={{
-                  opacity,
-                  y,
-                  scale,
-                }}
-              className="relative flex flex-col text-center"
-            >
-                {/* Floating sparkles */}
-                <AnimatePresence>
-                  {isHovered && (
-                    <>
-                      {[...Array(5)].map((_, i) => (
               <motion.div
-                          key={`sparkle-${i}`}
-                          initial={{ opacity: 0, scale: 0 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          exit={{ opacity: 0, scale: 0 }}
-                          className="absolute"
-                          style={{
-                            top: `${Math.random() * 100}%`,
-                            left: `${Math.random() * 100}%`,
-                            zIndex: 30,
-                          }}
-                        >
-                          <motion.div
-                            animate={{
-                              y: [0, -20, 0],
-                              opacity: [0, 1, 0],
-                            }}
-                            transition={{
-                              duration: 1.5,
-                              repeat: Infinity,
-                              delay: Math.random() * 0.5,
-                            }}
-                          >
-                            <Sparkles className="w-3 h-3 text-blue-400" />
-                          </motion.div>
-                        </motion.div>
-                      ))}
-                    </>
-                  )}
-                </AnimatePresence>
-
+                key={`chatbot-${plan.name}`}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: index * 0.1 }}
+                className="relative flex flex-col text-center"
+              >
                 {/* Most Popular Badge */}
                 {plan.popular && (
                   <motion.div
@@ -1212,13 +1046,50 @@ Thank you for choosing TopEdge AI!`;
                   </motion.div>
                 )}
 
+                {/* Floating sparkles */}
+                <AnimatePresence>
+                  {isHovered && (
+                    <>
+                      {[...Array(5)].map((_, i) => (
+                        <motion.div
+                          key={`sparkle-${i}`}
+                          initial={{ opacity: 0, scale: 0 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          exit={{ opacity: 0, scale: 0 }}
+                          className="absolute"
+                          style={{
+                            top: `${Math.random() * 100}%`,
+                            left: `${Math.random() * 100}%`,
+                            zIndex: 30,
+                          }}
+                        >
+                          <motion.div
+                            animate={{
+                              y: [-20, 0],
+                              opacity: [1, 0],
+                            }}
+                            transition={{
+                              duration: 1.5,
+                              repeat: Infinity,
+                              delay: Math.random() * 0.5,
+                            }}
+                          >
+                            <Sparkles className="w-3 h-3 text-blue-400" />
+                          </motion.div>
+                        </motion.div>
+                      ))}
+                    </>
+                  )}
+                </AnimatePresence>
+
                 {/* Card */}
                 <motion.div
                   className={`relative flex-1 p-6 sm:p-8 rounded-2xl backdrop-blur-xl border border-white/10 bg-gradient-to-b from-black/80 to-blue-950/20 overflow-hidden ${plan.popular ? 'md:scale-105' : ''}`}
                   onHoverStart={() => setHoveredPlan(plan.name)}
                   onHoverEnd={() => setHoveredPlan(null)}
-                whileHover={{ scale: 1.02, y: -5 }}
-              >
+                  whileHover={{ scale: 1.02, y: -5 }}
+                  initial={false}
+                >
                   {/* Animated gradient border */}
                   <motion.div
                     className="absolute inset-0 rounded-2xl"
@@ -1243,47 +1114,13 @@ Thank you for choosing TopEdge AI!`;
                   {/* Plan Icon with enhanced animation */}
                   <motion.div
                     className={`relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl bg-gradient-to-r ${plan.gradient} p-0.5 mb-4 sm:mb-6 mx-auto`}
-                    whileHover={{ rotate: [0, -5, 5, 0], scale: 1.1 }}
-                    initial={{ rotate: 0, scale: 1 }}
-                    animate={{ rotate: 0, scale: 1 }}
-                    transition={{ 
-                      duration: 0.3,
-                      type: "spring",
-                      stiffness: 400,
-                      damping: 25
-                    }}
+                    whileHover={{ rotate: -5, scale: 1.1 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 25 }}
                   >
                     <motion.div 
                       className="w-full h-full bg-black rounded-xl flex items-center justify-center overflow-hidden"
-                      initial={{ background: 'rgba(0,0,0,1)' }}
-                      animate={isHovered ? {
-                        background: ['rgba(0,0,0,1)', 'rgba(0,0,40,1)', 'rgba(0,0,0,1)']
-                      } : {
-                        background: 'rgba(0,0,0,1)'
-                      }}
-                      transition={{ 
-                        duration: 2,
-                        repeat: isHovered ? Infinity : 0,
-                        ease: "easeInOut"
-                      }}
                     >
-                      <motion.div
-                        initial={{ scale: 1, rotate: 0 }}
-                        animate={isHovered ? {
-                          scale: [1, 1.2, 1],
-                          rotate: [0, 10, -10, 0],
-                        } : {
-                          scale: 1,
-                          rotate: 0
-                        }}
-                        transition={{ 
-                          duration: 1,
-                          repeat: isHovered ? Infinity : 0,
-                          ease: "easeInOut"
-                        }}
-                      >
-                        <Icon className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-white" />
-                      </motion.div>
+                      <Icon className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-white" />
                     </motion.div>
                   </motion.div>
 
@@ -1291,33 +1128,33 @@ Thank you for choosing TopEdge AI!`;
                   <motion.h3 
                     className="text-lg sm:text-xl md:text-2xl font-bold mb-2 sm:mb-3 text-center"
                   >
-                  {plan.name}
-                </motion.h3>
+                    {plan.name}
+                  </motion.h3>
 
-                  {/* Price Section */}
-                <div className="mt-4 space-y-4">
-                    <div className="flex items-baseline text-6xl font-bold">
-                    <span className="text-white">${plan.price}</span>
-                    <span className="ml-1 text-2xl font-medium text-gray-400">{plan.description}</span>
+                  {/* Price Section for Chatbot */}
+                  <div className="mt-4 space-y-4">
+                    <div className="flex flex-col items-center justify-center">
+                      <div className="text-6xl font-bold text-white mb-2">$0</div>
+                      <div className="text-lg text-gray-400">Free Development & Deployment</div>
+                    </div>
+
+                    {renderPriceSection(plan)}
                   </div>
-
-                    {renderPriceSection(plan, showPricing)}
-                </div>
 
                   {/* Features list */}
                   <ul className="space-y-3 mb-8 text-left px-2 sm:px-0 mt-6">
                     {plan.features.map((feature, featureIndex) => (
-                    <motion.li
-                      key={feature}
-                      className="flex items-start gap-2"
-                    >
+                      <motion.li
+                        key={feature}
+                        className="flex items-start gap-2"
+                      >
                         <motion.div>
                           <Check className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
                         </motion.div>
-                      <span className="text-gray-300">{feature}</span>
-                    </motion.li>
-                  ))}
-                {plan.addOns && (
+                        <span className="text-gray-300">{feature}</span>
+                      </motion.li>
+                    ))}
+                    {plan.addOns && (
                       <motion.li className="flex items-start gap-2 mt-4">
                         <span className="text-sm text-blue-400">{plan.addOns}</span>
                       </motion.li>
@@ -1325,93 +1162,14 @@ Thank you for choosing TopEdge AI!`;
                   </ul>
 
                 {/* Buttons */}
-                  <div className="flex flex-col gap-4 mt-auto">
-                  <motion.button
-                      className="relative w-full py-3 px-4 sm:px-6 rounded-xl overflow-hidden bg-gradient-to-r from-blue-600/20 to-blue-600/10 border border-blue-500/20 text-white font-semibold text-center"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                      onClick={() => handleGetMaintenancePrice(plan.name, 'chatbot')}
-                    >
-                      <motion.div
-                        className="absolute inset-0 bg-gradient-to-r from-blue-600/0 via-blue-600/40 to-blue-600/0"
-                        initial={{ x: '-100%' }}
-                        animate={isHovered ? {
-                          x: ['-100%', '100%'],
-                        } : {
-                          x: '-100%'
-                        }}
-                        transition={{
-                          duration: 1.5,
-                          repeat: isHovered ? Infinity : 0,
-                          ease: "linear",
-                        }}
-                      />
-                      <motion.div
-                        className="relative z-10 flex items-center justify-center gap-2"
-                        initial={{ x: 0 }}
-                        animate={isHovered ? {
-                          x: [0, 5, 0],
-                        } : {
-                          x: 0
-                        }}
-                        transition={{
-                          duration: 1,
-                          repeat: isHovered ? Infinity : 0,
-                          ease: "easeInOut",
-                        }}
-                      >
-                      Get Maintenance Price
-                      <ArrowRight className="w-5 h-5" />
-                      </motion.div>
-                  </motion.button>
-                    
-                    <Link to="/booking" className="block w-full">
-                      <motion.button
-                        className="relative w-full py-3 px-4 sm:px-6 rounded-xl overflow-hidden bg-gradient-to-r from-blue-600/20 to-blue-600/10 border border-blue-500/20 text-white font-semibold text-center"
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                      >
-                        <motion.div
-                          className="absolute inset-0 bg-gradient-to-r from-blue-600/0 via-blue-600/40 to-blue-600/0"
-                          initial={{ x: '-100%' }}
-                          animate={isHovered ? {
-                            x: ['-100%', '100%'],
-                          } : {
-                            x: '-100%'
-                          }}
-                          transition={{
-                            duration: 1.5,
-                            repeat: isHovered ? Infinity : 0,
-                            ease: "linear",
-                          }}
-                        />
-                        <motion.div
-                          className="relative z-10 flex items-center justify-center gap-2"
-                          initial={{ x: 0 }}
-                          animate={isHovered ? {
-                            x: [0, 5, 0],
-                          } : {
-                            x: 0
-                          }}
-                          transition={{
-                            duration: 1,
-                            repeat: isHovered ? Infinity : 0,
-                            ease: "easeInOut",
-                          }}
-                        >
-                          Get Started
-                          <ArrowRight className="w-5 h-5" />
-                        </motion.div>
-                      </motion.button>
-                    </Link>
-                </div>
+                  {renderPlanButtons(plan.name, 'chatbot')}
+                </motion.div>
               </motion.div>
-            </motion.div>
             );
           })}
 
           {/* Operational Cost Card */}
-          <OperationalCostCard showPricing={showPricing} />
+          <OperationalCostCard />
         </div>
       </div>
 
@@ -1426,9 +1184,12 @@ Thank you for choosing TopEdge AI!`;
           >
             {/* Background overlay with purple tint and blur */}
             <motion.div
-              initial={{ backdropFilter: 'blur(0px)', backgroundColor: 'rgba(0, 0, 0, 0)' }}
-              animate={{ backdropFilter: 'blur(8px)', backgroundColor: 'rgba(88, 28, 135, 0.05)' }}
-              exit={{ backdropFilter: 'blur(0px)', backgroundColor: 'rgba(0, 0, 0, 0)' }}
+              initial={{ opacity: 0, backdropFilter: 'blur(0px)' }}
+              animate={{ opacity: 1, backdropFilter: 'blur(8px)' }}
+              exit={{ opacity: 0, backdropFilter: 'blur(0px)' }}
+              style={{
+                backgroundColor: 'rgba(88, 28, 135, 0.05)'
+              }}
               transition={{ duration: 0.3 }}
               className="fixed inset-0"
               onClick={handleCloseModal}
@@ -1497,18 +1258,45 @@ Thank you for choosing TopEdge AI!`;
                     <motion.div
                       initial={{ opacity: 0, scale: 0.95 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      className="text-center py-8"
+                      className="text-left py-4 px-2 sm:px-4"
                     >
                       <motion.div
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
                         transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                        className="w-16 h-16 mx-auto mb-4 rounded-full bg-purple-500/10 flex items-center justify-center"
+                        className="w-12 h-12 mx-auto mb-4 rounded-full bg-gradient-to-r from-emerald-500/20 to-teal-500/20 flex items-center justify-center"
                       >
-                        <Check className="w-8 h-8 text-purple-500" />
+                        <Check className="w-6 h-6 text-emerald-500" />
                       </motion.div>
-                      <h4 className="text-xl font-semibold text-white mb-2">Thank You!</h4>
-                      <p className="text-purple-300">We'll send you the voice agent pricing details shortly.</p>
+                      <div className="space-y-4 text-center mb-4">
+                        <h4 className="text-xl font-semibold text-white">Thank You!</h4>
+                        <p className="text-gray-300 text-sm">We've sent the plan details to your email.</p>
+                      </div>
+                      
+                      <div className="mt-6 bg-black/30 rounded-xl p-4 space-y-3 text-sm">
+                        <h5 className="font-medium text-white">Email Preview:</h5>
+                        <div className="space-y-4 text-gray-300">
+                          <p>Hello ${formData.name},</p>
+                          <p>Thank you for your interest in our ${selectedPlan} ${formData.section === 'voice' ? 'AI Voice Agent' : 'Chatbot'} solution.</p>
+                          <div className="space-y-2">
+                            <p className="text-emerald-400 font-medium">Next Steps:</p>
+                            <p>• Our team will contact you within 24 hours</p>
+                            <p>• We'll discuss your requirements and provide a customized solution</p>
+                          </div>
+                          <p className="text-sm text-gray-400">Check your email for complete details about the amazing impact our solution can have on your business.</p>
+                        </div>
+                      </div>
+
+                      <div className="mt-6 flex justify-center">
+                        <motion.button
+                          onClick={handleCloseModal}
+                          className="px-6 py-2 rounded-lg bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-medium"
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                        >
+                          Close
+                        </motion.button>
+                      </div>
                     </motion.div>
                   ) : (
                     <form onSubmit={handleSubmitMaintenanceForm} className="space-y-5">
@@ -1524,12 +1312,14 @@ Thank you for choosing TopEdge AI!`;
                           <input
                             type="text"
                             required
+                            minLength={2}
                             value={formData.name}
                             onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
                             className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 pl-10 text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
-                            placeholder="Your name"
+                            placeholder="Enter your full name *"
                           />
                         </div>
+                        <span className="text-xs text-gray-400 mt-1">Minimum 2 characters required</span>
                       </motion.div>
 
                       <motion.div
@@ -1544,12 +1334,14 @@ Thank you for choosing TopEdge AI!`;
                           <input
                             type="email"
                             required
+                            pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
                             value={formData.email}
                             onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
                             className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 pl-10 text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
-                            placeholder="Your email"
+                            placeholder="Enter your email address *"
                           />
                         </div>
+                        <span className="text-xs text-gray-400 mt-1">Must be a valid email address</span>
                       </motion.div>
 
                       <motion.div
@@ -1564,12 +1356,17 @@ Thank you for choosing TopEdge AI!`;
                           <input
                             type="tel"
                             required
+                            pattern="[0-9]{10}"
                             value={formData.phone}
-                            onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
+                            onChange={(e) => {
+                              const value = e.target.value.replace(/\D/g, '').slice(0, 10);
+                              setFormData(prev => ({ ...prev, phone: value }));
+                            }}
                             className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 pl-10 text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
-                            placeholder="Your phone number"
+                            placeholder="Enter your phone number *"
                           />
                         </div>
+                        <span className="text-xs text-gray-400 mt-1">10-digit phone number required</span>
                       </motion.div>
 
                       <motion.button
@@ -1620,9 +1417,12 @@ Thank you for choosing TopEdge AI!`;
           >
             {/* Background overlay with blue tint and blur */}
             <motion.div
-              initial={{ backdropFilter: 'blur(0px)', backgroundColor: 'rgba(0, 0, 0, 0)' }}
-              animate={{ backdropFilter: 'blur(8px)', backgroundColor: 'rgba(37, 99, 235, 0.05)' }}
-              exit={{ backdropFilter: 'blur(0px)', backgroundColor: 'rgba(0, 0, 0, 0)' }}
+              initial={{ opacity: 0, backdropFilter: 'blur(0px)' }}
+              animate={{ opacity: 1, backdropFilter: 'blur(8px)' }}
+              exit={{ opacity: 0, backdropFilter: 'blur(0px)' }}
+              style={{
+                backgroundColor: 'rgba(37, 99, 235, 0.05)'
+              }}
               transition={{ duration: 0.3 }}
               className="fixed inset-0"
               onClick={handleCloseModal}
@@ -1718,10 +1518,11 @@ Thank you for choosing TopEdge AI!`;
                         <input
                           type="text"
                           required
+                          minLength={2}
                           value={formData.name}
                           onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 pl-10 text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#4D07E3]/50 focus:border-transparent transition-all duration-200"
-                          placeholder="Your name"
+                          className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 pl-10 text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#4D07E3]/50 focus:border-transparent transition-all duration-200"
+                          placeholder="Enter your full name *"
                         />
                       </div>
                       </motion.div>
@@ -1738,10 +1539,11 @@ Thank you for choosing TopEdge AI!`;
                         <input
                           type="email"
                           required
+                          pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
                           value={formData.email}
                           onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 pl-10 text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#4D07E3]/50 focus:border-transparent transition-all duration-200"
-                          placeholder="Your email"
+                          className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 pl-10 text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#4D07E3]/50 focus:border-transparent transition-all duration-200"
+                          placeholder="Enter your email address *"
                         />
                       </div>
                       </motion.div>
@@ -1758,10 +1560,14 @@ Thank you for choosing TopEdge AI!`;
                         <input
                           type="tel"
                           required
+                          pattern="[0-9]{10}"
                           value={formData.phone}
-                          onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
-                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 pl-10 text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#4D07E3]/50 focus:border-transparent transition-all duration-200"
-                          placeholder="Your phone number"
+                          onChange={(e) => {
+                            const value = e.target.value.replace(/\D/g, '').slice(0, 10);
+                            setFormData(prev => ({ ...prev, phone: value }));
+                          }}
+                          className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 pl-10 text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#4D07E3]/50 focus:border-transparent transition-all duration-200"
+                          placeholder="Enter your phone number *"
                         />
                       </div>
                       </motion.div>
@@ -1818,11 +1624,17 @@ Thank you for choosing TopEdge AI!`;
           <div className="flex flex-col gap-3">
             <p className="text-emerald-400 font-medium">Cost Transparency</p>
             <p className="text-gray-300 text-sm sm:text-base">
-            The calculated costs represent direct API and platform API fees for usage,  TopEdge does not markup or profit from these operational costs - we charge only our management
+              The calculated costs represent direct API and platform API fees for usage, TopEdge does not markup or profit from these operational costs - we charge only our management
             </p>
           </div>
         </div>
       </motion.div>
+
+      {/* ROI Calculator Section */}
+      <div className="mt-32">
+        <ROICalculator />
+      </div>
+
     </motion.section>
   );
 };

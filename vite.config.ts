@@ -5,24 +5,32 @@ import path from 'path';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  build: {
-    outDir: 'dist',
-    sourcemap: true
-  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
-      '@components': path.resolve(__dirname, './src/components'),
-      '@containers': path.resolve(__dirname, './src/containers'),
-      '@utils': path.resolve(__dirname, './src/utils'),
     },
-    mainFields: ['browser', 'module', 'main', 'jsnext:main'],
-    extensions: ['.js', '.jsx', '.ts', '.tsx'],
+  },
+  build: {
+    outDir: 'dist',
+    assetsDir: 'assets',
+    sourcemap: false,
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+      },
+    },
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'react-router-dom'],
+          animations: ['framer-motion'],
+        },
+      },
+    },
   },
   server: {
-    port: 5173,
-    proxy: {
-      '/api': 'http://localhost:3001',
-    },
+    port: 3000,
+    open: true,
   },
 });

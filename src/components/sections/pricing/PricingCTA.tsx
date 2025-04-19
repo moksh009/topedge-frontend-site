@@ -1,10 +1,12 @@
 import { motion, useInView } from 'framer-motion';
 import { ArrowRight, CreditCard, DollarSign } from 'lucide-react';
 import { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const PricingCTA = () => {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+  const navigate = useNavigate();
 
   return (
     <motion.section
@@ -80,16 +82,17 @@ const PricingCTA = () => {
             transition={{ duration: 0.8, delay: 0.8 }}
           >
             <motion.a
-              href="#pricing-plans"
+              href="/booking"
               className="group relative inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-emerald-600 to-green-600 rounded-full text-white font-semibold text-lg hover:from-emerald-500 hover:to-green-500 transition-all duration-300 shadow-xl hover:shadow-2xl"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={(e) => {
                 e.preventDefault();
-                document.getElementById('pricing-plans')?.scrollIntoView({ behavior: 'smooth' });
+                navigate('/booking');
+                window.scrollTo(0, 0);
               }}
             >
-              View Plans
+              Save $10K in 45 Days
               <motion.div
                 className="relative"
                 animate={{
@@ -118,12 +121,17 @@ const PricingCTA = () => {
             </motion.a>
 
             <motion.a
-              href="/contact"
+              href="/roi"
               className="group relative inline-flex items-center gap-2 px-8 py-4 bg-transparent border border-emerald-500/30 rounded-full text-emerald-300 font-semibold text-lg hover:bg-emerald-500/10 transition-all duration-300"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              onClick={(e) => {
+                e.preventDefault();
+                navigate('/roi');
+                window.scrollTo(0, 0);
+              }}
             >
-              Contact Sales
+              Calculate ROI
               <motion.div
                 animate={{
                   rotate: [0, 360],

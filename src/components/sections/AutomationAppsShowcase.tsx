@@ -1,6 +1,7 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useMemo } from 'react';
 import { motion, useScroll, useTransform, useSpring, useInView } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
+import React from 'react';
 
 interface AutomationApp {
   name: string;
@@ -10,18 +11,6 @@ interface AutomationApp {
 }
 
 const automationApps: AutomationApp[] = [
-  {
-    name: "Make.com",
-    image: "/image.png",
-    color: "#FF4A4A",
-    description: "Advanced automation platform"
-  },
-  {
-    name: "Vapi",
-    image: "/image copy.png",
-    color: "#6366F1",
-    description: "Voice API integration"
-  },
   {
     name: "WhatsApp",
     image: "https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg",
@@ -54,25 +43,41 @@ const extendedApps = [...automationApps, ...automationApps, ...automationApps];
 const AutomationAppsShowcase = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(containerRef);
+  const isMobile = window.innerWidth < 768;
+
+  // Memoize scroll values and view state
+  const isInView = useInView(containerRef, {
+    amount: isMobile ? 0.3 : 0.5,
+    once: false
+  });
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"]
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], [100, -100]);
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
+  // Optimize transforms with useSpring for smoother animations
+  const springConfig = { mass: 0.1, stiffness: 100, damping: 30 };
+  const y = useSpring(
+    useTransform(scrollYProgress, [0, 1], [100, -100]),
+    springConfig
+  );
+  const opacity = useSpring(
+    useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]),
+    springConfig
+  );
 
-  // Horizontal scroll animation
-  const baseX = useTransform(scrollYProgress, [0, 1], [0, -1000]);
-  const springX = useSpring(baseX, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  });
+  // Optimize horizontal scroll animation
+  const baseX = useSpring(
+    useTransform(scrollYProgress, [0, 1], [0, -1000]),
+    { stiffness: 50, damping: 20 }
+  );
 
-  const SCROLL_SPEED = 0.2; 
+  // Memoize apps array to prevent unnecessary re-renders
+  const memoizedExtendedApps = useMemo(() => extendedApps, []);
+
+  // Optimize scroll speed based on device
+  const SCROLL_SPEED = useMemo(() => isMobile ? 0.15 : 0.2, [isMobile]);
 
   useEffect(() => {
     if (isInView && scrollRef.current) {
@@ -81,16 +86,16 @@ const AutomationAppsShowcase = () => {
       let lastTime = 0;
 
       const animate = (currentTime: number) => {
+        if (!scrollRef.current || !isInView) return;
+
         if (lastTime === 0) {
           lastTime = currentTime;
         }
         const deltaTime = currentTime - lastTime;
         
-        if (scrollRef.current) {
-          scrollRef.current.scrollLeft += SCROLL_SPEED * deltaTime;
-          if (scrollRef.current.scrollLeft >= scrollWidth / 3) {
-            scrollRef.current.scrollLeft = 0;
-          }
+        scrollRef.current.scrollLeft += SCROLL_SPEED * deltaTime;
+        if (scrollRef.current.scrollLeft >= scrollWidth / 3) {
+          scrollRef.current.scrollLeft = 0;
         }
         
         lastTime = currentTime;
@@ -104,7 +109,7 @@ const AutomationAppsShowcase = () => {
         }
       };
     }
-  }, [isInView]);
+  }, [isInView, SCROLL_SPEED]);
 
   return (
     <motion.section
@@ -113,13 +118,14 @@ const AutomationAppsShowcase = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
+      style={{ willChange: 'transform, opacity' }}
     >
       {/* Content Container */}
       <div className="relative container mx-auto px-4">
         {/* Section Title */}
         <motion.div
           className="text-center mb-12 sm:mb-20"
-          style={{ opacity }}
+          style={{ opacity, willChange: 'opacity' }}
         >
           <motion.h2
             className="text-3xl sm:text-5xl md:text-7xl font-bold mb-4 sm:mb-6 leading-tight"
@@ -129,6 +135,9 @@ const AutomationAppsShowcase = () => {
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               animation: 'shine 8s linear infinite',
+              willChange: 'transform',
+              backfaceVisibility: 'hidden',
+              WebkitBackfaceVisibility: 'hidden'
             }}
           >
             Never Miss Another <br />Business Opportunity
@@ -139,7 +148,9 @@ const AutomationAppsShowcase = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
           >
-            Did you know that <span className="text-red-400">72% of customers</span> choose another business when their call goes unanswered? Let our AI receptionist handle every call, 24/7, ensuring you never lose another lead.
+          <span className="text-red-400">72% of customers</span> choose another business when <br /> their call goes unanswered? & Slow replies <br />
+          ⁠Let our 24/7 AI-Powered Support Squad handle every call, even instagram inquiry, ensuring you never lose another lead.
+
           </motion.p>
           
           {/* Pain Points Grid */}
@@ -164,20 +175,28 @@ const AutomationAppsShowcase = () => {
           </motion.div>
         </motion.div>
 
-        {/* Infinite Scroll Container */}
+        {/* Infinite Scroll Container - Optimized */}
         <div 
           ref={scrollRef}
           className="relative overflow-x-hidden"
           style={{ 
             maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)',
-            WebkitMaskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)'
+            WebkitMaskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)',
+            willChange: 'transform',
+            backfaceVisibility: 'hidden',
+            WebkitBackfaceVisibility: 'hidden'
           }}
         >
           <motion.div 
             className="flex gap-4 sm:gap-8 py-6 sm:py-10"
-            style={{ x: springX }}
+            style={{ 
+              x: baseX,
+              willChange: 'transform',
+              backfaceVisibility: 'hidden',
+              WebkitBackfaceVisibility: 'hidden'
+            }}
           >
-            {extendedApps.map((app, index) => (
+            {memoizedExtendedApps.map((app, index) => (
               <motion.div
                 key={index}
                 className="relative flex-none w-[280px] sm:w-[400px]"
@@ -187,15 +206,24 @@ const AutomationAppsShowcase = () => {
                   y: 0,
                   transition: {
                     type: "spring",
-                    stiffness: 50,
-                    damping: 20,
-                    duration: 0.8
+                    stiffness: isMobile ? 30 : 50,
+                    damping: isMobile ? 15 : 20,
+                    duration: isMobile ? 0.5 : 0.8
                   }
                 }}
-                viewport={{ once: true, margin: "-100px" }}
-                whileHover={{ 
+                viewport={{ 
+                  once: true, 
+                  margin: isMobile ? "-50px" : "-100px",
+                  amount: isMobile ? 0.3 : 0.5
+                }}
+                whileHover={isMobile ? undefined : { 
                   scale: 1.02,
                   transition: { duration: 0.3 }
+                }}
+                style={{
+                  willChange: 'transform, opacity',
+                  backfaceVisibility: 'hidden',
+                  WebkitBackfaceVisibility: 'hidden'
                 }}
               >
                 <div className="relative h-[180px] sm:h-[200px] rounded-2xl overflow-hidden backdrop-blur-lg bg-white/5 border border-white/10">
@@ -246,4 +274,4 @@ const AutomationAppsShowcase = () => {
   );
 };
 
-export default AutomationAppsShowcase; 
+export default React.memo(AutomationAppsShowcase); 

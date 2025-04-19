@@ -403,7 +403,7 @@ const AboutHero: React.FC = () => {
                 animation: 'shine 12s linear infinite',
               }}
             >
-              Pioneering AI solutions that transform businesses and empower innovation.
+We tech-enable businesses and strengthen their customer acquisition game by upleveling Customer Support.
             </motion.p>
           </motion.div>
 

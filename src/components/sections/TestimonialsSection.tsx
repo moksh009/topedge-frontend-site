@@ -5,15 +5,15 @@ import { Star, Quote, Play, Pause } from 'lucide-react';
 const testimonial = {
   name: "Steven Mugabe",
   role: "Doctor at Code Clinic",
-  image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTP5IqbmloRw1URDMMdIkaWrhKwXN6lMKfFQ&s",
+  image: "/images/testimonials/steven-mugabe.jpg",
   content: "TopEdge's AI solutions transformed our customer service. Response times dropped by 90% while satisfaction increased by 55%. It's like having a superhuman team that never sleeps.",
   rating: 5,
   company: {
-    logo: "code clinic.png",
+    logo: "/images/logos/code-clinic.png",
     name: "Code Clinic"
   },
   video: {
-    vimeoId: "1074178390",
+    vimeoId: "824804225",
     duration: "2:15"
   }
 };
@@ -44,15 +44,16 @@ const TestimonialCard = () => {
       className="relative group max-w-3xl mx-auto"
     >
       <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-xl border border-white/10">
-        {/* Video Section - Adjusted for vertical video */}
+        {/* Video Section */}
         <div className="relative w-full max-w-[400px] mx-auto overflow-hidden">
-          <div style={{ padding: "177.78% 0 0 0", position: "relative" }}>
+          <div style={{ padding: "56.25% 0 0 0", position: "relative" }}>
             <iframe
-              src="https://player.vimeo.com/video/1074178390?badge=0&autopause=0&player_id=0&app_id=58479&controls=true&title=0&byline=0&portrait=0&quality=1080p&dnt=1"
-              frameBorder="0"
-              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+              src={`https://player.vimeo.com/video/${testimonial.video.vimeoId}?h=c31f795c7d&autoplay=0&title=0&byline=0&portrait=0`}
               style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
-              title="Dr.Steven Mugabe (Code Clinic)"
+              frameBorder="0"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowFullScreen
+              title={`${testimonial.name} Testimonial`}
               className="rounded-t-3xl"
             />
           </div>

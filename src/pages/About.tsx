@@ -91,7 +91,8 @@ const AboutCTA: React.FC = () => {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="text-lg sm:text-xl text-gray-300 mb-12"
           >
-            Join the businesses that are already saving time and maximizing opportunities with our AI solutions.
+Join the smart businesses already saving up to $10K in revenue each week/month with our super AI agents.
+
           </motion.p>
 
           {/* CTA Button */}
@@ -122,7 +123,7 @@ const AboutCTA: React.FC = () => {
                 
                 {/* Button Content */}
                 <span className="relative text-lg font-semibold text-white">
-                  Let's Transform My Business
+                  Transform My Business
                 </span>
                 <Sparkles className="relative w-5 h-5 text-white animate-pulse" />
                 <ArrowRight className="relative w-5 h-5 text-white group-hover:translate-x-1 transition-transform duration-300" />

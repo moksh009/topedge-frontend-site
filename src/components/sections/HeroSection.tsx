@@ -1,166 +1,148 @@
-import { useRef, useEffect, useMemo } from 'react';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
-import { ArrowRight, Rocket, Info } from 'lucide-react';
-import { TypeAnimation } from 'react-type-animation';
+import { useRef, useEffect, useMemo, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowRight, Rocket, Info, Phone, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import '../../styles/animations.css';
 import '../../styles/breathe.css';
 import { Bot, Brain, Cpu, TrendingUp, Zap } from 'lucide-react';
+import { vapiService } from '../../services/vapiService';
+
+// Add this new component for the end call icon
+const EndCallIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="transform rotate-135">
+    <path d="M22 3L2 21" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+    <path d="M21.3536 20.3536L15.3536 14.3536C15.1583 14.1583 15.1583 13.8417 15.3536 13.6464L17.6464 11.3536C17.8417 11.1583 18.1583 11.1583 18.3536 11.3536L24.3536 17.3536C24.5488 17.5488 24.5488 17.8654 24.3536 18.0607L22.0607 20.3536C21.8654 20.5488 21.5488 20.5488 21.3536 20.3536Z" fill="currentColor"/>
+  </svg>
+);
 
 const HeroSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
+  const isMobile = window.innerWidth < 768;
+  const [isCallActive, setIsCallActive] = useState(false);
+  const [isConnecting, setIsConnecting] = useState(false);
 
-  // Optimize scroll handling
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end start"]
-  });
+  useEffect(() => {
+    // Check if there's an active call on component mount
+    setIsCallActive(vapiService.isActive());
 
-  // Use lighter spring physics
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 30,
-    damping: 15,
-    restDelta: 0.001
-  });
+    // Cleanup on unmount
+    return () => {
+      if (vapiService.isActive()) {
+        vapiService.close();
+      }
+    };
+  }, []);
 
-  // Reduce transform calculations
-  const sectionScale = useTransform(smoothProgress, [0, 0.5], [1, 0.98]);
-  const sectionOpacity = useTransform(smoothProgress, [0, 0.5], [1, 0.5]);
+  const handleStartCall = async () => {
+    try {
+      setIsConnecting(true);
+      await vapiService.start();
+      setIsCallActive(true);
+    } catch (error) {
+      console.error('Failed to start call:', error);
+      setIsCallActive(false);
+    } finally {
+      setIsConnecting(false);
+    }
+  };
 
-  // Optimize floating orbs by reducing count and animation complexity
+  const handleEndCall = async () => {
+    try {
+      setIsConnecting(true);
+      await vapiService.close();
+      setIsCallActive(false);
+    } catch (error) {
+      console.error('Failed to end call:', error);
+    } finally {
+      setIsConnecting(false);
+    }
+  };
+
+  // Optimize floating orbs by reducing count on mobile
   const floatingOrbs = useMemo(() => {
-    return [...Array(8)].map((_, i) => ({
+    const orbCount = isMobile ? 4 : 8;
+    return [...Array(orbCount)].map((_, i) => ({
       id: i,
       x: Math.random() * window.innerWidth,
       y: Math.random() * window.innerHeight,
       scale: Math.random() * 0.5 + 0.5,
-      duration: Math.random() * 5 + 15
+      duration: Math.random() * 3 + (isMobile ? 10 : 15)
     }));
   }, []);
 
-  // Reduced transform range
-  const x1 = useTransform(smoothProgress, [0, 0.4], ["0%", "-15%"]);
-  const x2 = useTransform(smoothProgress, [0, 0.4], ["0%", "15%"]);
-
-  // Optimize background animations
-  const bgOpacity = useTransform(smoothProgress, [0, 0.5], [1, 0.5]);
-
-  // Simplified variants with reduced animation properties
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.5,
-        ease: "easeOut"
-      }
-    }
-  };
-
-  const y = useTransform(scrollYProgress, [0, 1], [0, 200]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1, 0]);
-
-  // Add new scroll-triggered animation for wizard
-  const wizardRef = useRef<HTMLDivElement>(null);
-  const wizardScrollProgress = useScroll({
-    target: wizardRef,
-    offset: ["start end", "end end"]
-  }).scrollYProgress;
-
-  const wizardOpacity = useTransform(wizardScrollProgress, 
-    [0, 0.2], 
-    [0, 1]
-  );
-  const wizardY = useTransform(wizardScrollProgress, 
-    [0, 0.2], 
-    ["100px", "0px"]
-  );
-  const wizardX = useTransform(wizardScrollProgress, 
-    [0, 0.2], 
-    ["-50px", "0px"]
-  );
+  // Reduce particle count for mobile
+  const particleCount = isMobile ? 5 : 10;
 
   return (
     <motion.section 
       ref={sectionRef} 
-      className="relative min-h-[100vh] flex items-center justify-center overflow-hidden font-sf-pro-display will-change-transform"
-      style={{
-        scale: sectionScale,
-        opacity: sectionOpacity
-      }}
+      className="relative min-h-[100vh] flex items-center justify-center overflow-hidden font-sf-pro-display"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
     >
       {/* Optimized Background Effects */}
       <motion.div 
         className="absolute inset-0 overflow-hidden"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
+        transition={{ duration: 0.5 }}
         style={{
           background: 'linear-gradient(to bottom, rgba(0,0,0,0.95), rgba(0,0,0,0.98))',
           willChange: 'transform'
         }}
       >
-        {/* Optimized breathing circle */}
+        {/* Optimized breathing circle - reduced animation complexity for mobile */}
         <motion.div
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] will-change-transform"
           animate={{
-            scale: [1, 1.05, 1],
-            opacity: [0.15, 0.18, 0.15],
+            scale: isMobile ? [1, 1.02, 1] : [1, 1.05, 1],
+            opacity: isMobile ? [0.1, 0.12, 0.1] : [0.15, 0.18, 0.15],
           }}
           transition={{
-            duration: 6,
+            duration: isMobile ? 4 : 6,
             repeat: Infinity,
-            ease: "easeInOut",
+            ease: "linear",
           }}
         >
           <div className="absolute inset-0 rounded-full bg-gradient-to-r from-white/10 to-white/2"
-            style={{ filter: 'blur(50px)' }}
+            style={{ filter: isMobile ? 'blur(30px)' : 'blur(50px)' }}
           />
         </motion.div>
 
-        {/* Optimized floating orbs */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {floatingOrbs.map((orb) => (
-            <motion.div
-              key={orb.id}
-              className="absolute w-2 h-2 bg-purple-500/30 rounded-full"
-              initial={{
-                opacity: 0.1,
-                scale: orb.scale,
-                x: orb.x,
-                y: orb.y,
-              }}
-              animate={{
-                y: [orb.y, orb.y + 50, orb.y],
-                opacity: [0.1, 0.15, 0.1],
-              }}
-              transition={{
-                duration: orb.duration,
-                repeat: Infinity,
-                ease: "linear",
-              }}
-              style={{
-                filter: 'blur(1px)',
-              }}
-            />
-          ))}
-        </div>
+        {/* Optimized floating orbs - reduced count and simpler animations for mobile */}
+        {!isMobile && (
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            {floatingOrbs.map((orb) => (
+              <motion.div
+                key={orb.id}
+                className="absolute w-2 h-2 bg-purple-500/30 rounded-full"
+                initial={{
+                  opacity: 0.1,
+                  scale: orb.scale,
+                  x: orb.x,
+                  y: orb.y,
+                }}
+                animate={{
+                  y: [orb.y, orb.y + 30, orb.y],
+                  opacity: [0.1, 0.12, 0.1],
+                }}
+                transition={{
+                  duration: orb.duration,
+                  repeat: Infinity,
+                  ease: "linear",
+                }}
+                style={{
+                  filter: 'blur(1px)',
+                }}
+              />
+            ))}
+          </div>
+        )}
 
-        {/* Optimized particles - reduced count */}
-        {[...Array(10)].map((_, i) => (
+        {/* Optimized particles - reduced count and simpler animations for mobile */}
+        {[...Array(particleCount)].map((_, i) => (
           <motion.div
             key={`particle-${i}`}
             className="absolute w-1 h-1 rounded-full bg-white/20"
@@ -170,37 +152,37 @@ const HeroSection = () => {
               filter: 'blur(0.5px)',
             }}
             animate={{
-              y: [0, -60],
+              y: [0, -40],
               opacity: [0.2, 0],
             }}
             transition={{
-              duration: 3 + Math.random() * 2,
+              duration: 2 + Math.random() * 1,
               repeat: Infinity,
               ease: "linear",
-              delay: Math.random() * 2,
+              delay: Math.random() * 1,
             }}
           />
         ))}
       </motion.div>
 
-      {/* Animated background */}
+      {/* Simplified animated background for mobile */}
       <div className="absolute inset-0 bg-gradient-to-b from-black via-purple-950/20 to-black">
         <div className="absolute inset-0">
-          {[...Array(50)].map((_, i) => (
+          {[...Array(isMobile ? 20 : 50)].map((_, i) => (
             <motion.div
               key={i}
               className="absolute w-1 h-1 bg-purple-300/40 rounded-full"
               animate={{
                 y: [Math.random() * 1000, -10],
-                opacity: [0, 1, 0],
-                scale: [0, 2, 0]
+                opacity: [0, 0.5, 0],
+                scale: [0, 1.5, 0]
               }}
               transition={{
-                duration: Math.random() * 3 + 2,
+                duration: Math.random() * 2 + 2,
                 repeat: Infinity,
                 repeatType: "loop",
                 ease: "linear",
-                delay: Math.random() * 2
+                delay: Math.random() * 1
               }}
               style={{
                 left: `${Math.random() * 100}%`,
@@ -426,7 +408,7 @@ const HeroSection = () => {
                       delay: 0.2
                     }
                   }}
-                  className="text-[2.3rem] sm:text-4xl md:text-5xl lg:text-6xl font-light text-center leading-tight mt-2"
+                  className="text-[2.3rem] sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-center leading-tight mt-2"
                   style={{
                     background: 'linear-gradient(to right, #FFFFFF 20%, #8B5CF6 50%, #FFFFFF 80%)',
                     backgroundSize: '200% auto',
@@ -445,7 +427,7 @@ const HeroSection = () => {
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="text-[1.2rem] sm:text-xl md:text-2xl text-white/90 max-w-[1200px] mx-auto leading-relaxed mb-6 sm:mb-8 md:mb-12 px-4"
+            className="text-[1.2rem] sm:text-xl md:text-2xl text-white/90 max-w-[1200px] mx-auto leading-relaxed mb-8 sm:mb-8 md:mb-12 px-4"
             style={{
               textShadow: '0 0 20px rgba(255,255,255,0.2)',
             }}
@@ -465,265 +447,156 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.8 }}
-            className="flex flex-col sm:flex-row gap-5 sm:gap-4 md:gap-6 justify-center items-stretch w-full max-w-md mx-auto px-4"
+            className="flex flex-col sm:flex-row gap-5 sm:gap-4 md:gap-6 justify-center items-stretch w-full max-w-md mx-auto px-4 mt-4 sm:mt-0"
           >
-            {/* First Button - See how AI works */}
-            <Link to="/services" className="w-full">
-              <motion.button
-                whileHover="hover"
-                whileTap="tap"
-                variants={{
-                  hover: { scale: 1.02 },
-                  tap: { scale: 0.98 }
-                }}
-                className="group relative rounded-full w-full"
-              >
-                <div className="relative px-3 sm:px-8 py-2.5 sm:py-4 rounded-full w-full">
-                  {/* Button Background */}
-                  <div className="absolute inset-0 bg-black border border-purple-500/50 group-hover:border-purple-400 rounded-full" />
-                  
-                  {/* Button Content */}
-                  <div className="relative flex items-center justify-center gap-2 sm:gap-3">
-                    <Rocket className="w-4 h-4 sm:w-6 sm:h-6 text-purple-400 group-hover:text-white transition-colors duration-300" />
-                    <span className="text-sm sm:text-lg font-medium bg-gradient-to-r from-white via-purple-200 to-white bg-clip-text text-transparent whitespace-nowrap">
-                      See how AI works
-                    </span>
-                    <ArrowRight className="w-4 h-4 sm:w-6 sm:h-6 text-purple-400 group-hover:text-white transition-colors duration-300" />
-                  </div>
-                </div>
-              </motion.button>
-            </Link>
+            {/* Voice Chat Button */}
+            <motion.button
+              onClick={isCallActive ? handleEndCall : handleStartCall}
+              disabled={isConnecting}
+              whileHover="hover"
+              whileTap="tap"
+              variants={{
+                hover: { scale: 1.02 },
+                tap: { scale: 0.98 }
+              }}
+              className="group relative rounded-full min-w-[300px] mb-3 sm:mb-0"
+            >
+              <div className="relative px-6 sm:px-8 py-3 sm:py-4 rounded-full w-full">
+                {/* Button Background with dynamic border color */}
+                <div 
+                  className={`absolute inset-0 bg-black rounded-full transition-all duration-300 ${
+                    isCallActive 
+                      ? 'border border-red-500/50 group-hover:border-red-400' 
+                      : 'border border-green-500/50 group-hover:border-green-400'
+                  }`}
+                />
 
-            {/* Second Button - I Want Save Opportunities */}
-            <Link to="/book-appointment" className="w-full">
-              <motion.button
+                {/* Active Call Wave Effect */}
+                {isCallActive && (
+                  <div className="absolute inset-0 rounded-full overflow-hidden">
+                    <div className="absolute inset-0 bg-red-500/5" />
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-r from-transparent via-red-500/10 to-transparent"
+                      animate={{
+                        x: ['-100%', '100%'],
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "linear"
+                      }}
+                    />
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-l from-transparent via-red-500/10 to-transparent"
+                      animate={{
+                        x: ['100%', '-100%'],
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "linear",
+                        delay: 1
+                      }}
+                    />
+                  </div>
+                )}
+                
+                {/* Button Content */}
+                <div className="relative flex items-center justify-center h-7 overflow-hidden">
+                  <AnimatePresence mode="wait">
+                    {isConnecting ? (
+                      <motion.div 
+                        key="loading"
+                        className="flex items-center justify-center gap-3"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                      >
+                        <div className="relative w-6 h-6">
+                          <div className="absolute inset-0 border-2 border-green-400/30 rounded-full" />
+                          <div className="absolute inset-0 border-2 border-t-green-400 rounded-full animate-[spin_0.6s_linear_infinite]" />
+                        </div>
+                        <span className="text-[17px] font-medium text-white/90">
+                          {isCallActive ? 'Ending Call...' : 'Connecting...'}
+                        </span>
+                      </motion.div>
+                    ) : (
+                      <motion.div 
+                        key="content"
+                        className="flex items-center justify-center gap-3"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                      >
+                        {isCallActive ? (
+                          <>
+                            {/* End Call Icons */}
+                            <div className="flex items-center gap-3">
+                              <svg 
+                                width="24" 
+                                height="24" 
+                                viewBox="0 0 24 24" 
+                                fill="none" 
+                                xmlns="http://www.w3.org/2000/svg" 
+                                className="text-red-400 group-hover:text-white transition-colors duration-300"
+                              >
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" />
+                                <path d="M5 19L19 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                              </svg>
+                            </div>
+                            <span className="text-[17px] font-medium text-red-400 group-hover:text-white transition-colors duration-300">
+                              End Call
+                            </span>
+                          </>
+                        ) : (
+                          <>
+                            <Phone className="w-6 h-6 text-green-400 group-hover:text-white transition-colors duration-300" />
+                            <span className="text-[17px] font-medium text-white">
+                              Talk to TopEdge AI Live
+                            </span>
+                          </>
+                        )}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </div>
+            </motion.button>
+
+            {/* Second Button - Check ROI in 3 Sec */}
+            <Link
+              to="/roi"
+              className="group relative rounded-full w-full"
+            >
+              <motion.div
                 whileHover="hover"
                 whileTap="tap"
                 variants={{
                   hover: { scale: 1.02 },
                   tap: { scale: 0.98 }
                 }}
-                className="group relative rounded-full w-full"
+                className="relative px-6 sm:px-8 py-3 sm:py-4 rounded-full w-full"
               >
-                <div className="relative px-3 sm:px-8 py-2.5 sm:py-4 rounded-full w-full">
-                  {/* Button Background */}
-                  <div className="absolute inset-0 bg-black border border-purple-500/50 group-hover:border-purple-400 rounded-full" />
-                  
-                  {/* Button Content */}
-                  <div className="relative flex items-center justify-center gap-2 sm:gap-3">
-                    <Info className="w-4 h-4 sm:w-6 sm:h-6 text-purple-400 group-hover:text-white transition-colors duration-300" />
-                    <span className="text-sm sm:text-lg font-medium bg-gradient-to-r from-white via-purple-200 to-white bg-clip-text text-transparent whitespace-nowrap">
-                      I Want Save Opportunities
+                {/* Button Background */}
+                <div className="absolute inset-0 bg-black border border-purple-500/50 group-hover:border-purple-400 rounded-full" />
+                
+                {/* Button Content */}
+                <div className="relative flex items-center justify-center h-7 overflow-hidden">
+                  <div className="flex items-center justify-center gap-3">
+                    <Info className="w-6 h-6 text-purple-400 group-hover:text-white transition-colors duration-300" />
+                    <span className="text-[17px] font-medium text-white whitespace-nowrap">
+                      Check ROI in 3 Sec
                     </span>
-                    <ArrowRight className="w-4 h-4 sm:w-6 sm:h-6 text-purple-400 group-hover:text-white transition-colors duration-300" />
+                    <ArrowRight className="w-6 h-6 text-purple-400 group-hover:text-white transition-colors duration-300" />
                   </div>
                 </div>
-              </motion.button>
+              </motion.div>
             </Link>
           </motion.div>
         </motion.div>
       </div>
-
-      {/* Wizard and Message UI */}
-      <motion.div
-        ref={wizardRef}
-        className="hidden sm:flex absolute bottom-8 left-8 items-start gap-4 z-50"
-        initial={{ opacity: 0, y: 100, x: -50 }}
-        animate={{ opacity: 1, y: 0, x: 0 }}
-        transition={{
-          type: "spring",
-          stiffness: 100,
-          damping: 20,
-          delay: 3
-        }}
-      >
-        {/* Wizard Image with Subtle Glow */}
-        <motion.div
-          className="relative w-32 sm:w-52 h-32 sm:h-52"
-          initial={{ rotate: 8, opacity: 0 }}
-          animate={{
-            rotate: [2, 9, 5],
-            scale: [1, 1.02, 1],
-            opacity: 1
-          }}
-          transition={{
-            rotate: {
-              duration: 4,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 4
-            },
-            scale: {
-              duration: 3,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 5
-            },
-            opacity: {
-              duration: 1,
-              delay: 4
-            }
-          }}
-        >
-          {/* Refined glow effect */}
-          <div className="absolute inset-[10%] -z-10">
-            {/* Main glow */}
-            <motion.div
-              className="absolute inset-0 rounded-full bg-purple-500/15"
-              animate={{
-                scale: [0.95, 1.05, 0.95],
-                opacity: [0.2, 0.3, 0.2],
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              style={{
-                filter: 'blur(20px)',
-              }}
-            />
-            
-            {/* Subtle accent glow */}
-            <motion.div
-              className="absolute inset-0 rounded-full"
-              style={{
-                background: 'radial-gradient(circle at 30% 30%, rgba(167, 139, 250, 0.25), transparent 70%)',
-                filter: 'blur(15px)',
-              }}
-              animate={{
-                opacity: [0.2, 0.4, 0.2],
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
-
-            {/* Subtle moving highlight */}
-            <motion.div
-              className="absolute inset-0"
-              animate={{
-                background: [
-                  'radial-gradient(circle at 0% 0%, rgba(167, 139, 250, 0.2) 0%, transparent 50%)',
-                  'radial-gradient(circle at 60% 60%, rgba(167, 139, 250, 0.2) 0%, transparent 50%)',
-                  'radial-gradient(circle at 0% 0%, rgba(167, 139, 250, 0.2) 0%, transparent 50%)',
-                ],
-              }}
-              transition={{
-                duration: 8,
-                repeat: Infinity,
-                ease: "linear",
-              }}
-              style={{
-                filter: 'blur(15px)',
-              }}
-            />
-          </div>
-
-          <img 
-            src="/wizard.png" 
-            alt="AI Wizard" 
-            className="w-full h-full object-contain relative z-10"
-            style={{
-              filter: 'drop-shadow(0 0 8px rgba(139,92,246,0.2))',
-            }}
-          />
-        </motion.div>
-
-        {/* Animated Dots and Message */}
-        <div className="relative -ml-2">
-          {/* First Dot */}
-          <motion.div
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.5, delay: 4.5 }}
-            className="absolute -left-5 top-24 w-2 h-2 bg-purple-400 rounded-full"
-          />
-
-          {/* Second Dot */}
-          <motion.div
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.5, delay: 4.9 }}
-            className="absolute left-0 top-28 w-3 h-3 bg-purple-400 rounded-full"
-          />
-
-          {/* Message Container */}
-          <motion.div
-            className="relative mt-20 ml-6"
-            initial={{ opacity: 0, scale: 0.8, x: -20 }}
-            animate={{ opacity: 1, scale: 1, x: 0 }}
-            transition={{
-              type: "spring",
-              stiffness: 200,
-              damping: 20,
-              delay: 5.5
-            }}
-          >
-            <div className="relative overflow-hidden rounded-2xl">
-              {/* Glass Background */}
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-600/30 to-purple-800/30 backdrop-blur-md" />
-              
-              {/* Animated Gradient Background */}
-              <motion.div
-                className="absolute inset-0"
-                animate={{
-                  background: [
-                    'linear-gradient(45deg, rgba(147,51,234,0.3) 0%, rgba(79,70,229,0.3) 100%)',
-                    'linear-gradient(45deg, rgba(79,70,229,0.3) 0%, rgba(147,51,234,0.3) 100%)',
-                  ],
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  repeatType: "reverse",
-                  ease: "linear",
-                }}
-              />
-
-              {/* Content Container */}
-              <div className="relative px-4 sm:px-6 py-3 sm:py-4 bg-black/20">
-                {/* Glow Effects */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-[1px] bg-gradient-to-r from-transparent via-purple-500/50 to-transparent" />
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 h-[1px] bg-gradient-to-r from-transparent via-purple-500/50 to-transparent" />
-                
-                <motion.p
-                  className="text-xs sm:text-sm font-medium leading-relaxed"
-                  style={{
-                    background: 'linear-gradient(to right, #fff, #e0e0ff)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                  }}
-                >
-                  72% of customers choose another business<br/>
-                  if their call or inquiry goes unanswered<br/>
-                  You can't count how many opportunities<br/>
-                  you've lost—because you don't even know.
-                </motion.p>
-              </div>
-
-              {/* Shine Effect */}
-              <motion.div
-                className="absolute inset-0 pointer-events-none"
-                animate={{
-                  background: [
-                    'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.08) 50%, transparent 100%)',
-                    'linear-gradient(90deg, transparent 100%, rgba(255,255,255,0.08) 150%, transparent 200%)',
-                  ],
-                  left: ['-100%', '100%'],
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "linear",
-                }}
-              />
-            </div>
-          </motion.div>
-        </div>
-      </motion.div>
 
       <style>
         {`

@@ -3,10 +3,10 @@ import { Bot, Send, CheckCircle, Calendar as CalendarIcon, Star, Clock, Mail, Ar
 import { format } from 'date-fns';
 import { useEffect, useRef, useState } from 'react';
 import { toast } from 'react-hot-toast';
-import useSound from 'use-sound';
 import { BookingDetails, emailService } from '../services/emailService';
 import { DayPicker, SelectSingleEventHandler } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
+import { utcToZonedTime, formatInTimeZone } from 'date-fns-tz';
 
 interface Service {
   id: string;
@@ -22,102 +22,34 @@ interface Service {
   popular?: boolean;
 }
 
-const services: Service[] = [
-  // AI Voice Agent Plans
-  { 
-    id: '1', 
-    name: 'Voice Agent Starter', 
-    price: '599',
-    description: 'Setup one time fees only',
-    monthlyFee: '$49/month management fees + Operating cost',
-    icon: '🎙️',
-    rating: '4.8',
-    duration: '1-2 weeks',
-    type: 'voice',
-    features: [
-      "FAQ",
-      "Ticket Creation/Leave Note - pass any message of user to business"
-    ]
-  },
-  { 
-    id: '2', 
-    name: 'Voice Agent Pro', 
-    price: '1299',
-    description: 'Setup one time fees only',
-    monthlyFee: '$99/month management fees + Operating cost',
-    icon: '🎙️',
-    rating: '4.9',
-    duration: '2-3 weeks',
-    type: 'voice',
-    popular: true,
-    features: [
-      "Everything in Starter +",
-      "Appointment setting to calendar",
-      "Dedicated Dashboard",
-      "updates customer records in real time"
-    ]
-  },
-  { 
-    id: '3', 
-    name: 'Voice Agent Premium', 
-    price: '2499',
-    description: 'Setup one time fees only',
-    monthlyFee: '$249/month management fees + Operating cost',
-    icon: '🎙️',
-    rating: '5.0',
-    duration: '3-4 weeks',
-    type: 'voice',
-    features: [
-      "All in Pro +",
-      "Meeting management",
-      "Multi Channel agent",
-      "outbound marketing"
-    ]
-  },
-  // Chatbot Plans
-  { 
-    id: '4', 
-    name: 'Chatbot Pro', 
-    price: '599',
-    description: 'Setup one time fees only',
-    monthlyFee: '$49/month management fees + Operating cost',
-    icon: '💬',
-    rating: '4.8',
-    duration: '1-2 weeks',
-    type: 'chatbot',
-    features: [
-      "FAQ",
-      "Ticket Creation/Leave Note",
-      "Single Channel",
-      "Pass any message of user to business"
-    ]
-  },
-  { 
-    id: '5', 
-    name: 'Chatbot Premium', 
-    price: '1299',
-    description: 'Setup one time fees only',
-    monthlyFee: '$99/month maintenance fees + Operating cost',
-    icon: '💬',
-    rating: '4.9',
-    duration: '2-3 weeks',
-    type: 'chatbot',
-    popular: true,
-    features: [
-      "All in Pro +",
-      "Appointment Setting",
-      "Multi-channel",
-      "outbound marketing",
-      "Advanced Ai Models",
-      "Multi Language Support",
-      "Human Hand-off"
-    ]
-  }
-];
+interface TimeZoneOption {
+  value: string;
+  label: string;
+  offset: string;
+}
+
+const services: Service[] = [];  // Empty services array
 
 const availableTimes = [
-  '09:00 AM', '10:00 AM', '11:00 AM',
-  '02:00 PM', '03:00 PM', '04:00 PM', '05:00 PM'
+  '09:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '01:00 PM', '02:00 PM', '03:00 PM', '04:00 PM', '05:00 PM', '06:00 PM', '07:00 PM', '08:00 PM', '09:00 PM', '10:00 PM'
+  
+];
+
+const timeZones: TimeZoneOption[] = [
+  { value: 'America/New_York', label: 'Eastern Time (ET)', offset: 'UTC-4' },
+  { value: 'America/Chicago', label: 'Central Time (CT)', offset: 'UTC-5' },
+  { value: 'America/Denver', label: 'Mountain Time (MT)', offset: 'UTC-6' },
+  { value: 'America/Los_Angeles', label: 'Pacific Time (PT)', offset: 'UTC-7' },
+  { value: 'America/Anchorage', label: 'Alaska Time (AKT)', offset: 'UTC-8' },
+  { value: 'Pacific/Honolulu', label: 'Hawaii Time (HT)', offset: 'UTC-10' },
+  { value: 'Europe/London', label: 'British Time (BST)', offset: 'UTC+1' },
+  { value: 'Europe/Paris', label: 'Central European Time (CET)', offset: 'UTC+2' },
+  { value: 'Asia/Dubai', label: 'Gulf Time (GT)', offset: 'UTC+4' },
+  { value: 'Asia/Kolkata', label: 'India Time (IST)', offset: 'UTC+5:30' },
+  { value: 'Asia/Singapore', label: 'Singapore Time (SGT)', offset: 'UTC+8' },
+  { value: 'Asia/Tokyo', label: 'Japan Time (JST)', offset: 'UTC+9' },
+  { value: 'Australia/Sydney', label: 'Australian Eastern Time (AET)', offset: 'UTC+10' },
+  { value: 'Pacific/Auckland', label: 'New Zealand Time (NZT)', offset: 'UTC+12' },
 ];
 
 interface Message {
@@ -504,23 +436,97 @@ const GlowingOrbs = () => {
   );
 };
 
-const ServiceTypeTab = ({ type, isActive, onClick }: { type: string; isActive: boolean; onClick: () => void }) => (
-  <motion.button
-    whileHover={{ scale: 1.05 }}
-    whileTap={{ scale: 0.95 }}
-    onClick={(e) => {
-      e.preventDefault(); // Prevent default behavior
-      onClick();
-    }}
-    className={`px-6 py-3 rounded-full text-base sm:text-lg font-medium transition-all duration-300 ${
-      isActive 
-        ? 'bg-gradient-to-r from-[#4D07E3] to-[#7A0BC0] text-white shadow-lg shadow-purple-500/20' 
-        : 'bg-black/50 text-gray-400 hover:text-white border border-gray-800'
-    }`}
-  >
-    {type}
-  </motion.button>
-);
+const TimeZoneSelector = ({ selectedZone, onSelect }: { selectedZone: string; onSelect: (zone: string) => void }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const selectedOption = timeZones.find(tz => tz.value === selectedZone);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  return (
+    <div className="relative z-50" ref={dropdownRef}>
+      <motion.button
+        type="button"
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full bg-black/50 rounded-xl border border-white/10 px-4 py-4 text-white 
+          hover:border-purple-500/50 transition-all duration-300 flex items-center justify-between"
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+      >
+        <span className="flex items-center gap-2">
+          <Clock className="w-5 h-5 text-purple-400" />
+          {selectedOption ? selectedOption.label : 'Select Timezone'}
+        </span>
+        <span className="text-gray-400 text-sm">{selectedOption?.offset}</span>
+      </motion.button>
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="absolute left-0 right-0 mt-2 bg-black/90 border border-white/10 rounded-xl shadow-xl max-h-[300px] overflow-y-auto"
+            style={{ zIndex: 100 }}
+          >
+            <div className="divide-y divide-white/10">
+              {timeZones.map((tz) => (
+                <motion.button
+                  key={tz.value}
+                  type="button"
+                  onClick={() => {
+                    onSelect(tz.value);
+                    setIsOpen(false);
+                  }}
+                  className={`w-full px-4 py-4 text-left transition-colors flex items-center justify-between
+                    ${selectedZone === tz.value 
+                      ? 'bg-gradient-to-r from-purple-500/20 to-blue-500/20 text-white' 
+                      : 'text-gray-300 hover:bg-purple-500/10'
+                    }
+                  `}
+                  whileHover={{ x: 4 }}
+                >
+                  <span>{tz.label}</span>
+                  <span className="text-sm text-gray-400">{tz.offset}</span>
+                </motion.button>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
+// Add custom scrollbar styles to your global CSS or in this component
+const scrollbarStyles = `
+  .timezone-dropdown::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .timezone-dropdown::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+  }
+
+  .timezone-dropdown::-webkit-scrollbar-thumb {
+    background: rgba(139, 92, 246, 0.5);
+    border-radius: 4px;
+  }
+
+  .timezone-dropdown::-webkit-scrollbar-thumb:hover {
+    background: rgba(139, 92, 246, 0.7);
+  }
+`;
 
 const Booking = () => {
   const [selectedServices, setSelectedServices] = useState<Service[]>([]);
@@ -537,10 +543,13 @@ const Booking = () => {
   const [isSuccess, setIsSuccess] = useState(false);
   const progressBarRef = useRef<HTMLDivElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
-  const [activeServiceType, setActiveServiceType] = useState<'voice' | 'chatbot'>('voice');
-
-  // Filter services by type
-  const filteredServices = services.filter(service => service.type === activeServiceType);
+  const [selectedTimezone, setSelectedTimezone] = useState(() => {
+    try {
+      return Intl.DateTimeFormat().resolvedOptions().timeZone;
+    } catch {
+      return 'America/New_York'; // Default fallback
+    }
+  });
 
   useEffect(() => {
     if (progressBarRef.current) {
@@ -569,8 +578,11 @@ const Booking = () => {
     });
   };
 
-  const handleDateSelect = (date: Date) => {
-    setSelectedDate(date);
+  const handleDateSelect = (date: Date | null) => {
+    if (date) {
+      const zonedDate = utcToZonedTime(date, selectedTimezone);
+      setSelectedDate(zonedDate);
+    }
   };
 
   const handleTimeSelect = (time: string) => {
@@ -587,12 +599,14 @@ const Booking = () => {
       selectedTime
     );
   };
-  function formatDate(date: Date): string {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  }
+
+  const formattedDateTime = selectedDate && selectedTime
+    ? formatInTimeZone(
+        selectedDate, 
+        selectedTimezone,
+        "MMMM d, yyyy 'at' h:mm a zzz"
+      )
+    : 'Select a date and time';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -606,7 +620,7 @@ const Booking = () => {
         email: formRef.current.user_email.value,
         phone: formRef.current.phone.value,
         services: selectedServices,
-        date: formatDate(selectedDate),
+        date: formattedDateTime,
         time: selectedTime,
         additionalInfo: formRef.current.notes?.value || '',
       };
@@ -719,7 +733,7 @@ const Booking = () => {
                   <div>
                     <p className="text-white font-medium">Date & Time</p>
                     <p className="text-gray-400">
-                      {selectedDate ? format(selectedDate, 'MMMM d, yyyy') : ''} at {selectedTime}
+                      {formattedDateTime}
                     </p>
                   </div>
                 </div>
@@ -821,7 +835,7 @@ const Booking = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.8 }}
               >
-                Choose your preferred services and schedule a time that works for you.
+                Choose your preferred time that works for you.
                 Let's create something amazing together.
               </motion.p>
             </motion.div>
@@ -834,44 +848,6 @@ const Booking = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.8 }}
             >
-              {/* Services Selection */}
-              <div className="space-y-6">
-                <div className="flex flex-col items-center space-y-4">
-                  <label className="block text-white text-lg sm:text-xl font-medium">Select Services *</label>
-                  
-                  {/* Service Type Tabs */}
-                  <div className="flex gap-4 mb-8">
-                    <ServiceTypeTab 
-                      type="AI Voice Agent" 
-                      isActive={activeServiceType === 'voice'} 
-                      onClick={() => setActiveServiceType('voice')} 
-                    />
-                    <ServiceTypeTab 
-                      type="Chatbot" 
-                      isActive={activeServiceType === 'chatbot'} 
-                      onClick={() => setActiveServiceType('chatbot')} 
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
-                  {filteredServices.map((service, index) => (
-                    <motion.div
-                      key={service.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.2 * index }}
-                    >
-                      <ServiceCard
-                        service={service}
-                        isSelected={selectedServices.some(s => s.id === service.id)}
-                        onSelect={() => handleServiceSelect(service)}
-                      />
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-
               {/* Date and Time Selection */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div className="space-y-4">
@@ -882,8 +858,15 @@ const Booking = () => {
                 </div>
 
                 <div className="space-y-4">
-                  <label className="block text-gray-300 text-sm font-medium mb-2">Select Time *</label>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">
+                  <label className="block text-gray-300 text-sm font-medium mb-2">Select Timezone *</label>
+                  <style>{scrollbarStyles}</style>
+                  <TimeZoneSelector
+                    selectedZone={selectedTimezone}
+                    onSelect={setSelectedTimezone}
+                  />
+
+                  <label className="block text-gray-300 text-sm font-medium mb-2 mt-6">Select Time *</label>
+                  <div className="relative z-0 grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-3 mt-8">
                     {availableTimes.map((time) => (
                       <motion.button
                         key={time}
@@ -892,7 +875,7 @@ const Booking = () => {
                         whileTap={{ scale: 0.98 }}
                         onClick={() => handleTimeSelect(time)}
                         className={`
-                          p-2 sm:p-3 rounded-lg text-sm font-medium
+                          px-4 py-3 rounded-xl text-sm font-medium
                           ${selectedTime === time
                             ? 'bg-gradient-to-r from-purple-500 to-blue-500 text-white shadow-lg shadow-purple-500/25'
                             : 'bg-black/50 border border-white/10 text-gray-300 hover:border-purple-500/50'
@@ -904,6 +887,9 @@ const Booking = () => {
                       </motion.button>
                     ))}
                   </div>
+                  <p className="text-sm text-gray-400 mt-4">
+                    All times are shown in {timeZones.find(tz => tz.value === selectedTimezone)?.label || selectedTimezone}
+                  </p>
                 </div>
               </div>
 

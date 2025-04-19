@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Instagram, Youtube, Twitter, Phone, Mail, MapPin, Globe, Bot, MessageSquare, Calendar, Users, ArrowRight } from 'lucide-react';
+import { Instagram, Youtube, Twitter, Phone, Mail, MapPin, Globe, Bot, MessageSquare, Calendar, Users, ArrowRight, Facebook, Linkedin } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
@@ -37,7 +37,7 @@ const Footer = () => {
   const socialLinks = [
     { 
       icon: Instagram, 
-      href: 'https://www.instagram.com/topedgenetwork/', 
+      href: 'https://www.instagram.com/topedge_ai/', 
       label: 'Instagram',
       color: 'hover:text-pink-500'
     },
@@ -52,6 +52,18 @@ const Footer = () => {
       href: 'https://x.com/TopEdgeNetwork', 
       label: 'X (Twitter)',
       color: 'hover:text-blue-400'
+    },
+    {
+      icon: Facebook,
+      href: 'https://www.facebook.com/profile.php?id=61553261702229',
+      label: 'Facebook',
+      color: 'hover:text-blue-600'
+    },
+    {
+      icon: Linkedin,
+      href: 'https://www.linkedin.com/company/topedgenetwork',
+      label: 'LinkedIn',
+      color: 'hover:text-blue-500'
     }
   ];
 
@@ -62,24 +74,18 @@ const Footer = () => {
       href: 'mailto:team@topedgeai.com',
       color: 'group-hover:text-blue-400'
     },
-    { 
-      icon: Mail, 
-      text: 'team@aitopedge.com', 
-      href: 'mailto:team@aitopedge.com',
-      color: 'group-hover:text-blue-400'
+    {
+      icon: Instagram,
+      text: 'Chat on Instagram',
+      href: 'https://www.instagram.com/topedge_ai/',
+      color: 'group-hover:text-pink-500'
     },
-    { 
-      icon: Mail, 
-      text: 'team@topedgenetwork.com', 
-      href: 'mailto:team@topedgenetwork.com',
-      color: 'group-hover:text-blue-400'
-    },
-    { 
-      icon: Mail, 
-      text: 'team@topedge.co.in', 
-      href: 'mailto:team@topedge.co.in',
-      color: 'group-hover:text-blue-400'
-    },
+    {
+      icon: Facebook,
+      text: 'Chat on Facebook',
+      href: 'https://www.facebook.com/profile.php?id=61553261702229',
+      color: 'group-hover:text-blue-600'
+    }
   ];
 
   return (
@@ -115,14 +121,20 @@ const Footer = () => {
                 </motion.a>
               ))}
               <motion.a
-                href="https://www.threads.net/@topedgenetwork"
+                href="https://www.threads.net/@topedge_ai"
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.1 }}
                 className="text-gray-400 hover:text-purple-500 transition-colors"
               >
-                <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.5 12.186V11.5h6.607v.687c0 1.879.386 3.2 1.146 3.925.761.726 1.85 1.101 3.237 1.122 1.374-.019 2.461-.397 3.224-1.125.763-.727 1.148-2.047 1.148-3.925V3.99c0-1.879-.386-3.2-1.146-3.925C14.955.339 13.866-.037 12.479-.058c-1.37.019-2.454.397-3.215 1.125-.761.727-1.146 2.047-1.146 3.925v2.95H1.5V5.031C1.5 1.779 2.35-1.027 3.995-3.283 5.64-5.538 8.393-6.719 11.98-6.744h.007c3.581.024 6.334 1.205 8.184 3.509C21.65-1.026 22.5 1.828 22.5 5.228v6.958c0 3.401-.85 6.257-2.495 8.512-1.645 2.255-4.398 3.436-7.979 3.461l-.84-.159z"/>
+                <svg 
+                  className="w-6 h-6" 
+                  viewBox="0 0 24 24" 
+                  fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M17.743 11.123a8.547 8.547 0 0 0-.315-.142c-.185-.074-.374-.143-.565-.207-.336-.112-.674-.22-1.013-.314l-.063-.019c-.263-.075-.526-.135-.791-.194-.904-.198-1.637-.293-2.291-.293-.653 0-1.387.095-2.29.293-.266.059-.529.119-.792.194l-.063.019c-.339.094-.676.202-1.012.314-.191.064-.381.133-.566.207-.105.042-.21.091-.315.142-.781.381-1.206.851-1.206 1.334 0 .483.425.953 1.206 1.334.105.051.21.1.315.142.185.074.375.143.566.207.336.112.673.22 1.012.314l.063.019c.263.075.526.135.792.194.903.198 1.637.293 2.29.293.654 0 1.387-.095 2.291-.293.265-.059.528-.119.791-.194l.063-.019c.339-.094.677-.202 1.013-.314.191-.064.38-.133.565-.207.105-.042.21-.091.315-.142.781-.381 1.206-.851 1.206-1.334 0-.483-.425-.953-1.206-1.334zm-5.474 4.321c-2.723 0-4.931-1.555-4.931-3.472s2.208-3.472 4.931-3.472c2.724 0 4.932 1.555 4.932 3.472s-2.208 3.472-4.932 3.472z" />
+                  <path d="M12.269 2C6.692 2 2.174 6.518 2.174 12.095c0 5.577 4.518 10.095 10.095 10.095 5.577 0 10.095-4.518 10.095-10.095C22.364 6.518 17.846 2 12.269 2zm0 18.19c-4.473 0-8.095-3.622-8.095-8.095 0-4.473 3.622-8.095 8.095-8.095 4.473 0 8.095 3.622 8.095 8.095 0 4.473-3.622 8.095-8.095 8.095z" />
                 </svg>
               </motion.a>
             </div>

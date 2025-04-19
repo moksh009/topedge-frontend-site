@@ -1,7 +1,7 @@
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useRef } from 'react';
-import { ChevronRight, Coins, CreditCard, Gem, Crown, Wallet, Sparkles, Star, PhoneCall } from 'lucide-react';
+import { ChevronRight, Coins, CreditCard, Gem, Crown, Wallet, Sparkles, Star, PhoneCall, Calculator } from 'lucide-react';
 import { CyberButton } from '../../ui/CyberButton';
 
 const PricingHero = () => {
@@ -284,7 +284,7 @@ const PricingHero = () => {
                 backgroundSize: '200% auto',
               }}
             >
-              Flexible Pricing
+              {/* Optimal Pricing */}
             </motion.span>
             <br className="hidden sm:block" />
             <motion.span
@@ -301,7 +301,7 @@ const PricingHero = () => {
                 backgroundSize: '200% auto',
               }}
             >
-              Tailored to Your Business
+Optimal Pricing
             </motion.span>
           </motion.h1>
           
@@ -324,7 +324,7 @@ const PricingHero = () => {
         </motion.div>
 
         <motion.p 
-          className="text-lg sm:text-xl md:text-2xl lg:text-3xl max-w-3xl mx-auto mb-12 sm:mb-16 md:mb-20"
+          className="text-lg sm:text-xl md:text-2xl lg:text-3xl max-w-4xl mx-auto mb-12 sm:mb-16 md:mb-20"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
@@ -340,8 +340,8 @@ const PricingHero = () => {
               ease: "easeInOut",
             }}
           >
-            Transform your business with our AI-powered solutions. 
-            Choose the perfect plan that scales with your needs.
+Get every high-impact feature that drives results <br/> Not just fancy, over-techy stuff 
+all at a price that makes sense.
           </motion.span>
         </motion.p>
 
@@ -480,7 +480,7 @@ const PricingHero = () => {
               tap: { scale: 0.95 }
             }}
             className="group relative rounded-full"
-            onClick={() => navigate('/contact')}
+            onClick={() => navigate('/roi')}
           >
             {/* Button Container */}
             <div className="relative px-8 py-4 rounded-full">
@@ -554,9 +554,9 @@ const PricingHero = () => {
               {/* Button Content */}
               <div className="relative flex items-center gap-3">
                 <div className="relative flex items-center gap-3">
-                  <PhoneCall className="w-5 h-5 sm:w-6 sm:h-6 text-amber-400 group-hover:text-white transition-colors duration-300" />
+                  <Calculator className="w-5 h-5 sm:w-6 sm:h-6 text-amber-400 group-hover:text-white transition-colors duration-300" />
                   <span className="text-base sm:text-lg font-medium bg-gradient-to-r from-white via-amber-200 to-white bg-clip-text text-transparent">
-                    Contact Sales
+                    Calculate ROI
                   </span>
                   <motion.div
                     className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-amber-400 to-transparent"

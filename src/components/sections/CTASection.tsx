@@ -51,6 +51,19 @@ export const CTASection = () => {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.1 }}
         >
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 mb-4 sm:mb-6"
+          >
+            <Sparkles className="w-4 h-4 text-purple-400" />
+            <span className="text-sm font-medium bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">
+              Claim Your Extra $10K Revenue This Month
+            </span>
+          </motion.div>
+
           <motion.h2
             className="text-3xl sm:text-5xl md:text-6xl font-bold mb-6 sm:mb-8"
             initial={{ opacity: 0, y: 20 }}
@@ -72,7 +85,7 @@ export const CTASection = () => {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            Join the next generation of digital innovation. Let's build something extraordinary together.
+Ready to take the next step and add up to an extra $10K in revenue within the next 45 days?
           </motion.p>
 
           <motion.div
@@ -88,7 +101,7 @@ export const CTASection = () => {
               whileTap={{ scale: 0.98 }}
               style={{ willChange: 'transform' }}
             >
-              Get Started
+              "Tell me more"
               <motion.div
                 className="relative"
                 animate={{

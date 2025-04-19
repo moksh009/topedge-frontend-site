@@ -5,52 +5,44 @@ import { useRef } from 'react';
 const benefits = [
   {
     icon: Brain,
-    title: "AI-Powered Solutions",
-    description: "Leverage cutting-edge AI technology to automate and enhance your business processes.",
+    title: "100% Custom-Built AI Agents",
+    description: "Your brand's voice deserves its own voice. Your AI voice agent is fully customised, tailored to your industry, tone, and goals. No limitations. No compromises.",
     gradient: "from-purple-500 to-indigo-500",
     delay: 0,
     direction: "left"
   },
   {
-    icon: Shield,
-    title: "Enterprise Security",
-    description: "Bank-grade security with end-to-end encryption and compliance with industry standards.",
+    icon: DollarSign,
+    title: "Free Development & Deployment",
+    description: "We invest in you first — because your success is ours. While others charge thousands to get started, we handle everything strategy, build, training & deployment - all 100% free.",
     gradient: "from-blue-500 to-cyan-500",
     delay: 0.1,
     direction: "right"
   },
   {
-    icon: Users,
-    title: "Team Collaboration",
-    description: "Seamlessly work together with unlimited team members and real-time updates.",
+    icon: Database,
+    title: "Live Dashboard Access",
+    description: "Make script tweaks, monitor conversations, and track performance all from your own dashboard. Built with code, designed for clarity. Change what you want, when you want.",
     gradient: "from-green-500 to-emerald-500",
     delay: 0.2,
     direction: "left"
   },
   {
-    icon: BarChart,
-    title: "Advanced Analytics",
-    description: "Get detailed insights and metrics to track your business performance.",
+    icon: Sparkles,
+    title: "Built for Brands That Want to Win",
+    description: "Stay ahead of the competition with cutting-edge AI technology that adapts to your needs. Transform your customer experience and drive growth.",
     gradient: "from-orange-500 to-red-500",
     delay: 0.3,
     direction: "right"
   },
   {
-    icon: Clock,
-    title: "24/7 Support",
-    description: "Round-the-clock customer support to help you with any issues.",
+    icon: Settings,
+    title: "Real-Time Customization Control",
+    description: "Full control over your AI's behavior, responses, and personality. Adjust and optimize in real-time based on your business needs. No tech skills needed.",
     gradient: "from-pink-500 to-rose-500",
     delay: 0.4,
     direction: "left"
-  },
-  {
-    icon: Zap,
-    title: "Lightning Fast",
-    description: "Optimized performance ensuring quick response times and smooth operation.",
-    gradient: "from-yellow-500 to-amber-500",
-    delay: 0.5,
-    direction: "right"
-  },
+  }
 ];
 
 const PricingBenefits = () => {
@@ -154,7 +146,6 @@ const PricingBenefits = () => {
 
       {/* Content Container */}
       <div className="relative max-w-7xl mx-auto">
-        {/* Section Header - Adjusted for mobile */}
         <motion.div
           className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 md:mb-24"
           initial={{ opacity: 0, y: 20 }}
@@ -162,8 +153,16 @@ const PricingBenefits = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
+          <motion.div
+            className="inline-flex items-center justify-center px-6 py-2 rounded-full bg-white/5 backdrop-blur-lg border border-white/10 mb-6"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <span className="text-sm font-medium bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">Recap</span>
+          </motion.div>
+
           <motion.h2
-            className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent px-4 sm:px-0"
+            className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent px-4 sm:px-0"
             animate={{
               backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
             }}
@@ -173,16 +172,16 @@ const PricingBenefits = () => {
               repeatType: "reverse",
             }}
           >
-            Why Choose Our Platform?
+            What Makes Us Different?
           </motion.h2>
           <motion.p
-            className="text-gray-400 text-base sm:text-lg px-4 sm:px-0"
+            className="text-gray-400 text-lg sm:text-xl px-4 sm:px-0"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            Experience the power of our platform with these amazing benefits
+            Use AI or Stay Behind
           </motion.p>
         </motion.div>
 

@@ -88,7 +88,7 @@ const Contact = () => {
       {/* Animated Background Elements */}
       <div className="absolute inset-0 z-0">
         <motion.div 
-          className="absolute top-0 right-0 w-[800px] h-[800px] bg-purple-600/20 rounded-full blur-[180px]"
+          className="absolute top-0 right-0 w-[800px] h-[800px] bg-purple-600/10 rounded-full blur-[120px]"
           animate={{
             scale: [1, 1.2, 1],
             opacity: [0.2, 0.3, 0.2],
@@ -111,7 +111,7 @@ const Contact = () => {
           }}
         />
         <motion.div 
-          className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-600/20 rounded-full blur-[150px]"
+          className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[100px]"
           animate={{
             scale: [1, 1.3, 1],
             opacity: [0.2, 0.4, 0.2],
@@ -160,10 +160,10 @@ const Contact = () => {
             transition={{ type: "spring", duration: 1.5 }}
           >
             <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full blur-xl opacity-50"
+              className="absolute inset-0 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full blur-xl opacity-30"
               animate={{
                 scale: [1, 1.2, 1],
-                opacity: [0.5, 0.8, 0.5],
+                opacity: [0.3, 0.5, 0.3],
               }}
               transition={{
                 duration: 3,
@@ -173,22 +173,25 @@ const Contact = () => {
             />
             <Building2 className="w-20 h-20 text-white mx-auto relative z-10" />
           </motion.div>
-          <motion.h1
-            className="text-6xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent"
+          <motion.div
+            className="space-y-6 relative z-20"
             initial={{ y: 50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            Let's Build Your Vision Together
-          </motion.h1>
-          <motion.p
-            className="text-gray-400 text-xl"
-            initial={{ y: 50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            Transform your ideas into reality with our expert team.
-          </motion.p>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.2] relative z-20">
+              <span className="block mb-2">Let's transform with</span>
+              <span className="block bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent">an AI-Powered Support Squad</span>
+            </h1>
+            <div className="space-y-2">
+              <p className="text-gray-100 text-lg sm:text-xl font-medium">
+                Partner with the best, Perform like the best.
+              </p>
+              <p className="text-gray-300 text-base sm:text-lg">
+                The Best choose us. Now it's your turn.
+              </p>
+            </div>
+          </motion.div>
         </motion.div>
 
         <motion.form
@@ -345,6 +348,44 @@ const Contact = () => {
                 />
               </motion.div>
             </div>
+
+            <motion.div
+              className="group relative"
+              whileHover={{ scale: 1.02, z: 20 }}
+              transition={{ duration: 0.2 }}
+              onFocus={() => setActiveField("queries")}
+              onBlur={() => setActiveField(null)}
+            >
+              <AnimatePresence>
+                {activeField === "queries" && (
+                  <motion.span
+                    className="absolute -top-6 left-0 text-sm text-purple-400"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                  >
+                    Average Monthly Queries
+                  </motion.span>
+                )}
+              </AnimatePresence>
+              <select
+                name="queries"
+                required
+                className={inputClasses}
+                defaultValue=""
+              >
+                <option value="" disabled>Calls + Text Combined</option>
+                <option value="upto-5000">Upto 5000 queries/month</option>
+                <option value="5000-10000">5000 - 10000 queries/month</option>
+                <option value="10000-20000">10000 - 20000 queries/month</option>
+                <option value="20000-40000">20000 - 40000 queries/month</option>
+                <option value="40000-plus">More than 40000 queries/month</option>
+              </select>
+              <motion.div
+                className="absolute inset-0 rounded-lg bg-purple-500/20 opacity-0 group-hover:opacity-100 -z-10 blur"
+                transition={{ duration: 0.2 }}
+              />
+            </motion.div>
 
             <motion.div
               className="group relative"

@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Battery, Bot, Contact, Mic, MicOff, Phone, Sparkles, Video, Volume2, X } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 interface Message {
   text: string;
@@ -336,9 +337,12 @@ export const AIAgentInteraction = () => {
             AI Voice Assistant
           </span>
         </h2>
-        <p className="mt-6 text-2xl md:text-3xl text-slate-300 max-w-2xl mx-auto">
-          Experience the future of communication.<br/>
-          <span className="text-green-400">Click on answer button to hear a AI Working →</span>
+        <p className="mt-6 text-2xl md:text-3xl text-slate-300 max-w-3xl mx-auto">
+          This is just a demo showcase. For live working demo,{" "}
+          <Link to="/" className="text-purple-400 hover:text-purple-300 transition-colors">
+            go to homepage
+          </Link>{" "}
+          and click on the "Talk to AI Agent" button.
         </p>
       </div>
 
@@ -694,7 +698,7 @@ export const AIAgentInteraction = () => {
                       </motion.button>
                     </motion.div>
 
-                    {/* Enhanced End Call Button - Made Smaller */}
+                    {/* Enhanced End Call Button */}
                     <div className="relative px-8 mb-12">
                       <motion.div 
                         className="flex justify-center"

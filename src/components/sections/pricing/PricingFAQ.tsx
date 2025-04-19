@@ -4,44 +4,60 @@ import { ChevronDown } from 'lucide-react';
 
 const faqs = [
   {
-    question: "What is an AI agent?",
-    answer: "An AI agent is a program designed to automate tasks and operations for humans and organizations. It leverages foundation models to make automation both contextually aware and autonomous."
+    question: "What exactly does TopEdge offer?",
+    answer: "TopEdge is an AI agency that provides 24/7 AI caller systems to handle your client calls automatically — answering queries, booking appointments, and capturing leads. We also offer a real-time dashboard that shows how your AI agents are performing with detailed analytics like call count, costs, summaries, and transcripts."
   },
   {
-    question: "How do AI phone agents handle unexpected scenarios during calls?",
-    answer: "Advanced AI phone agents can interpret speech, think, and respond in real-time. However, their effectiveness in handling unexpected scenarios depends on the quality of their implementation and training."
+    question: "How can your AI agent help my business?",
+    answer: "Our AI agents take care of routine and repetitive calls like answering FAQs, scheduling appointments, and collecting information — freeing up your staff's time and ensuring no call is ever missed, even after business hours."
   },
   {
-    question: "Can AI agents be customized to fit specific business needs?",
-    answer: "Yes, AI agents can be tailored to specific business requirements, including customizing greetings, conversation flows, and integrating with existing systems."
+    question: "What type of businesses is this for?",
+    answer: "TopEdge is ideal for businesses like:\n• Clinics & Dental Offices\n• Real Estate Agencies\n• Local Service Providers\n• Lead Generation Agencies\nBasically, anyone who receives client inquiries and appointments by phone."
   },
   {
-    question: "What happens if an AI agent cannot answer a caller's question?",
-    answer: "If an AI agent cannot answer a question, it can be programmed to escalate the call to a human agent or inform the caller that their query will be forwarded to a specialist for follow-up."
+    question: "Do I need to install anything or change my current system?",
+    answer: "Nope. Our system works with your current phone setup. We handle the backend — you just need to provide us with the call flow or intent, and we'll do the rest."
   },
   {
-    question: "How are AI agents trained and updated over time?",
-    answer: "AI agents are trained using datasets relevant to their tasks. They can be updated by adding new data sources, refining existing data, and providing feedback to improve their performance."
+    question: "Can your AI speak in different languages or accents?",
+    answer: "Yes! Our AI callers can be customized with neutral or regional accents (like Indian/US) and support multiple languages based on your target audience."
   },
   {
-    question: "What are the limitations of AI agents in customer service?",
-    answer: "While AI agents can handle routine inquiries efficiently, they may struggle with complex or nuanced situations that require human empathy and judgment."
+    question: "Will clients know they're talking to an AI?",
+    answer: "Not unless you tell them. Our AI sounds human-like, understands natural language, and responds intelligently — most clients assume it's a real agent."
   },
   {
-    question: "How do AI agents integrate with existing business systems?",
-    answer: "AI agents can be integrated with various business systems through APIs and other integration tools, allowing them to access and process information from different platforms to perform tasks effectively."
+    question: "How do I know the performance of my AI agent?",
+    answer: "You'll get access to a personalized TopEdge Dashboard where you can track:\n• Number of calls made\n• End reasons (e.g., successful, rejected, voicemail)\n• Cost per call\n• Transcripts\n• Summaries & key metrics\nIt's all in real-time, no waiting."
   },
   {
-    question: "What measures are in place to ensure the reliability of AI agents?",
-    answer: "The reliability of AI agents depends on their design, training, and the quality of their implementation. Continuous monitoring and updates are essential to maintain their performance and handle a wide variety of inquiries effectively."
+    question: "Is this better than hiring a human caller or VA?",
+    answer: "Definitely. Our AI agent is faster, doesn't sleep, never forgets scripts, doesn't require training, and is available 24/7 — all at a fraction of the cost of a full-time employee."
   },
   {
-    question: "Can AI agents handle multiple calls simultaneously?",
-    answer: "Yes, AI agents can handle multiple calls simultaneously, making them highly scalable solutions for businesses with high call volumes."
+    question: "How do I get started with TopEdge?",
+    answer: "Just click on \"Get Started\" or book a demo. We'll understand your business needs, customize the AI, and deploy your first agent within 1–2 days."
   },
   {
-    question: "How do AI agents contribute to cost savings in customer service operations?",
-    answer: "AI agents can reduce the need for large human support teams by handling routine inquiries, leading to significant cost savings in customer service operations."
+    question: "What's the pricing model?",
+    answer: "We follow a pay-as-you-go model — meaning you only pay based on the actual AI call activity, not a fixed subscription. It's transparent, affordable, and scales with your business."
+  },
+  {
+    question: "Can I integrate this with my CRM or calendar system?",
+    answer: "Yes! We can integrate with most CRMs, Google Calendar, and booking systems to automatically log appointments, follow-ups, and leads."
+  },
+  {
+    question: "Is my data secure?",
+    answer: "Absolutely. We use industry-standard encryption and data handling practices. Your call data, summaries, and analytics are stored securely and visible only to you."
+  },
+  {
+    question: "Can I customize what the AI says?",
+    answer: "Yes, you have full control over the script, tone, and flow of the conversation. Our team helps you craft the perfect conversation based on your business needs."
+  },
+  {
+    question: "What if I need support or want to make changes later?",
+    answer: "We offer dedicated customer support and a user-friendly settings manager where you can update preferences, change scripts, or request adjustments anytime."
   }
 ];
 

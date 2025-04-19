@@ -1,0 +1,21 @@
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://topedgeai.com/sitemap.xml
+
+# Optimize crawl rate
+Crawl-delay: 1
+
+# Important directories to crawl
+Allow: /blog/
+Allow: /features/
+Allow: /pricing/
+Allow: /about/
+Allow: /contact/
+
+# Prevent duplicate content
+Disallow: /api/
+Disallow: /*?*
+Disallow: /*? 

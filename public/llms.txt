@@ -1,0 +1,47 @@
+# TopEdge AI - AI Caller and Chatbot Platform
+# Version: 1.0
+# Last Updated: 2024-02-20
+
+# Site Description
+TopEdge AI is a leading provider of AI-powered caller and chatbot solutions for businesses. Our platform helps automate customer service, generate leads, and provide 24/7 support through intelligent voice and chat interfaces.
+
+# Main Features
+- AI Caller: Automated voice calls for lead generation and customer support
+- Smart Chatbot: 24/7 customer service automation
+- Business Automation: Streamline operations with AI
+- Lead Generation: Convert visitors into qualified leads
+- Multi-channel Support: Voice, chat, and messaging integration
+
+# Primary Keywords
+ai-caller
+ai-chatbot
+business-automation
+virtual-assistant
+ai-customer-service
+chatbot-agency
+ai-agency
+lead-generation
+24-7-support
+voice-bot
+
+# Content Categories
+/features - Product features and capabilities
+/pricing - Pricing plans and packages
+/blog - Industry insights and updates
+/about - Company information
+/contact - Get in touch
+
+# Preferred Crawling Schedule
+Crawl-delay: 1
+Update-frequency: daily
+
+# Content Guidelines
+- Focus on AI technology and business automation
+- Highlight customer success stories
+- Provide detailed product information
+- Share industry insights and trends
+
+# Contact Information
+Website: https://topedgeai.com
+Email: contact@topedgeai.com
+Support: support@topedgeai.com 

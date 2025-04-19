@@ -16,6 +16,7 @@ import AICallerSection from '../components/sections/AICallerSection';
 import AdvancedChatbotSection from '../components/sections/AdvancedChatbotSection';
 import AIBenefitsShowcase from '../components/sections/AIBenefitsShowcase';
 import { ParticleField } from '@/components/ui/ParticleField';
+import ROICalculator from '../components/sections/pricing/ROICalculator';
 
 const Home = () => {
   const { scrollYProgress } = useScroll();
@@ -94,9 +95,7 @@ const Home = () => {
       <div className="relative z-10">
         <HeroSection />
         <div className="relative bg-black">
-          <div className="-mt-12 sm:mt-0">
-            <ScrollingText />
-          </div>
+          
           {/* <div className="-mt-16 sm:mt-8 md:mt-16">
             <AIAgentSection />
           </div> */}
@@ -105,11 +104,18 @@ const Home = () => {
             <AIBenefitsShowcase />
           </div>
           
+          {/* ROI Calculator Section */}
+          <div className="mt-0 sm:mt-8 md:mt-16">
+            <ROICalculator />
+          </div>
+          
           {/* <div className="-mt-16 sm:mt-0">
             <InvisibleApproachSection />
           </div> */}
           
-         
+          <div className="-mt-12 sm:mt-0">
+            <ScrollingText />
+          </div>
           
           {/* Existing Sections */}
           <div className="mt-0 sm:mt-8 md:mt-16">
@@ -118,6 +124,9 @@ const Home = () => {
           <div className="mt-0 sm:mt-8 md:mt-16">
             <AICallerSection />
           </div>
+          
+        
+          
           <div className="mt-0 sm:mt-8 md:mt-16">
             <AdvancedChatbotSection />
           </div>
@@ -126,9 +135,9 @@ const Home = () => {
           <div className="mt-0 sm:mt-8 md:mt-16">
             <ComparisonSection />
           </div>
-          <div className="mt-0 sm:mt-8 md:mt-16">
+          {/* <div className="mt-0 sm:mt-8 md:mt-16">
             <InfiniteIconsSection />
-          </div>
+          </div> */}
           <div className="mt-0 sm:mt-8 md:mt-16">
             <ProductShowcase />
           </div>
@@ -140,9 +149,9 @@ const Home = () => {
           </div>
           
           {/* Testimonials strategically placed before CTA */}
-          <div className="mt-8 sm:mt-16 md:mt-24 mb-16 sm:mb-24">
+          {/* <div className="mt-8 sm:mt-16 md:mt-24 mb-16 sm:mb-24">
             <TestimonialsSection />
-          </div>
+          </div> */}
           
           <div className="mt-0 sm:mt-8 md:mt-16">
             <CTASection />
