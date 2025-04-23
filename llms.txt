@@ -1,0 +1,30 @@
+# TopEdge AI Website Documentation
+
+## Site Overview
+TopEdge AI provides AI-powered business automation solutions including chatbots, voice agents, and process automation tools.
+
+## Key Products & Services
+- AI Voice Agents for customer calls
+- Intelligent Chatbots
+- Business Process Automation
+- Analytics Dashboard
+
+## Target Keywords
+- AI caller
+- AI chatbot
+- business automation
+- customer service AI
+- TopEdge AI
+
+## Site Structure
+- Home: Overview of services
+- Products: Detailed product information
+- Pricing: Service plans and costs
+- Contact: Get in touch
+- Blog: Industry insights and updates
+
+## Content Guidelines
+- Focus on business automation and AI solutions
+- Highlight benefits and ROI
+- Include case studies and testimonials
+- Regular blog updates on AI technology 

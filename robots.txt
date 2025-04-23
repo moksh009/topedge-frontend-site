@@ -1,0 +1,22 @@
+# Allow AI search and agent use
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User  
+User-agent: PerplexityBot
+User-agent: FirecrawlAgent
+User-agent: AndiBot
+User-agent: ExaBot
+User-agent: PhindBot
+User-agent: YouBot
+Allow: /
+
+# Allow traditional search indexing
+User-agent: Googlebot
+User-agent: Bingbot
+Allow: /
+
+# Disallow access to admin areas for all bots
+User-agent: *
+Disallow: /admin/
+Disallow: /internal/
+
+Sitemap: https://www.topedge.ai/sitemap.xml 

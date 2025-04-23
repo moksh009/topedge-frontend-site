@@ -1,0 +1,30 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://topedgeai.com/sitemap.xml
+
+# Prevent crawling of admin or private areas
+Disallow: /admin/
+Disallow: /private/
+Disallow: /api/
+
+# Allow crawling of assets
+Allow: /images/
+Allow: /static/
+Allow: /assets/
+
+# Optimize crawl rate
+Crawl-delay: 1
+
+# Important directories to crawl
+Allow: /blog/
+Allow: /features/
+Allow: /pricing/
+Allow: /about/
+Allow: /contact/
+
+# Prevent duplicate content
+Disallow: /*?*
+Disallow: /*? 

@@ -1,0 +1,184 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Enhanced Light Theme Colors */
+    --bg-primary: 255 255 255; /* Pure White */
+    --bg-secondary: 248 250 252; /* Slate 50 - Softer background */
+    --bg-accent: 243 244 246; /* Gray 100 - Subtle accent */
+    --bg-surface: 255 255 255; /* White */
+    --bg-overlay: 255 255 255; /* White with opacity */
+    --bg-inverse: 15 23 42; /* Slate 900 - For contrast */
+
+    --text-primary: 15 23 42; /* Slate 900 - Clear readable text */
+    --text-secondary: 71 85 105; /* Slate 600 - Softer secondary text */
+    --text-accent: 59 130 246; /* Blue 500 - Vibrant accent */
+    --text-inverse: 255 255 255; /* White - For contrast */
+
+    --border-primary: 226 232 240; /* Slate 200 - Subtle borders */
+    --border-secondary: 241 245 249; /* Slate 100 - Even softer borders */
+    --border-accent: 59 130 246; /* Blue 500 - Matching accent */
+
+    --glow-primary: 59 130 246; /* Blue 500 - Primary glow */
+    --glow-secondary: 99 102 241; /* Indigo 500 - Secondary glow */
+    --glow-accent: 139 92 246; /* Purple 500 - Accent glow */
+
+    --grid-line-color: rgba(17, 24, 39, 0.05);
+
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  }
+
+  /* Base styles */
+  body {
+    @apply bg-theme-bg-primary text-theme-text-primary;
+  }
+
+  /* Smooth transitions */
+  *, *::before, *::after {
+    transition-property: background-color, border-color, color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 200ms;
+  }
+}
+
+@layer components {
+  /* Glass Effect */
+  .glass-effect {
+    @apply backdrop-blur-effect bg-theme-bg-overlay/5 border border-theme-border-primary/10;
+  }
+
+  /* Glow Effect */
+  .glow-effect {
+    @apply blur-[80px] opacity-30;
+  }
+
+  /* Gradient Text */
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-theme-text-primary via-theme-text-accent to-theme-text-primary;
+  }
+
+  /* Button Styles */
+  .button-primary {
+    @apply relative inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full overflow-hidden transition-all duration-300;
+  }
+
+  .button-primary::before {
+    @apply content-[''] absolute inset-0 bg-gradient-to-r from-theme-text-accent via-theme-text-accent to-theme-text-accent opacity-90 transition-opacity duration-300;
+  }
+
+  .button-primary::after {
+    @apply content-[''] absolute inset-0 bg-gradient-to-r from-theme-text-accent via-theme-text-primary to-theme-text-accent opacity-0 transition-opacity duration-300;
+  }
+
+  .button-primary:hover::before {
+    @apply opacity-0;
+  }
+
+  .button-primary:hover::after {
+    @apply opacity-90;
+  }
+
+  /* Card Styles */
+  .card {
+    @apply relative rounded-2xl overflow-hidden transition-all duration-300;
+  }
+
+  .card::before {
+    @apply content-[''] absolute inset-0 bg-theme-bg-surface/[0.02] backdrop-blur-effect border border-theme-border-primary/10;
+  }
+
+  .card:hover {
+    @apply transform scale-[1.02];
+  }
+
+  /* Animation Delays */
+  .delay-2 {
+    animation-delay: 0.2s;
+  }
+  .delay-4 {
+    animation-delay: 0.4s;
+  }
+  .delay-6 {
+    animation-delay: 0.6s;
+  }
+  .delay-8 {
+    animation-delay: 0.8s;
+  }
+  .delay-10 {
+    animation-delay: 1s;
+  }
+}
+
+@layer utilities {
+  .animation-delay-2000 {
+    animation-delay: 2s;
+  }
+  .animation-delay-4000 {
+    animation-delay: 4s;
+  }
+  
+  .backdrop-blur-effect {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+}
+
+/* Cursor Styles */
+* {
+  cursor: default;
+}
+
+a, button, [role="button"], input, select, textarea {
+  cursor: pointer;
+}
+
+input[type="text"], input[type="email"], textarea {
+  cursor: text;
+}
+
+/* Animation Utilities */
+.animate-glow {
+  animation: glow 4s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: float 8s ease-in-out infinite;
+}
+
+.animate-float-reverse {
+  animation: float 8s ease-in-out infinite reverse;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  @apply w-2;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-theme-bg-secondary;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-theme-border-primary rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-theme-border-accent;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}

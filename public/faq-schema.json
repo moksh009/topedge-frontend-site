@@ -1,0 +1,30 @@
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is TopEdge AI?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "TopEdge AI is a leading provider of AI voice agents and chatbots for business automation, delivering 300% ROI and 85% cost reduction."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How can AI callers help my business?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "AI callers automate outbound and inbound calls, improving efficiency, reducing costs, and increasing customer satisfaction."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is TopEdge AI compliant with industry regulations?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, TopEdge AI solutions are HIPAA and GDPR compliant, ensuring data security and privacy."
+      }
+    }
+  ]
+}

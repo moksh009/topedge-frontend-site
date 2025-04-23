@@ -1,0 +1,13 @@
+{
+  "short_name": "TopEdge",
+  "name": "TopEdge AI - AI Voice & Chatbot Agency",
+  "description": "AI Callers & Chatbots for 24/7 Business Automation. 300% ROI Guaranteed.",
+  "icons": [
+    { "src": "/icons/icon-192x192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icons/icon-512x512.png", "sizes": "512x512", "type": "image/png" }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#6366f1",
+  "background_color": "#ffffff"
+}
