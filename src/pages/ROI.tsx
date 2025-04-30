@@ -277,9 +277,9 @@ export default function ROICalculator() {
   return (
     <>
       <SEO 
-        title="ROI Calculator"
-        description="Calculate your potential ROI with TopEdge AI's voice automation solutions. Discover how much revenue you could add by letting AI handle your leads 24/7."
-        keywords="ROI calculator, AI ROI, voice automation ROI, business automation calculator, TopEdge AI calculator"
+        title="Business Efficiency Estimator"
+        description="Estimate your potential business gains with TopEdge AI’s automation solutions. Discover how intelligent automation can help you work smarter and serve customers better."
+        keywords="efficiency estimator, automation calculator, business automation gains, TopEdge AI calculator, workflow optimization"
       />
 
     <div className="min-h-screen bg-theme-bg-primary relative overflow-hidden pt-24 sm:pt-32">

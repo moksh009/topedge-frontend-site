@@ -45,7 +45,7 @@ export default function SEO({
   twitterImage,
   twitterCard
 }: SEOProps) {
-  const siteTitle = 'TopEdge AI - #1 AI Voice & Chatbot Agency | 300% ROI Guaranteed';
+  const siteTitle = 'TopEdge AI | Intelligent Automation for Modern Business';
   const fullTitle = title === siteTitle ? title : `${title} | ${siteTitle}`;
   
   // Enhanced keyword list based on SEMrush research and industry targeting
@@ -67,7 +67,7 @@ export default function SEO({
     ],
     "url": "https://topedgeai.com",
     "logo": "https://topedgeai.com/logo.png",
-    "description": "TopEdge AI is the leading AI agency delivering 300% ROI through advanced AI callers, WhatsApp automation, and Instagram chatbots. Our solutions reduce costs by 85% while achieving 95% customer satisfaction.",
+    "description": "TopEdge AI is a trusted AI agency delivering proven ROI improvements through advanced AI callers, WhatsApp automation, and Instagram chatbots. Our solutions reduce costs while achieving high customer satisfaction.",
     "sameAs": [
       "https://twitter.com/topedgeai",
       "https://linkedin.com/company/topedgeai",
@@ -90,7 +90,7 @@ export default function SEO({
     }],
     "offers": {
       "@type": "AggregateOffer",
-      "description": "AI Voice Agents & Chatbot Solutions with 300% ROI Guarantee",
+      "description": "AI Voice Agents & Chatbot Solutions with proven ROI improvements",
       "priceCurrency": "USD",
       "availability": "https://schema.org/InStock",
       "category": "Business Software > Artificial Intelligence",
@@ -103,7 +103,7 @@ export default function SEO({
             "itemOffered": {
               "@type": "Service",
               "name": "AI Voice Agents",
-              "description": "Advanced AI callers with 95% satisfaction rate"
+              "description": "Advanced AI callers with high satisfaction rate"
             }
           },
           {
@@ -128,7 +128,7 @@ export default function SEO({
     "award": [
       {
         "@type": "Award",
-        "name": "Best AI Implementation Agency 2024"
+        "name": "Top AI Implementation Agency"
       },
       {
         "@type": "Award",
@@ -150,11 +150,11 @@ export default function SEO({
     "@context": "https://schema.org",
     "@type": "Product",
     "name": "TopEdge AI Voice & Chatbot Solutions",
-    "description": "Industry-leading AI voice agents and chatbots delivering 300% ROI and 85% cost reduction",
+    "description": "Industry-leading AI voice agents and chatbots delivering proven ROI improvements and cost reduction",
     "brand": {
       "@type": "Brand",
       "name": "TopEdge AI",
-      "slogan": "Transform Business Communication with 300% ROI"
+      "slogan": "Transform Business Communication with proven ROI improvements"
     },
     "category": "Business Software > Artificial Intelligence > Voice AI",
     "keywords": defaultKeywords,
@@ -189,7 +189,7 @@ export default function SEO({
           "@type": "Person",
           "name": "John Smith"
         },
-        "reviewBody": "Achieved 300% ROI within 6 months of implementing TopEdge AI solutions."
+        "reviewBody": "Achieved proven ROI improvements within 6 months of implementing TopEdge AI solutions."
       }
     ]
   };
@@ -282,10 +282,10 @@ export default function SEO({
       <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
       <link rel="manifest" href="/site.webmanifest" />
       {/* Primary Meta Tags */}
-      <meta name="description" content={description || 'TopEdge AI: 300% ROI with AI callers, chatbots, and automation.'} />
+      <meta name="description" content={description || 'TopEdge AI: proven ROI improvements with AI callers, chatbots, and automation.'} />
       <meta name="keywords" content={keywords || defaultKeywords} />
       <meta name="author" content={author || 'TopEdge AI'} />
-      <meta name="copyright" content={`© ${new Date().getFullYear()} TopEdge AI`} />
+      <meta name="copyright" content={` TopEdge AI`} />
       <meta name="HandheldFriendly" content="True" />
       <meta name="format-detection" content="telephone=no" />
       <meta name="geo.region" content="US" />
@@ -298,7 +298,7 @@ export default function SEO({
       <meta name="coverage" content="Worldwide" />
       {/* Open Graph / Facebook */}
       <meta property="og:title" content={fullTitle} />
-      <meta property="og:description" content={description || 'TopEdge AI: 300% ROI with AI callers, chatbots, and automation.'} />
+      <meta property="og:description" content={description || 'TopEdge AI: proven ROI improvements with AI callers, chatbots, and automation.'} />
       <meta property="og:type" content={type || 'website'} />
       <meta property="og:image" content={image || 'https://topedgeai.com/og-default.jpg'} />
       <meta property="og:url" content={url || 'https://topedgeai.com'} />

@@ -85,10 +85,11 @@ const InvisibleApproachSection = () => {
             transform: 'translate(-50%, -50%)'
           }}
         >
+          {/* Use <picture> for <img>, but for background-image, try to use webp if available. Fallback is handled by CSS if browser does not support webp. */}
           <div 
             className="w-full h-full bg-contain bg-center bg-no-repeat"
             style={{ 
-              backgroundImage: `url(${heroImage})`,
+              backgroundImage: `url(${heroImage.replace(/\.(jpg|jpeg|png)$/i, '.webp')}), url(${heroImage})`,
               filter: 'drop-shadow(0 0 20px rgba(59, 130, 246, 0.2)) sm:drop-shadow(0 0 25px rgba(59, 130, 246, 0.25)) md:drop-shadow(0 0 30px rgba(59, 130, 246, 0.3))'
             }}
           />

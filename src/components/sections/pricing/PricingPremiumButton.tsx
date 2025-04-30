@@ -72,10 +72,10 @@ const PremiumButton: React.FC<PremiumButtonProps> = ({
       {/* Button Content */}
       <div className="relative flex items-center justify-center gap-2 sm:gap-3">
         <div className="relative flex items-center gap-2 sm:gap-3">
-          <Icon className={`w-4 h-4 sm:w-5 sm:h-5 ${colors.icon} transition-colors duration-300`} />
           <span className={`text-sm sm:text-base font-medium ${colors.text} transition-colors duration-300`}>
             {text}
           </span>
+          <Icon className={`w-4 h-4 sm:w-5 sm:h-5 ${colors.icon} transition-colors duration-300`} />
         </div>
         {/* Only show the animated arrow if no icon is provided */}
         {Icon === undefined && (

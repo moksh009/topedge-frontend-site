@@ -136,11 +136,14 @@ const ServiceShowcase = () => {
             className="relative aspect-square"
           >
             <div className="relative w-full h-full rounded-3xl overflow-hidden">
-              <img
-                src={services[activeService].showcaseImage}
-                alt={services[activeService].title}
-                className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
-              />
+              <picture>
+                <source srcSet={services[activeService].showcaseImage.replace(/\.(jpg|jpeg|png)$/i, '.webp')} type="image/webp" />
+                <img
+                  src={services[activeService].showcaseImage}
+                  alt={services[activeService].title}
+                  className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+                />
+              </picture>
               <div className="absolute inset-0 bg-gradient-to-br from-transparent via-black/20 to-black/40" />
             </div>
           </motion.div>

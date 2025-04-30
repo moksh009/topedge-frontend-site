@@ -117,7 +117,7 @@ const AboutCTA: React.FC = () => {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="text-lg sm:text-xl text-theme-text-secondary mb-12"
           >
-            Join the smart businesses already saving up to $10K in revenue each week/month with our super AI agents.
+Ready to take the next step and unlock extra revenue in just 45 days?
           </motion.p>
 
           {/* CTA Button */}
@@ -322,7 +322,7 @@ const DeveloperShowcase: React.FC = () => {
 const About: React.FC = () => {
   // About page SEO metadata
   const seoTitle = 'About Us';
-  const seoDescription = 'Discover TopEdge AI’s mission, values, and the expert team behind our industry-leading AI voice and chatbot solutions. Learn how we deliver 300% ROI and transform business automation.';
+  const seoDescription = 'Learn about TopEdge AI’s mission, values, and the expert team driving business transformation with intelligent automation solutions.';
   const { scrollYProgress } = useScroll();
 
   return (
@@ -331,7 +331,7 @@ const About: React.FC = () => {
       <SEO
         title={seoTitle}
         description={seoDescription}
-        keywords="About TopEdge AI, AI agency team, AI mission, business automation, AI chatbot experts, voice AI, company values, TopEdge leadership"
+        keywords="About TopEdge AI, automation team, AI mission, business automation, AI experts, voice AI, company values, TopEdge leadership"
         type="website"
       />
       {/* BreadcrumbList Schema.org JSON-LD */}

@@ -1,7 +1,7 @@
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Check, ArrowRight, Star, Zap, Sparkles, MessageSquare, User, Mail, Phone, Clock, Calculator, Gem, Orbit, DollarSign } from 'lucide-react';
+import { Check, ArrowRight, Star, Zap, Sparkles, MessageSquare, User, Mail, Phone, Clock, Calculator, Gem, Orbit, DollarSign, ChevronRight } from 'lucide-react';
 import { LucideIcon } from 'lucide-react';
 import { maintenanceService } from '../../../services/maintenanceService';
 import { toast } from 'react-hot-toast';
@@ -28,25 +28,25 @@ interface Plan {
 const plans: Plan[] = [
   {
     name: "Core (V1)",
-    price: "0",
-    description: "FREE SETUP + DEV.",
+    price: "",
+    description: "",
     monthlyFee: "$249/month",
     managementText: "management fees",
     operationalText: "+ OPERATIONAL COST",
     icon: Gem, // Use text-green-500 or text-emerald-400 for icon color,
-    gradient: "from-emerald-400 via-teal-600 to-black", // Premium emerald-teal-black
-    shadow: "shadow-green-500/20",
+    gradient: "from-purple-500 via-indigo-500 to-purple-900", // Premium purple-indigo
+    shadow: "shadow-purple-500/20",
     features: [
-      "FAQ",
+      "Professional Support Agent",
       "Ticket Creation/Leave Note - pass any message of user to business",
       "Dedicated Dashboard"
     ],
-    addOns: "$187 for appointment setting"
+    addOns: ""
   },
   {
     name: "Edge (V2)",
-    price: "0",
-    description: "FREE SETUP + DEV.",
+    price: "",
+    description: "",
     monthlyFee: "$529/month",
     managementText: "management fees",
     operationalText: "+ OPERATIONAL COST",
@@ -57,7 +57,7 @@ const plans: Plan[] = [
     features: [
       "Everything in Core (V1) +",
       "Appointment setting to calendar",
-      "updates customer records in real time",
+      "Updates customer records in real time",
       "Customized AI Models",
       "Human Hand-off",
       "Past Call Memory"
@@ -65,21 +65,21 @@ const plans: Plan[] = [
   },
   {
     name: "Edge (V3)",
-    price: "0",
-    description: "FREE SETUP + DEV.",
+    price: "",
+    description: "",
     monthlyFee: "$987/month",
     managementText: "management fees",
     operationalText: "+ OPERATIONAL COST",
     icon: Sparkles, // Use text-green-500 or text-emerald-400 for icon color,
-    gradient: "from-purple-400 via-blue-600 via-black to-emerald-400", // Purple-blue-emerald-black
-    shadow: "shadow-green-700/20",
+    gradient: "from-red-400 via-red-600 to-red-900", // Premium red gradient
+    shadow: "shadow-red-500/20", // Red shadow
     features: [
       "All in Edge (V2) +",
       "Meeting management",
       "Multi Channel agent",
-      "outbound marketing",
+      "Outbound Calls",
       "Multi Language Support",
-      "Nurture Leads"
+      "Lead Nurturing, Backed by Pro-Level Sales Training"
     ]
   }
 ];
@@ -87,39 +87,39 @@ const plans: Plan[] = [
 const chatbotPlans: Plan[] = [
   {
     name: "CX Agent (V1)",
-    price: "0",
-    description: "FREE SETUP + DEV.",
+    price: "",
+    description: "",
     monthlyFee: "$249/month",
     managementText: "management fees",
     operationalText: "+ OPERATIONAL COST",
-    icon: Gem, // Use text-green-500 or text-emerald-400 for icon color,
-    gradient: "from-emerald-400 via-yellow-400 via-black to-green-700", // Emerald-gold-black
-    shadow: "shadow-green-500/20",
+    icon: Gem, // Use text-purple-500 or text-indigo-400 for icon color
+    gradient: "from-purple-500 via-indigo-500 to-purple-900", // Premium purple-indigo
+    shadow: "shadow-purple-500/20",
     features: [
-      "FAQ",
+      "Professional Support Agent",
       "Ticket Creation/Leave Note - pass any message of user to business",
       "Single Channel",
-      "Birthday Remainder"
+      "⁠2x Custom Feature - Automation Development"
     ],
-    addOns: "Extra for additional channel eg. Whatsapp, Instagram....."
+    addOns: ""
   },
   {
     name: "CX Agent (V2)",
-    price: "0",
-    description: "FREE SETUP + DEV.",
+    price: "",
+    description: "",
     monthlyFee: "$549/month",
     managementText: "management fees",
     operationalText: "+ OPERATIONAL COST",
-    icon: Sparkles, // Use text-green-500 or text-emerald-400 for icon color,
-    gradient: "from-green-600 via-black to-green-700",
-    shadow: "shadow-emerald-500/20",
+    icon: Sparkles, // Use text-green-500 or text-emerald-400 for icon color
+    gradient: "from-green-400 via-teal-600 to-black", // Premium emerald-teal-black
+    shadow: "shadow-green-500/20",
     popular: true,
     features: [
       "All in CX Agent (V1) +",
       "Appointment Setting",
       "Multi-channel",
-      "outbound marketing",
-      "Advanced Ai Models - ++customer support experience than CX Agent (V1) Plan Setup",
+      "Outbound Messages",
+"Full Customization of Agent Models",
       "Multi Language Support",
       "Human Hand-off",
       "Appointment Remainder"
@@ -127,14 +127,14 @@ const chatbotPlans: Plan[] = [
   },
   {
     name: "Operational Cost",
-    price: "0",
-    description: "Free Cost Calculation",
+    price: "",
+    description: "",
     monthlyFee: "",
     managementText: "",
     operationalText: "",
-    icon: Calculator, // Use text-purple-500 for icon color
-    gradient: "from-purple-500 via-indigo-500 to-purple-900",
-    shadow: "shadow-purple-500/20",
+    icon: Calculator, // Use text-red-500 for icon color
+    gradient: "from-red-400 via-red-600 to-red-900", // Premium red gradient
+    shadow: "shadow-red-500/20",
     isOperationalCost: true,
     features: [
       "Get exact pricing based on your usage",
@@ -202,7 +202,7 @@ const AICallerCalculator = () => {
     >
       <div className="text-center mb-12">
         <motion.div 
-          className="inline-flex items-center justify-center gap-1.5 px-3 py-1 sm:px-4 sm:py-1.5 rounded-full bg-white border border-green-500 mb-3 sm:mb-4"
+          className="inline-flex items-center justify-center gap-1.5 px-3 py-1 sm:px-4 sm:py-1.5 rounded-full bg-white border border-purple-500 mb-3 sm:mb-4"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -213,7 +213,7 @@ const AICallerCalculator = () => {
         </motion.div>
         
         <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-3 sm:mb-4 drop-shadow-lg">
-          <span className="inline-block bg-gradient-to-r from-green-500 via-black to-green-700 bg-clip-text text-transparent leading-tight">
+          <span className="inline-block bg-gradient-to-r from-purple-500 via-indigo-500 to-purple-900 bg-clip-text text-transparent leading-tight">
             AI Caller Cost Calculator
           </span>
         </h2>
@@ -223,7 +223,7 @@ const AICallerCalculator = () => {
       </div>
 
       <motion.div
-        className="relative pt-8 pb-6 px-8 rounded-3xl shadow-2xl border-2 border-emerald-100 bg-white"
+        className="relative pt-8 pb-6 px-8 rounded-3xl shadow-2xl border-2 border-purple-100 bg-white"
         whileHover={{ scale: 1.02 }}
         transition={{ duration: 0.3 }}
       >
@@ -242,7 +242,7 @@ const AICallerCalculator = () => {
               </label>
               <div className="relative group">
                 <Phone className={`absolute left-3 top-1/2 transform -translate-y-1/2 transition-colors w-5 h-5 ${
-                  hoveredInput === 'calls' ? 'text-emerald-500' : 'text-gray-400'
+                  hoveredInput === 'calls' ? 'text-purple-500' : 'text-gray-400'
                 }`} />
                 <input
                   type="number"
@@ -298,10 +298,10 @@ const AICallerCalculator = () => {
           {/* Calculate button */}
           <div className="flex justify-center">
             <PremiumButton
-              icon={DollarSign}
+              icon={ChevronRight}
               text={isAnimating ? 'Calculating...' : 'Calculate Monthly Cost'}
               disabled={isAnimating}
-              variant="green"
+              variant="purple"
               type="submit"
             />
           </div>
@@ -350,7 +350,7 @@ const AICallerCalculator = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
-          className="mt-4 text-xs text-gray-400 text-center"
+          className="mt-4 text-s text-black-400 text-center"
         >
           <span>* Pricing per minute may vary based on different APIs and features selected. Contact us for detailed pricing based on your specific requirements.</span>
         </motion.p>
@@ -538,10 +538,10 @@ P.S. Most of our clients see positive ROI within the first month!`;
   const renderPlanButtons = (planName: string, type: 'voice' | 'chatbot', index: number) => (
     <div className="flex flex-col gap-4 mt-auto">
       <PremiumButton
-        icon={DollarSign}
-        text="Get Maintenance Price"
+        icon={ChevronRight}
+        text="Get Details"
         onClick={() => handleGetMaintenancePrice(planName, type)}
-        variant={index === 0 ? 'red' : index === 1 ? 'green' : 'purple'}
+        variant={index === 0 ? 'purple' : index === 1 ? 'green' : 'red'}
       />
     </div>
   );
@@ -580,8 +580,8 @@ P.S. Most of our clients see positive ROI within the first month!`;
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <Zap className="w-3 h-3 sm:w-4 sm:h-4 text-green-500" />
-            <span className="text-xs sm:text-sm text-green-500 font-semibold">AI Voice Agent Pricing</span>
+            <Zap className="w-3 h-3 sm:w-4 sm:h-4 text-purple-500" />
+            <span className="text-xs sm:text-sm text-purple-500 font-semibold">AI Voice Agent Pricing</span>
           </motion.div>
           
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 px-4">
@@ -589,6 +589,11 @@ P.S. Most of our clients see positive ROI within the first month!`;
               Choose Your AI Voice Plan
             </span>
           </h2>
+          <div className="mb-4">
+            <p className="text-base sm:text-lg text-theme-text-secondary max-w-2xl mx-auto px-2 py-2 bg-green-50/70 border border-green-200 rounded-xl">
+              Need a different voice agent setup or specific features? <br/><span className="font-semibold text-green-700">Contact us</span> for custom solutions and feature selection tailored to your business.
+            </p>
+          </div>
         </motion.div>
 
         {/* Plans Grid */}
@@ -621,7 +626,7 @@ P.S. Most of our clients see positive ROI within the first month!`;
                 )}
 
                 <motion.div
-                  className={`relative flex-1 p-6 sm:p-8 rounded-2xl backdrop-blur-xl border border-transparent bg-theme-bg-secondary/50 overflow-hidden ${plan.popular ? 'md:scale-105' : ''}`}
+                  className={`relative flex-1 p-6 sm:p-8 rounded-2xl backdrop-blur-xl border border-transparent bg-theme-bg-secondary/20 overflow-hidden ${plan.popular ? 'md:scale-105' : ''}`}
                   onHoverStart={() => setHoveredPlan(plan.name)}
                   onHoverEnd={() => setHoveredPlan(null)}
                   whileHover={{ scale: 1.02, y: -5 }}
@@ -629,32 +634,32 @@ P.S. Most of our clients see positive ROI within the first month!`;
                 >
                   {/* Custom Glow Behind Card */}
                   {index === 0 && (
-                    <motion.div
-                      className="absolute inset-0 rounded-2xl pointer-events-none z-0"
-                      style={{
-                        background: 'radial-gradient(circle at 50% 40%, rgba(255, 80, 80, 0.22) 0%, rgba(255,80,80,0.10) 60%, transparent 100%)'
-                      }}
-                      aria-hidden={true}
-                    />
-                  )}
-                  {index === 1 && (
-                    <motion.div
-                      className="absolute inset-0 rounded-2xl pointer-events-none z-0"
-                      style={{
-                        background: 'radial-gradient(circle at 50% 40%, rgba(34,197,94, 0.22) 0%, rgba(34,197,94,0.10) 60%, transparent 100%)'
-                      }}
-                      aria-hidden={true}
-                    />
-                  )}
-                  {index === 2 && (
-                    <motion.div
-                      className="absolute inset-0 rounded-2xl pointer-events-none z-0"
-                      style={{
-                        background: 'radial-gradient(circle at 50% 40%, rgba(168,85,247, 0.22) 0%, rgba(168,85,247,0.10) 60%, transparent 100%)'
-                      }}
-                      aria-hidden={true}
-                    />
-                  )}
+  <motion.div
+    className="absolute inset-0 rounded-2xl pointer-events-none z-0"
+    style={{
+      background: 'radial-gradient(circle at 50% 40%, rgba(168,85,247,0.32) 0%, rgba(168,85,247,0.18) 60%, transparent 100%)' // purple
+    }}
+    aria-hidden={true}
+  />
+)}
+{index === 1 && (
+  <motion.div
+    className="absolute inset-0 rounded-2xl pointer-events-none z-0"
+    style={{
+      background: 'radial-gradient(circle at 50% 40%, rgba(34,197,94,0.32) 0%, rgba(34,197,94,0.18) 60%, transparent 100%)' // green
+    }}
+    aria-hidden={true}
+  />
+)}
+{index === 2 && (
+  <motion.div
+    className="absolute inset-0 rounded-2xl pointer-events-none z-0"
+    style={{
+      background: 'radial-gradient(circle at 50% 40%, rgba(239,68,68,0.32) 0%, rgba(239,68,68,0.18) 60%, transparent 100%)' // red
+    }}
+    aria-hidden={true}
+  />
+)}
                   {/* Plan Icon */}
                   <motion.div
                     className={`relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl bg-gradient-to-r ${plan.gradient} p-0.5 mb-4 sm:mb-6 mx-auto`}
@@ -665,11 +670,11 @@ P.S. Most of our clients see positive ROI within the first month!`;
                       className="w-full h-full bg-theme-bg-primary rounded-xl flex items-center justify-center"
                     >
                       {index === 0 ? (
-  <Icon className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-red-500" />
+  <Icon className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-purple-500" />
 ) : index === 1 ? (
   <Icon className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-green-500" />
 ) : (
-  <Icon className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-purple-500" />
+  <Icon className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-red-500" />
 )}
                     </motion.div>
                   </motion.div>
@@ -685,11 +690,11 @@ P.S. Most of our clients see positive ROI within the first month!`;
                   <div className="mt-4 space-y-4">
                     <div className="flex flex-col items-center justify-center">
                       {index === 0 ? (
-  <div className="block text-6xl font-extrabold bg-gradient-to-r from-black via-red-500 to-red-700 bg-clip-text text-transparent mb-2">$0</div>
+  <div className="block text-6xl font-extrabold bg-gradient-to-r from-black via-red-500 to-red-700 bg-clip-text text-transparent mb-2"></div>
 ) : (
-  <div className="block text-6xl font-extrabold bg-gradient-to-r from-black via-green-500 to-green-700 bg-clip-text text-transparent mb-2">$0</div>
+  <div className="block text-6xl font-extrabold bg-gradient-to-r from-black via-green-500 to-green-700 bg-clip-text text-transparent mb-2"></div>
 )}
-                      <div className="text-lg text-theme-text-secondary">Free Development & Deployment</div>
+                      <div className="text-lg text-theme-text-secondary"></div>
                     </div>
 
                     {renderPriceSection(plan)}
@@ -784,15 +789,16 @@ P.S. Most of our clients see positive ROI within the first month!`;
                             </div>
                             {isSubmitting ? (
                               <PremiumButton
-                                icon={DollarSign}
+                                icon={ChevronRight}
                                 text="Submitting..."
                                 disabled
                               />
                             ) : (
                               <PremiumButton
-                                icon={DollarSign}
-                                text="Get Pricing"
-                                onClick={undefined} // submit handled by form
+                                icon={ChevronRight}
+                                text="Get Details"
+                                type="submit" // submit handled by form
+                                variant={index === 0 ? 'purple' : index === 1 ? 'green' : 'red'}
                               />
                             )}
                           </form>
@@ -821,8 +827,8 @@ P.S. Most of our clients see positive ROI within the first month!`;
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <MessageSquare className="w-3 h-3 sm:w-4 sm:h-4 text-green-500" />
-            <span className="text-xs sm:text-sm text-green-500">Advanced Chatbot Pricing</span>
+            <MessageSquare className="w-3 h-3 sm:w-4 sm:h-4 text-purple-500" />
+            <span className="text-xs sm:text-sm text-purple-500">Advanced Chatbot Pricing</span>
           </motion.div>
           
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 px-4">
@@ -850,16 +856,36 @@ P.S. Most of our clients see positive ROI within the first month!`;
                   className="relative flex flex-col text-center"
                 >
                   <motion.div
-                    className="relative flex-1 p-6 sm:p-8 rounded-2xl backdrop-blur-xl border-2 border-transparent bg-theme-bg-secondary/50 overflow-hidden"
+                    className="relative flex-1 p-6 sm:p-8 rounded-2xl backdrop-blur-xl border-2 border-transparent bg-theme-bg-secondary/20 overflow-hidden"
                   >
                     {/* Purple Glow */}
-                    <motion.div
-                      className="absolute inset-0 rounded-2xl pointer-events-none z-0"
-                      style={{
-                        background: 'radial-gradient(circle at 50% 40%, rgba(168,85,247, 0.22) 0%, rgba(168,85,247,0.10) 60%, transparent 100%)'
-                      }}
-                      aria-hidden={true}
-                    />
+                    {index === 0 && (
+  <motion.div
+    className="absolute inset-0 rounded-2xl pointer-events-none z-0"
+    style={{
+      background: 'radial-gradient(circle at 50% 40%, rgba(168,85,247,0.32) 0%, rgba(168,85,247,0.18) 60%, transparent 100%)' // purple
+    }}
+    aria-hidden={true}
+  />
+)}
+{index === 1 && (
+  <motion.div
+    className="absolute inset-0 rounded-2xl pointer-events-none z-0"
+    style={{
+      background: 'radial-gradient(circle at 50% 40%, rgba(34,197,94,0.32) 0%, rgba(34,197,94,0.18) 60%, transparent 100%)' // green
+    }}
+    aria-hidden={true}
+  />
+)}
+{index === 2 && (
+  <motion.div
+    className="absolute inset-0 rounded-2xl pointer-events-none z-0"
+    style={{
+      background: 'radial-gradient(circle at 50% 40%, rgba(239,68,68,0.32) 0%, rgba(239,68,68,0.18) 60%, transparent 100%)' // red
+    }}
+    aria-hidden={true}
+  />
+)}/
                     {/* Plan Icon */}
                     <motion.div
                       className={`relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl bg-gradient-to-r ${plan.gradient} p-0.5 mb-4 sm:mb-6 mx-auto`}
@@ -868,11 +894,11 @@ P.S. Most of our clients see positive ROI within the first month!`;
                     >
                       <motion.div className="w-full h-full bg-theme-bg-primary rounded-xl flex items-center justify-center overflow-hidden">
                         {index === 0 ? (
-  <Icon className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-red-500" />
+  <Icon className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-purple-500" />
 ) : index === 1 ? (
   <Icon className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-green-500" />
 ) : (
-  <Icon className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-purple-500" />
+  <Icon className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-red-500" />
 )}
                       </motion.div>
                     </motion.div>
@@ -882,7 +908,7 @@ P.S. Most of our clients see positive ROI within the first month!`;
                     </motion.h3>
                     <div className="mt-4 space-y-4">
                       <div className="flex flex-col items-center justify-center">
-                        <div className="block text-6xl font-extrabold bg-gradient-to-r from-black via-purple-400 to-purple-700 bg-clip-text text-transparent mb-2">??</div>
+                        <div className="block text-6xl font-extrabold bg-gradient-to-r from-black via-red-400 to-red-700 bg-clip-text text-transparent mb-2">??</div>
                         <div className="text-lg text-theme-text-secondary">Free Cost Calculation</div>
                         <div className="text-base text-theme-text-secondary mt-1">Get exact pricing based on your usage</div>
                       </div>
@@ -906,7 +932,7 @@ P.S. Most of our clients see positive ROI within the first month!`;
   icon={Calculator}
   text="Get Operational Cost"
   onClick={() => handleGetMaintenancePrice(plan.name, 'chatbot')}
-  variant={index === 0 ? 'red' : index === 2 ? 'purple' : 'green'}
+  variant={index === 0 ? 'purple' : index === 1 ? 'green' : 'red'}
 />
                     {/* Chatbot Maintenance Form Modal */}
                     <AnimatePresence>
@@ -974,15 +1000,16 @@ P.S. Most of our clients see positive ROI within the first month!`;
                               </div>
                               {isSubmitting ? (
                                 <PremiumButton
-                                  icon={DollarSign}
+                                  icon={ChevronRight}
                                   text="Submitting..."
                                   disabled
                                 />
                               ) : (
                                 <PremiumButton
-                                  icon={DollarSign}
-                                  text="Get Pricing"
-                                  onClick={undefined} // submit handled by form
+                                  icon={ChevronRight}
+                                  text="Get Details"
+                                  type="submit"
+                                  variant={index === 0 ? 'purple' : index === 1 ? 'green' : 'red'}
                                 />
                               )}
                             </form>
@@ -1027,7 +1054,7 @@ P.S. Most of our clients see positive ROI within the first month!`;
                     <motion.div
                       className="absolute inset-0 rounded-2xl pointer-events-none z-0"
                       style={{
-                        background: 'radial-gradient(circle at 50% 40%, rgba(255, 80, 80, 0.22) 0%, rgba(255,80,80,0.10) 60%, transparent 100%)'
+                        background: 'radial-gradient(circle at 50% 40%, rgba(168,85,247,0.32) 0%, rgba(168,85,247,0.18) 60%, transparent 100%)'
                       }}
                       aria-hidden={true}
                     />
@@ -1082,11 +1109,11 @@ P.S. Most of our clients see positive ROI within the first month!`;
                   <div className="mt-4 space-y-4">
                     <div className="flex flex-col items-center justify-center">
                       {index === 0 ? (
-  <div className="block text-6xl font-extrabold bg-gradient-to-r from-black via-red-500 to-red-700 bg-clip-text text-transparent mb-2">$0</div>
+  <div className="block text-6xl font-extrabold bg-gradient-to-r from-black via-red-500 to-red-700 bg-clip-text text-transparent mb-2"></div>
 ) : (
-  <div className="block text-6xl font-extrabold bg-gradient-to-r from-black via-green-500 to-green-700 bg-clip-text text-transparent mb-2">$0</div>
+  <div className="block text-6xl font-extrabold bg-gradient-to-r from-black via-green-500 to-green-700 bg-clip-text text-transparent mb-2"></div>
 )}
-                      <div className="text-lg text-theme-text-secondary">Free Development & Deployment</div>
+                      <div className="text-lg text-theme-text-secondary"></div>
                     </div>
 
                     <div className="backdrop-blur-lg px-3 py-2 rounded-lg cursor-pointer bg-white/5">
@@ -1115,12 +1142,14 @@ P.S. Most of our clients see positive ROI within the first month!`;
                   </ul>
 
                   {/* Button */}
-                  <PremiumButton
-                    icon={DollarSign}
-                    text="Get Maintenance Price"
-                    onClick={() => handleGetMaintenancePrice(plan.name, 'chatbot')}
-                    variant={index === 0 ? 'red' : index === 1 ? 'green' : 'purple'}
-                  />
+                  <div className="w-auto mx-auto">
+  <PremiumButton
+    icon={ChevronRight}
+    text="Get Details"
+    onClick={() => handleGetMaintenancePrice(plan.name, 'voice')}
+    variant={index === 0 ? 'purple' : index === 1 ? 'green' : 'red'}
+  />
+</div>
 
                   {/* Form Modal */}
                   <AnimatePresence>
@@ -1182,7 +1211,7 @@ P.S. Most of our clients see positive ROI within the first month!`;
                             </div>
                             <div className="w-full flex">
   <PremiumButton
-    icon={DollarSign}
+    icon={ChevronRight}
     text={isSubmitting ? 'Submitting...' : 'Get Pricing Details'}
     disabled={isSubmitting}
   />

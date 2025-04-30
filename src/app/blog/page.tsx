@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { blogPosts2 } from '../../data/blogPosts2';
 import { blogPosts3 } from '../../data/blogPosts3';
 import { blogPosts4 } from '../../data/blogPosts4';
+import blogPosts7 from '../../data/blogPosts7';
 
 export const metadata: Metadata = {
   title: 'AI Voice Technology Blog | TopEdge AI',
@@ -22,9 +23,12 @@ interface BlogPost {
 }
 
 // Combine all blog posts and sort by date (most recent first)
-const allBlogPosts = [...blogPosts2, ...blogPosts3, ...blogPosts4].sort((a, b) => {
-  return new Date(b.date).getTime() - new Date(a.date).getTime();
-});
+const allBlogPosts = [
+  ...blogPosts2,
+  ...blogPosts3,
+  ...blogPosts4,
+  ...blogPosts7,
+].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
 export default function BlogIndex() {
   return (

@@ -219,11 +219,17 @@ const ProductShowcase = () => {
               <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-theme-bg-secondary/30 to-theme-bg-secondary/10 backdrop-blur-xl border-[1.5px] border-theme-border-primary/30 h-full transition-all duration-300 group-hover:border-theme-border-accent/40 shadow-lg hover:shadow-xl">
                 {/* Visual Section */}
                 <div className="relative aspect-[16/9] overflow-hidden rounded-t-2xl">
-                  <img
-                    src={data.visual}
-                    alt={data.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
+                  <picture>
+                    <source srcSet={data.visual.replace(/\.(jpg|jpeg|png)$/i, '.webp')} type="image/webp" />
+                    <img
+                      src={data.visual}
+                      loading="lazy"
+                      width={320}
+                      height={180}
+                      alt={data.title}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                  </picture>
 
                   
                   {/* Title on Image */}

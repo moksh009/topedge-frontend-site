@@ -320,26 +320,56 @@ const Calendar = ({ selectedDate, onSelect }: { selectedDate: Date | undefined; 
   };
 
   return (
-    <div className="calendar-wrapper p-2 sm:p-4 bg-white rounded-xl overflow-x-auto shadow-lg">
+    <div
+  className="calendar-wrapper p-1 sm:p-4 bg-white rounded-xl overflow-x-auto shadow-lg max-w-full"
+  style={{ WebkitOverflowScrolling: 'touch' }}
+>
+
       <style>
-        {`
-          .rdp {
-            --rdp-cell-size: clamp(30px, 8vw, 40px);
-            margin: 0;
-          }
-          @media (max-width: 640px) {
-            .rdp {
-              --rdp-cell-size: 30px;
-            }
-          }
-          .rdp-day_disabled, .rdp-day:disabled {
-            color: #d1d5db !important;
-            background: #f9fafb !important;
-            cursor: not-allowed !important;
-            opacity: 1 !important;
-          }
-        `}
-      </style>
+  {`
+    .rdp {
+      --rdp-cell-size: clamp(44px, 10vw, 48px);
+      margin: 0;
+      font-size: 1rem;
+    }
+    @media (max-width: 640px) {
+      .rdp {
+        --rdp-cell-size: 44px;
+        font-size: 0.95rem;
+      }
+      .rdp-caption_label,
+      .rdp-head_cell {
+        font-size: 0.9rem;
+      }
+    }
+    .rdp-day_disabled, .rdp-day:disabled {
+      color: #d1d5db !important;
+      background: #f9fafb !important;
+      cursor: not-allowed !important;
+      opacity: 1 !important;
+    }
+    .rdp-day {
+      min-width: 44px;
+      min-height: 44px;
+      max-width: 48px;
+      max-height: 48px;
+      font-size: 1rem;
+      line-height: 1;
+      padding: 0;
+      margin: 0.1rem;
+      border-radius: 0.5rem;
+      transition: all 0.2s;
+      touch-action: manipulation;
+    }
+    @media (max-width: 640px) {
+      .rdp-day {
+        min-width: 44px;
+        min-height: 44px;
+        font-size: 0.95rem;
+      }
+    }
+  `}
+</style>
       <DayPicker
         mode="single"
         modifiers={{
@@ -742,8 +772,8 @@ const Booking = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2, duration: 0.8 }}
               >
-                Book a Service
-              </motion.h1>
+Book For Discussion              
+</motion.h1>
               <motion.p 
                 className="text-xl sm:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed px-4"
                 initial={{ opacity: 0, y: 20 }}

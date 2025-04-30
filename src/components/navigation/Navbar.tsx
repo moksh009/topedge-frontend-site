@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ChevronRight, Brain, ArrowRight, Calendar } from 'lucide-react';
+import { Menu, X, ChevronRight, Brain, ArrowRight, Calendar, Home, User, Star, Tag, Mail } from 'lucide-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -9,12 +9,13 @@ const Navbar = () => {
   const location = useLocation();
 
   const navItems = [
-    { path: '/', label: 'Home' },
-    { path: '/about', label: 'About' },
-    { path: '/services', label: 'Services' },
-    { path: '/testimonials', label: 'Testimonials' },
-    { path: '/pricing', label: 'Pricing' },
-    { path: '/contact', label: 'Contact' }
+    { path: '/', label: 'Home', icon: Home },
+    { path: '/about', label: 'About', icon: User },
+    { path: '/services', label: 'Services', icon: Calendar },
+    { path: '/testimonials', label: 'Testimonials', icon: Star },
+    { path: '/pricing', label: 'Pricing', icon: Tag },
+    { path: '/contact', label: 'Contact', icon: Mail },
+    
   ];
 
   useEffect(() => {
@@ -107,12 +108,79 @@ const Navbar = () => {
         animate="visible"
         variants={containerVariants}
       >
-        <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center">
+        {/* Mobile pill navbar when scrolled */}
+        <AnimatePresence>
+  <motion.div
+    className={
+      `md:hidden flex fixed top-5 left-0 right-0 mx-auto w-[94vw] max-w-xl items-center justify-between z-50 ${scrolled ? 'rounded-full bg-white shadow-lg px-4 py-2' : 'rounded-2xl bg-white/80 px-4 py-2 border border-gray-200'} mt-2`
+    }
+    initial={{ opacity: 0, y: -20 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -20 }}
+    transition={{ duration: 0.3, ease: 'easeOut' }}
+  >
+    {/* Logo and Company Name */}
+    <Link to="/" className="flex items-center space-x-2" onClick={() => setIsOpen(false)}>
+      <img src="logo.png" alt="TopEdge Logo" className="h-8 w-8 rounded-full object-cover" />
+      <span className="text-base font-bold text-gray-900">Top<span className="text-theme-glow-primary">E</span>dge</span>
+    </Link>
+    {/* Hamburger/Close menu animation */}
+    <button onClick={() => setIsOpen(!isOpen)} className="p-2 text-gray-700 hover:text-theme-glow-primary focus:outline-none transition-all duration-300">
+      {isOpen ? <X size={28} /> : <Menu size={28} />}
+    </button>
+  </motion.div>
+</AnimatePresence>
+        {isOpen && (
+  <AnimatePresence>
+    <motion.div
+      key="mobile-dropdown"
+      initial={{ opacity: 0, y: -16, scale: 0.97 }}
+      animate={{ opacity: 1, y: 12, scale: 1 }}
+      exit={{ opacity: 0, y: -16, scale: 0.97 }}
+      transition={{ duration: 0.24, ease: 'easeOut' }}
+      className="md:hidden flex flex-col items-center absolute left-[30%] top-16 -translate-x-[40%] w-[65vw] max-w-xs bg-white rounded-3xl shadow-2xl py-6 px-4 z-50"
+      style={{ boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.15)' }}
+    >
+      {navItems.map((item, i) => (
+        <Link
+          key={item.path}
+          to={item.path}
+          className="flex items-center gap-3 w-full px-4 py-3 rounded-xl hover:bg-gray-100 transition font-medium text-gray-900 text-lg justify-start"
+          onClick={() => setIsOpen(false)}
+        >
+          {item.icon && <item.icon className="w-5 h-5 text-theme-glow-primary" />}
+          {item.label}
+        </Link>
+      ))}
+      <Link to="/booking" className="mt-4 block w-full">
+  <button
+    className="w-full flex-nowrap flex items-center justify-center gap-2 bg-theme-glow-primary text-white font-semibold py-3 px-4 rounded-2xl text-lg shadow hover:bg-blue-700 transition whitespace-nowrap"
+    style={{ minWidth: 0 }}
+  >
+    <Calendar className="w-5 h-5 flex-shrink-0" />
+    <span className="truncate">Book Appointment</span>
+  </button>
+</Link>
+    </motion.div>
+  </AnimatePresence>
+)}
+        {/* Desktop or default navbar */}
+        <div className="container mx-auto px-4 md:flex hidden">
+          <div className="flex items-center w-full">
             {/* Logo */}
             <Link to="/" className="relative group md:block hidden">
               <div className="flex items-center space-x-4">
-                <img src="logo.png" alt="TopEdge Logo" className="h-14 w-auto" />
+                {/* Logo from public directory with fallback alt and style */}
+                <picture>
+                  <source srcSet="/logo.webp" type="image/webp" />
+                  <img 
+                    src="/logo.png" 
+                    alt="TopEdge AI Logo" 
+                    className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0" 
+                    style={{ minWidth: 40, minHeight: 40, objectFit: 'contain' }} 
+                    onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => { e.currentTarget.src = '/favicon.ico'; }}
+                  />
+                </picture>
                 <div className="flex flex-col">
                   <span className="text-2xl font-bold">
                     <span className="text-theme-text-primary">Top</span>
@@ -122,35 +190,8 @@ const Navbar = () => {
                 </div>
               </div>
             </Link>
-
-            {/* Mobile Logo Text */}
-            <AnimatePresence>
-              {!isOpen && (
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  transition={{ duration: 0.3 }}
-                  className="md:hidden block"
-                >
-                  <Link to="/">
-                    <div className="flex items-center space-x-3">
-                      <img src="logo.png" alt="TopEdge Logo" className="h-10 w-auto" />
-                      <div className="flex flex-col">
-                        <span className="text-lg font-bold">
-                          <span className="text-theme-text-primary">Top</span>
-                          <span className="text-theme-glow-primary">E</span>
-                          <span className="text-theme-text-primary">dge</span>
-                        </span>
-                      </div>
-                    </div>
-                  </Link>
-                </motion.div>
-              )}
-            </AnimatePresence>
-
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-8">
+            {/* Desktop Navigation Links */}
+            <div className="flex-1 flex items-center ml-40 space-x-6">
               {navItems.map((item) => (
                 <motion.div
                   key={item.path}
@@ -181,8 +222,9 @@ const Navbar = () => {
                   </Link>
                 </motion.div>
               ))}
-              
-              {/* Book Appointment Button */}
+            </div>
+            {/* Book Appointment Button (remains at far right) */}
+            <div className="flex items-center ml-auto">
               <Link to="/booking">
                 <motion.button
                   whileHover="hover"
@@ -237,82 +279,6 @@ const Navbar = () => {
         </div>
       </motion.nav>
 
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            className="fixed inset-0 z-40 md:hidden"
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            variants={mobileMenuVariants}
-          >
-            <div className="absolute inset-0 bg-theme-bg-primary/95 backdrop-blur-xl" />
-            
-            <div className="relative h-full p-6 overflow-y-auto">
-              <div className="flex items-center justify-between mb-8">
-                <Link to="/" className="flex items-center space-x-3" onClick={() => setIsOpen(false)}>
-                  <img src="logo.png" alt="TopEdge Logo" className="h-10 w-auto" />
-                  <div className="flex flex-col">
-                    <span className="text-lg font-bold">
-                      <span className="text-theme-text-primary">Top</span>
-                      <span className="text-theme-glow-primary">E</span>
-                      <span className="text-theme-text-primary">dge</span>
-                    </span>
-                  </div>
-                </Link>
-                
-                <button
-                  onClick={() => setIsOpen(false)}
-                  className="p-2 text-theme-text-primary hover:text-theme-text-secondary focus:outline-none"
-                >
-                  <X size={24} />
-                </button>
-              </div>
-
-              <nav className="space-y-4">
-                {navItems.map((item, i) => (
-                  <motion.div 
-                    key={item.path}
-                    variants={menuItemVariants}
-                    custom={i}
-                  >
-                    <Link
-                      to={item.path}
-                      className={`block py-4 px-4 text-2xl font-semibold border-b border-theme-border-primary/10 ${
-                        location.pathname === item.path
-                          ? 'text-theme-glow-primary'
-                          : 'text-theme-text-primary hover:text-theme-glow-primary'
-                      }`}
-                      onClick={() => setIsOpen(false)}
-                    >
-                      <div className="flex items-center justify-between">
-                        <span>{item.label}</span>
-                        <ChevronRight className="w-5 h-5" />
-                      </div>
-                    </Link>
-                  </motion.div>
-                ))}
-              </nav>
-
-              {/* Mobile CTA */}
-              <motion.div 
-                className="mt-12"
-                variants={menuItemVariants}
-                custom={navItems.length}
-              >
-                <Link
-                  to="/booking"
-                  className="block w-full bg-gradient-to-r from-theme-glow-primary to-theme-glow-accent text-theme-text-inverse py-4 px-6 rounded-xl font-medium text-center text-lg"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Book Appointment
-                </Link>
-              </motion.div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </>
   );
 };

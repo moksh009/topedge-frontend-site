@@ -17,8 +17,8 @@ interface SEOProps {
 
 export default function SEOHead({
   title = "TopEdge AI – AI Callers & Chatbots for 24/7 Business Automation",
-  description = "TopEdge AI offers smart AI callers, chatbots, and voice assistants that help businesses operate efficiently 24/7. Increase leads and automate support with ease.",
-  keywords = "AI caller, chatbot for business, 24/7 AI assistant, voice bot, TopEdge AI, AI customer service, automation, AI agency, chatbot agency, AI caller agency",
+  description = "TopEdge AI offers AI-powered automation solutions that help businesses streamline operations and enhance customer experience.",
+  keywords = "AI caller, chatbot for business, 24/7 AI assistant, voice bot, TopEdge AI, AI customer service, automation, AI solutions partner, automation solutions",
   ogImage = "https://topedgeai.com/assets/og-image.jpg",
   canonicalUrl = "https://topedgeai.com",
   pageType = "website",

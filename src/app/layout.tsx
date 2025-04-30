@@ -5,20 +5,18 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://topedgeai.com'),
   title: {
     template: '%s | TopEdge AI',
-    default: 'TopEdge AI – Leading AI Caller & Chatbot Agency | 24/7 Business Automation'
+    default: 'TopEdge AI – Leading Intelligent Automation Solutions | 24/7 Business Efficiency'
   },
-  description: 'TopEdge AI is the premier AI caller and chatbot agency. Our intelligent voice bots and automation tools help businesses operate 24/7, increase leads, and deliver exceptional customer service.',
+  description: 'TopEdge AI is the premier AI automation solutions provider. Our intelligent voice bots and automation tools help businesses operate 24/7, increase leads, and deliver exceptional customer experiences.',
   keywords: [
     'AI caller',
-    'AI chatbot',
-    'business automation',
+    'AI automation',
+    'business efficiency',
     'voice bot',
     'TopEdge AI',
-    'AI customer service',
+    'AI customer experience',
     'automation agency',
-    'AI agency',
-    'chatbot agency',
-    'AI caller agency',
+    'AI solutions partner',
     'virtual assistant',
     'AI sales calls',
     'automated customer support',
@@ -26,7 +24,7 @@ export const metadata: Metadata = {
     '24/7 customer service',
     'conversational AI',
     'AI voice assistant',
-    'business efficiency',
+    'business productivity',
     'AI solutions',
     'intelligent automation'
   ],
@@ -39,8 +37,8 @@ export const metadata: Metadata = {
     telephone: false,
   },
   openGraph: {
-    title: 'TopEdge AI – Leading AI Caller & Chatbot Agency | 24/7 Business Automation',
-    description: 'Transform your business with TopEdge AI - the premier agency for AI callers, chatbots, and intelligent automation solutions. Boost efficiency and grow 24/7.',
+    title: 'TopEdge AI – Leading Intelligent Automation Solutions | 24/7 Business Efficiency',
+    description: 'Transform your business with TopEdge AI - the premier agency for AI callers, automation solutions, and intelligent automation tools. Boost efficiency and grow 24/7.',
     url: 'https://topedgeai.com',
     siteName: 'TopEdge AI',
     images: [
@@ -56,8 +54,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'TopEdge AI – Leading AI Caller & Chatbot Agency',
-    description: "Boost business efficiency with TopEdge AI intelligent voice bots and automation tools",
+    title: 'TopEdge AI – Leading Intelligent Automation Solutions',
+    description: "Boost business efficiency with TopEdge AI's intelligent voice bots and automation tools",
     images: [{
       url: 'https://topedgeai.com/assets/twitter-preview.jpg',
       alt: 'TopEdge AI - Intelligent Business Automation Solutions'

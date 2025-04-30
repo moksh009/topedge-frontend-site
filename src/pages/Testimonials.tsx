@@ -23,7 +23,6 @@ interface Testimonial {
     poster?: string;
   };
 }
-
 const testimonials: Testimonial[] = [
   {
     id: '3',
@@ -33,8 +32,8 @@ const testimonials: Testimonial[] = [
       url: "/steeven.mp4",
       poster: "/images/testimonials/steven-mugabe-poster.jpg"
     },
-    content: "TopEdge's AI solutions transformed our dental practice. Patient scheduling is automated, response times dropped by 90%, and patient satisfaction increased by 55%. It's like having an extra team member.",
-    highlight: "90% FASTER RESPONSE",
+    content: "Integrating TopEdge AI into our practice has been a turning point. Our appointment scheduling is now fully automated, reducing admin workload by over 60%. Response times are nearly instant, and we’ve seen a 55% increase in patient satisfaction.",
+    highlight: "60% LESS ADMIN WORK",
     rating: 5,
     industry: 'dentist',
     company: {
@@ -43,84 +42,120 @@ const testimonials: Testimonial[] = [
     }
   },
   {
-    id: '1',
-    name: "Jake Miller",
-    role: "CEO at Mapquest Realty",
-    image: "/testi 1.jpeg",
-    content: "TopEdge AI has revolutionized how we handle customer interactions. The intelligent automation has brought amazing results. Our property viewings have increased by 300% and client satisfaction is at an all-time high.",
-    highlight: "7+ More Properties Visits in One Week",
-    rating: 5,
-    industry: 'realtor',
-    company: {
-      logo: "/images/logos/techsolutions.png",
-      name: "TechSolutions Inc."
-    }
-  },
-  {
     id: '2',
-    name: "Michael Chen",
-    role: "Operations Director",
-    image: "/testi 2.jpeg",
-    content: "The AI voice agent from TopEdge has revolutionized our real estate operations. We're handling 3x more property inquiries with better conversion rates. Our agents can focus on high-value activities.",
-    highlight: "300+ QUALIFIED LEADS",
+    name: "Shubham Patel",
+    role: "Realtor",
+    video: {
+      url: "/shubham.mp4",
+      poster: "/images/testimonials/shubham-patel-poster.jpg"
+    },
+    content: "TopEdge AI handles all my inbound leads automatically — answering questions, sharing property details, and sending brochures. As a realtor, it saves me hours daily and delivers only serious, high-intent clients. It’s like having a full-time lead manager that never takes a break.",
+    highlight: "24/7 LEAD MANAGEMENT",
     rating: 5,
     industry: 'realtor',
     company: {
-      logo: "/images/logos/global-retail.png",
-      name: "Global Retail"
+      logo: "/images/logos/your-realty-logo.png",
+      name: "Patel Realty"
     }
   },
   {
     id: '4',
-    name: "Dr. Emma Thompson",
-    role: "Dental Practice Owner",
-    image: "/testi 3.jpeg",
-    content: "The AI-powered patient management system has given us insights we never thought possible. Our appointment efficiency has improved dramatically and patients love the instant responses.",
-    highlight: "150% MORE APPOINTMENTS",
+    name: "Sarah Johnson",
+    role: "CEO at TechFlow",
+    video: {
+      url: "/sarah.mp4",
+      poster: "/images/testimonials/sarah-johnson-poster.jpg"
+    },
+    content: "Implementing TopEdge AI has been a game-changer for our business. Our customer engagement is up 200% and our team can focus on strategic tasks while AI handles routine inquiries. The ROI has been incredible from day one.",
+    highlight: "200% CUSTOMER ENGAGEMENT",
     rating: 5,
-    industry: 'dentist',
+    industry: 'business',
     company: {
-      logo: "/images/logos/global-marketing.png",
-      name: "Thompson Dental"
+      logo: "/images/logos/techflow.png",
+      name: "TechFlow"
+    }
+  },
+
+  {
+    id: '1',
+    name: "Jake Miller",
+    role: "Realtor, US",
+    image: "/testi 1.jpeg", // replace with real profile photo if available
+    content: "TopEdge’s AI Agent helped me secure 3 extra confirmed property visits in just one week—opportunities I would’ve completely missed. The AI follow-ups fixed my broken inquiry process and reactivated cold leads effortlessly. It’s like plugging in a powerhouse to your lead management system.",
+    highlight: "3 EXTRA VIEWINGS IN ONE WEEK",
+    rating: 5,
+    industry: 'realtor',
+    company: {
+      logo: "/images/logos/techsolutions.png", // or leave null if no company branding
+      name: ""
     }
   },
   {
     id: '5',
-    name: "David Rodriguez",
-    role: "Sales Director at TechPro",
-    content: "Implementation was smooth and the results were immediate. Our team's productivity has doubled since using TopEdge. The AI insights have helped us optimize our entire sales process.",
-    highlight: "2X PRODUCTIVITY",
+    name: "Dr. Steven",
+    role: "CX Specialist",
+    image: "testi 2.jpeg",
+    content: "Since using TopEdge AI Chat Agent, we've seen a 23% increase in inquiries and over 2% growth in conversion rates. Our Google reviews have also improved significantly. Their service is fast, friendly, and absolutely game-changing!",
+    highlight: "23% INQUIRY GROWTH",
     rating: 5,
-    industry: 'business',
+    industry: 'dentist',
     company: {
-      logo: "/images/logos/sales-pro.png",
-      name: "Sales Pro"
+      logo: "/images/logos/global-cx.png",
+      name: ""
     }
   },
   {
     id: '6',
-    name: "Sarah Williams",
-    role: "Customer Success Manager",
-    content: "The AI chatbot has transformed our customer support. We're now able to handle inquiries 24/7, and our response time has decreased by 80%. Customer satisfaction scores have never been higher.",
+    name: "Mr. Harold",
+    role: "Harold Realtor",
+    image: "testi 3.jpeg",
+    content: "TopEdge AI Support Agents have transformed our outbound sales! We upload 100+ contacts daily, and with a 20% interest rate and an 8–10% conversion rate, the results speak for themselves. It saves us 3–4 hours daily — the setup was smooth, and the support team is stellar.",
+    highlight: "3–4 HOURS SAVED DAILY",
+    rating: 5,
+    industry: 'realtor',
+    company: {
+      logo: "/images/logos/global-sales.png",
+      name: ""
+    }
+  },
+  
+  {
+    id: '5',
+    name: "Jason Lee",
+    role: "Head of Sales",
+    content: "TopEdge helped us automate follow-ups and track performance in real time. Our sales team's productivity has doubled, and we’re closing deals faster than ever.",
+    highlight: "2X SALES PRODUCTIVITY",
+    rating: 5,
+    industry: 'business',
+    company: {
+      logo: "/images/logos/sales-pro.png",
+      name: ""
+    }
+  },
+  {
+    id: '6',
+    name: "Emily Carter",
+    role: "Customer Experience Manager",
+    content: "The AI chatbot is a game-changer. It handles support 24/7 and has reduced our average response time by 80%. Customers are consistently giving us great feedback.",
     highlight: "80% FASTER SUPPORT",
     rating: 5,
     industry: 'business',
     company: {
       logo: "/images/logos/tech-innovate.png",
-      name: "Tech Innovate"
+      name: ""
     }
   },
   {
     id: '7',
-    name: "Alex Thompson",
-    role: "Operations Head at CloudTech",
-    content: "TopEdge AI has streamlined our entire workflow. The automation capabilities have reduced manual tasks by 70%, allowing our team to focus on strategic initiatives.",
+    name: "Noah Bennett",
+    role: "Operations Manager",
+    content: "With TopEdge AI, we've cut down manual tasks by 70%. It’s allowed our team to focus on strategic growth instead of repetitive processes. A true productivity boost.",
     highlight: "70% LESS MANUAL WORK",
     rating: 5,
     industry: 'business',
     company: {
       logo: "/images/logos/cloudtech.png",
-      name: "CloudTech"
+      name: ""
     }
   }
 ];
@@ -300,23 +335,47 @@ const TestimonialCard = ({ testimonial, isFirst }: { testimonial: Testimonial; i
                 </div>
               </div>
             ) : testimonial.image && (
-              <div className="relative w-full" style={{ maxHeight: '800px', overflow: 'hidden' }}>
-                <img 
-                  src={testimonial.image} 
-                  alt={testimonial.name}
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                  decoding="async"
-                />
-              </div>
-            )}
-            {/* Only show highlight if not video, or if video is unmuted (after first click) */}
-            {(!testimonial.video || (!firstClick && isPlaying)) && (
-              <div className="absolute -bottom-4 left-4 sm:left-8 z-10">
-                <div className="px-4 sm:px-6 py-1.5 sm:py-2 bg-theme-glow-primary rounded-full shadow-[0_0_20px_rgba(var(--glow-primary),0.3)]">
-                  <p className="text-sm sm:text-base font-bold text-theme-text-inverse tracking-wide whitespace-nowrap">{testimonial.highlight}</p>
+              <div className="relative w-full" style={
+                testimonial.name === "Emma Rodriguez"
+                  ? { maxHeight: '1000px', overflow: 'visible', background: 'white' }
+                  : { maxHeight: '1400px', overflow: 'hidden' }
+              }>
+                <div className="relative w-full" style={
+                  testimonial.name === "Emma Rodriguez"
+                    ? { maxHeight: '1000px', overflow: 'visible', background: 'white' }
+                    : { maxHeight: '1400px', overflow: 'visible' }
+                }>
+                
+                  <picture>
+                    <source srcSet={testimonial.image.replace(/\.(jpg|jpeg|png)$/i, '.webp')} type="image/webp" />
+                    <img 
+                      src={testimonial.image} 
+                      alt={testimonial.name} 
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                      width={800}
+                      height={800}
+                    />
+                  </picture>
                 </div>
               </div>
+            )
+}
+          {/* Only show highlight if not video, or if video is unmuted (after first click) */}
+            {(!testimonial.video || (!firstClick && isPlaying)) && (
+              testimonial.name === "Dr. Steven" ? (
+                <div className="absolute -bottom-4 right-4 sm:right-4 z-10">
+                  <div className="px-4 sm:px-6 py-1.5 sm:py-2 bg-blue-600 text-white font-bold rounded-full shadow-lg text-base sm:text-lg">
+                    {testimonial.highlight}
+                  </div>
+                </div>
+              ) : (
+                <div className="absolute -bottom-4 left-4 sm:left-8 z-10">
+                  <div className="px-4 sm:px-6 py-1.5 sm:py-2 bg-theme-glow-primary rounded-full shadow-[0_0_20px_rgba(var(--glow-primary),0.3)]">
+                    <p className="text-sm sm:text-base font-bold text-theme-text-inverse tracking-wide whitespace-nowrap">{testimonial.highlight}</p>
+                  </div>
+                </div>
+              )
             )}
 
           </div>
@@ -364,7 +423,7 @@ const Testimonials = () => {
 
   return (
     <>
-      <SEO title="Testimonials | TopEdge AI" description="Hear from businesses and clients who have transformed their operations with TopEdge AI's advanced voice agents, chatbots, and automation solutions." />
+      <SEO title="Testimonials" description="Hear from businesses and clients who have transformed their operations with TopEdge AI’s automation solutions—improving efficiency, customer experience, and business outcomes." />
       {/* BreadcrumbList Schema.org JSON-LD */}
       <script
         type="application/ld+json"
@@ -391,7 +450,7 @@ const Testimonials = () => {
       />
       <div className="min-h-screen bg-theme-bg-primary">
       <Navbar />
-      <section className="relative py-8 sm:py-16 md:py-24 overflow-hidden">
+      <section className="relative py-8 sm:py-16 md:py-24 overflow-hidden pt-24 sm:pt-28 md:pt-32">
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-b from-theme-bg-primary via-theme-bg-surface to-theme-bg-primary" />
           <motion.div 
@@ -450,7 +509,7 @@ const Testimonials = () => {
 
             {/* Trust Indicators */}
             <div className="mt-8 sm:mt-12 grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto">
-              <StatCard number="98%" label="Success Rate" />
+              <StatCard number="100%" label="Success Rate" />
               <StatCard number="10x" label="Faster Response" />
               <StatCard number="60%" label="Cost Reduction" />
             </div>
@@ -492,16 +551,16 @@ const Testimonials = () => {
               </p>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
                 <div className="p-4 rounded-xl bg-theme-glow-primary/10 border border-theme-glow-primary/20">
-                  <div className="text-3xl font-bold text-theme-glow-primary mb-2">60%</div>
-                  <div className="text-sm text-theme-text-secondary">Cost Reduction</div>
+                  <div className="text-3xl font-bold text-theme-glow-primary mb-2">28%</div>
+                  <div className="text-sm text-theme-text-secondary">Growth in Leads</div>
                 </div>
                 <div className="p-4 rounded-xl bg-theme-glow-primary/10 border border-theme-glow-primary/20">
                   <div className="text-3xl font-bold text-theme-glow-primary mb-2">85%</div>
                   <div className="text-sm text-theme-text-secondary">Faster Response Time</div>
                 </div>
                 <div className="p-4 rounded-xl bg-theme-glow-primary/10 border border-theme-glow-primary/20">
-                  <div className="text-3xl font-bold text-theme-glow-primary mb-2">3.5x</div>
-                  <div className="text-sm text-theme-text-secondary">Revenue Growth</div>
+                  <div className="text-3xl font-bold text-theme-glow-primary mb-2">160 hours+</div>
+                  <div className="text-sm text-theme-text-secondary">Saves Monthly</div>
                 </div>
               </div>
               <p className="text-lg text-theme-text-secondary mb-8">

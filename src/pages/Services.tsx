@@ -18,12 +18,18 @@ interface PremiumButtonProps {
   gradient?: string;
 }
 
-const PremiumButton: React.FC<PremiumButtonProps> = ({ 
+const PremiumButton: React.FC<PremiumButtonProps & { onClick?: () => void }> = ({ 
   icon: Icon, 
   text, 
-  to 
+  to, 
+  onClick
 }) => (
-  <Link to={to} className="w-full sm:w-auto">
+  <Link to={to} className="w-full sm:w-auto" onClick={e => {
+    if (onClick) {
+      e.preventDefault();
+      onClick();
+    }
+  }}>
     <motion.button
       whileHover="hover"
       whileTap="tap"
@@ -199,7 +205,7 @@ const Services: React.FC = () => {
           })
         }}
       />
-      <div className="bg-theme-bg-primary text-theme-text-primary font-sans overflow-x-hidden w-full relative">
+      <div className="bg-theme-bg-primary text-theme-text-primary font-sans overflow-x-hidden w-full relative pt-20 sm:pt-0">
       <motion.section 
         ref={containerRef}
         className="relative min-h-screen flex items-center justify-center overflow-hidden bg-theme-bg-primary py-16 sm:py-32"
@@ -344,15 +350,27 @@ const Services: React.FC = () => {
               transition={{ delay: 0.8 }}
             >
               <PremiumButton 
-                icon={Bot} 
-                text="AI Caller" 
-                to="#ai-agent-interaction"
-              />
-              <PremiumButton 
-                icon={MessageSquare} 
-                text="Chatbot" 
-                to="#chatbot-showcase"
-              />
+  icon={Bot} 
+  text="AI Caller" 
+  to="#ai-agent-interaction"
+  onClick={() => {
+    const section = document.getElementById('ai-agent-interaction');
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }}
+/>
+<PremiumButton 
+  icon={MessageSquare} 
+  text="Chatbot" 
+  to="#chatbot-showcase"
+  onClick={() => {
+    const section = document.getElementById('chatbot-showcase');
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }}
+/>
             </motion.div>
           </motion.div>
         </motion.div>
@@ -371,7 +389,7 @@ const Services: React.FC = () => {
         }}
       >
         <ServiceProcess />
-        <div className="relative z-10">
+        <div className="relative z-10" id="ai-agent-interaction">
           <AIAgentInteraction />
         </div>
         <div className="relative z-10">

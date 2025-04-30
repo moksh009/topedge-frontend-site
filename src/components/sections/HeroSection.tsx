@@ -8,7 +8,7 @@ import { Bot, Brain, Cpu, TrendingUp, Zap, User, User2, TrendingUpIcon } from 'l
 import { vapiService } from '../../services/vapiService';
 import React from 'react';
 import { LucideIcon } from 'lucide-react';
-import TechnologyShowcase from './TechnologyShowcase';
+
 
 // Add this new component for the end call icon
 const EndCallIcon = () => (
@@ -205,7 +205,7 @@ const HeroSection = () => {
   return (
     <motion.section 
       ref={sectionRef} 
-      className="relative min-h-screen bg-theme-bg-primary overflow-hidden flex items-center perspective-1000 py-16 sm:py-0"
+      className="relative min-h-screen bg-theme-bg-primary overflow-hidden flex items-center perspective-1000 py-8 sm:py-0"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
@@ -494,7 +494,7 @@ const HeroSection = () => {
             </AnimatePresence>
 
             {/* ROI Button */}
-            <Link to="/pricing">
+            <Link to="/roi">
               <PremiumButton 
                 icon={Rocket}
                 text="Calculate ROI" 

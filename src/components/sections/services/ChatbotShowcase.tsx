@@ -166,16 +166,23 @@ const playReceiveSound = useCallback(() => {
 
   const generateBotResponse = (userMessage: string): string => {
     const responses = {
-      services: "We build AI-powered voice agents that handle customer calls 24/7—bookings, inquiries, support, and more. Fully automated. Fully human-like.",
-      customization: "Absolutely! From the voice, tone, script, to integrations—we tailor everything to fit your brand and workflow.",
-      choose: "We don't just sell tech—we craft experiences. With real-time dashboards, human-like voice agents, and top-tier support, we make AI work for your business.",
-      who: "We're an AI agency helping businesses scale smarter with voice automation. Think of us as your intelligent 24/7 team member.",
-      robotic: "Not at all! Our agents sound natural, confident, and human—trained to build trust with your callers.",
-      monitor: "Yes! You'll get a live dashboard with call logs, transcripts, summaries, analytics—everything you need to stay in control.",
-      businesses: "Clinics, real estate teams, service providers—any business that wants to automate calls without compromising on customer experience.",
-      solution: "It's a voice solution! Our AI agents talk with your customers over the phone—just like a real person would.",
-      demo: "100%! We can set up a quick demo for your use-case. You'll hear it in action before making any decision.",
-      default: "I'd be happy to help you learn more about our AI solutions. What specific aspect would you like to know about?"
+      services: "We build AI-powered systems that automate your entire customer communication—calls, WhatsApp, and Instagram DMs. From booking appointments and handling inquiries to lead follow-ups and support, our human-like agents work 24/7 so your business never misses a beat. Fully automated, fully branded, and fully results-driven.",      
+      customization: "Definitely! Every aspect—from the agent's voice and tone to the call flow, scripts, and CRM integrations—is tailored to match your brand, process, and industry needs.",
+      
+      choose: "TopEdge isn’t just software—it’s a full-service AI experience. We offer real-time dashboards, 95%+ accurate AI conversations, seamless onboarding, and dedicated support to ensure your automation actually drives results.",
+      
+      who: "We're TopEdge—an AI automation agency helping forward-thinking businesses reduce costs by up to 85%, boost lead conversions, and deliver smarter customer experiences using advanced voice agents and chat automation.",
+      
+      robotic: "Not even close! Our AI agents are designed to sound natural, calm, and professional. They build rapport, follow custom logic, and handle objections—just like a trained team member would.",
+      
+      monitor: "Yes! You'll get a real-time dashboard showing call logs, transcriptions, summaries, outcomes, and performance analytics—so you stay in control and always know what your AI agents are doing.",
+      
+      businesses: "We work with real estate teams, dental clinics, salons, law firms, repair services, and many more. If your business gets calls and wants to save time while increasing ROI—our AI agents are a perfect fit.",
+      
+      solution: "We're not just voice AI—we're a complete AI automation suite. From human-like voice agents that handle phone calls, to WhatsApp responders and Instagram chatbots, we help you automate customer conversations, follow-ups, bookings, and lead nurturing across all channels. One platform. Total coverage. Real results.",      
+      demo: "Absolutely! Let’s set up a quick personalized demo so you can hear the AI agent in action and see your potential results before committing.",
+      
+      default: "Let me help you learn more about how TopEdge AI can automate and grow your business. What would you like to explore—pricing, features, ROI, or a live demo?"
     };
 
     const message = userMessage.toLowerCase();

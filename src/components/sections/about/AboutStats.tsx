@@ -125,7 +125,7 @@ const AboutStats = () => {
       suffix: "%"
     },
     { 
-      number: 75, 
+      number: 60, 
       label: "Cost Reduction",
       suffix: "%"
     }

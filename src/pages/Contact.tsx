@@ -96,7 +96,7 @@ const Contact = () => {
       <SEO
         title={seoTitle}
         description={seoDescription}
-        keywords="Contact TopEdge AI, AI agency contact, business inquiries, support, partnership, AI solutions, customer service"
+        keywords="Contact TopEdge AI, automation solutions contact, business inquiries, support, partnership, AI solutions, customer service"
         type="website"
       />
       {/* BreadcrumbList Schema.org JSON-LD */}

@@ -60,13 +60,18 @@ const TeamMemberCard: React.FC<TeamMember> = React.memo(({ name, role, image, bi
         <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         <div className="relative p-4">
           <div className="w-24 h-24 mx-auto mb-4 overflow-hidden rounded-full">
-            <img
-              src={image}
-              alt={name}
-              className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-300"
-              loading="lazy"
-              decoding="async"
-            />
+            <picture>
+  <source srcSet={image.replace(/\.(jpg|jpeg|png)$/i, '.webp')} type="image/webp" />
+  <img
+    src={image}
+    alt={name}
+    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-300"
+    loading="lazy"
+    width={96}
+    height={96}
+    decoding="async"
+  />
+</picture>
           </div>
           <h3 className="text-lg font-semibold text-white text-center mb-1">{name}</h3>
           <p className="text-sm text-gray-400 text-center">{role}</p>

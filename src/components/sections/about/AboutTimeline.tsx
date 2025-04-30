@@ -119,7 +119,7 @@ const TimelineItem: React.FC<TimelineItemProps> = ({ year, title, description, i
             {title}
           </h3>
           <p className="text-base sm:text-lg text-theme-text-secondary font-light leading-relaxed group-hover:text-theme-text-primary transition-colors duration-300"
-            style={{ fontFamily: "SF Pro Text, system-ui, -apple-system, BlinkMacSystemFont, sans-serif" }}>
+            style={{ fontFamily: "SF Pro Text, system-ui, -apple-system, BlinkMacSystemFont, sans-serif", whiteSpace: "pre-line" }}>
             {description}
           </p>
           
@@ -163,19 +163,19 @@ const AboutTimeline: React.FC = () => {
 
   const timeline = [
     {
-      year: "Aug 2024",
+      year: "Apr 2024",
       title: "The Vision Takes Shape",
       description: "TopEdge was founded with a clear vision: to help businesses break free from mundane tasks through intelligent automation, allowing them to focus on what truly matters - innovation and growth.",
     },
     {
-      year: "Nov 2024",
+      year: "July 2024",
       title: "Building the Future",
       description: "Development of our core services and products begins, focusing on creating intelligent solutions that adapt to each business's unique needs and challenges.",
     },
     {
       year: "Jan 2025",
-      title: "First Success Story",
-      description: "Milestone achievement as we sign our first client and successfully integrate our automation services into their system, marking the beginning of our journey to transform businesses.",
+      title: "10 Clients Empowered",
+      description: "Achieved a major milestone by partnering with our first 10 clients.\nDelivered exceptional automation results—saving hundreds of hours and driving significant revenue growth for each business.\nOur solutions consistently exceeded expectations and set a new standard for operational excellence.",
     }
   ];
 

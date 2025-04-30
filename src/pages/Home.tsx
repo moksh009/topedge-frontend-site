@@ -21,27 +21,27 @@ import ROICalculator from '../components/sections/pricing/ROICalculator';
 
 const Home = () => {
   // Home page SEO metadata
-  const seoTitle = 'TopEdge AI - #1 AI Voice & Chatbot Agency | 300% ROI Guaranteed';
-  const seoDescription = 'Unlock 300% ROI with TopEdge AI’s advanced AI voice agents, WhatsApp automation, and Instagram chatbots. Automate your business, reduce costs by 85%, and achieve 95% customer satisfaction.';
+  const seoTitle = 'TopEdge AI | AI Voice & Chatbot Automation for Business';
+  const seoDescription = 'Automate your business with advanced AI voice agents, WhatsApp automation, and chatbots. Improve efficiency, boost leads, and enhance customer experience with TopEdge AI.';
   const { scrollYProgress } = useScroll();
   const progressBarWidth = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
   return (
     <>
       <SEO
-        title="TopEdge AI | #1 AI Voice Agents & Chatbot Agency"
-        description="TopEdge AI is the #1 provider of advanced AI voice agents and chatbots. Automate your business, boost ROI, and achieve 95% customer satisfaction. Discover why TopEdge AI leads the industry."
-        keywords="TopEdge, TopEdge AI, AI voice agents, AI chatbots, business automation, AI agency, ROI, customer satisfaction"
+        title="TopEdge AI | Intelligent Automation for Modern Business"
+        description="Empower your business with TopEdge AI’s intelligent automation solutions. Streamline operations, boost productivity, and deliver outstanding customer experiences with cutting-edge AI voice agents and chat automation—trusted by forward-thinking companies."
+        keywords="AI automation, TopEdge AI, voice agents, chat automation, business efficiency, digital transformation, customer experience, workflow automation, AI technology"
         type="website"
         url="https://topedge.ai/"
         image="/logo.png"
         canonical="https://topedge.ai/"
-        ogTitle="TopEdge AI | Advanced AI Voice & Chatbot Solutions"
-        ogDescription="Unlock 300% ROI with TopEdge AI’s voice agents, WhatsApp automation, and chatbots. Reduce costs by 85%."
+        ogTitle="TopEdge AI | Intelligent Automation for Modern Business"
+        ogDescription="Reimagine your business with TopEdge AI—seamless automation, smarter workflows, and next-level customer engagement. Discover the future of business efficiency."
         ogImage="/logo.png"
         ogUrl="https://topedge.ai/"
-        twitterTitle="TopEdge AI | #1 AI Voice & Chatbot Agency"
-        twitterDescription="Automate your business with TopEdge AI voice agents and chatbots. 95% satisfaction. 300% ROI."
+        twitterTitle="TopEdge AI | Intelligent Automation for Modern Business"
+        twitterDescription="Experience the power of AI-driven automation. TopEdge AI helps you work smarter, serve customers better, and stay ahead in a digital world."
         twitterImage="/logo.png"
         twitterCard="summary_large_image"
       />

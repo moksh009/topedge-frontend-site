@@ -119,8 +119,7 @@ export const CTASection = () => {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            Ready to take the next step and add up to an extra $10K in revenue within the next 45 days?
-          </motion.p>
+Ready to take the next step and unlock extra revenue in just 45 days?          </motion.p>
 
           <motion.div
             className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-stretch sm:items-center px-4"

@@ -25,9 +25,9 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     Content-Security-Policy = """
       default-src 'self';
-      script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.daily.co https://*.firebaseapp.com https://*.googleapis.com https://*.sentry.io;
+      script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.daily.co https://*.firebaseapp.com https://*.googleapis.com https://*.sentry.io https://apis.google.com;
       style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-      img-src 'self' data: https://*.daily.co https://*.firebaseapp.com https://*.googleapis.com;
+      img-src 'self' data: https://*.daily.co https://*.firebaseapp.com https://*.googleapis.com https://upload.wikimedia.org https://upload.wikimedia.org/wikipedia/commons https://media.licdn.com https://www.shutterstock.com https://www.shutterstock.com/image-photo https://www.facebook.com https://telegram.org;
       font-src 'self' https://fonts.gstatic.com;
       connect-src 'self' https://api.vapi.ai https://*.daily.co https://*.firebaseapp.com https://*.googleapis.com https://*.sentry.io wss://*.daily.co https://topedge-backend.netlify.app;
       frame-src 'self' https://*.daily.co https://*.firebaseapp.com;

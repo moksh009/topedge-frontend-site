@@ -1,22 +1,23 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation, createRoutesFromElements } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider } from './contexts/ThemeContext';
 import Navbar from './components/navigation/Navbar';
+import FloatingVoiceChat from './components/FloatingVoiceChat';
 import Footer from './components/Footer';
 import Home from './pages/Home';
-import About from './pages/About';
-import Services from './pages/Services';
-import Contact from './pages/Contact';
-import Booking from './pages/Booking';
-import Pricing from './pages/Pricing';
-import Blog from './pages/Blog';
-import BlogPost from './pages/BlogPost';
-import ROI from './pages/ROI';
-import { MaintenanceInquiries } from './components/admin/MaintenanceInquiries';
+const About = React.lazy(() => import('./pages/About'));
+const Services = React.lazy(() => import('./pages/Services'));
+const Contact = React.lazy(() => import('./pages/Contact'));
+const Booking = React.lazy(() => import('./pages/Booking'));
+const Pricing = React.lazy(() => import('./pages/Pricing'));
+const Blog = React.lazy(() => import('./pages/Blog'));
+const BlogPost = React.lazy(() => import('./pages/BlogPost'));
+const ROI = React.lazy(() => import('./pages/ROI'));
+const MaintenanceInquiries = React.lazy(() => import('./components/admin/MaintenanceInquiries').then(module => ({ default: module.MaintenanceInquiries })));
+const Login = React.lazy(() => import('./components/admin/Login').then(module => ({ default: module.Login })));
 import { ProtectedRoute } from './components/admin/ProtectedRoute';
-import { Login } from './components/admin/Login';
 import Testimonials from './pages/Testimonials';
 import './i18n';
 
@@ -41,7 +42,7 @@ const App: React.FC = () => {
       <ThemeProvider>
         <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
           <ScrollToTop />
-          <div className="min-h-screen bg-background text-text transition-colors duration-200">
+          <div className="min-h-screen bg-background text-text transition-colors duration-200 relative">
             <Helmet>
               <title>TopEdge AI - Advanced AI Voice Agents & Chatbots</title>
               <meta name="description" content="Transform your customer service with TopEdge AI's advanced voice agents and chatbots. 24/7 availability, reduced costs, and improved customer satisfaction." />
@@ -69,29 +70,32 @@ const App: React.FC = () => {
             <Navbar />
             <main className="flex-grow">
               <Toaster />
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/services" element={<Services />} />
-                <Route path="/testimonials" element={<Testimonials />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/booking" element={<Booking />} />
-                <Route path="/pricing" element={<Pricing />} />
-                <Route path="/roi" element={<ROI />} />
-                <Route path="/blog" element={<Blog />} />
-                <Route path="/blog/:slug" element={<BlogPost />} />
-                <Route path="/admin/login" element={<Login />} />
-                <Route 
-                  path="/admin/maintenance-inquiries" 
-                  element={
-                    <ProtectedRoute>
-                      <MaintenanceInquiries />
-                    </ProtectedRoute>
-                  } 
-                />
-              </Routes>
+              <React.Suspense fallback={<div className="min-h-screen flex items-center justify-center text-lg">Loading...</div>}>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/services" element={<Services />} />
+                  <Route path="/testimonials" element={<Testimonials />} />
+                  <Route path="/contact" element={<Contact />} />
+                  <Route path="/booking" element={<Booking />} />
+                  <Route path="/pricing" element={<Pricing />} />
+                  <Route path="/roi" element={<ROI />} />
+                  <Route path="/blog" element={<Blog />} />
+                  <Route path="/blog/:slug" element={<BlogPost />} />
+                  <Route path="/admin/login" element={<Login />} />
+                  <Route 
+                    path="/admin/maintenance-inquiries" 
+                    element={
+                      <ProtectedRoute>
+                        <MaintenanceInquiries />
+                      </ProtectedRoute>
+                    } 
+                  />
+                </Routes>
+              </React.Suspense>
             </main>
             <Footer />
+            <FloatingVoiceChat />
           </div>
         </Router>
       </ThemeProvider>

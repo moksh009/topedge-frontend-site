@@ -39,6 +39,21 @@ const testimonials: Testimonial[] = [
     }
   },
   {
+    name: "Shubham Patel",
+    role: "Realtor",
+    image: "/images/testimonials/shubham-patel.jpg",
+    content: "TopEdge AI has completely changed how I manage inbound leads. As a realtor running ads across platforms, I get a lot of inquiries—and my Inbound Voice Agent (Edge V2 Model) handles them all. It answers questions, shares property info, and even sends brochures automatically. Now I only deal with high-intent clients, saving hours every day. It’s like having a 24/7 lead manager that never misses a beat.",
+    rating: 5,
+    company: {
+      logo: "/images/logos/your-realty-logo.png",
+      name: "Patel Realty"
+    },
+    video: {
+      url: "/shubham.mp4",
+      poster: "/images/testimonials/shubham-patel-poster.jpg"
+    }
+  },
+  {
     name: "Sarah Johnson",
     role: "CEO at TechFlow",
     image: "/images/testimonials/sarah-johnson.jpg",
@@ -52,7 +67,7 @@ const testimonials: Testimonial[] = [
   {
     name: "Michael Chen",
     role: "Operations Director at InnovateCorp",
-    image: "/images/testimonials/michael-chen.jpg",
+    image: "testi 3.jpeg",
     content: "The ROI with TopEdge AI has been incredible. We've seen a 40% reduction in operational costs and our customer satisfaction scores have never been higher.",
     rating: 5,
     company: {
@@ -63,7 +78,7 @@ const testimonials: Testimonial[] = [
   {
     name: "Emma Rodriguez",
     role: "Support Manager at CloudScale",
-    image: "/images/testimonials/emma-rodriguez.jpg",
+    image: "testi 4.jpeg",
     content: "TopEdge AI's chatbots are remarkably human-like. Our customers often can't tell they're talking to an AI, and that's exactly what we wanted - seamless, natural interactions 24/7.",
     rating: 5,
     company: {
@@ -87,7 +102,7 @@ const TestimonialCard = ({ testimonial }: { testimonial: Testimonial }) => {
       className="relative group max-w-3xl mx-auto mb-12"
     >
       <div className="relative overflow-hidden rounded-3xl border border-white/10">
-        {/* Video Section */}
+      
         {testimonial.video && (
           <div className="relative w-full max-w-[600px] mx-auto overflow-hidden">
             <div className="aspect-video">
@@ -133,11 +148,14 @@ const TestimonialCard = ({ testimonial }: { testimonial: Testimonial }) => {
 
             {/* Author info */}
             <div className="flex items-center justify-center gap-4">
-              <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-purple-500/20">
+              <div className={
+                `relative rounded-full border-2 border-purple-500/20 ` +
+                (testimonial.name === "Emma Rodriguez" ? "w-20 h-20 overflow-visible" : "w-14 h-14 overflow-hidden")
+              }>
                 <img 
                   src={testimonial.image} 
                   alt={testimonial.name}
-                  className="w-full h-full object-cover"
+                  className={testimonial.name === "Emma Rodriguez" ? "w-full h-full object-contain" : "w-full h-full object-cover"}
                 />
               </div>
               <div className="text-center">
@@ -146,11 +164,17 @@ const TestimonialCard = ({ testimonial }: { testimonial: Testimonial }) => {
               </div>
               {testimonial.company.logo && (
                 <div className="ml-4 border-l border-white/10 pl-4">
-                  <img 
-                    src={testimonial.company.logo} 
-                    alt={testimonial.company.name}
-                    className="h-10 opacity-70 group-hover:opacity-100 transition-opacity"
-                  />
+                  <picture>
+  <source srcSet={testimonial.company.logo.replace(/\.(jpg|jpeg|png)$/i, '.webp')} type="image/webp" />
+  <img 
+    src={testimonial.company.logo} 
+    alt={testimonial.company.name}
+    className="h-10 opacity-70 group-hover:opacity-100 transition-opacity"
+    loading="lazy"
+    width={40}
+    height={40}
+  />
+</picture>
                 </div>
               )}
             </div>

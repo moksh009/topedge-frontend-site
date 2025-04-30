@@ -22,7 +22,7 @@ export const blogPosts2: BlogPost[] = [
         <li><strong>Turnover Troubles:</strong> High attrition rates lead to recurring recruitment and training expenses.</li>
         <li><strong>Quality Challenges:</strong> Inconsistent customer experiences impact brand reputation and retention.</li>
       </ul>
-      <p><em>Traditional models are no longer sustainable for growth-focused businesses in 2024.</em></p>
+      <p>Traditional models are no longer sustainable for growth-focused businesses in 2024.</p>
 
       <h2>Section 2: How TopEdge AI Callers Deliver Unmatched ROI</h2>
       <ul>
@@ -32,7 +32,7 @@ export const blogPosts2: BlogPost[] = [
         <li><strong>Built-in Quality Assurance:</strong> Consistent, brand-aligned messaging on every call.</li>
         <li><strong>Seamless Integration:</strong> Plug-and-play with your CRM, analytics, and support stack.</li>
       </ul>
-      <p>With TopEdge AI, businesses report <strong>85% lower operational costs</strong> and <strong>300% faster ROI</strong> compared to legacy systems.</p>
+      <p>With TopEdge AI, businesses report <strong>85% lower operational costs</strong> and <strong>proven ROI improvements</strong> compared to legacy systems.</p>
 
       <h2>Section 3: Real-World Success — Case Study</h2>
       <p><strong>Case Study: E-Commerce Giant Saves $2.5M Annually</strong></p>
@@ -281,7 +281,7 @@ export const blogPosts2: BlogPost[] = [
         <li>75% reduction in response times</li>
         <li>99% accuracy in customer intent recognition</li>
         <li>50% increase in customer satisfaction</li>
-        <li>300% ROI for early adopters</li>
+        <li>proven ROI improvements for early adopters</li>
       </ul>
     `
   }

@@ -82,7 +82,7 @@ const AdvancedChatbotSection = () => {
             <div className="relative w-full max-w-[500px] mx-auto lg:mx-0">
               {/* WhatsApp Image */}
               <motion.div 
-                className="absolute w-[200px] lg:w-[320px] left-1/2 lg:left-0 -translate-x-[60%] lg:translate-x-0 top-0 lg:top-20"
+                className="absolute w-[200px] lg:w-[320px] left-2 sm:left-1/2 lg:left-0 -translate-x-0 sm:-translate-x-[60%] lg:translate-x-0 top-0 lg:top-20"
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8 }}

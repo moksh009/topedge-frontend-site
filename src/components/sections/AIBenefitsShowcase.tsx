@@ -313,63 +313,7 @@ const AIBenefitsShowcase = () => {
                       </motion.div>
                     ))}
                   </div>
-
-                  {/* Expandable Content */}
-                  <AnimatePresence>
-                    {selectedBenefit === index && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="mt-8 pt-8 border-t border-theme-border-primary/5 space-y-8"
-                      >
-                        {/* Pain Points */}
-                        <div className="space-y-4">
-                          <h4 className="text-base font-semibold text-red-400/90 flex items-center gap-2 mb-4">
-                            <XCircle className="w-5 h-5" />
-                            Current Challenges
-                          </h4>
-                          <div className="grid gap-4 pl-2">
-                            {benefit.painPoints.map((point, i) => (
-                              <motion.div
-                                key={i}
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: i * 0.1 }}
-                                className="flex items-start gap-4"
-                              >
-                                <div className="w-1.5 h-1.5 rounded-full bg-red-400/80 mt-2 flex-shrink-0" />
-                                <p className="text-red-400/80 text-base leading-relaxed">{point}</p>
-                              </motion.div>
-                            ))}
-                          </div>
-                        </div>
-
-                        {/* Solutions */}
-                        <div className="space-y-4">
-                          <h4 className="text-base font-semibold text-emerald-400/90 flex items-center gap-2 mb-4">
-                            <CheckCircle2 className="w-5 h-5" />
-                            Our Solutions
-                          </h4>
-                          <div className="grid gap-4 pl-2">
-                            {benefit.solutions.map((solution, i) => (
-                              <motion.div
-                                key={i}
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: i * 0.1 + 0.3 }}
-                                className="flex items-start gap-4"
-                              >
-                                <div className="w-1.5 h-1.5 rounded-full bg-emerald-400/80 mt-2 flex-shrink-0" />
-                                <p className="text-emerald-400/80 text-base leading-relaxed">{solution}</p>
-                              </motion.div>
-                            ))}
-                          </div>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                  
                 </div>
               </motion.div>
             </motion.div>

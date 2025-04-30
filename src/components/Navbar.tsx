@@ -4,20 +4,28 @@ const navigation = [
   { name: 'About', href: '/about' },
   { name: 'Testimonials', href: '/testimonials' },
   { name: 'Contact', href: '/contact' },
+  { name: 'Pricing', href: '/pricing' },
+  
 ]; 
 
 const Navbar = () => {
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-theme-bg-primary/80 backdrop-blur-lg border-b border-theme-border-primary/10">
+    <nav className="fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-theme-bg-primary/80 backdrop-blur-lg border border-theme-border-primary/10 rounded-full shadow-lg px-4 py-2 w-auto max-w-[95vw] flex items-center transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20">
           {/* Logo and Brand */}
           <a href="/" className="flex items-center space-x-2 sm:space-x-3">
-            <img 
-              src="/logo.png" 
-              alt="TopEdge AI" 
-              className="w-10 h-10 sm:w-12 sm:h-12" // Increased mobile size
-            />
+            {/* Logo from public directory with fallback alt and style */}
+            <picture>
+              <source srcSet="/logo.webp" type="image/webp" />
+              <img 
+                src="/logo.png" 
+                alt="TopEdge AI Logo" 
+                className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0" 
+                style={{ minWidth: 40, minHeight: 40, objectFit: 'contain' }} 
+                onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => { e.currentTarget.src = '/favicon.ico'; }}
+              />
+            </picture>
             <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-theme-text-accent to-primary-dark bg-clip-text text-transparent">
               TopEdge AI
             </span>

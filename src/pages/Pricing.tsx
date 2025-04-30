@@ -10,7 +10,7 @@ import PricingCTA from '../components/sections/pricing/PricingCTA';
 const Pricing = () => {
   // Pricing page SEO metadata
   const seoTitle = 'Pricing Plans';
-  const seoDescription = 'Explore TopEdge AI’s transparent pricing plans for AI voice agents, chatbots, and automation solutions. Find the best plan for your business and maximize your ROI.';
+  const seoDescription = 'Explore TopEdge AI’s transparent pricing for advanced automation solutions. Find the best plan to streamline your business and deliver value to your customers.';
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
@@ -18,7 +18,7 @@ const Pricing = () => {
       <SEO
         title={seoTitle}
         description={seoDescription}
-        keywords="AI pricing, TopEdge AI plans, chatbot pricing, voice agent cost, automation solutions, business ROI, AI packages"
+        keywords="AI pricing, TopEdge AI plans, automation pricing, voice agent cost, automation solutions, business efficiency, AI packages"
         type="website"
       />
       {/* FAQPage Schema.org JSON-LD (dynamic) */}

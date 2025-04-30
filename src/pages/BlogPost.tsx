@@ -7,10 +7,11 @@ import { blogPosts2 } from '../data/blogPosts2';
 import { blogPosts3 } from '../data/blogPosts3';
 import { blogPosts4 } from '../data/blogPosts4';
 import { blogPosts5 } from '../data/blogPosts5';
+import blogPosts7 from '../data/blogPosts7';
 import { TwitterIcon, LinkedInIcon, FacebookIcon } from '../components/Icons';
 
 // Combine all blog posts
-const allBlogPosts = [...blogPosts, ...blogPosts2, ...blogPosts3, ...blogPosts4, ...blogPosts5];
+const allBlogPosts = [...blogPosts, ...blogPosts2, ...blogPosts3, ...blogPosts4, ...blogPosts5, blogPosts7];
 
 export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
@@ -30,7 +31,7 @@ export default function BlogPost() {
             <p className="text-[#94A3B8] mb-8">The blog post you're looking for doesn't exist.</p>
             <Link 
               to="/blog"
-              className="inline-flex items-center px-6 py-3 bg-[#F59E0B] text-[#0F172A] rounded-lg font-semibold hover:bg-[#FBBF24] transition-colors"
+              className="inline-flex items-center px-6 py-3 bg-[#F59E0B] text-[#0F172A] font-semibold hover:bg-[#FBBF24] transition-colors"
             >
               Return to Blog
             </Link>
@@ -154,7 +155,7 @@ export default function BlogPost() {
                 {post.category}
               </span>
               <h1 className="text-3xl md:text-4xl font-bold mb-6 text-gray-900 leading-tight">
-                {post.title} – TopEdge AI Blog | #1 AI Voice Agents & Chatbot Agency
+                {post.title} – TopEdge AI Blog | Expert Insights on AI Voice Agents & Chatbot Solutions
               </h1>
               <div className="flex gap-6 mb-4">
                 <a href="/" className="text-blue-600 underline font-semibold" title="TopEdge AI Home">TopEdge AI Home</a>

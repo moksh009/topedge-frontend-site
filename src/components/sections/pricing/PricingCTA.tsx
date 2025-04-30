@@ -43,7 +43,7 @@ const PricingCTA = () => {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
-            Flexible pricing options to match your business needs. Start with our free trial today.
+            Flexible pricing options to match your business needs.
           </motion.p>
 
           {/* Unified CTA Buttons */}
