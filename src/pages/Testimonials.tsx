@@ -80,7 +80,7 @@ const testimonials: Testimonial[] = [
     id: '1',
     name: "Jake Miller",
     role: "Realtor, US",
-    image: "/testi 1.jpeg", // replace with real profile photo if available
+    image: "/testi-1.jpeg", // replace with real profile photo if available
     content: "TopEdge’s AI Agent helped me secure 3 extra confirmed property visits in just one week—opportunities I would’ve completely missed. The AI follow-ups fixed my broken inquiry process and reactivated cold leads effortlessly. It’s like plugging in a powerhouse to your lead management system.",
     highlight: "3 EXTRA VIEWINGS IN ONE WEEK",
     rating: 5,
@@ -94,7 +94,7 @@ const testimonials: Testimonial[] = [
     id: '5',
     name: "Dr. Steven",
     role: "CX Specialist",
-    image: "testi 2.jpeg",
+    image: "/testi-2.jpeg",
     content: "Since using TopEdge AI Chat Agent, we've seen a 23% increase in inquiries and over 2% growth in conversion rates. Our Google reviews have also improved significantly. Their service is fast, friendly, and absolutely game-changing!",
     highlight: "23% INQUIRY GROWTH",
     rating: 5,
@@ -108,7 +108,7 @@ const testimonials: Testimonial[] = [
     id: '6',
     name: "Mr. Harold",
     role: "Harold Realtor",
-    image: "testi 3.jpeg",
+    image: "/testi-3.jpeg",
     content: "TopEdge AI Support Agents have transformed our outbound sales! We upload 100+ contacts daily, and with a 20% interest rate and an 8–10% conversion rate, the results speak for themselves. It saves us 3–4 hours daily — the setup was smooth, and the support team is stellar.",
     highlight: "3–4 HOURS SAVED DAILY",
     rating: 5,
