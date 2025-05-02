@@ -29,10 +29,10 @@ const testimonials: Testimonial[] = [
     name: "Dr. Steven Mugabe",
     role: "Lead Dentist at Code Clinic",
     video: {
-      url: "/steeven.mp4",
-      poster: "/images/testimonials/steven-mugabe-poster.jpg"
+      url: "/images/testimonials/steeven.mp4",
+      poster: "/images/testimonials/dr-steven.jpeg"
     },
-    content: "Integrating TopEdge AI into our practice has been a turning point. Our appointment scheduling is now fully automated, reducing admin workload by over 60%. Response times are nearly instant, and we’ve seen a 55% increase in patient satisfaction.",
+    content: "Integrating TopEdge AI into our practice has been a turning point. Our appointment scheduling is now fully automated, reducing admin workload by over 60%. Response times are nearly instant, and we've seen a 55% increase in patient satisfaction.",
     highlight: "60% LESS ADMIN WORK",
     rating: 5,
     industry: 'dentist',
@@ -46,10 +46,10 @@ const testimonials: Testimonial[] = [
     name: "Shubham Patel",
     role: "Realtor",
     video: {
-      url: "/shubham.mp4",
-      poster: "/images/testimonials/shubham-patel-poster.jpg"
+      url: "/images/testimonials/shubham.mp4",
+      poster: "/images/testimonials/jake-miller.jpeg"
     },
-    content: "TopEdge AI handles all my inbound leads automatically — answering questions, sharing property details, and sending brochures. As a realtor, it saves me hours daily and delivers only serious, high-intent clients. It’s like having a full-time lead manager that never takes a break.",
+    content: "TopEdge AI handles all my inbound leads automatically — answering questions, sharing property details, and sending brochures. As a realtor, it saves me hours daily and delivers only serious, high-intent clients. It's like having a full-time lead manager that never takes a break.",
     highlight: "24/7 LEAD MANAGEMENT",
     rating: 5,
     industry: 'realtor',
@@ -63,8 +63,8 @@ const testimonials: Testimonial[] = [
     name: "Sarah Johnson",
     role: "CEO at TechFlow",
     video: {
-      url: "/sarah.mp4",
-      poster: "/images/testimonials/sarah-johnson-poster.jpg"
+      url: "/images/testimonials/steeven.mp4",
+      poster: "/images/testimonials/dr-steven.jpeg"
     },
     content: "Implementing TopEdge AI has been a game-changer for our business. Our customer engagement is up 200% and our team can focus on strategic tasks while AI handles routine inquiries. The ROI has been incredible from day one.",
     highlight: "200% CUSTOMER ENGAGEMENT",
@@ -80,13 +80,13 @@ const testimonials: Testimonial[] = [
     id: '1',
     name: "Jake Miller",
     role: "Realtor, US",
-    image: "/testi-1.jpeg", // replace with real profile photo if available
-    content: "TopEdge’s AI Agent helped me secure 3 extra confirmed property visits in just one week—opportunities I would’ve completely missed. The AI follow-ups fixed my broken inquiry process and reactivated cold leads effortlessly. It’s like plugging in a powerhouse to your lead management system.",
+    image: "/images/testimonials/jake-miller.jpeg",
+    content: "TopEdge's AI Agent helped me secure 3 extra confirmed property visits in just one week—opportunities I would've completely missed. The AI follow-ups fixed my broken inquiry process and reactivated cold leads effortlessly. It's like plugging in a powerhouse to your lead management system.",
     highlight: "3 EXTRA VIEWINGS IN ONE WEEK",
     rating: 5,
     industry: 'realtor',
     company: {
-      logo: "/images/logos/techsolutions.png", // or leave null if no company branding
+      logo: "/images/logos/techsolutions.png",
       name: ""
     }
   },
@@ -94,7 +94,7 @@ const testimonials: Testimonial[] = [
     id: '5',
     name: "Dr. Steven",
     role: "CX Specialist",
-    image: "/testi-2.jpeg",
+    image: "/images/testimonials/dr-steven.jpeg",
     content: "Since using TopEdge AI Chat Agent, we've seen a 23% increase in inquiries and over 2% growth in conversion rates. Our Google reviews have also improved significantly. Their service is fast, friendly, and absolutely game-changing!",
     highlight: "23% INQUIRY GROWTH",
     rating: 5,
@@ -108,7 +108,7 @@ const testimonials: Testimonial[] = [
     id: '6',
     name: "Mr. Harold",
     role: "Harold Realtor",
-    image: "/testi-3.jpeg",
+    image: "/images/testimonials/harold.jpeg",
     content: "TopEdge AI Support Agents have transformed our outbound sales! We upload 100+ contacts daily, and with a 20% interest rate and an 8–10% conversion rate, the results speak for themselves. It saves us 3–4 hours daily — the setup was smooth, and the support team is stellar.",
     highlight: "3–4 HOURS SAVED DAILY",
     rating: 5,
@@ -123,7 +123,7 @@ const testimonials: Testimonial[] = [
     id: '5',
     name: "Jason Lee",
     role: "Head of Sales",
-    content: "TopEdge helped us automate follow-ups and track performance in real time. Our sales team's productivity has doubled, and we’re closing deals faster than ever.",
+    content: "TopEdge helped us automate follow-ups and track performance in real time. Our sales team's productivity has doubled, and we're closing deals faster than ever.",
     highlight: "2X SALES PRODUCTIVITY",
     rating: 5,
     industry: 'business',
@@ -149,7 +149,7 @@ const testimonials: Testimonial[] = [
     id: '7',
     name: "Noah Bennett",
     role: "Operations Manager",
-    content: "With TopEdge AI, we've cut down manual tasks by 70%. It’s allowed our team to focus on strategic growth instead of repetitive processes. A true productivity boost.",
+    content: "With TopEdge AI, we've cut down manual tasks by 70%. It's allowed our team to focus on strategic growth instead of repetitive processes. A true productivity boost.",
     highlight: "70% LESS MANUAL WORK",
     rating: 5,
     industry: 'business',
@@ -345,39 +345,17 @@ const TestimonialCard = ({ testimonial, isFirst }: { testimonial: Testimonial; i
                     ? { maxHeight: '1000px', overflow: 'visible', background: 'white' }
                     : { maxHeight: '1400px', overflow: 'visible' }
                 }>
-                
-                  <picture>
-                    <source srcSet={testimonial.image.replace(/\.(jpg|jpeg|png)$/i, '.webp')} type="image/webp" />
-                    <img 
-                      src={testimonial.image} 
-                      alt={testimonial.name} 
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                      width={800}
-                      height={800}
-                    />
-                  </picture>
+                  <img 
+                    src={testimonial.image} 
+                    alt={testimonial.name} 
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                    width={800}
+                    height={800}
+                  />
                 </div>
               </div>
-            )
-}
-          {/* Only show highlight if not video, or if video is unmuted (after first click) */}
-            {(!testimonial.video || (!firstClick && isPlaying)) && (
-              testimonial.name === "Dr. Steven" ? (
-                <div className="absolute -bottom-4 right-4 sm:right-4 z-10">
-                  <div className="px-4 sm:px-6 py-1.5 sm:py-2 bg-blue-600 text-white font-bold rounded-full shadow-lg text-base sm:text-lg">
-                    {testimonial.highlight}
-                  </div>
-                </div>
-              ) : (
-                <div className="absolute -bottom-4 left-4 sm:left-8 z-10">
-                  <div className="px-4 sm:px-6 py-1.5 sm:py-2 bg-theme-glow-primary rounded-full shadow-[0_0_20px_rgba(var(--glow-primary),0.3)]">
-                    <p className="text-sm sm:text-base font-bold text-theme-text-inverse tracking-wide whitespace-nowrap">{testimonial.highlight}</p>
-                  </div>
-                </div>
-              )
             )}
-
           </div>
         ) : (
           <div className="absolute top-6 right-8 text-theme-glow-primary/20 transform rotate-180">
@@ -423,7 +401,7 @@ const Testimonials = () => {
 
   return (
     <>
-      <SEO title="Testimonials" description="Hear from businesses and clients who have transformed their operations with TopEdge AI’s automation solutions—improving efficiency, customer experience, and business outcomes." />
+      <SEO title="Testimonials" description="Hear from businesses and clients who have transformed their operations with TopEdge AI's automation solutions—improving efficiency, customer experience, and business outcomes." />
       {/* BreadcrumbList Schema.org JSON-LD */}
       <script
         type="application/ld+json"

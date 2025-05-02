@@ -26,7 +26,7 @@ const testimonials: Testimonial[] = [
   {
     name: "Steven Mugabe",
     role: "Doctor at Code Clinic",
-    image: "/images/testimonials/steven-mugabe.jpg",
+    image: "/images/testimonials/dr-steven.jpeg",
     content: "TopEdge's AI solutions transformed our customer service. Response times dropped by 90% while satisfaction increased by 55%. It's like having a superhuman team that never sleeps.",
     rating: 5,
     company: {
@@ -34,29 +34,29 @@ const testimonials: Testimonial[] = [
       name: "Code Clinic"
     },
     video: {
-      url: "/steeven.mp4",
-      poster: "/images/testimonials/steven-mugabe-poster.jpg"
+      url: "/images/testimonials/steeven.mp4",
+      poster: "/images/testimonials/dr-steven.jpeg"
     }
   },
   {
     name: "Shubham Patel",
     role: "Realtor",
-    image: "/images/testimonials/shubham-patel.jpg",
-    content: "TopEdge AI has completely changed how I manage inbound leads. As a realtor running ads across platforms, I get a lot of inquiries—and my Inbound Voice Agent (Edge V2 Model) handles them all. It answers questions, shares property info, and even sends brochures automatically. Now I only deal with high-intent clients, saving hours every day. It’s like having a 24/7 lead manager that never misses a beat.",
+    image: "/images/testimonials/jake-miller.jpeg",
+    content: "TopEdge AI has completely changed how I manage inbound leads. As a realtor running ads across platforms, I get a lot of inquiries—and my Inbound Voice Agent (Edge V2 Model) handles them all. It answers questions, shares property info, and even sends brochures automatically. Now I only deal with high-intent clients, saving hours every day. It's like having a 24/7 lead manager that never misses a beat.",
     rating: 5,
     company: {
       logo: "/images/logos/your-realty-logo.png",
       name: "Patel Realty"
     },
     video: {
-      url: "/shubham.mp4",
-      poster: "/images/testimonials/shubham-patel-poster.jpg"
+      url: "/images/testimonials/shubham.mp4",
+      poster: "/images/testimonials/jake-miller.jpeg"
     }
   },
   {
     name: "Sarah Johnson",
     role: "CEO at TechFlow",
-    image: "/images/testimonials/sarah-johnson.jpg",
+    image: "/images/testimonials/harold.jpeg",
     content: "Implementing TopEdge AI has been a game-changer for our business. Our customer engagement is up 200% and our team can focus on strategic tasks while AI handles routine inquiries.",
     rating: 5,
     company: {
@@ -67,7 +67,7 @@ const testimonials: Testimonial[] = [
   {
     name: "Michael Chen",
     role: "Operations Director at InnovateCorp",
-    image: "testi 3.jpeg",
+    image: "/images/testimonials/jake-miller.jpeg",
     content: "The ROI with TopEdge AI has been incredible. We've seen a 40% reduction in operational costs and our customer satisfaction scores have never been higher.",
     rating: 5,
     company: {
@@ -78,7 +78,7 @@ const testimonials: Testimonial[] = [
   {
     name: "Emma Rodriguez",
     role: "Support Manager at CloudScale",
-    image: "testi 4.jpeg",
+    image: "/images/testimonials/dr-steven.jpeg",
     content: "TopEdge AI's chatbots are remarkably human-like. Our customers often can't tell they're talking to an AI, and that's exactly what we wanted - seamless, natural interactions 24/7.",
     rating: 5,
     company: {
@@ -164,17 +164,14 @@ const TestimonialCard = ({ testimonial }: { testimonial: Testimonial }) => {
               </div>
               {testimonial.company.logo && (
                 <div className="ml-4 border-l border-white/10 pl-4">
-                  <picture>
-  <source srcSet={testimonial.company.logo.replace(/\.(jpg|jpeg|png)$/i, '.webp')} type="image/webp" />
-  <img 
-    src={testimonial.company.logo} 
-    alt={testimonial.company.name}
-    className="h-10 opacity-70 group-hover:opacity-100 transition-opacity"
-    loading="lazy"
-    width={40}
-    height={40}
-  />
-</picture>
+                  <img 
+                    src={testimonial.company.logo} 
+                    alt={testimonial.company.name}
+                    className="h-10 opacity-70 group-hover:opacity-100 transition-opacity"
+                    loading="lazy"
+                    width={40}
+                    height={40}
+                  />
                 </div>
               )}
             </div>
