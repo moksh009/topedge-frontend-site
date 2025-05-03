@@ -98,11 +98,10 @@ export class EmailService {
         const response = await axios.post(url, details, {
           headers: {
             'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'Origin': window.location.origin
+            'Accept': 'application/json'
           },
-          timeout: 15000,
-          withCredentials: true,
+          timeout: 30000,
+          withCredentials: false,
           validateStatus: (status) => status >= 200 && status < 500
         });
 

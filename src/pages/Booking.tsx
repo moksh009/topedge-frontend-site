@@ -8,6 +8,7 @@ import { BookingDetails, emailService } from '../services/emailService';
 import { DayPicker, SelectSingleEventHandler } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 import { utcToZonedTime, formatInTimeZone } from 'date-fns-tz';
+import Footer from '../components/Footer';
 
 interface Service {
   id: string;
@@ -508,7 +509,7 @@ const scrollbarStyles = `
 const Booking = () => {
   // Booking page SEO metadata
   const seoTitle = 'Book a Demo';
-  const seoDescription = 'Schedule a personalized demo with TopEdge AI’s experts. Discover how our AI voice and chatbot solutions can boost your business ROI and automate customer engagement.';
+  const seoDescription = `Schedule a personalized demo with TopEdge AI's experts. Discover how our AI voice and chatbot solutions can boost your business ROI and automate customer engagement.`;
 
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const [selectedTime, setSelectedTime] = useState<string>('');
@@ -975,6 +976,7 @@ Book For Discussion
             </motion.form>
           </div>
         </div>
+        <Footer />
       </motion.div>
     </LayoutGroup>
   );

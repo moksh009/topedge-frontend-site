@@ -1146,7 +1146,7 @@ P.S. Most of our clients see positive ROI within the first month!`;
   <PremiumButton
     icon={ChevronRight}
     text="Get Details"
-    onClick={() => handleGetMaintenancePrice(plan.name, 'voice')}
+    onClick={() => handleGetMaintenancePrice(plan.name, 'chatbot')}
     variant={index === 0 ? 'purple' : index === 1 ? 'green' : 'red'}
   />
 </div>

@@ -14,22 +14,21 @@
 # Enable CORS headers
 [[headers]]
   for = "/*"
-    [headers.values]
-    Access-Control-Allow-Origin = "https://topedge-backend.netlify.app"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
     Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
-    Access-Control-Allow-Headers = "Content-Type, Authorization, Accept"
-    Access-Control-Allow-Credentials = "true"
+    Access-Control-Allow-Headers = "Origin, X-Requested-With, Content-Type, Accept, Authorization"
     X-Frame-Options = "DENY"
     X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Content-Security-Policy = """
       default-src 'self';
-      script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.daily.co https://*.firebaseapp.com https://*.googleapis.com https://*.sentry.io https://apis.google.com;
+      script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.daily.co https://*.firebaseapp.com https://*.googleapis.com https://*.sentry.io;
       style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-      img-src 'self' data: https://*.daily.co https://*.firebaseapp.com https://*.googleapis.com https://upload.wikimedia.org https://upload.wikimedia.org/wikipedia/commons https://media.licdn.com https://www.shutterstock.com https://www.shutterstock.com/image-photo https://www.facebook.com https://telegram.org;
+      img-src 'self' data: https://*.daily.co https://*.firebaseapp.com https://*.googleapis.com;
       font-src 'self' https://fonts.gstatic.com;
-      connect-src 'self' https://api.vapi.ai https://*.daily.co https://*.firebaseapp.com https://*.googleapis.com https://*.sentry.io wss://*.daily.co https://topedge-backend.netlify.app;
+      connect-src 'self' https://*.daily.co https://*.firebaseapp.com https://*.googleapis.com https://*.sentry.io wss://*.daily.co https://topedge-backend.netlify.app;
       frame-src 'self' https://*.daily.co https://*.firebaseapp.com;
       media-src 'self' https://*.daily.co;
     """
@@ -47,4 +46,8 @@
 
 [build.processing.images]
   compress = true
-  optimize = true 
+  optimize = true
+
+[context.production.environment]
+  NODE_ENV = "production"
+  VITE_API_URL = "https://topedge-backend.netlify.app" 
