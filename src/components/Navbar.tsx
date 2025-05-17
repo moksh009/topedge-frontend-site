@@ -1,3 +1,6 @@
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+
 const navigation = [
   { name: 'Home', href: '/' },
   { name: 'Services', href: '/services' },
@@ -5,55 +8,63 @@ const navigation = [
   { name: 'Testimonials', href: '/testimonials' },
   { name: 'Contact', href: '/contact' },
   { name: 'Pricing', href: '/pricing' },
-  
-]; 
+];
 
 const Navbar = () => {
+  const [scrolled, setScrolled] = useState(false);
+  const router = typeof window !== 'undefined' ? window.location.pathname : '';
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.innerWidth >= 768) {
+        setScrolled(window.scrollY > 24);
+      } else {
+        setScrolled(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleScroll);
+    handleScroll();
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
+  }, []);
+
+  // Special style for /landing page
+  const isLanding = typeof window !== 'undefined' && window.location.pathname === '/landing';
+
   return (
-    <nav className="fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-theme-bg-primary/80 backdrop-blur-lg border border-theme-border-primary/10 rounded-full shadow-lg px-4 py-2 w-auto max-w-[95vw] flex items-center transition-all duration-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 sm:h-20">
-          {/* Logo and Brand */}
-          <a href="/" className="flex items-center space-x-2 sm:space-x-3">
-            {/* Logo from public directory with fallback alt and style */}
-            <picture>
-              <source srcSet="/logo.webp" type="image/webp" />
-              <img 
-                src="/logo.png" 
-                alt="TopEdge AI Logo" 
-                className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0" 
-                style={{ minWidth: 40, minHeight: 40, objectFit: 'contain' }} 
-                onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => { e.currentTarget.src = '/favicon.ico'; }}
-              />
-            </picture>
-            <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-theme-text-accent to-primary-dark bg-clip-text text-transparent">
-              TopEdge AI
-            </span>
-          </a>
-
-          {/* Navigation Links */}
-          <div className="hidden md:flex items-center space-x-8">
-            {navigation.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className="text-theme-text-secondary hover:text-theme-text-accent transition-colors duration-200"
-              >
-                {item.name}
-              </a>
-            ))}
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button className="md:hidden p-2 rounded-lg hover:bg-theme-bg-secondary/20 transition-colors duration-200">
-            <svg className="w-6 h-6 text-theme-text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
+    <nav
+      className={`
+        fixed left-0 top-0 w-full z-50 transition-all duration-500
+        ${isLanding ?
+          'bg-[#101e3a]/95 text-white shadow-lg border-b border-blue-900' :
+          'bg-white/90 text-blue-900 shadow-md border-b border-gray-100'
+        }
+      `}
+    >
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-3">
+        <a href="/" className="flex items-center gap-2">
+          <img src="/logo.png" alt="TopEdge AI Logo" className="w-9 h-9" />
+          <span className={`font-bold text-xl tracking-tight ${isLanding ? 'text-white' : 'text-blue-900'}`}>TopEdge <span className={isLanding ? 'text-blue-300' : 'text-blue-600'}>AI</span></span>
+        </a>
+        <div className="hidden md:flex gap-8 items-center">
+          {navigation.map((item) => (
+            <a
+              key={item.name}
+              href={item.href}
+              className={`font-medium transition-colors text-base ${isLanding ? 'text-white hover:text-blue-200' : 'text-blue-900 hover:text-blue-600'}`}
+            >
+              {item.name}
+            </a>
+          ))}
         </div>
+        <a href="#" className={`ml-4 px-6 py-2 rounded-full font-semibold shadow transition-colors text-base
+          ${isLanding ? 'bg-gradient-to-r from-blue-500 to-blue-400 text-white hover:from-blue-600 hover:to-blue-500' : 'bg-gradient-to-r from-blue-500 to-blue-400 text-white hover:from-blue-600 hover:to-blue-500'}`}>Book Appointment</a>
       </div>
     </nav>
   );
-}; 
+};
 
 export default Navbar; 

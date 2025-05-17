@@ -43,7 +43,7 @@ const nextConfig = {
           },
           {
             key: 'Content-Security-Policy',
-            value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' player.vimeo.com *.vimeocdn.com; frame-src 'self' player.vimeo.com; img-src 'self' data: *.vimeocdn.com; style-src 'self' 'unsafe-inline'; connect-src 'self' player.vimeo.com *.vimeocdn.com"
+            value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' player.vimeo.com *.vimeocdn.com https://*.daily.co https://*.firebaseapp.com https://*.googleapis.com https://*.sentry.io; frame-src 'self' player.vimeo.com https://*.daily.co https://*.firebaseapp.com; img-src 'self' data: *.vimeocdn.com https://*.wikimedia.org https://*.licdn.com https://*.shutterstock.com https://*.vapi.ai; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; connect-src 'self' player.vimeo.com *.vimeocdn.com https://*.daily.co https://*.firebaseapp.com https://*.googleapis.com https://*.sentry.io https://*.vapi.ai https://api.vapi.ai wss://*.daily.co https://topedge-backend.netlify.app"
           }
         ]
       },

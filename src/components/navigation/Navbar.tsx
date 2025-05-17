@@ -112,7 +112,7 @@ const Navbar = () => {
         <AnimatePresence>
   <motion.div
     className={
-      `md:hidden flex fixed top-5 left-0 right-0 mx-auto w-[94vw] max-w-xl items-center justify-between z-50 ${scrolled ? 'rounded-full bg-white shadow-lg px-4 py-2' : 'rounded-2xl bg-white/80 px-4 py-2 border border-gray-200'} mt-2`
+      `md:hidden flex fixed top-2 left-0 right-0 mx-auto w-[96vw] max-w-xl items-center justify-between z-50 ${scrolled ? 'rounded-full bg-white shadow-lg px-4 py-3' : 'rounded-2xl bg-white/90 px-4 py-3 border border-gray-200 shadow-md'} mt-1`
     }
     initial={{ opacity: 0, y: -20 }}
     animate={{ opacity: 1, y: 0 }}
@@ -138,7 +138,7 @@ const Navbar = () => {
       animate={{ opacity: 1, y: 12, scale: 1 }}
       exit={{ opacity: 0, y: -16, scale: 0.97 }}
       transition={{ duration: 0.24, ease: 'easeOut' }}
-      className="md:hidden flex flex-col items-center absolute left-[30%] top-16 -translate-x-[40%] w-[65vw] max-w-xs bg-white rounded-3xl shadow-2xl py-6 px-4 z-50"
+      className="md:hidden flex flex-col items-center fixed left-1/2 top-20 -translate-x-1/2 w-[85vw] max-w-xs bg-white rounded-3xl shadow-2xl py-6 px-4 z-50"
       style={{ boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.15)' }}
     >
       {navItems.map((item, i) => (

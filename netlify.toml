@@ -26,9 +26,9 @@
       default-src 'self';
       script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.daily.co https://*.firebaseapp.com https://*.googleapis.com https://*.sentry.io;
       style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-      img-src 'self' data: https://*.daily.co https://*.firebaseapp.com https://*.googleapis.com;
+      img-src 'self' data: https://*.daily.co https://*.firebaseapp.com https://*.googleapis.com https://*.wikimedia.org https://*.licdn.com https://*.shutterstock.com https://*.vapi.ai;
       font-src 'self' https://fonts.gstatic.com;
-      connect-src 'self' https://*.daily.co https://*.firebaseapp.com https://*.googleapis.com https://*.sentry.io wss://*.daily.co https://topedge-backend.netlify.app;
+      connect-src 'self' https://*.daily.co https://*.firebaseapp.com https://*.googleapis.com https://*.sentry.io https://*.vapi.ai https://api.vapi.ai wss://*.daily.co https://topedge-backend.netlify.app;
       frame-src 'self' https://*.daily.co https://*.firebaseapp.com;
       media-src 'self' https://*.daily.co;
     """

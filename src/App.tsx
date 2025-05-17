@@ -7,6 +7,7 @@ import Navbar from './components/navigation/Navbar';
 import FloatingVoiceChat from './components/FloatingVoiceChat';
 import Footer from './components/Footer';
 import Home from './pages/Home';
+import Landing from './pages/Landing';
 const About = React.lazy(() => import('./pages/About'));
 const Services = React.lazy(() => import('./pages/Services'));
 const Contact = React.lazy(() => import('./pages/Contact'));
@@ -91,6 +92,7 @@ const App: React.FC = () => {
                       </ProtectedRoute>
                     } 
                   />
+                  <Route path="/landing" element={<Landing />} />
                 </Routes>
               </React.Suspense>
             </main>
