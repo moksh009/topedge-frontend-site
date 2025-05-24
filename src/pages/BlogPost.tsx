@@ -7,11 +7,28 @@ import { blogPosts2 } from '../data/blogPosts2';
 import { blogPosts3 } from '../data/blogPosts3';
 import { blogPosts4 } from '../data/blogPosts4';
 import { blogPosts5 } from '../data/blogPosts5';
+import { blogPosts6 } from '../data/blogPosts6';
 import blogPosts7 from '../data/blogPosts7';
 import { TwitterIcon, LinkedInIcon, FacebookIcon } from '../components/Icons';
 
-// Combine all blog posts
-const allBlogPosts = [...blogPosts, ...blogPosts2, ...blogPosts3, ...blogPosts4, ...blogPosts5, blogPosts7];
+// Define the BlogPost type to match the structure of blog posts
+type BlogPost = {
+  id: number;
+  title: string;
+  description: string;
+  slug: string;
+  date: string;
+  readTime: string;
+  category: string;
+  author: string;
+  image: string;
+  imageAlt: string;
+  keywords: string[];
+  content: string;
+};
+
+// Combine all blog posts and ensure proper type casting
+const allBlogPosts = [...blogPosts, ...blogPosts2, ...blogPosts3, ...blogPosts4, ...blogPosts5, ...blogPosts6, ...(Array.isArray(blogPosts7) ? blogPosts7 : [blogPosts7])] as BlogPost[];
 
 export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();

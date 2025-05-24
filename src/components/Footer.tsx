@@ -210,6 +210,11 @@ const Footer = () => {
                   Book Demo
                 </Link>
               </li>
+              <li>
+                <Link to="/privacy-policy" className="text-theme-text-secondary hover:text-theme-text-accent transition-colors">
+                  Privacy Policy
+                </Link>
+              </li>
             </ul>
           </div>
         </div>

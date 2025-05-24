@@ -6,6 +6,7 @@ import { ThemeProvider } from './contexts/ThemeContext';
 import Navbar from './components/navigation/Navbar';
 import FloatingVoiceChat from './components/FloatingVoiceChat';
 import Footer from './components/Footer';
+import MetaPixel from './components/MetaPixel';
 import Home from './pages/Home';
 import Landing from './pages/Landing';
 const About = React.lazy(() => import('./pages/About'));
@@ -16,6 +17,7 @@ const Pricing = React.lazy(() => import('./pages/Pricing'));
 const Blog = React.lazy(() => import('./pages/Blog'));
 const BlogPost = React.lazy(() => import('./pages/BlogPost'));
 const ROI = React.lazy(() => import('./pages/ROI'));
+const PrivacyPolicy = React.lazy(() => import('./pages/PrivacyPolicy'));
 const MaintenanceInquiries = React.lazy(() => import('./components/admin/MaintenanceInquiries').then(module => ({ default: module.MaintenanceInquiries })));
 const Login = React.lazy(() => import('./components/admin/Login').then(module => ({ default: module.Login })));
 import { ProtectedRoute } from './components/admin/ProtectedRoute';
@@ -43,6 +45,7 @@ const App: React.FC = () => {
       <ThemeProvider>
         <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
           <ScrollToTop />
+          <MetaPixel />
           <div className="min-h-screen bg-background text-text transition-colors duration-200 relative">
             <Helmet>
               <title>TopEdge AI - Advanced AI Voice Agents & Chatbots</title>
@@ -83,6 +86,7 @@ const App: React.FC = () => {
                   <Route path="/roi" element={<ROI />} />
                   <Route path="/blog" element={<Blog />} />
                   <Route path="/blog/:slug" element={<BlogPost />} />
+                  <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                   <Route path="/admin/login" element={<Login />} />
                   <Route 
                     path="/admin/maintenance-inquiries" 

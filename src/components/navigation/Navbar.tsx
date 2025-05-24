@@ -138,7 +138,7 @@ const Navbar = () => {
       animate={{ opacity: 1, y: 12, scale: 1 }}
       exit={{ opacity: 0, y: -16, scale: 0.97 }}
       transition={{ duration: 0.24, ease: 'easeOut' }}
-      className="md:hidden flex flex-col items-center fixed left-1/2 top-20 -translate-x-1/2 w-[85vw] max-w-xs bg-white rounded-3xl shadow-2xl py-6 px-4 z-50"
+      className="md:hidden flex flex-col items-center fixed left-44 top-20 -translate-x-1/2 w-[55vw] max-w-xs bg-white rounded-3xl shadow-2xl py-6 px-4 z-50"
       style={{ boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.15)' }}
     >
       {navItems.map((item, i) => (

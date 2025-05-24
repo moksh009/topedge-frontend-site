@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon.png" />
     <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="shortcut icon" href="/favicon.ico" />
@@ -14,6 +14,20 @@
     <link rel="preload" as="style" href="/src/index.css" />
     <meta name="description" content="Automate your business with TopEdge AI's intelligent voice agents, WhatsApp automation, and Instagram chatbots. Boost leads, reduce manual work by 85%, and enhance customer satisfaction with 24/7 smart support." />
     <meta name="keywords" content="AI, Voice Agent, Chatbot, WhatsApp Automation, Instagram Chatbot, Business Automation, ROI, Customer Satisfaction, TopEdge AI">
+    <!-- Meta Pixel Code -->
+    <script>
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n; n.push=n; n.loaded=!0; n.version='2.0';
+      n.queue=[]; t=b.createElement(e); t.async=!0;
+      t.src=v; s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '2160932677677176');
+      fbq('track', 'PageView');
+    </script>
+    <!-- End Meta Pixel Code -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -42,6 +56,12 @@
 </script>
   </head>
   <body>
+    <!-- Meta Pixel Code (noscript) -->
+    <noscript>
+      <img height="1" width="1" style="display:none"
+      src="https://www.facebook.com/tr?id=2160932677677176&ev=PageView&noscript=1"/>
+    </noscript>
+    <!-- End Meta Pixel Code (noscript) -->
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
