@@ -66,22 +66,6 @@ const PricingCTA = () => {
           >
             <DollarSign className="w-14 h-14" />
           </motion.div>
-          {/* Sparkles - right center */}
-          <motion.div
-            className="absolute right-10 top-1/3 text-blue-400/20"
-            animate={{ y: [-12, 12, -12], rotate: [0, 360, 0] }}
-            transition={{ duration: 14, repeat: Infinity, ease: "linear" }}
-          >
-            <Sparkles className="w-12 h-12" />
-          </motion.div>
-          {/* Gem - bottom left */}
-          <motion.div
-            className="absolute left-20 bottom-16 text-purple-400/20"
-            animate={{ x: [0, 12, 0], rotate: [0, 180, 0] }}
-            transition={{ duration: 16, repeat: Infinity, ease: "linear" }}
-          >
-            <Gem className="w-12 h-12" />
-          </motion.div>
         </div>
 
         {/* Decorative elements */}

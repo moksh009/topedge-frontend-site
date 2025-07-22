@@ -70,20 +70,6 @@ const AICallerSection = () => {
         >
           <Phone className="w-20 h-20" />
         </motion.div>
-        <motion.div
-          className="absolute right-32 top-1/3 text-yellow-400/40"
-          animate={{ x: [8, -8, 8], rotate: [0, -180, 0] }}
-          transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
-        >
-          <Waves className="w-16 h-16" />
-        </motion.div>
-        <motion.div
-          className="absolute left-1/3 bottom-20 text-emerald-400/40"
-          animate={{ y: [12, -12, 12], rotate: [0, 180, 0] }}
-          transition={{ duration: 14, repeat: Infinity, ease: "linear" }}
-        >
-          <Bot className="w-16 h-16" />
-        </motion.div>
       </div>
 
       {/* Content Container */}

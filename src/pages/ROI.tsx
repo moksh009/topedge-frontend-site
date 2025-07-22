@@ -287,11 +287,6 @@ export default function ROICalculator() {
       <div className="absolute inset-0 z-0">
         {/* Decorative Lucide icons background for ROI Calculator */}
         <DollarSign className="absolute top-16 left-24 w-24 h-24 text-green-400 opacity-40 rotate-12 pointer-events-none" />
-        <BarChart2 className="absolute bottom-24 right-32 w-20 h-20 text-blue-400 opacity-40 -rotate-6 pointer-events-none" />
-        <TrendingUp className="absolute top-1/2 left-8 w-16 h-16 text-purple-400 opacity-40 rotate-12 pointer-events-none" />
-        <Calculator className="absolute bottom-10 left-40 w-24 h-24 text-yellow-400 opacity-40 pointer-events-none" />
-        <PieChart className="absolute top-28 right-1/4 w-16 h-16 text-pink-400 opacity-40 pointer-events-none" />
-        <PiggyBank className="absolute bottom-1/4 right-12 w-20 h-20 text-indigo-400 opacity-40 pointer-events-none" />
         {/* End Decorative Lucide icons */}
       </div>
 

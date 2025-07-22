@@ -39,20 +39,6 @@ export const ChatbotProcess = () => {
         >
           <Bot className="w-16 h-16 text-purple-400/15" />
         </motion.div>
-        <motion.div
-          className="absolute right-20 top-1/2"
-          animate={{ y: [20, -20, 20], rotate: [360, 0] }}
-          transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
-        >
-          <MessageSquare className="w-20 h-20 text-blue-400/15" />
-        </motion.div>
-        <motion.div
-          className="absolute left-1/2 bottom-20 -translate-x-1/2"
-          animate={{ y: [15, -15, 15], rotate: [0, 360] }}
-          transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }}
-        >
-          <Database className="w-16 h-16 text-theme-glow-accent/15" />
-        </motion.div>
       </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Title */}

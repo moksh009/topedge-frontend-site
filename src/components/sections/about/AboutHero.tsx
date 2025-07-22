@@ -104,14 +104,10 @@ const AboutHero: React.FC = () => {
         {/* Floating orbs removed, only grid and icons remain */}
 
         <div className="absolute inset-0 pointer-events-none">
+          {/* Only Bot and Building2 icons remain for subtle background effect */}
           {[
             { Icon: Bot, color: 'text-blue-500/30', delay: 0, top: '20%', left: '15%' },
-            { Icon: Brain, color: 'text-yellow-400/30', delay: 1, top: '40%', left: '70%' },
-            { Icon: Cpu, color: 'text-purple-500/30', delay: 0, top: '85%', left: '30%' },
-            { Icon: TrendingUp, color: 'text-emerald-500/30', delay: 1, top: '55%', left: '80%' },
-            { Icon: Zap, color: 'text-rose-500/30', delay: 0, top: '75%', left: '55%' },
-            { Icon: Building2, color: 'text-rose-500/30', delay: 0, top: '45%', left: '15%' },
-            { Icon: Users2, color: 'text-purple-500/30', delay: 1, top: '15%', left: '85%' }
+            { Icon: Building2, color: 'text-rose-500/30', delay: 0, top: '45%', left: '15%' }
           ].map(({ Icon, color, delay, top, left }, index) => (
             <motion.div
               key={index}

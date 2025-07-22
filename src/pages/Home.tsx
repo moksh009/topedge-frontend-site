@@ -16,6 +16,7 @@ import AutomationAppsShowcase from '../components/sections/AutomationAppsShowcas
 import AICallerSection from '../components/sections/AICallerSection';
 import AdvancedChatbotSection from '../components/sections/AdvancedChatbotSection';
 import AIBenefitsShowcase from '../components/sections/AIBenefitsShowcase';
+import ProblemsSolutionsSection from '../components/sections/home/ProblemsSolutionsSection';
 
 import ROICalculator from '../components/sections/pricing/ROICalculator';
 
@@ -173,6 +174,7 @@ const Home = () => {
       <div className="relative z-10">
         <h1 className="sr-only">TopEdge AI</h1>
       <HeroSection />
+      <ProblemsSolutionsSection />
         <div className="relative bg-theme-bg-primary">
           
           {/* <div className="-mt-16 sm:mt-8 md:mt-16">

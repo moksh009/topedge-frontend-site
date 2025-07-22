@@ -146,66 +146,6 @@ const PricingHero = () => {
       duration: 8,
       scale: 1
     },
-    { 
-      Icon: Gem, 
-      size: 84, 
-      brightness: 0.5, 
-      color: '#9F7AEA', 
-      position: { top: '15%', right: '12%' }, 
-      rotation: -20,
-      delay: 0.3,
-      floatRange: 25,
-      duration: 7.5,
-      scale: 0.9
-    },
-    { 
-      Icon: Coins, 
-      size: 64, 
-      brightness: 0.95, 
-      color: '#F6E05E', 
-      position: { bottom: '30%', left: '20%' }, 
-      rotation: 25,
-      delay: 0.4,
-      floatRange: 20,
-      duration: 7,
-      scale: 1
-    },
-    { 
-      Icon: Wallet, 
-      size: 48, 
-      brightness: 0.85, 
-      color: '#B794F4', 
-      position: { bottom: '20%', right: '25%' }, 
-      rotation: -15,
-      delay: 0.5,
-      floatRange: 15,
-      duration: 6.5,
-      scale: 1
-    },
-    { 
-      Icon: DollarSignIcon, 
-      size: 60, 
-      brightness: 0.8, 
-      color: '#FBD38D', 
-      position: { top: '60%', left: '15%' }, 
-      rotation: 30,
-      delay: 0.6,
-      floatRange: 20,
-      duration: 7.5,
-      scale: 1
-    },
-    {
-      Icon: CreditCard,
-      size: 72,
-      brightness: 0.85,
-      color: '#38BDF8',
-      position: { top: '40%', right: '10%' },
-      rotation: -10,
-      delay: 0.7,
-      floatRange: 18,
-      duration: 8,
-      scale: 1
-    },
     {
       Icon: DollarSign,
       size: 60,

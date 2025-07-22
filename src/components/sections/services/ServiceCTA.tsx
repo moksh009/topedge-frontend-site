@@ -13,20 +13,6 @@ export const ServiceCTA = () => {
         >
           <Bot className="w-20 h-20 text-purple-400" />
         </motion.div>
-        <motion.div
-          className="absolute right-16 top-32"
-          animate={{ y: [40, -40, 40], rotate: [360, 0] }}
-          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-        >
-          <Brain className="w-24 h-24 text-yellow-400" />
-        </motion.div>
-        <motion.div
-          className="absolute left-1/4 top-80 -translate-x-1/2"
-          animate={{ y: [40, -40, 40], rotate: [360, 0] }}
-          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-        >
-          <Zap className="w-16 h-16 text-red-500 bg-gradient-to-br from-red-400 to-red-600 bg-clip-text text-transparent" />
-        </motion.div>
       </div>
 
       <motion.div 

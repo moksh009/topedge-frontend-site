@@ -134,11 +134,6 @@ const Contact = () => {
         <div className="absolute inset-0 z-0">
           {/* Decorative Lucide icons background */}
           <Mail className="absolute top-16 left-24 w-24 h-24 text-purple-300 opacity-40 rotate-12 pointer-events-none" />
-          <Phone className="absolute bottom-24 right-32 w-20 h-20 text-blue-300 opacity-40 rotate-6 pointer-events-none" />
-          <User className="absolute top-1/2 left-8 w-16 h-16 text-pink-300 opacity-40 rotate-12 pointer-events-none" />
-          <Building2 className="absolute bottom-10 left-40 w-24 h-24 text-green-300 opacity-40 pointer-events-none" />
-          <Send className="absolute top-28 right-1/4 w-16 h-16 text-yellow-300 opacity-40 pointer-events-none" />
-          <CheckCircle2 className="absolute bottom-1/4 right-12 w-20 h-20 text-indigo-300 opacity-40 pointer-events-none" />
           {/* End Decorative Lucide icons */}
           <motion.div 
             className="absolute top-0 right-0 w-[800px] h-[800px] bg-theme-glow-primary/10 rounded-full blur-[120px]"

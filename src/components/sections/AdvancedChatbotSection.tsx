@@ -58,20 +58,6 @@ const AdvancedChatbotSection = () => {
         >
           <MessageSquare className="w-20 h-20" />
         </motion.div>
-        <motion.div
-          className="absolute right-24 top-1/2 text-yellow-400/50"
-          animate={{ x: [8, -8, 8], rotate: [0, -180, 0] }}
-          transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
-        >
-          <Sparkles className="w-16 h-16" />
-        </motion.div>
-        <motion.div
-          className="absolute right-1/4 bottom-40 text-emerald-400/50"
-          animate={{ y: [12, -12, 12], rotate: [0, 180, 0] }}
-          transition={{ duration: 14, repeat: Infinity, ease: "linear" }}
-        >
-          <User className="w-16 h-16" />
-        </motion.div>
       </div>
 
       {/* Content Container */}

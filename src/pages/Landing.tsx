@@ -224,11 +224,6 @@ const Landing = () => {
     }
   };
 
-  // Function to trigger a test event for Meta Pixel
-  const triggerMetaPixelTestEvent = () => {
-    trackLead('landing_page_test');
-    alert('Meta Pixel test event "Lead" triggered. Check Facebook Pixel Helper for confirmation.');
-  };
 
   // Function to scroll to a specific section by ID
   const scrollToSection = (sectionId: string) => {
@@ -971,21 +966,7 @@ Watch this quick video for details 👇
         
       </section>
       
-      {/* Test Meta Pixel Button (for development only) */}
-      <section className="py-8 bg-gray-50 border-t border-gray-200">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col items-center">
-            <h3 className="text-lg font-semibold mb-4">Meta Pixel Testing</h3>
-            <button 
-              onClick={triggerMetaPixelTestEvent}
-              className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg transition-colors"
-            >
-              Test Meta Pixel Event
-            </button>
-            <p className="text-sm text-gray-500 mt-2">Click to trigger a test "Lead" event for Meta Pixel</p>
-          </div>
-        </div>
-      </section>
+
     </>
   );
 };

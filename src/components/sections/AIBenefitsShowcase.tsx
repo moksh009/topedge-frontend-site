@@ -166,20 +166,6 @@ const AIBenefitsShowcase = () => {
         >
           <Bot className="w-20 h-20" />
         </motion.div>
-        <motion.div
-          className="absolute right-40 bottom-20 text-yellow-400/20"
-          animate={{ y: [10, -10, 10], rotate: [0, -360, 0] }}
-          transition={{ duration: 13, repeat: Infinity, ease: "linear" }}
-        >
-          <Sparkles className="w-16 h-16" />
-        </motion.div>
-        <motion.div
-          className="absolute left-1/2 top-1/8 text-emerald-400/20"
-          animate={{ x: [-10, 10, -10], rotate: [0, 180, 0] }}
-          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-        >
-          <MessageCircle className="w-16 h-16" />
-        </motion.div>
       </div>
 
       <div className="relative container mx-auto px-4 sm:px-6">

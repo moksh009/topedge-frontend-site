@@ -35,20 +35,6 @@ const AboutCTA: React.FC = () => {
         >
           <Sparkles className="w-20 h-20" />
         </motion.div>
-        <motion.div
-          className="absolute right-20 bottom-16 text-yellow-400/20"
-          animate={{ x: [10, -10, 10], rotate: [0, -180, 0] }}
-          transition={{ duration: 13, repeat: Infinity, ease: "linear" }}
-        >
-          <Rocket className="w-16 h-16" />
-        </motion.div>
-        <motion.div
-          className="absolute left-1/3 bottom-12 text-emerald-400/20"
-          animate={{ y: [8, -8, 8], rotate: [0, 180, 0] }}
-          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-        >
-          <Star className="w-16 h-16" />
-        </motion.div>
       </div>
 
       {/* Animated Background */}
@@ -231,20 +217,6 @@ const DeveloperShowcase: React.FC = () => {
           transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
         >
           <Code2 className="w-20 h-20" />
-        </motion.div>
-        <motion.div
-          className="absolute right-10 bottom-10 text-yellow-400/20"
-          animate={{ y: [10, -10, 10], rotate: [0, -360, 0] }}
-          transition={{ duration: 14, repeat: Infinity, ease: "linear" }}
-        >
-          <Trophy className="w-16 h-16" />
-        </motion.div>
-        <motion.div
-          className="absolute left-1/2 top-1/4 text-emerald-400/20"
-          animate={{ x: [-10, 10, -10], rotate: [0, 180, 0] }}
-          transition={{ duration: 16, repeat: Infinity, ease: "linear" }}
-        >
-          <Shield className="w-16 h-16" />
         </motion.div>
       </div>
 

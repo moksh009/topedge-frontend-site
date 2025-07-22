@@ -283,62 +283,6 @@ export const AIAgentInteraction = () => {
         >
           <Bot className="w-16 h-16 text-purple-400/20" />
         </motion.div>
-        <motion.div
-          className="absolute right-20 top-1/2"
-          animate={{ y: [25, -25, 25], rotate: [360, 0] }}
-          transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
-        >
-          <Phone className="w-20 h-20 text-yellow-400/15" />
-        </motion.div>
-        <motion.div
-          className="absolute left-1/2 bottom-16 -translate-x-1/2"
-          animate={{ y: [20, -20, 20], rotate: [0, 360] }}
-          transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }}
-        >
-          <Sparkles className="w-16 h-16 text-theme-glow-accent/15" />
-        </motion.div>
-
-        
-        
-        {/* Animated gradient lines */}
-        <div className="absolute inset-0 overflow-hidden">
-          <motion.div
-            className="absolute w-full h-[1px] bg-gradient-to-r from-transparent via-theme-glow-primary/50 to-transparent"
-            style={{ top: "30%" }}
-            animate={{
-              x: ["-100%", "100%"],
-            }}
-            transition={{
-              duration: 5,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-          />
-          <motion.div
-            className="absolute w-[1px] h-full bg-gradient-to-b from-transparent via-theme-glow-accent/50 to-transparent"
-            style={{ left: "30%" }}
-            animate={{
-              y: ["-100%", "100%"],
-            }}
-            transition={{
-              duration: 5,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-          />
-          <motion.div
-            className="absolute w-full h-[1px] bg-gradient-to-r from-transparent via-theme-glow-accent/30 to-transparent"
-            style={{ top: "70%" }}
-            animate={{
-              x: ["100%", "-100%"],
-            }}
-            transition={{
-              duration: 7,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-          />
-        </div>
       </div>
       
       {/* Title Section */}

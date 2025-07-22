@@ -48,28 +48,25 @@ const GridBackground = memo(() => {
 const FloatingHexagons = memo(() => {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {Array(3).fill(null).map((_, i) => ( // Reduced for better mobile performance
-        <motion.div
-          key={i}
-          className="absolute"
-          style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-          }}
-          animate={{
-            rotateZ: [0, 360],
-            y: [0, -20, 0],
-            opacity: [0.05, 0.2, 0.05],
-          }}
-          transition={{
-            duration: 15 + i * 2, // Reduced duration for better mobile performance
-            repeat: Infinity,
-            ease: "linear",
-          }}
-        >
-          <Hexagon className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 text-blue-500/20" />
-        </motion.div>
-      ))}
+      <motion.div
+        className="absolute"
+        style={{
+          left: `${Math.random() * 100}%`,
+          top: `${Math.random() * 100}%`,
+        }}
+        animate={{
+          rotateZ: [0, 360],
+          y: [0, -20, 0],
+          opacity: [0.05, 0.2, 0.05],
+        }}
+        transition={{
+          duration: 15, // Reduced duration for better mobile performance
+          repeat: Infinity,
+          ease: "linear",
+        }}
+      >
+        <Hexagon className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 text-blue-500/20" />
+      </motion.div>
     </div>
   );
 });

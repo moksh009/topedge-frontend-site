@@ -218,9 +218,7 @@ const HeroSection = () => {
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
       >
-      
-
-        {/* Floating icons with colorful variants */}
+        {/* Keep only Bot and TrendingUp icons for subtle background effect */}
         <motion.div
           className="absolute left-10 top-1/4 text-blue-500/40"
           animate={{
@@ -228,137 +226,12 @@ const HeroSection = () => {
             rotate: [0, 360],
           }}
           transition={{
-            y: {
-              duration: 4,
-              repeat: Infinity,
-              ease: "easeInOut",
-            },
-            rotate: {
-              duration: 8,
-              repeat: Infinity,
-              ease: "linear",
-            },
+            y: { duration: 4, repeat: Infinity, ease: "easeInOut" },
+            rotate: { duration: 8, repeat: Infinity, ease: "linear" },
           }}
         >
           <Bot className="w-16 h-16" />
         </motion.div>
-
-        <motion.div
-          className="absolute right-10 top-1/3 text-yellow-400/40"
-          animate={{
-            y: [20, -20, 20],
-            rotate: [360, 0],
-          }}
-          transition={{
-            y: {
-              duration: 4,
-              repeat: Infinity,
-              ease: "easeInOut",
-            },
-            rotate: {
-              duration: 8,
-              repeat: Infinity,
-              ease: "linear",
-            },
-          }}
-        >
-          <Brain className="w-16 h-16" />
-        </motion.div>
-
-        <motion.div
-          className="absolute left-40 top-1/2 text-purple-400/40"
-          animate={{
-            y: [10, -10, 10],
-            rotate: [360, 0],
-          }}
-          transition={{
-            y: {
-              duration: 4,
-              repeat: Infinity,
-              ease: "easeInOut",
-            },
-            rotate: {
-              duration: 8,
-              repeat: Infinity,
-              ease: "linear",
-            },
-          }}
-        >
-          <User2 className="w-16 h-16" />
-        </motion.div>
-
-        <motion.div
-          className="absolute right-40 top-1/4 text-blue-400/40"
-          animate={{
-            y: [20, -20, 20],
-            rotate: [360, 0],
-          }}
-          transition={{
-            y: {
-              duration: 4,
-              repeat: Infinity,
-              ease: "easeInOut",
-            },
-            rotate: {
-              duration: 8,
-              repeat: Infinity,
-              ease: "linear",
-            },
-          }}
-        >
-          <CalculatorIcon className="w-16 h-16" />
-        </motion.div>
-
-
-        <motion.div
-          className="absolute right-10 bottom-1/4 text-orange-400/40"
-          animate={{
-            y: [20, -20, 20],
-            rotate: [360, 0],
-          }}
-          transition={{
-            y: {
-              duration: 4,
-              repeat: Infinity,
-              ease: "easeInOut",
-            },
-            rotate: {
-              duration: 8,
-              repeat: Infinity,
-              ease: "linear",
-            },
-          }}
-        >
-          <Bot className="w-16 h-16" />
-        </motion.div>
-        <motion.div
-          className="absolute left-1/4 bottom-1/4 text-purple-500/40"
-          animate={{
-            y: [-30, 30, -30],
-            x: [-20, 20, -20],
-            rotate: [0, -360],
-          }}
-          transition={{
-            y: {
-              duration: 5,
-              repeat: Infinity,
-              ease: "easeInOut",
-            },
-            x: {
-              duration: 6,
-              repeat: Infinity,
-              ease: "easeInOut",
-            },
-            rotate: {
-              duration: 10,
-              repeat: Infinity,
-              ease: "linear",
-            },
-          }}
-        >
-          <Cpu className="w-12 h-12" />
-        </motion.div>
-
         <motion.div
           className="absolute right-1/4 top-1/2 text-emerald-500/40"
           animate={{
@@ -367,52 +240,12 @@ const HeroSection = () => {
             rotate: [360, 0],
           }}
           transition={{
-            y: {
-              duration: 6,
-              repeat: Infinity,
-              ease: "easeInOut",
-            },
-            x: {
-              duration: 5,
-              repeat: Infinity,
-              ease: "easeInOut",
-            },
-            rotate: {
-              duration: 10,
-              repeat: Infinity,
-              ease: "linear",
-            },
+            y: { duration: 6, repeat: Infinity, ease: "easeInOut" },
+            x: { duration: 5, repeat: Infinity, ease: "easeInOut" },
+            rotate: { duration: 10, repeat: Infinity, ease: "linear" },
           }}
         >
           <TrendingUp className="w-12 h-12" />
-        </motion.div>
-
-        <motion.div
-          className="absolute left-1/3 top-1/4 text-rose-500/40"
-          animate={{
-            y: [-25, 25, -25],
-            x: [-15, 15, -15],
-            rotate: [180, -180],
-          }}
-          transition={{
-            y: {
-              duration: 7,
-              repeat: Infinity,
-              ease: "easeInOut",
-            },
-            x: {
-              duration: 8,
-              repeat: Infinity,
-              ease: "easeInOut",
-            },
-            rotate: {
-              duration: 12,
-              repeat: Infinity,
-              ease: "linear",
-            },
-          }}
-        >
-          <Zap className="w-10 h-10" />
         </motion.div>
       </motion.div>
 

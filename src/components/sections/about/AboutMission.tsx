@@ -70,20 +70,6 @@ const AboutMission = () => {
         >
           <Rocket className="w-20 h-20" />
         </motion.div>
-        <motion.div
-          className="absolute right-20 bottom-16 text-purple-400/20"
-          animate={{ x: [10, -10, 10], rotate: [0, -180, 0] }}
-          transition={{ duration: 13, repeat: Infinity, ease: "linear" }}
-        >
-          <Target className="w-16 h-16" />
-        </motion.div>
-        <motion.div
-          className="absolute left-1/3 bottom-12 text-emerald-400/20"
-          animate={{ y: [8, -8, 8], rotate: [0, 180, 0] }}
-          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-        >
-          <Globe className="w-16 h-16" />
-        </motion.div>
       </div>
 
       {/* Content Container */}

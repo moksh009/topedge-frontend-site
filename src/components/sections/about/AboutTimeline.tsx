@@ -232,20 +232,6 @@ const AboutTimeline: React.FC = () => {
         >
           <Calendar className="w-16 h-16" />
         </motion.div>
-        <motion.div
-          className="absolute right-16 bottom-10 text-yellow-400/20"
-          animate={{ x: [8, -8, 8], rotate: [0, -180, 0] }}
-          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-        >
-          <Clock className="w-14 h-14" />
-        </motion.div>
-        <motion.div
-          className="absolute right-1/3 top-1/2 text-emerald-400/20"
-          animate={{ y: [12, -12, 12], rotate: [0, 180, 0] }}
-          transition={{ duration: 17, repeat: Infinity, ease: "linear" }}
-        >
-          <Flag className="w-14 h-14" />
-        </motion.div>
       </div>
 
       <motion.div

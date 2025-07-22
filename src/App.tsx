@@ -9,6 +9,8 @@ import Footer from './components/Footer';
 import MetaPixel from './components/MetaPixel';
 import Home from './pages/Home';
 import Landing from './pages/Landing';
+import AICaller from './pages/AICaller';
+import AIChatbot from './pages/AIChatbot';
 const About = React.lazy(() => import('./pages/About'));
 const Services = React.lazy(() => import('./pages/Services'));
 const Contact = React.lazy(() => import('./pages/Contact'));
@@ -84,6 +86,8 @@ const App: React.FC = () => {
                   <Route path="/booking" element={<Booking />} />
                   <Route path="/pricing" element={<Pricing />} />
                   <Route path="/roi" element={<ROI />} />
+                  <Route path="/ai-caller" element={<AICaller />} />
+                  <Route path="/ai-chatbot" element={<AIChatbot />} />
                   <Route path="/blog" element={<Blog />} />
                   <Route path="/blog/:slug" element={<BlogPost />} />
                   <Route path="/privacy-policy" element={<PrivacyPolicy />} />

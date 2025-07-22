@@ -3,18 +3,18 @@ import { useLocation } from 'react-router-dom';
 
 declare global {
   interface Window {
-    fbq: any;
-    _fbq: any;
+    fbq?: (...args: any[]) => void;
   }
 }
 
 const MetaPixel = () => {
   const location = useLocation();
 
-  // Track page view on route change
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.fbq) {
+    if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
       window.fbq('track', 'PageView');
+    } else {
+      console.warn('Meta Pixel not initialized');
     }
   }, [location]);
 

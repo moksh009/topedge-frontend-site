@@ -37,20 +37,6 @@ const ChatbotShowcase = () => {
       >
         <Bot className="w-16 h-16 text-purple-400/15" />
       </motion.div>
-      <motion.div
-        className="absolute right-20 top-1/2"
-        animate={{ y: [20, -20, 20], rotate: [360, 0] }}
-        transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
-      >
-        <MessageSquare className="w-20 h-20 text-blue-400/15" />
-      </motion.div>
-      <motion.div
-        className="absolute left-1/2 bottom-16 -translate-x-1/2"
-        animate={{ y: [15, -15, 15], rotate: [0, 360] }}
-        transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }}
-      >
-        <User className="w-16 h-16 text-theme-glow-accent/15" />
-      </motion.div>
     </div>
   );
   const [messages, setMessages] = useState<Message[]>([]);

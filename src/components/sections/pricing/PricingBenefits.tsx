@@ -61,14 +61,6 @@ const PricingBenefits = () => {
     >
       {/* Animated Lucide Icons Background */}
       <div className="pointer-events-none absolute inset-0 z-0">
-        {/* Brain - top left */}
-        <motion.div
-          className="absolute left-8 top-10 text-red-400/30"
-          animate={{ y: [-15, 15, -15], rotate: [0, 360, 0] }}
-          transition={{ duration: 13, repeat: Infinity, ease: "linear" }}
-        >
-          <Brain className="w-14 h-14" />
-        </motion.div>
         {/* DollarSign - left center */}
         <motion.div
           className="absolute left-6 top-1/2 text-emerald-400/25"
@@ -76,46 +68,6 @@ const PricingBenefits = () => {
           transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
         >
           <DollarSign className="w-12 h-12" />
-        </motion.div>
-        {/* Database - top right */}
-        <motion.div
-          className="absolute right-12 top-16 text-green-500/25"
-          animate={{ y: [10, -10, 10], rotate: [0, 180, 0] }}
-          transition={{ duration: 17, repeat: Infinity, ease: "linear" }}
-        >
-          <Database className="w-14 h-14" />
-        </motion.div>
-        {/* Sparkles - mid right */}
-        <motion.div
-          className="absolute right-10 top-1/3 text-blue-500/20"
-          animate={{ y: [-12, 12, -12], rotate: [0, 360, 0] }}
-          transition={{ duration: 14, repeat: Infinity, ease: "linear" }}
-        >
-          <Sparkles className="w-12 h-12" />
-        </motion.div>
-        {/* Settings - bottom left */}
-        <motion.div
-          className="absolute left-20 bottom-16 text-purple-400/20"
-          animate={{ x: [0, 12, 0], rotate: [0, 180, 0] }}
-          transition={{ duration: 16, repeat: Infinity, ease: "linear" }}
-        >
-          <Settings className="w-12 h-12" />
-        </motion.div>
-        {/* Shield - bottom right */}
-        <motion.div
-          className="absolute right-16 bottom-20 text-black-600/15"
-          animate={{ y: [10, -10, 10], rotate: [0, 360, 0] }}
-          transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
-        >
-          <Shield className="w-16 h-16" />
-        </motion.div>
-        {/* Users - center bottom */}
-        <motion.div
-          className="absolute left-1/2 bottom-8 -translate-x-1/2 text-emerald-400/15"
-          animate={{ y: [-10, 10, -10], rotate: [0, -180, 0] }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-        >
-          <Users className="w-14 h-14" />
         </motion.div>
       </div>
       {/* Background with subtle gradient */}

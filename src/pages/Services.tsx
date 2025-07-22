@@ -109,36 +109,6 @@ const Services: React.FC = () => {
       duration: { y: 4, rotate: 8 }
     },
     {
-      Icon: Brain,
-      position: { right: '15', top: '85' },
-      color: 'text-yellow-400',
-      animation: {
-        y: [40, -40, 40],
-        rotate: [360, 0],
-      },
-      duration: { y: 4, rotate: 8 }
-    },
-    {
-      Icon: User2,
-      position: { right: '15', top: '45' },
-      color: 'text-red-500 bg-gradient-to-br from-red-400 to-red-600 bg-clip-text text-transparent',
-      animation: {
-        y: [40, -40, 40],
-        rotate: [360, 0],
-      },
-      duration: { y: 4, rotate: 8 }
-    },
-    {
-      Icon: BadgeDollarSign,
-      position: { right: '45', top: '85' },
-      color: 'text-green-500 bg-gradient-to-br from-green-400 to-green-600 bg-clip-text text-transparent',
-      animation: {
-        y: [40, -40, 40],
-        rotate: [360, 0],
-      },
-      duration: { y: 4, rotate: 8 }
-    },
-    {
       Icon: Cpu,
       position: { left: '40', bottom: '80' },
       color: 'text-purple-500',
@@ -148,28 +118,6 @@ const Services: React.FC = () => {
         rotate: [0, -360],
       },
       duration: { y: 5, x: 6, rotate: 10 }
-    },
-    {
-      Icon: TrendingUp,
-      position: { right: '40', bottom: '80' },
-      color: 'text-emerald-500',
-      animation: {
-        y: [20, -20, 20],
-        x: [20, -20, 20],
-        rotate: [360, 0],
-      },
-      duration: { y: 6, x: 5, rotate: 10 }
-    },
-    {
-      Icon: Zap,
-      position: { left: '10', top: '80' },
-      color: 'text-rose-500',
-      animation: {
-        y: [-15, 15, -15],
-        x: [-25, 25, -25],
-        rotate: [180, -180],
-      },
-      duration: { y: 7, x: 8, rotate: 12 }
     }
   ], []);
 
@@ -234,7 +182,6 @@ const Services: React.FC = () => {
             className={`absolute ${color}/40`}
             style={{
               left: position.left ? `${position.left}%` : undefined,
-              right: position.right ? `${position.right}%` : undefined,
               top: position.top ? `${position.top}%` : undefined,
               bottom: position.bottom ? `${position.bottom}%` : undefined,
             }}
@@ -257,7 +204,7 @@ const Services: React.FC = () => {
               },
             }}
           >
-            <Icon className={index < 2 ? "w-16 h-16" : index < 4 ? "w-12 h-12" : "w-10 h-10"} />
+            <Icon className={index < 1 ? "w-16 h-16" : "w-12 h-12"} />
           </motion.div>
         ))}
 
