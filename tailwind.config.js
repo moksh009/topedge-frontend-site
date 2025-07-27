@@ -12,6 +12,14 @@ export default {
         'pulse-glow': 'pulseGlow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         'slide-up': 'slideUp 0.5s ease-out',
         'fade-in': 'fadeIn 0.7s ease-in-out',
+        'grid-flow': 'grid-flow 20s linear infinite',
+        'float-slow': 'float 8s ease-in-out infinite',
+        'float-slow-reverse': 'float 8s ease-in-out infinite reverse',
+        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'glow': 'glow 4s ease-in-out infinite',
+        'marquee': 'marquee 25s linear infinite',
+        'marquee-reverse': 'marquee-reverse 25s linear infinite',
+        'gradient-text': 'gradient 8s linear infinite',
       },
       keyframes: {
         float: {
@@ -87,18 +95,7 @@ export default {
         'radial-gradient': 'radial-gradient(circle at center, var(--glow-primary) 0%, transparent 70%)',
         'conic-gradient': 'conic-gradient(from 180deg at 50% 50%, #3B82F6 0deg, #6366F1 120deg, #8B5CF6 240deg, #3B82F6 360deg)'
       },
-      animation: {
-        'float': 'float 6s ease-in-out infinite',
-        'grid-flow': 'grid-flow 20s linear infinite',
-        'float-slow': 'float 8s ease-in-out infinite',
-        'float-slow-reverse': 'float 8s ease-in-out infinite reverse',
-        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        'glow': 'glow 4s ease-in-out infinite',
-        'spin-slow': 'spin 8s linear infinite',
-        'marquee': 'marquee 25s linear infinite',
-        'marquee-reverse': 'marquee-reverse 25s linear infinite',
-        'gradient-text': 'gradient 8s linear infinite',
-      },
+
       keyframes: {
         float: {
           '0%, 100%': { transform: 'translateY(0)' },
