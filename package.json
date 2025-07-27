@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "build:netlify": "npm install --legacy-peer-deps && vite build",
+    "build:netlify": "npm install --legacy-peer-deps --include=optional && vite build",
     "lint": "eslint . --ext js,jsx,ts,tsx --fix",
     "preview": "vite preview"
   },
@@ -41,7 +41,8 @@
     "react-router-dom": "^6.16.0",
     "use-sound": "^4.0.1",
     "vite": "^4.4.5",
-    "terser": "^5.39.0"
+    "terser": "^5.39.0",
+    "esbuild": "^0.19.0"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.16",
