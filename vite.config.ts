@@ -47,7 +47,6 @@ export default defineConfig(({ mode }) => {
           manualChunks: {
             vendor: ['react', 'react-dom', 'react-router-dom'],
             animations: ['framer-motion'],
-            firebase: ['firebase'],
             charts: ['chart.js', 'react-chartjs-2'],
           },
         },
@@ -59,6 +58,10 @@ export default defineConfig(({ mode }) => {
     },
     optimizeDeps: {
       include: ['react', 'react-dom', 'react-router-dom', 'framer-motion'],
+      exclude: ['firebase'],
+    },
+    define: {
+      global: 'globalThis',
     },
   };
 });
