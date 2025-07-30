@@ -28,10 +28,12 @@ const PrivacyPolicy: React.FC = () => {
             <p>
               TopEdge AI is a forward-thinking AI agency and SaaS platform offering AI-powered voice 
               agents and dashboards tailored for businesses in healthcare, real estate, and service industries.
+              We operate as a sole proprietorship business.
             </p>
             <p className="mt-4">
               <strong>Contact Information:</strong><br />
-              📧 Email: team@topedgeai.com
+              📧 Email: team@topedgeai.com<br />
+              📍 Address: B 203 Shyam Arcade, Near Gangotri Circle, Nikol, Ahmedabad, Gujarat, India 382350
             </p>
           </section>
           
@@ -227,7 +229,8 @@ const PrivacyPolicy: React.FC = () => {
             </p>
             <p className="mt-4">
               📧 Privacy Team: team@topedge.co.in<br />
-              📧 General Contact: team@topedgeai.com
+              📧 General Contact: team@topedgeai.com<br />
+              📍 Address: B 203 Shyam Arcade, Near Gangotri Circle, Nikol, Ahmedabad, Gujarat, India 382350
             </p>
           </section>
           

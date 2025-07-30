@@ -75,6 +75,12 @@ const Footer = () => {
       color: 'group-hover:text-blue-400'
     },
     {
+      icon: MapPin,
+      text: 'B 203 Shyam Arcade, Near Gangotri Circle, Nikol, Ahmedabad, Gujarat, India 382350',
+      href: '#',
+      color: 'group-hover:text-green-500'
+    },
+    {
       icon: Instagram,
       text: 'Chat on Instagram',
       href: 'https://www.instagram.com/topedge_ai/',
