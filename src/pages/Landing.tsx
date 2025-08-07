@@ -5,7 +5,7 @@ import { MdVerified, MdOutlineLocalHospital, MdWarning, MdPlayArrow } from 'reac
 import { BsCalculator, BsHeadset, BsGraphUp, BsCalendarCheck, BsClock } from 'react-icons/bs';
 import { Rocket, Calendar, Shield, Clock, DollarSign, CheckCircle } from 'lucide-react';
 import { HiOutlineLightBulb, HiCurrencyDollar } from 'react-icons/hi';
-import { trackLead, trackSchedule } from '../utils/metaPixelEvents';
+import { trackLead, trackSchedule, trackViewContent } from '../utils/metaPixelEvents';
 import Link from 'next/link';
 import { Line, Bar } from 'react-chartjs-2';
 import {
@@ -219,8 +219,8 @@ const Landing = () => {
     const calendlySection = document.getElementById('calendly-section');
     if (calendlySection) {
       calendlySection.scrollIntoView({ behavior: 'smooth' });
-      // Track scheduling event when user clicks to schedule
-      trackSchedule('demo');
+      // Track intent to schedule (not actual booking completion)
+      trackViewContent('calendly-widget', 'booking-form');
     }
   };
 
@@ -238,13 +238,23 @@ const Landing = () => {
   const [calendarLoaded, setCalendarLoaded] = useState(false);
   const [showFallback, setShowFallback] = useState(false);
 
-  // Listen for Calendly events to detect when the widget is loaded
+  // Listen for Calendly events to detect when the widget is loaded and when bookings are completed
   useEffect(() => {
     // Function to handle Calendly events
     const handleCalendlyEvent = (e: any) => {
-      if (e.data && e.data.event && typeof e.data.event === 'string' && e.data.event.includes('calendly')) {
-        console.log('Calendly widget loaded and active');
-        setCalendarLoaded(true);
+      if (e.data && e.data.event && typeof e.data.event === 'string') {
+        // Handle different Calendly events
+        if (e.data.event.includes('calendly')) {
+          console.log('Calendly widget loaded and active');
+          setCalendarLoaded(true);
+        }
+        
+        // Track successful booking completion
+        if (e.data.event === 'calendly.event_scheduled') {
+          console.log('Calendly booking completed successfully');
+          // Fire Meta Pixel Schedule event for successful booking
+          trackSchedule('consultation');
+        }
       }
     };
     
