@@ -137,7 +137,7 @@ const Home = () => {
         
         {/* Animated Glow Effects - Using lighter theme colors */}
         <motion.div
-          className="absolute top-1/4 -left-1/4 w-96 h-96 bg-theme-glow-primary/20 rounded-full blur-3xl"
+          className="absolute top-1/4 -left-1/4 w-96 h-96 bg-theme-glow-primary/10 rounded-full blur-3xl"
           animate={{
             x: [0, 100, 0],
             scale: [1, 1.2, 1],
@@ -150,7 +150,7 @@ const Home = () => {
           }}
         />
         <motion.div
-          className="absolute -bottom-1/4 right-1/4 w-96 h-96 bg-theme-glow-secondary/20 rounded-full blur-3xl"
+          className="absolute -bottom-1/4 right-1/4 w-96 h-96 bg-theme-glow-secondary/10 rounded-full blur-3xl"
           animate={{
             y: [-50, 50, -50],
             scale: [1.2, 1, 1.2],
@@ -166,7 +166,7 @@ const Home = () => {
       </div>
 
       {/* Particle Effect */}
-      <div className="fixed inset-0 pointer-events-none opacity-30">
+      <div className="fixed inset-0 pointer-events-none opacity-15">
         
       </div>
 

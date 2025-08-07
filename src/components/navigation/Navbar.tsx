@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ChevronRight, Brain, ArrowRight, Calendar, Home, User, Star, Tag, Mail, Phone, MessageCircle } from 'lucide-react';
+import { Menu, X, Brain, ArrowRight, Calendar, Home, User, Star, Tag, Mail, Phone, MessageCircle } from 'lucide-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
-  const [servicesDropdown, setServicesDropdown] = useState(false);
+
 
   const navItems = [
     { path: '/', label: 'Home', icon: Home },
@@ -33,18 +33,7 @@ const Navbar = () => {
     setIsOpen(false);
   }, [location.pathname]);
 
-  // Close services dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      const target = event.target as Element;
-      if (!target.closest('.services-dropdown-container')) {
-        setServicesDropdown(false);
-      }
-    };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
 
   const containerVariants = {
     hidden: { opacity: 0, y: -20 },
@@ -219,85 +208,29 @@ const Navbar = () => {
                   whileTap={{ scale: 0.95 }}
                   className="relative services-dropdown-container"
                 >
-                  {item.label === 'Services' ? (
-                    <button
-                      onClick={() => setServicesDropdown(!servicesDropdown)}
-                                          className={`relative group px-4 py-2 flex items-center gap-1 transition-all duration-300 ${
+                  <Link
+                    to={item.path}
+                    className={`relative group px-4 py-2 transition-all duration-300 ${
                       location.pathname === item.path
                         ? 'text-gray-900 font-medium'
                         : 'text-gray-700 hover:text-gray-900'
                     }`}
-                    >
-                      <span className="relative z-10">{item.label}</span>
-                      <ChevronRight 
-                        className={`w-4 h-4 transition-transform duration-200 ${
-                          servicesDropdown ? 'rotate-90' : ''
-                        }`} 
-                      />
-                      {location.pathname === item.path && (
-                        <motion.div
-                          className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-lg backdrop-blur-sm"
-                          layoutId="navBackground"
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ duration: 0.3 }}
-                        />
-                      )}
+                  >
+                    <span className="relative z-10">{item.label}</span>
+                    {location.pathname === item.path && (
                       <motion.div
-                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300"
+                        className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-lg backdrop-blur-sm"
+                        layoutId="navBackground"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.3 }}
                       />
-                    </button>
-                  ) : (
-                    <Link
-                      to={item.path}
-                      className={`relative group px-4 py-2 transition-all duration-300 ${
-                        location.pathname === item.path
-                          ? 'text-gray-900 font-medium'
-                          : 'text-gray-700 hover:text-gray-900'
-                      }`}
-                    >
-                      <span className="relative z-10">{item.label}</span>
-                      {location.pathname === item.path && (
-                        <motion.div
-                          className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-lg backdrop-blur-sm"
-                          layoutId="navBackground"
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ duration: 0.3 }}
-                        />
-                      )}
-                      <motion.div
-                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300"
-                      />
-                    </Link>
-                  )}
-                  {/* Dropdown for Services - Hidden for now */}
-                  {/* {item.label === 'Services' && servicesDropdown && (
+                    )}
                     <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 10 }}
-                      transition={{ duration: 0.18 }}
-                      className="absolute left-1/2 -translate-x-1/2 top-full mt-3 w-56 bg-white border border-theme-border-primary/10 shadow-2xl rounded-2xl z-50 py-2 flex flex-col gap-1"
-                    >
-                      <Link
-                        to="/ai-caller"
-                        className="flex items-center gap-3 px-5 py-3 rounded-xl hover:bg-theme-glow-primary/10 transition text-theme-text-primary font-medium text-base"
-                        onClick={() => setServicesDropdown(false)}
-                      >
-                        <Phone className="w-5 h-5 text-theme-glow-primary" />
-                        AI Caller
-                      </Link>
-                      <Link
-                        to="/ai-chatbot"
-                        className="flex items-center gap-3 px-5 py-3 rounded-xl hover:bg-theme-glow-accent/10 transition text-theme-text-primary font-medium text-base"
-                        onClick={() => setServicesDropdown(false)}
-                      >
-                        <MessageCircle className="w-5 h-5 text-theme-glow-accent" />
-                        AI Chatbot
-                      </Link>
-                    </motion.div>
-                  )} */}
+                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300"
+                    />
+                  </Link>
+
                 </motion.div>
               ))}
             </div>

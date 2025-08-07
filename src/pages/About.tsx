@@ -128,7 +128,7 @@ Ready to take the next step and unlock extra revenue in just 45 days?
                 {/* Base Glow Layer */}
                 <div className="absolute inset-0 rounded-full bg-gradient-to-r from-theme-glow-primary/20 via-theme-glow-accent/30 to-theme-glow-primary/20" />
                 {/* Outer Glow */}
-                <div className="absolute inset-0 blur-xl opacity-70 group-hover:opacity-100 transition-opacity duration-500 rounded-full bg-gradient-to-r from-theme-glow-primary/30 via-theme-glow-accent/40 to-theme-glow-primary/30 opacity-50 group-hover:opacity-100 transition-all duration-500 rounded-full" />
+                <div className="absolute inset-0 blur-xl opacity-30 group-hover:opacity-70 transition-opacity duration-500 rounded-full bg-gradient-to-r from-theme-glow-primary/30 via-theme-glow-accent/40 to-theme-glow-primary/30 opacity-20 group-hover:opacity-70 transition-all duration-500 rounded-full" />
                 {/* Button Background */}
                 <div className="absolute inset-0 bg-theme-bg-surface border-[1.5px] rounded-full border-theme-border-accent/50 group-hover:border-theme-border-accent transition-all duration-300" />
                 {/* Button Content */}
@@ -258,7 +258,7 @@ const DeveloperShowcase: React.FC = () => {
                   <div className="text-blue-500 text-sm font-semibold group-hover:text-blue-700 transition-colors duration-300 text-center">{area.stats}</div>
                 </div>
               </div>
-              <div className="absolute -inset-1 rounded-2xl bg-gradient-to-br from-blue-400/20 via-transparent to-blue-500/20 blur-xl opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+              <div className="absolute -inset-1 rounded-2xl bg-gradient-to-br from-blue-400/20 via-transparent to-blue-500/20 blur-xl opacity-30 group-hover:opacity-70 transition-opacity duration-500 pointer-events-none" />
             </div>
           ))}
         </div>
@@ -281,7 +281,7 @@ const DeveloperShowcase: React.FC = () => {
                   <h4 className="text-2xl font-bold text-blue-700 mb-2 group-hover:text-blue-500 transition-colors duration-300 text-center">{offering.value}</h4>
                   <p className="text-theme-text-secondary text-sm font-medium text-center">{offering.title}</p>
                 </div>
-                <div className="absolute -inset-1 rounded-2xl bg-gradient-to-br from-blue-400/20 via-transparent to-blue-500/20 blur-xl opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                <div className="absolute -inset-1 rounded-2xl bg-gradient-to-br from-blue-400/20 via-transparent to-blue-500/20 blur-xl opacity-30 group-hover:opacity-70 transition-opacity duration-500 pointer-events-none" />
               </div>
             ))}
           </div>

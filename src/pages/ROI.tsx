@@ -286,7 +286,7 @@ export default function ROICalculator() {
       {/* Background Effects */}
       <div className="absolute inset-0 z-0">
         {/* Decorative Lucide icons background for ROI Calculator */}
-        <DollarSign className="absolute top-16 left-24 w-24 h-24 text-green-400 opacity-40 rotate-12 pointer-events-none" />
+        <DollarSign className="absolute top-16 left-24 w-24 h-24 text-green-400 opacity-15 rotate-12 pointer-events-none" />
         {/* End Decorative Lucide icons */}
       </div>
 

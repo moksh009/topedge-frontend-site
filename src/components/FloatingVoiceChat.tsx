@@ -48,7 +48,7 @@ const FloatingVoiceChat: React.FC = () => {
         <div className="absolute bottom-0 right-0 w-auto flex-none pointer-events-auto">
           {/* Glow layer (blue/purple) */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
-            <div className="w-full h-full rounded-full blur-2xl opacity-60 bg-gradient-to-r from-theme-glow-primary/60 via-theme-glow-accent/80 to-theme-glow-primary/60 animate-pulse" />
+            <div className="w-full h-full rounded-full blur-2xl opacity-30 bg-gradient-to-r from-theme-glow-primary/60 via-theme-glow-accent/80 to-theme-glow-primary/60 animate-pulse" />
           </div>
           <button
             className="relative flex items-center justify-center rounded-full shadow-lg bg-theme-bg-surface text-theme-text-primary hover:bg-theme-bg-secondary transition-all duration-300 focus:outline-none border border-theme-border-primary w-14 h-14 sm:w-auto sm:h-auto px-0 sm:px-6 py-0 sm:py-3"
@@ -95,7 +95,7 @@ const FloatingVoiceChat: React.FC = () => {
                   <div className="relative flex items-center justify-center w-full">
                     {/* Glow layer */}
                     <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                      <div className="w-full h-full rounded-full blur-lg opacity-30 bg-gradient-to-r from-red-400/40 via-red-500/50 to-red-400/40 animate-pulse" />
+                      <div className="w-full h-full rounded-full blur-lg opacity-15 bg-gradient-to-r from-red-400/40 via-red-500/50 to-red-400/40 animate-pulse" />
                     </div>
                     <motion.button
                       key="endcall"
@@ -111,7 +111,7 @@ const FloatingVoiceChat: React.FC = () => {
                   <div className="relative flex items-center justify-center w-full">
                     {/* Glow layer */}
                     <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                      <div className="w-full h-full rounded-full blur-2xl opacity-60 bg-gradient-to-r from-theme-glow-primary/60 via-theme-glow-accent/80 to-theme-glow-primary/60 animate-pulse" />
+                      <div className="w-full h-full rounded-full blur-2xl opacity-30 bg-gradient-to-r from-theme-glow-primary/60 via-theme-glow-accent/80 to-theme-glow-primary/60 animate-pulse" />
                     </div>
                     <motion.button
                       key="startcall"

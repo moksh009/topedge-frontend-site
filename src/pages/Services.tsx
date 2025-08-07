@@ -42,7 +42,7 @@ const PremiumButton: React.FC<PremiumButtonProps & { onClick?: () => void }> = (
       {/* Button Container */}
       <div className="relative px-6 sm:px-8 py-4 rounded-full w-full">
         {/* Glow Effect */}
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-500/50 via-purple-400/50 to-purple-500/50 blur-xl opacity-70 group-hover:opacity-100 transition-opacity duration-500 rounded-full" />
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-500/50 via-purple-400/50 to-purple-500/50 blur-xl opacity-30 group-hover:opacity-70 transition-opacity duration-500 rounded-full" />
         
         {/* Floating orbs/particles removed for clean background */}
 
@@ -164,7 +164,7 @@ const Services: React.FC = () => {
         {/* Background */}
         <div className="absolute inset-0">
           {/* Primary gradient */}
-          <div className="absolute inset-0 bg-gradient-to-b from-theme-bg-primary via-theme-bg-primary to-theme-bg-primary opacity-90" />
+          <div className="absolute inset-0 bg-gradient-to-b from-theme-bg-primary via-theme-bg-primary to-theme-bg-primary opacity-70" />
           
           {/* Grid pattern */}
           <div className="absolute inset-0" 
@@ -261,7 +261,7 @@ const Services: React.FC = () => {
                 }}
               >
                 <motion.span
-                  className="absolute inset-0 blur-lg opacity-50"
+                  className="absolute inset-0 blur-lg opacity-25"
                   style={{
                     backgroundImage: "linear-gradient(to right, rgb(var(--text-primary)), rgb(147, 51, 234), rgb(var(--text-primary)))",
                     WebkitBackgroundClip: "text",

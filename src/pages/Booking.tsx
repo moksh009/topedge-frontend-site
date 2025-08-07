@@ -159,7 +159,7 @@ const ServiceCard = ({ service, isSelected, onSelect }: { service: Service; isSe
         >
           <div className="relative">
             {/* Glow effect */}
-            <div className="absolute inset-0 bg-[#4D07E3] blur-md opacity-50" />
+            <div className="absolute inset-0 bg-[#4D07E3] blur-md opacity-25" />
             
             {/* Badge */}
             <div className="relative px-4 py-1 bg-gradient-to-r from-[#4D07E3] to-[#7A0BC0] rounded-full">
@@ -637,7 +637,7 @@ const Booking = () => {
               transition={{ type: "spring", delay: 0.2 }}
               className="w-24 h-24 mx-auto mb-8 rounded-full bg-gradient-to-r from-blue-500 to-blue-500 flex items-center justify-center relative"
             >
-              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 to-blue-500 opacity-20 blur-xl" />
+              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 to-blue-500 opacity-10 blur-xl" />
               <CheckCircle className="w-12 h-12 text-white relative z-10" />
             </motion.div>
 
@@ -748,7 +748,7 @@ const Booking = () => {
           <div className="absolute inset-0 backdrop-blur-[100px]" />
           {/* Grid pattern overlay */}
           <div 
-            className="absolute inset-0 opacity-20"
+            className="absolute inset-0 opacity-10"
             style={{
               backgroundImage: `radial-gradient(circle at 1px 1px, rgba(0, 0, 0, 0.15) 1px, transparent 0)`,
               backgroundSize: '40px 40px'

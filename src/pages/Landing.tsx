@@ -406,9 +406,9 @@ const Landing = () => {
       {/* HERO SECTION - with video that straddles into section below */}
       <section className="relative flex flex-col justify-center bg-white text-gray-900 overflow-visible pt-16 sm:pt-16 pb-24 sm:pb-32 min-h-[100vh] sm:min-h-[50vh] lg:flex lg:items-center">
         {/* Full-width background image - desktop */}
-        <div className="absolute inset-0 w-[100vw] h-[100vh] bg-cover bg-center hidden sm:block rounded-b-xl" style={{ backgroundImage: "url('/hero-background.png')", filter: 'none', opacity: 1 }}></div>
+        <div className="absolute inset-0 w-[100vw] h-[100vh] bg-cover bg-center hidden sm:block rounded-b-xl" style={{/*backgroundImage: "url('/hero-background.png')",*/ filter: 'none', opacity: 1 }}></div>
         {/* Mobile-specific background image */}
-        <div className="absolute inset-0 w-full h-full bg-cover bg-center block sm:hidden rounded-b-3xl" style={{ backgroundImage: "url('/hero-background-mobile.png')", filter: 'none', opacity: 1 }}></div>
+        <div className="absolute inset-0 w-full h-full bg-cover bg-center block sm:hidden rounded-b-3xl" style={{/*backgroundImage: "url('/hero-background-mobile.png')",*/ filter: 'none', opacity: 1 }}></div>
         
         <div className="container mx-auto mt-12 sm:mt-20 px-3 sm:px-6 lg:px-8 relative z-10">
           {/* Trust Badges */}
@@ -426,8 +426,8 @@ const Landing = () => {
           
           {/* Headline & Subheadline */}
           <div className="flex flex-col items-center justify-center text-center max-w-4xl mt-0 mx-auto">
-            <h1 className="text-3xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold leading-tight mb-3 sm:mb-5 text-black">
-              <span className="relative inline-block"><span className="absolute -right-2 -top-2 w-[120px] h-[80px] sm:w-[140px] sm:h-[90px] md:opacity-0 rounded-[50%] border-[8px] border-red-500 opacity-100"></span><span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 text-[2.5rem] sm:text-4xl md:text-5xl lg:text-6xl relative">Recover up to $10k</span></span> and Save <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-600 text-[2.5rem] sm:text-4xl md:text-5xl lg:text-6xl">40+ Hours Weekly</span> Within 45 Days with AI
+            <h1 className="font-['Geist',_'Inter',_sans-serif] text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium leading-[1.2] mb-6 sm:mb-8 text-gray-900 tracking-tight">
+              Recover <span className="text-blue-600 font-semibold">$10,000+</span> in Revenue and Save <span className="text-blue-600 font-semibold">40+ Hours Weekly</span><br className="block" /> <span className="text-gray-700 font-normal">Within 45 Days</span>
             </h1>
             <p className="text-lg sm:text-lg md:text-xl text-gray-800 font-medium max-w-3xl mb-0 px-2">
             72% of customers choose another business when they don’t get a fast reply.<br/>
@@ -444,14 +444,14 @@ Watch this quick video for details 👇
           <div className="w-full max-w-[850px] mx-auto px-2 sm:px-4">
             {/* Larger video that straddles hero section and below - positioned with higher z-index */}
             <div className="relative z-30 transform translate-y-8 sm:translate-y-14 mb-0">
-              <div className="absolute -inset-1 sm:-inset-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl sm:rounded-2xl blur-lg opacity-40 animate-pulse"></div>
+              <div className="absolute -inset-1 sm:-inset-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl sm:rounded-2xl blur-lg opacity-20 animate-pulse"></div>
               <div className="relative overflow-hidden rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl border-2 border-white/50 bg-gradient-to-br from-gray-900 to-black">
                 {/* YouTube embed with poster image fallback */}
                 <div className="relative w-full aspect-video">
                   <iframe 
                     className="w-full h-full absolute inset-0"
-                    src="https://www.youtube.com/embed/L2DP3iTrbsE?si=635I9oFIf-Lc8Qk9&autoplay=1&mute=1&enablejsapi=1&origin=https://topedgeai.com"
-                    title="TopEdge AI Demo Video"
+                    src="https://www.youtube.com/embed/neRnyxh5BFU?si=3e-CwNFNwlDWax_T"
+                    title="YouTube video player"
                     frameBorder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerPolicy="strict-origin-when-cross-origin"
@@ -486,8 +486,8 @@ Watch this quick video for details 👇
           <div className="max-w-7xl mx-auto">
             {/* Section Title */}
             <div className="text-center mb-8 sm:mb-12 md:mb-16 animate-fade-in">
-              <span className="text-blue-600 font-semibold text-base sm:text-lg mb-2 sm:mb-4 block tracking-wide font-heading">TRUSTED BY INDUSTRY LEADERS</span>
-              <h2 className="text-3xl sm:text-4xl lg:text-7xl font-heading font-extrabold text-gray-900 mb-4 sm:mb-6 bg-gradient-to-r from-gray-900 via-blue-800 to-purple-900 bg-clip-text text-transparent">
+              <span className="text-blue-600 font-medium text-base sm:text-lg mb-2 sm:mb-4 block tracking-wide font-heading">TRUSTED BY INDUSTRY LEADERS</span>
+              <h2 className="text-3xl sm:text-4xl lg:text-7xl font-heading font-medium text-gray-900 mb-4 sm:mb-6 bg-gradient-to-r from-gray-900 via-blue-800 to-purple-900 bg-clip-text text-transparent">
                 Client Success Stories
               </h2>
               <div className="w-24 sm:w-32 h-2 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto mb-4 sm:mb-6 rounded-full animate-pulse-glow"></div>
@@ -643,15 +643,15 @@ Watch this quick video for details 👇
        <section className="py-20 bg-gradient-to-b from-white to-blue-50/30 relative overflow-hidden">
         {/* Background decorative elements */}
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-          <div className="absolute -top-24 -right-24 w-96 h-96 bg-blue-200/20 rounded-full blur-3xl"></div>
-          <div className="absolute top-1/2 -left-24 w-80 h-80 bg-indigo-200/20 rounded-full blur-3xl"></div>
-          <div className="absolute -bottom-32 right-1/4 w-64 h-64 bg-purple-200/20 rounded-full blur-3xl"></div>
+          <div className="absolute -top-24 -right-24 w-96 h-96 bg-blue-200/10 rounded-full blur-3xl"></div>
+          <div className="absolute top-1/2 -left-24 w-80 h-80 bg-indigo-200/10 rounded-full blur-3xl"></div>
+          <div className="absolute -bottom-32 right-1/4 w-64 h-64 bg-purple-200/10 rounded-full blur-3xl"></div>
         </div>
         
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-12">
             <span className="inline-block px-4 py-1.5 bg-blue-100 text-blue-700 rounded-full text-sm font-medium tracking-wide mb-4">MAXIMIZE YOUR INVESTMENT</span>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-700 via-indigo-700 to-blue-800 bg-clip-text text-transparent leading-tight">Calculate Your Potential ROI</h2>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium mb-6 bg-gradient-to-r from-blue-700 via-indigo-700 to-blue-800 bg-clip-text text-transparent leading-tight">Calculate Your Potential ROI</h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">See exactly how TopEdge AI can transform your business metrics with our interactive calculator</p>
           </div>
 
@@ -694,11 +694,11 @@ Watch this quick video for details 👇
               {/* Benefit Card 1 */}
               <div className="bg-gradient-to-br from-white to-blue-50 rounded-2xl shadow-xl overflow-hidden border border-blue-100 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 group animate-slide-up" style={{animationDelay: '0ms'}}>
                 <div className="p-8 relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-400/10 to-purple-500/10 rounded-full -mr-16 -mt-16 group-hover:scale-110 transition-transform duration-500"></div>
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-400/5 to-purple-500/5 rounded-full -mr-16 -mt-16 group-hover:scale-110 transition-transform duration-500"></div>
                   <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-700 rounded-2xl flex items-center justify-center mb-6 shadow-lg transform group-hover:rotate-6 transition-transform duration-300 mx-auto sm:mx-0">
                     <FaMoneyBillWave className="text-white w-8 h-8" />
                   </div>
-                  <h3 className="text-2xl font-heading font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors duration-300 text-center sm:text-left">Recover $10k+ Monthly</h3>
+                  <h3 className="text-2xl font-heading font-medium text-gray-900 mb-3 group-hover:text-blue-600 transition-colors duration-300 text-center sm:text-left">Recover $10k+ Monthly</h3>
                   <p className="text-gray-600 font-sans leading-relaxed text-center sm:text-left">
                     Our AI system captures leads that would otherwise be lost, directly impacting your bottom line.
                   </p>
@@ -714,11 +714,11 @@ Watch this quick video for details 👇
               {/* Benefit Card 2 */}
               <div className="bg-gradient-to-br from-white to-purple-50 rounded-2xl shadow-xl overflow-hidden border border-purple-100 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 group animate-slide-up" style={{animationDelay: '150ms'}}>
                 <div className="p-8 relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-purple-400/10 to-indigo-500/10 rounded-full -mr-16 -mt-16 group-hover:scale-110 transition-transform duration-500"></div>
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-purple-400/5 to-indigo-500/5 rounded-full -mr-16 -mt-16 group-hover:scale-110 transition-transform duration-500"></div>
                   <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-700 rounded-2xl flex items-center justify-center mb-6 shadow-lg transform group-hover:rotate-6 transition-transform duration-300 mx-auto sm:mx-0">
                     <FaClock className="text-white w-8 h-8" />
                   </div>
-                  <h3 className="text-2xl font-heading font-bold text-gray-900 mb-3 group-hover:text-purple-600 transition-colors duration-300 text-center sm:text-left">Save 40+ Hours Weekly</h3>
+                  <h3 className="text-2xl font-heading font-medium text-gray-900 mb-3 group-hover:text-purple-600 transition-colors duration-300 text-center sm:text-left">Save 40+ Hours Weekly</h3>
                   <p className="text-gray-600 font-sans leading-relaxed text-center sm:text-left">
                     Automate repetitive customer interactions, freeing your team to focus on high-value activities.
                   </p>
@@ -734,11 +734,11 @@ Watch this quick video for details 👇
               {/* Benefit Card 3 */}
               <div className="bg-gradient-to-br from-white to-green-50 rounded-2xl shadow-xl overflow-hidden border border-green-100 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 group animate-slide-up" style={{animationDelay: '300ms'}}>
                 <div className="p-8 relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-green-400/10 to-teal-500/10 rounded-full -mr-16 -mt-16 group-hover:scale-110 transition-transform duration-500"></div>
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-green-400/5 to-teal-500/5 rounded-full -mr-16 -mt-16 group-hover:scale-110 transition-transform duration-500"></div>
                   <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-green-700 rounded-2xl flex items-center justify-center mb-6 shadow-lg transform group-hover:rotate-6 transition-transform duration-300 mx-auto sm:mx-0">
                     <FaShieldAlt className="text-white w-8 h-8" />
                   </div>
-                  <h3 className="text-2xl font-heading font-bold text-gray-900 mb-3 group-hover:text-green-600 transition-colors duration-300 text-center sm:text-left">100% HIPAA Compliant</h3>
+                  <h3 className="text-2xl font-heading font-medium text-gray-900 mb-3 group-hover:text-green-600 transition-colors duration-300 text-center sm:text-left">100% HIPAA Compliant</h3>
                   <p className="text-gray-600 font-sans leading-relaxed text-center sm:text-left">
                     Enterprise-grade security protects all patient data with full encryption and compliance certification you can trust.
                   </p>
@@ -756,7 +756,7 @@ Watch this quick video for details 👇
             <div className="text-center">
               <div className="relative inline-block">
                 {/* Static subtle glow */}
-                <div className="absolute -inset-1 rounded-full bg-blue-500/10 blur-md opacity-70"></div>
+                <div className="absolute -inset-1 rounded-full bg-blue-500/10 blur-md opacity-30"></div>
                 
                 <button
                   onClick={handleScrollToCalendly}
@@ -788,7 +788,7 @@ Watch this quick video for details 👇
         <div className="container mx-auto px-4">
           <div className="text-center mb-8">
             <p className="text-blue-600 font-medium mb-2">Take Action Now...</p>
-            <h2 className="text-4xl font-bold mb-4">Book Your Discovery Call Now! We Have Limited Seats Available</h2>
+            <h2 className="text-4xl font-medium mb-4">Book Your Discovery Call Now! We Have Limited Seats Available</h2>
           </div>
           
           <div className="max-w-5xl mx-auto">
@@ -826,7 +826,7 @@ Watch this quick video for details 👇
             ) : (
               // Fallback UI when Calendly fails to load
               <div className="text-center p-8 bg-white rounded-lg shadow-lg border border-blue-100">
-                <h3 className="text-2xl font-semibold mb-6 text-blue-900">Schedule Your Free Consultation</h3>
+                <h3 className="text-2xl font-medium mb-6 text-blue-900">Schedule Your Free Consultation</h3>
                 <p className="mb-6 text-gray-700">Book a 30-minute call with our team to see how TopEdge AI can help your business recover lost revenue and save staff time.</p>
                 <a 
                   href={calendlyUrl} 
@@ -919,7 +919,7 @@ Watch this quick video for details 👇
                   </div>
                   
                   <div className="relative">
-                    <FaQuoteLeft className="text-blue-100 w-12 h-12 absolute -left-2 -top-2 opacity-50" />
+                    <FaQuoteLeft className="text-blue-100 w-12 h-12 absolute -left-2 -top-2 opacity-20" />
                     <p className="text-gray-700 text-lg leading-relaxed font-medium pl-4 relative z-10">"{testimonial.quote}"</p>
                   </div>
                   
@@ -1093,8 +1093,8 @@ function RealTimeROICalculator() {
       <div className="rounded-3xl shadow-2xl overflow-hidden border border-blue-100 bg-white backdrop-blur-sm bg-white/90">
         <div className="relative overflow-hidden">
           {/* Decorative elements */}
-          <div className="absolute -top-20 -right-20 w-40 h-40 bg-blue-100 rounded-full opacity-50 blur-3xl"></div>
-          <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-indigo-100 rounded-full opacity-50 blur-3xl"></div>
+          <div className="absolute -top-20 -right-20 w-40 h-40 bg-blue-100 rounded-full opacity-20 blur-3xl"></div>
+          <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-indigo-100 rounded-full opacity-20 blur-3xl"></div>
           
           <div className="relative p-6 sm:p-8 md:p-10 lg:p-12">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">

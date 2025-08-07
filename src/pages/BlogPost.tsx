@@ -209,7 +209,7 @@ export default function BlogPost() {
             <article className="prose prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-a:text-blue-600 hover:prose-a:text-blue-500 prose-strong:text-gray-900 prose-code:text-blue-600 prose-code:bg-blue-50 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-blockquote:border-l-4 prose-blockquote:border-purple-400 prose-blockquote:bg-purple-50 prose-blockquote:text-gray-800 prose-img:rounded-xl prose-img:shadow-lg prose-img:border-2 prose-img:border-purple-100 prose-li:marker:text-purple-600 prose-table:border prose-table:border-gray-200 prose-th:bg-purple-50 prose-th:text-purple-700 prose-th:font-semibold prose-td:border-gray-100 prose-hr:border-purple-200 dark:prose-headings:text-white dark:prose-p:text-gray-300 dark:prose-blockquote:bg-purple-950 dark:prose-blockquote:text-gray-100 dark:prose-img:border-purple-800 dark:prose-img:shadow-xl dark:prose-th:bg-purple-900 dark:prose-th:text-purple-200 dark:prose-td:border-gray-800 font-sans" dangerouslySetInnerHTML={{ __html: post.content || '' }} />
 
             {/* Gradient Divider */}
-            <div className="my-12 h-1 w-full bg-gradient-to-r from-purple-200 via-blue-100 to-purple-200 rounded-full opacity-70" />
+            <div className="my-12 h-1 w-full bg-gradient-to-r from-purple-200 via-blue-100 to-purple-200 rounded-full opacity-30" />
 
             {/* Share Section */}
             <div className="pt-8">

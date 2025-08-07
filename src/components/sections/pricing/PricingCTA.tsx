@@ -70,7 +70,7 @@ const PricingCTA = () => {
 
         {/* Decorative elements */}
         <motion.div
-          className="absolute left-0 top-1/2 -translate-y-1/2 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl"
+          className="absolute left-0 top-1/2 -translate-y-1/2 w-64 h-64 bg-emerald-500/5 rounded-full blur-3xl"
           animate={{
             scale: [1, 1.2, 1],
             opacity: [0.3, 0.6, 0.3],
@@ -82,7 +82,7 @@ const PricingCTA = () => {
           }}
         />
         <motion.div
-          className="absolute right-0 top-1/2 -translate-y-1/2 w-64 h-64 bg-green-500/10 rounded-full blur-3xl"
+          className="absolute right-0 top-1/2 -translate-y-1/2 w-64 h-64 bg-green-500/5 rounded-full blur-3xl"
           animate={{
             scale: [1.2, 1, 1.2],
             opacity: [0.3, 0.6, 0.3],

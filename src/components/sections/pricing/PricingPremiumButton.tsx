@@ -66,7 +66,7 @@ const PremiumButton: React.FC<PremiumButtonProps> = ({
   >
     <div className="relative px-4 sm:px-8 py-3 sm:py-4 rounded-full">
       {/* Outer Glow */}
-      <div className={`absolute inset-0 blur-xl opacity-70 group-hover:opacity-100 transition-opacity duration-500 rounded-full bg-gradient-to-r ${colors.glow}`} />
+      <div className={`absolute inset-0 blur-xl opacity-30 group-hover:opacity-70 transition-opacity duration-500 rounded-full bg-gradient-to-r ${colors.glow}`} />
       {/* Main Button Background */}
       <div className={`absolute inset-0 ${colors.bg} border ${colors.border} rounded-full`} />
       {/* Button Content */}

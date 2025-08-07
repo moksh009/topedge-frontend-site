@@ -61,7 +61,7 @@ export const ServiceCTA = () => {
                 {/* Button Container */}
                 <div className="relative px-6 sm:px-8 py-4 rounded-full w-full">
                   {/* Glow Effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500/50 via-purple-400/50 to-purple-500/50 blur-xl opacity-70 group-hover:opacity-100 transition-opacity duration-500 rounded-full" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500/50 via-purple-400/50 to-purple-500/50 blur-xl opacity-30 group-hover:opacity-70 transition-opacity duration-500 rounded-full" />
                   {/* Moving Particles Background */}
                   <div className="absolute inset-0 overflow-hidden rounded-full">
                     {[...Array(5)].map((_, i) => (
@@ -122,7 +122,7 @@ export const ServiceCTA = () => {
                 {/* Button Container */}
                 <div className="relative px-6 sm:px-8 py-4 rounded-full w-full">
                   {/* Glow Effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500/50 via-purple-400/50 to-purple-500/50 blur-xl opacity-70 group-hover:opacity-100 transition-opacity duration-500 rounded-full" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500/50 via-purple-400/50 to-purple-500/50 blur-xl opacity-30 group-hover:opacity-70 transition-opacity duration-500 rounded-full" />
                   {/* Moving Particles Background */}
                   <div className="absolute inset-0 overflow-hidden rounded-full">
                     {[...Array(5)].map((_, i) => (
@@ -178,8 +178,8 @@ export const ServiceCTA = () => {
         </div>
 
         {/* Subtle background effects */}
-        <div className="absolute left-0 top-1/2 -translate-y-1/2 w-64 h-64 bg-theme-glow-primary/5 rounded-full blur-3xl" />
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-64 h-64 bg-theme-glow-accent/5 rounded-full blur-3xl" />
+        <div className="absolute left-0 top-1/2 -translate-y-1/2 w-64 h-64 bg-theme-glow-primary/3 rounded-full blur-3xl" />
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-64 h-64 bg-theme-glow-accent/3 rounded-full blur-3xl" />
       </motion.div>
     </section>
   );

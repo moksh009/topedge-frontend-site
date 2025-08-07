@@ -133,10 +133,10 @@ const Contact = () => {
         {/* Animated Background Elements */}
         <div className="absolute inset-0 z-0">
           {/* Decorative Lucide icons background */}
-          <Mail className="absolute top-16 left-24 w-24 h-24 text-purple-300 opacity-40 rotate-12 pointer-events-none" />
+          <Mail className="absolute top-16 left-24 w-24 h-24 text-purple-300 opacity-15 rotate-12 pointer-events-none" />
           {/* End Decorative Lucide icons */}
           <motion.div 
-            className="absolute top-0 right-0 w-[800px] h-[800px] bg-theme-glow-primary/10 rounded-full blur-[120px]"
+            className="absolute top-0 right-0 w-[800px] h-[800px] bg-theme-glow-primary/5 rounded-full blur-[120px]"
             animate={{
               scale: [1, 1.2, 1],
               opacity: [0.6, 0.4, 0.2],
@@ -171,7 +171,7 @@ const Contact = () => {
               transition={{ type: "spring", duration: 1.5 }}
             >
               <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-theme-accent-primary to-theme-accent-secondary rounded-full blur-xl opacity-30"
+                className="absolute inset-0 bg-gradient-to-r from-theme-accent-primary to-theme-accent-secondary rounded-full blur-xl opacity-15"
                 animate={{
                   scale: [1, 1.2, 1],
                   opacity: [0.3, 0.5, 0.3],
