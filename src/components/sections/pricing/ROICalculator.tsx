@@ -84,39 +84,7 @@ const ROICalculator = ({ isPricingPage = false }: ROICalculatorProps) => {
       id="roi-calculator"
       className="relative py-16 sm:py-24 md:py-32 overflow-hidden bg-theme-bg-primary"
     >
-      {/* Enhanced Background Elements */}
-      <div className="absolute inset-0 pointer-events-none z-0">
-        <motion.div
-          className="absolute left-10 top-20 text-blue-400/50"
-          animate={{ y: [-15, 15, -15], rotate: [0, 360, 0] }}
-          transition={{ duration: 11, repeat: Infinity, ease: "linear" }}
-        >
-          <Calculator className="w-20 h-20" />
-        </motion.div>
-        <motion.div
-          className="absolute right-40 bottom-40 text-yellow-400/50"
-          animate={{ y: [10, -10, 10], rotate: [0, -360, 0] }}
-          transition={{ duration: 13, repeat: Infinity, ease: "linear" }}
-        >
-          <BarChart2 className="w-16 h-16" />
-        </motion.div>
-        <motion.div
-          className="absolute left-1/2 top-80 text-emerald-400/50"
-          animate={{ x: [-10, 10, -10], rotate: [0, 180, 0] }}
-          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-        >
-          <DollarSign className="w-16 h-16" />
-        </motion.div>
-      </div>
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute w-full h-full bg-gradient-to-b from-theme-bg-primary via-theme-bg-accent/5 to-theme-bg-primary" />
-        <motion.div
-          className="absolute inset-0"
-          style={{
-            background: "radial-gradient(circle at 50% 50%, var(--glow-primary) 0%, transparent 50%)"
-          }}
-        />
-      </div>
+    
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Title Section */}

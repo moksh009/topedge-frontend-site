@@ -130,33 +130,7 @@ const Contact = () => {
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
       >
-        {/* Animated Background Elements */}
-        <div className="absolute inset-0 z-0">
-          {/* Decorative Lucide icons background */}
-          <Mail className="absolute top-16 left-24 w-24 h-24 text-purple-300 opacity-15 rotate-12 pointer-events-none" />
-          {/* End Decorative Lucide icons */}
-          <motion.div 
-            className="absolute top-0 right-0 w-[800px] h-[800px] bg-theme-glow-primary/5 rounded-full blur-[120px]"
-            animate={{
-              scale: [1, 1.2, 1],
-              opacity: [0.6, 0.4, 0.2],
-              x: mousePosition.x * 2,
-              y: mousePosition.y * 2,
-            }}
-            transition={{
-              scale: {
-                duration: 8,
-                repeat: Infinity,
-                ease: 'easeInOut',
-              },
-              opacity: {
-                duration: 8,
-                repeat: Infinity,
-                ease: 'easeInOut',
-              },
-            }}
-          />
-        </div>
+        
 
         {/* Content Container */}
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">

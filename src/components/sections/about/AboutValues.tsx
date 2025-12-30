@@ -91,16 +91,7 @@ const AboutValues: React.FC = () => {
           ))}
         </div>
       </div>
-      {/* Add floating icons as background decorations */}
-      <div className="absolute inset-0 pointer-events-none z-0">
-        <motion.div
-          className="absolute left-10 top-10 text-blue-400/20"
-          animate={{ y: [-15, 15, -15], rotate: [0, 360, 0] }}
-          transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-        >
-          <Lightbulb className="w-20 h-20" />
-        </motion.div>
-      </div>
+     
     </section>
   );
 };

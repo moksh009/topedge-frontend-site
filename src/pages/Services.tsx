@@ -1,7 +1,6 @@
 import SEO from '../components/SEO';
 import React, { useRef, useMemo } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Database, Bot, Cpu, Brain, Sparkles, MessageSquare, TrendingUp, Zap, User2, BadgeDollarSign } from 'lucide-react';
 import { ServiceProcess } from '../components/sections/services/ServiceProcess';
 import ChatbotShowcase from '../components/sections/services/ChatbotShowcase';
 import { AIAgentInteraction } from '../components/sections/services/AIAgentInteraction';
@@ -9,17 +8,14 @@ import { ServiceCTA } from '../components/sections/services/ServiceCTA';
 import { ChatbotProcess } from '../components/sections/services/ChatbotProcess';
 import { Link } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
-import { LucideIcon } from 'lucide-react';
 
 interface PremiumButtonProps {
-  icon: LucideIcon;
   text: string;
   to: string;
   gradient?: string;
 }
 
 const PremiumButton: React.FC<PremiumButtonProps & { onClick?: () => void }> = ({ 
-  icon: Icon, 
   text, 
   to, 
   onClick
@@ -52,7 +48,6 @@ const PremiumButton: React.FC<PremiumButtonProps & { onClick?: () => void }> = (
         {/* Button Content */}
         <div className="relative flex items-center justify-center gap-3">
           <div className="flex items-center justify-center gap-3">
-            <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-purple-500 group-hover:text-purple-600 transition-colors duration-300" />
             <span className="text-base sm:text-lg font-medium bg-gradient-to-r from-purple-600 via-purple-400 to-purple-600 bg-clip-text text-transparent">
               {text}
             </span>
@@ -96,30 +91,8 @@ const Services: React.FC = () => {
   const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.9, 0.8]);
   const y = useTransform(scrollYProgress, [0, 1], [0, 30]);
 
-  // Define floating icons before using them
-  const floatingIcons = useMemo(() => [
-    {
-      Icon: Bot,
-      position: { left: '15', top: '20' },
-      color: 'text-purple-400',
-      animation: {
-        y: [-40, 20, -40],
-        rotate: [0, 360],
-      },
-      duration: { y: 4, rotate: 8 }
-    },
-    {
-      Icon: Cpu,
-      position: { left: '40', bottom: '80' },
-      color: 'text-purple-500',
-      animation: {
-        y: [-30, 30, -30],
-        x: [-20, 20, -20],
-        rotate: [0, -360],
-      },
-      duration: { y: 5, x: 6, rotate: 10 }
-    }
-  ], []);
+  // Floating icons removed
+  const floatingIcons: any[] = [];
 
   return (
     <>
@@ -175,38 +148,7 @@ const Services: React.FC = () => {
           />
         </div>
 
-        {/* Floating icons */}
-        {floatingIcons.map(({ Icon, position, color, animation, duration }, index) => (
-          <motion.div
-            key={index}
-            className={`absolute ${color}/40`}
-            style={{
-              left: position.left ? `${position.left}%` : undefined,
-              top: position.top ? `${position.top}%` : undefined,
-              bottom: position.bottom ? `${position.bottom}%` : undefined,
-            }}
-            animate={animation}
-            transition={{
-              y: {
-                duration: duration.y,
-                repeat: Infinity,
-                ease: "easeInOut",
-              },
-              x: duration.x ? {
-                duration: duration.x,
-                repeat: Infinity,
-                ease: "easeInOut",
-              } : undefined,
-              rotate: {
-                duration: duration.rotate,
-                repeat: Infinity,
-                ease: "linear",
-              },
-            }}
-          >
-            <Icon className={index < 1 ? "w-16 h-16" : "w-12 h-12"} />
-          </motion.div>
-        ))}
+        {/* Floating icons removed */}
 
         {/* Content */}
         <motion.div 
@@ -297,7 +239,6 @@ const Services: React.FC = () => {
               transition={{ delay: 0.8 }}
             >
               <PremiumButton 
-  icon={Bot} 
   text="AI Caller" 
   to="#ai-agent-interaction"
   onClick={() => {
@@ -308,7 +249,6 @@ const Services: React.FC = () => {
   }}
 />
 <PremiumButton 
-  icon={MessageSquare} 
   text="Chatbot" 
   to="#chatbot-showcase"
   onClick={() => {

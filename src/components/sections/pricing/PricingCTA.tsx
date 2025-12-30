@@ -56,17 +56,7 @@ const PricingCTA = () => {
           </motion.div>
         </motion.div>
 
-        {/* Animated Floating Icons */}
-        <div className="pointer-events-none absolute inset-0 z-0">
-          {/* DollarSign - top left */}
-          <motion.div
-            className="absolute left-8 top-10 text-green-400/30"
-            animate={{ y: [-15, 15, -15], rotate: [0, 360, 0] }}
-            transition={{ duration: 13, repeat: Infinity, ease: "linear" }}
-          >
-            <DollarSign className="w-14 h-14" />
-          </motion.div>
-        </div>
+       
 
         {/* Decorative elements */}
         <motion.div

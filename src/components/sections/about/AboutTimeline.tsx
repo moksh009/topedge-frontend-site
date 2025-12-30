@@ -223,17 +223,6 @@ const AboutTimeline: React.FC = () => {
         </div>
       </div>
 
-      {/* Add floating icons as background decorations */}
-      <div className="absolute inset-0 pointer-events-none z-0">
-        <motion.div
-          className="absolute left-10 top-20 text-blue-400/20"
-          animate={{ y: [-10, 10, -10], rotate: [0, 360, 0] }}
-          transition={{ duration: 13, repeat: Infinity, ease: "linear" }}
-        >
-          <Calendar className="w-16 h-16" />
-        </motion.div>
-      </div>
-
       <motion.div
         ref={sectionRef}
         style={{ 

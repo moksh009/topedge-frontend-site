@@ -26,45 +26,9 @@ const AboutCTA: React.FC = () => {
 
   return (
     <section className="relative py-24 sm:py-32 overflow-hidden">
-      {/* Floating Icons as Background Decorations */}
-      <div className="absolute inset-0 pointer-events-none z-0">
-        <motion.div
-          className="absolute left-10 top-10 text-blue-400/20"
-          animate={{ y: [-12, 12, -12], rotate: [0, 360, 0] }}
-          transition={{ duration: 11, repeat: Infinity, ease: "linear" }}
-        >
-          <Sparkles className="w-20 h-20" />
-        </motion.div>
-      </div>
+    
 
-      {/* Animated Background */}
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-theme-bg-primary via-theme-glow-primary/5 to-theme-bg-primary" />
-        
-        {/* Animated Particles */}
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-theme-glow-primary rounded-full"
-            animate={{
-              y: [0, -100],
-              x: [0, Math.random() * 50 - 25],
-              scale: [0, 1, 0],
-              opacity: [0, 0.5, 0],
-            }}
-            transition={{
-              duration: Math.random() * 3 + 2,
-              repeat: Infinity,
-              ease: "linear",
-              delay: Math.random() * 2,
-            }}
-            style={{
-              left: `${Math.random() * 100}%`,
-              bottom: '0%',
-            }}
-          />
-        ))}
-      </div>
+      
 
       {/* Content Container */}
       <motion.div
@@ -209,16 +173,7 @@ const DeveloperShowcase: React.FC = () => {
 
   return (
     <section className="relative py-32 overflow-hidden">
-      {/* Add floating icons as background decorations */}
-      <div className="absolute inset-0 pointer-events-none z-0">
-        <motion.div
-          className="absolute left-10 top-10 text-blue-400/20"
-          animate={{ y: [-15, 15, -15], rotate: [0, 360, 0] }}
-          transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
-        >
-          <Code2 className="w-20 h-20" />
-        </motion.div>
-      </div>
+     
 
       <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Enhanced Header */}

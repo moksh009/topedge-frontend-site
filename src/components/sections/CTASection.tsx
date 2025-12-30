@@ -43,17 +43,7 @@ export const CTASection = () => {
           ))}
         </div>
       </div>
-
-      {/* Add floating icons as background decorations */}
-      <div className="absolute inset-0 pointer-events-none z-0">
-        <motion.div
-          className="absolute left-32 top-10 text-blue-400/40"
-          animate={{ y: [-10, 10, -10], rotate: [0, 360, 0] }}
-          transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-        >
-          <Rocket className="w-20 h-20" />
-        </motion.div>
-      </div>
+          
 
       <div className="relative container mx-auto px-4 sm:px-6">
         <motion.div

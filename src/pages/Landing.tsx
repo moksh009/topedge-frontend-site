@@ -641,12 +641,7 @@ Watch this quick video for details 👇
 
        {/* ROI Calculator Section - Real Time */}
        <section className="py-20 bg-gradient-to-b from-white to-blue-50/30 relative overflow-hidden">
-        {/* Background decorative elements */}
-        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-          <div className="absolute -top-24 -right-24 w-96 h-96 bg-blue-200/10 rounded-full blur-3xl"></div>
-          <div className="absolute top-1/2 -left-24 w-80 h-80 bg-indigo-200/10 rounded-full blur-3xl"></div>
-          <div className="absolute -bottom-32 right-1/4 w-64 h-64 bg-purple-200/10 rounded-full blur-3xl"></div>
-        </div>
+        
         
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-12">

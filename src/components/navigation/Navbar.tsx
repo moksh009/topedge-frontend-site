@@ -16,7 +16,6 @@ const Navbar = () => {
     { path: '/testimonials', label: 'Testimonials', icon: Star },
     { path: '/pricing', label: 'Pricing', icon: Tag },
     { path: '/contact', label: 'Contact', icon: Mail },
-    
   ];
 
   useEffect(() => {
@@ -157,7 +156,6 @@ const Navbar = () => {
           className="flex items-center gap-3 w-full px-4 py-3 rounded-xl hover:bg-white/60 backdrop-blur-sm transition-all duration-300 font-medium text-gray-900 text-lg justify-start border border-transparent hover:border-white/20"
           onClick={() => setIsOpen(false)}
         >
-          {item.icon && <item.icon className="w-5 h-5 text-theme-glow-primary" />}
           {item.label}
         </Link>
       ))}
@@ -256,7 +254,6 @@ const Navbar = () => {
                     
                     {/* Button Content */}
                     <div className="relative flex items-center gap-2">
-                      <Calendar className="w-4 h-4 text-blue-600 group-hover:text-blue-700 transition-colors duration-300" />
                       <span className="text-sm font-medium text-gray-900">
                         Book Appointment
                       </span>

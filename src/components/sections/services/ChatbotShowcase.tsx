@@ -30,13 +30,7 @@ const ChatbotShowcase = () => {
   // Animated Lucide icons background
   const iconsBg = (
     <div className="absolute inset-0 pointer-events-none z-0">
-      <motion.div
-        className="absolute left-10 top-28"
-        animate={{ y: [-25, 15, -25], rotate: [0, 360] }}
-        transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
-      >
-        <Bot className="w-16 h-16 text-purple-400/15" />
-      </motion.div>
+     
     </div>
   );
   const [messages, setMessages] = useState<Message[]>([]);

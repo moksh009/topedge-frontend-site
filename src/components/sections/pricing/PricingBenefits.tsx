@@ -59,17 +59,7 @@ const PricingBenefits = () => {
         scale
       }}
     >
-      {/* Animated Lucide Icons Background */}
-      <div className="pointer-events-none absolute inset-0 z-0">
-        {/* DollarSign - left center */}
-        <motion.div
-          className="absolute left-6 top-1/2 text-emerald-400/25"
-          animate={{ x: [-10, 10, -10], rotate: [0, -360, 0] }}
-          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-        >
-          <DollarSign className="w-12 h-12" />
-        </motion.div>
-      </div>
+      
       {/* Background with subtle gradient */}
       
 

@@ -212,42 +212,7 @@ const HeroSection = () => {
       style={{ position: 'relative' }}
     >
       {/* Dynamic Background - Enhanced */}
-      <motion.div 
-        className="absolute inset-0 pointer-events-none"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1 }}
-      >
-        {/* Keep only Bot and TrendingUp icons for subtle background effect */}
-        <motion.div
-          className="absolute left-10 top-1/4 text-blue-500/40"
-          animate={{
-            y: [-20, 20, -20],
-            rotate: [0, 360],
-          }}
-          transition={{
-            y: { duration: 4, repeat: Infinity, ease: "easeInOut" },
-            rotate: { duration: 8, repeat: Infinity, ease: "linear" },
-          }}
-        >
-          <Bot className="w-16 h-16" />
-        </motion.div>
-        <motion.div
-          className="absolute right-1/4 top-1/2 text-emerald-500/40"
-          animate={{
-            y: [20, -20, 20],
-            x: [20, -20, 20],
-            rotate: [360, 0],
-          }}
-          transition={{
-            y: { duration: 6, repeat: Infinity, ease: "easeInOut" },
-            x: { duration: 5, repeat: Infinity, ease: "easeInOut" },
-            rotate: { duration: 10, repeat: Infinity, ease: "linear" },
-          }}
-        >
-          <TrendingUp className="w-12 h-12" />
-        </motion.div>
-      </motion.div>
+     
 
       {/* Main Content */}
       <div className="relative container mx-auto px-4 flex flex-col justify-center items-center text-center min-h-screen">

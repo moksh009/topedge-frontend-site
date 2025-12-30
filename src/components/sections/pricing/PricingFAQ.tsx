@@ -130,35 +130,7 @@ const FAQItem = ({ question, answer, isOpen, onToggle, index }: {
   );
 };
 
-import type { LucideIcon, LucideProps } from 'lucide-react';
 
-type BackgroundIconConfig = {
-  Icon: LucideIcon;
-  size: string | number;
-  brightness: number;
-  color: string;
-  position: React.CSSProperties;
-  rotation: number;
-  delay: number;
-  floatRange: number;
-  duration: number;
-  scale: number;
-};
-
-const backgroundIcons: BackgroundIconConfig[] = [
-  {
-    Icon: Crown,
-    size: 96,
-    brightness: 0.4,
-    color: '#FFD700',
-    position: { top: '5%', left: '8%' },
-    rotation: 65,
-    delay: 0.2,
-    floatRange: 30,
-    duration: 8,
-    scale: 1,
-  }
-];
 
 const PricingFAQ = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -171,36 +143,8 @@ const PricingFAQ = () => {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
     >
-      {/* Animated Floating Lucide Icons for FAQ Background */}
-      <div className="pointer-events-none absolute inset-0 z-0">
-        {backgroundIcons.map((iconCfg: BackgroundIconConfig, idx: number) => {
-          const { Icon, size, brightness, color, position, rotation, delay, floatRange, duration, scale } = iconCfg;
-          return (
-            <motion.div
-              key={idx}
-              style={{
-                ...position,
-                filter: `brightness(${brightness})`,
-                color,
-                zIndex: 0,
-                transform: `rotate(${rotation}deg) scale(${scale})`,
-              }}
-              initial={{ y: 0 }}
-              animate={{ y: [0, floatRange, 0] }}
-              transition={{
-                duration,
-                repeat: Infinity,
-                repeatType: 'reverse',
-                ease: 'easeInOut',
-                delay
-              }}
-              className="absolute opacity-80"
-            >
-              <Icon size={size} strokeWidth={1.5} />
-            </motion.div>
-          );
-        })}
-      </div>
+     
+           
       {/* Background Effects */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-b from-theme-bg-primary via-theme-glow-primary/10 to-theme-bg-primary" />

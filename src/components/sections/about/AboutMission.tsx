@@ -61,16 +61,6 @@ const AboutMission = () => {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] sm:w-[800px] h-[300px] sm:h-[500px] bg-theme-glow-primary/5 rounded-full blur-[80px] sm:blur-[120px]" />
       </div>
 
-      {/* Floating Icons as Background Decorations */}
-      <div className="absolute inset-0 pointer-events-none z-0">
-        <motion.div
-          className="absolute left-16 top-10 text-blue-400/20"
-          animate={{ y: [-12, 12, -12], rotate: [0, 360, 0] }}
-          transition={{ duration: 11, repeat: Infinity, ease: "linear" }}
-        >
-          <Rocket className="w-20 h-20" />
-        </motion.div>
-      </div>
 
       {/* Content Container */}
       <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 z-20">

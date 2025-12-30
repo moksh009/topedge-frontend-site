@@ -18,7 +18,7 @@ import {
 } from 'chart.js'
 import { useNavigate } from 'react-router-dom'
 import { storeROIData } from '../services/firebase'
-import { X, AlertCircle, DollarSign, BarChart2, TrendingUp, Calculator, PieChart, PiggyBank } from 'lucide-react'
+import { X, AlertCircle, BarChart2, TrendingUp, DollarSign, PieChart, PiggyBank } from 'lucide-react'
 
 // Register Chart.js components
 ChartJS.register(
@@ -284,11 +284,7 @@ export default function ROICalculator() {
 
     <div className="min-h-screen bg-theme-bg-primary relative overflow-hidden pt-24 sm:pt-32">
       {/* Background Effects */}
-      <div className="absolute inset-0 z-0">
-        {/* Decorative Lucide icons background for ROI Calculator */}
-        <DollarSign className="absolute top-16 left-24 w-24 h-24 text-green-400 opacity-15 rotate-12 pointer-events-none" />
-        {/* End Decorative Lucide icons */}
-      </div>
+      <div className="absolute inset-0 z-0" />
 
       <div className="max-w-[80rem] mx-auto px-4 sm:px-6 lg:px-8 pb-12 relative z-10">
         <motion.div

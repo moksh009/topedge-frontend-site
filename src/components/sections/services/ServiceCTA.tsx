@@ -4,16 +4,7 @@ import { motion } from 'framer-motion';
 export const ServiceCTA = () => {
   return (
     <section className="relative py-24 overflow-hidden bg-theme-bg-primary">
-      {/* Premium Lucide icons background */}
-      <div className="absolute inset-0 pointer-events-none">
-        <motion.div
-          className="absolute left-10 top-16"
-          animate={{ y: [-40, 20, -40], rotate: [0, 360] }}
-          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-        >
-          <Bot className="w-20 h-20 text-purple-400" />
-        </motion.div>
-      </div>
+      
 
       <motion.div 
         className="relative container mx-auto px-4"

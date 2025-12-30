@@ -103,31 +103,7 @@ const AboutHero: React.FC = () => {
 
         {/* Floating orbs removed, only grid and icons remain */}
 
-        <div className="absolute inset-0 pointer-events-none">
-          {/* Only Bot and Building2 icons remain for subtle background effect */}
-          {[
-            { Icon: Bot, color: 'text-blue-500/30', delay: 0, top: '20%', left: '15%' },
-            { Icon: Building2, color: 'text-rose-500/30', delay: 0, top: '45%', left: '15%' }
-          ].map(({ Icon, color, delay, top, left }, index) => (
-            <motion.div
-              key={index}
-              className={`absolute ${color}`}
-              style={{ top, left }}
-              animate={{
-                y: [-20, 20, -20],
-                rotate: [0, 360, 0]
-              }}
-              transition={{
-                delay: delay,
-                duration: 8,
-                repeat: Infinity,
-                ease: "linear"
-              }}
-            >
-              <Icon className="w-12 h-12" />
-            </motion.div>
-          ))}
-        </div>
+
       </div>
 
       <div className="relative container mx-auto px-4 z-10">

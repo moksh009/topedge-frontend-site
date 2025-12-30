@@ -134,21 +134,10 @@ const PricingHero = () => {
 
   // Background icons configuration with optimized animations
   const backgroundIcons = [
-    { 
-      Icon: Crown, 
-      size: 96, 
-      brightness: 0.4, 
-      color: '#FFD700', 
-      position: { top: '5%', left: '8%' }, 
-      rotation: 15,
-      delay: 0.2,
-      floatRange: 30,
-      duration: 8,
-      scale: 1
-    },
+    
     {
       Icon: DollarSign,
-      size: 60,
+      size: 0,
       brightness: 0.9,
       color: '#22C55E',
       position: { bottom: '10%', left: '35%' },

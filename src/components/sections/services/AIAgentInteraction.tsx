@@ -274,16 +274,7 @@ export const AIAgentInteraction = () => {
 
   return (
     <div className="relative flex flex-col items-center justify-center min-h-[140vh] bg-theme-bg-primary">
-      {/* Premium Animated Background Lines and Lucide Icons */}
-      <div className="absolute inset-0 pointer-events-none">
-        <motion.div
-          className="absolute left-12 top-24"
-          animate={{ y: [-30, 15, -30], rotate: [0, 360] }}
-          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
-        >
-          <Bot className="w-16 h-16 text-purple-400/20" />
-        </motion.div>
-      </div>
+    
       
       {/* Title Section */}
       <div className="text-center mb-16">

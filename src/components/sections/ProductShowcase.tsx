@@ -7,7 +7,7 @@ import { Bot, User, Zap, Clock, Globe, Shield, Brain, Sparkles, Cpu, Users, Doll
 const aiVisual = "https://media.licdn.com/dms/image/v2/D5612AQGTYdPfsL3afw/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1721838400002?e=2147483647&v=beta&t=WW-Tw2KnU4PXsxpnDqOXg1ZIACs6BiqgDx8FfwNJAPM";
 const humanVisual = "https://www.shutterstock.com/image-photo/tired-angry-stress-business-man-600nw-2193338535.jpg";
 
-const comparisonData = {
+ const comparisonData = {
   ai: {
     title: "",
     subtitle: "",
@@ -141,16 +141,8 @@ const ProductShowcase = () => {
         />
       </div>
 
-      {/* Add floating icons as background decorations */}
-      <div className="absolute inset-0 pointer-events-none z-0">
-        <motion.div
-          className="absolute left-40 top-24 text-blue-400/40"
-          animate={{ y: [-10, 10, -10], rotate: [0, 360, 0] }}
-          transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-        >
-          <Package className="w-20 h-20" />
-        </motion.div>
-      </div>
+      {/* Remove floating decorative icons */}
+      {/* Previously: Package background icon */}
 
       {/* Content Container */}
       <motion.div 
@@ -177,7 +169,7 @@ const ProductShowcase = () => {
 
             {/* Content */}
             <Sparkles className="relative w-4 h-4 text-blue-400" />
-            <span className="relative text-sm font-medium text-black/90">
+            <span className="relative text-sm font-medium text_black/90">
               Future of Customer Service
             </span>
           </motion.div>

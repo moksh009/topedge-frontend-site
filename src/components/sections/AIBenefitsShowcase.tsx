@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform, AnimatePresence, useSpring } from 'framer-motion';
 import { useRef, useState, useMemo } from 'react';
-import { Phone, MessageSquare, Calendar, Users, Clock, Zap, Bot, BrainCircuit, Sparkles, CheckCircle2, XCircle, Building2, Globe2, TrendingUp, ArrowRight, Star, PhoneCall, MessageCircle, CalendarCheck, PhoneIncoming, BellRing, CalendarRange, Calculator } from 'lucide-react';
+import {  Bot, BrainCircuit, Sparkles, CheckCircle2, XCircle, Building2, Globe2, TrendingUp, ArrowRight, Star, PhoneCall, MessageCircle, CalendarCheck, PhoneIncoming, BellRing, CalendarRange, Calculator } from 'lucide-react';
 import React from 'react';
 
 interface Benefit {
@@ -157,16 +157,7 @@ const AIBenefitsShowcase = () => {
         />
       </div>
 
-      {/* Floating icons as background decorations */}
-      <div className="absolute inset-0 pointer-events-none z-0">
-        <motion.div
-          className="absolute left-10 top-20 text-blue-400/20"
-          animate={{ y: [-15, 15, -15], rotate: [0, 360, 0] }}
-          transition={{ duration: 11, repeat: Infinity, ease: "linear" }}
-        >
-          <Bot className="w-20 h-20" />
-        </motion.div>
-      </div>
+      
 
       <div className="relative container mx-auto px-4 sm:px-6">
         {/* Premium Header */}

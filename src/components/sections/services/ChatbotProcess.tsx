@@ -32,13 +32,7 @@ export const ChatbotProcess = () => {
   return (
     <section className="relative min-h-screen py-24 overflow-hidden bg-theme-bg-primary">
       <div className="absolute inset-0 pointer-events-none z-0">
-        <motion.div
-          className="absolute left-10 top-32"
-          animate={{ y: [-25, 10, -25], rotate: [0, 360] }}
-          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
-        >
-          <Bot className="w-16 h-16 text-purple-400/15" />
-        </motion.div>
+        
       </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Title */}
