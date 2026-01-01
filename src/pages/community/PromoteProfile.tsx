@@ -1,17 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import CommunityLayout from '@/components/community/layout/CommunityLayout';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Loader2, Edit2, Globe, Mail, MapPin, Briefcase, User, Building, Brain, Phone } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { ArrowLeft, Loader2, Edit2, Globe, Mail, MapPin, Briefcase, User, Building, Brain, Phone, Upload } from 'lucide-react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
-import { db } from '@/services/firebase';
+import { db, storage } from '@/services/firebase';
 import { useAuth } from '@/contexts/AuthContext';
 import { UserProfile } from '@/types/user';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import toast from 'react-hot-toast';
 
 const PromoteProfile = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { user, userProfile, loading: authLoading, refreshProfile } = useAuth();
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState(() => {
+    const params = new URLSearchParams(location.search);
+    return params.get('edit') === '1';
+  });
   const [saving, setSaving] = useState(false);
 
   const [formData, setFormData] = useState<Partial<UserProfile>>({
@@ -26,12 +32,14 @@ const PromoteProfile = () => {
     description: '',
     currentWork: '',
     aiSkills: [],
-    workOpenFor: '',
+    workingStatus: '',
+    networkingIntent: [],
     contactDetails: '',
-    lookingToGetHired: false
+    phoneNumber: ''
   });
 
   const [skillsInput, setSkillsInput] = useState('');
+  const [uploadingPhoto, setUploadingPhoto] = useState(false);
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -40,13 +48,14 @@ const PromoteProfile = () => {
   }, [authLoading, user, navigate]);
 
   useEffect(() => {
+    const editParam = new URLSearchParams(location.search).get('edit') === '1';
     if (userProfile) {
       setFormData({
         ...userProfile,
         aiSkills: userProfile.aiSkills || []
       });
       setSkillsInput(userProfile.aiSkills?.join(', ') || '');
-      setIsEditing(false);
+      setIsEditing(editParam ? true : false);
     } else if (user) {
       setFormData(prev => ({
         ...prev,
@@ -56,7 +65,7 @@ const PromoteProfile = () => {
       }));
       setIsEditing(true);
     }
-  }, [userProfile, user]);
+  }, [userProfile, user, location.search]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
@@ -78,39 +87,42 @@ const PromoteProfile = () => {
     if (!user) return;
     setSaving(true);
 
-    try {
-      const skills = skillsInput.split(',').map(s => s.trim()).filter(s => s);
-      
-      const profileData: UserProfile = {
-        uid: user.uid,
-        email: user.email || '',
-        fullName: formData.fullName || '',
-        photoURL: formData.photoURL || '',
-        location: formData.location || '',
-        age: formData.age ? Number(formData.age) : undefined,
-        gender: formData.gender || '',
-        buildingInAI: formData.buildingInAI || '',
-        companyName: formData.companyName || '',
-        websiteURL: formData.websiteURL || '',
-        description: formData.description || '',
-        currentWork: formData.currentWork || '',
-        aiSkills: skills,
-        workOpenFor: formData.workOpenFor || '',
-        contactDetails: formData.contactDetails || '',
-        lookingToGetHired: formData.lookingToGetHired || false,
-        createdAt: userProfile?.createdAt || serverTimestamp(),
-        updatedAt: serverTimestamp()
-      };
+      try {
+        const skills = skillsInput.split(',').map(s => s.trim()).filter(s => s);
+        
+        const profileData: UserProfile = {
+          uid: user.uid,
+          email: user.email || '',
+          fullName: formData.fullName || '',
+          photoURL: formData.photoURL || '',
+          location: formData.location || '',
+          age: formData.age ? Number(formData.age) : undefined,
+          gender: formData.gender || '',
+          buildingInAI: formData.buildingInAI || '',
+          companyName: formData.companyName || '',
+          websiteURL: formData.websiteURL || '',
+          description: formData.description || '',
+          currentWork: formData.currentWork || '',
+          aiSkills: skills,
+          workingStatus: formData.workingStatus || '',
+          networkingIntent: formData.networkingIntent || [],
+          contactDetails: formData.contactDetails || '',
+          phoneNumber: formData.phoneNumber || '',
+          createdAt: userProfile?.createdAt || serverTimestamp(),
+          updatedAt: serverTimestamp()
+        };
 
-      await setDoc(doc(db, 'public_profiles', user.uid), profileData);
-      await refreshProfile();
-      setIsEditing(false);
-    } catch (error) {
-      console.error("Error saving profile:", error);
-    } finally {
-      setSaving(false);
-    }
-  };
+        await setDoc(doc(db, 'public_profiles', user.uid), profileData);
+        await refreshProfile();
+        toast.success('Profile updated');
+        navigate(`/community/profile/${user.uid}`);
+      } catch (error) {
+        console.error("Error saving profile:", error);
+        toast.error('Failed to save profile');
+      } finally {
+        setSaving(false);
+      }
+    };
 
   if (authLoading) {
     return (
@@ -134,7 +146,7 @@ const PromoteProfile = () => {
               className="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100"
             >
               {/* Header Banner */}
-              <div className="h-48 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 relative">
+              <div className="h-56 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 relative">
                 <div className="absolute top-6 left-6">
                     <Link to="/community/profiles" className="text-white/80 hover:text-white flex items-center gap-2 transition-colors">
                         <ArrowLeft className="w-5 h-5" />
@@ -143,7 +155,7 @@ const PromoteProfile = () => {
                 </div>
                 <button 
                   onClick={() => setIsEditing(true)}
-                  className="absolute top-6 right-6 bg-white/20 backdrop-blur-md text-white px-4 py-2 rounded-full flex items-center gap-2 hover:bg-white/30 transition-all font-medium border border-white/30"
+                  className="absolute top-6 right-6 bg-white/20 backdrop-blur-md text-white px-4 py-2 rounded-full flex items-center gap-2 hover:bg-white/30 transition-all font-medium border border-white/30 shadow-lg"
                 >
                   <Edit2 className="w-4 h-4" />
                   Edit Profile
@@ -152,8 +164,8 @@ const PromoteProfile = () => {
 
               {/* Profile Info */}
               <div className="px-8 pb-12 relative">
-                <div className="flex flex-col md:flex-row items-start gap-6 -mt-16 mb-8">
-                  <div className="w-32 h-32 rounded-full border-4 border-white shadow-lg overflow-hidden bg-white">
+                <div className="flex flex-col md:flex-row items-start gap-6 -mt-20 mb-8">
+                  <div className="w-36 h-36 rounded-full border-4 border-white shadow-2xl overflow-hidden bg-white">
                     {userProfile.photoURL ? (
                       <img src={userProfile.photoURL} alt={userProfile.fullName} className="w-full h-full object-cover" />
                     ) : (
@@ -162,22 +174,27 @@ const PromoteProfile = () => {
                       </div>
                     )}
                   </div>
-                  <div className="pt-16 md:pt-0 mt-2 flex-1">
-                    <h1 className="text-3xl font-bold text-gray-900 mb-2">{userProfile.fullName}</h1>
-                    <div className="flex flex-wrap gap-4 text-gray-600 text-sm mb-4">
+                  <div className="pt-20 md:pt-0 mt-2 flex-1">
+                    <h1 className="text-4xl font-extrabold text-gray-900 mb-2 tracking-tight">{userProfile.fullName}</h1>
+                    <div className="flex flex-wrap gap-3 text-gray-700 text-sm mb-4">
                       {userProfile.location && (
-                        <span className="flex items-center gap-1">
-                          <MapPin className="w-4 h-4" /> {userProfile.location}
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/70 backdrop-blur border border-gray-200">
+                          <MapPin className="w-4 h-4 text-gray-600" /> {userProfile.location}
                         </span>
                       )}
                       {userProfile.companyName && (
-                        <span className="flex items-center gap-1">
-                          <Building className="w-4 h-4" /> {userProfile.companyName}
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/70 backdrop-blur border border-gray-200">
+                          <Building className="w-4 h-4 text-gray-600" /> {userProfile.companyName}
                         </span>
                       )}
                       {userProfile.currentWork && (
-                        <span className="flex items-center gap-1">
-                          <Briefcase className="w-4 h-4" /> {userProfile.currentWork}
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/70 backdrop-blur border border-gray-200">
+                          <Briefcase className="w-4 h-4 text-gray-600" /> {userProfile.currentWork}
+                        </span>
+                      )}
+                      {userProfile.workingStatus && (
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gray-900 text-white border border-gray-900">
+                          {userProfile.workingStatus}
                         </span>
                       )}
                     </div>
@@ -188,28 +205,28 @@ const PromoteProfile = () => {
                   {/* Left Column */}
                   <div className="md:col-span-2 space-y-8">
                     {userProfile.description && (
-                      <section>
+                      <section className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
                         <h2 className="text-lg font-bold text-gray-900 mb-3">About</h2>
-                        <p className="text-gray-600 leading-relaxed whitespace-pre-wrap">{userProfile.description}</p>
+                        <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">{userProfile.description}</p>
                       </section>
                     )}
 
                     {userProfile.buildingInAI && (
-                      <section className="bg-blue-50/50 p-6 rounded-2xl border border-blue-100">
-                        <h2 className="text-lg font-bold text-blue-900 mb-3 flex items-center gap-2">
+                      <section className="p-6 rounded-2xl border border-indigo-100 bg-gradient-to-br from-indigo-50 to-purple-50">
+                        <h2 className="text-lg font-bold text-indigo-900 mb-3 flex items-center gap-2">
                           <Brain className="w-5 h-5" />
                           Building in AI
                         </h2>
-                        <p className="text-blue-800 leading-relaxed">{userProfile.buildingInAI}</p>
+                        <p className="text-indigo-800 leading-relaxed">{userProfile.buildingInAI}</p>
                       </section>
                     )}
 
                     {userProfile.aiSkills && userProfile.aiSkills.length > 0 && (
-                      <section>
+                      <section className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
                         <h2 className="text-lg font-bold text-gray-900 mb-3">AI Skills</h2>
                         <div className="flex flex-wrap gap-2">
                           {userProfile.aiSkills.map((skill, index) => (
-                            <span key={index} className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm font-medium">
+                            <span key={index} className="px-3 py-1 bg-gray-50 text-gray-700 rounded-full text-sm font-medium border border-gray-200">
                               {skill}
                             </span>
                           ))}
@@ -220,7 +237,7 @@ const PromoteProfile = () => {
 
                   {/* Right Column */}
                   <div className="space-y-6">
-                    <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100">
+                    <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
                       <h3 className="font-semibold text-gray-900 mb-4">Details</h3>
                       <div className="space-y-4 text-sm">
                         {userProfile.age && (
@@ -235,16 +252,10 @@ const PromoteProfile = () => {
                                 <span className="text-gray-900 font-medium">{userProfile.gender}</span>
                             </div>
                         )}
-                        {userProfile.lookingToGetHired && (
-                          <div className="flex items-center gap-2 text-green-600 font-medium bg-green-50 p-2 rounded-lg justify-center">
-                            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                            Open to Opportunities
-                          </div>
-                        )}
                       </div>
                     </div>
 
-                    <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100">
+                    <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
                       <h3 className="font-semibold text-gray-900 mb-4">Contact & Links</h3>
                       <div className="space-y-4">
                         {userProfile.websiteURL && (
@@ -257,6 +268,12 @@ const PromoteProfile = () => {
                           <div className="flex items-center gap-3 text-gray-600">
                             <Mail className="w-5 h-5" />
                             <span className="truncate">{userProfile.contactDetails}</span>
+                          </div>
+                        )}
+                        {userProfile.phoneNumber && (
+                          <div className="flex items-center gap-3 text-gray-600">
+                            <Phone className="w-5 h-5" />
+                            <span className="truncate">{userProfile.phoneNumber}</span>
                           </div>
                         )}
                       </div>
@@ -296,68 +313,114 @@ const PromoteProfile = () => {
               <div className="space-y-6">
                 <h2 className="text-xl font-semibold text-gray-900 border-b pb-2">Basic Information</h2>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-gray-700">Full Name</label>
-                    <input
-                      type="text"
-                      name="fullName"
-                      value={formData.fullName}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-                    />
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="md:col-span-1">
+                    <div className="flex flex-col items-center justify-center p-4 rounded-2xl border border-gray-200 bg-gray-50">
+                      <div className="w-28 h-28 rounded-2xl overflow-hidden border border-gray-200 bg-white mb-3">
+                        {formData.photoURL ? (
+                          <img src={formData.photoURL} alt="Profile" className="w-full h-full object-cover" />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center bg-gray-100">
+                            <User className="w-10 h-10 text-gray-400" />
+                          </div>
+                        )}
+                      </div>
+                      <label className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-900 text-white text-sm font-semibold hover:bg-gray-800 cursor-pointer">
+                        <Upload className="w-4 h-4" />
+                        {uploadingPhoto ? 'Uploading...' : 'Upload Photo'}
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={async (e) => {
+                            const file = e.target.files?.[0];
+                            if (!file || !user) return;
+                            try {
+                              setUploadingPhoto(true);
+                              const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
+                              const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
+                              if (cloudName && uploadPreset) {
+                                const formDataCloud = new FormData();
+                                formDataCloud.append('file', file);
+                                formDataCloud.append('upload_preset', uploadPreset);
+                                const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+                                  method: 'POST',
+                                  body: formDataCloud
+                                });
+                                if (!res.ok) throw new Error('Cloudinary upload failed');
+                                const data = await res.json();
+                                setFormData(prev => ({ ...prev, photoURL: data.secure_url || data.url }));
+                                toast.success('Photo uploaded');
+                              } else {
+                                const safeName = `${Date.now()}-${file.name.replace(/\s+/g, '_')}`;
+                                const fileRef = ref(storage, `profile_photos/${user.uid}/${safeName}`);
+                                await uploadBytes(fileRef, file);
+                                const url = await getDownloadURL(fileRef);
+                                setFormData(prev => ({ ...prev, photoURL: url }));
+                                toast.success('Photo uploaded');
+                              }
+                            } catch (err) {
+                              console.error('Photo upload failed:', err);
+                              toast.error('Photo upload failed');
+                            } finally {
+                              setUploadingPhoto(false);
+                            }
+                          }}
+                          className="hidden"
+                        />
+                      </label>
+                    </div>
                   </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-gray-700">Photo URL</label>
-                    <input
-                      type="url"
-                      name="photoURL"
-                      value={formData.photoURL}
-                      onChange={handleChange}
-                      placeholder="https://..."
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-                    />
+                  <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-gray-700">Full Name</label>
+                      <input
+                        type="text"
+                        name="fullName"
+                        value={formData.fullName}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-gray-700">Location</label>
+                      <input
+                        type="text"
+                        name="location"
+                        value={formData.location}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-gray-700">Age</label>
+                      <input
+                        type="number"
+                        name="age"
+                        value={formData.age || ''}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-gray-700">Gender</label>
+                      <select
+                        name="gender"
+                        value={formData.gender || ''}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                      >
+                        <option value="">Select...</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                        <option value="Prefer not to say">Prefer not to say</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-gray-700">Location</label>
-                    <input
-                      type="text"
-                      name="location"
-                      value={formData.location}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-gray-700">Age</label>
-                    <input
-                      type="number"
-                      name="age"
-                      value={formData.age || ''}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-gray-700">Gender</label>
-                    <select
-                      name="gender"
-                      value={formData.gender}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-                    >
-                      <option value="">Select...</option>
-                      <option value="Male">Male</option>
-                      <option value="Female">Female</option>
-                      <option value="Other">Other</option>
-                      <option value="Prefer not to say">Prefer not to say</option>
-                    </select>
-                  </div>
-                </div>
+                
               </div>
 
               {/* Professional Info */}
@@ -377,13 +440,20 @@ const PromoteProfile = () => {
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-gray-700">Current Role/Business</label>
-                    <input
-                      type="text"
+                    <select
                       name="currentWork"
-                      value={formData.currentWork}
+                      value={formData.currentWork || ''}
                       onChange={handleChange}
                       className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-                    />
+                    >
+                      <option value="">Select...</option>
+                      <option value="Founder / Owner">Founder / Owner</option>
+                      <option value="Freelancer">Freelancer</option>
+                      <option value="Consultant">Consultant</option>
+                      <option value="Engineer / Developer">Engineer / Developer</option>
+                      <option value="Marketer / Sales">Marketer / Sales</option>
+                      <option value="Other">Other</option>
+                    </select>
                   </div>
                 </div>
 
@@ -437,20 +507,63 @@ const PromoteProfile = () => {
               <div className="space-y-6">
                 <h2 className="text-xl font-semibold text-gray-900 border-b pb-2">Preferences & Contact</h2>
                 
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700">Work Open For</label>
-                  <input
-                    type="text"
-                    name="workOpenFor"
-                    value={formData.workOpenFor}
-                    onChange={handleChange}
-                    placeholder="Freelance, Full-time, Consulting..."
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-                  />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-gray-700">Current Working Status</label>
+                    <div className="grid grid-cols-1 gap-2">
+                      {[
+                        'Full-time Business',
+                        'Part-time Business',
+                        'Full-time Freelancer',
+                        'Part-time Freelancer'
+                      ].map((status) => (
+                        <label key={status} className="flex items-center gap-3 px-3 py-2 rounded-xl border border-gray-200">
+                          <input
+                            type="radio"
+                            name="workingStatus"
+                            value={status}
+                            checked={(formData.workingStatus || '') === status}
+                            onChange={handleChange}
+                            className="w-4 h-4 text-blue-600"
+                          />
+                          <span className="text-sm text-gray-700">{status}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-gray-700">Networking Intent</label>
+                    <div className="grid grid-cols-1 gap-2">
+                      {[
+                        'Seeking Partnerships',
+                        'Seeking Placement',
+                        'Open for Contracts',
+                        'Open for Projects',
+                        'Business Growth'
+                      ].map((intent) => (
+                        <label key={intent} className="flex items-center gap-3 px-3 py-2 rounded-xl border border-gray-200">
+                          <input
+                            type="checkbox"
+                            checked={Array.isArray(formData.networkingIntent) ? formData.networkingIntent.includes(intent) : false}
+                            onChange={(e) => {
+                              const checked = e.target.checked;
+                              setFormData(prev => {
+                                const current = Array.isArray(prev.networkingIntent) ? prev.networkingIntent : [];
+                                const next = checked ? [...current, intent] : current.filter(i => i !== intent);
+                                return { ...prev, networkingIntent: next };
+                              });
+                            }}
+                            className="w-4 h-4 text-blue-600 rounded border-gray-300"
+                          />
+                          <span className="text-sm text-gray-700">{intent}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700">Contact Details (Email/Phone)</label>
+                  <label className="text-sm font-medium text-gray-700">Contact Email</label>
                   <input
                     type="text"
                     name="contactDetails"
@@ -459,17 +572,19 @@ const PromoteProfile = () => {
                     className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
                   />
                 </div>
-
-                <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-700">Phone Number (optional)</label>
                   <input
-                    type="checkbox"
-                    name="lookingToGetHired"
-                    checked={formData.lookingToGetHired}
+                    type="tel"
+                    name="phoneNumber"
+                    value={formData.phoneNumber || ''}
                     onChange={handleChange}
-                    className="w-5 h-5 text-blue-600 rounded focus:ring-blue-500 border-gray-300"
+                    placeholder="+1 555 000 1234"
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
                   />
-                  <label className="text-gray-900 font-medium">I am looking to get hired</label>
                 </div>
+
+                {/* Removed 'I am looking to get hired' as requested */}
               </div>
 
               <div className="pt-4">

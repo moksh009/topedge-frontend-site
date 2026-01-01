@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown, Bell, User, LogOut, Settings } from 'lucide-react';
+import { Menu, X, Bell, User, LogOut, Settings } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/contexts/AuthContext';
 import { auth, db } from '@/services/firebase';
 import { signOut } from 'firebase/auth';
-import { collection, query, orderBy, limit, onSnapshot, Timestamp } from 'firebase/firestore';
+import { collection, query, orderBy, limit, onSnapshot } from 'firebase/firestore';
 
 interface Notification {
   id: string;
@@ -125,14 +125,12 @@ const CommunityNavbar = () => {
       >
         <div className={cn(
           "flex items-center justify-between rounded-full px-6 py-3 transition-all duration-300",
-          "bg-white/70 backdrop-blur-md border border-white/40 shadow-sm",
-          isScrolled && "bg-white/90 shadow-md border-gray-200"
+          "bg-white/30 backdrop-blur-xl border border-white/50 shadow-[0_8px_30px_rgba(0,0,0,0.12)] ring-1 ring-white/30",
+          isScrolled && "bg-white/40"
         )}>
           {/* Logo Section */}
           <Link to="/community/home" className="flex items-center gap-3 group mr-auto">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-600 to-purple-600 flex items-center justify-center text-white font-bold text-xs shadow-md">
-              TE
-            </div>
+            <img src="/logo.png" alt="TopEdge Logo" className="h-8 w-auto" />
             <span className="font-bold text-gray-900 tracking-tight group-hover:text-blue-600 transition-colors">TopEdge AI</span>
           </Link>
 
@@ -192,13 +190,15 @@ const CommunityNavbar = () => {
                 <div className="relative">
                   <button 
                     onClick={() => setShowProfileMenu(!showProfileMenu)}
-                    className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 p-[1px] shadow-sm"
+                    className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 p-[1px] shadow-sm"
                   >
                     <div className="w-full h-full rounded-full bg-white flex items-center justify-center overflow-hidden">
-                      {user.photoURL ? (
+                      {userProfile?.photoURL ? (
+                        <img src={userProfile.photoURL} alt={userProfile.fullName || 'User'} className="w-full h-full object-cover" />
+                      ) : user?.photoURL ? (
                         <img src={user.photoURL} alt={user.displayName || 'User'} className="w-full h-full object-cover" />
                       ) : (
-                        <span className="text-xs font-bold text-gray-700">{user.displayName?.charAt(0) || 'U'}</span>
+                        <span className="text-sm font-bold text-gray-700">{user?.displayName?.charAt(0) || 'U'}</span>
                       )}
                     </div>
                   </button>
@@ -286,7 +286,7 @@ const CommunityNavbar = () => {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -20, scale: 0.95 }}
               transition={{ duration: 0.2 }}
-              className="absolute top-24 left-1/2 -translate-x-1/2 w-full max-w-2xl px-4 z-50"
+              className="fixed top-6 inset-x-4 sm:left-1/2 sm:inset-x-auto sm:-translate-x-1/2 w-auto sm:w-full sm:max-w-2xl px-0 sm:px-4 z-50"
             >
               <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden p-2">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2 p-2">

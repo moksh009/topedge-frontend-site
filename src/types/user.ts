@@ -13,6 +13,9 @@ export interface UserProfile {
   currentWork?: string;
   aiSkills?: string[];
   workOpenFor?: string;
+  workingStatus?: string;
+  networkingIntent?: string[];
+  phoneNumber?: string;
   contactDetails?: string;
   lookingToGetHired?: boolean;
   createdAt: any; // Firestore Timestamp

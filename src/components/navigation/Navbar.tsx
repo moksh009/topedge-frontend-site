@@ -40,8 +40,8 @@ const Navbar = () => {
       >
         <div className={cn(
           "flex items-center justify-between rounded-full px-6 py-3 transition-all duration-300",
-          "bg-white/70 backdrop-blur-md border border-white/40 shadow-sm",
-          isScrolled && "bg-white/90 shadow-md border-gray-200"
+          "bg-white/30 backdrop-blur-xl border border-white/50 shadow-[0_8px_30px_rgba(0,0,0,0.12)] ring-1 ring-white/30",
+          isScrolled && "bg-white/40"
         )}>
           {/* Logo Section */}
           <Link to="/" className="flex items-center gap-3 group mr-auto">
@@ -114,7 +114,7 @@ const Navbar = () => {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -20, scale: 0.95 }}
               transition={{ duration: 0.2 }}
-              className="absolute top-24 left-1/2 -translate-x-1/2 w-full max-w-2xl px-4 z-50"
+              className="fixed top-6 inset-x-4 sm:left-1/2 sm:inset-x-auto sm:-translate-x-1/2 w-auto sm:w-full sm:max-w-2xl px-0 sm:px-4 z-50"
             >
               <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden p-2">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2 p-2">

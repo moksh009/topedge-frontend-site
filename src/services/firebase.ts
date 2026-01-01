@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore, enableIndexedDbPersistence, collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
+import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -26,9 +27,6 @@ const app = initializeApp(firebaseConfig);
 // Initialize Firestore
 const db = getFirestore(app);
 
-// Initialize Auth
-const auth = getAuth(app);
-
 // Enable offline persistence
 enableIndexedDbPersistence(db).catch((err) => {
   if (err.code === 'failed-precondition') {
@@ -37,6 +35,12 @@ enableIndexedDbPersistence(db).catch((err) => {
     console.warn('The current browser does not support persistence.');
   }
 });
+
+// Initialize Auth
+const auth = getAuth(app);
+
+// Initialize Storage using default bucket from config
+const storage = getStorage(app);
 
 // Validate email format
 const isValidEmail = (email: string): boolean => {
@@ -112,3 +116,4 @@ export const storeROIData = async (data: {
 };
 
 export { db, auth }; 
+export { storage };

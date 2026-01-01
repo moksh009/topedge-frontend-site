@@ -11,15 +11,16 @@ interface Profile {
   id: string;
   fullName: string;
   photoURL?: string;
-  location: string;
-  role: string;
-  company?: string;
-  skills: string[];
-  isOpenForWork: boolean;
-  description: string;
-  website?: string;
+  location?: string;
+  currentWork?: string;
+  companyName?: string;
+  aiSkills?: string[];
+  description?: string;
+  websiteURL?: string;
   github?: string;
   linkedin?: string;
+  workingStatus?: string;
+  networkingIntent?: string[];
 }
 
 const CommunityProfiles = () => {
@@ -59,9 +60,9 @@ const CommunityProfiles = () => {
   }, []);
 
   const filteredProfiles = profiles.filter(profile => 
-    profile.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    profile.skills.some(skill => skill.toLowerCase().includes(searchTerm.toLowerCase())) ||
-    profile.role.toLowerCase().includes(searchTerm.toLowerCase())
+    (profile.fullName || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (profile.aiSkills || []).some(skill => (skill || '').toLowerCase().includes(searchTerm.toLowerCase())) ||
+    (profile.currentWork || '').toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -119,24 +120,25 @@ const CommunityProfiles = () => {
                   <div className="relative z-10">
                     <div className="flex items-start justify-between mb-6">
                       <div className="flex items-center gap-4">
-                        <div className="w-16 h-16 rounded-2xl bg-gray-100 flex items-center justify-center overflow-hidden border-2 border-white shadow-md">
+                        <div className="w-24 h-24 rounded-2xl bg-gray-100 flex items-center justify-center overflow-hidden border-2 border-white shadow-md ring-4 ring-white">
                           {profile.photoURL ? (
                             <img src={profile.photoURL} alt={profile.fullName} className="w-full h-full object-cover" />
                           ) : (
-                            <div className="w-full h-full bg-gradient-to-tr from-blue-500 to-purple-600 flex items-center justify-center text-white text-2xl font-bold">
+                            <div className="w-full h-full bg-gradient-to-tr from-blue-600 to-purple-600 flex items-center justify-center text-white text-2xl font-bold">
                               {profile.fullName.charAt(0)}
                             </div>
                           )}
                         </div>
                         <div>
                           <h3 className="font-bold text-lg text-gray-900 group-hover:text-blue-600 transition-colors">{profile.fullName}</h3>
-                          <p className="text-sm text-blue-600 font-medium">{profile.role}</p>
+                          {profile.currentWork && (
+                            <p className="text-sm text-blue-600 font-medium">{profile.currentWork}</p>
+                          )}
                         </div>
                       </div>
-                      {profile.isOpenForWork && (
-                        <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-green-50 text-green-700 text-xs font-bold uppercase tracking-wider rounded-full border border-green-100">
-                          <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-                          Hire Me
+                      {profile.workingStatus && (
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-gray-50 text-gray-700 text-xs font-semibold rounded-full border border-gray-200">
+                          {profile.workingStatus}
                         </span>
                       )}
                     </div>
@@ -144,32 +146,40 @@ const CommunityProfiles = () => {
                     <div className="mb-6 space-y-2">
                        <div className="flex items-center gap-2 text-gray-500 text-sm">
                           <MapPin className="w-4 h-4" />
-                          <span>{profile.location}</span>
+                          <span>{profile.location || '—'}</span>
                        </div>
-                       {profile.company && (
+                       {profile.companyName && (
                          <div className="flex items-center gap-2 text-gray-500 text-sm">
                             <Briefcase className="w-4 h-4" />
-                            <span>{profile.company}</span>
+                            <span>{profile.companyName}</span>
                          </div>
                        )}
                     </div>
 
                     <p className="text-gray-600 mb-6 line-clamp-3 leading-relaxed text-sm min-h-[60px]">
-                      {profile.description}
+                      {profile.description || ''}
                     </p>
 
                     <div className="flex flex-wrap gap-2 mb-8 min-h-[52px]">
-                      {(profile.skills || []).slice(0, 4).map((skill, index) => (
+                      {(profile.networkingIntent || []).slice(0, 3).map((intent, index) => (
                         <span 
                           key={index}
-                          className="px-3 py-1 bg-gray-50 text-gray-600 text-xs font-medium rounded-lg border border-gray-100 group-hover:border-blue-100 group-hover:bg-blue-50/50 transition-colors"
+                          className="px-3 py-1 bg-white text-gray-700 text-xs font-medium rounded-lg border border-gray-200"
+                        >
+                          {intent}
+                        </span>
+                      ))}
+                      {(profile.aiSkills || []).slice(0, 3).map((skill, index) => (
+                        <span 
+                          key={index}
+                          className="px-3 py-1 bg-gray-50 text-gray-700 text-xs font-medium rounded-lg border border-gray-100 group-hover:border-blue-100 group-hover:bg-blue-50/50 transition-colors"
                         >
                           {skill}
                         </span>
                       ))}
-                      {(profile.skills || []).length > 4 && (
+                      {(profile.aiSkills || []).length > 3 && (
                         <span className="px-3 py-1 bg-gray-50 text-gray-400 text-xs font-medium rounded-lg border border-gray-100">
-                          +{(profile.skills || []).length - 4}
+                          +{(profile.aiSkills || []).length - 3}
                         </span>
                       )}
                     </div>
@@ -185,14 +195,14 @@ const CommunityProfiles = () => {
                           <Linkedin className="w-5 h-5" />
                         </a>
                       )}
-                      {profile.website && (
-                        <a href={profile.website} target="_blank" rel="noopener noreferrer" className="p-2 text-gray-400 hover:text-purple-600 hover:bg-purple-50 rounded-xl transition-all">
+                      {profile.websiteURL && (
+                        <a href={profile.websiteURL} target="_blank" rel="noopener noreferrer" className="p-2 text-gray-400 hover:text-purple-600 hover:bg-purple-50 rounded-xl transition-all">
                           <Globe className="w-5 h-5" />
                         </a>
                       )}
                       <Link 
                         to={`/community/profile/${profile.id}`}
-                        className="ml-auto px-4 py-2 bg-gray-900 text-white text-sm font-semibold rounded-xl hover:bg-gray-800 transition-colors shadow-sm"
+                        className="ml-auto px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-semibold rounded-xl hover:shadow-lg transition-all shadow-md"
                       >
                         View Profile
                       </Link>

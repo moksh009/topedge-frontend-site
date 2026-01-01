@@ -29,17 +29,21 @@ const OpenSource = () => {
   useEffect(() => {
     const fetchResources = async () => {
       try {
-        // Fetch only free resources
+        // Fetch only free resources (client-side sort to avoid composite index requirement)
         const q = query(
           collection(db, 'community_resources'),
-          where('isPaid', '==', false),
-          orderBy('createdAt', 'desc')
+          where('isPaid', '==', false)
         );
         const querySnapshot = await getDocs(q);
-        const resourcesData = querySnapshot.docs.map(doc => ({
+        const resourcesRaw = querySnapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data()
-        })) as Resource[];
+        })) as any[];
+        const resourcesData = resourcesRaw.sort((a, b) => {
+          const ad = a.createdAt?.toDate?.() || new Date(0);
+          const bd = b.createdAt?.toDate?.() || new Date(0);
+          return bd.getTime() - ad.getTime();
+        }) as Resource[];
         setResources(resourcesData);
       } catch (error) {
         console.error("Error fetching open source resources:", error);
@@ -120,8 +124,9 @@ const OpenSource = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
-                  className="group relative bg-white border border-gray-200 rounded-[2rem] overflow-hidden hover:shadow-xl hover:shadow-blue-500/5 hover:-translate-y-1 transition-all duration-300 shadow-sm"
+                  className="group relative bg-white border border-gray-200 rounded-[2rem] overflow-hidden hover:shadow-xl hover:shadow-blue-500/5 hover:-translate-y-1 transition-all duration-300 shadow-sm ring-1 ring-gray-100 hover:ring-blue-100"
                 >
+                  <div className="absolute top-0 right-0 w-28 h-28 bg-gradient-to-br from-blue-50 to-purple-50 rounded-bl-[3rem] -z-0 transition-transform group-hover:scale-110" />
                   <div className="p-8 space-y-6">
                     <div className="flex justify-between items-start">
                       <div className="flex items-center gap-3">
@@ -137,9 +142,14 @@ const OpenSource = () => {
                           <p className="text-xs text-gray-500">Creator</p>
                         </div>
                       </div>
-                      <span className="px-3 py-1.5 rounded-full text-xs font-bold border bg-gray-50 text-gray-600 border-gray-200 uppercase tracking-wider">
-                        {resource.category}
-                      </span>
+                      <div className="flex items-center gap-2">
+                        <span className="px-3 py-1.5 rounded-full text-xs font-bold border bg-gray-50 text-gray-600 border-gray-200 uppercase tracking-wider">
+                          {resource.category}
+                        </span>
+                        <span className="px-3 py-1.5 rounded-full text-xs font-bold border bg-green-50 text-green-700 border-green-100">
+                          Free
+                        </span>
+                      </div>
                     </div>
 
                     <div>
@@ -167,10 +177,10 @@ const OpenSource = () => {
                     <div className="pt-6 border-t border-gray-100 flex items-center gap-3">
                          <Link 
                            to={`/community/resource/${resource.id}`}
-                           className="flex-1 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl text-sm hover:shadow-lg transition-all shadow-md flex items-center justify-center gap-2 group/btn"
+                           className="flex-1 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl text-sm hover:shadow-lg transition-all shadow-md flex items-center justify-center gap-2 group/btn hover:scale-[1.01]"
                          >
-                            Access Now
-                            <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-0.5 transition-transform" />
+                           Access Free
+                           <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-0.5 transition-transform" />
                         </Link>
                     </div>
                   </div>

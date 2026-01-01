@@ -164,7 +164,7 @@ const Signup = () => {
             <button 
               type="submit" 
               disabled={loading}
-              className="w-full py-3.5 bg-gray-900 text-white font-bold rounded-xl hover:bg-gray-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg shadow-gray-900/20 mt-4"
+              className="w-full py-3.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold rounded-xl hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg mt-4"
             >
               {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : "Sign Up"}
             </button>
