@@ -11,6 +11,15 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
+// Debug check for missing configuration
+const missingKeys = Object.entries(firebaseConfig)
+  .filter(([_, value]) => !value)
+  .map(([key]) => key);
+
+if (missingKeys.length > 0) {
+  console.error(`Missing Firebase configuration keys: ${missingKeys.join(', ')}. Check your .env file.`);
+}
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
