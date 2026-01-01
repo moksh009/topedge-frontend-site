@@ -41,14 +41,14 @@ const CommunityHome = () => {
               {user ? (
                 <Link 
                   to="/community/automation-hub" 
-                  className="px-10 py-5 bg-gray-900 text-white font-bold rounded-full hover:bg-gray-800 hover:shadow-xl hover:scale-105 transition-all shadow-lg shadow-gray-900/20"
+                  className="px-10 py-5 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold rounded-full hover:shadow-xl hover:scale-105 transition-all shadow-lg"
                 >
                   Go to Hub →
                 </Link>
               ) : (
                 <Link 
                   to="/community/signup" 
-                  className="px-10 py-5 bg-gray-900 text-white font-bold rounded-full hover:bg-gray-800 hover:shadow-xl hover:scale-105 transition-all shadow-lg shadow-gray-900/20"
+                  className="px-10 py-5 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold rounded-full hover:shadow-xl hover:scale-105 transition-all shadow-lg"
                 >
                   Join the Community →
                 </Link>
@@ -119,7 +119,7 @@ const CommunityHome = () => {
               <h3 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900">Build. Share. Grow.</h3>
               <p className="text-xl text-gray-600 max-w-xl">A curated space for serious builders. Publish automations, discover open‑source tools, and connect with the right people.</p>
               <div className="flex flex-wrap gap-4">
-                <Link to="/community/automation-hub" className="px-6 py-3 rounded-full bg-gray-900 text-white font-semibold hover:bg-gray-800 transition-colors">Explore Automation Hub</Link>
+                <Link to="/community/automation-hub" className="px-6 py-3 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold hover:shadow-lg transition-all">Explore Automation Hub</Link>
                 <Link to="/community/open-source" className="px-6 py-3 rounded-full bg-white border border-gray-200 text-gray-900 font-semibold hover:bg-gray-50 transition-colors">Browse Open‑Source</Link>
               </div>
             </motion.div>
@@ -167,7 +167,7 @@ const CommunityHome = () => {
             >
               <h4 className="text-2xl font-bold text-gray-900 mb-3">Automation Hub</h4>
               <p className="text-gray-600 mb-6">Discover community‑shared automations that save time and scale outcomes.</p>
-              <Link to="/community/automation-hub" className="inline-flex items-center px-5 py-2 rounded-full bg-gray-900 text-white font-semibold hover:bg-gray-800 transition-colors">Browse Hub</Link>
+              <Link to="/community/automation-hub" className="inline-flex items-center px-5 py-2 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold hover:shadow-lg transition-all">Browse Hub</Link>
             </motion.div>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
