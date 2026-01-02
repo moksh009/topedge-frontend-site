@@ -10,6 +10,7 @@ import { db } from '@/services/firebase';
 import { useAuth } from '@/contexts/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+import LaunchGate from '@/components/ui/LaunchGate';
 
 interface Resource {
   id: string;
@@ -332,16 +333,22 @@ const AutomationHub = () => {
                 <p className="text-sm font-medium text-slate-500">Loading marketplace...</p>
              </div>
           ) : (
-            <motion.div 
-              layout
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-12"
+            <LaunchGate
+              active
+              title="Marketplace visible after launch"
+              description="Submit your resource now. Listings unlock on launch day."
             >
-              <AnimatePresence>
-                {filteredResources.map((resource, index) => (
-                  <ResourceCard key={resource.id} resource={resource} index={index} />
-                ))}
-              </AnimatePresence>
-            </motion.div>
+              <motion.div 
+                layout
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-12"
+              >
+                <AnimatePresence>
+                  {filteredResources.map((resource, index) => (
+                    <ResourceCard key={resource.id} resource={resource} index={index} />
+                  ))}
+                </AnimatePresence>
+              </motion.div>
+            </LaunchGate>
           )}
           
           {/* Empty State */}

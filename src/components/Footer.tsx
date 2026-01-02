@@ -1,27 +1,102 @@
+import React from 'react';
 import { motion } from 'framer-motion';
-import { Instagram, Youtube, Twitter, Phone, Mail, MapPin, Globe, Bot, MessageSquare, Calendar, Users, ArrowRight, Facebook, Linkedin } from 'lucide-react';
+import { 
+  Instagram, Youtube, Twitter, Mail, MapPin, 
+  Bot, MessageSquare, Facebook, Linkedin, 
+  Smartphone
+} from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
+// Custom Discord Icon
+const DiscordIcon = ({ className }: { className?: string }) => (
+  <svg 
+    className={className} 
+    viewBox="0 0 24 24" 
+    fill="currentColor" 
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+  </svg>
+);
+
+// --- CONFIGURATION ---
 const services = [
   {
     icon: Bot,
     title: "AI Voice Agent",
-    description: "24/7 Intelligent Call Handling",
     path: "/services",
     section: "ai-caller-demo"
   },
   {
     icon: MessageSquare,
     title: "Advanced Chatbot",
-    description: "Instant Multi-Channel Support",
     path: "/services",
     section: "chatbot-showcase"
+  },
+  {
+    icon: Smartphone,
+    title: "WhatsApp Automation",
+    path: "/services",
+    section: "whatsapp-automation"
+  }
+];
+
+const quickLinks = [
+  { label: "Home", path: "/" },
+  { label: "Community", path: "/community/home", isNew: true },
+  { label: "About Us", path: "/about" },
+  { label: "Pricing", path: "/pricing" },
+  { label: "Contact", path: "/contact" },
+  { label: "Book Demo", path: "/booking" },
+];
+
+const legals = [
+  { label: "Privacy Policy", path: "/privacy-policy" },
+  { label: "Terms of Service", path: "/terms" },
+];
+
+const socialLinks = [
+  { 
+    icon: Instagram, 
+    href: 'https://www.instagram.com/topedge_ai/', 
+    label: 'Instagram',
+    color: 'hover:bg-pink-500 hover:text-white hover:border-pink-500'
+  },
+  { 
+    icon: Youtube, 
+    href: 'https://www.youtube.com/@TopEdgeNetwork', 
+    label: 'YouTube',
+    color: 'hover:bg-red-500 hover:text-white hover:border-red-500'
+  },
+  { 
+    icon: Twitter, 
+    href: 'https://x.com/TopEdgeNetwork', 
+    label: 'X',
+    color: 'hover:bg-black hover:text-white hover:border-black'
+  },
+  {
+    icon: Linkedin,
+    href: 'https://www.linkedin.com/company/topedgenetwork',
+    label: 'LinkedIn',
+    color: 'hover:bg-blue-600 hover:text-white hover:border-blue-600'
+  },
+  {
+    icon: Facebook,
+    href: 'https://www.facebook.com/profile.php?id=61553261702229',
+    label: 'Facebook',
+    color: 'hover:bg-blue-700 hover:text-white hover:border-blue-700'
+  },
+  {
+    icon: DiscordIcon,
+    href: 'https://discord.gg/your-invite-code',
+    label: 'Discord',
+    color: 'hover:bg-[#5865F2] hover:text-white hover:border-[#5865F2]'
   }
 ];
 
 const Footer = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const handleServiceClick = (path: string, section: string) => {
@@ -34,200 +109,150 @@ const Footer = () => {
     }, 100);
   };
 
-  const socialLinks = [
-    { 
-      icon: Instagram, 
-      href: 'https://www.instagram.com/topedge_ai/', 
-      label: 'Instagram',
-      color: 'hover:text-pink-500'
-    },
-    { 
-      icon: Youtube, 
-      href: 'https://www.youtube.com/@TopEdgeNetwork', 
-      label: 'YouTube',
-      color: 'hover:text-red-500'
-    },
-    { 
-      icon: Twitter, 
-      href: 'https://x.com/TopEdgeNetwork', 
-      label: 'X (Twitter)',
-      color: 'hover:text-blue-400'
-    },
-    {
-      icon: Facebook,
-      href: 'https://www.facebook.com/profile.php?id=61553261702229',
-      label: 'Facebook',
-      color: 'hover:text-blue-600'
-    },
-    {
-      icon: Linkedin,
-      href: 'https://www.linkedin.com/company/topedgenetwork',
-      label: 'LinkedIn',
-      color: 'hover:text-blue-500'
-    }
-  ];
-
-  const contactInfo = [
-    { 
-      icon: Mail, 
-      text: 'team@topedgeai.com', 
-      href: 'mailto:team@topedgeai.com',
-      color: 'group-hover:text-blue-400'
-    },
-    {
-      icon: MapPin,
-      text: 'B 203 Shyam Arcade, Near Gangotri Circle, Nikol, Ahmedabad, Gujarat, India 382350',
-      href: '#',
-      color: 'group-hover:text-green-500'
-    },
-    {
-      icon: Instagram,
-      text: 'Chat on Instagram',
-      href: 'https://www.instagram.com/topedge_ai/',
-      color: 'group-hover:text-pink-500'
-    },
-    {
-      icon: Facebook,
-      text: 'Chat on Facebook',
-      href: 'https://www.facebook.com/profile.php?id=61553261702229',
-      color: 'group-hover:text-blue-600'
-    }
-  ];
-
   return (
-    <footer className="bg-theme-bg-secondary border-t border-theme-border-primary">
-      <div className="container mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-          {/* Company Info */}
-          <div>
-            <div className="flex items-center gap-2 mb-6">
-              <img 
-                src="/logo.png" 
-                alt="TopEdge Logo" 
-                className="w-8 h-8 object-contain"
-              />
-              <h3 className="text-2xl font-bold bg-gradient-to-r from-theme-text-accent to-primary-dark bg-clip-text text-transparent">
-                TopEdge
-              </h3>
+    <footer className="relative bg-white pt-24 pb-0 overflow-hidden">
+      
+      {/* --- HUGE WATERMARK --- */}
+      {/* Positioned absolute bottom, z-0 so it sits BEHIND the glass card */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full text-center pointer-events-none select-none z-0">
+        <h1 className="text-[20vw] font-black text-[#F3F4F6] leading-none tracking-tighter">
+          TOPEDGE
+        </h1>
+      </div>
+
+      <div className="container relative z-10 mx-auto px-4 sm:px-6 max-w-7xl pb-12">
+        
+        {/* Main Footer Card - Glassmorphism enabled to show watermark */}
+        <div className="bg-white/80 backdrop-blur-xl rounded-[2.5rem] p-8 md:p-12 shadow-xl shadow-slate-200/50 border border-white/50">
+          
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8">
+            
+            {/* BRAND COLUMN (Span 4) */}
+            <div className="lg:col-span-4 space-y-8">
+               <div className="space-y-4">
+                  <div className="inline-flex items-center gap-3">
+                    <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center border border-slate-100 shadow-sm">
+                       <img src="/logo.png" alt="TopEdge Logo" className="w-8 h-8 object-contain" />
+                    </div>
+                    <span className="text-2xl font-bold text-slate-900 tracking-tight">TopEdge AI</span>
+                  </div>
+                  <p className="text-slate-500 text-lg leading-relaxed max-w-sm font-medium">
+                    Empowering businesses with intelligent automation. We turn customer support into your biggest growth engine.
+                  </p>
+               </div>
+
+               {/* Social Dock */}
+               <div className="flex flex-wrap gap-3">
+                  {socialLinks.map((social, idx) => (
+                    <motion.a
+                      key={idx}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      whileHover={{ y: -4 }}
+                      className={`w-11 h-11 rounded-2xl border border-slate-200 flex items-center justify-center text-slate-400 transition-all duration-300 ${social.color} bg-white`}
+                      aria-label={social.label}
+                    >
+                       <social.icon className="w-5 h-5" />
+                    </motion.a>
+                  ))}
+               </div>
             </div>
-            <p className="text-theme-text-secondary mb-6">
-              We tech-enable businesses and strengthen their customer acquisition game by Upleveling Customer Support
-            </p>
-            <div className="flex space-x-4">
-              {socialLinks.map((social) => (
-                <motion.a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.1 }}
-                  className={`text-theme-text-secondary ${social.color} transition-colors`}
-                >
-                  <social.icon className="w-6 h-6" />
-                </motion.a>
-              ))}
-              <motion.a
-                href="https://www.threads.net/@topedge_ai"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.1 }}
-                className="text-theme-text-secondary hover:text-purple-500 transition-colors"
-              >
-                <svg 
-                  className="w-6 h-6" 
-                  viewBox="0 0 24 24" 
-                  fill="currentColor"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M17.743 11.123a8.547 8.547 0 0 0-.315-.142c-.185-.074-.374-.143-.565-.207-.336-.112-.674-.22-1.013-.314l-.063-.019c-.263-.075-.526-.135-.791-.194-.904-.198-1.637-.293-2.291-.293-.653 0-1.387.095-2.29.293-.266.059-.529.119-.792.194l-.063.019c-.339.094-.676.202-1.012.314-.191.064-.381.133-.566.207-.105.042-.21.091-.315.142-.781.381-1.206.851-1.206 1.334 0 .483.425.953 1.206 1.334.105.051.21.1.315.142.185.074.375.143.566.207.336.112.673.22 1.012.314l.063.019c.263.075.526.135.792.194.903.198 1.637.293 2.29.293.654 0 1.387-.095 2.291-.293.265-.059.528-.119.791-.194l.063-.019c.339-.094.677-.202 1.013-.314.191-.064.38-.133.565-.207.105-.042.21-.091.315-.142.781-.381 1.206-.851 1.206-1.334 0-.483-.425-.953-1.206-1.334zm-5.474 4.321c-2.723 0-4.931-1.555-4.931-3.472s2.208-3.472 4.931-3.472c2.724 0 4.932 1.555 4.932 3.472s-2.208 3.472-4.932 3.472z" />
-                  <path d="M12.269 2C6.692 2 2.174 6.518 2.174 12.095c0 5.577 4.518 10.095 10.095 10.095 5.577 0 10.095-4.518 10.095-10.095C22.364 6.518 17.846 2 12.269 2zm0 18.19c-4.473 0-8.095-3.622-8.095-8.095 0-4.473 3.622-8.095 8.095-8.095 4.473 0 8.095 3.622 8.095 8.095 0 4.473-3.622 8.095-8.095 8.095z" />
-                </svg>
-              </motion.a>
+
+            {/* LINKS COLUMNS (Span 8 - Divided into 3) */}
+            <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+               
+               {/* Column 1: Solutions */}
+               <div>
+                  <h4 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-6">Solutions</h4>
+                  <ul className="space-y-4">
+                     {services.map((service, idx) => (
+                        <li key={idx}>
+                           <button 
+                              onClick={() => handleServiceClick(service.path, service.section)}
+                              className="group flex items-center gap-2 text-slate-500 hover:text-slate-900 transition-colors text-left"
+                           >
+                              <span className="w-1.5 h-1.5 rounded-full bg-slate-300 group-hover:bg-slate-900 transition-colors" />
+                              <span className="font-medium">{service.title}</span>
+                           </button>
+                        </li>
+                     ))}
+                  </ul>
+               </div>
+
+               {/* Column 2: Company */}
+               <div>
+                  <h4 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-6">Company</h4>
+                  <ul className="space-y-4">
+                     {quickLinks.map((link, idx) => (
+                        <li key={idx}>
+                           <Link 
+                              to={link.path}
+                              className="group flex items-center gap-3 text-slate-500 hover:text-slate-900 transition-colors"
+                           >
+                              <span className="font-medium">{link.label}</span>
+                              {link.isNew && (
+                                <span className="text-[9px] font-extrabold bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded-full border border-indigo-100 uppercase tracking-wide">
+                                    New
+                                </span>
+                              )}
+                           </Link>
+                        </li>
+                     ))}
+                  </ul>
+               </div>
+
+               {/* Column 3: Contact Info (Cards) */}
+               <div>
+                  <h4 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-6">Get in Touch</h4>
+                  <div className="space-y-4">
+                     {/* Email Card - Fixed Break */}
+                     <a href="mailto:team@topedgeai.com" className="flex items-start gap-4 p-4 rounded-2xl bg-slate-50 hover:bg-white/80 transition-colors group border border-transparent hover:border-slate-200">
+                        <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-slate-400 group-hover:text-slate-900 shadow-sm border border-slate-100 shrink-0">
+                           <Mail className="w-5 h-5" />
+                        </div>
+                        <div className="min-w-0">
+                           <p className="text-[10px] font-bold text-slate-400 uppercase mb-0.5">Email Us</p>
+                           <p className="text-sm font-bold text-slate-900 break-all leading-tight">
+                             team@topedgeai.com
+                           </p>
+                        </div>
+                     </a>
+
+                     {/* Location Card */}
+                     <div className="flex items-start gap-4 p-4 rounded-2xl bg-slate-50/50 border border-transparent">
+                        <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-slate-400 shadow-sm border border-slate-100 shrink-0">
+                           <MapPin className="w-5 h-5" />
+                        </div>
+                        <div>
+                           <p className="text-[10px] font-bold text-slate-400 uppercase mb-0.5">Visit Us</p>
+                           <p className="text-sm font-bold text-slate-900 leading-snug">
+                              Ahmedabad, Gujarat,<br/>India 382350
+                           </p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
             </div>
           </div>
 
-          {/* Services */}
-          <div>
-            <h3 className="text-xl font-semibold text-theme-text-primary mb-6">Our Services</h3>
-            <ul className="space-y-4">
-              {services.map((service, index) => (
-                <li key={index}>
-                  <button 
-                    onClick={() => handleServiceClick(service.path, service.section)}
-                    className="flex items-center text-theme-text-secondary hover:text-theme-text-accent transition-colors"
-                  >
-                    <service.icon className="w-5 h-5 mr-2" />
-                    <span>{service.title}</span>
-                  </button>
-                </li>
-              ))}
-            </ul>
+          {/* FOOTER BOTTOM */}
+          <div className="mt-12 pt-8 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500 font-medium">
+             <div className="flex items-center gap-1">
+                <span>© {new Date().getFullYear()} TopEdge AI.</span>
+                <span className="hidden sm:inline">Made with <span className="text-red-500">♥</span> in India.</span>
+             </div>
+             
+             <div className="flex flex-wrap justify-center gap-6">
+                {legals.map((legal, idx) => (
+                   <Link key={idx} to={legal.path} className="hover:text-slate-900 transition-colors">
+                      {legal.label}
+                   </Link>
+                ))}
+             </div>
           </div>
 
-          {/* Contact Info */}
-          <div>
-            <h3 className="text-xl font-semibold text-theme-text-primary mb-6">Contact Us</h3>
-            <ul className="space-y-4">
-              {contactInfo.map((item, index) => (
-                <li key={index}>
-                  <a 
-                    href={item.href} 
-                    className="flex items-center text-theme-text-secondary hover:text-theme-text-accent transition-colors group"
-                  >
-                    <item.icon className={`w-5 h-5 mr-2 text-theme-text-secondary/70 ${item.color} transition-colors`} />
-                    <span>{item.text}</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Quick Links */}
-          <div>
-            <h3 className="text-xl font-semibold text-theme-text-primary mb-6">Quick Links</h3>
-            <ul className="space-y-4">
-              <li>
-                <Link to="/" className="text-theme-text-secondary hover:text-theme-text-accent transition-colors">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link to="/about" className="text-theme-text-secondary hover:text-theme-text-accent transition-colors">
-                  About Us
-                </Link>
-              </li>
-              <li>
-                <Link to="/services" className="text-theme-text-secondary hover:text-theme-text-accent transition-colors">
-                  Services
-                </Link>
-              </li>
-              <li>
-                <Link to="/pricing" className="text-theme-text-secondary hover:text-theme-text-accent transition-colors">
-                  Pricing
-                </Link>
-              </li>
-              <li>
-                <Link to="/contact" className="text-theme-text-secondary hover:text-theme-text-accent transition-colors">
-                  Contact
-                </Link>
-              </li>
-              <li>
-                <Link to="/booking" className="text-theme-text-secondary hover:text-theme-text-accent transition-colors">
-                  Book Demo
-                </Link>
-              </li>
-              <li>
-                <Link to="/privacy-policy" className="text-theme-text-secondary hover:text-theme-text-accent transition-colors">
-                  Privacy Policy
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        {/* Copyright */}
-        <div className="mt-12 pt-8 border-t border-theme-border-primary text-center text-theme-text-secondary">
-          <p>© {new Date().getFullYear()} TopEdge. All rights reserved.</p>
         </div>
       </div>
     </footer>
