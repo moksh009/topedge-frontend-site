@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Bell, User, LogOut, Settings } from 'lucide-react';
+import { Menu, X, Bell, User, LogOut, Settings, ChevronRight, Home, Users, Zap, BookOpen, Megaphone, MessageCircle, Globe, Calendar } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/contexts/AuthContext';
 import { auth, db } from '@/services/firebase';
@@ -12,7 +12,7 @@ interface Notification {
   id: string;
   type: 'resource' | 'announcement';
   title: string;
-  createdAt: any; // Firestore Timestamp
+  createdAt: any; 
   link: string;
   isRead?: boolean;
 }
@@ -26,20 +26,10 @@ const CommunityNavbar = () => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const location = useLocation();
 
+  // --- Real-time Notifications ---
   useEffect(() => {
-    // Listen for new resources
-    const resourcesQuery = query(
-      collection(db, 'community_resources'),
-      orderBy('createdAt', 'desc'),
-      limit(5)
-    );
-
-    // Listen for new announcements
-    const announcementsQuery = query(
-      collection(db, 'community_announcements'),
-      orderBy('createdAt', 'desc'),
-      limit(5)
-    );
+    const resourcesQuery = query(collection(db, 'community_resources'), orderBy('createdAt', 'desc'), limit(5));
+    const announcementsQuery = query(collection(db, 'community_announcements'), orderBy('createdAt', 'desc'), limit(5));
 
     const unsubscribeResources = onSnapshot(resourcesQuery, (snapshot) => {
       const newResources = snapshot.docs.map(doc => ({
@@ -56,37 +46,31 @@ const CommunityNavbar = () => {
       const newAnnouncements = snapshot.docs.map(doc => ({
         id: doc.id,
         type: 'announcement' as const,
-        title: `New Announcement: ${doc.data().title}`,
+        title: `Announcement: ${doc.data().title}`,
         createdAt: doc.data().createdAt,
         link: '/community/announcements'
       }));
       updateNotifications(newAnnouncements, 'announcement');
     });
 
-    return () => {
-      unsubscribeResources();
-      unsubscribeAnnouncements();
-    };
+    return () => { unsubscribeResources(); unsubscribeAnnouncements(); };
   }, []);
 
   const updateNotifications = (newItems: Notification[], type: 'resource' | 'announcement') => {
     setNotifications(prev => {
-      // Remove existing items of this type and add new ones
       const otherItems = prev.filter(item => item.type !== type);
-      const allItems = [...otherItems, ...newItems];
-      // Sort by date desc
-      return allItems.sort((a, b) => {
+      const allItems = [...otherItems, ...newItems].sort((a, b) => {
         const dateA = a.createdAt?.toDate?.() || new Date(0);
         const dateB = b.createdAt?.toDate?.() || new Date(0);
         return dateB.getTime() - dateA.getTime();
-      }).slice(0, 10); // Keep top 10
+      }).slice(0, 10);
+      return allItems;
     });
   };
 
+  // --- Scroll Effect ---
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -96,225 +80,271 @@ const CommunityNavbar = () => {
       await signOut(auth);
       setShowProfileMenu(false);
       setIsOpen(false);
-    } catch (error) {
-      console.error("Error signing out:", error);
-    }
+    } catch (error) { console.error(error); }
   };
 
+  // --- Updated Config with Icons & Descriptions ---
   const navLinks = [
-    { label: 'Home', path: '/community/home' },
-    { label: 'Public Profiles', path: '/community/profiles' },
-    { label: 'Automation Hub', path: '/community/automation-hub' },
-    { label: 'OpenSource Library', path: '/community/open-source' },
-    { label: 'Announcements', path: '/community/announcements' },
-    { label: 'Discord', path: '/community/discord' },
-    { label: 'Website', path: '/' },
-    { label: 'Book Appointment', path: '/booking' },
+    { label: 'Home', path: '/community/home', icon: Home, desc: 'Community Dashboard' },
+    { label: 'Profiles', path: '/community/profiles', icon: Users, desc: 'Connect with Builders' },
+    { label: 'Automation Hub', path: '/community/automation-hub', icon: Zap, desc: 'Tools & Workflows' },
+    { label: 'Open Source', path: '/community/open-source', icon: BookOpen, desc: 'Library of Code' },
+    { label: 'Announcements', path: '/community/announcements', icon: Megaphone, desc: 'Latest Updates' },
+    { label: 'Discord', path: '/community/discord', icon: MessageCircle, desc: 'Live Chat' },
+    { label: 'Main Website', path: '/', icon: Globe, desc: 'TopEdge AI Home' },
+    { label: 'Book Call', path: '/booking', icon: Calendar, desc: 'Schedule Meeting' },
   ];
 
+  // Common Styles
+  const glassPanel = "bg-white/80 backdrop-blur-xl backdrop-saturate-150 border border-white/40 shadow-[0_8px_32px_0_rgba(31,38,135,0.07)]";
+  const glassDropdown = "bg-white/95 backdrop-blur-2xl backdrop-saturate-150 border border-slate-200/60 shadow-2xl shadow-black/10 ring-1 ring-black/5";
+
   return (
-    <nav className={cn(
-      "fixed top-0 left-0 right-0 z-50 flex justify-center transition-all duration-300",
-      isScrolled ? "pt-4" : "pt-6"
-    )}>
-      <motion.div 
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-        className="w-full max-w-5xl px-4"
-      >
-        <div className={cn(
-          "flex items-center justify-between rounded-full px-6 py-3 transition-all duration-300",
-          "bg-white/30 backdrop-blur-xl border border-white/50 shadow-[0_8px_30px_rgba(0,0,0,0.12)] ring-1 ring-white/30",
-          isScrolled && "bg-white/40"
-        )}>
-          {/* Logo Section */}
-          <Link to="/community/home" className="flex items-center gap-3 group mr-auto">
-            <img src="/logo.png" alt="TopEdge Logo" className="h-8 w-auto" />
-            <span className="font-bold text-gray-900 tracking-tight group-hover:text-blue-600 transition-colors">TopEdge AI</span>
-          </Link>
+    <>
+      <nav className={cn(
+        "fixed top-0 left-0 right-0 z-50 flex justify-center transition-all duration-500 ease-out pointer-events-none",
+        isScrolled ? "pt-4" : "pt-6"
+      )}>
+        <motion.div 
+          initial={{ y: -100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ type: "spring", stiffness: 260, damping: 20 }}
+          className={cn(
+            "pointer-events-auto w-full max-w-5xl px-2 sm:px-4 transition-all duration-300",
+          )}
+        >
+          <div className={cn(
+            "relative flex items-center justify-between rounded-full px-2 py-2 pr-3 transition-all duration-500",
+            glassPanel,
+            isScrolled && "bg-white/90 shadow-md"
+          )}>
+            
+            {/* --- Left: Logo --- */}
+            <Link to="/community/home" className="flex items-center gap-3 px-4 group">
+               <img src="/logo.png" alt="TopEdge AI" className="h-8 w-auto object-contain" />
+               <span className="font-bold text-slate-900 tracking-tight text-lg hidden sm:block group-hover:text-blue-600 transition-colors">
+                 TopEdge AI
+               </span>
+            </Link>
 
-          {/* User Controls */}
-          <div className="flex items-center gap-4 mr-4">
-            {user ? (
-              <>
-                <div className="relative">
-                  <button 
-                    onClick={() => setShowNotifications(!showNotifications)}
-                    className="p-2 rounded-full hover:bg-gray-100 text-gray-600 hover:text-gray-900 transition-colors relative"
-                  >
-                    <Bell className="w-5 h-5" />
-                    {notifications.length > 0 && (
-                      <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border border-white"></span>
-                    )}
-                  </button>
-
-                  <AnimatePresence>
-                    {showNotifications && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                        className="absolute right-0 top-12 w-80 bg-white backdrop-blur-xl border border-gray-200 rounded-2xl shadow-xl overflow-hidden py-1 z-50"
-                      >
-                         <div className="px-4 py-3 border-b border-gray-100 bg-gray-50/50 flex justify-between items-center">
-                            <span className="font-semibold text-sm">Notifications</span>
-                            <span className="text-xs text-gray-500">{notifications.length} New</span>
-                         </div>
-                         <div className="max-h-80 overflow-y-auto">
-                            {notifications.length > 0 ? (
-                              notifications.map((notification) => (
-                                <Link
-                                  key={notification.id}
-                                  to={notification.link}
-                                  onClick={() => setShowNotifications(false)}
-                                  className="block px-4 py-3 hover:bg-gray-50 transition-colors border-b border-gray-50 last:border-0"
-                                >
-                                  <p className="text-sm font-medium text-gray-900 line-clamp-2">{notification.title}</p>
-                                  <p className="text-xs text-gray-400 mt-1">
-                                    {notification.createdAt?.toDate?.().toLocaleDateString()}
-                                  </p>
-                                </Link>
-                              ))
-                            ) : (
-                              <div className="p-4 text-center text-sm text-gray-500">
-                                No new notifications
-                              </div>
-                            )}
-                         </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-                
-                <div className="relative">
-                  <button 
-                    onClick={() => setShowProfileMenu(!showProfileMenu)}
-                    className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 p-[1px] shadow-sm"
-                  >
-                    <div className="w-full h-full rounded-full bg-white flex items-center justify-center overflow-hidden">
-                      {userProfile?.photoURL ? (
-                        <img src={userProfile.photoURL} alt={userProfile.fullName || 'User'} className="w-full h-full object-cover" />
-                      ) : user?.photoURL ? (
-                        <img src={user.photoURL} alt={user.displayName || 'User'} className="w-full h-full object-cover" />
-                      ) : (
-                        <span className="text-sm font-bold text-gray-700">{user?.displayName?.charAt(0) || 'U'}</span>
+            {/* --- Right: Controls --- */}
+            <div className="flex items-center gap-2">
+              
+              {/* User Actions */}
+              {user ? (
+                <div className="flex items-center gap-2 mr-2">
+                  {/* Notifications */}
+                  <div className="relative">
+                    <button 
+                      onClick={() => { setShowNotifications(!showNotifications); setShowProfileMenu(false); }}
+                      className={cn(
+                        "w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 active:scale-95",
+                        showNotifications ? "bg-slate-900 text-white" : "hover:bg-slate-100 text-slate-600"
                       )}
-                    </div>
-                  </button>
+                    >
+                      <Bell className="w-5 h-5" />
+                      {notifications.length > 0 && (
+                        <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-rose-500 rounded-full border border-white" />
+                      )}
+                    </button>
 
-                  <AnimatePresence>
-                    {showProfileMenu && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                        className="absolute right-0 top-12 w-56 bg-white backdrop-blur-xl border border-gray-200 rounded-2xl shadow-xl overflow-hidden py-1 z-50"
-                      >
-                        <div className="px-4 py-3 border-b border-gray-100 bg-gray-50/50">
-                          <p className="text-sm font-semibold text-gray-900 truncate">{user.displayName || 'User'}</p>
-                          <p className="text-xs text-gray-500 truncate">{user.email}</p>
-                        </div>
-                        <div className="p-1">
-                          <Link to="/community/promote-profile" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors" onClick={() => setShowProfileMenu(false)}>
-                            <User className="w-4 h-4" />
-                            My Profile
-                          </Link>
-                          <Link to="/community/settings" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors" onClick={() => setShowProfileMenu(false)}>
-                            <Settings className="w-4 h-4" />
-                            Settings
-                          </Link>
-                        </div>
-                        <div className="border-t border-gray-100 p-1 mt-1">
-                          <button 
-                            onClick={handleLogout}
-                            className="w-full flex items-center gap-2 px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors text-left"
-                          >
-                            <LogOut className="w-4 h-4" />
-                            Log Out
-                          </button>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                    <AnimatePresence>
+                      {showNotifications && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                          className={cn("absolute right-0 top-14 w-80 rounded-3xl overflow-hidden origin-top-right z-50", glassDropdown)}
+                        >
+                           <div className="px-5 py-4 border-b border-slate-100 flex justify-between items-center bg-gray-50/50">
+                              <span className="font-bold text-sm text-slate-900">Notifications</span>
+                           </div>
+                           <div className="max-h-[300px] overflow-y-auto">
+                              {notifications.length > 0 ? (
+                                notifications.map((n) => (
+                                  <Link
+                                    key={n.id}
+                                    to={n.link}
+                                    onClick={() => setShowNotifications(false)}
+                                    className="block px-5 py-4 hover:bg-slate-50 transition-colors border-b border-slate-100 last:border-0 relative group"
+                                  >
+                                    <div className="flex gap-3">
+                                       <div className="mt-1.5 w-2 h-2 rounded-full bg-blue-500 flex-shrink-0" />
+                                       <div>
+                                          <p className="text-sm font-semibold text-slate-800 leading-snug group-hover:text-blue-600 transition-colors">{n.title}</p>
+                                          <p className="text-xs text-slate-400 mt-1 font-medium">
+                                            {n.createdAt?.toDate ? n.createdAt.toDate().toLocaleDateString() : 'Just now'}
+                                          </p>
+                                       </div>
+                                    </div>
+                                  </Link>
+                                ))
+                              ) : (
+                                <div className="p-8 text-center text-sm text-slate-400">
+                                  No new updates
+                                </div>
+                              )}
+                           </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                  
+                  {/* Profile */}
+                  <div className="relative">
+                    <button 
+                      onClick={() => { setShowProfileMenu(!showProfileMenu); setShowNotifications(false); }}
+                      className="w-10 h-10 rounded-full p-0.5 ring-2 ring-transparent hover:ring-slate-200 transition-all active:scale-95"
+                    >
+                      <img 
+                        src={userProfile?.photoURL || user.photoURL || `https://ui-avatars.com/api/?name=${user.displayName}`} 
+                        alt="Profile" 
+                        className="w-full h-full rounded-full object-cover shadow-sm bg-slate-100"
+                      />
+                    </button>
+
+                    <AnimatePresence>
+                      {showProfileMenu && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                          className={cn("absolute right-0 top-14 w-64 rounded-3xl overflow-hidden origin-top-right z-50 p-2", glassDropdown)}
+                        >
+                          <div className="px-4 py-3 mb-2 rounded-2xl bg-slate-50 border border-slate-100">
+                            <p className="text-sm font-bold text-slate-900 truncate">{user.displayName || 'User'}</p>
+                            <p className="text-xs text-slate-500 truncate font-medium">{user.email}</p>
+                          </div>
+                          
+                          <div className="space-y-1">
+                            <Link to="/community/promote-profile" className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-slate-900 rounded-xl transition-all" onClick={() => setShowProfileMenu(false)}>
+                              <User className="w-4 h-4" /> My Profile
+                            </Link>
+                            <Link to="/community/settings" className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-slate-900 rounded-xl transition-all" onClick={() => setShowProfileMenu(false)}>
+                              <Settings className="w-4 h-4" /> Settings
+                            </Link>
+                            <button onClick={handleLogout} className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-rose-600 hover:bg-rose-50 hover:text-rose-700 rounded-xl transition-all text-left">
+                              <LogOut className="w-4 h-4" /> Sign Out
+                            </button>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
                 </div>
-              </>
-            ) : (
-              <div className="hidden sm:flex items-center gap-3">
-                <Link to="/community/login" className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">
-                  Log In
-                </Link>
-                <Link to="/community/signup" className="px-5 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full text-sm font-semibold hover:shadow-lg hover:scale-105 transition-all shadow-md">
-                  Join Community
-                </Link>
-              </div>
-            )}
+              ) : (
+                <div className="hidden sm:flex items-center gap-2 mr-2">
+                  <Link to="/community/login" className="px-5 py-2.5 text-sm font-semibold text-slate-600 hover:text-slate-900 transition-colors">
+                    Log In
+                  </Link>
+                  <Link to="/community/signup" className="px-5 py-2.5 bg-slate-900 text-white rounded-full text-sm font-semibold shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all">
+                    Join Free
+                  </Link>
+                </div>
+              )}
+
+              {/* Menu Toggle Button */}
+              <button 
+                onClick={() => setIsOpen(!isOpen)}
+                className={cn(
+                  "flex items-center gap-2 pl-4 pr-2 py-2 rounded-full transition-all duration-300 border",
+                  isOpen 
+                    ? "bg-slate-900 text-white border-slate-900 pr-4" 
+                    : "bg-white/50 hover:bg-white text-slate-700 border-transparent hover:border-slate-200"
+                )}
+              >
+                <span className="text-sm font-semibold ml-1 hidden sm:block">{isOpen ? 'Close' : 'Menu'}</span>
+                <div className={cn("p-1.5 rounded-full transition-colors", isOpen ? "bg-white/20" : "bg-slate-200")}>
+                  {isOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+                </div>
+              </button>
+            </div>
+
           </div>
+        </motion.div>
+      </nav>
 
-          {/* Menu Toggle */}
-          <button 
-            onClick={() => setIsOpen(!isOpen)}
-            className="flex items-center gap-2 px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-900 transition-all text-sm font-medium border border-transparent"
-          >
-            <span className="hidden sm:inline">Menu</span>
-            <motion.div
-              animate={{ rotate: isOpen ? 180 : 0 }}
-              transition={{ duration: 0.2 }}
-            >
-              {isOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
-            </motion.div>
-          </button>
-        </div>
-      </motion.div>
-
-      {/* Expanded Menu */}
+      {/* --- Full Screen / Modal Menu --- */}
       <AnimatePresence>
         {isOpen && (
           <>
              {/* Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsOpen(false)}
-              className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40"
-            />
-            
-            {/* Menu Container */}
-            <motion.div
-              initial={{ opacity: 0, y: -20, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -20, scale: 0.95 }}
-              transition={{ duration: 0.2 }}
-              className="fixed top-6 inset-x-4 sm:left-1/2 sm:inset-x-auto sm:-translate-x-1/2 w-auto sm:w-full sm:max-w-2xl px-0 sm:px-4 z-50"
-            >
-              <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden p-2">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 p-2">
-                  {navLinks.map((link) => (
-                    <Link
-                      key={link.path}
-                      to={link.path}
-                      onClick={() => setIsOpen(false)}
-                      className={cn(
-                        "flex items-center justify-between p-4 rounded-2xl transition-all group",
-                        location.pathname === link.path 
-                          ? "bg-gray-100 text-black" 
-                          : "hover:bg-gray-50 text-gray-600 hover:text-black"
-                      )}
-                    >
-                      <span className="font-medium">{link.label}</span>
-                      {location.pathname === link.path && (
-                        <motion.div layoutId="activeDot" className="w-1.5 h-1.5 rounded-full bg-black" />
-                      )}
-                    </Link>
-                  ))}
+             <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setIsOpen(false)}
+                className="fixed inset-0 bg-slate-900/20 backdrop-blur-sm z-40"
+             />
+
+             {/* Menu Container */}
+             <motion.div
+                initial={{ opacity: 0, scale: 0.9, y: -20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.9, y: -20 }}
+                transition={{ type: "spring", duration: 0.5, bounce: 0.3 }}
+                className={cn(
+                  "fixed z-50 flex flex-col",
+                  // Mobile Sizing
+                  "inset-x-4 top-24 bottom-6 rounded-[2rem]", 
+                  // Desktop Sizing - Compact Width
+                  "sm:inset-auto sm:top-28 sm:left-1/2 sm:-translate-x-1/2 sm:w-[400px] sm:max-h-[85vh] sm:h-auto sm:rounded-[2rem]",
+                  glassDropdown
+                )}
+             >
+                <div className="flex flex-col h-full overflow-hidden">
+                   {/* Scrollable Content Area */}
+                   <div className="flex-1 overflow-y-auto p-2">
+                      <div className="grid grid-cols-1 gap-1">
+                         {navLinks.map((link, i) => (
+                            <motion.div
+                              key={link.path}
+                              initial={{ opacity: 0, x: -10 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: i * 0.03 }}
+                            >
+                              <Link
+                                to={link.path}
+                                onClick={() => setIsOpen(false)}
+                                className={cn(
+                                  "group flex items-center p-3 rounded-[1.25rem] transition-all duration-300 border border-transparent",
+                                  location.pathname === link.path 
+                                    ? "bg-white shadow-sm border-slate-100" 
+                                    : "hover:bg-white/60 hover:shadow-sm"
+                                )}
+                              >
+                                 <div className={cn(
+                                    "w-10 h-10 rounded-xl flex items-center justify-center transition-colors mr-3 shrink-0",
+                                    location.pathname === link.path ? "bg-slate-900 text-white" : "bg-slate-100 text-slate-500 group-hover:bg-white group-hover:text-blue-600"
+                                 )}>
+                                    <link.icon className="w-5 h-5" />
+                                 </div>
+                                 <div className="flex-1 min-w-0">
+                                    <h3 className={cn("text-sm font-bold transition-colors truncate", location.pathname === link.path ? "text-slate-900" : "text-slate-700 group-hover:text-slate-900")}>
+                                      {link.label}
+                                    </h3>
+                                    <p className="text-[11px] font-medium text-slate-400 group-hover:text-slate-500 truncate">{link.desc}</p>
+                                 </div>
+                                 <ChevronRight className={cn("w-4 h-4 text-slate-300 transition-transform group-hover:translate-x-1 shrink-0", location.pathname === link.path && "text-slate-900")} />
+                              </Link>
+                            </motion.div>
+                         ))}
+                      </div>
+                   </div>
+                   
+                   {!user && (
+                      <div className="p-3 mt-auto border-t border-slate-100 shrink-0">
+                        <Link to="/community/signup" className="flex items-center justify-center w-full py-3.5 rounded-xl bg-slate-900 text-white font-bold text-sm shadow-md hover:bg-slate-800 transition-colors" onClick={() => setIsOpen(false)}>
+                          Join Community
+                        </Link>
+                      </div>
+                   )}
                 </div>
-              </div>
-            </motion.div>
+             </motion.div>
           </>
         )}
       </AnimatePresence>
-    </nav>
+    </>
   );
 };
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import CommunityLayout from '@/components/community/layout/CommunityLayout';
-import { motion } from 'framer-motion';
-import { Loader2, ArrowLeft, DollarSign, Video, Wrench, Sparkles, Layout, AlertCircle } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Loader2, ArrowLeft, DollarSign, Video, Wrench, Sparkles, Layout, AlertCircle, Rocket, Gift, Tag, Check } from 'lucide-react';
 import { doc, setDoc, serverTimestamp, getDoc, collection, addDoc, query, where, getCountFromServer } from 'firebase/firestore';
 import { db, auth } from '@/services/firebase';
 import { useNavigate, Link } from 'react-router-dom';
@@ -24,8 +24,8 @@ const SubmitResource = () => {
     videoUrl: '',
     monetization: 'free', // free | paid
     price: '',
-    toolkit: '', // Comma separated
-    category: 'automation', // automation | project | tool
+    toolkit: '',
+    category: 'automation',
   });
 
   useEffect(() => {
@@ -38,12 +38,11 @@ const SubmitResource = () => {
       }
 
       if (!userProfile) {
-        toast.error("You must promote your profile before uploading resources.");
+        toast.error("You must create a profile before uploading resources.");
         navigate('/community/promote-profile');
         return;
       }
 
-      // Check upload limit for non-admins
       if (!isAdmin) {
         try {
           const q = query(
@@ -55,7 +54,7 @@ const SubmitResource = () => {
           setUploadCount(count);
           
           if (count >= 10) {
-            toast.error("You have reached the limit of 10 uploads.");
+            toast.error("Upload limit reached (10/10).");
             navigate('/community/automation-hub');
           }
         } catch (error) {
@@ -70,10 +69,7 @@ const SubmitResource = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -93,8 +89,8 @@ const SubmitResource = () => {
         authorName: userProfile.fullName,
         authorPhoto: userProfile.photoURL,
         title: formData.title,
-        description: formData.description, // Short description
-        fullDescription: formData.description, // Using same for now, or split if needed
+        description: formData.description,
+        fullDescription: formData.description,
         whatItDoes: formData.whatItDoes,
         outcome: formData.outcome,
         demoVideoUrl: formData.videoUrl,
@@ -102,21 +98,19 @@ const SubmitResource = () => {
         price: formData.monetization === 'paid' ? parseFloat(formData.price) : 0,
         tools: formData.toolkit.split(',').map(s => s.trim()).filter(s => s),
         category: formData.category,
-        tags: [], // Can add tags later
+        tags: [],
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
         downloads: 0,
         views: 0
       };
 
-      // Add to community_resources collection
       await addDoc(collection(db, 'community_resources'), resourceData);
-      
-      toast.success("Resource published successfully!");
+      toast.success("Resource launched successfully!");
       navigate('/community/automation-hub');
     } catch (error) {
       console.error("Error submitting resource:", error);
-      toast.error("Failed to submit resource. Please try again.");
+      toast.error("Failed to publish. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -125,56 +119,79 @@ const SubmitResource = () => {
   if (authLoading || checkingLimit) {
     return (
       <CommunityLayout>
-        <div className="min-h-screen flex items-center justify-center">
-          <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+        <div className="min-h-screen flex items-center justify-center bg-[#F8F9FB]">
+          <Loader2 className="w-8 h-8 animate-spin text-slate-900" />
         </div>
       </CommunityLayout>
     );
   }
 
+  const progressPercentage = Math.min((uploadCount / 10) * 100, 100);
+
   return (
     <CommunityLayout>
-      <div className="min-h-screen bg-gray-50 py-20 relative overflow-hidden">
-        {/* Background Decorative Elements */}
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-100/50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-purple-100/50 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none" />
+      <div className="min-h-screen bg-[#F8F9FB] pb-20 font-sans text-slate-900">
+        
+        {/* Background Pattern */}
+        <div className="absolute inset-0 pointer-events-none opacity-[0.4]" style={{ backgroundImage: 'radial-gradient(#cbd5e1 1px, transparent 1px)', backgroundSize: '32px 32px' }}></div>
 
-        <div className="container mx-auto px-4 relative z-10">
+        <div className="container relative mx-auto px-4 max-w-4xl pt-12">
+          
+          {/* Top Navigation */}
           <Link 
             to="/community/automation-hub" 
-            className="inline-flex items-center text-gray-500 hover:text-gray-900 mb-8 transition-colors group"
+            className="inline-flex items-center text-sm font-semibold text-slate-500 hover:text-slate-900 mb-8 transition-colors group"
           >
-            <ArrowLeft className="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" />
-            Back to Hub
+            <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
+            Cancel & Back
           </Link>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="max-w-4xl mx-auto"
           >
-            <div className="text-center mb-12">
-              <h1 className="text-4xl font-bold text-gray-900 mb-4 tracking-tight">Submit Resource</h1>
-              <p className="text-gray-600 text-lg">Share your automation, tool, or project with the community.</p>
-              {!isAdmin && (
-                <div className="mt-4 inline-flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-700 rounded-full text-sm font-medium">
-                  <AlertCircle className="w-4 h-4" />
-                  Uploads remaining: {10 - uploadCount} / 10
-                </div>
-              )}
+            {/* Header Section */}
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+               <div>
+                  <h1 className="text-4xl font-bold tracking-tight text-slate-900 mb-2">
+                     Launch Resource
+                  </h1>
+                  <p className="text-lg text-slate-500">
+                     Share your automation workflows and tools with the community.
+                  </p>
+               </div>
+               
+               {/* Usage Meter (Non-Admins) */}
+               {!isAdmin && (
+                 <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm w-full md:w-64">
+                    <div className="flex justify-between text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
+                       <span>Upload Limit</span>
+                       <span>{uploadCount}/10</span>
+                    </div>
+                    <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+                       <div 
+                          className="h-full bg-slate-900 rounded-full transition-all duration-1000 ease-out" 
+                          style={{ width: `${progressPercentage}%` }}
+                       />
+                    </div>
+                 </div>
+               )}
             </div>
 
-            <form onSubmit={handleSubmit} className="bg-white rounded-3xl shadow-xl p-8 md:p-12 space-y-8 border border-gray-100">
-              {/* Basic Info */}
-              <section className="space-y-6">
-                <div className="flex items-center gap-3 pb-4 border-b border-gray-100">
-                  <Layout className="w-6 h-6 text-blue-600" />
-                  <h2 className="text-xl font-bold text-gray-900">Basic Information</h2>
+            <form onSubmit={handleSubmit} className="space-y-8">
+              
+              {/* ================= SECTION 1: ESSENTIALS ================= */}
+              <div className="bg-white rounded-[2rem] border border-slate-200 p-8 shadow-sm relative overflow-hidden">
+                <div className="flex items-center gap-3 mb-8">
+                  <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600">
+                     <Layout className="w-5 h-5" />
+                  </div>
+                  <h2 className="text-xl font-bold text-slate-900">The Essentials</h2>
                 </div>
                 
-                <div className="space-y-4">
+                <div className="grid grid-cols-1 gap-6">
                   <div className="space-y-2">
-                    <label className="text-sm font-medium text-gray-700">Title</label>
+                    <label className="text-sm font-bold text-slate-700">Resource Title</label>
                     <input
                       type="text"
                       name="title"
@@ -182,182 +199,213 @@ const SubmitResource = () => {
                       onChange={handleChange}
                       required
                       placeholder="e.g. Real Estate AI Caller Agent"
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                      className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all font-medium placeholder:text-slate-400"
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <label className="text-sm font-medium text-gray-700">Short Description</label>
+                    <label className="text-sm font-bold text-slate-700">Short Description</label>
                     <textarea
                       name="description"
                       value={formData.description}
                       onChange={handleChange}
                       required
-                      placeholder="Brief overview of what this resource is..."
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all h-24 resize-none"
+                      rows={2}
+                      placeholder="A quick 1-2 sentence hook about what this is..."
+                      className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all font-medium placeholder:text-slate-400 resize-none"
                     />
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-700">Category</label>
-                      <select
-                        name="category"
-                        value={formData.category}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-                      >
-                        <option value="automation">Automation</option>
-                        <option value="project">Full Project</option>
-                        <option value="tool">Tool / Utility</option>
-                        <option value="prompt">Prompt Engineering</option>
-                      </select>
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-700">Toolkit Used</label>
-                      <div className="relative">
-                        <Wrench className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                        <input
-                          type="text"
-                          name="toolkit"
-                          value={formData.toolkit}
-                          onChange={handleChange}
-                          placeholder="e.g. n8n, OpenAI, Supabase (comma separated)"
-                          className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-                        />
-                      </div>
-                    </div>
+                     <div className="space-y-2">
+                        <label className="text-sm font-bold text-slate-700">Category</label>
+                        <div className="relative">
+                           <select
+                              name="category"
+                              value={formData.category}
+                              onChange={handleChange}
+                              className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all font-medium appearance-none cursor-pointer"
+                           >
+                              <option value="automation">Automation Workflow</option>
+                              <option value="project">Full Project / Codebase</option>
+                              <option value="tool">Tool / Utility</option>
+                              <option value="prompt">Prompt Engineering</option>
+                           </select>
+                           <Tag className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                        </div>
+                     </div>
+                     
+                     <div className="space-y-2">
+                        <label className="text-sm font-bold text-slate-700">Toolkit Used</label>
+                        <div className="relative">
+                           <input
+                              type="text"
+                              name="toolkit"
+                              value={formData.toolkit}
+                              onChange={handleChange}
+                              placeholder="n8n, OpenAI, Supabase..."
+                              className="w-full px-5 py-4 pl-12 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all font-medium placeholder:text-slate-400"
+                           />
+                           <Wrench className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                        </div>
+                     </div>
                   </div>
                 </div>
-              </section>
+              </div>
 
-              {/* Details */}
-              <section className="space-y-6">
-                <div className="flex items-center gap-3 pb-4 border-b border-gray-100">
-                  <Sparkles className="w-6 h-6 text-purple-600" />
-                  <h2 className="text-xl font-bold text-gray-900">Deep Dive</h2>
+              {/* ================= SECTION 2: DEEP DIVE ================= */}
+              <div className="bg-white rounded-[2rem] border border-slate-200 p-8 shadow-sm">
+                <div className="flex items-center gap-3 mb-8">
+                  <div className="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center text-purple-600">
+                     <Sparkles className="w-5 h-5" />
+                  </div>
+                  <h2 className="text-xl font-bold text-slate-900">Deep Dive</h2>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
                   <div className="space-y-2">
-                    <label className="text-sm font-medium text-gray-700">What it does</label>
+                    <label className="text-sm font-bold text-slate-700">What it does</label>
                     <textarea
                       name="whatItDoes"
                       value={formData.whatItDoes}
                       onChange={handleChange}
                       required
-                      placeholder="Explain the core functionality..."
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all h-32 resize-none"
+                      placeholder="Explain the core functionality step-by-step..."
+                      className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 outline-none transition-all font-medium h-40 resize-none placeholder:text-slate-400"
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-medium text-gray-700">Outcome Achieved</label>
+                    <label className="text-sm font-bold text-slate-700">Outcome Achieved</label>
                     <textarea
                       name="outcome"
                       value={formData.outcome}
                       onChange={handleChange}
                       required
-                      placeholder="What is the end result? (e.g. Saves 10 hours/week)"
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all h-32 resize-none"
+                      placeholder="What is the ROI? (e.g. Saves 10 hours/week, Automates lead gen)"
+                      className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 outline-none transition-all font-medium h-40 resize-none placeholder:text-slate-400"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700">Demo Video URL</label>
+                  <label className="text-sm font-bold text-slate-700">Demo Video URL</label>
                   <div className="relative">
-                    <Video className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                     <input
                       type="url"
                       name="videoUrl"
                       value={formData.videoUrl}
                       onChange={handleChange}
-                      placeholder="https://youtube.com/..."
-                      className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                      placeholder="https://youtube.com/watch?v=..."
+                      className="w-full px-5 py-4 pl-12 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 outline-none transition-all font-medium placeholder:text-slate-400"
                     />
+                    <Video className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
                   </div>
-                  <p className="text-xs text-gray-500">YouTube or Vimeo links supported.</p>
                 </div>
-              </section>
+              </div>
 
-              {/* Monetization */}
-              <section className="space-y-6">
-                <div className="flex items-center gap-3 pb-4 border-b border-gray-100">
-                  <DollarSign className="w-6 h-6 text-green-600" />
-                  <h2 className="text-xl font-bold text-gray-900">Monetization</h2>
+              {/* ================= SECTION 3: COMMERCE ================= */}
+              <div className="bg-white rounded-[2rem] border border-slate-200 p-8 shadow-sm">
+                <div className="flex items-center gap-3 mb-8">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600">
+                     <DollarSign className="w-5 h-5" />
+                  </div>
+                  <h2 className="text-xl font-bold text-slate-900">Distribution</h2>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-gray-700">Type</label>
-                    <div className="flex gap-4">
-                      <label className="flex-1 cursor-pointer">
-                        <input
-                          type="radio"
-                          name="monetization"
-                          value="free"
-                          checked={formData.monetization === 'free'}
-                          onChange={handleChange}
-                          className="peer sr-only"
-                        />
-                        <div className="text-center px-4 py-3 rounded-xl border border-gray-200 peer-checked:border-blue-500 peer-checked:bg-blue-50 peer-checked:text-blue-700 transition-all hover:border-gray-300">
-                          Free
+                <div className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {/* Free Option */}
+                    <div 
+                        onClick={() => setFormData(p => ({...p, monetization: 'free'}))}
+                        className={cn(
+                            "cursor-pointer group relative p-6 rounded-2xl border-2 transition-all duration-300",
+                            formData.monetization === 'free'
+                                ? "bg-emerald-50/30 border-emerald-500"
+                                : "bg-slate-50 border-transparent hover:bg-slate-100"
+                        )}
+                    >
+                        <div className="flex items-start justify-between mb-2">
+                           <Gift className={cn("w-6 h-6", formData.monetization === 'free' ? "text-emerald-600" : "text-slate-400")} />
+                           {formData.monetization === 'free' && <div className="w-5 h-5 bg-emerald-500 rounded-full flex items-center justify-center"><Check className="w-3 h-3 text-white" /></div>}
                         </div>
-                      </label>
-                      <label className="flex-1 cursor-pointer">
-                        <input
-                          type="radio"
-                          name="monetization"
-                          value="paid"
-                          checked={formData.monetization === 'paid'}
-                          onChange={handleChange}
-                          className="peer sr-only"
-                        />
-                        <div className="text-center px-4 py-3 rounded-xl border border-gray-200 peer-checked:border-blue-500 peer-checked:bg-blue-50 peer-checked:text-blue-700 transition-all hover:border-gray-300">
-                          Paid
+                        <h3 className="text-lg font-bold text-slate-900">Free Resource</h3>
+                        <p className="text-sm text-slate-500">Available to everyone in the community.</p>
+                    </div>
+
+                    {/* Paid Option */}
+                    <div 
+                        onClick={() => setFormData(p => ({...p, monetization: 'paid'}))}
+                        className={cn(
+                            "cursor-pointer group relative p-6 rounded-2xl border-2 transition-all duration-300",
+                            formData.monetization === 'paid'
+                                ? "bg-slate-900/5 border-slate-900"
+                                : "bg-slate-50 border-transparent hover:bg-slate-100"
+                        )}
+                    >
+                        <div className="flex items-start justify-between mb-2">
+                           <DollarSign className={cn("w-6 h-6", formData.monetization === 'paid' ? "text-slate-900" : "text-slate-400")} />
+                           {formData.monetization === 'paid' && <div className="w-5 h-5 bg-slate-900 rounded-full flex items-center justify-center"><Check className="w-3 h-3 text-white" /></div>}
                         </div>
-                      </label>
+                        <h3 className="text-lg font-bold text-slate-900">Paid Asset</h3>
+                        <p className="text-sm text-slate-500">Monetize your work. Users pay to access.</p>
                     </div>
                   </div>
 
-                  {formData.monetization === 'paid' && (
-                    <motion.div 
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      className="space-y-2"
-                    >
-                      <label className="text-sm font-medium text-gray-700">Price ($)</label>
-                      <input
-                        type="number"
-                        name="price"
-                        value={formData.price}
-                        onChange={handleChange}
-                        placeholder="0.00"
-                        min="0"
-                        step="0.01"
-                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-                      />
-                    </motion.div>
-                  )}
+                  <AnimatePresence>
+                     {formData.monetization === 'paid' && (
+                        <motion.div
+                           initial={{ opacity: 0, height: 0 }}
+                           animate={{ opacity: 1, height: 'auto' }}
+                           exit={{ opacity: 0, height: 0 }}
+                           className="overflow-hidden"
+                        >
+                           <div className="pt-2">
+                              <label className="text-sm font-bold text-slate-700 mb-2 block">Price (USD)</label>
+                              <div className="relative max-w-xs">
+                                 <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-900 font-bold text-lg">$</span>
+                                 <input
+                                    type="number"
+                                    name="price"
+                                    value={formData.price}
+                                    onChange={handleChange}
+                                    placeholder="0.00"
+                                    min="0"
+                                    step="0.01"
+                                    className="w-full px-5 py-4 pl-10 bg-white border-2 border-slate-200 rounded-xl focus:border-slate-900 focus:ring-0 outline-none transition-all font-bold text-lg placeholder:text-slate-300"
+                                 />
+                              </div>
+                              <p className="text-xs text-slate-500 mt-2">Platform fees may apply.</p>
+                           </div>
+                        </motion.div>
+                     )}
+                  </AnimatePresence>
                 </div>
-              </section>
+              </div>
 
+              {/* Submit Button */}
               <div className="pt-6">
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full py-4 bg-gray-900 text-white font-bold rounded-xl hover:bg-gray-800 transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  className="group w-full py-5 bg-slate-900 text-white text-lg font-bold rounded-2xl hover:bg-slate-800 hover:-translate-y-1 transition-all shadow-xl shadow-slate-200 flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {loading ? (
                     <>
-                      <Loader2 className="w-5 h-5 animate-spin" />
-                      Publishing...
+                      <Loader2 className="w-6 h-6 animate-spin" />
+                      Publishing to Hub...
                     </>
                   ) : (
-                    'Publish Resource'
+                    <>
+                      <Rocket className="w-6 h-6 group-hover:animate-pulse" />
+                      Launch Resource
+                    </>
                   )}
                 </button>
+                <p className="text-center text-xs text-slate-400 mt-4">
+                  By publishing, you agree to our community guidelines.
+                </p>
               </div>
+
             </form>
           </motion.div>
         </div>

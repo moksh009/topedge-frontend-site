@@ -1,236 +1,318 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import CommunityLayout from '@/components/community/layout/CommunityLayout';
 import { motion } from 'framer-motion';
 import { db } from '@/services/firebase';
-import { useAuth } from '@/contexts/AuthContext';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+import { collection, getDocs, limit, orderBy, query } from 'firebase/firestore';
+import { ArrowRight, CheckCircle2, Code2, Users, Zap, Terminal, Sparkles, MoveRight } from 'lucide-react';
+
+// --- ANIMATION VARIANTS ---
+const containerVar = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1, transition: { staggerChildren: 0.1 } }
+};
+
+const itemVar = {
+  hidden: { opacity: 0, y: 30 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } }
+};
+
+// --- CUSTOM BUTTON COMPONENT ---
+const PremiumButton = ({ children, variant = 'primary', className, to }: any) => {
+  const baseStyles = "relative inline-flex items-center justify-center px-8 py-4 overflow-hidden font-medium rounded-2xl transition-all duration-300 group";
+  
+  const variants = {
+    primary: "bg-slate-900 text-white shadow-[0_1px_2px_rgba(0,0,0,0.1),0_8px_16px_rgba(0,0,0,0.1)] hover:-translate-y-1 hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.3)]",
+    secondary: "bg-white text-slate-900 border border-slate-200 shadow-sm hover:border-slate-300 hover:bg-slate-50 hover:-translate-y-1",
+    glow: "bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-[0_0_20px_rgba(79,70,229,0.3)] hover:shadow-[0_0_40px_rgba(79,70,229,0.5)] hover:-translate-y-1"
+  };
+
+  const content = (
+    <>
+      <span className="relative z-10 flex items-center gap-2">{children}</span>
+      {variant === 'primary' && (
+        <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-shimmer" />
+      )}
+    </>
+  );
+
+  if (to) return <Link to={to} className={cn(baseStyles, variants[variant as keyof typeof variants], className)}>{content}</Link>;
+  return <button className={cn(baseStyles, variants[variant as keyof typeof variants], className)}>{content}</button>;
+};
 
 const CommunityHome = () => {
-  const { user } = useAuth();
+  const [profiles, setProfiles] = useState<any[]>([]);
+  const [resources, setResources] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const qp = query(collection(db, 'public_profiles'), orderBy('createdAt', 'desc'), limit(3));
+        const rp = await getDocs(qp);
+        setProfiles(rp.docs.map(d => ({ id: d.id, ...d.data() })));
+      } catch (e) { console.error(e) }
+
+      try {
+        const qr = query(collection(db, 'community_resources'), orderBy('createdAt', 'desc'), limit(2));
+        const rr = await getDocs(qr);
+        setResources(rr.docs.map(d => ({ id: d.id, ...d.data() })));
+      } catch (e) { console.error(e) }
+    };
+    fetchData();
+  }, []);
 
   return (
     <CommunityLayout>
-      {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-white">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-[-30%] right-[-20%] w-[700px] h-[700px] bg-gray-100 rounded-full blur-[140px]" />
-          <div className="absolute bottom-[-30%] left-[-20%] w-[500px] h-[500px] bg-gray-50 rounded-full blur-[120px]" />
-        </div>
-        
-        <div className="container mx-auto px-4 z-10 text-center relative">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-          >
-            <div className="inline-flex items-center px-4 py-1.5 mb-10 text-sm font-medium text-gray-700 bg-gray-50 rounded-full border border-gray-200">
-              <span>Welcome to the Hub</span>
-            </div>
-            
-            <h1 className="text-5xl md:text-7xl font-extrabold text-gray-900 mb-8 tracking-tight leading-tight">
-              The future of AI, built together
-            </h1>
-            
-            <p className="max-w-2xl mx-auto text-xl text-gray-600 mb-12 leading-relaxed font-light">
-              Connect with elite AI builders, share cutting-edge automations, and access exclusive resources. 
-              TopEdge AI Community is your gateway to the next generation of intelligence.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              {user ? (
-                <Link 
-                  to="/community/automation-hub" 
-                  className="px-10 py-5 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold rounded-full hover:shadow-xl hover:scale-105 transition-all shadow-lg"
-                >
-                  Go to Hub →
-                </Link>
-              ) : (
-                <Link 
-                  to="/community/signup" 
-                  className="px-10 py-5 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold rounded-full hover:shadow-xl hover:scale-105 transition-all shadow-lg"
-                >
-                  Join the Community →
-                </Link>
-              )}
-              <Link 
-                to="/community/profiles" 
-                className="px-10 py-5 bg-white text-gray-900 font-bold rounded-full hover:bg-gray-50 transition-all border border-gray-200 shadow-md hover:shadow-lg"
-              >
-                Explore Profiles
-              </Link>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      <div className="bg-[#F8F9FB] min-h-screen text-slate-900 font-sans selection:bg-indigo-500 selection:text-white">
 
-      {/* Vision Section */}
-      <section className="py-28 bg-gray-50 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808010_1px,transparent_1px),linear-gradient(to_bottom,#80808010_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none" />
-
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 tracking-tight">Why join us</h2>
-            <p className="text-xl text-gray-500 max-w-2xl mx-auto font-light">Everything you need to accelerate your AI journey.</p>
-          </div>
+        {/* ================= HERO SECTION ================= */}
+        <section className="relative pt-32 pb-24 overflow-hidden">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-indigo-200/20 rounded-full blur-[100px] pointer-events-none" />
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Network",
-                description: "Connect with like‑minded AI enthusiasts, developers, and business leaders.",
-              },
-              {
-                title: "Build",
-                description: "Share automation projects, get feedback, and grow your tools.",
-              },
-              {
-                title: "Grow",
-                description: "Access exclusive resources, tutorials, and open‑source libraries.",
-              }
-            ].map((item, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="p-10 rounded-3xl bg-white border border-gray-100 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
-              >
-                <h3 className="text-2xl font-semibold text-gray-900 mb-3">{item.title}</h3>
-                <p className="text-gray-600 leading-relaxed text-lg">{item.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Spotlight Section */}
-      <section className="py-24 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="space-y-6"
+          <div className="container relative z-10 mx-auto px-6 max-w-5xl text-center">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, ease: "circOut" }}
             >
-              <h3 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900">Build. Share. Grow.</h3>
-              <p className="text-xl text-gray-600 max-w-xl">A curated space for serious builders. Publish automations, discover open‑source tools, and connect with the right people.</p>
-              <div className="flex flex-wrap gap-4">
-                <Link to="/community/automation-hub" className="px-6 py-3 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold hover:shadow-lg transition-all">Explore Automation Hub</Link>
-                <Link to="/community/open-source" className="px-6 py-3 rounded-full bg-white border border-gray-200 text-gray-900 font-semibold hover:bg-gray-50 transition-colors">Browse Open‑Source</Link>
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-slate-200 shadow-sm text-xs font-bold uppercase tracking-widest text-indigo-600 mb-8">
+                <Sparkles className="w-3 h-3" />
+                Community 2.0
               </div>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <div className="rounded-[2rem] bg-[radial-gradient(circle_at_30%_30%,#f3f4f6_0,#e5e7eb_60%,transparent_100%)] border border-gray-200 p-10 shadow-xl">
-                <div className="grid grid-cols-2 gap-6">
-                  <div className="rounded-2xl bg-white border border-gray-100 p-6 shadow-sm">
-                    <div className="text-sm text-gray-500 mb-1">Hub</div>
-                    <div className="text-lg font-semibold text-gray-900">Automation Library</div>
-                  </div>
-                  <div className="rounded-2xl bg-white border border-gray-100 p-6 shadow-sm">
-                    <div className="text-sm text-gray-500 mb-1">Library</div>
-                    <div className="text-lg font-semibold text-gray-900">Open‑Source Tools</div>
-                  </div>
-                  <div className="rounded-2xl bg-white border border-gray-100 p-6 shadow-sm">
-                    <div className="text-sm text-gray-500 mb-1">Community</div>
-                    <div className="text-lg font-semibold text-gray-900">Profiles & Networking</div>
-                  </div>
-                  <div className="rounded-2xl bg-white border border-gray-100 p-6 shadow-sm">
-                    <div className="text-sm text-gray-500 mb-1">Updates</div>
-                    <div className="text-lg font-semibold text-gray-900">Announcements</div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
 
-      {/* Showcase Grid */}
-      <section className="py-24 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="rounded-[2rem] p-10 bg-white border border-gray-100 shadow-lg hover:shadow-xl transition-all"
-            >
-              <h4 className="text-2xl font-bold text-gray-900 mb-3">Automation Hub</h4>
-              <p className="text-gray-600 mb-6">Discover community‑shared automations that save time and scale outcomes.</p>
-              <Link to="/community/automation-hub" className="inline-flex items-center px-5 py-2 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold hover:shadow-lg transition-all">Browse Hub</Link>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="rounded-[2rem] p-10 bg-white border border-gray-100 shadow-lg hover:shadow-xl transition-all"
-            >
-              <h4 className="text-2xl font-bold text-gray-900 mb-3">Open‑Source Library</h4>
-              <p className="text-gray-600 mb-6">Explore curated resources and tools released by the community.</p>
-              <Link to="/community/open-source" className="inline-flex items-center px-5 py-2 rounded-full bg-white border border-gray-200 text-gray-900 font-semibold hover:bg-gray-50 transition-colors">View Library</Link>
-            </motion.div>
-          </div>
-        </div>
-      </section>
+              <h1 className="text-5xl md:text-8xl font-bold tracking-tighter text-slate-900 leading-[0.95] mb-8">
+                Build smarter. <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-br from-indigo-600 to-violet-500">
+                  Ship faster.
+                </span>
+              </h1>
 
-      {/* Stats Band */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="rounded-[2rem] border border-gray-200 bg-gray-50 p-8 md:p-12 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            <div>
-              <div className="text-4xl font-bold text-gray-900">Growing</div>
-              <div className="text-gray-500 mt-2">Active builders</div>
-            </div>
-            <div>
-              <div className="text-4xl font-bold text-gray-900">Curated</div>
-              <div className="text-gray-500 mt-2">Weekly resources</div>
-            </div>
-            <div>
-              <div className="text-4xl font-bold text-gray-900">Open</div>
-              <div className="text-gray-500 mt-2">Collaborations</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-28 bg-white relative">
-        <div className="container mx-auto px-4 text-center">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="max-w-6xl mx-auto p-16 md:p-24 rounded-[3rem] bg-gray-900 text-white shadow-2xl overflow-hidden relative group"
-          >
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-            <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-white/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
-            
-            <div className="relative z-10">
-              <h2 className="text-5xl md:text-6xl font-bold mb-8 tracking-tight">Ready to start building?</h2>
-              <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto font-light leading-relaxed">
-                Join developers and entrepreneurs pushing the boundaries of what’s possible with AI.
+              <p className="text-xl text-slate-500 max-w-2xl mx-auto mb-12 leading-relaxed font-light">
+                The premier ecosystem for AI engineers. Access production-grade workflows and connect with top-tier talent.
               </p>
-              <Link 
-                to="/community/signup" 
-                className="inline-flex items-center px-10 py-5 bg-white text-gray-900 font-bold rounded-full hover:bg-gray-100 transition-all shadow-xl hover:shadow-2xl hover:scale-105"
-              >
-                Get started →
-              </Link>
+
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
+                <PremiumButton to="/community/automation-hub" variant="primary">
+                  Explore Hub <ArrowRight className="w-4 h-4" />
+                </PremiumButton>
+                <PremiumButton to="/community/promote-profile" variant="secondary">
+                  Share Work
+                </PremiumButton>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* ================= FEATURED EXPERTS (Redesigned) ================= */}
+        <section className="py-24">
+          <div className="container mx-auto px-6 max-w-7xl">
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+              <div>
+                <h2 className="text-4xl font-bold text-slate-900 tracking-tight">Featured Experts</h2>
+                <p className="mt-3 text-lg text-slate-500">Engineering leaders shaping the future of AI.</p>
+              </div>
+              <PremiumButton to="/community/profiles" variant="secondary" className="px-6 py-3 text-sm">
+                View All Talent
+              </PremiumButton>
             </div>
-          </motion.div>
-        </div>
-      </section>
+
+            <motion.div 
+              variants={containerVar}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-100px" }}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            >
+              {profiles.map((p, i) => (
+                <motion.div
+                  key={p.id || i}
+                  variants={itemVar}
+                  className="group relative bg-white rounded-[32px] p-2 transition-all duration-500 hover:-translate-y-2"
+                >
+                  {/* Card Glow Effect */}
+                  <div className="absolute -inset-0.5 bg-gradient-to-b from-slate-200 to-transparent rounded-[34px] opacity-50 group-hover:opacity-100 transition duration-500 blur-[1px]" />
+                  
+                  <div className="relative h-full bg-white rounded-[30px] p-6 flex flex-col justify-between overflow-hidden">
+                    {/* Top Section */}
+                    <div>
+                      <div className="flex justify-between items-start mb-6">
+                        <div className="relative">
+                          <div className="w-20 h-20 rounded-2xl bg-slate-100 p-1 shadow-inner overflow-hidden">
+                            {p.photoURL ? (
+                              <img src={p.photoURL} alt={p.fullName} className="w-full h-full rounded-xl object-cover" />
+                            ) : (
+                              <div className="w-full h-full rounded-xl bg-slate-200 flex items-center justify-center text-xl font-bold text-slate-400">
+                                {(p.fullName || 'U')[0]}
+                              </div>
+                            )}
+                          </div>
+                          <div className="absolute -bottom-2 -right-2 bg-green-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full border-[3px] border-white">
+                            PRO
+                          </div>
+                        </div>
+                        <button className="w-10 h-10 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-400 hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-100 transition-colors">
+                          <MoveRight className="w-5 h-5 -rotate-45" />
+                        </button>
+                      </div>
+
+                      <h3 className="text-xl font-bold text-slate-900 mb-1">
+                        {p.fullName || 'Anonymous User'}
+                      </h3>
+                      <p className="text-sm font-medium text-slate-500 mb-6">
+                        {p.currentWork || 'AI Enthusiast'}
+                      </p>
+
+                      <div className="flex flex-wrap gap-2 mb-8">
+                        {(p.aiSkills || ['Python', 'System Design']).slice(0, 3).map((skill: string, idx: number) => (
+                          <span key={idx} className="px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-100 text-xs font-semibold text-slate-600 group-hover:border-indigo-100 group-hover:bg-indigo-50/50 group-hover:text-indigo-600 transition-colors">
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Bottom Action Area */}
+                    <Link 
+                      to={`/community/profile/${p.id}`}
+                      className="w-full py-4 rounded-xl bg-slate-50 text-slate-600 font-semibold text-sm flex items-center justify-center gap-2 group-hover:bg-slate-900 group-hover:text-white transition-all duration-300"
+                    >
+                      View Full Profile
+                    </Link>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </section>
+
+        {/* ================= CURATED AUTOMATIONS (Redesigned) ================= */}
+        <section className="py-32 bg-[#0F1115] text-white relative overflow-hidden">
+          {/* Ambient Lighting */}
+          <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-indigo-600/10 rounded-full blur-[120px] pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-violet-600/10 rounded-full blur-[100px] pointer-events-none" />
+
+          <div className="container relative z-10 mx-auto px-6 max-w-7xl">
+            <div className="grid lg:grid-cols-2 gap-16 items-center mb-20">
+              <div>
+                <div className="inline-flex items-center gap-2 text-indigo-400 font-bold tracking-wider text-xs uppercase mb-4">
+                  <Terminal className="w-4 h-4" />
+                  Marketplace
+                </div>
+                <h2 className="text-4xl md:text-5xl font-bold leading-tight mb-6">
+                  Don't reinvent the wheel. <br />
+                  <span className="text-slate-400">Deploy verified workflows.</span>
+                </h2>
+                <p className="text-lg text-slate-400 max-w-md">
+                  Skip the boilerplate. Access a library of agents, scrapers, and automation flows built by verified experts.
+                </p>
+              </div>
+              
+              <div className="flex justify-start lg:justify-end">
+                <PremiumButton to="/community/automation-hub" variant="glow">
+                  Browse Marketplace
+                </PremiumButton>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {resources.map((r, i) => (
+                <motion.div
+                  key={r.id || i}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.1, duration: 0.6 }}
+                  viewport={{ once: true }}
+                  className="group relative rounded-[2rem] bg-white/[0.03] border border-white/10 hover:border-white/20 transition-all duration-500 overflow-hidden hover:bg-white/[0.05]"
+                >
+                  <div className="p-8 md:p-10 flex flex-col h-full">
+                    <div className="flex justify-between items-start mb-8">
+                      <div className="w-14 h-14 rounded-2xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center">
+                        <Code2 className="w-7 h-7" />
+                      </div>
+                      <span className={cn(
+                        "px-4 py-1.5 rounded-full text-xs font-bold border tracking-wide",
+                        r.isPaid 
+                          ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
+                          : "bg-white/10 text-white border-white/10"
+                      )}>
+                        {r.isPaid ? `$${r.price} USD` : 'FREE LICENSE'}
+                      </span>
+                    </div>
+
+                    <h3 className="text-2xl font-bold mb-3 group-hover:text-indigo-300 transition-colors">
+                      {r.title || "Untitled Automation"}
+                    </h3>
+                    
+                    <p className="text-slate-400 mb-8 line-clamp-2 leading-relaxed">
+                      {r.description || "A powerful automation workflow designed to streamline your operations."}
+                    </p>
+
+                    <div className="mt-auto pt-8 border-t border-white/10 flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="text-xs font-medium text-slate-500 uppercase tracking-wider">Tech Stack</div>
+                        <div className="flex -space-x-2">
+                          {[1,2,3].map(n => (
+                            <div key={n} className="w-6 h-6 rounded-full bg-slate-800 border border-slate-700" />
+                          ))}
+                        </div>
+                      </div>
+                      
+                      <Link 
+                        to={`/community/resource/${r.id}`}
+                        className="flex items-center gap-2 text-sm font-bold text-white group/link"
+                      >
+                        Get Access 
+                        <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
+                      </Link>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ================= EXTRAORDINARY CTA ================= */}
+        <section className="py-24 px-6">
+          <div className="container mx-auto max-w-6xl">
+            <div className="relative rounded-[3rem] bg-slate-900 overflow-hidden shadow-2xl">
+              {/* Abstract Background Shapes */}
+              <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
+                <div className="absolute -top-[50%] -left-[20%] w-[100%] h-[200%] bg-gradient-to-r from-indigo-600/30 to-purple-600/30 rotate-12 blur-3xl opacity-60" />
+                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-500/10 blur-[100px]" />
+              </div>
+
+              <div className="relative z-10 p-12 md:p-24 text-center">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                >
+                  <h2 className="text-4xl md:text-6xl font-bold text-white tracking-tight mb-8">
+                    Ready to scale your <br />
+                    <span className="text-indigo-400">engineering journey?</span>
+                  </h2>
+                  
+                  <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto mb-12">
+                    Join a high-signal community where serious builders share code, feedback, and opportunities.
+                  </p>
+
+                  <div className="flex flex-col sm:flex-row justify-center gap-6">
+                    <button className="px-10 py-5 rounded-2xl bg-white text-slate-950 font-bold text-lg hover:scale-105 transition-transform shadow-[0_0_40px_-10px_rgba(255,255,255,0.3)]">
+                      Join Community Free
+                    </button>
+                    <button className="px-10 py-5 rounded-2xl bg-white/10 border border-white/10 text-white font-bold text-lg hover:bg-white/20 transition-colors backdrop-blur-sm">
+                      View Documentation
+                    </button>
+                  </div>
+                </motion.div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
     </CommunityLayout>
   );
 };
