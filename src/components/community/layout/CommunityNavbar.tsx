@@ -124,7 +124,7 @@ const CommunityNavbar = () => {
                <img src="/logo.png" alt="TopEdge AI" className="h-8 w-auto object-contain" />
                {/* "hidden sm:block" removed to show text on mobile */}
                <span className="font-bold text-slate-900 tracking-tight text-lg group-hover:text-blue-600 transition-colors">
-                 TopEdge AI
+                 AI Community Hub
                </span>
             </Link>
 
