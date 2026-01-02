@@ -86,14 +86,14 @@ const SubmitResource = () => {
     try {
       const resourceData = {
         userId: user.uid,
-        authorName: userProfile.fullName,
-        authorPhoto: userProfile.photoURL,
+        userName: userProfile.fullName,
+        userPhoto: userProfile.photoURL,
         title: formData.title,
         description: formData.description,
         fullDescription: formData.description,
         whatItDoes: formData.whatItDoes,
         outcome: formData.outcome,
-        demoVideoUrl: formData.videoUrl,
+        videoUrl: formData.videoUrl,
         isPaid: formData.monetization === 'paid',
         price: formData.monetization === 'paid' ? parseFloat(formData.price) : 0,
         tools: formData.toolkit.split(',').map(s => s.trim()).filter(s => s),

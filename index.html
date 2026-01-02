@@ -10,14 +10,15 @@
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    <meta http-equiv="Content-Security-Policy" content="
-      default-src 'self';
-      img-src 'self' data: https://ui-avatars.com https://res.cloudinary.com https://grainy-gradients.vercel.app https://*.daily.co https://*.firebaseapp.com https://*.googleapis.com https://*.wikimedia.org https://*.licdn.com https://*.shutterstock.com https://*.vapi.ai https://*.gifer.com https://*.giphy.com https://*.ytimg.com https://*.facebook.com https://*.fbcdn.net;
-      media-src 'self' https://res.cloudinary.com blob:;
-      connect-src 'self' https://api.cloudinary.com https://*.googleapis.com https://*.firebaseio.com https://*.facebook.com;
-      script-src 'self' 'unsafe-inline' https://connect.facebook.net;
-      style-src 'self' 'unsafe-inline';
-    " />
+   <meta http-equiv="Content-Security-Policy" content="
+  default-src 'self';
+  img-src 'self' data: https://ui-avatars.com https://res.cloudinary.com https://grainy-gradients.vercel.app https://*.daily.co https://*.firebaseapp.com https://*.googleapis.com https://*.wikimedia.org https://*.licdn.com https://*.shutterstock.com https://*.vapi.ai https://*.gifer.com https://*.giphy.com https://*.ytimg.com https://*.facebook.com https://*.fbcdn.net;
+  media-src 'self' https://res.cloudinary.com https://*.daily.co blob: https://*.ytimg.com;
+  connect-src 'self' https://api.cloudinary.com https://*.googleapis.com https://*.firebaseio.com https://*.facebook.com;
+  script-src 'self' 'unsafe-inline' https://connect.facebook.net;
+  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+  font-src 'self' https://fonts.gstatic.com;
+" />
 
     <meta name="theme-color" content="#000000" />
     <meta name="facebook-domain-verification" content="i2pnu6h97g9phu0n302eyu7ggc8dvc" />
