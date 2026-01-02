@@ -148,7 +148,9 @@ const PromoteProfile = () => {
         contactDetails: formData.contactDetails || '',
         phoneNumber: formData.phoneNumber || '',
         createdAt: userProfile?.createdAt || serverTimestamp(),
-        updatedAt: serverTimestamp()
+        updatedAt: serverTimestamp(),
+        linkedin: undefined,
+        github: undefined
       };
 
       await setDoc(doc(db, 'public_profiles', user.uid), profileData);

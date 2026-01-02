@@ -9,13 +9,23 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <meta http-equiv="Content-Security-Policy" content="
+      default-src 'self';
+      img-src 'self' data: https://ui-avatars.com https://res.cloudinary.com https://*.daily.co https://*.firebaseapp.com https://*.googleapis.com https://*.wikimedia.org https://*.licdn.com https://*.shutterstock.com https://*.vapi.ai https://*.gifer.com https://*.giphy.com https://*.ytimg.com https://*.facebook.com https://*.fbcdn.net;
+      media-src 'self' https://res.cloudinary.com;
+      connect-src 'self' https://api.cloudinary.com https://*.googleapis.com https://*.firebaseio.com https://*.facebook.com;
+      script-src 'self' 'unsafe-inline' https://connect.facebook.net;
+      style-src 'self' 'unsafe-inline';
+    " />
+
     <meta name="theme-color" content="#000000" />
     <meta name="facebook-domain-verification" content="i2pnu6h97g9phu0n302eyu7ggc8dvc" />
     <title>TopEdge AI</title>
     <link rel="preload" as="style" href="/src/index.css" />
     <meta name="description" content="Automate your business with TopEdge AI's intelligent voice agents, WhatsApp automation, and Instagram chatbots. Boost leads, reduce manual work by 85%, and enhance customer satisfaction with 24/7 smart support." />
     <meta name="keywords" content="AI, Voice Agent, Chatbot, WhatsApp Automation, Instagram Chatbot, Business Automation, ROI, Customer Satisfaction, TopEdge AI">
-    <!-- Meta Pixel Code -->
+    
     <script>
       !function(f,b,e,v,n,t,s)
       {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -28,41 +38,38 @@
       fbq('init', '2160932677677176');
       fbq('track', 'PageView');  
     </script>
-    <!-- End Meta Pixel Code -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "url": "https://topedgeai.com/",
-  "name": "TopEdge AI",
-  "potentialAction": {
-    "@type": "SearchAction",
-    "target": "https://topedgeai.com/?s={search_term_string}",
-    "query-input": "required name=search_term_string"
-  }
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "TopEdge AI",
-  "url": "https://topedgeai.com/",
-  "logo": "https://topedgeai.com/favicon.ico",
-  "sameAs": [
-    "https://www.linkedin.com/company/topedgeai/",
-    "https://twitter.com/topedgeai"
-  ]
-}
-</script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "url": "https://topedgeai.com/",
+      "name": "TopEdge AI",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://topedgeai.com/?s={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "TopEdge AI",
+      "url": "https://topedgeai.com/",
+      "logo": "https://topedgeai.com/favicon.ico",
+      "sameAs": [
+        "https://www.linkedin.com/company/topedgeai/",
+        "https://twitter.com/topedgeai"
+      ]
+    }
+    </script>
   </head>
   <body>
-    <!-- Meta Pixel Code (noscript) -->
     <noscript>
       <img height="1" width="1" style="display:none"
       src="https://www.facebook.com/tr?id=2160932677677176&ev=PageView&noscript=1"/>
     </noscript>
-    <!-- End Meta Pixel Code (noscript) -->
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
