@@ -122,7 +122,8 @@ const CommunityNavbar = () => {
             {/* --- Left: Logo --- */}
             <Link to="/community/home" className="flex items-center gap-3 px-4 group">
                <img src="/logo.png" alt="TopEdge AI" className="h-8 w-auto object-contain" />
-               <span className="font-bold text-slate-900 tracking-tight text-lg hidden sm:block group-hover:text-blue-600 transition-colors">
+               {/* "hidden sm:block" removed to show text on mobile */}
+               <span className="font-bold text-slate-900 tracking-tight text-lg group-hover:text-blue-600 transition-colors">
                  TopEdge AI
                </span>
             </Link>

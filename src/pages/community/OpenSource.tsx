@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import CommunityLayout from '@/components/community/layout/CommunityLayout';
-import { motion } from 'framer-motion';
-import { Search, ExternalLink, Play, DollarSign, Wrench, Filter, Github, ArrowRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Search, ArrowRight, BookOpen, GitBranch, Terminal, FolderGit2, Code2 } from 'lucide-react';
 import { collection, query, where, getDocs, orderBy } from 'firebase/firestore';
 import { db } from '@/services/firebase';
 import { cn } from '@/lib/utils';
@@ -12,12 +12,12 @@ interface Resource {
   title: string;
   description: string;
   isPaid: boolean;
-  price?: number;
   tools: string[];
   userId: string;
   userName: string;
   userPhoto?: string;
   category: 'automation' | 'project' | 'tool' | 'prompt';
+  createdAt?: any;
 }
 
 const OpenSource = () => {
@@ -29,7 +29,7 @@ const OpenSource = () => {
   useEffect(() => {
     const fetchResources = async () => {
       try {
-        // Fetch only free resources (client-side sort to avoid composite index requirement)
+        // Fetch only free resources
         const q = query(
           collection(db, 'community_resources'),
           where('isPaid', '==', false)
@@ -67,136 +67,174 @@ const OpenSource = () => {
 
   return (
     <CommunityLayout>
-      <div className="min-h-screen bg-gray-50 py-12">
-        <div className="container mx-auto px-4 py-8">
-          {/* Header */}
-          <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
-            <div>
-              <h1 className="text-4xl font-bold text-gray-900 mb-4 tracking-tight">OpenSource Library</h1>
-              <p className="text-gray-500 max-w-xl text-lg">
-                Free resources, automations, and tools for the community. 
-                Learn, build, and contribute.
+      <div className="min-h-screen bg-[#F8F9FB] text-slate-900 font-sans selection:bg-slate-900 selection:text-white pb-20">
+        
+        {/* Background Pattern */}
+        <div className="fixed inset-0 pointer-events-none opacity-[0.4]" style={{ backgroundImage: 'radial-gradient(#cbd5e1 1px, transparent 1px)', backgroundSize: '32px 32px' }}></div>
+
+        <div className="container relative mx-auto px-6 max-w-7xl pt-16">
+
+          {/* ================= HERO SECTION ================= */}
+          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="max-w-2xl"
+            >
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-slate-200 shadow-sm text-xs font-bold uppercase tracking-wider text-slate-600 mb-6">
+                <GitBranch className="w-3.5 h-3.5" />
+                Open Source Library
+              </div>
+              <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-6 leading-tight">
+                Community <br/>
+                <span className="text-slate-400">Codebase & Tools</span>
+              </h1>
+              <p className="text-lg text-slate-500 leading-relaxed max-w-xl">
+                Free, community-contributed resources. Fork, learn, and deploy production-ready automations without the cost.
               </p>
-            </div>
+            </motion.div>
           </div>
 
-          {/* Search & Filter */}
-          <div className="flex flex-col md:flex-row gap-4 mb-12">
-            <div className="relative flex-grow max-w-xl">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-              <input 
-                type="text"
-                placeholder="Search free resources..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-12 pr-4 py-4 bg-white border border-gray-200 rounded-2xl text-gray-900 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all shadow-sm"
-              />
-            </div>
-            
-            <div className="flex bg-white p-1 rounded-2xl border border-gray-200 shadow-sm overflow-x-auto">
-              {(['all', 'automation', 'prompt', 'tool', 'project'] as const).map((f) => (
-                <button
-                  key={f}
-                  onClick={() => setActiveFilter(f)}
-                  className={cn(
-                    "px-6 py-3 rounded-xl text-sm font-medium transition-all capitalize whitespace-nowrap",
-                    activeFilter === f 
-                      ? "bg-blue-600 text-white shadow-md" 
-                      : "text-gray-500 hover:text-gray-900 hover:bg-gray-50"
-                  )}
-                >
-                  {f}
-                </button>
-              ))}
-            </div>
-          </div>
+          {/* ================= CONTROLS TOOLBAR ================= */}
+          <motion.div 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="sticky top-24 z-30 mb-12"
+          >
+             <div className="p-2 bg-white/80 backdrop-blur-xl border border-slate-200 rounded-2xl shadow-lg shadow-slate-200/50 flex flex-col md:flex-row gap-2">
+                {/* Search */}
+                <div className="relative flex-grow group">
+                   <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-slate-900 transition-colors">
+                      <Search className="w-4 h-4" />
+                   </div>
+                   <input 
+                      type="text"
+                      placeholder="Search repositories..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="w-full h-12 pl-12 pr-4 bg-transparent rounded-xl text-slate-900 placeholder:text-slate-400 font-medium outline-none"
+                   />
+                </div>
 
-          {/* Grid */}
+                {/* Divider */}
+                <div className="hidden md:block w-px h-8 bg-slate-200 my-auto" />
+
+                {/* Filters */}
+                <div className="flex bg-slate-100/50 p-1 rounded-xl overflow-x-auto no-scrollbar">
+                   {(['all', 'automation', 'prompt', 'tool', 'project'] as const).map((f) => (
+                      <button
+                         key={f}
+                         onClick={() => setActiveFilter(f)}
+                         className={cn(
+                            "px-4 h-10 rounded-lg text-sm font-bold capitalize transition-all whitespace-nowrap",
+                            activeFilter === f 
+                               ? "bg-white text-slate-900 shadow-sm ring-1 ring-slate-200" 
+                               : "text-slate-500 hover:text-slate-700 hover:bg-slate-200/50"
+                         )}
+                      >
+                         {f}
+                      </button>
+                   ))}
+                </div>
+             </div>
+          </motion.div>
+
+          {/* ================= GRID SECTION ================= */}
           {loading ? (
-             <div className="flex justify-center items-center py-20">
-                <div className="w-8 h-8 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+             <div className="flex flex-col items-center justify-center py-32 opacity-50">
+                <div className="w-10 h-10 border-4 border-slate-200 border-t-slate-900 rounded-full animate-spin mb-4"></div>
+                <p className="text-sm font-medium text-slate-500">Fetching repositories...</p>
              </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredResources.map((resource, index) => (
-                <motion.div
-                  key={resource.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="group relative bg-white border border-gray-200 rounded-[2rem] overflow-hidden hover:shadow-xl hover:shadow-blue-500/5 hover:-translate-y-1 transition-all duration-300 shadow-sm ring-1 ring-gray-100 hover:ring-blue-100"
-                >
-                  <div className="absolute top-0 right-0 w-28 h-28 bg-gradient-to-br from-blue-50 to-purple-50 rounded-bl-[3rem] -z-0 transition-transform group-hover:scale-110" />
-                  <div className="p-8 space-y-6">
-                    <div className="flex justify-between items-start">
-                      <div className="flex items-center gap-3">
-                        {resource.userPhoto ? (
-                            <img src={resource.userPhoto} alt={resource.userName} className="w-10 h-10 rounded-xl object-cover border border-gray-100 shadow-sm" />
-                        ) : (
-                            <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 text-sm font-bold border border-blue-100 shadow-sm">
-                                {resource.userName?.charAt(0)}
-                            </div>
-                        )}
-                        <div>
-                          <p className="text-sm font-bold text-gray-900">{resource.userName}</p>
-                          <p className="text-xs text-gray-500">Creator</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="px-3 py-1.5 rounded-full text-xs font-bold border bg-gray-50 text-gray-600 border-gray-200 uppercase tracking-wider">
+            <motion.div 
+              layout
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-12"
+            >
+              <AnimatePresence>
+                {filteredResources.map((resource, index) => (
+                  <motion.div
+                    layout
+                    key={resource.id}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ delay: index * 0.05 }}
+                    className="group relative flex flex-col bg-white rounded-[24px] border border-slate-200 p-6 hover:border-slate-300 hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-300 hover:-translate-y-1"
+                  >
+                    
+                    {/* Header: Icon & Category */}
+                    <div className="flex justify-between items-start mb-6">
+                       <div className="w-12 h-12 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-600 group-hover:bg-slate-900 group-hover:text-white transition-colors">
+                          <BookOpen className="w-6 h-6" />
+                       </div>
+                       <span className="px-2.5 py-1 rounded-md bg-slate-50 border border-slate-100 text-xs font-bold uppercase tracking-wider text-slate-500">
                           {resource.category}
-                        </span>
-                        <span className="px-3 py-1.5 rounded-full text-xs font-bold border bg-green-50 text-green-700 border-green-100">
-                          Free
-                        </span>
-                      </div>
+                       </span>
                     </div>
 
-                    <div>
-                      <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors mb-2">
-                        {resource.title}
-                      </h3>
-                      <p className="text-gray-500 text-sm line-clamp-2 leading-relaxed">
-                        {resource.description}
-                      </p>
+                    {/* Content */}
+                    <div className="flex-1 mb-6">
+                       <h3 className="text-lg font-bold text-slate-900 mb-2 leading-tight group-hover:underline decoration-slate-300 underline-offset-4 decoration-2">
+                          {resource.title}
+                       </h3>
+                       <p className="text-sm text-slate-500 leading-relaxed line-clamp-3">
+                          {resource.description}
+                       </p>
                     </div>
 
-                    <div className="flex flex-wrap gap-2">
-                      {(resource.tools || []).slice(0, 3).map((tool, i) => (
-                        <span key={i} className="text-xs font-medium text-gray-600 bg-gray-50 border border-gray-100 px-2.5 py-1.5 rounded-lg group-hover:bg-blue-50 group-hover:border-blue-100 transition-colors">
-                          {tool}
-                        </span>
-                      ))}
-                      {(resource.tools || []).length > 3 && (
-                        <span className="text-xs font-medium text-gray-500 bg-gray-50 border border-gray-100 px-2.5 py-1.5 rounded-lg">
-                          +{(resource.tools || []).length - 3}
-                        </span>
-                      )}
+                    {/* Tech Stack */}
+                    <div className="flex flex-wrap gap-2 mb-6">
+                       {(resource.tools || []).slice(0, 3).map((tool, i) => (
+                          <div key={i} className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-slate-50 border border-slate-100 text-[11px] font-semibold text-slate-600">
+                             <Terminal className="w-3 h-3 text-slate-400" />
+                             {tool}
+                          </div>
+                       ))}
                     </div>
 
-                    <div className="pt-6 border-t border-gray-100 flex items-center gap-3">
-                         <Link 
-                           to={`/community/resource/${resource.id}`}
-                           className="flex-1 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl text-sm hover:shadow-lg transition-all shadow-md flex items-center justify-center gap-2 group/btn hover:scale-[1.01]"
-                         >
-                           Access Free
-                           <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-0.5 transition-transform" />
-                        </Link>
+                    {/* Footer: User & Action */}
+                    <div className="pt-6 border-t border-slate-100 flex items-center justify-between">
+                       <div className="flex items-center gap-2">
+                          {resource.userPhoto ? (
+                             <img src={resource.userPhoto} alt={resource.userName} className="w-6 h-6 rounded-full object-cover ring-2 ring-white shadow-sm" />
+                          ) : (
+                             <div className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-[10px] font-bold text-slate-500">
+                                {resource.userName?.charAt(0)}
+                             </div>
+                          )}
+                          <span className="text-xs font-semibold text-slate-500 truncate max-w-[100px]">{resource.userName}</span>
+                       </div>
+
+                       <Link 
+                         to={`/community/resource/${resource.id}`}
+                         className="flex items-center gap-1 text-xs font-bold text-slate-900 hover:text-slate-600 transition-colors"
+                       >
+                         View Code <ArrowRight className="w-3 h-3" />
+                       </Link>
                     </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </motion.div>
           )}
           
+          {/* Empty State */}
           {!loading && filteredResources.length === 0 && (
-             <div className="text-center py-20 bg-white rounded-[2rem] border border-gray-200 shadow-sm mt-8">
-                <div className="w-16 h-16 bg-gray-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                  <Search className="w-8 h-8 text-gray-400" />
+             <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-center py-24 bg-white rounded-[32px] border border-dashed border-slate-300"
+            >
+                <div className="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                  <FolderGit2 className="w-8 h-8 text-slate-400" />
                 </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-1">No open source resources found</h3>
-                <p className="text-gray-500">Be the first to contribute!</p>
-             </div>
+                <h3 className="text-xl font-bold text-slate-900 mb-2">No open source projects found</h3>
+                <p className="text-slate-500">
+                  Try adjusting your search terms or be the first to contribute to the library.
+                </p>
+             </motion.div>
           )}
         </div>
       </div>
