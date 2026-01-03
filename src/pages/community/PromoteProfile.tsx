@@ -149,11 +149,15 @@ const PromoteProfile = () => {
         phoneNumber: formData.phoneNumber || '',
         createdAt: userProfile?.createdAt || serverTimestamp(),
         updatedAt: serverTimestamp(),
-        linkedin: undefined,
-        github: undefined
+        linkedin: formData as any && (formData as any).linkedin ? (formData as any).linkedin : undefined,
+        github: formData as any && (formData as any).github ? (formData as any).github : undefined
       };
 
-      await setDoc(doc(db, 'public_profiles', user.uid), profileData);
+      const sanitized = Object.fromEntries(
+        Object.entries(profileData).filter(([, v]) => v !== undefined)
+      ) as UserProfile;
+
+      await setDoc(doc(db, 'public_profiles', user.uid), sanitized);
       await refreshProfile();
       toast.success('Profile saved successfully');
       setIsEditing(false);
@@ -161,7 +165,8 @@ const PromoteProfile = () => {
       
     } catch (error) {
       console.error("Error saving profile:", error);
-      toast.error('Failed to save profile');
+      const msg = (error as any)?.message || 'Failed to save profile';
+      toast.error(msg);
     } finally {
       setSaving(false);
     }

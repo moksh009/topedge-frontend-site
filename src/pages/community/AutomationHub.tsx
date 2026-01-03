@@ -333,22 +333,52 @@ const AutomationHub = () => {
                 <p className="text-sm font-medium text-slate-500">Loading marketplace...</p>
              </div>
           ) : (
-            <LaunchGate
-              active
-              title="Marketplace visible after launch"
-              description="Submit your resource now. Listings unlock on launch day."
-            >
-              <motion.div 
-                layout
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-12"
-              >
-                <AnimatePresence>
-                  {filteredResources.map((resource, index) => (
-                    <ResourceCard key={resource.id} resource={resource} index={index} />
-                  ))}
-                </AnimatePresence>
-              </motion.div>
-            </LaunchGate>
+            <>
+              {(() => {
+                const myResources = filteredResources.filter(r => r.userId === (user?.uid || ''));
+                const otherResources = filteredResources.filter(r => r.userId !== (user?.uid || ''));
+                const isPreLaunch = new Date() < new Date('2026-01-19');
+                return (
+                  <>
+                    {myResources.length > 0 && (
+                      <div className="mb-12">
+                        <div className="flex items-center justify-between mb-6">
+                          <h2 className="text-2xl font-bold text-slate-900">My Resources</h2>
+                          <Link to="/community/submit-resource" className="text-sm font-semibold text-indigo-600 hover:text-indigo-700">Add More</Link>
+                        </div>
+                        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-2">
+                          <AnimatePresence>
+                            {myResources.map((resource, index) => (
+                              <ResourceCard key={resource.id} resource={resource} index={index} />
+                            ))}
+                          </AnimatePresence>
+                        </motion.div>
+                      </div>
+                    )}
+                    <div className="flex items-center justify-between mb-6">
+                      <h2 className="text-2xl font-bold text-slate-900">Community Marketplace</h2>
+                      <span className="text-sm font-semibold text-slate-400">Locked until launch</span>
+                    </div>
+                    <LaunchGate
+                      active={isPreLaunch}
+                      title="Marketplace visible after launch"
+                      description="Submit your resource now. Listings unlock on launch day."
+                    >
+                      <motion.div 
+                        layout
+                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-12"
+                      >
+                        <AnimatePresence>
+                          {otherResources.map((resource, index) => (
+                            <ResourceCard key={resource.id} resource={resource} index={index} />
+                          ))}
+                        </AnimatePresence>
+                      </motion.div>
+                    </LaunchGate>
+                  </>
+                );
+              })()}
+            </>
           )}
           
           {/* Empty State */}

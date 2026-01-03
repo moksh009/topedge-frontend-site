@@ -7,6 +7,7 @@ import { db } from '@/services/firebase';
 import { cn } from '@/lib/utils';
 import { Link } from 'react-router-dom';
 import LaunchGate from '@/components/ui/LaunchGate';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface Resource {
   id: string;
@@ -26,6 +27,7 @@ const OpenSource = () => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [activeFilter, setActiveFilter] = useState<'all' | 'automation' | 'prompt' | 'tool' | 'project'>('all');
+  const { user } = useAuth();
 
   useEffect(() => {
     const fetchResources = async () => {
@@ -148,73 +150,154 @@ const OpenSource = () => {
                 <p className="text-sm font-medium text-slate-500">Fetching repositories...</p>
              </div>
           ) : (
-            <LaunchGate
-              active
-              title="Open source visible after launch"
-              description="Contribute now. Library unlocks on launch day."
-            >
-              <motion.div 
-                layout
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-12"
-              >
-                <AnimatePresence>
-                  {filteredResources.map((resource, index) => (
-                    <motion.div
-                      layout
-                      key={resource.id}
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.95 }}
-                      transition={{ delay: index * 0.05 }}
-                      className="group relative flex flex-col bg-white rounded-[24px] border border-slate-200 p-6 hover:border-slate-300 hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-300 hover:-translate-y-1"
+            <>
+              {(() => {
+                const myResources = filteredResources.filter(r => r.userId === (user?.uid || ''));
+                const otherResources = filteredResources.filter(r => r.userId !== (user?.uid || ''));
+                const isPreLaunch = new Date() < new Date('2026-01-19');
+                return (
+                  <>
+                    {myResources.length > 0 && (
+                      <div className="mb-12">
+                        <div className="flex items-center justify-between mb-6">
+                          <h2 className="text-2xl font-bold text-slate-900">My Open Source</h2>
+                          <Link to="/community/submit-resource" className="text-sm font-semibold text-indigo-600 hover:text-indigo-700">Contribute More</Link>
+                        </div>
+                        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-2">
+                          <AnimatePresence>
+                            {myResources.map((resource, index) => (
+                              <motion.div
+                                layout
+                                key={resource.id}
+                                initial={{ opacity: 0, scale: 0.95 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.95 }}
+                                transition={{ delay: index * 0.05 }}
+                                className="group relative flex flex-col bg-white rounded-[24px] border border-slate-200 p-6 hover:border-slate-300 hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-300 hover:-translate-y-1"
+                              >
+                                <div className="flex justify-between items-start mb-6">
+                                   <div className="w-12 h-12 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-600 group-hover:bg-slate-900 group-hover:text-white transition-colors">
+                                      <BookOpen className="w-6 h-6" />
+                                   </div>
+                                   <span className="px-2.5 py-1 rounded-md bg-slate-50 border border-slate-100 text-xs font-bold uppercase tracking-wider text-slate-500">
+                                      {resource.category}
+                                   </span>
+                                </div>
+                                <div className="flex-1 mb-6">
+                                   <h3 className="text-lg font-bold text-slate-900 mb-2 leading-tight group-hover:underline decoration-slate-300 underline-offset-4 decoration-2">
+                                      {resource.title}
+                                   </h3>
+                                   <p className="text-sm text-slate-500 leading-relaxed line-clamp-3">
+                                      {resource.description}
+                                   </p>
+                                </div>
+                                <div className="flex flex-wrap gap-2 mb-6">
+                                   {(resource.tools || []).slice(0, 3).map((tool, i) => (
+                                      <div key={i} className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-slate-50 border border-slate-100 text-[11px] font-semibold text-slate-600">
+                                         <Terminal className="w-3 h-3 text-slate-400" />
+                                         {tool}
+                                      </div>
+                                   ))}
+                                </div>
+                                <div className="pt-6 border-t border-slate-100 flex items-center justify-between">
+                                   <div className="flex items-center gap-2">
+                                      {resource.userPhoto ? (
+                                         <img src={resource.userPhoto} alt={resource.userName} className="w-6 h-6 rounded-full object-cover ring-2 ring-white shadow-sm" />
+                                      ) : (
+                                         <div className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-[10px] font-bold text-slate-500">
+                                            {resource.userName?.charAt(0)}
+                                         </div>
+                                      )}
+                                      <span className="text-xs font-semibold text-slate-500 truncate max-w-[100px]">{resource.userName}</span>
+                                   </div>
+                                   <Link 
+                                     to={`/community/resource/${resource.id}`}
+                                     className="flex items-center gap-1 text-xs font-bold text-slate-900 hover:text-slate-600 transition-colors"
+                                   >
+                                     View Code <ArrowRight className="w-3 h-3" />
+                                   </Link>
+                                </div>
+                              </motion.div>
+                            ))}
+                          </AnimatePresence>
+                        </motion.div>
+                      </div>
+                    )}
+                    <div className="flex items-center justify-between mb-6">
+                      <h2 className="text-2xl font-bold text-slate-900">Community Library</h2>
+                      <span className="text-sm font-semibold text-slate-400">Locked until launch</span>
+                    </div>
+                    <LaunchGate
+                      active={isPreLaunch}
+                      title="Open source visible after launch"
+                      description="Contribute now. Library unlocks on launch day."
                     >
-                      <div className="flex justify-between items-start mb-6">
-                         <div className="w-12 h-12 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-600 group-hover:bg-slate-900 group-hover:text-white transition-colors">
-                            <BookOpen className="w-6 h-6" />
-                         </div>
-                         <span className="px-2.5 py-1 rounded-md bg-slate-50 border border-slate-100 text-xs font-bold uppercase tracking-wider text-slate-500">
-                            {resource.category}
-                         </span>
-                      </div>
-                      <div className="flex-1 mb-6">
-                         <h3 className="text-lg font-bold text-slate-900 mb-2 leading-tight group-hover:underline decoration-slate-300 underline-offset-4 decoration-2">
-                            {resource.title}
-                         </h3>
-                         <p className="text-sm text-slate-500 leading-relaxed line-clamp-3">
-                            {resource.description}
-                         </p>
-                      </div>
-                      <div className="flex flex-wrap gap-2 mb-6">
-                         {(resource.tools || []).slice(0, 3).map((tool, i) => (
-                            <div key={i} className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-slate-50 border border-slate-100 text-[11px] font-semibold text-slate-600">
-                               <Terminal className="w-3 h-3 text-slate-400" />
-                               {tool}
-                            </div>
-                         ))}
-                      </div>
-                      <div className="pt-6 border-t border-slate-100 flex items-center justify-between">
-                         <div className="flex items-center gap-2">
-                            {resource.userPhoto ? (
-                               <img src={resource.userPhoto} alt={resource.userName} className="w-6 h-6 rounded-full object-cover ring-2 ring-white shadow-sm" />
-                            ) : (
-                               <div className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-[10px] font-bold text-slate-500">
-                                  {resource.userName?.charAt(0)}
-                               </div>
-                            )}
-                            <span className="text-xs font-semibold text-slate-500 truncate max-w-[100px]">{resource.userName}</span>
-                         </div>
-                         <Link 
-                           to={`/community/resource/${resource.id}`}
-                           className="flex items-center gap-1 text-xs font-bold text-slate-900 hover:text-slate-600 transition-colors"
-                         >
-                           View Code <ArrowRight className="w-3 h-3" />
-                         </Link>
-                      </div>
-                    </motion.div>
-                  ))}
-                </AnimatePresence>
-              </motion.div>
-            </LaunchGate>
+                      <motion.div 
+                        layout
+                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-12"
+                      >
+                        <AnimatePresence>
+                          {otherResources.map((resource, index) => (
+                            <motion.div
+                              layout
+                              key={resource.id}
+                              initial={{ opacity: 0, scale: 0.95 }}
+                              animate={{ opacity: 1, scale: 1 }}
+                              exit={{ opacity: 0, scale: 0.95 }}
+                              transition={{ delay: index * 0.05 }}
+                              className="group relative flex flex-col bg-white rounded-[24px] border border-slate-200 p-6 hover:border-slate-300 hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-300 hover:-translate-y-1"
+                            >
+                              <div className="flex justify-between items-start mb-6">
+                                 <div className="w-12 h-12 rounded-xl bg-slate-50 border border-slate-100 flex items-center justifyCenter text-slate-600 group-hover:bg-slate-900 group-hover:text-white transition-colors">
+                                    <BookOpen className="w-6 h-6" />
+                                 </div>
+                                 <span className="px-2.5 py-1 rounded-md bg-slate-50 border border-slate-100 text-xs font-bold uppercase tracking-wider text-slate-500">
+                                    {resource.category}
+                                 </span>
+                              </div>
+                              <div className="flex-1 mb-6">
+                                 <h3 className="text-lg font-bold text-slate-900 mb-2 leading-tight group-hover:underline decoration-slate-300 underline-offset-4 decoration-2">
+                                    {resource.title}
+                                 </h3>
+                                 <p className="text-sm text-slate-500 leading-relaxed line-clamp-3">
+                                    {resource.description}
+                                 </p>
+                              </div>
+                              <div className="flex flex-wrap gap-2 mb-6">
+                                 {(resource.tools || []).slice(0, 3).map((tool, i) => (
+                                    <div key={i} className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-slate-50 border border-slate-100 text-[11px] font-semibold text-slate-600">
+                                       <Terminal className="w-3 h-3 text-slate-400" />
+                                       {tool}
+                                    </div>
+                                 ))}
+                              </div>
+                              <div className="pt-6 border-t border-slate-100 flex items-center justify-between">
+                                 <div className="flex items-center gap-2">
+                                    {resource.userPhoto ? (
+                                       <img src={resource.userPhoto} alt={resource.userName} className="w-6 h-6 rounded-full object-cover ring-2 ring-white shadow-sm" />
+                                    ) : (
+                                       <div className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-[10px] font-bold text-slate-500">
+                                          {resource.userName?.charAt(0)}
+                                       </div>
+                                    )}
+                                    <span className="text-xs font-semibold text-slate-500 truncate max-w-[100px]">{resource.userName}</span>
+                                 </div>
+                                 <Link 
+                                   to={`/community/resource/${resource.id}`}
+                                   className="flex items-center gap-1 text-xs font-bold text-slate-900 hover:text-slate-600 transition-colors"
+                                 >
+                                   View Code <ArrowRight className="w-3 h-3" />
+                                 </Link>
+                              </div>
+                            </motion.div>
+                          ))}
+                        </AnimatePresence>
+                      </motion.div>
+                    </LaunchGate>
+                  </>
+                );
+              })()}
+            </>
           )}
           
           {/* Empty State */}

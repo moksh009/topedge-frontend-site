@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils';
 import { collection, getDocs, limit, orderBy, query } from 'firebase/firestore';
 import { ArrowRight, CheckCircle2, Code2, Users, Zap, Terminal, Sparkles, MoveRight } from 'lucide-react';
 import LaunchGate from '@/components/ui/LaunchGate';
+import { useAuth } from '@/contexts/AuthContext';
 
 // --- ANIMATION VARIANTS ---
 const containerVar = {
@@ -45,6 +46,7 @@ const PremiumButton = ({ children, variant = 'primary', className, to }: any) =>
 const CommunityHome = () => {
   const [profiles, setProfiles] = useState<any[]>([]);
   const [resources, setResources] = useState<any[]>([]);
+  const { user } = useAuth();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -120,78 +122,146 @@ const CommunityHome = () => {
               </div>
             </div>
 
-            <LaunchGate
-              active
-              title="Profiles visible after launch"
-              description="You can add your profile now. Listings unlock on launch day."
-            >
-              <motion.div 
-                variants={containerVar}
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true, margin: "-100px" }}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
-              >
-                {profiles.map((p, i) => (
-                  <motion.div
-                    key={p.id || i}
-                    variants={itemVar}
-                    className="group relative bg-white rounded-[32px] p-2 transition-all duration-500 hover:-translate-y-2 shadow-sm border border-slate-100"
-                  >
-                    <div className="absolute -inset-0.5 bg-gradient-to-b from-slate-200 to-transparent rounded-[34px] opacity-50 group-hover:opacity-100 transition duration-500 blur-[1px]" />
-                    <div className="relative h-full bg-white rounded-[30px] p-6 flex flex-col justify-between overflow-hidden">
-                      <div>
-                        <div className="flex justify-between items-start mb-6">
-                          <div className="relative">
-                            <div className="w-20 h-20 rounded-2xl bg-slate-100 p-1 shadow-inner overflow-hidden">
-                              {p.photoURL ? (
-                                <img src={p.photoURL} alt={p.fullName} className="w-full h-full rounded-xl object-cover" />
-                              ) : (
-                                <div className="w-full h-full rounded-xl bg-slate-200 flex items-center justify-center text-xl font-bold text-slate-400">
-                                  {(p.fullName || 'U')[0]}
-                                </div>
-                              )}
+            {(() => {
+              const myProfiles = profiles.filter(p => (user?.uid || '') === (p.id || p.uid));
+              const otherProfiles = profiles.filter(p => (user?.uid || '') !== (p.id || p.uid));
+              const isPreLaunch = new Date() < new Date('2026-01-19');
+              return (
+                <>
+                  {myProfiles.length > 0 && (
+                    <motion.div 
+                      variants={containerVar}
+                      initial="hidden"
+                      whileInView="show"
+                      viewport={{ once: true, margin: "-100px" }}
+                      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-8"
+                    >
+                      {myProfiles.map((p, i) => (
+                        <motion.div
+                          key={p.id || i}
+                          variants={itemVar}
+                          className="group relative bg-white rounded-[32px] p-2 transition-all duration-500 hover:-translate-y-2 shadow-sm border border-slate-100"
+                        >
+                      <div className="absolute -inset-0.5 bg-gradient-to-b from-slate-200 to-transparent rounded-[34px] opacity-50 group-hover:opacity-100 transition duration-500 blur-[1px]" />
+                      <div className="relative h-full bg-white rounded-[30px] p-6 flex flex-col justify-between overflow-hidden">
+                        <div>
+                          <div className="flex justify-between items-start mb-6">
+                            <div className="relative">
+                              <div className="w-20 h-20 rounded-2xl bg-slate-100 p-1 shadow-inner overflow-hidden">
+                                {p.photoURL ? (
+                                  <img src={p.photoURL} alt={p.fullName} className="w-full h-full rounded-xl object-cover" />
+                                ) : (
+                                  <div className="w-full h-full rounded-xl bg-slate-200 flex items-center justify-center text-xl font-bold text-slate-400">
+                                    {(p.fullName || 'U')[0]}
+                                  </div>
+                                )}
+                              </div>
+                              <div className="absolute -bottom-2 -right-2 bg-green-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full border-[3px] border-white">
+                                PRO
+                              </div>
                             </div>
-                            <div className="absolute -bottom-2 -right-2 bg-green-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full border-[3px] border-white">
-                              PRO
-                            </div>
+                            <button className="w-10 h-10 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-400 hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-100 transition-colors">
+                              <MoveRight className="w-5 h-5 -rotate-45" />
+                            </button>
                           </div>
-                          <button className="w-10 h-10 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-400 hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-100 transition-colors">
-                            <MoveRight className="w-5 h-5 -rotate-45" />
-                          </button>
+                          <h3 className="text-xl font-bold text-slate-900 mb-1">
+                            {p.fullName || 'Anonymous User'}
+                          </h3>
+                          <p className="text-sm font-medium text-slate-500 mb-6">
+                            {p.currentWork || 'AI Enthusiast'}
+                          </p>
+                          <div className="flex flex-wrap gap-2 mb-8">
+                            {(p.aiSkills || ['Python', 'System Design']).slice(0, 3).map((skill: string, idx: number) => (
+                              <span key={idx} className="px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-100 text-xs font-semibold text-slate-600 group-hover:border-indigo-100 group-hover:bg-indigo-50/50 group-hover:text-indigo-600 transition-colors">
+                                {skill}
+                              </span>
+                            ))}
+                          </div>
                         </div>
-                        <h3 className="text-xl font-bold text-slate-900 mb-1">
-                          {p.fullName || 'Anonymous User'}
-                        </h3>
-                        <p className="text-sm font-medium text-slate-500 mb-6">
-                          {p.currentWork || 'AI Enthusiast'}
-                        </p>
-                        <div className="flex flex-wrap gap-2 mb-8">
-                          {(p.aiSkills || ['Python', 'System Design']).slice(0, 3).map((skill: string, idx: number) => (
-                            <span key={idx} className="px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-100 text-xs font-semibold text-slate-600 group-hover:border-indigo-100 group-hover:bg-indigo-50/50 group-hover:text-indigo-600 transition-colors">
-                              {skill}
-                            </span>
-                          ))}
-                        </div>
+                        <Link 
+                          to={`/community/profile/${p.id}`}
+                          className="w-full py-4 rounded-xl bg-slate-50 text-slate-600 font-semibold text-sm flex items-center justify-center gap-2 group-hover:bg-slate-900 group-hover:text-white transition-all duration-300"
+                        >
+                          View Full Profile
+                        </Link>
                       </div>
-                      <Link 
-                        to={`/community/profile/${p.id}`}
-                        className="w-full py-4 rounded-xl bg-slate-50 text-slate-600 font-semibold text-sm flex items-center justify-center gap-2 group-hover:bg-slate-900 group-hover:text-white transition-all duration-300"
-                      >
-                        View Full Profile
-                      </Link>
-                    </div>
-                  </motion.div>
-                ))}
-              </motion.div>
-              
-              {/* Mobile View All Button */}
-              <div className="mt-8 md:hidden flex justify-center">
-                 <PremiumButton to="/community/profiles" variant="secondary" className="w-full">
-                   View All Talent
-                 </PremiumButton>
-              </div>
-            </LaunchGate>
+                        </motion.div>
+                      ))}
+                    </motion.div>
+                  )}
+                  <LaunchGate
+                    active={isPreLaunch}
+                    title="Profiles visible after launch"
+                    description="You can add your profile now. Listings unlock on launch day."
+                  >
+                    <motion.div 
+                      variants={containerVar}
+                      initial="hidden"
+                      whileInView="show"
+                      viewport={{ once: true, margin: "-100px" }}
+                      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
+                    >
+                      {otherProfiles.map((p, i) => (
+                        <motion.div
+                          key={p.id || i}
+                          variants={itemVar}
+                          className="group relative bg-white rounded-[32px] p-2 transition-all duration-500 hover:-translate-y-2 shadow-sm border border-slate-100"
+                        >
+                          <div className="absolute -inset-0.5 bg-gradient-to-b from-slate-200 to-transparent rounded-[34px] opacity-50 group-hover:opacity-100 transition duration-500 blur-[1px]" />
+                          <div className="relative h-full bg-white rounded-[30px] p-6 flex flex-col justify-between overflow-hidden">
+                            <div>
+                              <div className="flex justify-between items-start mb-6">
+                                <div className="relative">
+                                  <div className="w-20 h-20 rounded-2xl bg-slate-100 p-1 shadow-inner overflow-hidden">
+                                    {p.photoURL ? (
+                                      <img src={p.photoURL} alt={p.fullName} className="w-full h-full rounded-xl object-cover" />
+                                    ) : (
+                                      <div className="w-full h-full rounded-xl bg-slate-200 flex items-center justify-center text-xl font-bold text-slate-400">
+                                        {(p.fullName || 'U')[0]}
+                                      </div>
+                                    )}
+                                  </div>
+                                  <div className="absolute -bottom-2 -right-2 bg-green-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full border-[3px] border-white">
+                                    PRO
+                                  </div>
+                                </div>
+                                <button className="w-10 h-10 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-400 hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-100 transition-colors">
+                                  <MoveRight className="w-5 h-5 -rotate-45" />
+                                </button>
+                              </div>
+                              <h3 className="text-xl font-bold text-slate-900 mb-1">
+                                {p.fullName || 'Anonymous User'}
+                              </h3>
+                              <p className="text-sm font-medium text-slate-500 mb-6">
+                                {p.currentWork || 'AI Enthusiast'}
+                              </p>
+                              <div className="flex flex-wrap gap-2 mb-8">
+                                {(p.aiSkills || ['Python', 'System Design']).slice(0, 3).map((skill: string, idx: number) => (
+                                  <span key={idx} className="px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-100 text-xs font-semibold text-slate-600 group-hover:border-indigo-100 group-hover:bg-indigo-50/50 group-hover:text-indigo-600 transition-colors">
+                                    {skill}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                            <Link 
+                              to={`/community/profile/${p.id}`}
+                              className="w-full py-4 rounded-xl bg-slate-50 text-slate-600 font-semibold text-sm flex items-center justify-center gap-2 group-hover:bg-slate-900 group-hover:text-white transition-all duration-300"
+                            >
+                              View Full Profile
+                            </Link>
+                          </div>
+                        </motion.div>
+                      ))}
+                    </motion.div>
+                  </LaunchGate>
+                  <div className="mt-8 md:hidden flex justify-center">
+                     <PremiumButton to="/community/profiles" variant="secondary" className="w-full">
+                       View All Talent
+                     </PremiumButton>
+                  </div>
+                </>
+              );
+            })()}
           </div>
         </section>
 
@@ -224,64 +294,126 @@ const CommunityHome = () => {
               </div>
             </div>
 
-            <LaunchGate
-              active
-              title="Resources visible after launch"
-              description="Submit yours now. Marketplace unlocks on launch day."
-              dark
-            >
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {resources.map((r, i) => (
-                  <motion.div
-                    key={r.id || i}
-                    initial={{ opacity: 0, y: 40 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.1, duration: 0.6 }}
-                    viewport={{ once: true }}
-                    className="group relative rounded-[2rem] bg-white/[0.03] border border-white/10 hover:border-white/20 transition-all duration-500 overflow-hidden hover:bg-white/[0.05]"
-                  >
-                    <div className="p-8 md:p-10 flex flex-col h-full">
-                      <div className="flex justify-between items-start mb-8">
-                        <div className="w-14 h-14 rounded-2xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center">
-                          <Code2 className="w-7 h-7" />
-                        </div>
-                        <span className={cn(
-                          "px-4 py-1.5 rounded-full text-xs font-bold border tracking-wide",
-                          r.isPaid 
-                            ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
-                            : "bg-white/10 text-white border-white/10"
-                        )}>
-                          {r.isPaid ? `$${r.price} USD` : 'FREE LICENSE'}
-                        </span>
-                      </div>
-                      <h3 className="text-2xl font-bold mb-3 group-hover:text-indigo-300 transition-colors">
-                        {r.title || "Untitled Automation"}
-                      </h3>
-                      <p className="text-slate-400 mb-8 line-clamp-2 leading-relaxed">
-                        {r.description || "A powerful automation workflow designed to streamline your operations."}
-                      </p>
-                      <div className="mt-auto pt-8 border-t border-white/10 flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                          <div className="text-xs font-medium text-slate-500 uppercase tracking-wider">Tech Stack</div>
-                          <div className="flex -space-x-2">
-                            {[1,2,3].map(n => (
-                              <div key={n} className="w-6 h-6 rounded-full bg-slate-800 border border-slate-700" />
-                            ))}
-                          </div>
-                        </div>
-                        <Link 
-                          to={`/community/resource/${r.id}`}
-                          className="flex items-center gap-2 text-sm font-bold text-white group/link"
+            {(() => {
+              const myResources = resources.filter(r => (user?.uid || '') === r.userId);
+              const otherResources = resources.filter(r => (user?.uid || '') !== r.userId);
+              const isPreLaunch = new Date() < new Date('2026-01-19');
+              return (
+                <>
+                  {myResources.length > 0 && (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                      {myResources.map((r, i) => (
+                        <motion.div
+                          key={r.id || i}
+                          initial={{ opacity: 0, y: 40 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          transition={{ delay: i * 0.1, duration: 0.6 }}
+                          viewport={{ once: true }}
+                          className="group relative rounded-[2rem] bg-white/[0.03] border border-white/10 hover:border-white/20 transition-all duration-500 overflow-hidden hover:bg-white/[0.05]"
                         >
-                          Get Access 
-                          <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
-                        </Link>
-                      </div>
+                          <div className="p-8 md:p-10 flex flex-col h-full">
+                            <div className="flex justify-between items-start mb-8">
+                              <div className="w-14 h-14 rounded-2xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center">
+                                <Code2 className="w-7 h-7" />
+                              </div>
+                              <span className={cn(
+                                "px-4 py-1.5 rounded-full text-xs font-bold border tracking-wide",
+                                r.isPaid 
+                                  ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
+                                  : "bg-white/10 text-white border-white/10"
+                              )}>
+                                {r.isPaid ? `$${r.price} USD` : 'FREE LICENSE'}
+                              </span>
+                            </div>
+                            <h3 className="text-2xl font-bold mb-3 group-hover:text-indigo-300 transition-colors">
+                              {r.title || "Untitled Automation"}
+                            </h3>
+                            <p className="text-slate-400 mb-8 line-clamp-2 leading-relaxed">
+                              {r.description || "A powerful automation workflow designed to streamline your operations."}
+                            </p>
+                            <div className="mt-auto pt-8 border-t border-white/10 flex items-center justify-between">
+                              <div className="flex items-center gap-3">
+                                <div className="text-xs font-medium text-slate-500 uppercase tracking-wider">Tech Stack</div>
+                                <div className="flex -space-x-2">
+                                  {[1,2,3].map(n => (
+                                    <div key={n} className="w-6 h-6 rounded-full bg-slate-800 border border-slate-700" />
+                                  ))}
+                                </div>
+                              </div>
+                              <Link 
+                                to={`/community/resource/${r.id}`}
+                                className="flex items-center gap-2 text-sm font-bold text-white group/link"
+                              >
+                                Get Access 
+                                <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
+                              </Link>
+                            </div>
+                          </div>
+                        </motion.div>
+                      ))}
                     </div>
-                  </motion.div>
-                ))}
-              </div>
-            </LaunchGate>
+                  )}
+                  <LaunchGate
+                    active={isPreLaunch}
+                    title="Resources visible after launch"
+                    description="Submit yours now. Marketplace unlocks on launch day."
+                    dark
+                  >
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                      {otherResources.map((r, i) => (
+                        <motion.div
+                          key={r.id || i}
+                          initial={{ opacity: 0, y: 40 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          transition={{ delay: i * 0.1, duration: 0.6 }}
+                          viewport={{ once: true }}
+                          className="group relative rounded-[2rem] bg-white/[0.03] border border-white/10 hover:border-white/20 transition-all duration-500 overflow-hidden hover:bg-white/[0.05]"
+                        >
+                          <div className="p-8 md:p-10 flex flex-col h-full">
+                            <div className="flex justify-between items-start mb-8">
+                              <div className="w-14 h-14 rounded-2xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center">
+                                <Code2 className="w-7 h-7" />
+                              </div>
+                              <span className={cn(
+                                "px-4 py-1.5 rounded-full text-xs font-bold border tracking-wide",
+                                r.isPaid 
+                                  ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
+                                  : "bg-white/10 text-white border-white/10"
+                              )}>
+                                {r.isPaid ? `$${r.price} USD` : 'FREE LICENSE'}
+                              </span>
+                            </div>
+                            <h3 className="text-2xl font-bold mb-3 group-hover:text-indigo-300 transition-colors">
+                              {r.title || "Untitled Automation"}
+                            </h3>
+                            <p className="text-slate-400 mb-8 line-clamp-2 leading-relaxed">
+                              {r.description || "A powerful automation workflow designed to streamline your operations."}
+                            </p>
+                            <div className="mt-auto pt-8 border-t border-white/10 flex items-center justify-between">
+                              <div className="flex items-center gap-3">
+                                <div className="text-xs font-medium text-slate-500 uppercase tracking-wider">Tech Stack</div>
+                                <div className="flex -space-x-2">
+                                  {[1,2,3].map(n => (
+                                    <div key={n} className="w-6 h-6 rounded-full bg-slate-800 border border-slate-700" />
+                                  ))}
+                                </div>
+                              </div>
+                              <Link 
+                                to={`/community/resource/${r.id}`}
+                                className="flex items-center gap-2 text-sm font-bold text-white group/link"
+                              >
+                                Get Access 
+                                <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
+                              </Link>
+                            </div>
+                          </div>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </LaunchGate>
+                </>
+              );
+            })()}
           </div>
         </section>
 
