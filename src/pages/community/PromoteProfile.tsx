@@ -275,7 +275,7 @@ const PromoteProfile = () => {
         <div className="min-h-screen bg-slate-50/50 pb-20 font-sans selection:bg-indigo-500 selection:text-white">
           
           {/* --- HERO COVER --- */}
-          <div className="relative h-80 w-full overflow-hidden">
+           <div className="relative h-80 w-full overflow-hidden">
              <div className="absolute inset-0">
                {userProfile.bannerURL ? (
                  <img src={userProfile.bannerURL} alt="Banner" className="w-full h-full object-cover" />
