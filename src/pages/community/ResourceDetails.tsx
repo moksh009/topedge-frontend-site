@@ -5,10 +5,10 @@ import {
   ArrowLeft, Loader2, ExternalLink, User, Clock, 
   DollarSign, Edit2, Trash2, CheckCircle2, Share2, 
   Sparkles, Zap, Box, Upload, X, FileVideo, PlayCircle,
-  ArrowRight
+  ArrowRight, Star
 } from 'lucide-react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { doc, getDoc, updateDoc, serverTimestamp, deleteDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc, serverTimestamp, deleteDoc, arrayUnion, arrayRemove, increment } from 'firebase/firestore';
 import { db } from '@/services/firebase';
 import { useAuth } from '@/contexts/AuthContext';
 import { cn } from '@/lib/utils';
@@ -35,6 +35,11 @@ interface Resource {
   link?: string;
   category: 'automation' | 'project' | 'tool' | 'prompt';
   createdAt?: any;
+  contactEmail?: string;
+  contactPhone?: string;
+  contactWebsite?: string;
+  stars?: number;
+  starredBy?: string[];
 }
 
 const ResourceDetails = () => {
@@ -46,6 +51,8 @@ const ResourceDetails = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [saving, setSaving] = useState(false);
   const [uploadingVideo, setUploadingVideo] = useState(false);
+  const [starCount, setStarCount] = useState<number>(0);
+  const [starred, setStarred] = useState<boolean>(false);
 
   // Edit State
   const [editForm, setEditForm] = useState({
@@ -71,6 +78,8 @@ const ResourceDetails = () => {
         if (docSnap.exists()) {
           const data = docSnap.data();
           setResource({ ...data, id: docSnap.id } as Resource);
+          setStarCount((data as any).stars || 0);
+          setStarred(((data as any).starredBy || []).includes(user?.uid));
           setEditForm({
             title: data.title,
             description: data.description || '',
@@ -96,6 +105,24 @@ const ResourceDetails = () => {
 
     fetchResource();
   }, [id, navigate]);
+
+  const toggleStar = async () => {
+    if (!resource || !user) return;
+    try {
+      const ref = doc(db, 'community_resources', resource.id);
+      if (starred) {
+        await updateDoc(ref, { stars: increment(-1), starredBy: arrayRemove(user.uid) });
+        setStarCount(c => Math.max(0, c - 1));
+        setStarred(false);
+      } else {
+        await updateDoc(ref, { stars: increment(1), starredBy: arrayUnion(user.uid) });
+        setStarCount(c => c + 1);
+        setStarred(true);
+      }
+    } catch (e) {
+      console.error("Star toggle error:", e);
+    }
+  };
 
   // --- VIDEO UPLOAD HANDLER ---
   const handleVideoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -216,6 +243,10 @@ const ResourceDetails = () => {
                     >
                         <div className="sticky top-0 bg-white/80 backdrop-blur-md z-10 px-8 py-6 border-b border-slate-100 flex justify-between items-center">
                             <h2 className="text-2xl font-bold text-slate-900">Edit Resource</h2>
+                            <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-50 border border-yellow-200 text-yellow-700 text-xs font-bold">
+                              <Star className="w-4 h-4" />
+                              {starCount} Stars
+                            </div>
                             <button onClick={() => setIsEditing(false)} className="p-2 hover:bg-slate-100 rounded-full transition-colors">
                                 <X className="w-6 h-6 text-slate-500" />
                             </button>
@@ -368,6 +399,14 @@ const ResourceDetails = () => {
                             <Edit2 className="w-3.5 h-3.5" /> Edit
                         </button>
                     )}
+                    <button 
+                      onClick={toggleStar} 
+                      className={cn("hidden sm:flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold border transition-colors", starred ? "bg-yellow-500 text-white border-yellow-500" : "bg-white text-slate-700 border-slate-200 hover:bg-slate-100")}
+                    >
+                      <Star className={cn("w-4 h-4", starred ? "text-white" : "text-yellow-500")} fill={starred ? "currentColor" : "none"} />
+                      <span>Give a Star</span>
+                      <span className={cn("px-2 py-0.5 rounded-full text-[10px] font-bold", starred ? "bg-white/20" : "bg-slate-100")}>{starCount}</span>
+                    </button>
                     <button className="p-2 hover:bg-slate-100 rounded-full text-slate-400 hover:text-indigo-600 transition-colors">
                         <Share2 className="w-5 h-5" />
                     </button>
@@ -486,6 +525,15 @@ const ResourceDetails = () => {
                             {resource.isPaid && <span className="px-3 py-1 bg-slate-100 text-slate-600 rounded-lg text-xs font-bold uppercase">One-time</span>}
                         </div>
 
+                        <button 
+                          onClick={toggleStar} 
+                          className={cn("w-full py-3 rounded-xl text-sm font-bold border mb-4 flex items-center justify-center gap-2", starred ? "bg-yellow-500 text-white border-yellow-500" : "bg-white text-slate-700 border-slate-200 hover:bg-slate-50")}
+                        >
+                          <Star className={cn("w-4 h-4", starred ? "text-white" : "text-yellow-500")} fill={starred ? "currentColor" : "none"} />
+                          <span>Give a Star if you like it</span>
+                          <span className={cn("px-2 py-0.5 rounded-full text-[10px] font-bold", starred ? "bg-white/20" : "bg-slate-100")}>{starCount}</span>
+                        </button>
+
                         {resource.link ? (
                             <a 
                               href={resource.link} 
@@ -517,6 +565,31 @@ const ResourceDetails = () => {
                             {(!resource.tools || resource.tools.length === 0) && (
                                 <span className="text-slate-400 text-sm italic">No tools listed</span>
                             )}
+                        </div>
+                    </div>
+
+                    {/* Contact Info */}
+                    <div className="bg-white rounded-[2rem] p-6 border border-slate-200 shadow-sm">
+                        <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
+                             <User className="w-4 h-4" /> Contact Creator
+                        </h3>
+                        <div className="space-y-3">
+                          {resource.contactEmail && (
+                            <a href={`mailto:${resource.contactEmail}`} className="block text-sm font-medium text-slate-700 hover:text-indigo-600 underline decoration-slate-200 underline-offset-4">
+                              {resource.contactEmail}
+                            </a>
+                          )}
+                          {resource.contactPhone && (
+                            <div className="text-sm font-medium text-slate-700">{resource.contactPhone}</div>
+                          )}
+                          {resource.contactWebsite && (
+                            <a href={resource.contactWebsite} target="_blank" rel="noopener noreferrer" className="block text-sm font-medium text-slate-700 hover:text-indigo-600 underline decoration-slate-200 underline-offset-4">
+                              {resource.contactWebsite.replace(/^https?:\/\//, '')}
+                            </a>
+                          )}
+                          {!resource.contactEmail && !resource.contactPhone && !resource.contactWebsite && (
+                            <div className="text-sm text-slate-400">No contact details provided.</div>
+                          )}
                         </div>
                     </div>
 

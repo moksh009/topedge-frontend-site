@@ -1,13 +1,20 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
   Instagram, Youtube, Twitter, Mail, MapPin, 
   Bot, MessageSquare, Facebook, Linkedin, 
   Smartphone
 } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { collection, query, getDocs, orderBy, limit } from 'firebase/firestore';
+import { db } from '@/services/firebase';
 
+interface LinkItem {
+  label: string;
+  path: string;
+  isNew?: boolean;
+}
 // Custom Discord Icon
 const DiscordIcon = ({ className }: { className?: string }) => (
   <svg 
@@ -42,13 +49,23 @@ const services = [
   }
 ];
 
-const quickLinks = [
+const quickLinks: LinkItem[] = [
   { label: "Home", path: "/" },
   { label: "Community", path: "/community/home", isNew: true },
   { label: "About Us", path: "/about" },
   { label: "Pricing", path: "/pricing" },
   { label: "Contact", path: "/contact" },
   { label: "Book Demo", path: "/booking" },
+];
+
+const communityQuickLinks: LinkItem[] = [
+  { label: "Community Home", path: "/community/home" },
+  { label: "Profiles Directory", path: "/community/profiles" },
+  { label: "Automation Hub", path: "/community/automation-hub" },
+  { label: "Open Source", path: "/community/open-source" },
+  { label: "Submit Resource", path: "/community/submit-resource" },
+  { label: "Promote Profile", path: "/community/promote-profile" },
+  { label: "Login", path: "/community/login" }
 ];
 
 const legals = [
@@ -98,6 +115,9 @@ const socialLinks = [
 const Footer = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const location = useLocation();
+  const isCommunity = location.pathname.startsWith('/community');
+  const [topResources, setTopResources] = useState<{ id: string; title: string }[]>([]);
 
   const handleServiceClick = (path: string, section: string) => {
     navigate(path);
@@ -108,6 +128,25 @@ const Footer = () => {
       }
     }, 100);
   };
+
+  useEffect(() => {
+    const fetchTop = async () => {
+      if (!isCommunity) return;
+      try {
+        const q = query(
+          collection(db, 'community_resources'),
+          orderBy('stars', 'desc'),
+          limit(5)
+        );
+        const snap = await getDocs(q);
+        const items = snap.docs.map(d => ({ id: d.id, title: (d.data() as any).title || 'Untitled' }));
+        setTopResources(items);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    fetchTop();
+  }, [isCommunity]);
 
   return (
     <footer className="relative bg-white pt-24 pb-0 overflow-hidden">
@@ -134,10 +173,14 @@ const Footer = () => {
                     <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center border border-slate-100 shadow-sm">
                        <img src="/logo.png" alt="TopEdge Logo" className="w-8 h-8 object-contain" />
                     </div>
-                    <span className="text-2xl font-bold text-slate-900 tracking-tight">TopEdge AI</span>
+                    <span className="text-2xl font-bold text-slate-900 tracking-tight">
+                      {isCommunity ? 'AI Community' : 'TopEdge AI'}
+                    </span>
                   </div>
                   <p className="text-slate-500 text-lg leading-relaxed max-w-sm font-medium">
-                    Empowering businesses with intelligent automation. We turn customer support into your biggest growth engine.
+                    {isCommunity 
+                      ? 'Build, learn, and share automation together.'
+                      : 'Empowering businesses with intelligent automation. We turn customer support into your biggest growth engine.'}
                   </p>
                </div>
 
@@ -180,18 +223,20 @@ const Footer = () => {
                   </ul>
                </div>
 
-               {/* Column 2: Company */}
+               {/* Column 2: Company/Community */}
                <div>
-                  <h4 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-6">Company</h4>
+                  <h4 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-6">
+                    {isCommunity ? 'Community' : 'Company'}
+                  </h4>
                   <ul className="space-y-4">
-                     {quickLinks.map((link, idx) => (
+                     {(isCommunity ? communityQuickLinks : quickLinks).map((link, idx) => (
                         <li key={idx}>
                            <Link 
                               to={link.path}
                               className="group flex items-center gap-3 text-slate-500 hover:text-slate-900 transition-colors"
                            >
                               <span className="font-medium">{link.label}</span>
-                              {link.isNew && (
+                              {(!isCommunity && (link as any).isNew) && (
                                 <span className="text-[9px] font-extrabold bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded-full border border-indigo-100 uppercase tracking-wide">
                                     New
                                 </span>
@@ -202,36 +247,55 @@ const Footer = () => {
                   </ul>
                </div>
 
-               {/* Column 3: Contact Info (Cards) */}
+               {/* Column 3: Top Resources or Contact */}
                <div>
-                  <h4 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-6">Get in Touch</h4>
-                  <div className="space-y-4">
-                     {/* Email Card - Fixed Break */}
-                     <a href="mailto:team@topedgeai.com" className="flex items-start gap-4 p-4 rounded-2xl bg-slate-50 hover:bg-white/80 transition-colors group border border-transparent hover:border-slate-200">
+                  <h4 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-6">
+                    {isCommunity ? 'Top Resources' : 'Get in Touch'}
+                  </h4>
+                  {isCommunity ? (
+                    <ul className="space-y-4">
+                      {topResources.length === 0 ? (
+                        <li className="text-slate-400">No resources yet</li>
+                      ) : (
+                        topResources.map((res) => (
+                          <li key={res.id}>
+                            <Link 
+                              to={`/community/resource/${res.id}`}
+                              className="group flex items-center gap-2 text-slate-500 hover:text-slate-900 transition-colors"
+                            >
+                              <span className="w-1.5 h-1.5 rounded-full bg-slate-300 group-hover:bg-slate-900 transition-colors" />
+                              <span className="font-medium">{res.title}</span>
+                            </Link>
+                          </li>
+                        ))
+                      )}
+                    </ul>
+                  ) : (
+                    <div className="space-y-4">
+                      <a href="mailto:team@topedgeai.com" className="flex items-start gap-4 p-4 rounded-2xl bg-slate-50 hover:bg-white/80 transition-colors group border border-transparent hover:border-slate-200">
                         <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-slate-400 group-hover:text-slate-900 shadow-sm border border-slate-100 shrink-0">
-                           <Mail className="w-5 h-5" />
+                          <Mail className="w-5 h-5" />
                         </div>
                         <div className="min-w-0">
-                           <p className="text-[10px] font-bold text-slate-400 uppercase mb-0.5">Email Us</p>
-                           <p className="text-sm font-bold text-slate-900 break-all leading-tight">
-                             team@topedgeai.com
-                           </p>
+                          <p className="text-[10px] font-bold text-slate-400 uppercase mb-0.5">Email Us</p>
+                          <p className="text-sm font-bold text-slate-900 break-all leading-tight">
+                            team@topedgeai.com
+                          </p>
                         </div>
-                     </a>
-
-                     {/* Location Card */}
-                     <div className="flex items-start gap-4 p-4 rounded-2xl bg-slate-50/50 border border-transparent">
+                      </a>
+                      <div className="flex items-start gap-4 p-4 rounded-2xl bg-slate-50/50 border border-transparent">
                         <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-slate-400 shadow-sm border border-slate-100 shrink-0">
-                           <MapPin className="w-5 h-5" />
+                          <MapPin className="w-5 h-5" />
                         </div>
                         <div>
-                           <p className="text-[10px] font-bold text-slate-400 uppercase mb-0.5">Visit Us</p>
-                           <p className="text-sm font-bold text-slate-900 leading-snug">
-                              Ahmedabad, Gujarat,<br/>India 382350
-                           </p>
+                          <p className="text-[10px] font-bold text-slate-400 uppercase mb-0.5">Visit Us</p>
+                          <p className="text-sm font-bold text-slate-900 leading-snug">
+                            Ahmedabad, Gujarat,<br/>India 382350
+                          </p>
                         </div>
-                     </div>
-                  </div>
+                      </div>
+                    </div>
+                  )}
                </div>
 
             </div>
@@ -240,8 +304,8 @@ const Footer = () => {
           {/* FOOTER BOTTOM */}
           <div className="mt-12 pt-8 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500 font-medium">
              <div className="flex items-center gap-1">
-                <span>© {new Date().getFullYear()} TopEdge AI.</span>
-                <span className="hidden sm:inline">Made with <span className="text-red-500">♥</span> in India.</span>
+               <span>© {new Date().getFullYear()} {isCommunity ? 'AI Community' : 'TopEdge AI'}.</span>
+               
              </div>
              
              <div className="flex flex-wrap justify-center gap-6">

@@ -2,10 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import CommunityLayout from '@/components/community/layout/CommunityLayout';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Plus, Search, ArrowRight, Zap, Code2, Sparkles, 
-  Workflow, Database, Terminal, Box, Filter, Play, CheckCircle2
+  Plus, Search, ArrowRight, Zap, Sparkles,
+  Workflow, Terminal, Box, Filter, Play, CheckCircle2, Star
 } from 'lucide-react';
-import { collection, query, getDocs, orderBy, doc, getDoc } from 'firebase/firestore';
+import { collection, query, getDocs, orderBy, doc, getDoc, updateDoc, increment, arrayUnion, arrayRemove } from 'firebase/firestore';
 import { db } from '@/services/firebase';
 import { useAuth } from '@/contexts/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
@@ -24,12 +24,19 @@ interface Resource {
   userPhoto?: string;
   videoUrl?: string; // Added videoUrl
   category: 'automation' | 'project' | 'tool' | 'prompt';
+  stars?: number;
+  starredBy?: string[];
+  contactEmail?: string;
+  contactPhone?: string;
+  contactWebsite?: string;
 }
 
 // Sub-component for handling video hover effects
-const ResourceCard = ({ resource, index }: { resource: Resource; index: number }) => {
+const ResourceCard = ({ resource, index, currentUser }: { resource: Resource; index: number; currentUser: any }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isHovering, setIsHovering] = useState(false);
+  const [starCount, setStarCount] = useState<number>(resource.stars || 0);
+  const [starred, setStarred] = useState<boolean>(!!(resource.starredBy || []).includes(currentUser?.uid));
 
   // Auto-play video on hover
   useEffect(() => {
@@ -49,6 +56,24 @@ const ResourceCard = ({ resource, index }: { resource: Resource; index: number }
       case 'tool': return <Terminal className="w-4 h-4 text-emerald-500" />;
       case 'prompt': return <Sparkles className="w-4 h-4 text-amber-500" />;
       default: return <Box className="w-4 h-4 text-blue-500" />;
+    }
+  };
+
+  const toggleStar = async () => {
+    if (!currentUser) return;
+    try {
+      const ref = doc(db, 'community_resources', resource.id);
+      if (starred) {
+        await updateDoc(ref, { stars: increment(-1), starredBy: arrayRemove(currentUser.uid) });
+        setStarCount(c => Math.max(0, c - 1));
+        setStarred(false);
+      } else {
+        await updateDoc(ref, { stars: increment(1), starredBy: arrayUnion(currentUser.uid) });
+        setStarCount(c => c + 1);
+        setStarred(true);
+      }
+    } catch (e) {
+      console.error(e);
     }
   };
 
@@ -152,19 +177,34 @@ const ResourceCard = ({ resource, index }: { resource: Resource; index: number }
                     </div>
                  )}
                  <div className="flex flex-col">
-                    <span className="text-xs font-bold text-slate-900">{resource.userName}</span>
+                    <Link to={`/community/profile/${resource.userId}`} className="text-xs font-bold text-slate-900 hover:text-indigo-600">
+                      {resource.userName}
+                    </Link>
                     <span className="text-[10px] text-slate-400 flex items-center gap-0.5">
                        <CheckCircle2 className="w-2.5 h-2.5 text-emerald-500" /> Verified
                     </span>
                  </div>
               </div>
 
-              <Link 
-                to={`/community/resource/${resource.id}`}
-                className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-slate-900 group-hover:text-white transition-all"
-              >
-                 <ArrowRight className="w-4 h-4" />
-              </Link>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={toggleStar}
+                  className={cn(
+                    "px-4 h-9 rounded-full text-xs font-bold flex items-center gap-2 border transition-all",
+                    starred ? "bg-yellow-500 text-white border-yellow-500 shadow" : "bg-white text-slate-700 border-slate-200 hover:bg-slate-50"
+                  )}
+                >
+                  <Star className={cn("w-4 h-4", starred ? "text-white" : "text-yellow-500")} fill={starred ? "currentColor" : "none"} />
+                  <span>Star</span>
+                  <span className={cn("px-2 py-0.5 rounded-full text-[10px] font-bold", starred ? "bg-white/20" : "bg-slate-100")}>{starCount}</span>
+                </button>
+                <Link 
+                  to={`/community/resource/${resource.id}`}
+                  className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-slate-900 group-hover:text-white transition-all"
+                >
+                   <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
           </div>
       </div>
     </motion.div>
@@ -189,7 +229,9 @@ const AutomationHub = () => {
         const querySnapshot = await getDocs(q);
         const resourcesData = querySnapshot.docs.map(doc => ({
           id: doc.id,
-          ...doc.data()
+          ...doc.data(),
+          stars: (doc.data() as any).stars || 0,
+          starredBy: (doc.data() as any).starredBy || []
         })) as Resource[];
         setResources(resourcesData);
       } catch (error) {
@@ -231,7 +273,7 @@ const AutomationHub = () => {
                           (filter === 'paid' && resource.isPaid);
 
     return matchesSearch && matchesFilter;
-  });
+  }).sort((a, b) => (b.stars || 0) - (a.stars || 0));
 
   return (
     <CommunityLayout>
@@ -275,7 +317,7 @@ const AutomationHub = () => {
               <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
               <div className="flex items-center gap-2 relative z-10">
                 <Plus className="w-5 h-5" />
-                <span>Submit Resource</span>
+                <span>Promote Your Resource</span>
               </div>
             </motion.button>
           </div>
@@ -349,7 +391,7 @@ const AutomationHub = () => {
                         <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-2">
                           <AnimatePresence>
                             {myResources.map((resource, index) => (
-                              <ResourceCard key={resource.id} resource={resource} index={index} />
+                              <ResourceCard key={resource.id} resource={resource} index={index} currentUser={user} />
                             ))}
                           </AnimatePresence>
                         </motion.div>
@@ -362,7 +404,7 @@ const AutomationHub = () => {
                     <LaunchGate
                       active={isPreLaunch}
                       title="Marketplace visible after launch"
-                      description="Submit your resource now. Listings unlock on launch day."
+                      description="Promote your resource now. Listings unlock on launch day."
                     >
                       <motion.div 
                         layout
@@ -370,7 +412,7 @@ const AutomationHub = () => {
                       >
                         <AnimatePresence>
                           {otherResources.map((resource, index) => (
-                            <ResourceCard key={resource.id} resource={resource} index={index} />
+                            <ResourceCard key={resource.id} resource={resource} index={index} currentUser={user} />
                           ))}
                         </AnimatePresence>
                       </motion.div>

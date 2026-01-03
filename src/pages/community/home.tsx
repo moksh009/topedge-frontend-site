@@ -356,7 +356,7 @@ const CommunityHome = () => {
                   <LaunchGate
                     active={isPreLaunch}
                     title="Resources visible after launch"
-                    description="Submit yours now. Marketplace unlocks on launch day."
+                    description="Promote your resource now. Marketplace unlocks on launch day."
                     dark
                   >
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

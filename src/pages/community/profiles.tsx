@@ -16,6 +16,7 @@ interface Profile {
   id: string;
   fullName: string;
   photoURL?: string;
+  bannerURL?: string;
   location?: string;
   currentWork?: string;
   companyName?: string;
@@ -178,10 +179,17 @@ const CommunityProfiles = () => {
                                 transition={{ delay: index * 0.05 }}
                                 className="group relative flex flex-col bg-white rounded-[2.5rem] border border-slate-200 overflow-hidden hover:border-indigo-200 hover:shadow-[0_20px_40px_-12px_rgba(79,70,229,0.1)] transition-all duration-300 hover:-translate-y-2 text-center"
                               >
-                                <div className="h-32 bg-gradient-to-br from-indigo-50 via-slate-50 to-purple-50 relative overflow-hidden">
-                                   <div className="absolute inset-0 opacity-40" style={{ backgroundImage: 'radial-gradient(#cbd5e1 1px, transparent 1px)', filter: 'contrast(120%) brightness(120%)' }}></div>
-                                   <div className="absolute -top-10 -left-10 w-40 h-40 bg-indigo-500/5 rounded-full blur-3xl"></div>
-                                   <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-purple-500/5 rounded-full blur-3xl"></div>
+                                <div className="h-32 relative overflow-hidden">
+                                   {profile.bannerURL ? (
+                                     <img src={profile.bannerURL} alt="Banner" className="absolute inset-0 w-full h-full object-cover" />
+                                   ) : (
+                                     <>
+                                       <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 via-slate-50 to-purple-50" />
+                                       <div className="absolute inset-0 opacity-40" style={{ backgroundImage: 'radial-gradient(#cbd5e1 1px, transparent 1px)', filter: 'contrast(120%) brightness(120%)' }}></div>
+                                       <div className="absolute -top-10 -left-10 w-40 h-40 bg-indigo-500/5 rounded-full blur-3xl"></div>
+                                       <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-purple-500/5 rounded-full blur-3xl"></div>
+                                     </>
+                                   )}
                                    <div className="absolute top-4 right-4 flex gap-2">
                                         {profile.linkedin && (
                                             <a href={profile.linkedin} target="_blank" className="p-2 rounded-full bg-white/60 backdrop-blur-md text-slate-600 hover:bg-[#0077b5] hover:text-white transition-all shadow-sm">
@@ -202,7 +210,7 @@ const CommunityProfiles = () => {
                                 </div>
                                 <div className="px-8 pb-8 flex-1 flex flex-col relative items-center">
                                   <div className={cn(
-                                    'w-60 h-60 rounded-[2.5rem] p-1.5 bg-white shadow-xl rotate-0 group-hover:rotate-1 transition-transform duration-300 relative z-10',
+                                    'w-60 h-60 rounded-[2.5rem] p-1.5 bg-white shadow-xl rotate-0 group-hover:rotate-1 transition-transform duration-300 relative z-10 -mt-16', // Changed from -mt-10 to -mt-16
                                     profile.workingStatus === 'Open to Work' ? 'ring-4 ring-emerald-100' : '',
                                     profile.workingStatus && profile.workingStatus !== 'Open to Work' ? 'ring-4 ring-amber-100' : ''
                                   )}>
@@ -216,13 +224,13 @@ const CommunityProfiles = () => {
                                   </div>
                                   {profile.workingStatus && (
                                     <div className={cn(
-                                        'absolute bottom-1 right-1 w-7 h-7 rounded-full border-[3px] border-white shadow-sm z-20 flex items-center justify-center',
+                                        'absolute top-0 right-0 w-7 h-7 rounded-full border-[3px] border-white shadow-sm z-20 flex items-center justify-center', // Changed from bottom-1 right-1 to top-0 right-0
                                         profile.workingStatus === 'Open to Work' ? 'bg-emerald-500' : 'bg-amber-500'
                                     )} title={profile.workingStatus}>
                                         <div className="w-2.5 h-2.5 rounded-full bg-white animate-pulse"></div>
                                     </div>
                                   )}
-                                  <div className="mb-5 flex flex-col items-center">
+                                  <div className="mb-5 flex flex-col items-center mt-4"> {/* Added mt-4 */}
                                      <h3 className="text-2xl font-bold text-slate-900 leading-tight mb-1 group-hover:text-indigo-600 transition-colors">
                                         {profile.fullName}
                                      </h3>
@@ -300,10 +308,17 @@ const CommunityProfiles = () => {
                               transition={{ delay: index * 0.05 }}
                               className="group relative flex flex-col bg-white rounded-[2.5rem] border border-slate-200 overflow-hidden hover:border-indigo-200 hover:shadow-[0_20px_40px_-12px_rgba(79,70,229,0.1)] transition-all duration-300 hover:-translate-y-2 text-center"
                             >
-                      <div className="h-32 bg-gradient-to-br from-indigo-50 via-slate-50 to-purple-50 relative overflow-hidden">
-                         <div className="absolute inset-0 opacity-40" style={{ backgroundImage: 'radial-gradient(#cbd5e1 1px, transparent 1px)', filter: 'contrast(120%) brightness(120%)' }}></div>
-                         <div className="absolute -top-10 -left-10 w-40 h-40 bg-indigo-500/5 rounded-full blur-3xl"></div>
-                         <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-purple-500/5 rounded-full blur-3xl"></div>
+                      <div className="h-32 relative overflow-hidden">
+                         {profile.bannerURL ? (
+                           <img src={profile.bannerURL} alt="Banner" className="absolute inset-0 w-full h-full object-cover" />
+                         ) : (
+                           <>
+                             <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 via-slate-50 to-purple-50" />
+                             <div className="absolute inset-0 opacity-40" style={{ backgroundImage: 'radial-gradient(#cbd5e1 1px, transparent 1px)', filter: 'contrast(120%) brightness(120%)' }}></div>
+                             <div className="absolute -top-10 -left-10 w-40 h-40 bg-indigo-500/5 rounded-full blur-3xl"></div>
+                             <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-purple-500/5 rounded-full blur-3xl"></div>
+                           </>
+                         )}
                          <div className="absolute top-4 right-4 flex gap-2">
                               {profile.linkedin && (
                                   <a href={profile.linkedin} target="_blank" className="p-2 rounded-full bg-white/60 backdrop-blur-md text-slate-600 hover:bg-[#0077b5] hover:text-white transition-all shadow-sm">
@@ -324,7 +339,7 @@ const CommunityProfiles = () => {
                       </div>
                       <div className="px-8 pb-8 flex-1 flex flex-col relative items-center">
                         <div className={cn(
-                          'w-60 h-60 rounded-[2.5rem] p-1.5 bg-white shadow-xl rotate-0 group-hover:rotate-1 transition-transform duration-300 relative z-10',
+                          'w-60 h-60 rounded-[2.5rem] p-1.5 bg-white shadow-xl rotate-0 group-hover:rotate-1 transition-transform duration-300 relative z-10 -mt-16', // Changed from -mt-10 to -mt-16
                           profile.workingStatus === 'Open to Work' ? 'ring-4 ring-emerald-100' : '',
                           profile.workingStatus && profile.workingStatus !== 'Open to Work' ? 'ring-4 ring-amber-100' : ''
                         )}>
@@ -338,13 +353,13 @@ const CommunityProfiles = () => {
                         </div>
                         {profile.workingStatus && (
                           <div className={cn(
-                              'absolute bottom-1 right-1 w-7 h-7 rounded-full border-[3px] border-white shadow-sm z-20 flex items-center justify-center',
+                              'absolute top-0 right-0 w-7 h-7 rounded-full border-[3px] border-white shadow-sm z-20 flex items-center justify-center', // Changed from bottom-1 right-1 to top-0 right-0
                               profile.workingStatus === 'Open to Work' ? 'bg-emerald-500' : 'bg-amber-500'
                           )} title={profile.workingStatus}>
                               <div className="w-2.5 h-2.5 rounded-full bg-white animate-pulse"></div>
                           </div>
                         )}
-                        <div className="mb-5 flex flex-col items-center">
+                        <div className="mb-5 flex flex-col items-center mt-4"> {/* Added mt-4 */}
                            <h3 className="text-2xl font-bold text-slate-900 leading-tight mb-1 group-hover:text-indigo-600 transition-colors">
                               {profile.fullName}
                            </h3>

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import CommunityLayout from '@/components/community/layout/CommunityLayout';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Loader2, ArrowLeft, DollarSign, Video, Wrench, Sparkles, Layout, AlertCircle, Rocket, Gift, Tag, Check } from 'lucide-react';
-import { doc, setDoc, serverTimestamp, getDoc, collection, addDoc, query, where, getCountFromServer } from 'firebase/firestore';
-import { db, auth } from '@/services/firebase';
+import { Loader2, ArrowLeft, DollarSign, Video, Wrench, Sparkles, Layout, AlertCircle, Rocket, Gift, Tag, Check, User, Upload, Trash2, CheckCircle2 } from 'lucide-react';
+import { serverTimestamp, collection, addDoc, query, where, getCountFromServer } from 'firebase/firestore';
+import { db } from '@/services/firebase';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { cn } from '@/lib/utils';
@@ -15,6 +15,11 @@ const SubmitResource = () => {
   const { user, userProfile, isAdmin, loading: authLoading } = useAuth();
   const [uploadCount, setUploadCount] = useState(0);
   const [checkingLimit, setCheckingLimit] = useState(true);
+  const [needsProfile, setNeedsProfile] = useState(false);
+  const [uploadingVideo, setUploadingVideo] = useState(false);
+  
+  const CLOUD_NAME = "dn9gh1goq";
+  const UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || "YOUR_UPLOAD_PRESET_HERE";
   
   const [formData, setFormData] = useState({
     title: '',
@@ -22,6 +27,11 @@ const SubmitResource = () => {
     whatItDoes: '', 
     outcome: '', 
     videoUrl: '',
+    projectUrl: '',
+    youtubeUrl: '',
+    contactEmail: '',
+    contactPhone: '',
+    contactWebsite: '',
     monetization: 'free', // free | paid
     price: '',
     toolkit: '',
@@ -38,8 +48,8 @@ const SubmitResource = () => {
       }
 
       if (!userProfile) {
-        toast.error("You must create a profile before uploading resources.");
-        navigate('/community/promote-profile');
+        setNeedsProfile(true);
+        setCheckingLimit(false);
         return;
       }
 
@@ -67,9 +77,53 @@ const SubmitResource = () => {
     checkEligibility();
   }, [user, userProfile, isAdmin, authLoading, navigate]);
 
+  useEffect(() => {
+    if (user || userProfile) {
+      setFormData(prev => ({
+        ...prev,
+        contactEmail: userProfile?.contactDetails || user?.email || '',
+        contactPhone: userProfile?.phoneNumber || '',
+        contactWebsite: userProfile?.websiteURL || ''
+      }));
+    }
+  }, [user, userProfile]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleVideoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 100 * 1024 * 1024) {
+      toast.error("File is too large (Max 100MB)");
+      return;
+    }
+    try {
+      setUploadingVideo(true);
+      const data = new FormData();
+      data.append("file", file);
+      data.append("upload_preset", UPLOAD_PRESET);
+      data.append("cloud_name", CLOUD_NAME);
+      data.append("resource_type", "video");
+      const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/video/upload`, {
+        method: "POST",
+        body: data
+      });
+      const result = await response.json();
+      if (result.secure_url) {
+        setFormData(prev => ({ ...prev, videoUrl: result.secure_url }));
+        toast.success('Video uploaded successfully!');
+      } else {
+        throw new Error(result.error?.message || "Upload failed");
+      }
+    } catch (err) {
+      console.error("Video upload error:", err);
+      toast.error('Failed to upload video');
+    } finally {
+      setUploadingVideo(false);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -93,7 +147,11 @@ const SubmitResource = () => {
         fullDescription: formData.description,
         whatItDoes: formData.whatItDoes,
         outcome: formData.outcome,
-        videoUrl: formData.videoUrl,
+        videoUrl: formData.youtubeUrl || formData.videoUrl,
+        link: formData.projectUrl || '',
+        contactEmail: formData.contactEmail || '',
+        contactPhone: formData.contactPhone || '',
+        contactWebsite: formData.contactWebsite || '',
         isPaid: formData.monetization === 'paid',
         price: formData.monetization === 'paid' ? parseFloat(formData.price) : 0,
         tools: formData.toolkit.split(',').map(s => s.trim()).filter(s => s),
@@ -102,7 +160,9 @@ const SubmitResource = () => {
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
         downloads: 0,
-        views: 0
+        views: 0,
+        stars: 0,
+        starredBy: []
       };
 
       await addDoc(collection(db, 'community_resources'), resourceData);
@@ -136,6 +196,24 @@ const SubmitResource = () => {
         <div className="absolute inset-0 pointer-events-none opacity-[0.4]" style={{ backgroundImage: 'radial-gradient(#cbd5e1 1px, transparent 1px)', backgroundSize: '32px 32px' }}></div>
 
         <div className="container relative mx-auto px-4 max-w-4xl pt-12">
+          
+          {needsProfile && (
+            <div className="mb-6 bg-white border border-slate-200 p-6 rounded-2xl shadow-sm">
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600">
+                  <AlertCircle className="w-5 h-5" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm font-bold text-slate-900">Create your public profile to submit resources</p>
+                  <p className="text-sm text-slate-500 mt-1">Add your name, photo, and contact details. Your profile appears on your resources.</p>
+                  <div className="mt-4 flex gap-3">
+                    <Link to="/community/promote-profile" className="px-4 py-2 bg-slate-900 text-white rounded-xl text-sm font-bold hover:bg-slate-800">Create Profile</Link>
+                    <Link to="/community/automation-hub" className="px-4 py-2 bg-slate-100 text-slate-700 rounded-xl text-sm font-bold hover:bg-slate-200">Back</Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
           
           {/* Top Navigation */}
           <Link 
@@ -250,6 +328,18 @@ const SubmitResource = () => {
                         </div>
                      </div>
                   </div>
+                  
+                  <div className="space-y-2">
+                    <label className="text-sm font-bold text-slate-700">Live Project Link</label>
+                    <input
+                      type="url"
+                      name="projectUrl"
+                      value={formData.projectUrl}
+                      onChange={handleChange}
+                      placeholder="https://..."
+                      className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all font-medium placeholder:text-slate-400"
+                    />
+                  </div>
                 </div>
               </div>
 
@@ -287,18 +377,94 @@ const SubmitResource = () => {
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <label className="text-sm font-bold text-slate-700">Demo Video URL</label>
-                  <div className="relative">
+                <div className="space-y-4">
+                  <label className="text-sm font-bold text-slate-700">Demo Video</label>
+                  <div className="p-6 border-2 border-dashed border-slate-200 rounded-2xl bg-slate-50 flex flex-col items-center justify-center text-center transition-all hover:border-purple-300 hover:bg-purple-50/30">
+                    {formData.videoUrl ? (
+                      <div className="w-full relative">
+                        <video src={formData.videoUrl} className="w-full h-48 object-cover rounded-xl bg-black" controls />
+                        <button 
+                          type="button" 
+                          onClick={() => setFormData(prev => ({...prev, videoUrl: ''}))}
+                          className="absolute top-2 right-2 p-2 bg-red-500 text-white rounded-full hover:bg-red-600 shadow-md"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                        <p className="mt-2 text-xs text-emerald-600 font-bold flex items-center justify-center gap-1"><CheckCircle2 className="w-3 h-3" /> Video Uploaded</p>
+                      </div>
+                    ) : (
+                      <label className="cursor-pointer w-full h-full flex flex-col items-center justify-center py-6">
+                        {uploadingVideo ? (
+                          <Loader2 className="w-8 h-8 text-indigo-500 animate-spin mb-2" />
+                        ) : (
+                          <Upload className="w-8 h-8 text-slate-400 mb-2" />
+                        )}
+                        <span className="text-sm font-bold text-slate-700">
+                          {uploadingVideo ? "Uploading..." : "Upload Demo Video"}
+                        </span>
+                        <span className="text-xs text-slate-400 mt-1">MP4, WebM (Max 100MB)</span>
+                        <input type="file" accept="video/*" className="hidden" onChange={handleVideoUpload} disabled={uploadingVideo} />
+                      </label>
+                    )}
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-bold text-slate-700">Or External Link (YouTube/Loom)</label>
+                    <div className="relative">
+                      <input
+                        type="url"
+                        name="youtubeUrl"
+                        value={formData.youtubeUrl}
+                        onChange={handleChange}
+                        placeholder="https://youtube.com/watch?v=..."
+                        className="w-full px-5 py-4 pl-12 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 outline-none transition-all font-medium placeholder:text-slate-400"
+                      />
+                      <Video className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* ================= SECTION 3: CONTACT ================= */}
+              <div className="bg-white rounded-[2rem] border border-slate-200 p-8 shadow-sm">
+                <div className="flex items-center gap-3 mb-8">
+                  <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600">
+                     <User className="w-5 h-5" />
+                  </div>
+                  <h2 className="text-xl font-bold text-slate-900">Contact Details</h2>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="space-y-2">
+                    <label className="text-sm font-bold text-slate-700">Email</label>
+                    <input
+                      type="email"
+                      name="contactEmail"
+                      value={formData.contactEmail}
+                      onChange={handleChange}
+                      placeholder="you@example.com"
+                      className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all font-medium placeholder:text-slate-400"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-bold text-slate-700">Phone</label>
+                    <input
+                      type="text"
+                      name="contactPhone"
+                      value={formData.contactPhone}
+                      onChange={handleChange}
+                      placeholder="+1 555-555-5555"
+                      className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all font-medium placeholder:text-slate-400"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-bold text-slate-700">Website</label>
                     <input
                       type="url"
-                      name="videoUrl"
-                      value={formData.videoUrl}
+                      name="contactWebsite"
+                      value={formData.contactWebsite}
                       onChange={handleChange}
-                      placeholder="https://youtube.com/watch?v=..."
-                      className="w-full px-5 py-4 pl-12 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 outline-none transition-all font-medium placeholder:text-slate-400"
+                      placeholder="https://..."
+                      className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all font-medium placeholder:text-slate-400"
                     />
-                    <Video className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
                   </div>
                 </div>
               </div>

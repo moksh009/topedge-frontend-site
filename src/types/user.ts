@@ -5,6 +5,7 @@ export interface UserProfile {
   email: string;
   fullName: string;
   photoURL?: string;
+  bannerURL?: string;
   location?: string;
   age?: number;
   gender?: string;

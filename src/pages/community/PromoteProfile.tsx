@@ -62,6 +62,7 @@ const PromoteProfile = () => {
   const [formData, setFormData] = useState<Partial<UserProfile>>({
     fullName: '',
     photoURL: '',
+    bannerURL: '',
     location: '',
     age: undefined,
     gender: '',
@@ -74,7 +75,9 @@ const PromoteProfile = () => {
     workingStatus: '',
     networkingIntent: [],
     contactDetails: '',
-    phoneNumber: ''
+    phoneNumber: '',
+    linkedin: '',
+    github: ''
   });
 
   const [skillsInput, setSkillsInput] = useState('');
@@ -134,6 +137,7 @@ const PromoteProfile = () => {
         email: user.email || '',
         fullName: formData.fullName || '',
         photoURL: formData.photoURL || '',
+        bannerURL: formData.bannerURL || undefined,
         location: formData.location || '',
         age: formData.age ? Number(formData.age) : undefined,
         gender: formData.gender || '',
@@ -149,8 +153,8 @@ const PromoteProfile = () => {
         phoneNumber: formData.phoneNumber || '',
         createdAt: userProfile?.createdAt || serverTimestamp(),
         updatedAt: serverTimestamp(),
-        linkedin: formData as any && (formData as any).linkedin ? (formData as any).linkedin : undefined,
-        github: formData as any && (formData as any).github ? (formData as any).github : undefined
+        linkedin: formData.linkedin || undefined,
+        github: formData.github || undefined
       };
 
       const sanitized = Object.fromEntries(
@@ -216,6 +220,40 @@ const PromoteProfile = () => {
     }
   };
 
+  const handleBannerUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !user) return;
+    if (!UPLOAD_PRESET || UPLOAD_PRESET === "YOUR_UPLOAD_PRESET_HERE") {
+        toast.error("Upload preset is missing in .env config");
+        console.error("Missing VITE_CLOUDINARY_UPLOAD_PRESET");
+        return;
+    }
+    try {
+      setUploadingPhoto(true);
+      const data = new FormData();
+      data.append("file", file);
+      data.append("upload_preset", UPLOAD_PRESET); 
+      data.append("cloud_name", CLOUD_NAME);
+      data.append("folder", "user_banners"); 
+      const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
+        method: "POST",
+        body: data
+      });
+      const result = await response.json();
+      if (result.secure_url) {
+        setFormData(prev => ({ ...prev, bannerURL: result.secure_url }));
+        toast.success('Banner uploaded successfully');
+      } else {
+        throw new Error(result.error?.message || "Upload failed");
+      }
+    } catch (err) {
+      console.error("Cloudinary upload error:", err);
+      toast.error('Failed to upload banner');
+    } finally {
+      setUploadingPhoto(false);
+    }
+  };
+
   const copyProfileLink = () => {
     const url = window.location.href;
     navigator.clipboard.writeText(url);
@@ -238,11 +276,16 @@ const PromoteProfile = () => {
           
           {/* --- HERO COVER --- */}
           <div className="relative h-80 w-full overflow-hidden">
-             {/* Abstract Gradient Mesh */}
-             <div className="absolute inset-0 bg-slate-900">
-               <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-800 via-slate-900 to-black opacity-80"></div>
-               <div className="absolute -top-[50%] -left-[20%] w-[80%] h-[200%] bg-indigo-500/20 blur-[100px] rounded-full mix-blend-screen animate-pulse"></div>
-               <div className="absolute top-[20%] right-[-10%] w-[60%] h-[150%] bg-blue-500/10 blur-[120px] rounded-full mix-blend-screen"></div>
+             <div className="absolute inset-0">
+               {userProfile.bannerURL ? (
+                 <img src={userProfile.bannerURL} alt="Banner" className="w-full h-full object-cover" />
+               ) : (
+                 <div className="w-full h-full bg-slate-900">
+                   <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-800 via-slate-900 to-black opacity-80"></div>
+                   <div className="absolute -top-[50%] -left-[20%] w-[80%] h-[200%] bg-indigo-500/20 blur-[100px] rounded-full mix-blend-screen animate-pulse"></div>
+                   <div className="absolute top-[20%] right-[-10%] w-[60%] h-[150%] bg-blue-500/10 blur-[120px] rounded-full mix-blend-screen"></div>
+                 </div>
+               )}
                <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150 mix-blend-overlay"></div>
              </div>
 
@@ -485,7 +528,27 @@ const PromoteProfile = () => {
               )}
            </div>
 
-           <form onSubmit={handleSubmit} className="space-y-8">
+          <form onSubmit={handleSubmit} className="space-y-8">
+              {/* Banner Section */}
+              <div className="bg-white rounded-[2rem] border border-slate-200 p-8 shadow-sm">
+                 <h2 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
+                    <Camera className="w-5 h-5 text-indigo-600" /> Profile Banner (Optional)
+                 </h2>
+                 <div className="group relative w-full h-40 rounded-2xl bg-slate-100 border-2 border-dashed border-slate-300 hover:border-indigo-500 transition-colors overflow-hidden">
+                    {formData.bannerURL ? (
+                       <img src={formData.bannerURL} alt="Banner Preview" className="w-full h-full object-cover" />
+                    ) : (
+                       <div className="w-full h-full flex flex-col items-center justify-center text-slate-400">
+                          <Camera className="w-8 h-8 mb-1" />
+                          <span className="text-sm font-medium">Upload a wide banner image</span>
+                       </div>
+                    )}
+                    <label className="absolute inset-0 flex items-center justify-center bg-black/40 text-white opacity-0 group-hover:opacity-100 cursor-pointer transition-opacity font-medium text-xs">
+                       {uploadingPhoto ? 'Uploading...' : 'Change Banner'}
+                       <input type="file" accept="image/*" onChange={handleBannerUpload} className="hidden" />
+                    </label>
+                 </div>
+              </div>
               {/* Identity Section */}
               <div className="bg-white rounded-[2rem] border border-slate-200 p-8 shadow-sm">
                  <h2 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
@@ -614,6 +677,14 @@ const PromoteProfile = () => {
                     <div className="space-y-2">
                        <label className="text-sm font-semibold text-slate-700">Phone (Optional)</label>
                        <input type="tel" name="phoneNumber" value={formData.phoneNumber || ''} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 outline-none" placeholder="+1 234 567 8900" />
+                    </div>
+                    <div className="space-y-2">
+                       <label className="text-sm font-semibold text-slate-700">LinkedIn URL (Optional)</label>
+                       <input type="url" name="linkedin" value={(formData as any).linkedin || ''} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 outline-none" placeholder="https://www.linkedin.com/in/username" />
+                    </div>
+                    <div className="space-y-2">
+                       <label className="text-sm font-semibold text-slate-700">GitHub URL (Optional)</label>
+                       <input type="url" name="github" value={(formData as any).github || ''} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 outline-none" placeholder="https://github.com/username" />
                     </div>
                     <div className="space-y-2 md:col-span-2">
                        <label className="text-sm font-semibold text-slate-700">Email Address</label>
