@@ -36,6 +36,7 @@ const SubmitResource = () => {
     price: '',
     toolkit: '',
     category: 'automation',
+    isHiring: false,
   });
 
   useEffect(() => {
@@ -91,6 +92,11 @@ const SubmitResource = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = e.target;
+    setFormData(prev => ({ ...prev, [name]: checked }));
   };
 
   const handleVideoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -156,6 +162,7 @@ const SubmitResource = () => {
         price: formData.monetization === 'paid' ? parseFloat(formData.price) : 0,
         tools: formData.toolkit.split(',').map(s => s.trim()).filter(s => s),
         category: formData.category,
+        isHiring: formData.isHiring,
         tags: [],
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
@@ -466,6 +473,18 @@ const SubmitResource = () => {
                       className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all font-medium placeholder:text-slate-400"
                     />
                   </div>
+                </div>
+                <div className="mt-6 flex items-center gap-3 p-4 rounded-xl border border-slate-200 bg-slate-50">
+                  <input
+                    type="checkbox"
+                    name="isHiring"
+                    checked={formData.isHiring}
+                    onChange={handleCheckboxChange}
+                    className="w-5 h-5 rounded text-indigo-600 focus:ring-indigo-500"
+                  />
+                  <label className="font-bold text-slate-700">
+                    I am looking for collaborators on this project
+                  </label>
                 </div>
               </div>
 

@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Bell, User, LogOut, Settings, ChevronRight, Home, Users, Zap, BookOpen, Megaphone, MessageCircle, Globe, Calendar } from 'lucide-react';
+import { Menu, X, Bell, User, LogOut, Settings, ChevronRight, Home, Users, Zap, BookOpen, Megaphone, MessageCircle, Globe, Calendar, Star, Briefcase } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/contexts/AuthContext';
 import { auth, db } from '@/services/firebase';
 import { signOut } from 'firebase/auth';
-import { collection, query, orderBy, limit, onSnapshot } from 'firebase/firestore';
+import { collection, query, orderBy, limit, onSnapshot, where, doc, updateDoc } from 'firebase/firestore';
 
 interface Notification {
   id: string;
-  type: 'resource' | 'announcement';
+  type: 'star' | 'review' | 'hire_request' | 'announcement' | 'resource';
   title: string;
   createdAt: any; 
   link: string;
@@ -26,46 +26,56 @@ const CommunityNavbar = () => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const location = useLocation();
 
-  // --- Real-time Notifications ---
+  // --- Personal Activity Feed ---
+  const [unreadCount, setUnreadCount] = useState(0);
   useEffect(() => {
-    const resourcesQuery = query(collection(db, 'community_resources'), orderBy('createdAt', 'desc'), limit(5));
-    const announcementsQuery = query(collection(db, 'community_announcements'), orderBy('createdAt', 'desc'), limit(5));
-
-    const unsubscribeResources = onSnapshot(resourcesQuery, (snapshot) => {
-      const newResources = snapshot.docs.map(doc => ({
-        id: doc.id,
-        type: 'resource' as const,
-        title: `New Resource: ${doc.data().title}`,
-        createdAt: doc.data().createdAt,
-        link: `/community/resource/${doc.id}`
-      }));
-      updateNotifications(newResources, 'resource');
+    if (!user) {
+      setNotifications([]);
+      setUnreadCount(0);
+      return;
+    }
+    const q = query(
+      collection(db, 'notifications'),
+      where('recipientId', '==', user.uid),
+      orderBy('createdAt', 'desc'),
+      limit(20)
+    );
+    const unsub = onSnapshot(q, (snapshot) => {
+      const items = snapshot.docs.map(d => {
+        const data = d.data() as any;
+        return {
+          id: d.id,
+          type: data.type,
+          title:
+            data.type === 'star'
+              ? `${data.senderName || 'Someone'} starred ${data.resourceTitle || 'your project'}`
+              : data.type === 'review'
+              ? `${data.senderName || 'Someone'} reviewed ${data.resourceTitle || 'your project'}`
+              : data.type === 'hire_request'
+              ? `${data.senderName || 'Someone'} wants to hire you`
+              : 'Activity',
+          createdAt: data.createdAt,
+          link:
+            data.type === 'hire_request'
+              ? '/community/promote-profile'
+              : data.resourceId
+              ? `/community/resource/${data.resourceId}`
+              : '/community/home',
+          isRead: !!data.read
+        };
+      });
+      setNotifications(items);
+      setUnreadCount(items.filter(i => !i.isRead).length);
     });
+    return () => unsub();
+  }, [user]);
 
-    const unsubscribeAnnouncements = onSnapshot(announcementsQuery, (snapshot) => {
-      const newAnnouncements = snapshot.docs.map(doc => ({
-        id: doc.id,
-        type: 'announcement' as const,
-        title: `Announcement: ${doc.data().title}`,
-        createdAt: doc.data().createdAt,
-        link: '/community/announcements'
-      }));
-      updateNotifications(newAnnouncements, 'announcement');
-    });
-
-    return () => { unsubscribeResources(); unsubscribeAnnouncements(); };
-  }, []);
-
-  const updateNotifications = (newItems: Notification[], type: 'resource' | 'announcement') => {
-    setNotifications(prev => {
-      const otherItems = prev.filter(item => item.type !== type);
-      const allItems = [...otherItems, ...newItems].sort((a, b) => {
-        const dateA = a.createdAt?.toDate?.() || new Date(0);
-        const dateB = b.createdAt?.toDate?.() || new Date(0);
-        return dateB.getTime() - dateA.getTime();
-      }).slice(0, 10);
-      return allItems;
-    });
+  const markRead = async (id: string) => {
+    try {
+      await updateDoc(doc(db, 'notifications', id), { read: true });
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   // --- Scroll Effect ---
@@ -88,6 +98,7 @@ const CommunityNavbar = () => {
     { label: 'Home', path: '/community/home', icon: Home, desc: 'Community Dashboard' },
     { label: 'Profiles', path: '/community/profiles', icon: Users, desc: 'Connect with Builders' },
     { label: 'Automation Hub', path: '/community/automation-hub', icon: Zap, desc: 'Tools & Workflows' },
+    { label: 'Requests', path: '/community/requests', icon: Briefcase, desc: 'Reverse Marketplace' },
     { label: 'Open Source', path: '/community/open-source', icon: BookOpen, desc: 'Library of Code' },
     { label: 'Announcements', path: '/community/announcements', icon: Megaphone, desc: 'Latest Updates' },
     { label: 'Discord', path: '/community/discord', icon: MessageCircle, desc: 'Live Chat' },
@@ -144,8 +155,10 @@ const CommunityNavbar = () => {
                       )}
                     >
                       <Bell className="w-5 h-5" />
-                      {notifications.length > 0 && (
-                        <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-rose-500 rounded-full border border-white" />
+                      {unreadCount > 0 && (
+                        <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 bg-rose-600 text-white rounded-full border border-white text-[10px] font-bold flex items-center justify-center">
+                          {unreadCount}
+                        </span>
                       )}
                     </button>
 
@@ -166,11 +179,20 @@ const CommunityNavbar = () => {
                                   <Link
                                     key={n.id}
                                     to={n.link}
-                                    onClick={() => setShowNotifications(false)}
+                                    onClick={() => { setShowNotifications(false); markRead(n.id); }}
                                     className="block px-5 py-4 hover:bg-slate-50 transition-colors border-b border-slate-100 last:border-0 relative group"
                                   >
                                     <div className="flex gap-3">
-                                       <div className="mt-1.5 w-2 h-2 rounded-full bg-blue-500 flex-shrink-0" />
+                                       <div className={cn("mt-1.5 w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0",
+                                         n.type === 'star' ? "bg-yellow-100 text-yellow-600" :
+                                         n.type === 'review' ? "bg-blue-100 text-blue-600" :
+                                         n.type === 'hire_request' ? "bg-emerald-100 text-emerald-600" : "bg-slate-100 text-slate-500"
+                                       )}>
+                                         {n.type === 'star' ? <Star className="w-4 h-4" /> :
+                                          n.type === 'review' ? <MessageCircle className="w-4 h-4" /> :
+                                          n.type === 'hire_request' ? <Briefcase className="w-4 h-4" /> :
+                                          <Bell className="w-4 h-4" />}
+                                       </div>
                                        <div>
                                           <p className="text-sm font-semibold text-slate-800 leading-snug group-hover:text-blue-600 transition-colors">{n.title}</p>
                                           <p className="text-xs text-slate-400 mt-1 font-medium">
@@ -218,6 +240,9 @@ const CommunityNavbar = () => {
                           </div>
                           
                           <div className="space-y-1">
+                            <Link to="/community/dashboard" className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-slate-900 rounded-xl transition-all" onClick={() => setShowProfileMenu(false)}>
+                              <Home className="w-4 h-4" /> Dashboard
+                            </Link>
                             <Link to="/community/promote-profile" className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-slate-900 rounded-xl transition-all" onClick={() => setShowProfileMenu(false)}>
                               <User className="w-4 h-4" /> My Profile
                             </Link>
