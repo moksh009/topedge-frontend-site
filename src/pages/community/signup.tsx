@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth, db } from '@/services/firebase';
-import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { doc, setDoc } from 'firebase/firestore';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Loader2, UserPlus, User, Mail, Lock, AlertCircle } from 'lucide-react';
 
@@ -27,17 +27,14 @@ const Signup = () => {
       // Update display name
       await updateProfile(user, { displayName: name });
 
-      try {
-        await setDoc(doc(db, 'public_profiles', user.uid), {
-          fullName: name,
-          email: user.email,
-          phone,
-          createdAt: serverTimestamp(),
-          workingStatus: 'Member'
-        }, { merge: true });
-      } catch (writeErr) {
-        console.error(writeErr);
-      }
+      // Save user's name and phone number to Firestore
+      await setDoc(doc(db, 'users', user.uid), {
+        name: name,
+        phone: phone,
+        email: user.email,
+        createdAt: new Date().toISOString(),
+        role: 'member', // Default role
+      });
 
       navigate('/community/home');
     } catch (err: any) {
