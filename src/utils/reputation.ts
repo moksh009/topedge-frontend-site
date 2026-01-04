@@ -15,7 +15,7 @@ export interface UserProfileForReputation {
 
 export interface ResourceForReputation {
   userId: string;
-  stars?: number;
+  upvotes?: number;
 }
 
 export function calculateReputation(
@@ -23,7 +23,7 @@ export function calculateReputation(
   resources: ResourceForReputation[]
 ): ReputationResult {
   const resourcesCount = resources.length;
-  const totalStars = resources.reduce((sum, r) => sum + (r.stars || 0), 0);
+  const totalUpvotes = resources.reduce((sum, r) => sum + (r.upvotes || 0), 0);
 
   const hasCompleteProfile =
     !!userProfile?.bio &&
@@ -32,7 +32,7 @@ export function calculateReputation(
 
   const score =
     resourcesCount * 15 +
-    totalStars * 2 +
+    totalUpvotes * 2 +
     (hasCompleteProfile ? 10 : 0);
 
   let tier: BadgeTier = 'Builder';
@@ -41,4 +41,3 @@ export function calculateReputation(
 
   return { score, tier };
 }
-

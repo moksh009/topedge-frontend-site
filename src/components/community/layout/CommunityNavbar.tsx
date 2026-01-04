@@ -102,7 +102,7 @@ const CommunityNavbar = () => {
     { label: 'Open Source', path: '/community/open-source', icon: BookOpen, desc: 'Library of Code' },
     { label: 'Announcements', path: '/community/announcements', icon: Megaphone, desc: 'Latest Updates' },
     { label: 'Discord', path: '/community/discord', icon: MessageCircle, desc: 'Live Chat' },
-    { label: 'Main Website', path: '/', icon: Globe, desc: 'TopEdge AI Home' },
+    // { label: 'Main Website', path: '/', icon: Globe, desc: 'TopEdge AI Home' },
     { label: 'Book Call', path: '/booking', icon: Calendar, desc: 'Schedule Meeting' },
   ];
 
@@ -135,7 +135,7 @@ const CommunityNavbar = () => {
                <img src="/logo.png" alt="TopEdge AI" className="h-8 w-auto object-contain" />
                {/* "hidden sm:block" removed to show text on mobile */}
                <span className="font-bold text-slate-900 tracking-tight text-lg group-hover:text-blue-600 transition-colors">
-                 AI Community Hub
+                 AI Community
                </span>
             </Link>
 

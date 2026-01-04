@@ -3,7 +3,7 @@ import CommunityLayout from '@/components/community/layout/CommunityLayout';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Plus, Search, ArrowRight, Zap, Sparkles,
-  Workflow, Terminal, Box, Filter, Play, CheckCircle2, Star
+  Workflow, Terminal, Box, Filter, Play, CheckCircle2, Star, ThumbsUp
 } from 'lucide-react';
 import { collection, query, getDocs, orderBy, doc, getDoc, updateDoc, increment, arrayUnion, arrayRemove } from 'firebase/firestore';
 import { db } from '@/services/firebase';
@@ -25,8 +25,8 @@ interface Resource {
   userPhoto?: string;
   videoUrl?: string;
   category: 'automation' | 'project' | 'tool' | 'prompt';
-  stars?: number;
-  starredBy?: string[];
+  upvotes?: number;
+  upvotedBy?: string[];
   contactEmail?: string;
   contactPhone?: string;
   contactWebsite?: string;
@@ -37,8 +37,8 @@ interface Resource {
 const ResourceCard = ({ resource, index, currentUser }: { resource: Resource; index: number; currentUser: any }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isHovering, setIsHovering] = useState(false);
-  const [starCount, setStarCount] = useState<number>(resource.stars || 0);
-  const [starred, setStarred] = useState<boolean>(!!(resource.starredBy || []).includes(currentUser?.uid));
+  const [upvoteCount, setUpvoteCount] = useState<number>(resource.upvotes ?? ((resource as any).stars ?? 0));
+  const [upvoted, setUpvoted] = useState<boolean>(!!(((resource.upvotedBy ?? ((resource as any).starredBy ?? [])) as string[])).includes(currentUser?.uid));
   const [avgRating, setAvgRating] = useState<number>(0);
   const [reviewCount, setReviewCount] = useState<number>(0);
 
@@ -76,22 +76,22 @@ const ResourceCard = ({ resource, index, currentUser }: { resource: Resource; in
     }
   };
 
-  const toggleStar = async (e: React.MouseEvent) => {
+  const toggleUpvote = async (e: React.MouseEvent) => {
     e.preventDefault();
     if (!currentUser) return;
     try {
-      setStarred(!starred);
-      setStarCount(prev => starred ? Math.max(0, prev - 1) : prev + 1);
+      setUpvoted(!upvoted);
+      setUpvoteCount(prev => upvoted ? Math.max(0, prev - 1) : prev + 1);
       const ref = doc(db, 'community_resources', resource.id);
-      if (starred) {
-        await updateDoc(ref, { stars: increment(-1), starredBy: arrayRemove(currentUser.uid) });
+      if (upvoted) {
+        await updateDoc(ref, { upvotes: increment(-1), upvotedBy: arrayRemove(currentUser.uid) });
       } else {
-        await updateDoc(ref, { stars: increment(1), starredBy: arrayUnion(currentUser.uid) });
+        await updateDoc(ref, { upvotes: increment(1), upvotedBy: arrayUnion(currentUser.uid) });
       }
     } catch (e) {
       console.error(e);
-      setStarred(!starred);
-      setStarCount(prev => starred ? prev + 1 : prev - 1);
+      setUpvoted(!upvoted);
+      setUpvoteCount(prev => upvoted ? prev + 1 : prev - 1);
     }
   };
 
@@ -167,14 +167,14 @@ const ResourceCard = ({ resource, index, currentUser }: { resource: Resource; in
                 </div>
                 <div className="flex items-center gap-2">
                     {reviewCount > 0 && (
-                        <div className="flex items-center gap-1 bg-yellow-50 border border-yellow-100 px-2 py-1 rounded-lg">
-                            <Star className="w-3 h-3 text-yellow-500 fill-current" />
-                            <span className="text-[10px] font-bold text-yellow-700">{avgRating.toFixed(1)}</span>
-                        </div>
-                    )}
-                    <button onClick={toggleStar} className={cn("h-8 px-2.5 rounded-lg text-xs font-bold flex items-center gap-1.5 border transition-all", starred ? "bg-amber-50 border-amber-200 text-amber-600" : "bg-white text-slate-500 border-slate-200 hover:bg-slate-50")}>
-                        <Star className={cn("w-3.5 h-3.5", starred && "fill-current")} />
-                        <span>{starCount}</span>
+                    <div className="flex items-center gap-1 bg-yellow-50 border border-yellow-100 px-2 py-1 rounded-lg">
+                        <Star className="w-3 h-3 text-yellow-500 fill-current" />
+                        <span className="text-[10px] font-bold text-yellow-700">{avgRating.toFixed(1)}</span>
+                    </div>
+                  )}
+                    <button onClick={toggleUpvote} className={cn("h-8 px-2.5 rounded-lg text-xs font-bold flex items-center gap-1.5 border transition-all", upvoted ? "bg-indigo-50 border-indigo-200 text-indigo-600" : "bg-white text-slate-500 border-slate-200 hover:bg-slate-50")}>
+                        <ThumbsUp className={cn("w-3.5 h-3.5", upvoted && "fill-current")} />
+                        <span>{upvoteCount}</span>
                     </button>
                     <Link to={`/community/resource/${resource.id}`} className="w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center text-white hover:bg-slate-800 transition-all shadow-sm">
                         <ArrowRight className="w-4 h-4" />
@@ -205,8 +205,8 @@ const AutomationHub = () => {
         const resourcesData = querySnapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data(),
-          stars: (doc.data() as any).stars || 0,
-          starredBy: (doc.data() as any).starredBy || []
+          upvotes: (doc.data() as any).upvotes ?? (doc.data() as any).stars ?? 0,
+          upvotedBy: (doc.data() as any).upvotedBy ?? (doc.data() as any).starredBy ?? []
         })) as Resource[];
         setResources(resourcesData);
       } catch (error) {
@@ -249,7 +249,7 @@ const AutomationHub = () => {
                           (filter === 'collab' && !!resource.isHiring);
 
     return matchesSearch && matchesFilter;
-  }).sort((a, b) => (b.stars || 0) - (a.stars || 0));
+  }).sort((a, b) => (b.upvotes ?? 0) - (a.upvotes ?? 0));
 
   return (
     <CommunityLayout>

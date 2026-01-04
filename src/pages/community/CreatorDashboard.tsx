@@ -6,7 +6,7 @@ import { db } from '@/services/firebase';
 import { collection, onSnapshot, query, where, deleteDoc, doc } from 'firebase/firestore';
 import { motion } from 'framer-motion';
 import { 
-  BarChart3, Eye, Star, FolderPlus, Trash2, ArrowRight, 
+  BarChart3, Eye, ThumbsUp, FolderPlus, Trash2, ArrowRight, 
   TrendingUp, Trophy, Edit3, DollarSign, Zap 
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -17,7 +17,7 @@ interface ResourceItem {
   title: string;
   category: 'automation' | 'project' | 'tool' | 'prompt';
   views?: number;
-  stars?: number;
+  upvotes?: number;
   isPaid?: boolean;
   price?: number;
   createdAt?: any;
@@ -57,7 +57,7 @@ const CreatorDashboard = () => {
             title: data.title || 'Untitled',
             category: (data.category || 'automation') as ResourceItem['category'],
             views: Number(data.views || 0),
-            stars: Number(data.stars || 0),
+            upvotes: Number((data.upvotes ?? data.stars) || 0),
             isPaid: !!data.isPaid,
             price: Number(data.price || 0),
             createdAt: data.createdAt
@@ -105,7 +105,7 @@ const CreatorDashboard = () => {
   const stats = useMemo(() => {
     const count = items.length;
     const views = items.reduce((sum, r) => sum + (r.views || 0), 0);
-    const stars = items.reduce((sum, r) => sum + (r.stars || 0), 0);
+    const upvotes = items.reduce((sum, r) => sum + (r.upvotes || 0), 0);
     
     const rep = calculateReputation(
         {
@@ -115,10 +115,10 @@ const CreatorDashboard = () => {
             linkedin: userProfile?.linkedin,
             websiteURL: userProfile?.websiteURL
         },
-        items.map(i => ({ userId: user?.uid || '', stars: i.stars }))
+        items.map(i => ({ userId: user?.uid || '', upvotes: i.upvotes }))
     );
 
-    return { count, views, stars, score: rep.score, tier: rep.tier };
+    return { count, views, upvotes, score: rep.score, tier: rep.tier };
   }, [items, userProfile, user]);
 
   const topByViews = useMemo(() => {
@@ -190,7 +190,7 @@ const CreatorDashboard = () => {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-10">
             {[
               { label: 'Total Views', value: stats.views.toLocaleString(), icon: Eye, color: 'text-blue-600', bg: 'bg-blue-50' },
-              { label: 'Total Stars', value: stats.stars.toLocaleString(), icon: Star, color: 'text-yellow-600', bg: 'bg-yellow-50' },
+              { label: 'Total Upvotes', value: stats.upvotes.toLocaleString(), icon: ThumbsUp, color: 'text-indigo-600', bg: 'bg-indigo-50' },
               { label: 'Resources', value: stats.count, icon: FolderPlus, color: 'text-purple-600', bg: 'bg-purple-50' },
               { label: 'Reputation', value: `${stats.score} pts`, icon: Trophy, color: 'text-emerald-600', bg: 'bg-emerald-50' },
             ].map((stat, i) => (
@@ -297,7 +297,7 @@ const CreatorDashboard = () => {
                     <select className="px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-600 outline-none focus:ring-2 focus:ring-slate-200 cursor-pointer">
                         <option>Newest First</option>
                         <option>Most Viewed</option>
-                        <option>Most Stars</option>
+                        <option>Most Upvotes</option>
                     </select>
                 </div>
             </div>
@@ -346,8 +346,8 @@ const CreatorDashboard = () => {
                                             <div className="flex items-center gap-1.5 min-w-[60px]" title="Views">
                                                 <Eye className="w-4 h-4 text-slate-400" /> {item.views}
                                             </div>
-                                            <div className="flex items-center gap-1.5" title="Stars">
-                                                <Star className="w-4 h-4 text-slate-400" /> {item.stars}
+                                            <div className="flex items-center gap-1.5" title="Upvotes">
+                                                <ThumbsUp className="w-4 h-4 text-slate-400" /> {item.upvotes}
                                             </div>
                                         </div>
                                     </td>

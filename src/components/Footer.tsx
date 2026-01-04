@@ -135,7 +135,7 @@ const Footer = () => {
       try {
         const q = query(
           collection(db, 'community_resources'),
-          orderBy('stars', 'desc'),
+          orderBy('upvotes', 'desc'),
           limit(5)
         );
         const snap = await getDocs(q);

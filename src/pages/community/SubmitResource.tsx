@@ -141,6 +141,15 @@ const SubmitResource = () => {
       return;
     }
 
+    if (!formData.contactEmail.trim()) {
+      toast.error("Email is required");
+      return;
+    }
+    if (formData.monetization === 'paid' && (!formData.price || isNaN(Number(formData.price)))) {
+      toast.error("Enter a valid price");
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -168,8 +177,8 @@ const SubmitResource = () => {
         updatedAt: serverTimestamp(),
         downloads: 0,
         views: 0,
-        stars: 0,
-        starredBy: []
+        upvotes: 0,
+        upvotedBy: []
       };
 
       await addDoc(collection(db, 'community_resources'), resourceData);
