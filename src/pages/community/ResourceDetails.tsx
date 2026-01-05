@@ -36,6 +36,7 @@ interface Resource {
   isPaid: boolean;
   price?: number;
   tools: string[];
+  attachments?: Array<{ name: string; url: string; size?: number }>;
   userId: string;
   userName: string;
   userPhoto?: string;
@@ -60,6 +61,7 @@ const ResourceDetails = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [saving, setSaving] = useState(false);
   const [uploadingVideo, setUploadingVideo] = useState(false);
+  const [uploadingAttachment, setUploadingAttachment] = useState(false);
   const [starCount, setStarCount] = useState<number>(0);
   const [starred, setStarred] = useState<boolean>(false);
 
@@ -77,7 +79,8 @@ const ResourceDetails = () => {
     isPaid: false,
     contactEmail: '',
     contactPhone: '',
-    contactWebsite: ''
+    contactWebsite: '',
+    attachments: [] as Array<{ name: string; url: string; size?: number }>
   });
 
   // Toggle for Edit Modal (Link vs Upload)
@@ -109,7 +112,8 @@ const ResourceDetails = () => {
             isPaid: !!data.isPaid,
             contactEmail: data.contactEmail || '',
             contactPhone: data.contactPhone || '',
-            contactWebsite: data.contactWebsite || ''
+            contactWebsite: data.contactWebsite || '',
+            attachments: (data.attachments || []) as Array<{ name: string; url: string; size?: number }>
           });
 
           // Auto-detect video source type for edit modal
@@ -217,6 +221,43 @@ const ResourceDetails = () => {
     }
   };
 
+  const handleAttachmentsUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    if (files.length === 0) return;
+    try {
+      setUploadingAttachment(true);
+      for (const file of files) {
+        if (file.type.startsWith('image/') || file.type.startsWith('video/')) {
+          toast.error('Images and videos are not allowed here');
+          continue;
+        }
+        const data = new FormData();
+        data.append("file", file);
+        data.append("upload_preset", UPLOAD_PRESET as any);
+        const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/raw/upload`, {
+          method: "POST",
+          body: data
+        });
+        const json = await res.json();
+        if (json.secure_url) {
+          setEditForm(prev => ({
+            ...prev,
+            attachments: [...prev.attachments, { name: file.name, url: json.secure_url, size: file.size }]
+          }));
+        } else {
+          throw new Error(json.error?.message || 'Upload failed');
+        }
+      }
+      toast.success('Attachment(s) uploaded');
+    } catch (err) {
+      console.error(err);
+      toast.error('Failed to upload attachment');
+    } finally {
+      setUploadingAttachment(false);
+      if (e.target) e.target.value = '';
+    }
+  };
+
   const handleUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!resource || !user) return;
@@ -236,6 +277,7 @@ const ResourceDetails = () => {
         contactEmail: editForm.contactEmail,
         contactPhone: editForm.contactPhone,
         contactWebsite: editForm.contactWebsite,
+        attachments: editForm.attachments
       };
 
       await updateDoc(doc(db, 'community_resources', resource.id), updatedData as any);
@@ -496,23 +538,62 @@ const ResourceDetails = () => {
                                             </div>
                                         )}
                                     </div>
-                                </div>
                             </div>
+                          </div>
 
-                            {/* Section 5: Contact Info */}
-                            <div className="space-y-4 pt-4 border-t border-slate-100">
-                                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Contact Info</h3>
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                    <input value={editForm.contactEmail} onChange={e => setEditForm({...editForm, contactEmail: e.target.value})} className="p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none text-sm" placeholder="Email" />
-                                    <input value={editForm.contactPhone} onChange={e => setEditForm({...editForm, contactPhone: e.target.value})} className="p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none text-sm" placeholder="Phone" />
-                                    <input value={editForm.contactWebsite} onChange={e => setEditForm({...editForm, contactWebsite: e.target.value})} className="p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none text-sm" placeholder="Website" />
-                                </div>
+                          {/* Section 5: Contact Info */}
+                          <div className="space-y-4 pt-4 border-t border-slate-100">
+                            <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Contact Info</h3>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                              <input value={editForm.contactEmail} onChange={e => setEditForm({...editForm, contactEmail: e.target.value})} className="p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none text-sm" placeholder="Email" />
+                              <input value={editForm.contactPhone} onChange={e => setEditForm({...editForm, contactPhone: e.target.value})} className="p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none text-sm" placeholder="Phone" />
+                              <input value={editForm.contactWebsite} onChange={e => setEditForm({...editForm, contactWebsite: e.target.value})} className="p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none text-sm" placeholder="Website" />
                             </div>
+                          </div>
+
+                          {/* Section 6: Resource Files */}
+                          <div className="space-y-4 pt-4 border-t border-slate-100">
+                            <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Resource Files</h3>
+                            <div className="p-6 border-2 border-dashed border-slate-200 rounded-2xl bg-slate-50 flex flex-col gap-3 items-center justify-center text-center transition-all hover:border-indigo-300 hover:bg-indigo-50/30">
+                              <label className="cursor-pointer w-full h-full flex flex-col items-center justify-center py-4">
+                                {uploadingAttachment ? (
+                                  <Loader2 className="w-8 h-8 text-indigo-500 animate-spin mb-2" />
+                                ) : (
+                                  <Upload className="w-8 h-8 text-slate-400 mb-2" />
+                                )}
+                                <span className="text-sm font-bold text-slate-700">
+                                  {uploadingAttachment ? "Uploading..." : "Upload files (.zip, .json, .csv, .txt, .yaml)"}
+                                </span>
+                                <span className="text-xs text-slate-400 mt-1">Images/videos are not allowed here</span>
+                                <input type="file" multiple accept=".zip,.json,.csv,.txt,.yaml,.yml" className="hidden" onChange={handleAttachmentsUpload} disabled={uploadingAttachment} />
+                              </label>
+                              {editForm.attachments.length > 0 && (
+                                <div className="w-full">
+                                  <ul className="divide-y divide-slate-100 bg-white rounded-xl border border-slate-200">
+                                    {editForm.attachments.map((f, i) => (
+                                      <li key={`${f.name}-${i}`} className="flex items-center justify-between px-4 py-2 text-sm">
+                                        <a href={f.url} target="_blank" rel="noopener noreferrer" className="font-medium text-slate-700 hover:text-indigo-600 truncate">
+                                          {f.name}
+                                        </a>
+                                        <button
+                                          type="button"
+                                          onClick={() => setEditForm(prev => ({ ...prev, attachments: prev.attachments.filter((_, idx) => idx !== i) }))}
+                                          className="p-1.5 rounded-md text-rose-600 hover:bg-rose-50"
+                                        >
+                                          <Trash2 className="w-4 h-4" />
+                                        </button>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              )}
+                            </div>
+                          </div>
                         </div>
 
                         <div className="p-6 border-t border-slate-100 bg-slate-50 flex justify-between items-center sticky bottom-0 z-10">
-                            <button onClick={handleDelete} className="text-rose-600 text-sm font-bold hover:text-rose-700 flex items-center gap-2 px-4 py-2 hover:bg-rose-50 rounded-lg transition-colors">
-                                <Trash2 className="w-4 h-4" /> Delete
+                          <button onClick={handleDelete} className="text-rose-600 text-sm font-bold hover:text-rose-700 flex items-center gap-2 px-4 py-2 hover:bg-rose-50 rounded-lg transition-colors">
+                            <Trash2 className="w-4 h-4" /> Delete
                             </button>
                             <div className="flex gap-3">
                                 <button onClick={() => setIsEditing(false)} className="px-6 py-3 bg-white border border-slate-200 text-slate-700 font-bold rounded-xl hover:bg-slate-50 transition-colors">Cancel</button>
@@ -613,6 +694,23 @@ const ResourceDetails = () => {
                                 <h3 className="text-base lg:text-lg font-bold text-slate-900 mb-3 flex items-center gap-2"><Zap className="w-4 h-4 lg:w-5 lg:h-5 text-amber-500" /> How it Works</h3>
                                 <div className="prose prose-slate max-w-none text-slate-600 leading-relaxed whitespace-pre-line text-sm lg:text-base">{resource.whatItDoes}</div>
                             </section>
+                        )}
+                        {resource.attachments && resource.attachments.length > 0 && (
+                          <section className="bg-white p-6 lg:p-8 rounded-[1.5rem] lg:rounded-[2rem] border border-slate-200 shadow-sm">
+                            <h3 className="text-base lg:text-lg font-bold text-slate-900 mb-3 flex items-center gap-2"><Box className="w-4 h-4 lg:w-5 lg:h-5 text-indigo-500" /> Resource Files</h3>
+                            <ul className="divide-y divide-slate-100 bg-white rounded-xl border border-slate-200">
+                              {resource.attachments.map((f, i) => (
+                                <li key={`${f.name}-${i}`} className="flex items-center justify-between px-4 py-2 text-sm">
+                                  <a href={f.url} target="_blank" rel="noopener noreferrer" className="font-medium text-slate-700 hover:text-indigo-600 truncate">
+                                    {f.name}
+                                  </a>
+                                  <a href={f.url} target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 text-xs font-bold bg-slate-900 text-white rounded-lg hover:bg-slate-800">
+                                    Download
+                                  </a>
+                                </li>
+                              ))}
+                            </ul>
+                          </section>
                         )}
                         <div className="hidden lg:block pt-8 border-t border-slate-200">
                             <ResourceDiscussion resourceId={resource.id} />

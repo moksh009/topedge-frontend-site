@@ -17,6 +17,8 @@ const SubmitResource = () => {
   const [checkingLimit, setCheckingLimit] = useState(true);
   const [needsProfile, setNeedsProfile] = useState(false);
   const [uploadingVideo, setUploadingVideo] = useState(false);
+  const [uploadingAttachment, setUploadingAttachment] = useState(false);
+  const [attachments, setAttachments] = useState<Array<{ name: string; url: string; size?: number }>>([]);
   
   const CLOUD_NAME = "dn9gh1goq";
   const UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || "YOUR_UPLOAD_PRESET_HERE";
@@ -173,6 +175,7 @@ const SubmitResource = () => {
         category: formData.category,
         isHiring: formData.isHiring,
         tags: [],
+        attachments,
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
         downloads: 0,
@@ -189,6 +192,40 @@ const SubmitResource = () => {
       toast.error("Failed to publish. Please try again.");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleAttachmentsUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    if (files.length === 0) return;
+    try {
+      setUploadingAttachment(true);
+      for (const file of files) {
+        if (file.type.startsWith('image/') || file.type.startsWith('video/')) {
+          toast.error('Images and videos are not allowed here');
+          continue;
+        }
+        const data = new FormData();
+        data.append("file", file);
+        data.append("upload_preset", UPLOAD_PRESET);
+        const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/raw/upload`, {
+          method: "POST",
+          body: data
+        });
+        const json = await res.json();
+        if (json.secure_url) {
+          setAttachments(prev => [...prev, { name: file.name, url: json.secure_url, size: file.size }]);
+        } else {
+          throw new Error(json.error?.message || 'Upload failed');
+        }
+      }
+      toast.success('Attachment(s) uploaded');
+    } catch (err) {
+      console.error(err);
+      toast.error('Failed to upload attachment');
+    } finally {
+      setUploadingAttachment(false);
+      e.target.value = '';
     }
   };
 
@@ -435,6 +472,43 @@ const SubmitResource = () => {
                         className="w-full px-5 py-4 pl-12 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 outline-none transition-all font-medium placeholder:text-slate-400"
                       />
                       <Video className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                    </div>
+                  </div>
+                  <div className="space-y-2 pt-4">
+                    <label className="text-sm font-bold text-slate-700">Attachments</label>
+                    <div className="p-6 border-2 border-dashed border-slate-200 rounded-2xl bg-slate-50 flex flex-col gap-3 items-center justify-center text-center transition-all hover:border-indigo-300 hover:bg-indigo-50/30">
+                      <label className="cursor-pointer w-full h-full flex flex-col items-center justify-center py-4">
+                        {uploadingAttachment ? (
+                          <Loader2 className="w-8 h-8 text-indigo-500 animate-spin mb-2" />
+                        ) : (
+                          <Upload className="w-8 h-8 text-slate-400 mb-2" />
+                        )}
+                        <span className="text-sm font-bold text-slate-700">
+                          {uploadingAttachment ? "Uploading..." : "Upload files (.zip, .json, .csv, .txt, .yaml)"}
+                        </span>
+                        <span className="text-xs text-slate-400 mt-1">Images/videos are not allowed here</span>
+                        <input type="file" multiple accept=".zip,.json,.csv,.txt,.yaml,.yml" className="hidden" onChange={handleAttachmentsUpload} disabled={uploadingAttachment} />
+                      </label>
+                      {attachments.length > 0 && (
+                        <div className="w-full">
+                          <ul className="divide-y divide-slate-100 bg-white rounded-xl border border-slate-200">
+                            {attachments.map((f, i) => (
+                              <li key={`${f.name}-${i}`} className="flex items-center justify-between px-4 py-2 text-sm">
+                                <a href={f.url} target="_blank" rel="noopener noreferrer" className="font-medium text-slate-700 hover:text-indigo-600 truncate">
+                                  {f.name}
+                                </a>
+                                <button
+                                  type="button"
+                                  onClick={() => setAttachments(prev => prev.filter((_, idx) => idx !== i))}
+                                  className="p-1.5 rounded-md text-rose-600 hover:bg-rose-50"
+                                >
+                                  <Trash2 className="w-4 h-4" />
+                                </button>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>

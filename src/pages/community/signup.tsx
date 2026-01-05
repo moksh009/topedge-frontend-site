@@ -6,9 +6,14 @@ import { doc, setDoc } from 'firebase/firestore';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Loader2, UserPlus, User, Mail, Lock, AlertCircle } from 'lucide-react';
 
+// Import phone input and its styles
+import 'react-phone-number-input/style.css';
+import PhoneInput from 'react-phone-number-input';
+
 const Signup = () => {
   const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
+  // Phone state will now hold the full number including country code (e.g., +15550000000)
+  const [phone, setPhone] = useState<string | undefined>();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -27,13 +32,14 @@ const Signup = () => {
       // Update display name
       await updateProfile(user, { displayName: name });
 
-      // Save user's name and phone number to Firestore
+      // Save user details to Firestore
+      // Note: 'phone' variable now contains the full international format (e.g., +123456789)
       await setDoc(doc(db, 'users', user.uid), {
         name: name,
-        phone: phone,
+        phone: phone || '', // Ensure it's not undefined
         email: user.email,
         createdAt: new Date().toISOString(),
-        role: 'member', // Default role
+        role: 'member',
       });
 
       navigate('/community/home');
@@ -43,8 +49,6 @@ const Signup = () => {
         setError('Email is already in use.');
       } else if (err.code === 'auth/weak-password') {
         setError('Password should be at least 6 characters.');
-      } else if (err.code === 'auth/configuration-not-found' || err.message?.includes('CONFIGURATION_NOT_FOUND')) {
-        setError('Authentication is not enabled. Please enable "Email/Password" provider in Firebase Console -> Authentication -> Sign-in method.');
       } else {
         setError(err.message || 'Failed to create account.');
       }
@@ -99,10 +103,11 @@ const Signup = () => {
           )}
 
           <form onSubmit={handleSignup} className="space-y-5">
+            {/* Full Name Input */}
             <div className="space-y-1.5">
               <label className="text-sm font-semibold text-gray-700 ml-1">Full Name</label>
               <div className="relative group">
-                <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-blue-500 transition-colors" />
+                <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-blue-500 transition-colors z-10" />
                 <input
                   type="text"
                   value={name}
@@ -114,22 +119,56 @@ const Signup = () => {
               </div>
             </div>
 
+            {/* Phone Number Input with Country Code */}
             <div className="space-y-1.5">
               <label className="text-sm font-semibold text-gray-700 ml-1">Phone Number</label>
               <div className="relative group">
-                 {/* Reusing User icon or maybe Phone icon if imported, sticking to consistency */}
-                 <div className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-blue-500 transition-colors font-bold text-xs flex items-center justify-center">#</div>
-                <input
-                  type="tel"
+                {/* We apply a custom class to override the library's default styles 
+                   to match your glassmorphism UI.
+                */}
+                <style>{`
+                  .PhoneInput {
+                    display: flex;
+                    align-items: center;
+                    background-color: rgba(255, 255, 255, 0.5);
+                    border: 1px solid #e5e7eb;
+                    border-radius: 0.75rem; /* rounded-xl */
+                    padding: 0.5rem 1rem;
+                    transition: all 0.2s;
+                  }
+                  .PhoneInput:focus-within {
+                    border-color: #3b82f6;
+                    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+                  }
+                  .PhoneInputInput {
+                    background: transparent;
+                    border: none;
+                    outline: none;
+                    color: #111827;
+                    font-size: 1rem;
+                    padding-top: 0.5rem;
+                    padding-bottom: 0.5rem;
+                    width: 100%;
+                  }
+                  .PhoneInputInput::placeholder {
+                    color: #9ca3af;
+                  }
+                  .PhoneInputCountry {
+                    margin-right: 0.75rem;
+                  }
+                `}</style>
+                <PhoneInput
+                  international
+                  defaultCountry="US"
                   value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  className="w-full bg-white/50 border border-gray-200 rounded-xl py-3.5 pl-12 pr-4 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
-                  placeholder="+1 (555) 000-0000"
-                  required
+                  onChange={setPhone}
+                  placeholder="Enter phone number"
+                  className="w-full"
                 />
               </div>
             </div>
 
+            {/* Email Input */}
             <div className="space-y-1.5">
               <label className="text-sm font-semibold text-gray-700 ml-1">Email Address</label>
               <div className="relative group">
@@ -145,6 +184,7 @@ const Signup = () => {
               </div>
             </div>
 
+            {/* Password Input */}
             <div className="space-y-1.5">
               <label className="text-sm font-semibold text-gray-700 ml-1">Password</label>
               <div className="relative group">
