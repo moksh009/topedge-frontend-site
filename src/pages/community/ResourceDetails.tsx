@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ArrowLeft, Loader2, ExternalLink, User, Clock, 
   Edit2, Trash2, CheckCircle2, Share2, 
-  Sparkles, Zap, Box, Upload, X, PlayCircle,
+  Sparkles, Zap, Box, Upload, X, PlayCircle, Lock,
   ArrowRight, Star, ThumbsUp, DollarSign, Link as LinkIcon, Video
 } from 'lucide-react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -158,6 +158,10 @@ const ResourceDetails = () => {
     }
     // Return original if it's not a standard YouTube link (could be Vimeo, etc., or already embedded)
     return url; 
+  };
+
+  const handleLockedAttachmentClick = () => {
+    toast.error("Unlock attachments by buying this resource");
   };
 
   const toggleStar = async () => {
@@ -701,12 +705,19 @@ const ResourceDetails = () => {
                             <ul className="divide-y divide-slate-100 bg-white rounded-xl border border-slate-200">
                               {resource.attachments.map((f, i) => (
                                 <li key={`${f.name}-${i}`} className="flex items-center justify-between px-4 py-2 text-sm">
-                                  <a href={f.url} target="_blank" rel="noopener noreferrer" className="font-medium text-slate-700 hover:text-indigo-600 truncate">
+                                  <a href={resource.isPaid ? undefined : f.url} target={resource.isPaid ? undefined : "_blank"} rel={resource.isPaid ? undefined : "noopener noreferrer"} className="font-medium text-slate-700 hover:text-indigo-600 truncate">
                                     {f.name}
                                   </a>
-                                  <a href={f.url} target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 text-xs font-bold bg-slate-900 text-white rounded-lg hover:bg-slate-800">
-                                    Download
-                                  </a>
+                                  {resource.isPaid ? (
+                                    <button onClick={handleLockedAttachmentClick} className="px-3 py-1.5 text-xs font-bold bg-slate-100 text-slate-600 rounded-lg border border-slate-200 hover:bg-slate-200 flex items-center gap-1">
+                                      <Lock className="w-3 h-3" />
+                                      Download
+                                    </button>
+                                  ) : (
+                                    <a href={f.url} target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 text-xs font-bold bg-slate-900 text-white rounded-lg hover:bg-slate-800">
+                                      Download
+                                    </a>
+                                  )}
                                 </li>
                               ))}
                             </ul>

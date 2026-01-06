@@ -67,7 +67,7 @@ const CommunityHome = () => {
 
   return (
     <CommunityLayout>
-      <div className="bg-[#F8F9FB] min-h-screen text-slate-900 font-sans selection:bg-indigo-500 selection:text-white pb-20">
+      <div className="bg-[#F8F9FB] min-h-screen text-slate-900 font-sans selection:bg-indigo-500 selection:text-white pb-20 -mt-0 lg:-mt-20 ">
 
         {/* ================= HERO SECTION ================= */}
         <section className="relative pt-40 pb-20 md:pt-48 md:pb-32 overflow-hidden">
