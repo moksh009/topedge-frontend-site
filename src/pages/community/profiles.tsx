@@ -42,6 +42,8 @@ const CommunityProfiles = () => {
   const [activeHireId, setActiveHireId] = useState<string | null>(null);
   const [resourcesByUser, setResourcesByUser] = useState<Record<string, { count: number; upvotes: number }>>({});
 
+  // REMOVED: Scroll listener logic that caused flickering
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -215,32 +217,42 @@ const CommunityProfiles = () => {
 
   return (
     <CommunityLayout>
-      <div className="min-h-screen bg-[#F8F9FB] text-slate-900 font-sans selection:bg-indigo-500 selection:text-white pb-20">
+      <div className="min-h-screen bg-[#F8F9FB] text-slate-900 font-sans selection:bg-indigo-500 selection:text-white pb-14 md:pb-20">
         
         <div className="fixed inset-0 pointer-events-none opacity-[0.4]" style={{ backgroundImage: 'radial-gradient(#cbd5e1 1px, transparent 1px)', backgroundSize: '32px 32px' }}></div>
 
         <div className="container relative mx-auto px-4 sm:px-6 max-w-7xl pt-24 sm:pt-16">
 
           {/* Hero */}
-          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-12 lg:mb-16 gap-8">
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-2xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-slate-200 shadow-sm text-[10px] sm:text-xs font-bold uppercase tracking-wider text-indigo-600 mb-4 sm:mb-6">
+          <div className="flex flex-col lg:flex-row justify-between items-center lg:items-end mb-12 lg:mb-16 gap-8">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }} 
+              animate={{ opacity: 1, y: 0 }} 
+              className="max-w-2xl flex flex-col items-center lg:items-start w-full"
+            >
+              <div className="inline-flex justify-center gap-2 px-3 py-1 rounded-full bg-white border border-slate-200 shadow-sm text-[10px] sm:text-xs font-bold uppercase tracking-wider text-indigo-600 mb-4 sm:mb-6">
                 <UserPlus className="w-3.5 h-3.5" />
                 Talent Directory
               </div>
-              <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-slate-900 mb-4 sm:mb-6 leading-[1.1] sm:leading-tight">
+              
+              <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-slate-900 mb-4 sm:mb-6 leading-[1.1] sm:leading-tight text-center lg:text-left">
                 Connect with the <br/>
                 <span className="text-slate-400">Builders & Architects.</span>
               </h1>
-              <p className="text-base sm:text-lg text-slate-500 leading-relaxed max-w-xl">
+              
+              <p className="text-base sm:text-lg text-slate-500 leading-relaxed max-w-xl text-center lg:text-left">
                 A curated network of AI engineers, automation specialists, and founders.
               </p>
             </motion.div>
             
-            <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="w-full sm:w-auto">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9 }} 
+              animate={{ opacity: 1, scale: 1 }} 
+              className="w-full sm:w-auto flex justify-center lg:justify-end"
+            >
               <Link 
                 to="/community/promote-profile"
-                className="group w-full sm:w-auto relative inline-flex items-center justify-center gap-3 px-6 py-3.5 sm:px-8 sm:py-4 bg-slate-900 text-white rounded-2xl font-bold overflow-hidden shadow-xl shadow-slate-200 hover:-translate-y-1 transition-all"
+                className="group w-auto relative inline-flex items-center justify-center gap-3 px-6 py-3.5 sm:px-8 sm:py-4 bg-slate-900 text-white rounded-2xl font-bold overflow-hidden shadow-xl shadow-slate-200 hover:-translate-y-1 transition-all"
               >
                 <span className="relative text-sm sm:text-base">Create Public Profile</span>
                 <ArrowRight className="w-4 h-4 relative transition-transform group-hover:translate-x-1" />
@@ -248,12 +260,13 @@ const CommunityProfiles = () => {
             </motion.div>
           </div>
 
-          {/* Search Bar */}
+          {/* --- FIXED SEARCH BAR (No Flickering) --- */}
+          {/* Changed 'sticky top-20' to 'relative' so it stays on page */}
           <motion.div 
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="sticky top-20 sm:top-24 z-30 mb-10 sm:mb-12"
+            className="relative z-30 mb-10 sm:mb-12"
           >
              <div className="relative group w-full max-w-2xl mx-auto md:mx-0">
                 <div className="absolute inset-0 bg-white/80 backdrop-blur-xl rounded-2xl shadow-lg shadow-slate-200/50" />
@@ -308,7 +321,8 @@ const CommunityProfiles = () => {
                       title="Profiles visible after launch"
                       description="Create your profile now. Directory unlocks on launch day."
                     >
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 pb-12">
+                      {/* Grid with mobile height restriction */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 pb-12 max-h-[500px] md:max-h-none overflow-hidden">
                         {otherProfiles.map((profile) => <ProfileCard key={profile.id} profile={profile} />)}
                       </div>
                     </LaunchGate>

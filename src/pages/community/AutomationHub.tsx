@@ -33,7 +33,7 @@ interface Resource {
   isHiring?: boolean;
 }
 
-// ... ResourceCard Component (Kept same as before, condensed for brevity) ...
+// ... ResourceCard Component ...
 const ResourceCard = ({ resource, index, currentUser }: { resource: Resource; index: number; currentUser: any }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isHovering, setIsHovering] = useState(false);
@@ -253,12 +253,12 @@ const AutomationHub = () => {
 
   return (
     <CommunityLayout>
-      <div className="min-h-screen bg-[#FAFAFA] text-slate-900 font-sans selection:bg-slate-900 selection:text-white pb-20">
+      <div className="min-h-screen bg-[#FAFAFA] text-slate-900 font-sans selection:bg-slate-900 selection:text-white pb-14 md:pb-20">
         
         {/* Subtle Noise Texture */}
         <div className="fixed inset-0 pointer-events-none opacity-[0.02]" style={{ backgroundImage: 'url("https://grainy-gradients.vercel.app/noise.svg")' }}></div>
 
-        <div className="container relative z-10 mx-auto px-6 max-w-7xl pt-16">
+        <div className="container relative z-10 mx-auto px-6 max-w-7xl pt-12 md:pt-16">
           
           {/* ================= HEADER SECTION ================= */}
           <div className="flex flex-col lg:flex-row justify-between items-center lg:items-end mb-16 gap-8 lg:gap-12">
@@ -287,35 +287,35 @@ const AutomationHub = () => {
             {/* Right: Actions (Top Builders + Button) */}
             <div className="flex flex-col items-center lg:items-end gap-6 w-full lg:w-auto">
                
-               {/* Builders Widget - Properly Contained */}
+               {/* Builders Widget */}
                <div className="w-full max-w-sm">
                   <TopBuilders />
                </div>
 
-               {/* Promote Button - Aligned and Styled */}
+               {/* Promote Button */}
+               {/* UPDATED: w-20% logic (w-auto) instead of full on mobile */}
                <motion.button 
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={handlePromoteProject}
-                  className="group relative w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 bg-slate-900 text-white rounded-2xl font-bold shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-slate-300/50 transition-all overflow-hidden"
+                  className="group relative w-auto inline-flex items-center justify-center gap-3 px-8 py-4 bg-slate-900 text-white rounded-2xl font-bold shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-slate-300/50 transition-all overflow-hidden"
                 >
-                  {/* Subtle Gradient Glow Effect */}
                   <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/0 via-white/10 to-indigo-500/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
-                  
                   <Plus className="w-5 h-5 relative z-10" />
                   <span className="relative z-10">Promote Your Resource</span>
                 </motion.button>
             </div>
           </div>
 
-          {/* ================= CONTROLS TOOLBAR ================= */}
+          {/* ================= CONTROLS TOOLBAR (Improved Mobile UI) ================= */}
+          {/* UPDATED: sticky -> relative to fix flickering. Better flex layout for mobile. */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="sticky top-24 z-30 mb-12"
+            className="relative z-30 mb-12"
           >
             <div className="p-2 bg-white/80 backdrop-blur-xl border border-slate-200 rounded-[24px] shadow-lg shadow-slate-200/50 flex flex-col md:flex-row gap-2">
               
@@ -328,19 +328,20 @@ const AutomationHub = () => {
                   placeholder="Search workflows, stacks, or creators..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-14 pr-4 h-14 bg-transparent rounded-xl text-slate-900 placeholder:text-slate-400 font-medium outline-none border border-transparent focus:bg-white focus:border-slate-300 transition-all"
+                  className="w-full pl-14 pr-4 h-12 md:h-14 bg-transparent rounded-xl text-slate-900 placeholder:text-slate-400 font-medium outline-none border border-transparent focus:bg-white focus:border-slate-300 transition-all text-sm md:text-base"
                 />
               </div>
 
               <div className="hidden md:block w-px h-10 bg-slate-200 my-auto mx-2" />
 
-              <div className="flex bg-slate-100/50 p-1 rounded-xl overflow-x-auto no-scrollbar">
+              {/* Mobile Filter Scroll - Improved UI */}
+              <div className="flex bg-slate-100/50 p-1 rounded-xl overflow-x-auto no-scrollbar pb-1 md:pb-0">
                 {(['all', 'free', 'paid', 'collab'] as const).map((f) => (
                   <button
                     key={f}
                     onClick={() => setFilter(f)}
                     className={cn(
-                      "px-6 h-12 rounded-lg text-sm font-bold capitalize transition-all duration-300 whitespace-nowrap",
+                      "px-6 h-10 md:h-12 rounded-lg text-sm font-bold capitalize transition-all duration-300 whitespace-nowrap flex-shrink-0",
                       filter === f 
                         ? "bg-white text-slate-900 shadow-sm ring-1 ring-slate-200" 
                         : "text-slate-500 hover:text-slate-700 hover:bg-slate-200/50"
@@ -391,9 +392,10 @@ const AutomationHub = () => {
                       title="Marketplace visible after launch"
                       description="Promote your resource now. Listings unlock on launch day."
                     >
+                      {/* UPDATED: Added max-h-[500px] + overflow-hidden for mobile to fix height issue */}
                       <motion.div 
                         layout
-                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-12"
+                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-12 max-h-[500px] md:max-h-none overflow-hidden"
                       >
                         <AnimatePresence>
                           {otherResources.map((resource, index) => (

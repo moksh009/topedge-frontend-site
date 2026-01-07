@@ -73,11 +73,11 @@ export default function LaunchGate({
     <div className={cn('relative w-full', className)}>
       
       {/* ================= BLURRED CONTENT LAYER ================= */}
-      {/* Added min-height so the gate always has room to show, even if children are empty */}
       <div
         aria-hidden="true"
         className={cn(
-          'transition-all duration-700 ease-in-out select-none pointer-events-none min-h-[400px]',
+          // CHANGED: Increased md:min-h to [550px] to prevent desktop clipping
+          'transition-all duration-700 ease-in-out select-none pointer-events-none min-h-[360px] md:min-h-[550px]',
           dark ? 'blur-xl brightness-[0.3] grayscale-[0.6]' : 'blur-xl opacity-30 grayscale-[0.3]'
         )}
       >
@@ -85,14 +85,18 @@ export default function LaunchGate({
       </div>
 
       {/* ================= THE GATE OVERLAY ================= */}
-      <div className="absolute inset-0 z-20 flex items-center justify-center p-4 sm:p-6">
+      {/* Mobile: items-start + pt-10 (Stick to top to avoid gap)
+          Desktop: items-center + pt-0 (Center aligned)
+          Removed overflow-hidden to prevent clipping shadows
+      */}
+      <div className="absolute inset-0 z-20 flex items-start md:items-center justify-center px-4 pt-10 md:pt-0 pb-4">
         
         <motion.div 
           initial={{ opacity: 0, scale: 0.95, y: 10 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
           className={cn(
-            'relative w-full max-w-[340px] sm:max-w-[480px]', // Adjusted max-widths for mobile/tablet
+            'relative w-full max-w-[340px] sm:max-w-[480px]', 
             'rounded-[2rem] sm:rounded-[2.5rem] p-px', 
             'shadow-2xl'
           )}
@@ -171,7 +175,7 @@ export default function LaunchGate({
                  <TimeCard value={timeLeft.seconds} label="Secs" />
               </div>
 
-              {/* 5. Action Buttons (Stacked on very small, row on larger) */}
+              {/* 5. Action Buttons */}
               <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
                 <Link
                   to="/community/promote-profile"

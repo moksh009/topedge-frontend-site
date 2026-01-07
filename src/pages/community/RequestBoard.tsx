@@ -146,7 +146,6 @@ export default function RequestBoard() {
           // Update Existing
           await updateDoc(doc(db, 'community_requests', editingId), {
               ...data,
-              // Only update timestamp if you want to bump it, usually keeping original is better or adding updatedAt
           });
           toast.success("Request updated!");
       } else {
@@ -208,23 +207,18 @@ export default function RequestBoard() {
     <CommunityLayout>
       <div className="min-h-screen bg-[#FAFAFA] text-slate-900 font-sans pb-24 relative overflow-hidden">
         
-        {/* Background Atmosphere */}
-        <div className="fixed inset-0 pointer-events-none">
-            <div className="absolute top-[-20%] right-[-10%] w-[800px] h-[800px] bg-indigo-500/5 rounded-full blur-[120px]" />
-            <div className="absolute top-[20%] left-[-10%] w-[600px] h-[600px] bg-blue-500/5 rounded-full blur-[100px]" />
-            <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'url("https://grainy-gradients.vercel.app/noise.svg")' }}></div>
-        </div>
-
-        <div className="container relative mx-auto px-4 sm:px-6 max-w-7xl pt-12">
+        <div className="container relative mx-auto px-4 sm:px-6 max-w-7xl pt-10 md:pt-12">
           
           {/* Header */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
-            <div className="relative z-10">
+          {/* UPDATED: flex-col items-center (mobile) -> md:flex-row md:items-end (desktop) */}
+          {/* UPDATED: mb-6 md:mb-10 (Reduced margin bottom) */}
+          <div className="flex flex-col items-center md:flex-row md:items-end justify-between mb-6 md:mb-10 gap-8 text-center md:text-left">
+            <div className="relative z-10 flex flex-col items-center md:items-start">
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-slate-200 text-[11px] font-bold uppercase tracking-wider text-indigo-600 mb-5 shadow-sm">
                 <Sparkles className="w-3 h-3" />
                 Reverse Marketplace
               </div>
-              <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-slate-900 mb-4 leading-tight">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-4 leading-tight">
                 Community Requests
               </h1>
               <p className="text-lg text-slate-500 max-w-xl leading-relaxed">
@@ -236,7 +230,7 @@ export default function RequestBoard() {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={handlePostClick}
-              className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 bg-slate-900 text-white rounded-2xl font-bold shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-slate-300/50 transition-all overflow-hidden"
+              className="w-fit group relative inline-flex justify-center gap-3 px-8 py-4 bg-slate-900 text-white rounded-2xl font-bold shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-slate-300/50 transition-all overflow-hidden"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[length:200%_auto] animate-gradient" />
               <span className="relative z-10 flex items-center gap-2">
@@ -400,7 +394,8 @@ export default function RequestBoard() {
           )}
         </div>
 
-        {/* --- SUBMIT / EDIT MODAL --- */}
+        {/* ... (Existing Modals: Submit/Edit & Contact) ... */}
+        {/* Keeping the modals exactly as they were in your previous code snippet to save space */}
         <AnimatePresence>
           {open && (
             <div className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-4 sm:p-6">

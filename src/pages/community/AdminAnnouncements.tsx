@@ -75,7 +75,7 @@ const AdminAnnouncements = () => {
 
   return (
     <CommunityLayout>
-      <div className="min-h-screen bg-[#F8F9FB] pb-20 pt-12 relative overflow-hidden">
+      <div className="min-h-screen bg-[#F8F9FB] pb-14 md:pb-20 pt-10 md:pt-12 relative overflow-hidden">
         
         {/* Background Pattern */}
         <div className="absolute inset-0 pointer-events-none opacity-[0.4]" style={{ backgroundImage: 'radial-gradient(#cbd5e1 1px, transparent 1px)', backgroundSize: '32px 32px' }}></div>
@@ -98,7 +98,7 @@ const AdminAnnouncements = () => {
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 text-white text-xs font-bold uppercase tracking-wider mb-4">
                <Megaphone className="w-3 h-3" /> Admin Console
             </div>
-            <h1 className="text-4xl font-bold text-slate-900 tracking-tight mb-2">Broadcast Update</h1>
+            <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight mb-2">Broadcast Update</h1>
             <p className="text-slate-500 text-lg">
               Push a new notification to the community feed.
             </p>

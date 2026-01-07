@@ -160,15 +160,15 @@ const CreatorDashboard = () => {
 
   return (
     <CommunityLayout>
-      <div className="min-h-screen bg-[#F8F9FB] text-slate-900 font-sans pb-24">
+      <div className="min-h-screen bg-[#F8F9FB] text-slate-900 font-sans pb-16 md:pb-24">
         
         {/* Background Pattern */}
         <div className="fixed inset-0 pointer-events-none opacity-[0.03]" style={{ backgroundImage: 'url("https://grainy-gradients.vercel.app/noise.svg")' }}></div>
 
-        <div className="container relative mx-auto px-4 sm:px-6 max-w-7xl pt-10">
+        <div className="container relative mx-auto px-4 sm:px-6 max-w-7xl pt-8 md:pt-10">
           
           {/* Header */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 md:mb-10 gap-6">
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 text-xs font-bold uppercase tracking-wider mb-3">
                 <BarChart3 className="w-3.5 h-3.5" />

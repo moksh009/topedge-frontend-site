@@ -82,15 +82,9 @@ const socialLinks = [
   },
   { 
     icon: Youtube, 
-    href: 'https://www.youtube.com/@TopEdgeNetwork', 
+    href: 'https://www.youtube.com/@topedge_ai', 
     label: 'YouTube',
     color: 'hover:bg-red-500 hover:text-white hover:border-red-500'
-  },
-  { 
-    icon: Twitter, 
-    href: 'https://x.com/TopEdgeNetwork', 
-    label: 'X',
-    color: 'hover:bg-black hover:text-white hover:border-black'
   },
   {
     icon: Linkedin,
@@ -149,20 +143,20 @@ const Footer = () => {
   }, [isCommunity]);
 
   return (
-    <footer className="relative bg-white pt-24 pb-0 overflow-hidden">
+    <footer className="relative bg-white pt-12 md:pt-20 pb-0 overflow-hidden">
       
       {/* --- HUGE WATERMARK --- */}
       {/* Positioned absolute bottom, z-0 so it sits BEHIND the glass card */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full text-center pointer-events-none select-none z-0">
-        <h1 className="text-[20vw] font-black text-[#F3F4F6] leading-none tracking-tighter">
+        <h1 className="text-[16vw] md:text-[20vw] font-black text-[#F3F4F6] leading-none tracking-tighter">
           TOPEDGE
         </h1>
       </div>
 
-      <div className="container relative z-10 mx-auto px-4 sm:px-6 max-w-7xl pb-12">
+      <div className="container relative z-10 mx-auto px-4 sm:px-6 max-w-7xl pb-8 md:pb-12">
         
         {/* Main Footer Card - Glassmorphism enabled to show watermark */}
-        <div className="bg-white/80 backdrop-blur-xl rounded-[2.5rem] p-8 md:p-12 shadow-xl shadow-slate-200/50 border border-white/50">
+        <div className="bg-white/80 backdrop-blur-xl rounded-[2.5rem] p-6 md:p-10 shadow-xl shadow-slate-200/50 border border-white/50">
           
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8">
             
@@ -205,23 +199,7 @@ const Footer = () => {
             {/* LINKS COLUMNS (Span 8 - Divided into 3) */}
             <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
                
-               {/* Column 1: Solutions */}
-               <div>
-                  <h4 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-6">Solutions</h4>
-                  <ul className="space-y-4">
-                     {services.map((service, idx) => (
-                        <li key={idx}>
-                           <button 
-                              onClick={() => handleServiceClick(service.path, service.section)}
-                              className="group flex items-center gap-2 text-slate-500 hover:text-slate-900 transition-colors text-left"
-                           >
-                              <span className="w-1.5 h-1.5 rounded-full bg-slate-300 group-hover:bg-slate-900 transition-colors" />
-                              <span className="font-medium">{service.title}</span>
-                           </button>
-                        </li>
-                     ))}
-                  </ul>
-               </div>
+              
 
                {/* Column 2: Company/Community */}
                <div>

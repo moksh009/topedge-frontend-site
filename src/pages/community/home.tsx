@@ -5,7 +5,7 @@ import { db } from '@/services/firebase';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { collection, getDocs, limit, orderBy, query } from 'firebase/firestore';
-import { ArrowRight, CheckCircle2, Code2, Users, Zap, Terminal, Sparkles, MoveRight } from 'lucide-react';
+import { ArrowRight, Code2, Sparkles, MoveRight, Terminal } from 'lucide-react';
 import LaunchGate from '@/components/ui/LaunchGate';
 import { useAuth } from '@/contexts/AuthContext';
 
@@ -67,10 +67,10 @@ const CommunityHome = () => {
 
   return (
     <CommunityLayout>
-      <div className="bg-[#F8F9FB] min-h-screen text-slate-900 font-sans selection:bg-indigo-500 selection:text-white pb-20 -mt-0 lg:-mt-20 ">
+      <div className="bg-[#F8F9FB] min-h-screen text-slate-900 font-sans selection:bg-indigo-500 selection:text-white pb-0">
 
         {/* ================= HERO SECTION ================= */}
-        <section className="relative pt-40 pb-20 md:pt-48 md:pb-32 overflow-hidden">
+        <section className="relative pt-28 pb-12 md:pt-36 md:pb-20 overflow-hidden">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-indigo-200/20 rounded-full blur-[100px] pointer-events-none" />
           
           <div className="container relative z-10 mx-auto px-6 max-w-5xl text-center">
@@ -84,22 +84,22 @@ const CommunityHome = () => {
                 Community 2.0
               </div>
 
-              <h1 className="text-5xl md:text-8xl font-bold tracking-tighter text-slate-900 leading-[1.1] md:leading-[0.95] mb-8">
+              <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tighter text-slate-900 leading-[1.15] md:leading-[1.05] mb-6">
                 Build smarter. <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-br from-indigo-600 to-violet-500">
                   Ship faster.
                 </span>
               </h1>
 
-              <p className="text-xl text-slate-500 max-w-2xl mx-auto mb-12 leading-relaxed font-light px-4">
+              <p className="text-base sm:text-lg text-slate-500 max-w-2xl mx-auto mb-8 leading-relaxed font-light px-4">
                 The premier ecosystem for AI engineers. Access production-grade workflows and connect with top-tier talent.
               </p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-5 px-6">
-                <PremiumButton to="/community/automation-hub" variant="primary" className="w-full sm:w-auto">
+                <PremiumButton to="/community/automation-hub" variant="primary" className="w-20% sm:w-auto">
                   Explore Hub <ArrowRight className="w-4 h-4" />
                 </PremiumButton>
-                <PremiumButton to="/community/promote-profile" variant="secondary" className="w-full sm:w-auto">
+                <PremiumButton to="/community/promote-profile" variant="secondary" className="w-20% sm:w-auto">
                   Share Work
                 </PremiumButton>
               </div>
@@ -108,9 +108,9 @@ const CommunityHome = () => {
         </section>
 
         {/* ================= FEATURED EXPERTS (Redesigned) ================= */}
-        <section className="py-20 md:py-24 mb-12">
+        <section className="py-10 md:py-20 mb-0">
           <div className="container mx-auto px-6 max-w-7xl">
-            <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 md:mb-16 gap-6">
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-4 gap-6">
               <div className="text-center md:text-left">
                 <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">Featured Experts</h2>
                 <p className="mt-3 text-lg text-slate-500">Engineering leaders shaping the future of AI.</p>
@@ -134,7 +134,7 @@ const CommunityHome = () => {
                       initial="hidden"
                       whileInView="show"
                       viewport={{ once: true, margin: "-100px" }}
-                      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-8"
+                      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-4"
                     >
                       {myProfiles.map((p, i) => (
                         <motion.div
@@ -199,7 +199,8 @@ const CommunityHome = () => {
                       initial="hidden"
                       whileInView="show"
                       viewport={{ once: true, margin: "-100px" }}
-                      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
+
+                      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-h-[500px] md:max-h-none overflow-hidden"
                     >
                       {otherProfiles.map((p, i) => (
                         <motion.div
@@ -254,8 +255,9 @@ const CommunityHome = () => {
                       ))}
                     </motion.div>
                   </LaunchGate>
-                  <div className="mt-8 md:hidden flex justify-center">
-                     <PremiumButton to="/community/profiles" variant="secondary" className="w-full">
+                  {/* CHANGED: Removed negative margin and used normal spacing since the huge gap is gone */}
+                  <div className=" md:hidden flex justify-center mt-8 items-center">
+                     <PremiumButton to="/community/profiles" variant="secondary" className="w-20%">
                        View All Talent
                      </PremiumButton>
                   </div>
@@ -266,7 +268,7 @@ const CommunityHome = () => {
         </section>
 
         {/* ================= CURATED AUTOMATIONS (Redesigned) ================= */}
-        <section className="py-24 md:py-32 bg-[#0F1115] text-white relative overflow-hidden mb-12 rounded-[3rem] mx-2 md:mx-6 md:rounded-[4rem]">
+        <section className="py-16 md:py-24 bg-[#0F1115] text-white relative overflow-hidden mb-6 rounded-[3rem] mx-2 md:mx-6 md:rounded-[4rem]">
           {/* Ambient Lighting */}
           <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-indigo-600/10 rounded-full blur-[120px] pointer-events-none" />
           <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-violet-600/10 rounded-full blur-[100px] pointer-events-none" />
@@ -288,7 +290,7 @@ const CommunityHome = () => {
               </div>
               
               <div className="flex justify-center lg:justify-end">
-                <PremiumButton to="/community/automation-hub" variant="glow" className="w-full sm:w-auto">
+                <PremiumButton to="/community/automation-hub" variant="glow" className="w-20% sm:w-auto">
                   Browse Marketplace
                 </PremiumButton>
               </div>
@@ -359,7 +361,8 @@ const CommunityHome = () => {
                     description="Promote your resource now. Marketplace unlocks on launch day."
                     dark
                   >
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {/* CHANGED: Added max-h-[500px] and overflow-hidden on mobile to prevent huge gap */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-h-[500px] md:max-h-none overflow-hidden">
                       {otherResources.map((r, i) => (
                         <motion.div
                           key={r.id || i}
@@ -418,7 +421,7 @@ const CommunityHome = () => {
         </section>
 
         {/* ================= EXTRAORDINARY CTA ================= */}
-        <section className="py-12 md:py-24 px-4 md:px-6">
+        <section className="pt-0 md:pt-16 pb-0 px-4 md:px-6">
           <div className="container mx-auto max-w-6xl">
             <div className="relative rounded-[2.5rem] md:rounded-[3rem] bg-slate-900 overflow-hidden shadow-2xl">
               {/* Abstract Background Shapes */}
@@ -443,10 +446,10 @@ const CommunityHome = () => {
                   </p>
 
                   <div className="flex flex-col sm:flex-row justify-center gap-4 md:gap-6">
-                    <button className="w-full sm:w-auto px-8 md:px-10 py-4 md:py-5 rounded-2xl bg-white text-slate-950 font-bold text-lg hover:scale-105 transition-transform shadow-[0_0_40px_-10px_rgba(255,255,255,0.3)]">
+                    <button className="w-20% sm:w-auto px-8 md:px-10 py-4 md:py-5 rounded-2xl bg-white text-slate-950 font-bold text-lg hover:scale-105 transition-transform shadow-[0_0_40px_-10px_rgba(255,255,255,0.3)]">
                       Join Community Free
                     </button>
-                    <button className="w-full sm:w-auto px-8 md:px-10 py-4 md:py-5 rounded-2xl bg-white/10 border border-white/10 text-white font-bold text-lg hover:bg-white/20 transition-colors backdrop-blur-sm">
+                    <button className="w-20% sm:w-auto px-8 md:px-10 py-4 md:py-5 rounded-2xl bg-white/10 border border-white/10 text-white font-bold text-lg hover:bg-white/20 transition-colors backdrop-blur-sm">
                       View Documentation
                     </button>
                   </div>

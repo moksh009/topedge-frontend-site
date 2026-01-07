@@ -272,7 +272,7 @@ const PromoteProfile = () => {
   if (userProfile && !isEditing) {
     return (
       <CommunityLayout>
-        <div className="min-h-screen bg-slate-50/50 pb-20 font-sans selection:bg-indigo-500 selection:text-white">
+        <div className="min-h-screen bg-slate-50/50 pb-14 md:pb-20 font-sans selection:bg-indigo-500 selection:text-white">
           
           {/* --- HERO COVER --- */}
            <div className="relative h-80 w-full overflow-hidden">

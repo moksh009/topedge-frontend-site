@@ -643,7 +643,7 @@ const ResourceDetails = () => {
         </div>
 
         {/* Main Grid */}
-        <div className="container mx-auto px-4 sm:px-6 max-w-6xl pt-6 lg:pt-8 pb-20 relative z-10">
+        <div className="container mx-auto px-4 sm:px-6 max-w-6xl pt-6 lg:pt-8 pb-14 lg:pb-20 relative z-10">
              <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-8 items-start">
                 
                 {/* LEFT COLUMN (Main Content) */}

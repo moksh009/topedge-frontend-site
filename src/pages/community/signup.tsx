@@ -77,7 +77,7 @@ const Signup = () => {
       </div>
 
       {/* --- Navigation --- */}
-      <div className="z-20 w-full p-6 md:absolute md:top-0 md:left-0 flex justify-start">
+      <div className="z-20 w-full p-4 md:p-6 md:absolute md:top-0 md:left-0 flex justify-start">
         <Link 
           to="/community/home" 
           className="group flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur-sm border border-gray-200/60 rounded-full text-sm font-medium text-gray-600 hover:text-gray-900 hover:border-gray-300 transition-all shadow-sm hover:shadow-md"
@@ -88,7 +88,7 @@ const Signup = () => {
       </div>
 
       {/* --- Main Content --- */}
-      <div className="flex-1 flex items-center justify-center p-4 z-10 my-8 md:my-0">
+      <div className="flex-1 flex items-center justify-center p-4 z-10 my-6 md:my-0">
         <motion.div 
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
@@ -98,7 +98,7 @@ const Signup = () => {
           <div className="bg-white/90 backdrop-blur-xl rounded-[2rem] shadow-[0_20px_40px_-10px_rgba(0,0,0,0.08)] border border-white/50 p-8 sm:p-12 relative overflow-hidden ring-1 ring-gray-100">
             
             {/* Header Section with LOGO */}
-            <div className="text-center mb-8">
+            <div className="text-center mb-6 md:mb-8">
               <div className="flex justify-center mb-6">
                 <img 
                   src="/logo.png" 

@@ -243,12 +243,12 @@ const SubmitResource = () => {
 
   return (
     <CommunityLayout>
-      <div className="min-h-screen bg-[#F8F9FB] pb-20 font-sans text-slate-900">
+      <div className="min-h-screen bg-[#F8F9FB] pb-14 md:pb-20 font-sans text-slate-900">
         
         {/* Background Pattern */}
         <div className="absolute inset-0 pointer-events-none opacity-[0.4]" style={{ backgroundImage: 'radial-gradient(#cbd5e1 1px, transparent 1px)', backgroundSize: '32px 32px' }}></div>
 
-        <div className="container relative mx-auto px-4 max-w-4xl pt-12">
+        <div className="container relative mx-auto px-4 max-w-4xl pt-10 md:pt-12">
           
           {needsProfile && (
             <div className="mb-6 bg-white border border-slate-200 p-6 rounded-2xl shadow-sm">
@@ -284,7 +284,7 @@ const SubmitResource = () => {
             {/* Header Section */}
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
                <div>
-                  <h1 className="text-4xl font-bold tracking-tight text-slate-900 mb-2">
+                  <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 mb-2">
                      Launch Resource
                   </h1>
                   <p className="text-lg text-slate-500">

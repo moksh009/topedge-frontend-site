@@ -87,25 +87,28 @@ const Announcements = () => {
 
   return (
     <CommunityLayout>
-      <div className="min-h-screen bg-slate-50/50 pb-20">
+      <div className="min-h-screen bg-slate-50/50 pb-14 md:pb-20">
         
         {/* Background Pattern */}
         <div className="fixed inset-0 pointer-events-none opacity-[0.4]" style={{ backgroundImage: 'radial-gradient(#cbd5e1 1px, transparent 1px)', backgroundSize: '32px 32px' }}></div>
 
-        <div className="container relative mx-auto px-4 sm:px-6 max-w-5xl pt-16 sm:pt-24">
+        <div className="container relative mx-auto px-4 sm:px-6 max-w-5xl pt-12 sm:pt-20">
           
           {/* ================= HEADER ================= */}
-          <div className="flex flex-col md:flex-row items-start md:items-end justify-between mb-16 gap-6">
+          {/* UPDATED: items-center (mobile) -> md:items-end (desktop) */}
+          <div className="flex flex-col items-center md:flex-row md:items-end justify-between mb-10 md:mb-16 gap-6">
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
+              // UPDATED: flex-col items-center text-center (mobile) -> md:items-start md:text-left (desktop)
+              className="flex flex-col items-center md:items-start text-center md:text-left"
             >
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-slate-200 shadow-sm text-xs font-bold uppercase tracking-wider text-rose-500 mb-6">
                 <Megaphone className="w-3.5 h-3.5" />
                 Latest Updates
               </div>
-              <h1 className="text-4xl md:text-5xl font-bold text-slate-900 tracking-tight leading-tight">
-                What's new in <br className="hidden md:block" />
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 tracking-tight leading-tight">
+                What's new in <br className="" />
                 <span className="text-slate-500">TopEdge AI.</span>
               </h1>
             </motion.div>
@@ -114,6 +117,8 @@ const Announcements = () => {
               <motion.div 
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
+                // UPDATED: Centering wrapper for mobile button
+                className="w-full md:w-auto flex justify-center md:justify-end"
               >
                 <Link 
                   to="/community/admin/announcements"
