@@ -249,7 +249,7 @@ const SubmitResource = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-slate-700">Short Description</label>
+                    <label className="text-sm font-bold text-slate-700">Description</label>
                     <textarea name="description" value={formData.description} onChange={handleChange} required rows={2} placeholder="A quick hook..." 
                         className="w-full px-4 py-3 md:px-5 md:py-4 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-blue-500/20 outline-none font-medium resize-none" />
                   </div>
@@ -342,12 +342,12 @@ const SubmitResource = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-slate-700">Setup Guide (What it does)</label>
+                    <label className="text-sm font-bold text-slate-700">Setup User Guide</label>
                     <textarea name="whatItDoes" value={formData.whatItDoes} onChange={handleChange} required placeholder="Step-by-step instructions..." 
                         className="w-full px-4 py-3 md:px-5 md:py-4 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-purple-500/20 outline-none font-medium h-40 resize-none" />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-slate-700">Outcome Achieved</label>
+                    <label className="text-sm font-bold text-slate-700">Outcome Achieved (What it does)</label>
                     <textarea name="outcome" value={formData.outcome} onChange={handleChange} required placeholder="What is the ROI?..." 
                         className="w-full px-4 py-3 md:px-5 md:py-4 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-purple-500/20 outline-none font-medium h-40 resize-none" />
                   </div>

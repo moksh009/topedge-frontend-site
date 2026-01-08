@@ -373,7 +373,7 @@ const AutomationHub = () => {
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/0 via-white/10 to-indigo-500/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
                   <Plus className="w-5 h-5 relative z-10" />
-                  <span className="relative z-10">Promote Your Resource</span>
+                  <span className="relative z-10">Promote Resource Card</span>
                 </motion.button>
             </div>
           </div>

@@ -427,7 +427,7 @@ const ResourceDetails = () => {
                                     </div>
                                 </div>
                                 <div className="space-y-1">
-                                    <label className="text-sm font-bold text-slate-700">Short Description</label>
+                                    <label className="text-sm font-bold text-slate-700">Description</label>
                                     <textarea value={editForm.description} onChange={e => setEditForm({...editForm, description: e.target.value})} rows={2} className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none resize-none" />
                                 </div>
 
@@ -476,7 +476,7 @@ const ResourceDetails = () => {
                                 <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Deep Dive</h3>
                                 <div className="space-y-4">
                                     <div className="space-y-1">
-                                        <label className="text-sm font-bold text-slate-700">Setup Guide</label>
+                                        <label className="text-sm font-bold text-slate-700">Setup User Guide</label>
                                         <textarea value={editForm.whatItDoes} onChange={e => setEditForm({...editForm, whatItDoes: e.target.value})} rows={4} className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none resize-none" />
                                     </div>
                                     <div className="space-y-1">
@@ -612,7 +612,7 @@ const ResourceDetails = () => {
                         {/* 3. Setup Guide */}
                         {resource.whatItDoes && (
                             <section className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                                <h3 className="text-lg font-bold text-slate-900 mb-3 flex items-center gap-2"><Zap className="w-5 h-5 text-amber-500" /> Setup Guide</h3>
+                                <h3 className="text-lg font-bold text-slate-900 mb-3 flex items-center gap-2"><Zap className="w-5 h-5 text-amber-500" /> Setup User Guide</h3>
                                 <div className="prose prose-slate max-w-none text-slate-600 leading-relaxed whitespace-pre-line text-sm lg:text-base">{resource.whatItDoes}</div>
                             </section>
                         )}
