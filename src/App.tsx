@@ -64,25 +64,34 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
   const isCommunityRoute = location.pathname.startsWith('/community');
 
+  // Dynamic Metadata based on route
+  const pageTitle = isCommunityRoute 
+    ? "Community | TopEdge AI" 
+    : "TopEdge AI - Advanced AI Voice Agents & Chatbots";
+
+  const pageDescription = isCommunityRoute
+    ? "Join the TopEdge AI Community! Connect with builders, share automation workflows, access exclusive resources, and collaborate on the future of AI agents."
+    : "Transform your customer service with TopEdge AI's advanced voice agents and chatbots. 24/7 availability, reduced costs, and improved customer satisfaction.";
+
   return (
     <div className="min-h-screen bg-background text-text transition-colors duration-200 relative">
       <Helmet>
-        <title>TopEdge AI - Advanced AI Voice Agents & Chatbots</title>
-        <meta name="description" content="Transform your customer service with TopEdge AI's advanced voice agents and chatbots. 24/7 availability, reduced costs, and improved customer satisfaction." />
-        <meta name="keywords" content="AI voice agents, chatbots, customer service automation, TopEdge AI, business automation" />
+        <title>{pageTitle}</title>
+        <meta name="description" content={pageDescription} />
+        <meta name="keywords" content="AI voice agents, chatbots, customer service automation, TopEdge AI, business automation, AI community, automation workflows" />
         
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://topedgeai.com/" />
-        <meta property="og:title" content="TopEdge AI - Advanced AI Voice Agents & Chatbots" />
-        <meta property="og:description" content="Transform your customer service with TopEdge AI's advanced voice agents and chatbots." />
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={pageDescription} />
         <meta property="og:image" content="https://topedgeai.com/og-image.jpg" />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content="https://topedgeai.com/" />
-        <meta name="twitter:title" content="TopEdge AI - Advanced AI Voice Agents & Chatbots" />
-        <meta name="twitter:description" content="Transform your customer service with TopEdge AI's advanced voice agents and chatbots." />
+        <meta name="twitter:title" content={pageTitle} />
+        <meta name="twitter:description" content={pageDescription} />
         <meta name="twitter:image" content="https://topedgeai.com/og-image.jpg" />
 
         {/* Additional SEO tags */}
