@@ -13,10 +13,6 @@
     "lint": "eslint . --ext js,jsx,ts,tsx --fix",
     "preview": "vite preview"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "dependencies": {
     "@headlessui/react": "^1.7.17",
     "@types/next": "^8.0.7",

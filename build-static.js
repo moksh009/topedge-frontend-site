@@ -20,7 +20,7 @@ const communityPath = path.join(distPath, 'community.html');
 console.log("🏗️  Generating Static Community Entry Point...");
 
 try {
-  // 1. Read the main index.html (which has default metadata)
+  // 1. Read the main index.html
   let html = fs.readFileSync(indexPath, 'utf8');
 
   // 2. Replace Title
