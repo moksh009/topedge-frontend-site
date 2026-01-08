@@ -1,16 +1,26 @@
 [build]
-  command = "yarn build:netlify"
+  command = "npm run build:netlify"
   publish = "dist"
-  functions = "netlify/functions"
+  # functions = "netlify/functions"  <-- Removed because we are using the static method now
 
 [build.environment]
   NODE_VERSION = "18"
   NPM_FLAGS = "--legacy-peer-deps --include=optional"
-  NPM_CONFIG_PACKAGE_MANAGER = "yarn"
-  YARN_FLAGS = ""
-  YARN_VERSION = ""
-  USE_YARN = "true"
 
+# ---------------------------------------------------------
+# 1. COMMUNITY REDIRECT (Must be FIRST)
+# Serves community.html for any route starting with /community
+# ---------------------------------------------------------
+[[redirects]]
+  from = "/community/*"
+  to = "/community.html"
+  status = 200
+  force = true
+
+# ---------------------------------------------------------
+# 2. MAIN SPA REDIRECT (Catch-all)
+# Serves index.html for everything else (Home, About, etc.)
+# ---------------------------------------------------------
 [[redirects]]
   from = "/*"
   to = "/index.html"
