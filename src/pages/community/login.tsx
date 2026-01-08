@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import CommunitySEO from '@/components/community/CommunitySEO';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
 import { auth } from '@/services/firebase'; 
 import { motion } from 'framer-motion';
-import { ArrowLeft, Loader2, Mail, Lock, AlertCircle, ChevronRight } from 'lucide-react';
+import { ArrowLeft, Loader2, Mail, Lock, AlertCircle, ChevronRight, CheckCircle } from 'lucide-react';
 
 // Define a simple interface for the Firebase error to fix the "unknown" type error
 interface FirebaseError {
@@ -17,6 +17,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   // Fix: Explicitly tell TypeScript this state can be a string OR null
   const [error, setError] = useState<string | null>(null);
+  const [resetMessage, setResetMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -102,6 +103,18 @@ const Login = () => {
                 Enter your credentials to access your account
               </p>
             </div>
+
+            {/* Success Message */}
+            {resetMessage && (
+              <motion.div 
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                className="bg-green-50/80 backdrop-blur-sm border border-green-100 text-green-600 px-4 py-3 rounded-xl text-sm mb-6 flex items-start gap-3"
+              >
+                <CheckCircle className="w-5 h-5 shrink-0 mt-0.5" />
+                <p>{resetMessage}</p>
+              </motion.div>
+            )}
 
             {/* Error Message */}
             {error && (

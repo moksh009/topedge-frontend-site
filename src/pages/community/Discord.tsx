@@ -61,7 +61,7 @@ const Discord = () => {
                     <motion.a
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      href="https://discord.gg/topedgeai" 
+                      href="https://discord.gg/cvRnZTjZ8r" 
                       target="_blank"
                       rel="noopener noreferrer"
                       className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 md:px-8 py-3.5 md:py-4 bg-[#5865F2] text-white font-bold rounded-xl md:rounded-2xl hover:bg-[#4752C4] transition-all shadow-lg shadow-[#5865F2]/25 group text-sm md:text-base"

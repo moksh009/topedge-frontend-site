@@ -262,7 +262,7 @@ const CommunityHome = () => {
                     </motion.div>
                   </LaunchGate>
                   {/* CHANGED: Removed negative margin and used normal spacing since the huge gap is gone */}
-                  <div className=" md:hidden flex justify-center mt-8 items-center">
+                  <div className=" md:hidden flex justify-center mt-40 items-center">
                      <PremiumButton to="/community/profiles" variant="secondary" className="w-20%">
                        View All Talent
                      </PremiumButton>
@@ -368,7 +368,7 @@ const CommunityHome = () => {
                     dark
                   >
                     {/* CHANGED: Added max-h-[500px] and overflow-hidden on mobile to prevent huge gap */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-h-[500px] md:max-h-none overflow-hidden">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-h-[550px] md:max-h-none overflow-hidden">
                       {otherResources.map((r, i) => (
                         <motion.div
                           key={r.id || i}

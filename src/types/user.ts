@@ -1,4 +1,5 @@
 export interface UserProfile {
+  bio: string;
   linkedin: string | undefined;
   github: string | undefined;
   uid: string;
