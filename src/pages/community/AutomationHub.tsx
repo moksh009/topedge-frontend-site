@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import CommunityLayout from '@/components/community/layout/CommunityLayout';
+import CommunitySEO from '@/components/community/CommunitySEO';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Plus, Search, ArrowRight, Zap, Sparkles,
@@ -329,6 +330,11 @@ const AutomationHub = () => {
 
   return (
     <CommunityLayout>
+      <CommunitySEO 
+        title="Automation Hub - AI Tools & Resources"
+        description="Discover top-rated AI automation tools, templates, and workflows. Share your own resources and get feedback from the community."
+        url="/community/automation-hub"
+      />
       <div className="min-h-screen bg-[#FAFAFA] text-slate-900 font-sans selection:bg-slate-900 selection:text-white pb-14 md:pb-20">
         
         <div className="fixed inset-0 pointer-events-none opacity-[0.02]" style={{ backgroundImage: 'url("https://grainy-gradients.vercel.app/noise.svg")' }}></div>

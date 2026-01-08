@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import CommunityLayout from '@/components/community/layout/CommunityLayout';
+import CommunitySEO from '@/components/community/CommunitySEO';
 import { motion, AnimatePresence } from 'framer-motion';
 import { db } from '@/services/firebase';
 import { addDoc, collection, doc, getDoc, increment, onSnapshot, orderBy, query, serverTimestamp, updateDoc } from 'firebase/firestore';
@@ -205,6 +206,11 @@ export default function RequestBoard() {
 
   return (
     <CommunityLayout>
+      <CommunitySEO 
+        title="Request Board - Hire AI Talent & Projects"
+        description="Post your AI project requests or find paid opportunities. Connect with skilled developers and founders."
+        url="/community/requests"
+      />
       <div className="min-h-screen bg-[#FAFAFA] text-slate-900 font-sans pb-24 relative overflow-hidden">
         
         <div className="container relative mx-auto px-4 sm:px-6 max-w-7xl pt-10 md:pt-12">

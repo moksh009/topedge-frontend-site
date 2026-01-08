@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import CommunityLayout from '@/components/community/layout/CommunityLayout';
+import CommunitySEO from '@/components/community/CommunitySEO';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Loader2, ArrowLeft, DollarSign, Video, Wrench, Sparkles, Layout, AlertCircle, Rocket, Gift, Tag, Check, User, Upload, Trash2, CheckCircle2 } from 'lucide-react';
 import { serverTimestamp, collection, addDoc, query, where, getCountFromServer } from 'firebase/firestore';
@@ -188,7 +189,12 @@ const SubmitResource = () => {
 
   return (
     <CommunityLayout>
-      <div className="min-h-screen bg-[#F8F9FB] pb-14 md:pb-20 font-sans text-slate-900">
+      <CommunitySEO 
+        title="Submit Resource - TopEdge AI Community"
+        description="Share your AI automation tools, projects, and resources with the community."
+        url="/community/submit-resource"
+      />
+      <div className="min-h-screen bg-[#F8F9FB] text-slate-900 font-sans selection:bg-indigo-500 selection:text-white pb-14 md:pb-20">
         <div className="absolute inset-0 pointer-events-none opacity-[0.4]" style={{ backgroundImage: 'radial-gradient(#cbd5e1 1px, transparent 1px)', backgroundSize: '32px 32px' }}></div>
 
         {/* Adjusted padding on container for mobile (px-4) */}

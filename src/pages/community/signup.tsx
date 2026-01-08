@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import CommunitySEO from '@/components/community/CommunitySEO';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth, db } from '@/services/firebase';
 import { doc, setDoc } from 'firebase/firestore';
@@ -66,6 +67,11 @@ const Signup = () => {
 
   return (
     <div className="min-h-screen w-full flex flex-col md:flex-row bg-[#F8F9FA] relative overflow-hidden font-sans">
+      <CommunitySEO 
+        title="Join TopEdge AI Community - Sign Up"
+        description="Create your account to access exclusive AI resources, tools, and connect with the community."
+        url="/community/signup"
+      />
       
       {/* --- Premium Ambient Background --- */}
       <div className="absolute inset-0 z-0 pointer-events-none">

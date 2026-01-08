@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import CommunityLayout from '@/components/community/layout/CommunityLayout';
-import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  ArrowLeft, Loader2, User, Clock, 
-  Edit2, Trash2, CheckCircle2, Share2, 
-  Sparkles, Zap, Box, Upload, X, PlayCircle, Lock,
-  ArrowRight, ArrowBigUp, Link as LinkIcon, Video
-} from 'lucide-react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import CommunityLayout from '@/components/community/layout/CommunityLayout';
+import CommunitySEO from '@/components/community/CommunitySEO';
+import { motion, AnimatePresence } from 'framer-motion';
 import { doc, getDoc, updateDoc, serverTimestamp, deleteDoc, arrayUnion, arrayRemove, increment, addDoc, collection } from 'firebase/firestore';
 import { db } from '@/services/firebase';
 import { useAuth } from '@/contexts/AuthContext';
@@ -17,6 +12,7 @@ import toast from 'react-hot-toast';
 import ResourceReviews from '@/pages/community/ResourceReviews';
 import RelatedResources from '@/components/community/RelatedResources';
 import ResourceDiscussion from '@/pages/community/ResourceDiscussion';
+import { ArrowBigUp, ArrowLeft, ArrowRight, Box, CheckCircle2, Clock, Edit2, Loader2, PlayCircle, Share2, Sparkles, Trash2, Upload, User, X, Zap } from 'lucide-react';
 
 // CLOUDINARY CONFIG
 const CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || "dn9gh1goq";
@@ -384,6 +380,13 @@ const ResourceDetails = () => {
 
   return (
     <CommunityLayout>
+      <CommunitySEO 
+        title={`${resource.title} - ${resource.category} | TopEdge AI`}
+        description={resource.description}
+        url={`/community/resource/${id}`}
+        type="article"
+        author={resource.userName}
+      />
         {/* --- EDIT MODAL --- */}
         <AnimatePresence>
             {isEditing && (
@@ -629,7 +632,7 @@ const ResourceDetails = () => {
                                   </a>
                                   {resource.isPaid ? (
                                     <button onClick={handleLockedAttachmentClick} className="px-3 py-1.5 text-xs font-bold bg-slate-100 text-slate-600 rounded-lg border border-slate-200 hover:bg-slate-200 flex items-center gap-1">
-                                      <Lock className="w-3 h-3" /> Download
+                                       Download
                                     </button>
                                   ) : (
                                     <a href={f.url} target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 text-xs font-bold bg-slate-900 text-white rounded-lg hover:bg-slate-800">

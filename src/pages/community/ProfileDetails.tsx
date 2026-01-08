@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import CommunityLayout from '@/components/community/layout/CommunityLayout';
+import CommunitySEO from '@/components/community/CommunitySEO';
 import { motion } from 'framer-motion';
 import { doc, getDoc, collection, query, where, getDocs, orderBy } from 'firebase/firestore';
 import { db } from '@/services/firebase';
@@ -100,6 +101,13 @@ const ProfileDetails = () => {
 
   return (
     <CommunityLayout>
+      <CommunitySEO 
+        title={`${profile.fullName} - AI Builder Profile | TopEdge AI`}
+        description={profile.bio || `Connect with ${profile.fullName}, ${profile.currentWork} at TopEdge AI Community.`}
+        image={profile.photoURL}
+        url={`/community/profile/${id}`}
+        type="profile"
+      />
       {/* CLEAN BACKGROUND: No gradients, just crisp white/gray */}
       <div className="min-h-screen bg-[#FAFAFA] font-sans selection:bg-slate-900 selection:text-white pb-24">
         

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import CommunityLayout from '@/components/community/layout/CommunityLayout';
+import CommunitySEO from '@/components/community/CommunitySEO';
 import { motion } from 'framer-motion';
 import { db } from '@/services/firebase';
 import { Link } from 'react-router-dom';
@@ -67,6 +68,11 @@ const CommunityHome = () => {
 
   return (
     <CommunityLayout>
+      <CommunitySEO 
+        title="TopEdge AI Community - Build, Scale & Learn Together"
+        description="Join the premier ecosystem for AI engineers and founders. Access production-grade workflows, connect with top talent, and scale your AI automation business."
+        url="/community/home"
+      />
       <div className="bg-[#F8F9FB] min-h-screen text-slate-900 font-sans selection:bg-indigo-500 selection:text-white pb-0">
 
         {/* ================= HERO SECTION ================= */}

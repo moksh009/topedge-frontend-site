@@ -1,11 +1,17 @@
 import React from 'react';
 import CommunityLayout from '@/components/community/layout/CommunityLayout';
+import CommunitySEO from '@/components/community/CommunitySEO';
 import { motion } from 'framer-motion';
 import { MessageCircle, ArrowRight, Hash, Mic, Cpu, Globe } from 'lucide-react';
 
 const Discord = () => {
   return (
     <CommunityLayout>
+      <CommunitySEO 
+        title="Join Our Discord Community - TopEdge AI"
+        description="Join 5,000+ AI engineers and founders. Real-time discussions, code reviews, and alpha access."
+        url="/community/discord"
+      />
       <div className="min-h-screen bg-[#F8F9FB] text-slate-900 font-sans selection:bg-[#5865F2] selection:text-white flex flex-col relative overflow-hidden">
         
         {/* Background Pattern */}

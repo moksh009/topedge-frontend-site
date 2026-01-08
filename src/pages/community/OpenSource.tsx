@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import CommunityLayout from '@/components/community/layout/CommunityLayout';
+import CommunitySEO from '@/components/community/CommunitySEO';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, ArrowRight, BookOpen, GitBranch, Terminal, FolderGit2, Code2 } from 'lucide-react';
 import { collection, query, where, getDocs, orderBy } from 'firebase/firestore';
@@ -70,6 +71,11 @@ const OpenSource = () => {
 
   return (
     <CommunityLayout>
+      <CommunitySEO 
+        title="Open Source AI Resources - TopEdge AI"
+        description="Access free, community-contributed AI tools, templates, and codebases. Fork and build upon production-ready resources."
+        url="/community/open-source"
+      />
       <div className="min-h-screen bg-[#F8F9FB] text-slate-900 font-sans selection:bg-slate-900 selection:text-white pb-14 md:pb-20">
         
         {/* Background Pattern */}

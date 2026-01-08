@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import CommunitySEO from '@/components/community/CommunitySEO';
 import CommunityLayout from '@/components/community/layout/CommunityLayout';
 import { motion } from 'framer-motion';
 import { Bell, Calendar, Tag, Plus, Megaphone, PartyPopper, Trophy, Info, Rocket, ArrowRight, Radio } from 'lucide-react';
@@ -87,6 +88,11 @@ const Announcements = () => {
 
   return (
     <CommunityLayout>
+      <CommunitySEO 
+        title="Community Announcements - TopEdge AI"
+        description="Stay updated with the latest news, milestones, and updates from the TopEdge AI community."
+        url="/community/announcements"
+      />
       <div className="min-h-screen bg-slate-50/50 pb-14 md:pb-20">
         
         {/* Background Pattern */}
