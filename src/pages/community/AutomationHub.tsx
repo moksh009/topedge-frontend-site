@@ -3,15 +3,16 @@ import CommunityLayout from '@/components/community/layout/CommunityLayout';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Plus, Search, ArrowRight, Zap, Sparkles,
-  Workflow, Terminal, Box, Filter, Play, CheckCircle2, Star, ThumbsUp
+  Workflow, Terminal, Box, Filter, Play, CheckCircle2, Star, ArrowBigUp
 } from 'lucide-react';
-import { collection, query, getDocs, orderBy, doc, getDoc, updateDoc, increment, arrayUnion, arrayRemove } from 'firebase/firestore';
+import { collection, query, getDocs, orderBy, doc, updateDoc, increment, arrayUnion, arrayRemove } from 'firebase/firestore';
 import { db } from '@/services/firebase';
 import { useAuth } from '@/contexts/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import LaunchGate from '@/components/ui/LaunchGate';
 import TopBuilders from '@/components/community/TopBuilders';
+import { getDoc } from 'firebase/firestore'; // Fixed import
 
 interface Resource {
   id: string;
@@ -33,25 +34,47 @@ interface Resource {
   isHiring?: boolean;
 }
 
+// Helper to extract YouTube ID
+const getYouTubeId = (url: string) => {
+    if (!url) return null;
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[2].length === 11) ? match[2] : null;
+};
+
+// Helper to get Smart Poster for Cloudinary
+const getSmartPoster = (url: string) => {
+    if (!url) return undefined;
+    if (url.includes('cloudinary.com') && (url.endsWith('.mp4') || url.endsWith('.webm'))) {
+        return url.replace(/\.[^/.]+$/, ".jpg");
+    }
+    return undefined;
+}
+
 // ... ResourceCard Component ...
 const ResourceCard = ({ resource, index, currentUser }: { resource: Resource; index: number; currentUser: any }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isHovering, setIsHovering] = useState(false);
   const [upvoteCount, setUpvoteCount] = useState<number>(resource.upvotes ?? ((resource as any).stars ?? 0));
   const [upvoted, setUpvoted] = useState<boolean>(!!(((resource.upvotedBy ?? ((resource as any).starredBy ?? [])) as string[])).includes(currentUser?.uid));
-  const [avgRating, setAvgRating] = useState<number>(0);
   const [reviewCount, setReviewCount] = useState<number>(0);
+  const [avgRating, setAvgRating] = useState<number>(0);
+
+  const youtubeId = getYouTubeId(resource.videoUrl || '');
+  const isYoutube = !!youtubeId;
+  const smartPoster = getSmartPoster(resource.videoUrl || '');
 
   useEffect(() => {
-    if (videoRef.current) {
+    // Native Video Autoplay Logic
+    if (videoRef.current && !isYoutube) {
       if (isHovering) {
         videoRef.current.play().catch(() => {});
       } else {
         videoRef.current.pause();
-        videoRef.current.currentTime = 0;
+        videoRef.current.currentTime = 0; // Reset to start
       }
     }
-  }, [isHovering]);
+  }, [isHovering, isYoutube]);
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -104,29 +127,71 @@ const ResourceCard = ({ resource, index, currentUser }: { resource: Resource; in
       transition={{ delay: index * 0.05 }}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
-      className="group flex flex-col h-full bg-white rounded-[2rem] border border-slate-200 overflow-hidden hover:border-indigo-200 hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.1)] transition-all duration-500 hover:-translate-y-2"
+      className="group flex flex-col h-full bg-white rounded-[2rem] border border-slate-200 overflow-hidden hover:border-indigo-200 hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.1)] transition-all duration-500 hover:-translate-y-2 relative"
     >
+        {/* Link Wrapper for the whole card */}
+        <Link to={`/community/resource/${resource.id}`} className="absolute inset-0 z-10" />
+
         {/* Media Header */}
-        <div className="relative aspect-video w-full bg-slate-100 overflow-hidden border-b border-slate-50">
-            <div className="absolute top-4 left-4 z-20 flex items-center gap-2">
+        <div className="relative aspect-video w-full bg-slate-900 overflow-hidden border-b border-slate-50">
+            {/* Category Tag */}
+            <div className="absolute top-4 left-4 z-20 flex items-center gap-2 pointer-events-none">
                <div className="px-2.5 py-1.5 bg-white/90 backdrop-blur-md rounded-full border border-white/20 shadow-sm flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-700">
                   {getCategoryIcon(resource.category)}
                   {resource.category}
                </div>
             </div>
-            <div className="absolute top-4 right-4 z-20 flex gap-2">
+            {/* Price Tag */}
+            <div className="absolute top-4 right-4 z-20 flex gap-2 pointer-events-none">
                <span className={cn("px-3 py-1.5 rounded-full text-xs font-bold border shadow-sm backdrop-blur-md", resource.isPaid ? "bg-slate-900/90 text-white border-slate-900" : "bg-white/90 text-slate-700 border-white/20")}>
                   {resource.isPaid ? `$${resource.price}` : 'Free'}
                </span>
-               {resource.isHiring && <span className="px-3 py-1.5 rounded-full text-xs font-bold border shadow-sm bg-emerald-100 text-emerald-700 border-emerald-200 backdrop-blur-md">🤝 Collab</span>}
             </div>
+
+            {/* Video Logic */}
             {resource.videoUrl ? (
-                resource.videoUrl.includes('cloudinary') || resource.videoUrl.endsWith('.mp4') ? (
-                    <video ref={videoRef} src={resource.videoUrl} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" muted loop playsInline />
+                isYoutube ? (
+                   <div className="w-full h-full relative bg-black">
+                      {isHovering ? (
+                         <iframe 
+                           src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=1&controls=0&modestbranding=1&loop=1&playlist=${youtubeId}`}
+                           className="w-full h-full object-cover pointer-events-none"
+                           allow="autoplay; encrypted-media"
+                           title="Preview"
+                         />
+                      ) : (
+                         <img 
+                            src={`https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`} 
+                            alt={resource.title}
+                            className="w-full h-full object-cover"
+                         />
+                      )}
+                      {!isHovering && (
+                          <div className="absolute inset-0 flex items-center justify-center bg-black/10">
+                              <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                                  <Play className="w-6 h-6 text-white fill-white" />
+                              </div>
+                          </div>
+                      )}
+                   </div>
                 ) : (
-                    <div className="w-full h-full bg-slate-900 flex items-center justify-center relative">
-                       <div className="absolute inset-0 bg-gradient-to-tr from-indigo-900/50 to-purple-900/50"></div>
-                       <Play className="w-12 h-12 text-white opacity-80" fill="white" />
+                    <div className="w-full h-full relative">
+                        <video 
+                            ref={videoRef} 
+                            src={resource.videoUrl} 
+                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+                            muted 
+                            loop 
+                            playsInline
+                            preload="metadata"
+                            poster={smartPoster} // Use generated thumbnail for Cloudinary
+                        />
+                        {/* Play Icon Overlay for Native Video (Hidden on Hover) */}
+                        <div className={cn("absolute inset-0 flex items-center justify-center bg-black/10 transition-opacity duration-300", isHovering ? "opacity-0" : "opacity-100")}>
+                            <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                                <Play className="w-6 h-6 text-white fill-white" />
+                            </div>
+                        </div>
                     </div>
                 )
             ) : (
@@ -142,18 +207,21 @@ const ResourceCard = ({ resource, index, currentUser }: { resource: Resource; in
         </div>
 
         {/* Body */}
-        <div className="p-6 flex-1 flex flex-col">
+        <div className="p-6 flex-1 flex flex-col relative z-20">
             <div className="mb-4">
                 <h3 className="text-lg font-bold text-slate-900 mb-2 leading-tight group-hover:text-indigo-600 transition-colors line-clamp-1">{resource.title}</h3>
-                <p className="text-sm text-slate-500 leading-relaxed line-clamp-2 h-10">{resource.description}</p>
+                <p className="text-sm text-slate-500 leading-relaxed line-clamp-2 min-h-[40px]">{resource.description}</p>
             </div>
+            
             <div className="flex flex-wrap gap-2 mb-6">
                 {(resource.tools || []).slice(0, 3).map((tool, i) => (
                     <span key={i} className="px-2.5 py-1 bg-slate-50 border border-slate-100 text-slate-600 text-[10px] font-bold uppercase tracking-wide rounded-md group-hover:bg-slate-100 transition-colors">{tool}</span>
                 ))}
                 {(resource.tools || []).length > 3 && <span className="px-2 py-1 text-[10px] font-bold text-slate-400">+{resource.tools.length - 3}</span>}
             </div>
-            <div className="mt-auto pt-4 border-t border-slate-50 flex items-center justify-between">
+
+            <div className="mt-auto pt-4 border-t border-slate-50 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                {/* Author Info */}
                 <div className="flex items-center gap-2">
                     {resource.userPhoto ? (
                         <img src={resource.userPhoto} alt={resource.userName} className="w-8 h-8 rounded-full object-cover border border-slate-100" />
@@ -161,23 +229,31 @@ const ResourceCard = ({ resource, index, currentUser }: { resource: Resource; in
                         <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-[10px] font-bold text-slate-400">{resource.userName?.charAt(0)}</div>
                     )}
                     <div className="flex flex-col">
-                        <Link to={`/community/profile/${resource.userId}`} className="text-xs font-bold text-slate-900 hover:text-indigo-600">{resource.userName}</Link>
+                        <span className="text-xs font-bold text-slate-900">{resource.userName}</span>
                         <span className="text-[10px] text-slate-400 flex items-center gap-0.5"><CheckCircle2 className="w-2.5 h-2.5 text-emerald-500" /> Verified</span>
                     </div>
                 </div>
-                <div className="flex items-center gap-2">
-                    {reviewCount > 0 && (
-                    <div className="flex items-center gap-1 bg-yellow-50 border border-yellow-100 px-2 py-1 rounded-lg">
-                        <Star className="w-3 h-3 text-yellow-500 fill-current" />
-                        <span className="text-[10px] font-bold text-yellow-700">{avgRating.toFixed(1)}</span>
-                    </div>
-                  )}
-                    <button onClick={toggleUpvote} className={cn("h-8 px-2.5 rounded-lg text-xs font-bold flex items-center gap-1.5 border transition-all", upvoted ? "bg-indigo-50 border-indigo-200 text-indigo-600" : "bg-white text-slate-500 border-slate-200 hover:bg-slate-50")}>
-                        <ThumbsUp className={cn("w-3.5 h-3.5", upvoted && "fill-current")} />
+
+                {/* Actions Row */}
+                <div className="flex items-center gap-3 w-full sm:w-auto">
+                    {/* Upvote Button */}
+                    <button 
+                        onClick={toggleUpvote} 
+                        className={cn(
+                            "relative z-30 h-10 px-3 rounded-xl text-xs font-bold flex items-center gap-1.5 border transition-all flex-1 sm:flex-none justify-center", 
+                            upvoted ? "bg-orange-50 border-orange-200 text-orange-600" : "bg-white text-slate-500 border-slate-200 hover:bg-slate-50"
+                        )}
+                    >
+                        <ArrowBigUp className={cn("w-5 h-5", upvoted && "fill-current")} />
                         <span>{upvoteCount}</span>
                     </button>
-                    <Link to={`/community/resource/${resource.id}`} className="w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center text-white hover:bg-slate-800 transition-all shadow-sm">
-                        <ArrowRight className="w-4 h-4" />
+
+                    {/* View Button */}
+                    <Link 
+                        to={`/community/resource/${resource.id}`} 
+                        className="relative z-30 h-10 px-4 bg-slate-900 text-white text-xs font-bold rounded-xl flex items-center justify-center gap-2 hover:bg-slate-800 transition-all shadow-sm flex-[2] sm:flex-none"
+                    >
+                        View Details <ArrowRight className="w-3.5 h-3.5" />
                     </Link>
                 </div>
             </div>
@@ -255,15 +331,13 @@ const AutomationHub = () => {
     <CommunityLayout>
       <div className="min-h-screen bg-[#FAFAFA] text-slate-900 font-sans selection:bg-slate-900 selection:text-white pb-14 md:pb-20">
         
-        {/* Subtle Noise Texture */}
         <div className="fixed inset-0 pointer-events-none opacity-[0.02]" style={{ backgroundImage: 'url("https://grainy-gradients.vercel.app/noise.svg")' }}></div>
 
         <div className="container relative z-10 mx-auto px-6 max-w-7xl pt-12 md:pt-16">
           
-          {/* ================= HEADER SECTION ================= */}
+          {/* Header Section */}
           <div className="flex flex-col lg:flex-row justify-between items-center lg:items-end mb-16 gap-8 lg:gap-12">
             
-            {/* Left: Text */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -284,16 +358,11 @@ const AutomationHub = () => {
               </p>
             </motion.div>
             
-            {/* Right: Actions (Top Builders + Button) */}
             <div className="flex flex-col items-center lg:items-end gap-6 w-full lg:w-auto">
-               
-               {/* Builders Widget */}
                <div className="w-full max-w-sm">
                   <TopBuilders />
                </div>
 
-               {/* Promote Button */}
-               {/* UPDATED: w-20% logic (w-auto) instead of full on mobile */}
                <motion.button 
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
@@ -309,8 +378,7 @@ const AutomationHub = () => {
             </div>
           </div>
 
-          {/* ================= CONTROLS TOOLBAR (Improved Mobile UI) ================= */}
-          {/* UPDATED: sticky -> relative to fix flickering. Better flex layout for mobile. */}
+          {/* Search & Filter Toolbar */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -318,7 +386,6 @@ const AutomationHub = () => {
             className="relative z-30 mb-12"
           >
             <div className="p-2 bg-white/80 backdrop-blur-xl border border-slate-200 rounded-[24px] shadow-lg shadow-slate-200/50 flex flex-col md:flex-row gap-2">
-              
               <div className="relative flex-grow group">
                 <div className="absolute left-4 top-1/2 -translate-y-1/2 p-1.5 rounded-lg bg-slate-100 text-slate-400 group-focus-within:bg-slate-200 group-focus-within:text-slate-900 transition-colors">
                   <Search className="w-4 h-4" />
@@ -334,7 +401,6 @@ const AutomationHub = () => {
 
               <div className="hidden md:block w-px h-10 bg-slate-200 my-auto mx-2" />
 
-              {/* Mobile Filter Scroll - Improved UI */}
               <div className="flex bg-slate-100/50 p-1 rounded-xl overflow-x-auto no-scrollbar pb-1 md:pb-0">
                 {(['all', 'free', 'paid', 'collab'] as const).map((f) => (
                   <button
@@ -354,7 +420,7 @@ const AutomationHub = () => {
             </div>
           </motion.div>
 
-          {/* ================= PREMIUM GRID SECTION ================= */}
+          {/* Grid Section */}
           {loading ? (
              <div className="flex flex-col items-center justify-center py-32 opacity-50">
                 <div className="w-10 h-10 border-4 border-slate-200 border-t-slate-900 rounded-full animate-spin mb-4"></div>
@@ -369,11 +435,17 @@ const AutomationHub = () => {
                 return (
                   <>
                     {myResources.length > 0 && (
-                      <div className="mb-12">
-                        <div className="flex items-center justify-between mb-6">
-                          <h2 className="text-2xl font-bold text-slate-900">My Resources</h2>
-                          <Link to="/community/submit-resource" className="text-sm font-semibold text-indigo-600 hover:text-indigo-700">Add More</Link>
-                        </div>
+                     <div className="mb-12">
+  <div className="flex items-center justify-center md:justify-start mb-10">
+    <h2 className="text-4xl md:text-6xl font-bold text-slate-900">
+      My Resources
+    </h2>
+    
+    {/* If you add the button back here later, it will sit next to the title on desktop */}
+  </div>
+  
+  {/* Your Grid code follows here... */}
+
                         <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-2">
                           <AnimatePresence>
                             {myResources.map((resource, index) => (
@@ -392,7 +464,6 @@ const AutomationHub = () => {
                       title="Marketplace visible after launch"
                       description="Promote your resource now. Listings unlock on launch day."
                     >
-                      {/* UPDATED: Added max-h-[500px] + overflow-hidden for mobile to fix height issue */}
                       <motion.div 
                         layout
                         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-12 max-h-[500px] md:max-h-none overflow-hidden"
@@ -410,7 +481,6 @@ const AutomationHub = () => {
             </>
           )}
           
-          {/* Empty State */}
           {!loading && filteredResources.length === 0 && (
              <motion.div 
               initial={{ opacity: 0 }}
