@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import CommunityLayout from '@/components/community/layout/CommunityLayout';
-import CommunitySEO from '@/components/community/CommunitySEO';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { 
-  Search, MapPin, Github, Linkedin, 
-  ArrowRight, UserPlus, Building2, ExternalLink 
+  Search, Github, Linkedin, 
+  ArrowRight, UserPlus, Building2, ExternalLink,
+  Youtube, Instagram 
 } from 'lucide-react';
 import { collection, query, getDocs, orderBy } from 'firebase/firestore';
 import { db, auth } from '@/services/firebase';
@@ -29,6 +29,8 @@ interface Profile {
   email?: string;
   github?: string;
   linkedin?: string;
+  youtube?: string;    // Added
+  instagram?: string;  // Added
   workingStatus?: string;
   networkingIntent?: string[];
   resourcesCount?: number;
@@ -42,8 +44,6 @@ const CommunityProfiles = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeHireId, setActiveHireId] = useState<string | null>(null);
   const [resourcesByUser, setResourcesByUser] = useState<Record<string, { count: number; upvotes: number }>>({});
-
-  // REMOVED: Scroll listener logic that caused flickering
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -110,19 +110,30 @@ const CommunityProfiles = () => {
             <div className="absolute inset-0 opacity-40" style={{ backgroundImage: 'radial-gradient(#cbd5e1 1px, transparent 1px)', filter: 'contrast(120%) brightness(120%)' }}></div>
           )}
           
+          {/* Social Icons Overlay */}
           <div className="absolute top-4 right-4 flex gap-2">
+              {profile.youtube && (
+                  <a href={profile.youtube} target="_blank" rel="noreferrer" className="p-1.5 sm:p-2 rounded-full bg-white/60 backdrop-blur-md text-red-600 hover:bg-red-600 hover:text-white transition-all shadow-sm">
+                      <Youtube className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                  </a>
+              )}
+              {profile.instagram && (
+                  <a href={profile.instagram} target="_blank" rel="noreferrer" className="p-1.5 sm:p-2 rounded-full bg-white/60 backdrop-blur-md text-pink-600 hover:bg-pink-600 hover:text-white transition-all shadow-sm">
+                      <Instagram className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                  </a>
+              )}
               {profile.linkedin && (
-                  <a href={profile.linkedin} target="_blank" className="p-1.5 sm:p-2 rounded-full bg-white/60 backdrop-blur-md text-slate-600 hover:bg-[#0077b5] hover:text-white transition-all shadow-sm">
+                  <a href={profile.linkedin} target="_blank" rel="noreferrer" className="p-1.5 sm:p-2 rounded-full bg-white/60 backdrop-blur-md text-slate-600 hover:bg-[#0077b5] hover:text-white transition-all shadow-sm">
                       <Linkedin className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   </a>
               )}
               {profile.github && (
-                  <a href={profile.github} target="_blank" className="p-1.5 sm:p-2 rounded-full bg-white/60 backdrop-blur-md text-slate-600 hover:bg-slate-900 hover:text-white transition-all shadow-sm">
+                  <a href={profile.github} target="_blank" rel="noreferrer" className="p-1.5 sm:p-2 rounded-full bg-white/60 backdrop-blur-md text-slate-600 hover:bg-slate-900 hover:text-white transition-all shadow-sm">
                       <Github className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   </a>
               )}
               {profile.websiteURL && (
-                  <a href={profile.websiteURL} target="_blank" className="p-1.5 sm:p-2 rounded-full bg-white/60 backdrop-blur-md text-slate-600 hover:bg-indigo-600 hover:text-white transition-all shadow-sm">
+                  <a href={profile.websiteURL} target="_blank" rel="noreferrer" className="p-1.5 sm:p-2 rounded-full bg-white/60 backdrop-blur-md text-slate-600 hover:bg-indigo-600 hover:text-white transition-all shadow-sm">
                       <ExternalLink className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   </a>
               )}
@@ -261,8 +272,7 @@ const CommunityProfiles = () => {
             </motion.div>
           </div>
 
-          {/* --- FIXED SEARCH BAR (No Flickering) --- */}
-          {/* Changed 'sticky top-20' to 'relative' so it stays on page */}
+          {/* Search Bar */}
           <motion.div 
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -322,7 +332,6 @@ const CommunityProfiles = () => {
                       title="Profiles visible after launch"
                       description="Create your profile now. Directory unlocks on launch day."
                     >
-                      {/* Grid with mobile height restriction */}
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 pb-12 max-h-[500px] md:max-h-none overflow-hidden">
                         {otherProfiles.map((profile) => <ProfileCard key={profile.id} profile={profile} />)}
                       </div>

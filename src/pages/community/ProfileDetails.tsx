@@ -9,7 +9,7 @@ import { UserProfile } from '@/types/user';
 import { 
   ArrowLeft, Loader2, Edit2, Globe, Mail, MapPin, Briefcase, 
   User, Building2, Brain, Phone, Calendar, 
-  Linkedin, Github, Zap, CheckCircle2
+  Linkedin, Github, Zap, CheckCircle2, Youtube, Instagram
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { cn } from '@/lib/utils';
@@ -143,7 +143,7 @@ const ProfileDetails = () => {
                     {/* Header Decoration (Subtle Grey) */}
                     <div className="absolute top-0 left-0 w-full h-24 sm:h-32 bg-slate-50 border-b border-slate-100"></div>
                     
-                    {/* Content: Centered on Mobile, Row on Desktop */}
+                    {/* Content */}
                     <div className="relative flex flex-col sm:flex-row gap-6 items-center sm:items-start pt-8 sm:pt-12 text-center sm:text-left">
                         {/* Avatar */}
                         <div className="flex-shrink-0">
@@ -202,12 +202,10 @@ const ProfileDetails = () => {
                     </div>
                 </motion.div>
 
-                {/* 2. CURRENT FOCUS CARD - UPDATED DESIGN */}
+                {/* 2. CURRENT FOCUS CARD */}
                 {profile.buildingInAI && (
                     <motion.div variants={itemVars} className="relative overflow-hidden bg-[#0F172A] rounded-[2rem] p-8 text-white shadow-xl shadow-slate-200">
-                         {/* Subtle Accent Bar on Left */}
                         <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-indigo-500"></div>
-                        
                         <div className="relative z-10">
                             <div className="flex justify-between items-start mb-4">
                                 <div className="flex items-center gap-3">
@@ -216,7 +214,6 @@ const ProfileDetails = () => {
                                     </div>
                                     <h3 className="text-sm font-bold text-slate-400 uppercase tracking-widest">Building Now</h3>
                                 </div>
-                                {/* Live Pulse Indicator */}
                                 <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-500/30 text-[10px] font-bold text-indigo-200 uppercase tracking-wide">
                                     <span className="relative flex h-2 w-2">
                                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
@@ -225,7 +222,6 @@ const ProfileDetails = () => {
                                     Active
                                 </div>
                             </div>
-                            
                             <p className="text-white/90 text-lg sm:text-xl leading-relaxed font-light border-l-2 border-white/10 pl-4 ml-1">
                                 "{profile.buildingInAI}"
                             </p>
@@ -287,7 +283,7 @@ const ProfileDetails = () => {
             {/* ================= RIGHT COLUMN ================= */}
             <div className="lg:col-span-4 space-y-6">
                 
-                {/* 1. CONTACT CARD - CLEANER */}
+                {/* 1. CONTACT CARD - UPDATED WITH SOCIALS */}
                 <motion.div variants={itemVars} className="bg-white rounded-[2rem] p-6 border border-slate-200 shadow-sm">
                     <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-6">Connect</h3>
                     <div className="space-y-3">
@@ -313,14 +309,30 @@ const ProfileDetails = () => {
                                 </div>
                             </div>
                         )}
-                        <div className="flex gap-3 mt-4 pt-2">
+                        
+                        {/* SOCIAL LINKS GRID */}
+                        <div className="grid grid-cols-2 gap-3 mt-4 pt-2">
+                            {/* YouTube */}
+                            {(profile as any).youtube && (
+                                <a href={(profile as any).youtube} target="_blank" rel="noreferrer" className="flex items-center justify-center py-3 bg-red-50 text-red-600 hover:bg-red-600 hover:text-white rounded-xl transition-all shadow-sm">
+                                    <Youtube className="w-5 h-5" />
+                                </a>
+                            )}
+                            {/* Instagram */}
+                            {(profile as any).instagram && (
+                                <a href={(profile as any).instagram} target="_blank" rel="noreferrer" className="flex items-center justify-center py-3 bg-pink-50 text-pink-600 hover:bg-gradient-to-tr hover:from-[#f09433] hover:via-[#dc2743] hover:to-[#bc1888] hover:text-white rounded-xl transition-all shadow-sm">
+                                    <Instagram className="w-5 h-5" />
+                                </a>
+                            )}
+                            {/* LinkedIn */}
                             {profile.linkedin && (
-                                <a href={profile.linkedin} target="_blank" rel="noreferrer" className="flex-1 py-3 bg-[#0a66c2] hover:bg-[#004182] text-white rounded-xl flex items-center justify-center transition-colors shadow-sm">
+                                <a href={profile.linkedin} target="_blank" rel="noreferrer" className="flex items-center justify-center py-3 bg-blue-50 text-[#0a66c2] hover:bg-[#0a66c2] hover:text-white rounded-xl transition-all shadow-sm">
                                     <Linkedin className="w-5 h-5" />
                                 </a>
                             )}
+                            {/* GitHub */}
                             {profile.github && (
-                                <a href={profile.github} target="_blank" rel="noreferrer" className="flex-1 py-3 bg-[#24292e] hover:bg-[#1a1e22] text-white rounded-xl flex items-center justify-center transition-colors shadow-sm">
+                                <a href={profile.github} target="_blank" rel="noreferrer" className="flex items-center justify-center py-3 bg-slate-50 text-[#24292e] hover:bg-[#24292e] hover:text-white rounded-xl transition-all shadow-sm">
                                     <Github className="w-5 h-5" />
                                 </a>
                             )}

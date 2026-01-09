@@ -1,49 +1,84 @@
 import React, { useState, useEffect } from 'react';
 import CommunityLayout from '@/components/community/layout/CommunityLayout';
-import { motion } from 'framer-motion';
 import { 
   ArrowLeft, Loader2, Edit2, Globe, Phone, User, 
-  Building, Brain, Camera, Check, Sparkles, Share2, MapPin, Briefcase
+  Building, Camera, Check, Briefcase,
+  Youtube, Instagram, Github, Linkedin, Mail
 } from 'lucide-react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
-import { db } from '@/services/firebase'; // Removed storage import
+import { db } from '@/services/firebase';
 import { useAuth } from '@/contexts/AuthContext';
 import { UserProfile } from '@/types/user';
 import toast from 'react-hot-toast';
 import { cn } from '@/lib/utils';
 
 // --- CONFIGURATION ---
-// If you are using Create React App, change import.meta.env to process.env
 const CLOUD_NAME = "dn9gh1goq"; 
 const UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || "YOUR_UPLOAD_PRESET_HERE"; 
 
-const countries = [
-  "United States", "India", "United Kingdom", "Canada", "Australia", "Germany", "France", "Japan", "Brazil", 
-  "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Argentina", "Armenia", "Austria", "Azerbaijan",
-  "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brunei", "Bulgaria", "Burkina Faso", "Burundi",
-  "Cambodia", "Cameroon", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czech Republic",
-  "Denmark", "Djibouti", "Dominica", "Dominican Republic",
-  "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia",
-  "Fiji", "Finland",
-  "Gabon", "Gambia", "Georgia", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guyana",
-  "Haiti", "Honduras", "Hungary",
-  "Iceland", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy",
-  "Jamaica", "Jordan",
-  "Kazakhstan", "Kenya", "Kuwait", "Kyrgyzstan",
-  "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg",
-  "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Mauritania", "Mauritius", "Mexico", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar",
-  "Namibia", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "North Macedonia", "Norway",
-  "Oman",
-  "Pakistan", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal",
-  "Qatar",
-  "Romania", "Russia", "Rwanda",
-  "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Somalia", "South Africa", "South Korea", "Spain", "Sri Lanka", "Sudan", "Sweden", "Switzerland", "Syria",
-  "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Togo", "Tunisia", "Turkey", "Turkmenistan",
-  "Uganda", "Ukraine", "United Arab Emirates", "Uruguay", "Uzbekistan",
-  "Venezuela", "Vietnam",
-  "Yemen", "Zambia", "Zimbabwe"
+// --- COMPREHENSIVE COUNTRY CODES LIST ---
+const countryCodes = [
+  // --- AFRICA ---
+  { code: "+234", label: "Nigeria (+234)" },
+  { code: "+27", label: "South Africa (+27)" },
+  { code: "+20", label: "Egypt (+20)" },
+  { code: "+254", label: "Kenya (+254)" },
+  { code: "+233", label: "Ghana (+233)" },
+  { code: "+212", label: "Morocco (+212)" },
+  { code: "+251", label: "Ethiopia (+251)" },
+  { code: "+213", label: "Algeria (+213)" },
+  { code: "+256", label: "Uganda (+256)" },
+  { code: "+255", label: "Tanzania (+255)" },
+  { code: "+221", label: "Senegal (+221)" },
+  { code: "+250", label: "Rwanda (+250)" },
+  { code: "+237", label: "Cameroon (+237)" },
+  { code: "+225", label: "Ivory Coast (+225)" },
+  { code: "+244", label: "Angola (+244)" },
+  { code: "+260", label: "Zambia (+260)" },
+  { code: "+263", label: "Zimbabwe (+263)" },
+  { code: "+216", label: "Tunisia (+216)" },
+  { code: "+241", label: "Gabon (+241)" },
+  { code: "+220", label: "Gambia (+220)" },
+  { code: "+232", label: "Sierra Leone (+232)" },
+  { code: "+231", label: "Liberia (+231)" },
+  { code: "+243", label: "DR Congo (+243)" },
+  { code: "+242", label: "Congo Republic (+242)" },
+  { code: "+230", label: "Mauritius (+230)" },
+  { code: "+267", label: "Botswana (+267)" },
+  { code: "+264", label: "Namibia (+264)" },
+  
+  // --- MAJOR GLOBAL ---
+  { code: "+1", label: "US/Canada (+1)" },
+  { code: "+44", label: "UK (+44)" },
+  { code: "+91", label: "India (+91)" },
+  { code: "+61", label: "Australia (+61)" },
+  { code: "+971", label: "UAE (+971)" },
+  { code: "+966", label: "Saudi Arabia (+966)" },
+  { code: "+49", label: "Germany (+49)" },
+  { code: "+33", label: "France (+33)" },
+  { code: "+81", label: "Japan (+81)" },
+  { code: "+86", label: "China (+86)" },
+  { code: "+55", label: "Brazil (+55)" },
+  { code: "+7", label: "Russia (+7)" },
+  { code: "+39", label: "Italy (+39)" },
+  { code: "+34", label: "Spain (+34)" },
+  { code: "+31", label: "Netherlands (+31)" },
+  { code: "+46", label: "Sweden (+46)" },
+  { code: "+65", label: "Singapore (+65)" },
+  { code: "+60", label: "Malaysia (+60)" },
+  { code: "+62", label: "Indonesia (+62)" },
+  { code: "+92", label: "Pakistan (+92)" },
+  { code: "+880", label: "Bangladesh (+880)" },
+  { code: "+90", label: "Turkey (+90)" },
+  { code: "+1", label: "Other" }
 ];
+
+const countries = [
+  "Nigeria", "United States", "India", "United Kingdom", "Canada", "South Africa", "Kenya", "Ghana", "Australia", "Germany", "France", "UAE", "Saudi Arabia", "Japan", "Brazil", 
+  "Egypt", "Ethiopia", "Morocco", "Algeria", "Uganda", "Tanzania", "Rwanda", "Senegal", "Cameroon", "Angola", "Zambia", "Zimbabwe",
+  "China", "Russia", "Italy", "Spain", "Netherlands", "Sweden", "Singapore", "Malaysia", "Indonesia", "Pakistan", "Bangladesh", "Turkey"
+].sort();
 
 const PromoteProfile = () => {
   const navigate = useNavigate();
@@ -58,13 +93,15 @@ const PromoteProfile = () => {
   const [saving, setSaving] = useState(false);
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
 
-  // Form State
-  const [formData, setFormData] = useState<Partial<UserProfile>>({
+  // Phone State Management
+  const [phoneCode, setPhoneCode] = useState("+234"); // Default to Nigeria
+  const [phoneDigits, setPhoneDigits] = useState("");
+
+  const [formData, setFormData] = useState<Partial<UserProfile> & { youtube?: string, instagram?: string }>({
     fullName: '',
     photoURL: '',
     bannerURL: '',
     location: '',
-    age: undefined,
     gender: '',
     buildingInAI: '',
     companyName: '',
@@ -77,7 +114,9 @@ const PromoteProfile = () => {
     contactDetails: '',
     phoneNumber: '',
     linkedin: '',
-    github: ''
+    github: '',
+    youtube: '',
+    instagram: ''
   });
 
   const [skillsInput, setSkillsInput] = useState('');
@@ -97,10 +136,25 @@ const PromoteProfile = () => {
       setFormData({
         ...userProfile,
         aiSkills: userProfile.aiSkills || [],
-        phoneNumber: userProfile.phoneNumber || '',
-        location: userProfile.location || ''
+        location: userProfile.location || '',
+        youtube: (userProfile as any).youtube || '',
+        instagram: (userProfile as any).instagram || ''
       });
       setSkillsInput(userProfile.aiSkills?.join(', ') || '');
+
+      // Parse Phone Number
+      if (userProfile.phoneNumber) {
+        // Try to split by space first (our format: "+Code Number")
+        const parts = userProfile.phoneNumber.split(' ');
+        if (parts.length === 2) {
+            setPhoneCode(parts[0]);
+            setPhoneDigits(parts[1]);
+        } else {
+            // Fallback: If just a number, try to guess or just set digits
+            setPhoneDigits(userProfile.phoneNumber.replace(/[^0-9]/g, ''));
+        }
+      }
+
       if (editParam) setIsEditing(true); 
     } else if (user) {
       setFormData(prev => ({
@@ -124,42 +178,75 @@ const PromoteProfile = () => {
     }
   };
 
+  // Strict Phone Handler
+  const handlePhoneDigitChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    // Only allow digits, max 10
+    if (/^\d{0,10}$/.test(value)) {
+        setPhoneDigits(value);
+    }
+  };
+
+  // --- CANCEL HANDLER (REDIRECTS TO PROFILE) ---
+  const handleCancel = () => {
+    if (userProfile && user?.uid) {
+        // Redirect to their existing profile page
+        navigate(`/community/profile/${user.uid}`);
+    } else {
+        // Redirect to directory if they are new
+        navigate('/community/profiles');
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!user) return;
+
+    // --- VALIDATION ---
+    if (phoneDigits && phoneDigits.length !== 10) {
+        toast.error("Phone number must be exactly 10 digits");
+        return;
+    }
+
     setSaving(true);
 
     try {
       const skills = skillsInput.split(',').map(s => s.trim()).filter(s => s);
       
-      const profileData: UserProfile = {
-        uid: user.uid,
-        email: user.email || '',
-        fullName: formData.fullName || '',
-        photoURL: formData.photoURL || '',
-        bannerURL: formData.bannerURL || undefined,
-        location: formData.location || '',
-        age: formData.age ? Number(formData.age) : undefined,
-        gender: formData.gender || '',
-        buildingInAI: formData.buildingInAI || '',
-        companyName: formData.companyName || '',
-        websiteURL: formData.websiteURL || '',
-        description: formData.description || '',
-        currentWork: formData.currentWork || '',
-        aiSkills: skills,
-        workingStatus: formData.workingStatus || '',
-        networkingIntent: formData.networkingIntent || [],
-        contactDetails: formData.contactDetails || '',
-        phoneNumber: formData.phoneNumber || '',
-        createdAt: userProfile?.createdAt || serverTimestamp(),
-        updatedAt: serverTimestamp(),
-        linkedin: formData.linkedin || undefined,
-        github: formData.github || undefined
+      // Combine phone code and digits
+      const finalPhoneNumber = phoneDigits ? `${phoneCode} ${phoneDigits}` : "";
+
+      const profileData: UserProfile & { youtube?: string, instagram?: string } = {
+         uid: user.uid,
+         email: user.email || '',
+         fullName: formData.fullName || '',
+         photoURL: formData.photoURL || '',
+         bannerURL: formData.bannerURL || undefined,
+         location: formData.location || '',
+         age: formData.age ? Number(formData.age) : undefined,
+         gender: formData.gender || '',
+         buildingInAI: formData.buildingInAI || '',
+         companyName: formData.companyName || '',
+         websiteURL: formData.websiteURL || '',
+         description: formData.description || '',
+         currentWork: formData.currentWork || '',
+         aiSkills: skills,
+         workingStatus: formData.workingStatus || '',
+         networkingIntent: formData.networkingIntent || [],
+         contactDetails: formData.contactDetails || '',
+         phoneNumber: finalPhoneNumber, // Save combined
+         createdAt: userProfile?.createdAt || serverTimestamp(),
+         updatedAt: serverTimestamp(),
+         linkedin: formData.linkedin || undefined,
+         github: formData.github || undefined,
+         youtube: formData.youtube || undefined,
+         instagram: formData.instagram || undefined,
+         bio: ''
       };
 
       const sanitized = Object.fromEntries(
         Object.entries(profileData).filter(([, v]) => v !== undefined)
-      ) as UserProfile;
+      );
 
       await setDoc(doc(db, 'public_profiles', user.uid), sanitized);
       await refreshProfile();
@@ -176,342 +263,48 @@ const PromoteProfile = () => {
     }
   };
 
-  // --- CLOUDINARY UPLOAD FUNCTION ---
+  // --- CLOUDINARY HANDLERS ---
   const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file || !user) return;
-
-    // Validate Preset Exists
-    if (!UPLOAD_PRESET || UPLOAD_PRESET === "YOUR_UPLOAD_PRESET_HERE") {
-        toast.error("Upload preset is missing in .env config");
-        console.error("Missing VITE_CLOUDINARY_UPLOAD_PRESET");
-        return;
-    }
-
+    if (!UPLOAD_PRESET) { toast.error("Upload config missing"); return; }
     try {
       setUploadingPhoto(true);
-      
       const data = new FormData();
       data.append("file", file);
       data.append("upload_preset", UPLOAD_PRESET); 
       data.append("cloud_name", CLOUD_NAME);
-      // Optional: Add folder organization
-      data.append("folder", "user_profiles"); 
-
-      const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
-        method: "POST",
-        body: data
-      });
-
+      const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, { method: "POST", body: data });
       const result = await response.json();
-
       if (result.secure_url) {
         setFormData(prev => ({ ...prev, photoURL: result.secure_url }));
-        toast.success('Photo uploaded successfully');
-      } else {
-        throw new Error(result.error?.message || "Upload failed");
+        toast.success('Photo uploaded');
       }
-
-    } catch (err) {
-      console.error("Cloudinary upload error:", err);
-      toast.error('Failed to upload photo');
-    } finally {
-      setUploadingPhoto(false);
-    }
+    } catch (err) { toast.error('Failed to upload photo'); } finally { setUploadingPhoto(false); }
   };
 
   const handleBannerUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file || !user) return;
-    if (!UPLOAD_PRESET || UPLOAD_PRESET === "YOUR_UPLOAD_PRESET_HERE") {
-        toast.error("Upload preset is missing in .env config");
-        console.error("Missing VITE_CLOUDINARY_UPLOAD_PRESET");
-        return;
-    }
+    if (!UPLOAD_PRESET) { toast.error("Upload config missing"); return; }
     try {
       setUploadingPhoto(true);
       const data = new FormData();
       data.append("file", file);
       data.append("upload_preset", UPLOAD_PRESET); 
       data.append("cloud_name", CLOUD_NAME);
-      data.append("folder", "user_banners"); 
-      const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
-        method: "POST",
-        body: data
-      });
+      const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, { method: "POST", body: data });
       const result = await response.json();
       if (result.secure_url) {
         setFormData(prev => ({ ...prev, bannerURL: result.secure_url }));
-        toast.success('Banner uploaded successfully');
-      } else {
-        throw new Error(result.error?.message || "Upload failed");
+        toast.success('Banner uploaded');
       }
-    } catch (err) {
-      console.error("Cloudinary upload error:", err);
-      toast.error('Failed to upload banner');
-    } finally {
-      setUploadingPhoto(false);
-    }
+    } catch (err) { toast.error('Failed to upload banner'); } finally { setUploadingPhoto(false); }
   };
 
-  const copyProfileLink = () => {
-    const url = window.location.href;
-    navigator.clipboard.writeText(url);
-    toast.success('Profile link copied!');
-  };
+  if (authLoading) return <CommunityLayout><div className="min-h-screen flex items-center justify-center bg-[#F8F9FB]"><Loader2 className="w-8 h-8 animate-spin text-slate-900" /></div></CommunityLayout>;
 
-  if (authLoading) return (
-    <CommunityLayout>
-      <div className="min-h-screen flex items-center justify-center bg-[#F8F9FB]">
-        <Loader2 className="w-8 h-8 animate-spin text-slate-900" />
-      </div>
-    </CommunityLayout>
-  );
-
-  // ==================== VIEW MODE (PREMIUM UI) ====================
-  if (userProfile && !isEditing) {
-    return (
-      <CommunityLayout>
-        <div className="min-h-screen bg-slate-50/50 pb-14 md:pb-20 font-sans selection:bg-indigo-500 selection:text-white">
-          
-          {/* --- HERO COVER --- */}
-           <div className="relative h-80 w-full overflow-hidden">
-             <div className="absolute inset-0">
-               {userProfile.bannerURL ? (
-                 <img src={userProfile.bannerURL} alt="Banner" className="w-full h-full object-cover" />
-               ) : (
-                 <div className="w-full h-full bg-slate-900">
-                   <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-800 via-slate-900 to-black opacity-80"></div>
-                   <div className="absolute -top-[50%] -left-[20%] w-[80%] h-[200%] bg-indigo-500/20 blur-[100px] rounded-full mix-blend-screen animate-pulse"></div>
-                   <div className="absolute top-[20%] right-[-10%] w-[60%] h-[150%] bg-blue-500/10 blur-[120px] rounded-full mix-blend-screen"></div>
-                 </div>
-               )}
-               <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150 mix-blend-overlay"></div>
-             </div>
-
-             {/* Navigation */}
-             <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-start z-10">
-                <Link to="/community/profiles" className="flex items-center gap-2 px-4 py-2 bg-black/20 backdrop-blur-md border border-white/10 rounded-full text-white/90 text-sm font-medium hover:bg-black/40 transition-all">
-                    <ArrowLeft className="w-4 h-4" /> <span className="hidden sm:inline">Directory</span>
-                </Link>
-                <div className="flex gap-3">
-                   <button onClick={copyProfileLink} className="p-2 bg-black/20 backdrop-blur-md border border-white/10 rounded-full text-white/90 hover:bg-white hover:text-black transition-all">
-                      <Share2 className="w-4 h-4" />
-                   </button>
-                   {user?.uid === userProfile.uid && (
-                      <button onClick={() => setIsEditing(true)} className="flex items-center gap-2 px-5 py-2 bg-white text-slate-900 rounded-full text-sm font-bold shadow-lg hover:scale-105 transition-transform">
-                          <Edit2 className="w-3.5 h-3.5" /> Edit Profile
-                      </button>
-                   )}
-                </div>
-             </div>
-          </div>
-
-          <div className="container mx-auto px-4 sm:px-6 max-w-7xl relative z-20 -mt-24">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
-               
-               {/* --- LEFT COLUMN: PROFILE CARD --- */}
-               <div className="lg:col-span-4">
-                  <motion.div 
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="bg-white rounded-[2.5rem] border border-slate-200 p-8 shadow-[0_20px_40px_-12px_rgba(0,0,0,0.1)] relative overflow-hidden"
-                  >
-                     {/* Status Pill */}
-                     {userProfile.workingStatus && (
-                        <div className="absolute top-6 right-6">
-                           <span className="inline-flex items-center px-3 py-1 rounded-full bg-emerald-50 border border-emerald-100 text-[10px] font-bold uppercase tracking-wide text-emerald-700">
-                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>
-                              {userProfile.workingStatus}
-                           </span>
-                        </div>
-                     )}
-
-                     {/* Avatar */}
-                     <div className="mb-6 relative inline-block">
-                        <div className="w-32 h-32 sm:w-40 sm:h-40 rounded-[2rem] p-1.5 bg-white border border-slate-100 shadow-xl shadow-slate-200/50">
-                           {userProfile.photoURL ? (
-                              <img src={userProfile.photoURL} alt={userProfile.fullName} className="w-full h-full object-cover rounded-[1.6rem] bg-slate-100" />
-                           ) : (
-                              <div className="w-full h-full flex items-center justify-center bg-slate-50 rounded-[1.6rem] text-slate-300">
-                                 <User className="w-12 h-12" />
-                              </div>
-                           )}
-                        </div>
-                     </div>
-
-                     {/* Identity */}
-                     <div className="mb-8">
-                        <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight capitalize mb-2">
-                           {userProfile.fullName}
-                        </h1>
-                        <p className="text-lg text-slate-500 font-medium">
-                           {userProfile.currentWork || "Member"}
-                        </p>
-                        {userProfile.companyName && (
-                           <div className="flex items-center gap-2 text-slate-400 font-medium text-sm mt-1">
-                              <Building className="w-3.5 h-3.5" />
-                              {userProfile.companyName}
-                           </div>
-                        )}
-                     </div>
-
-                     {/* Meta Info */}
-                     <div className="space-y-4 pt-6 border-t border-slate-100">
-                        {userProfile.location && (
-                           <div className="flex items-center gap-3 text-slate-600">
-                              <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-400">
-                                 <MapPin className="w-4 h-4" />
-                              </div>
-                              <span className="text-sm font-medium">{userProfile.location}</span>
-                           </div>
-                        )}
-                        {userProfile.websiteURL && (
-                           <a href={userProfile.websiteURL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-slate-600 group hover:text-blue-600 transition-colors">
-                              <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-blue-50 group-hover:text-blue-500 transition-colors">
-                                 <Globe className="w-4 h-4" />
-                              </div>
-                              <span className="text-sm font-medium truncate underline decoration-slate-200 underline-offset-4 group-hover:decoration-blue-200">
-                                 {userProfile.websiteURL.replace(/^https?:\/\//, '')}
-                              </span>
-                           </a>
-                        )}
-                        {userProfile.phoneNumber && (
-                           <div className="flex items-center gap-3 text-slate-600">
-                              <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-400">
-                                 <Phone className="w-4 h-4" />
-                              </div>
-                              <span className="text-sm font-medium">{userProfile.phoneNumber}</span>
-                           </div>
-                        )}
-                     </div>
-
-                     {/* Action Buttons */}
-                     <div className="mt-8 grid grid-cols-2 gap-3">
-                        <button 
-                           onClick={() => window.location.href = `mailto:${userProfile.email}`}
-                           className="col-span-2 py-3.5 rounded-xl bg-slate-900 text-white font-bold text-sm hover:bg-slate-800 hover:-translate-y-0.5 transition-all shadow-lg shadow-slate-900/20"
-                        >
-                           Contact Me
-                        </button>
-                     </div>
-                  </motion.div>
-               </div>
-
-               {/* --- RIGHT COLUMN: BENTO GRID --- */}
-               <div className="lg:col-span-8 space-y-6">
-                  
-                  {/* ABOUT CARD */}
-                  <motion.div 
-                     initial={{ opacity: 0, y: 20 }}
-                     animate={{ opacity: 1, y: 0 }}
-                     transition={{ delay: 0.1 }}
-                     className="bg-white rounded-[2.5rem] border border-slate-200 p-8 sm:p-10 shadow-sm"
-                  >
-                     <div className="flex items-center gap-3 mb-6">
-                        <div className="w-10 h-10 rounded-2xl bg-indigo-50 flex items-center justify-center text-indigo-600">
-                           <User className="w-5 h-5" />
-                        </div>
-                        <h2 className="text-xl font-bold text-slate-900">About</h2>
-                     </div>
-                     <p className="text-slate-600 text-lg leading-relaxed whitespace-pre-wrap">
-                        {userProfile.description || "No bio available."}
-                     </p>
-                  </motion.div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                     
-                     {/* BUILDING IN AI CARD (Dark Theme) */}
-                     {userProfile.buildingInAI && (
-                        <motion.div 
-                           initial={{ opacity: 0, scale: 0.95 }}
-                           animate={{ opacity: 1, scale: 1 }}
-                           transition={{ delay: 0.2 }}
-                           className="relative bg-slate-900 rounded-[2.5rem] p-8 text-white overflow-hidden flex flex-col justify-between min-h-[280px]"
-                        >
-                           {/* Decorative Glows */}
-                           <div className="absolute top-0 right-0 w-40 h-40 bg-blue-500/20 rounded-full blur-[60px]"></div>
-                           <div className="absolute bottom-0 left-0 w-40 h-40 bg-purple-500/20 rounded-full blur-[60px]"></div>
-                           
-                           <div className="relative z-10">
-                              <div className="flex items-center gap-2 text-blue-400 font-bold text-xs uppercase tracking-wider mb-4">
-                                 <Brain className="w-4 h-4" />
-                                 Current Focus
-                              </div>
-                              <h3 className="text-2xl font-bold mb-4 leading-tight">Building in AI</h3>
-                              <div className="p-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 text-slate-200 text-sm leading-relaxed">
-                                 {userProfile.buildingInAI}
-                              </div>
-                           </div>
-                           
-                           <div className="relative z-10 mt-6 pt-6 border-t border-white/10 flex items-center justify-between">
-                              <span className="text-xs font-medium text-slate-400">Ask me about this</span>
-                              <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
-                                 <ArrowLeft className="w-4 h-4 rotate-[135deg]" />
-                              </div>
-                           </div>
-                        </motion.div>
-                     )}
-
-                     {/* TECH STACK CARD */}
-                     <motion.div 
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 0.3 }}
-                        className="bg-white rounded-[2.5rem] border border-slate-200 p-8 flex flex-col"
-                     >
-                        <div className="flex items-center gap-3 mb-6">
-                           <div className="w-10 h-10 rounded-2xl bg-amber-50 flex items-center justify-center text-amber-600">
-                              <Sparkles className="w-5 h-5" />
-                           </div>
-                           <h2 className="text-xl font-bold text-slate-900">Tech Stack</h2>
-                        </div>
-                        
-                        <div className="flex flex-wrap gap-2 content-start">
-                           {userProfile.aiSkills && userProfile.aiSkills.length > 0 ? (
-                              userProfile.aiSkills.map((skill, i) => (
-                                 <span key={i} className="px-4 py-2 rounded-xl bg-slate-50 border border-slate-100 text-slate-700 font-semibold text-sm hover:bg-slate-100 transition-colors cursor-default">
-                                    {skill}
-                                 </span>
-                              ))
-                           ) : (
-                              <span className="text-slate-400 italic text-sm">No skills listed yet.</span>
-                           )}
-                        </div>
-                     </motion.div>
-                  </div>
-
-                  {/* INTENT TAGS */}
-                  {userProfile.networkingIntent && userProfile.networkingIntent.length > 0 && (
-                     <motion.div 
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.4 }}
-                        className="bg-white rounded-[2.5rem] border border-slate-200 p-8"
-                     >
-                        <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-6">Open to</h3>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                           {userProfile.networkingIntent.map((intent, i) => (
-                              <div key={i} className="group flex items-center gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100 hover:border-slate-200 hover:bg-white hover:shadow-sm transition-all">
-                                 <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center border border-slate-100 text-emerald-500 shadow-sm group-hover:scale-110 transition-transform">
-                                    <Check className="w-5 h-5" />
-                                 </div>
-                                 <span className="font-bold text-slate-700">{intent}</span>
-                              </div>
-                           ))}
-                        </div>
-                     </motion.div>
-                  )}
-
-               </div>
-            </div>
-          </div>
-        </div>
-      </CommunityLayout>
-    );
-  }
-
-  // ==================== EDIT MODE ====================
+  // EDIT MODE
   return (
     <CommunityLayout>
       <div className="min-h-screen bg-[#F8F9FB] py-16">
@@ -521,15 +314,18 @@ const PromoteProfile = () => {
                  <h1 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">Profile Settings</h1>
                  <p className="text-slate-500 mt-2">Manage your public presence and professional details.</p>
               </div>
-              {userProfile && (
-                 <button onClick={() => setIsEditing(false)} className="px-5 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-600 font-medium hover:bg-slate-50 transition-colors">
-                    Cancel
-                 </button>
-              )}
+              
+              {/* --- CANCEL BUTTON FIXED --- */}
+              <button 
+                onClick={handleCancel} 
+                className="px-5 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-600 font-medium hover:bg-slate-50 transition-colors"
+              >
+                 Cancel
+              </button>
            </div>
 
           <form onSubmit={handleSubmit} className="space-y-8">
-              {/* Banner Section */}
+              {/* 1. Banner Section */}
               <div className="bg-white rounded-[2rem] border border-slate-200 p-8 shadow-sm">
                  <h2 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
                     <Camera className="w-5 h-5 text-indigo-600" /> Profile Banner (Optional)
@@ -549,12 +345,14 @@ const PromoteProfile = () => {
                     </label>
                  </div>
               </div>
-              {/* Identity Section */}
+
+              {/* 2. Identity Section */}
               <div className="bg-white rounded-[2rem] border border-slate-200 p-8 shadow-sm">
                  <h2 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
-                    <User className="w-5 h-5 text-indigo-600" /> Identity
+                    <User className="w-5 h-5 text-indigo-600" /> Identity & Info
                  </h2>
-                 <div className="flex flex-col md:flex-row gap-8">
+                 
+                 <div className="flex flex-col md:flex-row gap-8 mb-8 border-b border-slate-100 pb-8">
                     <div className="flex-shrink-0">
                        <div className="group relative w-32 h-32 rounded-2xl bg-slate-100 border-2 border-dashed border-slate-300 hover:border-indigo-500 transition-colors overflow-hidden">
                           {formData.photoURL ? (
@@ -594,11 +392,67 @@ const PromoteProfile = () => {
                              <option value="Prefer not to say">Prefer not to say</option>
                           </select>
                        </div>
+                       
+                       {/* Phone Number Field */}
+                       <div className="space-y-2">
+                          <label className="text-sm font-semibold text-slate-700">Phone (Digits only)</label>
+                          <div className="flex gap-1">
+                             {/* Country Code Select */}
+                             <select 
+                                value={phoneCode} 
+                                onChange={(e) => setPhoneCode(e.target.value)} 
+                                className="w-[120px] px-2 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all text-sm"
+                             >
+                                {countryCodes.map((c) => (
+                                   <option key={c.label} value={c.code}>{c.label}</option>
+                                ))}
+                             </select>
+                             {/* Number Input */}
+                             <input 
+                                type="text" 
+                                value={phoneDigits} 
+                                onChange={handlePhoneDigitChange} 
+                                className="w-[180px] px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none" 
+                                placeholder="9876543210" 
+                                inputMode="numeric"
+                             />
+                          </div>
+                          {phoneDigits.length > 0 && phoneDigits.length < 10 && (
+                             <p className="text-xs text-red-500">Must be exactly 10 digits</p>
+                          )}
+                       </div>
+                    </div>
+                 </div>
+
+                 {/* Socials & Contact */}
+                 <div className="space-y-4">
+                    <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wide">Social & Contact Links</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="space-y-2">
+                            <label className="text-sm font-semibold text-slate-700 flex items-center gap-2"><Youtube className="w-4 h-4 text-red-500"/> YouTube URL</label>
+                            <input type="url" name="youtube" value={formData.youtube || ''} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 outline-none" placeholder="https://youtube.com/@..." />
+                        </div>
+                        <div className="space-y-2">
+                            <label className="text-sm font-semibold text-slate-700 flex items-center gap-2"><Instagram className="w-4 h-4 text-pink-500"/> Instagram URL</label>
+                            <input type="url" name="instagram" value={formData.instagram || ''} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 outline-none" placeholder="https://instagram.com/..." />
+                        </div>
+                        <div className="space-y-2 md:col-span-2">
+                            <label className="text-sm font-semibold text-slate-700 flex items-center gap-2"><Mail className="w-4 h-4 text-slate-500"/> Email Address</label>
+                            <input type="email" name="contactDetails" value={formData.contactDetails} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 outline-none" />
+                        </div>
+                        <div className="space-y-2">
+                            <label className="text-sm font-semibold text-slate-700 flex items-center gap-2"><Github className="w-4 h-4 text-slate-900"/> GitHub URL</label>
+                            <input type="url" name="github" value={(formData as any).github || ''} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 outline-none" placeholder="https://github.com/..." />
+                        </div>
+                        <div className="space-y-2">
+                            <label className="text-sm font-semibold text-slate-700 flex items-center gap-2"><Linkedin className="w-4 h-4 text-blue-600"/> LinkedIn URL</label>
+                            <input type="url" name="linkedin" value={(formData as any).linkedin || ''} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 outline-none" placeholder="https://linkedin.com/in/..." />
+                        </div>
                     </div>
                  </div>
               </div>
 
-              {/* Professional Section */}
+              {/* 3. Professional Section */}
               <div className="bg-white rounded-[2rem] border border-slate-200 p-8 shadow-sm">
                  <h2 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
                     <Briefcase className="w-5 h-5 text-indigo-600" /> Professional Details
@@ -619,6 +473,10 @@ const PromoteProfile = () => {
                        <label className="text-sm font-semibold text-slate-700">Company Name</label>
                        <input type="text" name="companyName" value={formData.companyName} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all" />
                     </div>
+                    <div className="space-y-2 md:col-span-2">
+                       <label className="text-sm font-semibold text-slate-700 flex items-center gap-2"><Globe className="w-4 h-4 text-indigo-500"/> Website URL</label>
+                       <input type="url" name="websiteURL" value={formData.websiteURL} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 outline-none" placeholder="https://mywebsite.com" />
+                    </div>
                  </div>
                  <div className="space-y-2 mb-6">
                     <label className="text-sm font-semibold text-slate-700">Bio / About Me</label>
@@ -634,7 +492,7 @@ const PromoteProfile = () => {
                  </div>
               </div>
 
-              {/* Status Section */}
+              {/* 4. Status Section */}
               <div className="bg-white rounded-[2rem] border border-slate-200 p-8 shadow-sm">
                  <h2 className="text-xl font-bold text-slate-900 mb-6">Work Status & Intent</h2>
                  <div className="space-y-6">
@@ -662,33 +520,6 @@ const PromoteProfile = () => {
                              )
                           })}
                        </div>
-                    </div>
-                 </div>
-              </div>
-
-              {/* Contact Section */}
-              <div className="bg-white rounded-[2rem] border border-slate-200 p-8 shadow-sm">
-                 <h2 className="text-xl font-bold text-slate-900 mb-6">Contact Links</h2>
-                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                       <label className="text-sm font-semibold text-slate-700">Website URL (Optional)</label>
-                       <input type="url" name="websiteURL" value={formData.websiteURL} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 outline-none" placeholder="https://" />
-                    </div>
-                    <div className="space-y-2">
-                       <label className="text-sm font-semibold text-slate-700">Phone (Optional)</label>
-                       <input type="tel" name="phoneNumber" value={formData.phoneNumber || ''} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 outline-none" placeholder="+1 234 567 8900" />
-                    </div>
-                    <div className="space-y-2">
-                       <label className="text-sm font-semibold text-slate-700">LinkedIn URL (Optional)</label>
-                       <input type="url" name="linkedin" value={(formData as any).linkedin || ''} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 outline-none" placeholder="https://www.linkedin.com/in/username" />
-                    </div>
-                    <div className="space-y-2">
-                       <label className="text-sm font-semibold text-slate-700">GitHub URL (Optional)</label>
-                       <input type="url" name="github" value={(formData as any).github || ''} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 outline-none" placeholder="https://github.com/username" />
-                    </div>
-                    <div className="space-y-2 md:col-span-2">
-                       <label className="text-sm font-semibold text-slate-700">Email Address</label>
-                       <input type="email" name="contactDetails" value={formData.contactDetails} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 outline-none" />
                     </div>
                  </div>
               </div>
