@@ -7,10 +7,6 @@ import { doc, setDoc } from 'firebase/firestore';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Loader2, User, Mail, Lock, AlertCircle, ChevronRight } from 'lucide-react';
 
-// Import phone input
-import 'react-phone-number-input/style.css';
-import PhoneInput from 'react-phone-number-input';
-
 // Define Interface for Firebase Errors
 interface FirebaseError {
   code: string;
@@ -19,7 +15,6 @@ interface FirebaseError {
 
 const Signup = () => {
   const [name, setName] = useState('');
-  const [phone, setPhone] = useState<string | undefined>();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -42,7 +37,6 @@ const Signup = () => {
       // 3. Save to Firestore
       await setDoc(doc(db, 'users', user.uid), {
         name: name,
-        phone: phone || '',
         email: user.email,
         createdAt: new Date().toISOString(),
         role: 'member',
@@ -148,57 +142,6 @@ const Signup = () => {
                     required
                   />
                 </div>
-              </div>
-
-              {/* Phone Input - Custom Styled */}
-              <div className="space-y-1.5">
-                <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest ml-1">Phone Number</label>
-                
-                {/* Custom CSS to override the library and match our premium theme */}
-                <style>{`
-                  .PhoneInput {
-                    display: flex;
-                    align-items: center;
-                    background-color: rgba(249, 250, 251, 0.5); /* bg-gray-50/50 */
-                    border: 1px solid #e5e7eb;
-                    border-radius: 0.75rem;
-                    padding: 0.8rem 1rem; /* Match py-3.5 roughly */
-                    transition: all 0.2s;
-                  }
-                  .PhoneInput:focus-within {
-                    background-color: white;
-                    border-color: #d1d5db;
-                    box-shadow: 0 0 0 4px #f3f4f6; /* ring-4 ring-gray-100 */
-                  }
-                  .PhoneInputInput {
-                    background: transparent;
-                    border: none;
-                    outline: none;
-                    color: #111827;
-                    font-size: 0.875rem; /* text-sm */
-                    font-weight: 500;
-                    width: 100%;
-                  }
-                  .PhoneInputInput::placeholder {
-                    color: #9ca3af;
-                  }
-                  .PhoneInputCountry {
-                    margin-right: 0.75rem;
-                    opacity: 0.7;
-                  }
-                  .PhoneInputCountry:hover {
-                    opacity: 1;
-                  }
-                `}</style>
-                
-                <PhoneInput
-                  international
-                  defaultCountry="US"
-                  value={phone}
-                  onChange={setPhone}
-                  placeholder="Enter phone number"
-                  className="w-full"
-                />
               </div>
 
               {/* Email Input */}

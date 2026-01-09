@@ -3,10 +3,9 @@ import { useNavigate, Link } from 'react-router-dom';
 import CommunitySEO from '@/components/community/CommunitySEO';
 import { signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
 import { auth } from '@/services/firebase'; 
-import { motion } from 'framer-motion';
-import { ArrowLeft, Loader2, Mail, Lock, AlertCircle, ChevronRight, CheckCircle } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowLeft, Loader2, Mail, Lock, AlertCircle, ChevronRight, CheckCircle, Info } from 'lucide-react';
 
-// Define a simple interface for the Firebase error to fix the "unknown" type error
 interface FirebaseError {
   code: string;
   message: string;
@@ -15,16 +14,16 @@ interface FirebaseError {
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  // Fix: Explicitly tell TypeScript this state can be a string OR null
   const [error, setError] = useState<string | null>(null);
   const [resetMessage, setResetMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  // Fix: Type the event as React.FormEvent
+  // --- HANDLE LOGIN ---
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setResetMessage(null);
     setLoading(true);
 
     try {
@@ -32,7 +31,6 @@ const Login = () => {
       navigate('/community/home');
     } catch (err: unknown) {
       console.error(err);
-      // Fix: Cast 'err' to our interface or 'any' to access .code safely
       const firebaseError = err as FirebaseError;
       
       if (
@@ -43,6 +41,37 @@ const Login = () => {
         setError('Invalid email or password.');
       } else {
         setError('Failed to login. Please try again.');
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // --- HANDLE FORGOT PASSWORD ---
+  const handleForgotPassword = async () => {
+    setError(null);
+    setResetMessage(null);
+
+    // 1. Check if email is empty
+    if (!email) {
+      setError("Please enter your email address above first.");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      // 2. Send Reset Email
+      await sendPasswordResetEmail(auth, email);
+      setResetMessage(`Password reset link sent to ${email}. Please check your inbox and spam folder.`);
+    } catch (err: unknown) {
+      const firebaseError = err as FirebaseError;
+      if (firebaseError.code === 'auth/user-not-found') {
+        setError("No account found with this email.");
+      } else if (firebaseError.code === 'auth/invalid-email') {
+        setError("Please enter a valid email address.");
+      } else {
+        setError("Failed to send reset email. Try again later.");
       }
     } finally {
       setLoading(false);
@@ -61,7 +90,6 @@ const Login = () => {
       <div className="absolute inset-0 z-0 pointer-events-none">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#00000008_1px,transparent_1px),linear-gradient(to_bottom,#00000008_1px,transparent_1px)] bg-[size:32px_32px]" />
         
-        {/* Softer, more elegant blurred orbs */}
         <div className="hidden md:block absolute top-[-10%] right-[-5%] h-[600px] w-[600px] rounded-full bg-blue-50/80 blur-[120px]" />
         <div className="hidden md:block absolute bottom-[-10%] left-[-10%] h-[600px] w-[600px] rounded-full bg-indigo-50/80 blur-[120px]" />
       </div>
@@ -87,9 +115,8 @@ const Login = () => {
         >
           <div className="bg-white/90 backdrop-blur-xl rounded-[2rem] shadow-[0_20px_40px_-10px_rgba(0,0,0,0.08)] border border-white/50 p-8 sm:p-12 relative overflow-hidden ring-1 ring-gray-100">
             
-            {/* Header Section with LOGO */}
+            {/* Header */}
             <div className="text-center mb-8 md:mb-10">
-              {/* Logo Implementation */}
               <div className="flex justify-center mb-8">
                 <img 
                   src="/logo.png" 
@@ -97,36 +124,47 @@ const Login = () => {
                   className="h-12 w-auto object-contain drop-shadow-sm" 
                 />
               </div>
-              
               <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 tracking-tight">Welcome Back</h1>
               <p className="text-gray-500 text-sm font-medium">
                 Enter your credentials to access your account
               </p>
             </div>
 
-            {/* Success Message */}
-            {resetMessage && (
-              <motion.div 
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                className="bg-green-50/80 backdrop-blur-sm border border-green-100 text-green-600 px-4 py-3 rounded-xl text-sm mb-6 flex items-start gap-3"
-              >
-                <CheckCircle className="w-5 h-5 shrink-0 mt-0.5" />
-                <p>{resetMessage}</p>
-              </motion.div>
-            )}
+            {/* ALERTS SECTION */}
+            <AnimatePresence mode="wait">
+              {/* Success Message (Password Reset) */}
+              {resetMessage && (
+                <motion.div 
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="bg-emerald-50/90 backdrop-blur-sm border border-emerald-200 text-emerald-800 px-4 py-3 rounded-xl text-sm mb-6 flex items-start gap-3 shadow-sm"
+                >
+                  <CheckCircle className="w-5 h-5 shrink-0 mt-0.5 text-emerald-600" />
+                  <div className="leading-snug">
+                    <span className="font-bold block mb-0.5">Check your email</span>
+                    {resetMessage}
+                  </div>
+                </motion.div>
+              )}
 
-            {/* Error Message */}
-            {error && (
-              <motion.div 
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                className="bg-red-50/80 backdrop-blur-sm border border-red-100 text-red-600 px-4 py-3 rounded-xl text-sm mb-6 flex items-start gap-3"
-              >
-                <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
-                <p>{error}</p>
-              </motion.div>
-            )}
+              {/* Error Message */}
+              {error && (
+                <motion.div 
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="bg-red-50/90 backdrop-blur-sm border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm mb-6 flex items-start gap-3 shadow-sm"
+                >
+                  {error.includes("enter your email") ? (
+                    <Info className="w-5 h-5 shrink-0 mt-0.5 text-red-500" />
+                  ) : (
+                    <AlertCircle className="w-5 h-5 shrink-0 mt-0.5 text-red-500" />
+                  )}
+                  <p className="leading-snug font-medium">{error}</p>
+                </motion.div>
+              )}
+            </AnimatePresence>
 
             {/* Form */}
             <form onSubmit={handleLogin} className="space-y-6">
@@ -151,7 +189,15 @@ const Login = () => {
               <div className="space-y-2">
                 <div className="flex justify-between items-center ml-1">
                   <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest">Password</label>
-                  <a href="#" className="text-xs font-semibold text-gray-900 hover:text-gray-600 transition-colors">Forgot?</a>
+                  
+                  {/* Forgot Password Button */}
+                  <button 
+                    type="button" 
+                    onClick={handleForgotPassword}
+                    className="text-xs font-bold text-indigo-600 hover:text-indigo-800 transition-colors hover:underline underline-offset-2"
+                  >
+                    Forgot Password?
+                  </button>
                 </div>
                 <div className="relative group">
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
