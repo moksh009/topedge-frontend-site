@@ -15,6 +15,10 @@ interface LinkItem {
   path: string;
   isNew?: boolean;
 }
+
+// Target Launch Date: Jan 19, 2026
+const LAUNCH_DATE = new Date('2026-01-19T00:00:00');
+
 // Custom Discord Icon
 const DiscordIcon = ({ className }: { className?: string }) => (
   <svg 
@@ -112,6 +116,12 @@ const Footer = () => {
   const location = useLocation();
   const isCommunity = location.pathname.startsWith('/community');
   const [topResources, setTopResources] = useState<{ id: string; title: string }[]>([]);
+  const [isLaunched, setIsLaunched] = useState(false);
+
+  useEffect(() => {
+    // Check if current date is after launch date
+    setIsLaunched(new Date() >= LAUNCH_DATE);
+  }, []);
 
   const handleServiceClick = (path: string, section: string) => {
     navigate(path);
@@ -125,7 +135,8 @@ const Footer = () => {
 
   useEffect(() => {
     const fetchTop = async () => {
-      if (!isCommunity) return;
+      // Only fetch if community route AND launched
+      if (!isCommunity || !isLaunched) return;
       try {
         const q = query(
           collection(db, 'community_resources'),
@@ -140,13 +151,12 @@ const Footer = () => {
       }
     };
     fetchTop();
-  }, [isCommunity]);
+  }, [isCommunity, isLaunched]);
 
   return (
     <footer className="relative bg-white pt-12 md:pt-20 pb-0 overflow-hidden">
       
       {/* --- HUGE WATERMARK --- */}
-      {/* Positioned absolute bottom, z-0 so it sits BEHIND the glass card */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full text-center pointer-events-none select-none z-0">
         <h1 className="text-[16vw] md:text-[20vw] font-black text-[#F3F4F6] leading-none tracking-tighter">
           TOPEDGE
@@ -155,7 +165,7 @@ const Footer = () => {
 
       <div className="container relative z-10 mx-auto px-4 sm:px-6 max-w-7xl pb-8 md:pb-12">
         
-        {/* Main Footer Card - Glassmorphism enabled to show watermark */}
+        {/* Main Footer Card */}
         <div className="bg-white/80 backdrop-blur-xl rounded-[2.5rem] p-6 md:p-10 shadow-xl shadow-slate-200/50 border border-white/50">
           
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8">
@@ -199,8 +209,6 @@ const Footer = () => {
             {/* LINKS COLUMNS (Span 8 - Divided into 3) */}
             <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
                
-              
-
                {/* Column 2: Company/Community */}
                <div>
                   <h4 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-6">
@@ -232,20 +240,27 @@ const Footer = () => {
                   </h4>
                   {isCommunity ? (
                     <ul className="space-y-4">
-                      {topResources.length === 0 ? (
-                        <li className="text-slate-400">No resources yet</li>
+                      {isLaunched ? (
+                        topResources.length === 0 ? (
+                          <li className="text-slate-400">No resources yet</li>
+                        ) : (
+                          topResources.map((res) => (
+                            <li key={res.id}>
+                              <Link 
+                                to={`/community/resource/${res.id}`}
+                                className="group flex items-center gap-2 text-slate-500 hover:text-slate-900 transition-colors"
+                              >
+                                <span className="w-1.5 h-1.5 rounded-full bg-slate-300 group-hover:bg-slate-900 transition-colors" />
+                                <span className="font-medium">{res.title}</span>
+                              </Link>
+                            </li>
+                          ))
+                        )
                       ) : (
-                        topResources.map((res) => (
-                          <li key={res.id}>
-                            <Link 
-                              to={`/community/resource/${res.id}`}
-                              className="group flex items-center gap-2 text-slate-500 hover:text-slate-900 transition-colors"
-                            >
-                              <span className="w-1.5 h-1.5 rounded-full bg-slate-300 group-hover:bg-slate-900 transition-colors" />
-                              <span className="font-medium">{res.title}</span>
-                            </Link>
-                          </li>
-                        ))
+                        // Hidden until launch
+                        <li className="text-slate-400 text-md font-semibold">
+                          Coming Soon...
+                        </li>
                       )}
                     </ul>
                   ) : (
