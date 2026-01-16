@@ -22,7 +22,6 @@ const BlogPost = React.lazy(() => import('./pages/BlogPost'));
 const ROI = React.lazy(() => import('./pages/ROI'));
 const PrivacyPolicy = React.lazy(() => import('./pages/PrivacyPolicy'));
 const MaintenanceInquiries = React.lazy(() => import('./components/admin/MaintenanceInquiries').then(module => ({ default: module.MaintenanceInquiries })));
-const Login = React.lazy(() => import('./components/admin/Login').then(module => ({ default: module.Login })));
 import { ProtectedRoute } from './components/admin/ProtectedRoute';
 import Testimonials from './pages/Testimonials';
 import './i18n';
@@ -144,11 +143,11 @@ const App: React.FC = () => {
                   <Route path="/blog" element={<Blog />} />
                   <Route path="/blog/:slug" element={<BlogPost />} />
                   <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-                  <Route path="/admin/login" element={<Login />} />
+                  <Route path="/admin/login" element={<CommunityLogin />} />
                   <Route 
                     path="/admin/maintenance-inquiries" 
                     element={
-                      <ProtectedRoute>
+                      <ProtectedRoute requireAdmin>
                         <MaintenanceInquiries />
                       </ProtectedRoute>
                     } 

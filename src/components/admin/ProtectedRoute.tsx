@@ -1,25 +1,16 @@
 import { Navigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { motion } from 'framer-motion';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
+  requireAdmin?: boolean;
 }
 
-export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
-  const auth = getAuth();
+export const ProtectedRoute = ({ children, requireAdmin = false }: ProtectedRouteProps) => {
+  const { user, loading, isAdmin } = useAuth();
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setIsAuthenticated(!!user);
-    });
-
-    return () => unsubscribe();
-  }, [auth]);
-
-  if (isAuthenticated === null) {
+  if (loading) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">
         <motion.div
@@ -31,8 +22,12 @@ export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     );
   }
 
-  if (!isAuthenticated) {
-    return <Navigate to="/admin/login" replace />;
+  if (!user) {
+    return <Navigate to="/community/login" replace />;
+  }
+
+  if (requireAdmin && !isAdmin) {
+    return <Navigate to="/community/home" replace />;
   }
 
   return <>{children}</>;

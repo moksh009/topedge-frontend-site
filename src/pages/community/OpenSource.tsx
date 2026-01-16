@@ -9,6 +9,7 @@ import { cn } from '@/lib/utils';
 import { Link } from 'react-router-dom';
 import LaunchGate from '@/components/ui/LaunchGate';
 import { useAuth } from '@/contexts/AuthContext';
+import { isAdminEmail } from '@/utils/admin';
 
 interface Resource {
   id: string;
@@ -165,6 +166,8 @@ const OpenSource = () => {
                 const myResources = filteredResources.filter(r => r.userId === (user?.uid || ''));
                 const otherResources = filteredResources.filter(r => r.userId !== (user?.uid || ''));
                 const isPreLaunch = new Date() < new Date('2026-01-19');
+                const isAdmin = isAdminEmail(user?.email);
+                const showGate = isPreLaunch && !isAdmin;
                 return (
                   <>
                     {myResources.length > 0 && (
@@ -244,7 +247,7 @@ const OpenSource = () => {
                     </div>
                     
                     <LaunchGate
-                      active={isPreLaunch}
+                      active={showGate}
                       title="Open source visible after launch"
                       description="Contribute now. Library unlocks on launch day."
                     >

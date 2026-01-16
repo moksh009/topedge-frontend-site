@@ -3,10 +3,10 @@ import CommunityLayout from '@/components/community/layout/CommunityLayout';
 import CommunitySEO from '@/components/community/CommunitySEO';
 import { motion, AnimatePresence } from 'framer-motion';
 import { db } from '@/services/firebase';
-import { addDoc, collection, doc, getDoc, increment, onSnapshot, orderBy, query, serverTimestamp, updateDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc, increment, onSnapshot, orderBy, query, serverTimestamp, updateDoc, deleteDoc } from 'firebase/firestore';
 import { useAuth } from '@/contexts/AuthContext';
 import { cn } from '@/lib/utils';
-import { Sparkles, DollarSign, AlarmClock, X, Plus, Search, ThumbsUp, ArrowUpRight, Phone, Mail, ChevronRight, Edit3, User, Briefcase } from 'lucide-react';
+import { Sparkles, DollarSign, AlarmClock, X, Plus, Search, ThumbsUp, ArrowUpRight, Phone, Mail, ChevronRight, Edit3, User, Briefcase, Trash2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useNavigate, Link } from 'react-router-dom';
 import { isAdminEmail } from '@/utils/admin';
@@ -181,6 +181,29 @@ export default function RequestBoard() {
     }
   };
 
+  const handleDeleteRequest = async (item: RequestItem) => {
+    if (!user) {
+      toast.error("You must be logged in to delete a request");
+      return;
+    }
+
+    const canDelete = user.uid === item.requesterId || isAdminEmail(user.email);
+    if (!canDelete) {
+      toast.error("You do not have permission to delete this request");
+      return;
+    }
+
+    if (!window.confirm('Delete this request? This action cannot be undone.')) return;
+
+    try {
+      await deleteDoc(doc(db, 'community_requests', item.id));
+      toast.success('Request deleted');
+    } catch (error) {
+      console.error(error);
+      toast.error('Failed to delete request');
+    }
+  };
+
   const filteredItems = useMemo(() => {
     return items.filter(item => {
       const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
@@ -323,6 +346,7 @@ export default function RequestBoard() {
                             </Link>
                             
                             {isOwner && (
+                              <div className="flex items-center gap-1">
                                 <button 
                                     onClick={() => handleEditClick(r)}
                                     className="p-1.5 rounded-lg text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition-all"
@@ -330,6 +354,14 @@ export default function RequestBoard() {
                                 >
                                     <Edit3 className="w-4 h-4" />
                                 </button>
+                                <button
+                                    onClick={() => handleDeleteRequest(r)}
+                                    className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-all"
+                                    title="Delete Request"
+                                >
+                                    <Trash2 className="w-4 h-4" />
+                                </button>
+                              </div>
                             )}
                         </div>
 

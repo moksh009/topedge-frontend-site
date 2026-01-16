@@ -9,6 +9,7 @@ import { collection, getDocs, limit, orderBy, query } from 'firebase/firestore';
 import { ArrowRight, Code2, Sparkles, MoveRight, Terminal } from 'lucide-react';
 import LaunchGate from '@/components/ui/LaunchGate';
 import { useAuth } from '@/contexts/AuthContext';
+import { isAdminEmail } from '@/utils/admin';
 
 // --- ANIMATION VARIANTS ---
 const containerVar = {
@@ -132,6 +133,8 @@ const CommunityHome = () => {
               const myProfiles = profiles.filter(p => (user?.uid || '') === (p.id || p.uid));
               const otherProfiles = profiles.filter(p => (user?.uid || '') !== (p.id || p.uid));
               const isPreLaunch = new Date() < new Date('2026-01-19');
+              const isAdmin = isAdminEmail(user?.email);
+              const showGate = isPreLaunch && !isAdmin;
               return (
                 <>
                   {myProfiles.length > 0 && (
@@ -196,7 +199,7 @@ const CommunityHome = () => {
                     </motion.div>
                   )}
                   <LaunchGate
-                    active={isPreLaunch}
+                    active={showGate}
                     title="Profiles visible after launch"
                     description="You can add your profile now. Listings unlock on launch day."
                   >
@@ -306,6 +309,8 @@ const CommunityHome = () => {
               const myResources = resources.filter(r => (user?.uid || '') === r.userId);
               const otherResources = resources.filter(r => (user?.uid || '') !== r.userId);
               const isPreLaunch = new Date() < new Date('2026-01-19');
+              const isAdmin = isAdminEmail(user?.email);
+              const showGate = isPreLaunch && !isAdmin;
               return (
                 <>
                   {myResources.length > 0 && (
@@ -362,7 +367,7 @@ const CommunityHome = () => {
                     </div>
                   )}
                   <LaunchGate
-                    active={isPreLaunch}
+                    active={showGate}
                     title="Resources visible after launch"
                     description="Promote your resource now. Marketplace unlocks on launch day."
                     dark

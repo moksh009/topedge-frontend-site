@@ -14,6 +14,7 @@ import { cn } from '@/lib/utils';
 import LaunchGate from '@/components/ui/LaunchGate';
 import HireModal from '@/components/community/HireModal';
 import { calculateReputation } from '@/utils/reputation';
+import { isAdminEmail } from '@/utils/admin';
 
 interface Profile {
   id: string;
@@ -320,6 +321,8 @@ const CommunityProfiles = () => {
                 const myProfiles = filteredProfiles.filter(p => p.id === (user?.uid || ''));
                 const otherProfiles = filteredProfiles.filter(p => p.id !== (user?.uid || ''));
                 const isPreLaunch = new Date() < new Date('2026-01-19');
+                const isAdmin = isAdminEmail(user?.email || null);
+                const showGate = isPreLaunch && !isAdmin;
                 
                 return (
                   <>
@@ -341,7 +344,7 @@ const CommunityProfiles = () => {
                     </div>
                     
                     <LaunchGate
-                      active={isPreLaunch}
+                      active={showGate}
                       title="Profiles visible after launch"
                       description="Create your profile now. Directory unlocks on launch day."
                     >

@@ -247,6 +247,59 @@ export class EmailService {
       throw new Error('Failed to send maintenance admin email');
     }
   }
+
+  public async sendOtp(email: string): Promise<{ hash: string; email: string }> {
+    try {
+      console.log('Requesting OTP for:', email);
+      // We use axios directly here because sendEmail method is typed for void return
+      // and designed for specific email sending patterns
+      const url = `${this.baseURL}/api/generate-otp`;
+      const response = await axios.post(url, { email }, {
+        headers: { 'Content-Type': 'application/json' }
+      });
+      
+      if (response.status !== 200) throw new Error('Failed to send OTP');
+      return response.data; // Expected: { hash, email, message }
+    } catch (error) {
+      console.error('Error sending OTP:', error);
+      // Try fallback if primary fails (simplified fallback logic here for brevity, 
+      // ideally reuse sendEmail's robust fallback but customized for return value)
+      const fallbackBaseURL = this.getFallbackBaseURL();
+      if (fallbackBaseURL) {
+          try {
+             const url = `${fallbackBaseURL}/api/generate-otp`;
+             const response = await axios.post(url, { email });
+             return response.data;
+          } catch (e) {
+             throw new Error('Failed to send OTP via fallback');
+          }
+      }
+      throw new Error('Failed to send OTP');
+    }
+  }
+
+  public async verifyOtp(email: string, otp: string, hash: string): Promise<boolean> {
+    try {
+      const url = `${this.baseURL}/api/verify-otp`;
+      const response = await axios.post(url, { email, otp, hash }, {
+        headers: { 'Content-Type': 'application/json' }
+      });
+      return response.data.success;
+    } catch (error) {
+      console.error('Error verifying OTP:', error);
+       const fallbackBaseURL = this.getFallbackBaseURL();
+      if (fallbackBaseURL) {
+          try {
+             const url = `${fallbackBaseURL}/api/verify-otp`;
+             const response = await axios.post(url, { email, otp, hash });
+             return response.data.success;
+          } catch (e) {
+             return false;
+          }
+      }
+      return false;
+    }
+  }
 }
 
 // Export a singleton instance

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import CommunityLayout from '@/components/community/layout/CommunityLayout';
 import CommunitySEO from '@/components/community/CommunitySEO';
 import { motion } from 'framer-motion';
-import { doc, getDoc, collection, query, where, getDocs, orderBy } from 'firebase/firestore';
+import { doc, getDoc, collection, query, where, getDocs, orderBy, deleteDoc } from 'firebase/firestore';
 import { db } from '@/services/firebase';
 import { UserProfile } from '@/types/user';
 import { 
@@ -13,6 +13,8 @@ import {
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { cn } from '@/lib/utils';
+import { isAdminEmail } from '@/utils/admin';
+import toast from 'react-hot-toast';
 
 interface Resource {
   id: string;
@@ -27,6 +29,7 @@ interface Resource {
 const ProfileDetails = () => {
   const { id } = useParams<{ id: string }>();
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [resources, setResources] = useState<Resource[]>([]);
   const [loading, setLoading] = useState(true);
@@ -88,6 +91,21 @@ const ProfileDetails = () => {
   }
 
   const isOwner = user?.uid === profile.uid;
+  const isAdmin = isAdminEmail(user?.email);
+  const canEdit = isOwner || isAdmin;
+
+  const handleDeleteProfile = async () => {
+    if (!id || !user || !isAdmin) return;
+    if (!window.confirm('Are you sure you want to delete this profile?')) return;
+    try {
+      await deleteDoc(doc(db, 'public_profiles', id));
+      toast.success('Profile deleted');
+      navigate('/community/profiles');
+    } catch (error) {
+      console.error(error);
+      toast.error('Failed to delete profile');
+    }
+  };
 
   const containerVars = {
     hidden: { opacity: 0 },
@@ -113,7 +131,6 @@ const ProfileDetails = () => {
         
         <div className="container relative z-10 mx-auto px-4 sm:px-6 max-w-6xl pt-6">
           
-          {/* Top Navigation */}
           <div className="flex justify-between items-center mb-8">
             <Link to="/community/profiles" className="group flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-full text-slate-600 text-sm font-medium hover:bg-slate-50 hover:border-slate-300 transition-all">
                 <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
@@ -121,11 +138,22 @@ const ProfileDetails = () => {
                 <span className="sm:hidden">Back</span>
             </Link>
 
-            {isOwner && (
+            <div className="flex items-center gap-3">
+              {canEdit && (
                 <Link to="/community/promote-profile?edit=1" className="flex items-center gap-2 px-5 py-2 bg-slate-900 text-white rounded-full text-sm font-bold shadow-lg shadow-slate-900/10 hover:scale-105 transition-transform">
-                    <Edit2 className="w-3.5 h-3.5" /> <span className="hidden sm:inline">Edit Profile</span><span className="sm:hidden">Edit</span>
+                  <Edit2 className="w-3.5 h-3.5" /> <span className="hidden sm:inline">Edit Profile</span><span className="sm:hidden">Edit</span>
                 </Link>
-            )}
+              )}
+              {isAdmin && (
+                <button
+                  type="button"
+                  onClick={handleDeleteProfile}
+                  className="px-4 py-2 rounded-full bg-red-50 border border-red-200 text-red-600 text-xs font-bold hover:bg-red-100 transition-colors"
+                >
+                  Delete Profile
+                </button>
+              )}
+            </div>
           </div>
 
           <motion.div 

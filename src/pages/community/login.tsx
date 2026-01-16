@@ -4,7 +4,7 @@ import CommunitySEO from '@/components/community/CommunitySEO';
 import { signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
 import { auth } from '@/services/firebase'; 
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Loader2, Mail, Lock, AlertCircle, ChevronRight, CheckCircle, Info } from 'lucide-react';
+import { ArrowLeft, Loader2, Mail, Lock, AlertCircle, ChevronRight, CheckCircle, Info, ShieldCheck } from 'lucide-react';
 
 interface FirebaseError {
   code: string;
@@ -17,6 +17,7 @@ const Login = () => {
   const [error, setError] = useState<string | null>(null);
   const [resetMessage, setResetMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
 
   // --- HANDLE LOGIN ---
@@ -31,6 +32,7 @@ const Login = () => {
       navigate('/community/home');
     } catch (err: unknown) {
       console.error(err);
+      setLoading(false);
       const firebaseError = err as FirebaseError;
       
       if (
@@ -42,8 +44,6 @@ const Login = () => {
       } else {
         setError('Failed to login. Please try again.');
       }
-    } finally {
-      setLoading(false);
     }
   };
 

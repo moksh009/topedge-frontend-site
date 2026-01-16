@@ -64,6 +64,7 @@ const ResourceDetails = () => {
   const [pendingApprovalUserId, setPendingApprovalUserId] = useState<string | null>(null);
   const [pendingRequestId, setPendingRequestId] = useState<string | null>(null);
   const [approvalLoading, setApprovalLoading] = useState(false);
+  const [authorProfile, setAuthorProfile] = useState<any>(null);
 
   // Edit Form State
   const [editForm, setEditForm] = useState({
@@ -134,6 +135,23 @@ const ResourceDetails = () => {
     };
     fetchResource();
   }, [id, navigate, user]);
+
+  useEffect(() => {
+    if (resource?.userId) {
+      const fetchAuthorProfile = async () => {
+        try {
+          const profileDocRef = doc(db, 'public_profiles', resource.userId);
+          const profileDoc = await getDoc(profileDocRef);
+          if (profileDoc.exists()) {
+            setAuthorProfile(profileDoc.data());
+          }
+        } catch (error) {
+          console.error("Error fetching author profile:", error);
+        }
+      };
+      fetchAuthorProfile();
+    }
+  }, [resource?.userId]);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -274,6 +292,11 @@ const ResourceDetails = () => {
   const handleUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!resource || !user) return;
+    const canEdit = user.uid === resource.userId || isAdminEmail(user.email);
+    if (!canEdit) {
+      toast.error("You do not have permission to update this resource");
+      return;
+    }
     setSaving(true);
     try {
       const updatedData = {
@@ -308,6 +331,11 @@ const ResourceDetails = () => {
 
   const handleDelete = async () => {
     if (!resource || !user) return;
+    const canDelete = user.uid === resource.userId || isAdminEmail(user.email);
+    if (!canDelete) {
+      toast.error("You do not have permission to delete this resource");
+      return;
+    }
     if (window.confirm("Are you sure you want to delete this resource?")) {
       try {
         await deleteDoc(doc(db, 'community_resources', resource.id));

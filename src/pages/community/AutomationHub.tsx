@@ -14,6 +14,7 @@ import { cn } from '@/lib/utils';
 import LaunchGate from '@/components/ui/LaunchGate';
 import TopBuilders from '@/components/community/TopBuilders';
 import { getDoc } from 'firebase/firestore'; // Fixed import
+import { isAdminEmail } from '@/utils/admin';
 
 interface Resource {
   id: string;
@@ -61,6 +62,7 @@ const ResourceCard = ({ resource, index, currentUser }: { resource: Resource; in
   const [upvoted, setUpvoted] = useState<boolean>(!!(((resource.upvotedBy ?? ((resource as any).starredBy ?? [])) as string[])).includes(currentUser?.uid));
   const [reviewCount, setReviewCount] = useState<number>(0);
   const [avgRating, setAvgRating] = useState<number>(0);
+  const [authorProfile, setAuthorProfile] = useState<any>(null);
 
   const youtubeId = getYouTubeId(resource.videoUrl || '');
   const isYoutube = !!youtubeId;
@@ -91,6 +93,25 @@ const ResourceCard = ({ resource, index, currentUser }: { resource: Resource; in
     };
     fetchReviews();
   }, [resource.id]);
+
+  useEffect(() => {
+    const fetchAuthor = async () => {
+      try {
+        const profileRef = doc(db, 'public_profiles', resource.userId);
+        const profileSnap = await getDoc(profileRef);
+        if (profileSnap.exists()) {
+          setAuthorProfile(profileSnap.data());
+        } else {
+          setAuthorProfile(null);
+        }
+      } catch (error) {
+        console.error('Error fetching author profile:', error);
+      }
+    };
+    if (resource.userId) {
+      fetchAuthor();
+    }
+  }, [resource.userId]);
 
   const getCategoryIcon = (category: string) => {
     switch(category) {
@@ -237,7 +258,11 @@ const ResourceCard = ({ resource, index, currentUser }: { resource: Resource; in
                     )}
                     <div className="flex flex-col">
                         <span className="text-xs font-bold text-slate-900">{resource.userName}</span>
-                        <span className="text-[10px] text-slate-400 flex items-center gap-0.5"><CheckCircle2 className="w-2.5 h-2.5 text-emerald-500" /> Verified</span>
+                        {authorProfile?.isVerified && (
+                          <span className="text-[10px] text-slate-400 flex items-center gap-0.5">
+                            <CheckCircle2 className="w-2.5 h-2.5 text-emerald-500" /> Verified
+                          </span>
+                        )}
                     </div>
                 </div>
 
@@ -444,6 +469,8 @@ const AutomationHub = () => {
                 const myResources = filteredResources.filter(r => r.userId === (user?.uid || ''));
                 const otherResources = filteredResources.filter(r => r.userId !== (user?.uid || ''));
                 const isPreLaunch = new Date() < new Date('2026-01-19');
+                const isAdmin = isAdminEmail(user?.email);
+                const showGate = isPreLaunch && !isAdmin;
                 return (
                   <>
                     {myResources.length > 0 && (
@@ -472,7 +499,7 @@ const AutomationHub = () => {
                       <span className="text-sm font-semibold text-slate-400">Locked until launch</span>
                     </div>
                     <LaunchGate
-                      active={isPreLaunch}
+                      active={showGate}
                       title="Marketplace visible after launch"
                       description="Promote your resource now. Listings unlock on launch day."
                     >

@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import CommunityLayout from '@/components/community/layout/CommunityLayout';
 import { onAuthStateChanged, updateProfile, sendPasswordResetEmail } from 'firebase/auth';
-import { auth } from '@/services/firebase';
+import { auth, db, storage } from '@/services/firebase';
+import { doc, setDoc } from 'firebase/firestore';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { useNavigate } from 'react-router-dom';
 import { Loader2, User, Mail, Shield, Save, LogOut, Trash2, Camera, KeyRound, BellRing } from 'lucide-react';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
+import { useAuth } from '@/contexts/AuthContext';
 
 const Settings = () => {
   const [user, setUser] = useState(auth.currentUser);
@@ -13,6 +16,8 @@ const Settings = () => {
   const [saving, setSaving] = useState(false);
   const [displayName, setDisplayName] = useState('');
   const navigate = useNavigate();
+  const { refreshProfile } = useAuth();
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -27,11 +32,52 @@ const Settings = () => {
     return () => unsubscribe();
   }, [navigate]);
 
+  const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !user) return;
+
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error("File size should be less than 5MB");
+      return;
+    }
+
+    const toastId = toast.loading("Uploading photo...");
+    try {
+      const storageRef = ref(storage, `profile_photos/${user.uid}`);
+      await uploadBytes(storageRef, file);
+      const photoURL = await getDownloadURL(storageRef);
+
+      // Update Auth Profile
+      await updateProfile(user, { photoURL });
+
+      // Update Firestore Profile
+      const userDocRef = doc(db, 'public_profiles', user.uid);
+      await setDoc(userDocRef, { photoURL }, { merge: true });
+
+      // Refresh Context
+      await refreshProfile();
+      
+      // Update local state
+      setUser({ ...user, photoURL });
+
+      toast.success("Profile photo updated!", { id: toastId });
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to upload photo", { id: toastId });
+    }
+  };
+
   const handleUpdateProfile = async () => {
     if (!user) return;
     setSaving(true);
     try {
       await updateProfile(user, { displayName });
+      
+      // Also update Firestore
+      const userDocRef = doc(db, 'public_profiles', user.uid);
+      await setDoc(userDocRef, { displayName }, { merge: true });
+      
+      await refreshProfile();
       toast.success("Profile updated successfully");
     } catch (error) {
       console.error(error);
@@ -96,7 +142,14 @@ const Settings = () => {
                 
                 {/* Avatar Section */}
                 <div className="flex flex-col items-center gap-3">
-                   <div className="relative group cursor-pointer">
+                   <div className="relative group cursor-pointer" onClick={() => fileInputRef.current?.click()}>
+                      <input 
+                        type="file" 
+                        ref={fileInputRef} 
+                        onChange={handlePhotoUpload} 
+                        accept="image/*" 
+                        className="hidden" 
+                      />
                       <div className="w-24 h-24 rounded-full border-4 border-slate-50 bg-slate-100 overflow-hidden shadow-inner">
                          {user?.photoURL ? (
                             <img src={user.photoURL} alt="Profile" className="w-full h-full object-cover" />
