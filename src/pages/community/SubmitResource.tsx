@@ -37,6 +37,7 @@ const SubmitResource = () => {
     contactWebsite: '',
     monetization: 'free', 
     price: '',
+    pricingType: 'one_time',
     toolkit: '',
     category: 'automation',
     isHiring: false,
@@ -163,6 +164,7 @@ const SubmitResource = () => {
         contactWebsite: formData.contactWebsite || '',
         isPaid: formData.monetization === 'paid',
         price: formData.monetization === 'paid' ? parseFloat(formData.price) : 0,
+        pricingType: formData.monetization === 'paid' ? formData.pricingType : 'one_time',
         tools: formData.toolkit.split(',').map(s => s.trim()).filter(Boolean),
         category: formData.category,
         isHiring: formData.isHiring,
@@ -173,7 +175,8 @@ const SubmitResource = () => {
         downloads: 0,
         views: 0,
         upvotes: 0,
-        upvotedBy: []
+        upvotedBy: [],
+        purchasers: []
       };
 
       await addDoc(collection(db, 'community_resources'), resourceData);
@@ -388,8 +391,14 @@ const SubmitResource = () => {
                 </div>
 
                 <div className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div onClick={() => setFormData(p => ({...p, monetization: 'free'}))} className={cn("cursor-pointer p-5 md:p-6 rounded-2xl border-2 transition-all", formData.monetization === 'free' ? "bg-emerald-50/30 border-emerald-500" : "bg-slate-50 border-transparent")}>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div
+                      onClick={() => setFormData(p => ({ ...p, monetization: 'free', pricingType: 'one_time' }))}
+                      className={cn(
+                        "cursor-pointer p-5 md:p-6 rounded-2xl border-2 transition-all",
+                        formData.monetization === 'free' ? "bg-emerald-50/30 border-emerald-500" : "bg-slate-50 border-transparent"
+                      )}
+                    >
                         <div className="flex justify-between mb-2">
                            <Gift className={cn("w-6 h-6", formData.monetization === 'free' ? "text-emerald-600" : "text-slate-400")} />
                            {formData.monetization === 'free' && <Check className="w-5 h-5 text-emerald-600" />}
@@ -397,12 +406,36 @@ const SubmitResource = () => {
                         <h3 className="text-lg font-bold text-slate-900">Free Resource</h3>
                     </div>
 
-                    <div onClick={() => setFormData(p => ({...p, monetization: 'paid'}))} className={cn("cursor-pointer p-5 md:p-6 rounded-2xl border-2 transition-all", formData.monetization === 'paid' ? "bg-slate-900/5 border-slate-900" : "bg-slate-50 border-transparent")}>
+                    <div
+                      onClick={() => setFormData(p => ({ ...p, monetization: 'paid', pricingType: 'one_time' }))}
+                      className={cn(
+                        "cursor-pointer p-5 md:p-6 rounded-2xl border-2 transition-all",
+                        formData.monetization === 'paid' && formData.pricingType === 'one_time'
+                          ? "bg-slate-900/5 border-slate-900"
+                          : "bg-slate-50 border-transparent"
+                      )}
+                    >
                         <div className="flex justify-between mb-2">
-                           <DollarSign className={cn("w-6 h-6", formData.monetization === 'paid' ? "text-slate-900" : "text-slate-400")} />
-                           {formData.monetization === 'paid' && <Check className="w-5 h-5 text-slate-900" />}
+                           <DollarSign className={cn("w-6 h-6", formData.monetization === 'paid' && formData.pricingType === 'one_time' ? "text-slate-900" : "text-slate-400")} />
+                           {formData.monetization === 'paid' && formData.pricingType === 'one_time' && <Check className="w-5 h-5 text-slate-900" />}
                         </div>
-                        <h3 className="text-lg font-bold text-slate-900">Paid Asset</h3>
+                        <h3 className="text-lg font-bold text-slate-900">One-time Purchase</h3>
+                    </div>
+
+                    <div
+                      onClick={() => setFormData(p => ({ ...p, monetization: 'paid', pricingType: 'monthly' }))}
+                      className={cn(
+                        "cursor-pointer p-5 md:p-6 rounded-2xl border-2 transition-all",
+                        formData.monetization === 'paid' && formData.pricingType === 'monthly'
+                          ? "bg-slate-900/5 border-slate-900"
+                          : "bg-slate-50 border-transparent"
+                      )}
+                    >
+                        <div className="flex justify-between mb-2">
+                           <DollarSign className={cn("w-6 h-6", formData.monetization === 'paid' && formData.pricingType === 'monthly' ? "text-slate-900" : "text-slate-400")} />
+                           {formData.monetization === 'paid' && formData.pricingType === 'monthly' && <Check className="w-5 h-5 text-slate-900" />}
+                        </div>
+                        <h3 className="text-lg font-bold text-slate-900">Monthly Access</h3>
                     </div>
                   </div>
 

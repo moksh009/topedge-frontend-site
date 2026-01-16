@@ -48,9 +48,20 @@ export class EmailService {
 
   constructor() {
     this.isDevelopment = process.env.NODE_ENV === 'development';
-    this.baseURL = this.isDevelopment 
-      ? 'http://localhost:3001' 
-      : 'https://topedge-backend.netlify.app';
+
+    const envBaseURL =
+      (typeof import.meta !== 'undefined' &&
+        (import.meta as any).env &&
+        (import.meta as any).env.VITE_EMAIL_API_BASE_URL) ||
+      undefined;
+
+    if (envBaseURL && typeof envBaseURL === 'string' && envBaseURL.trim().length > 0) {
+      this.baseURL = envBaseURL.replace(/\/+$/, '');
+    } else {
+      this.baseURL = this.isDevelopment
+        ? 'http://localhost:3001'
+        : 'https://topedge-backend.netlify.app';
+    }
   }
 
   private formatDate(date: Date): string {
@@ -86,13 +97,27 @@ export class EmailService {
     `).join('');
   }
 
+  private getFallbackBaseURL(): string | null {
+    if (typeof window === 'undefined') {
+      return null;
+    }
+
+    try {
+      const origin = window.location.origin;
+      return `${origin.replace(/\/+$/, '')}/.netlify/functions/api`;
+    } catch {
+      return null;
+    }
+  }
+
   private async sendEmail(type: EmailType, endpoint: string, details: any): Promise<void> {
     const maxRetries = 3;
     let retryCount = 0;
+    let url = `${this.baseURL}${endpoint}`;
+    let usedFallback = false;
     
     while (retryCount < maxRetries) {
       try {
-        const url = `${this.baseURL}${endpoint}`;
         console.log(`Sending ${type} email to endpoint:`, url);
         
         const response = await axios.post(url, details, {
@@ -113,7 +138,7 @@ export class EmailService {
         return;
       } catch (error) {
         console.error(`Error sending ${type} email (attempt ${retryCount + 1}/${maxRetries}):`, error);
-        
+
         if (error instanceof AxiosError) {
           if (error.response) {
             console.error('Error response:', {
@@ -124,6 +149,17 @@ export class EmailService {
             });
             throw new Error(`Failed to send ${type} email: ${error.response.data?.message || error.message}`);
           } else if (error.request) {
+            if (!usedFallback) {
+              const fallbackBaseURL = this.getFallbackBaseURL();
+              if (fallbackBaseURL) {
+                url = `${fallbackBaseURL}${endpoint}`;
+                usedFallback = true;
+                retryCount = 0;
+                console.warn(`Switching to fallback email API base URL for ${type} email:`, url);
+                continue;
+              }
+            }
+
             if (retryCount < maxRetries - 1) {
               retryCount++;
               const delay = Math.min(1000 * Math.pow(2, retryCount), 10000);

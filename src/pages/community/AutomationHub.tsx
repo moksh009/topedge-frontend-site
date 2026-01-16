@@ -21,6 +21,7 @@ interface Resource {
   description: string;
   isPaid: boolean;
   price?: number;
+  pricingType?: 'one_time' | 'monthly';
   tools: string[];
   userId: string;
   userName: string;
@@ -144,6 +145,11 @@ const ResourceCard = ({ resource, index, currentUser }: { resource: Resource; in
             </div>
             {/* Price Tag */}
             <div className="absolute top-4 right-4 z-20 flex gap-2 pointer-events-none">
+               {resource.isPaid && (
+                 <span className="px-3 py-1.5 bg-white/90 backdrop-blur-md text-slate-700 rounded-full text-xs font-bold border border-white/20 shadow-sm uppercase">
+                   {(resource.pricingType || 'one_time') === 'monthly' ? 'Monthly' : 'One-time'}
+                 </span>
+               )}
                <span className={cn("px-3 py-1.5 rounded-full text-xs font-bold border shadow-sm backdrop-blur-md", resource.isPaid ? "bg-slate-900/90 text-white border-slate-900" : "bg-white/90 text-slate-700 border-white/20")}>
                   {resource.isPaid ? `$${resource.price}` : 'Free'}
                </span>

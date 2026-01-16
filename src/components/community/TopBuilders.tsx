@@ -25,18 +25,21 @@ export default function TopBuilders() {
       const profiles = pSnap.docs.map(d => ({ id: d.id, ...(d.data() as any) })) as Profile[];
 
       const rSnap = await getDocs(query(collection(db, 'community_resources'), orderBy('createdAt', 'desc')));
-      const byUser: Record<string, { count: number; upvotes: number }> = {};
+      const byUser: Record<string, { resources: { userId: string; upvotes: number }[] }> = {};
       rSnap.docs.forEach(d => {
         const data = d.data() as any;
         const uid = data.userId as string;
         if (!uid) return;
-        if (!byUser[uid]) byUser[uid] = { count: 0, upvotes: 0 };
-        byUser[uid].count += 1;
-        byUser[uid].upvotes += ((data.upvotes ?? data.stars) || 0);
+        if (!byUser[uid]) byUser[uid] = { resources: [] };
+        byUser[uid].resources.push({
+          userId: uid,
+          upvotes: Number((data.upvotes ?? data.stars) || 0)
+        });
       });
 
       const scored = profiles.map(p => {
-        const stats = byUser[p.id] || { count: 0, upvotes: 0 };
+        const entry = byUser[p.id];
+        const resources = entry?.resources || [];
         const rep = calculateReputation(
           {
             bio: p.description,
@@ -45,10 +48,9 @@ export default function TopBuilders() {
             linkedin: p.linkedin,
             websiteURL: p.websiteURL
           },
-          Array.from({ length: stats.count }).map(() => ({ userId: p.id, upvotes: 0 }))
+          resources
         );
-        const score = stats.count * 15 + stats.upvotes * 2 + (rep.score - (stats.count * 15 + stats.upvotes * 2));
-        return { profile: p, score, tier: rep.tier };
+        return { profile: p, score: rep.score, tier: rep.tier };
       });
 
       scored.sort((a, b) => b.score - a.score);

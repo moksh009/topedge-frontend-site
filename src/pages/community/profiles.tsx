@@ -43,7 +43,9 @@ const CommunityProfiles = () => {
   const [user, setUser] = useState(auth.currentUser);
   const [searchTerm, setSearchTerm] = useState('');
   const [activeHireId, setActiveHireId] = useState<string | null>(null);
-  const [resourcesByUser, setResourcesByUser] = useState<Record<string, { count: number; upvotes: number }>>({});
+  const [resourcesByUser, setResourcesByUser] = useState<
+    Record<string, { resources: { userId: string; upvotes: number }[] }>
+  >({});
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -68,14 +70,16 @@ const CommunityProfiles = () => {
 
         const rQ = query(collection(db, 'community_resources'), orderBy('createdAt', 'desc'));
         const rSnap = await getDocs(rQ);
-        const byUser: Record<string, { count: number; upvotes: number }> = {};
+        const byUser: Record<string, { resources: { userId: string; upvotes: number }[] }> = {};
         rSnap.docs.forEach(d => {
           const data = d.data() as any;
           const uid = data.userId as string;
           if (!uid) return;
-          if (!byUser[uid]) byUser[uid] = { count: 0, upvotes: 0 };
-          byUser[uid].count += 1;
-          byUser[uid].upvotes += ((data.upvotes ?? data.stars) || 0);
+          if (!byUser[uid]) byUser[uid] = { resources: [] };
+          byUser[uid].resources.push({
+            userId: uid,
+            upvotes: Number((data.upvotes ?? data.stars) || 0)
+          });
         });
         setResourcesByUser(byUser);
       } catch (error) {
@@ -164,9 +168,18 @@ const CommunityProfiles = () => {
             
             {/* Reputation */}
             {(() => {
-              const r = resourcesByUser[profile.id] || { count: 0, upvotes: 0 };
-              const resourcesArr = r.count === 0 ? [] : [{ userId: profile.id, upvotes: r.upvotes }];
-              const rep = calculateReputation({ bio: profile.description, photoURL: profile.photoURL }, resourcesArr);
+              const entry = resourcesByUser[profile.id];
+              const resourcesArr = entry?.resources || [];
+              const rep = calculateReputation(
+                {
+                  bio: profile.description,
+                  photoURL: profile.photoURL,
+                  github: profile.github,
+                  linkedin: profile.linkedin,
+                  websiteURL: profile.websiteURL
+                },
+                resourcesArr
+              );
               return (
                 <div className="mt-2 inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border text-[10px] font-bold uppercase tracking-wider bg-slate-100 text-slate-600 border-slate-200">
                   <span>{rep.tier}</span>

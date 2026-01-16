@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams, useLocation } from 'react-router-dom';
 import CommunityLayout from '@/components/community/layout/CommunityLayout';
 import CommunitySEO from '@/components/community/CommunitySEO';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -8,6 +8,7 @@ import { db } from '@/services/firebase';
 import { useAuth } from '@/contexts/AuthContext';
 import { cn } from '@/lib/utils';
 import { isAdminEmail } from '@/utils/admin';
+import { emailService } from '@/services/emailService';
 import toast from 'react-hot-toast';
 import ResourceReviews from '@/pages/community/ResourceReviews';
 import RelatedResources from '@/components/community/RelatedResources';
@@ -27,6 +28,7 @@ interface Resource {
   videoUrl?: string;
   isPaid: boolean;
   price?: number;
+  pricingType?: 'one_time' | 'monthly';
   tools: string[];
   attachments?: Array<{ name: string; url: string; size?: number }>;
   userId: string;
@@ -40,22 +42,28 @@ interface Resource {
   contactWebsite?: string;
   upvotes?: number;
   upvotedBy?: string[];
+  purchasers?: string[];
 }
 
 const ResourceDetails = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const location = useLocation();
   const [loading, setLoading] = useState(true);
   const [resource, setResource] = useState<Resource | null>(null);
   const { user } = useAuth();
-  
-  // Interaction State
+
   const [isEditing, setIsEditing] = useState(false);
   const [saving, setSaving] = useState(false);
   const [uploadingVideo, setUploadingVideo] = useState(false);
   const [uploadingAttachment, setUploadingAttachment] = useState(false);
   const [upvoteCount, setUpvoteCount] = useState<number>(0);
   const [isUpvoted, setIsUpvoted] = useState<boolean>(false);
+  const [purchaseRequestLoading, setPurchaseRequestLoading] = useState(false);
+  const [purchaseRequestSent, setPurchaseRequestSent] = useState(false);
+  const [pendingApprovalUserId, setPendingApprovalUserId] = useState<string | null>(null);
+  const [pendingRequestId, setPendingRequestId] = useState<string | null>(null);
+  const [approvalLoading, setApprovalLoading] = useState(false);
 
   // Edit Form State
   const [editForm, setEditForm] = useState({
@@ -72,7 +80,8 @@ const ResourceDetails = () => {
     contactEmail: '',
     contactPhone: '',
     contactWebsite: '',
-    attachments: [] as Array<{ name: string; url: string; size?: number }>
+    attachments: [] as Array<{ name: string; url: string; size?: number }>,
+    pricingType: 'one_time' as 'one_time' | 'monthly'
   });
 
   const [videoSourceType, setVideoSourceType] = useState<'link' | 'upload'>('link');
@@ -104,7 +113,8 @@ const ResourceDetails = () => {
             contactEmail: data.contactEmail || '',
             contactPhone: data.contactPhone || '',
             contactWebsite: data.contactWebsite || '',
-            attachments: (data.attachments || []) as Array<{ name: string; url: string; size?: number }>
+            attachments: (data.attachments || []) as Array<{ name: string; url: string; size?: number }>,
+            pricingType: (data.pricingType as 'one_time' | 'monthly') || 'one_time'
           });
 
           if (data.videoUrl && data.videoUrl.includes('cloudinary')) {
@@ -124,6 +134,19 @@ const ResourceDetails = () => {
     };
     fetchResource();
   }, [id, navigate, user]);
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const approveFor = params.get('approveFor');
+    const requestId = params.get('requestId');
+    if (approveFor) {
+      setPendingApprovalUserId(approveFor);
+      setPendingRequestId(requestId);
+    } else {
+      setPendingApprovalUserId(null);
+      setPendingRequestId(null);
+    }
+  }, [location.search]);
 
   // View Counter logic
   useEffect(() => {
@@ -147,7 +170,7 @@ const ResourceDetails = () => {
   };
 
   const handleLockedAttachmentClick = () => {
-    toast.error("Unlock attachments by buying this resource");
+    toast.error("Unlock attachments by requesting access and completing payment with the creator.");
   };
 
   const toggleUpvote = async () => {
@@ -267,7 +290,8 @@ const ResourceDetails = () => {
         contactEmail: editForm.contactEmail,
         contactPhone: editForm.contactPhone,
         contactWebsite: editForm.contactWebsite,
-        attachments: editForm.attachments
+        attachments: editForm.attachments,
+        pricingType: editForm.pricingType
       };
 
       await updateDoc(doc(db, 'community_resources', resource.id), updatedData as any);
@@ -305,6 +329,137 @@ const ResourceDetails = () => {
   };
 
   const isOwner = user && resource && (user.uid === resource.userId || isAdminEmail(user.email));
+  const hasAccess =
+    !!resource &&
+    (!resource.isPaid ||
+      (user &&
+        (user.uid === resource.userId ||
+          isAdminEmail(user.email) ||
+          (resource.purchasers || []).includes(user.uid))));
+
+  const handlePurchaseRequest = async () => {
+    if (!resource) return;
+    if (!user) {
+      toast.error("Please login to request access");
+      return;
+    }
+    if (!resource.isPaid) {
+      toast.error("This resource is free to access");
+      return;
+    }
+    if (
+      user.uid === resource.userId ||
+      isAdminEmail(user.email) ||
+      (resource.purchasers || []).includes(user.uid)
+    ) {
+      toast.success("You already have access to this resource");
+      return;
+    }
+    if (purchaseRequestLoading) return;
+
+    setPurchaseRequestLoading(true);
+    try {
+      const requestRef = await addDoc(collection(db, 'resource_access_requests'), {
+        resourceId: resource.id,
+        resourceTitle: resource.title,
+        resourceOwnerId: resource.userId,
+        resourceOwnerEmail: resource.contactEmail || null,
+        buyerId: user.uid,
+        buyerName: user.displayName || user.email || 'User',
+        buyerEmail: user.email || '',
+        isPaid: resource.isPaid,
+        price: resource.price || 0,
+        pricingType: resource.pricingType || 'one_time',
+        createdAt: serverTimestamp(),
+        status: 'pending'
+      });
+
+      const origin = window.location.origin;
+      const approveUrl = `${origin}/community/resource/${resource.id}?approveFor=${encodeURIComponent(
+        user.uid
+      )}&requestId=${encodeURIComponent(requestRef.id)}`;
+
+      await emailService.sendContactEmails({
+        name: user.displayName || 'Resource Buyer',
+        email: user.email || '',
+        phone: '',
+        companyName: '',
+        subject: `Resource Purchase Request: ${resource.title}`,
+        message: `
+          Resource purchase request from the community.
+
+          Buyer: ${user.displayName || 'N/A'} (${user.email || 'No email'})
+          Resource: ${resource.title}
+          Price: ${
+            resource.isPaid
+              ? `$${resource.price || 0} (${(resource.pricingType || 'one_time') === 'monthly' ? 'Monthly' : 'One-time'})`
+              : 'Free'
+          }
+
+          <br/><br/>
+          <strong>Approve access for this buyer:</strong><br/>
+          <a href="${approveUrl}" target="_blank" rel="noopener noreferrer">Click here to approve access</a>
+
+          <br/><br/>
+          You can also open the resource directly:<br/>
+          <a href="${origin}/community/resource/${resource.id}" target="_blank" rel="noopener noreferrer">View resource</a>
+        `
+      });
+
+      setPurchaseRequestSent(true);
+      toast.success("Purchase request sent to admin. You will get access once approved.");
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to send purchase request. Please try again.");
+    } finally {
+      setPurchaseRequestLoading(false);
+    }
+  };
+
+  const handleApproveAccess = async () => {
+    if (!resource || !user || !pendingApprovalUserId) return;
+    if (!isAdminEmail(user.email)) {
+      toast.error("Only admins can approve access");
+      return;
+    }
+    if (approvalLoading) return;
+
+    setApprovalLoading(true);
+    try {
+      await updateDoc(doc(db, 'community_resources', resource.id), {
+        purchasers: arrayUnion(pendingApprovalUserId)
+      });
+
+      if (pendingRequestId) {
+        await updateDoc(doc(db, 'resource_access_requests', pendingRequestId), {
+          status: 'approved',
+          approvedAt: serverTimestamp(),
+          approvedBy: user.uid
+        });
+      }
+
+      setResource(prev =>
+        prev
+          ? {
+              ...prev,
+              purchasers: Array.from(
+                new Set([...(prev.purchasers || []), pendingApprovalUserId])
+              )
+            }
+          : prev
+      );
+
+      toast.success("Access approved for buyer");
+      setPendingApprovalUserId(null);
+      setPendingRequestId(null);
+      navigate(`/community/resource/${resource.id}`);
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to approve access");
+    } finally {
+      setApprovalLoading(false);
+    }
+  };
 
   // --- SUB-COMPONENTS ---
   const TechStack = () => (
@@ -332,7 +487,11 @@ const ResourceDetails = () => {
                     {resource?.isPaid ? `$${resource.price}` : 'Free'}
                 </h2>
             </div>
-            {resource?.isPaid && <span className="px-2 py-1 bg-slate-100 text-slate-600 rounded-lg text-[10px] font-bold uppercase">One-time</span>}
+            {resource?.isPaid && (
+              <span className="px-2 py-1 bg-slate-100 text-slate-600 rounded-lg text-[10px] font-bold uppercase">
+                {(resource.pricingType || 'one_time') === 'monthly' ? 'Monthly' : 'One-time'}
+              </span>
+            )}
         </div>
 
         <button 
@@ -344,7 +503,40 @@ const ResourceDetails = () => {
             <span className="bg-slate-100 px-2 py-0.5 rounded-full text-xs text-slate-600 ml-1">{upvoteCount}</span>
         </button>
 
-        {resource?.link ? (
+        {resource?.isPaid ? (
+          hasAccess ? (
+            resource.link ? (
+              <a 
+                  href={resource.link} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 w-full py-3 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl transition-all shadow-lg shadow-slate-900/20 mb-2 group text-sm"
+              >
+                  Get Access <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </a>
+            ) : (
+              <button disabled className="w-full py-3 bg-slate-100 text-slate-400 font-bold rounded-xl cursor-not-allowed text-sm">
+                  Link Unavailable
+              </button>
+            )
+          ) : (
+            <button
+              onClick={handlePurchaseRequest}
+              disabled={purchaseRequestLoading || purchaseRequestSent}
+              className={cn(
+                "w-full py-3 bg-slate-900 text-white font-bold rounded-xl transition-all shadow-lg shadow-slate-900/20 mb-2 text-sm",
+                (purchaseRequestLoading || purchaseRequestSent) && "opacity-60 cursor-not-allowed"
+              )}
+            >
+              {purchaseRequestSent
+                ? "Request Sent"
+                : purchaseRequestLoading
+                ? "Sending Request..."
+                : "Buy / Request Access"}
+            </button>
+          )
+        ) : (
+          resource?.link ? (
             <a 
                 href={resource.link} 
                 target="_blank" 
@@ -353,12 +545,15 @@ const ResourceDetails = () => {
             >
                 Get Access <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </a>
-        ) : (
+          ) : (
             <button disabled className="w-full py-3 bg-slate-100 text-slate-400 font-bold rounded-xl cursor-not-allowed text-sm">
                 Link Unavailable
             </button>
+          )
         )}
-        <p className="text-[10px] text-center text-slate-400 font-medium">Secure access provided by creator</p>
+        <p className="text-[10px] text-center text-slate-400 font-medium">
+          For paid resources, you pay the creator directly. TopEdge takes 0% platform fee.
+        </p>
     </div>
   );
 
@@ -408,9 +603,7 @@ const ResourceDetails = () => {
                                 <X className="w-5 h-5" />
                             </button>
                         </div>
-                        {/* ... Edit form fields ... */}
                         <div className="overflow-y-auto p-6 space-y-8 flex-1">
-                            {/* ... Fields ... */}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div className="space-y-1">
                                     <label className="text-sm font-bold text-slate-700">Title</label>
@@ -430,7 +623,227 @@ const ResourceDetails = () => {
                                 <label className="text-sm font-bold text-slate-700">Description</label>
                                 <textarea value={editForm.description} onChange={e => setEditForm({...editForm, description: e.target.value})} rows={2} className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none resize-none" />
                             </div>
-                            {/* ... More fields (abbreviated for brevity as logic didn't change) ... */}
+
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div className="space-y-1">
+                                    <label className="text-sm font-bold text-slate-700">Contact Email</label>
+                                    <input
+                                        type="email"
+                                        value={editForm.contactEmail}
+                                        onChange={e => setEditForm({...editForm, contactEmail: e.target.value})}
+                                        className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none"
+                                    />
+                                </div>
+                                <div className="space-y-1">
+                                    <label className="text-sm font-bold text-slate-700">Contact Phone</label>
+                                    <input
+                                        value={editForm.contactPhone}
+                                        onChange={e => setEditForm({...editForm, contactPhone: e.target.value})}
+                                        className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none"
+                                    />
+                                </div>
+                                <div className="space-y-1">
+                                    <label className="text-sm font-bold text-slate-700">Website</label>
+                                    <input
+                                        type="url"
+                                        value={editForm.contactWebsite}
+                                        onChange={e => setEditForm({...editForm, contactWebsite: e.target.value})}
+                                        className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-4">
+                                    <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+                                        <span className="w-6 h-6 rounded-lg bg-green-100 flex items-center justify-center text-green-600">$</span>
+                                        Monetization
+                                    </h3>
+                                    <div className="grid grid-cols-2 gap-3">
+                                        <button
+                                            type="button"
+                                            onClick={() => setEditForm(p => ({ ...p, isPaid: false, price: '' }))}
+                                            className={cn("p-3 rounded-xl border-2 text-sm font-bold transition-all", !editForm.isPaid ? "bg-white border-green-500 text-green-600 shadow-sm" : "bg-transparent border-slate-200 text-slate-500 hover:bg-white")}
+                                        >
+                                            Free
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => setEditForm(p => ({ ...p, isPaid: true }))}
+                                            className={cn("p-3 rounded-xl border-2 text-sm font-bold transition-all", editForm.isPaid ? "bg-white border-green-500 text-green-600 shadow-sm" : "bg-transparent border-slate-200 text-slate-500 hover:bg-white")}
+                                        >
+                                            Paid
+                                        </button>
+                                    </div>
+
+                                    {editForm.isPaid && (
+                                        <div className="space-y-4 pt-2">
+                                            <div className="space-y-1">
+                                                <label className="text-xs font-bold text-slate-500 uppercase">Price ($)</label>
+                                                <input
+                                                    type="number"
+                                                    min="0"
+                                                    step="0.01"
+                                                    value={editForm.price}
+                                                    onChange={e => setEditForm({...editForm, price: e.target.value})}
+                                                    className="w-full p-3 bg-white border border-slate-200 rounded-xl outline-none font-bold"
+                                                    placeholder="0.00"
+                                                />
+                                            </div>
+                                            <div className="space-y-1">
+                                                <label className="text-xs font-bold text-slate-500 uppercase">Payment Type</label>
+                                                <div className="grid grid-cols-2 gap-2">
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => setEditForm(p => ({ ...p, pricingType: 'one_time' }))}
+                                                        className={cn("p-2 rounded-lg text-xs font-bold border transition-all", editForm.pricingType === 'one_time' ? "bg-slate-900 text-white border-slate-900" : "bg-white text-slate-600 border-slate-200")}
+                                                    >
+                                                        One-time
+                                                    </button>
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => setEditForm(p => ({ ...p, pricingType: 'monthly' }))}
+                                                        className={cn("p-2 rounded-lg text-xs font-bold border transition-all", editForm.pricingType === 'monthly' ? "bg-slate-900 text-white border-slate-900" : "bg-white text-slate-600 border-slate-200")}
+                                                    >
+                                                        Monthly
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+
+                                <div className="space-y-4">
+                                    <div className="space-y-1">
+                                        <label className="text-sm font-bold text-slate-700">Access Link</label>
+                                        <input
+                                            type="url"
+                                            value={editForm.link}
+                                            onChange={e => setEditForm({...editForm, link: e.target.value})}
+                                            className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none"
+                                            placeholder="https://..."
+                                        />
+                                    </div>
+                                    <div className="space-y-1">
+                                        <label className="text-sm font-bold text-slate-700">Tech Stack</label>
+                                        <input
+                                            value={editForm.tools}
+                                            onChange={e => setEditForm({...editForm, tools: e.target.value})}
+                                            className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none"
+                                            placeholder="n8n, OpenAI..."
+                                        />
+                                        <p className="text-[11px] text-slate-400">Separate tools with commas</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                                <div className="space-y-3">
+                                    <label className="text-sm font-bold text-slate-700">Demo Video</label>
+                                    <div className="flex gap-2 mb-2">
+                                        <button
+                                            type="button"
+                                            onClick={() => setVideoSourceType('link')}
+                                            className={cn("flex-1 py-2 text-xs font-bold rounded-xl border", videoSourceType === 'link' ? "bg-slate-900 text-white border-slate-900" : "bg-slate-50 text-slate-700 border-slate-200")}
+                                        >
+                                            YouTube / Video Link
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => setVideoSourceType('upload')}
+                                            className={cn("flex-1 py-2 text-xs font-bold rounded-xl border", videoSourceType === 'upload' ? "bg-slate-900 text-white border-slate-900" : "bg-slate-50 text-slate-700 border-slate-200")}
+                                        >
+                                            Upload Video
+                                        </button>
+                                    </div>
+
+                                    {videoSourceType === 'link' && (
+                                        <input
+                                            type="url"
+                                            value={editForm.videoUrl}
+                                            onChange={e => setEditForm({...editForm, videoUrl: e.target.value})}
+                                            className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none"
+                                            placeholder="https://youtube.com/..."
+                                        />
+                                    )}
+
+                                    {videoSourceType === 'upload' && (
+                                        <div className="border-2 border-dashed border-slate-200 rounded-2xl bg-slate-50 p-4 flex flex-col gap-3 items-center justify-center text-center">
+                                            {editForm.videoUrl ? (
+                                                <div className="w-full relative">
+                                                    <video src={editForm.videoUrl} className="w-full h-48 object-cover rounded-xl bg-black" controls />
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => setEditForm(prev => ({ ...prev, videoUrl: '' }))}
+                                                        className="absolute top-2 right-2 p-2 bg-red-500 text-white rounded-full shadow-md"
+                                                    >
+                                                        <Trash2 className="w-4 h-4" />
+                                                    </button>
+                                                </div>
+                                            ) : (
+                                                <label className="cursor-pointer w-full h-full flex flex-col items-center justify-center py-4">
+                                                    {uploadingVideo ? <Loader2 className="w-8 h-8 text-indigo-500 animate-spin mb-2" /> : <Upload className="w-8 h-8 text-slate-400 mb-2" />}
+                                                    <span className="text-sm font-bold text-slate-700">{uploadingVideo ? "Uploading..." : "Upload Demo Video"}</span>
+                                                    <input type="file" accept="video/*" className="hidden" onChange={handleVideoUpload} disabled={uploadingVideo} />
+                                                </label>
+                                            )}
+                                        </div>
+                                    )}
+                                </div>
+
+                                <div className="space-y-3">
+                                    <label className="text-sm font-bold text-slate-700">Attachments</label>
+                                    <div className="border-2 border-dashed border-slate-200 rounded-2xl bg-slate-50 p-4 flex flex-col gap-3 items-center justify-center text-center">
+                                        <label className="cursor-pointer w-full flex flex-col items-center justify-center py-2">
+                                            {uploadingAttachment ? <Loader2 className="w-6 h-6 animate-spin text-indigo-500" /> : <Upload className="w-6 h-6 text-slate-400" />}
+                                            <span className="text-sm font-bold text-slate-700 mt-2">{uploadingAttachment ? "Uploading..." : "Upload files (.zip, .json, .csv)"}</span>
+                                            <input type="file" multiple className="hidden" onChange={handleAttachmentsUpload} disabled={uploadingAttachment} />
+                                        </label>
+                                        {editForm.attachments.length > 0 && (
+                                            <div className="w-full grid gap-2">
+                                                {editForm.attachments.map((f, i) => (
+                                                    <div key={`${f.name}-${i}`} className="flex justify-between items-center bg-white p-2 rounded border border-slate-200 text-xs">
+                                                        <span className="truncate max-w-[180px]">{f.name}</span>
+                                                        <button
+                                                            type="button"
+                                                            onClick={() =>
+                                                                setEditForm(prev => ({
+                                                                    ...prev,
+                                                                    attachments: prev.attachments.filter((_, idx) => idx !== i)
+                                                                }))
+                                                            }
+                                                            className="text-rose-500"
+                                                        >
+                                                            <Trash2 className="w-4 h-4" />
+                                                        </button>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div className="space-y-1">
+                                    <label className="text-sm font-bold text-slate-700">Setup User Guide</label>
+                                    <textarea
+                                        value={editForm.whatItDoes}
+                                        onChange={e => setEditForm({...editForm, whatItDoes: e.target.value})}
+                                        rows={4}
+                                        className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none resize-none"
+                                    />
+                                </div>
+                                <div className="space-y-1">
+                                    <label className="text-sm font-bold text-slate-700">What it Does / Outcome</label>
+                                    <textarea
+                                        value={editForm.outcome}
+                                        onChange={e => setEditForm({...editForm, outcome: e.target.value})}
+                                        rows={4}
+                                        className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none resize-none"
+                                    />
+                                </div>
+                            </div>
                         </div>
                         <div className="p-5 border-t border-slate-100 bg-slate-50 flex justify-end gap-3 sticky bottom-0 z-10">
                             <button onClick={() => setIsEditing(false)} className="px-5 py-2.5 bg-white border border-slate-200 text-slate-700 font-bold rounded-xl hover:bg-slate-50">Cancel</button>
@@ -467,6 +880,26 @@ const ResourceDetails = () => {
                 </div>
              </div>
         </div>
+
+        {pendingApprovalUserId && isAdminEmail(user?.email) && (
+          <div className="container mx-auto px-4 sm:px-6 max-w-6xl mt-4">
+            <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+              <div>
+                <p className="text-sm font-bold text-emerald-800">Approve resource access</p>
+                <p className="text-xs text-emerald-700">
+                  You opened this page from an approval link. Confirm to grant access to this resource for user ID {pendingApprovalUserId}.
+                </p>
+              </div>
+              <button
+                onClick={handleApproveAccess}
+                disabled={approvalLoading}
+                className="px-4 py-2 bg-emerald-600 text-white text-xs font-bold rounded-xl hover:bg-emerald-700 disabled:opacity-60"
+              >
+                {approvalLoading ? 'Approving...' : 'Approve Access'}
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* Main Grid */}
         <div className="container mx-auto px-4 sm:px-6 max-w-6xl pt-6 lg:pt-8 pb-14 lg:pb-20 relative z-10">
@@ -553,10 +986,10 @@ const ResourceDetails = () => {
                             <ul className="divide-y divide-slate-100 bg-white rounded-xl border border-slate-200">
                               {resource.attachments.map((f, i) => (
                                 <li key={`${f.name}-${i}`} className="flex items-center justify-between px-4 py-3 text-sm">
-                                  <a href={resource.isPaid ? undefined : f.url} className="font-medium text-slate-700 hover:text-indigo-600 truncate max-w-[200px] sm:max-w-md">
+                                  <a href={!resource.isPaid || hasAccess ? f.url : undefined} className="font-medium text-slate-700 hover:text-indigo-600 truncate max-w-[200px] sm:max-w-md">
                                     {f.name}
                                   </a>
-                                  {resource.isPaid ? (
+                                  {resource.isPaid && !hasAccess ? (
                                     <button onClick={handleLockedAttachmentClick} className="px-3 py-1.5 text-xs font-bold bg-slate-100 text-slate-600 rounded-lg border border-slate-200 hover:bg-slate-200 flex items-center gap-1">
                                        Download
                                     </button>
