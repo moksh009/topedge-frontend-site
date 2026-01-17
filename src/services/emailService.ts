@@ -214,6 +214,44 @@ export class EmailService {
     }
   }
 
+  public async sendAccessRequestUserEmail(details: {
+    buyerName: string;
+    buyerEmail: string;
+    resourceTitle: string;
+  }): Promise<void> {
+    await this.sendEmail('user', '/api/access-request-user-email', details);
+  }
+
+  public async sendAccessRequestCreatorEmail(details: {
+    creatorName: string;
+    creatorEmail: string;
+    buyerName: string;
+    buyerEmail: string;
+    resourceTitle: string;
+    priceText?: string;
+    approvalUrl: string;
+  }): Promise<void> {
+    await this.sendEmail('admin', '/api/access-request-creator-email', details);
+  }
+
+  public async sendAccessApprovedUserEmail(details: {
+    buyerName: string;
+    buyerEmail: string;
+    resourceTitle: string;
+    priceText?: string;
+  }): Promise<void> {
+    await this.sendEmail('user', '/api/access-approved-user-email', details);
+  }
+
+  public async sendAccessApprovedCreatorEmail(details: {
+    creatorName: string;
+    creatorEmail: string;
+    buyerEmail: string;
+    resourceTitle: string;
+  }): Promise<void> {
+    await this.sendEmail('admin', '/api/access-approved-creator-email', details);
+  }
+
   public async sendMaintenanceUserEmail(details: MaintenanceDetails): Promise<void> {
     try {
       console.log('Sending maintenance user email with details:', details);

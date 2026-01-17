@@ -168,42 +168,70 @@ const CreatorDashboard = () => {
               }`
             : 'Free';
 
-        const messageLines = [
-          `Good news – your access request has been approved for: ${resTitle}.`,
-          '',
-          `Price: ${priceText}`,
-          '',
-          'You can now access this resource directly from your TopEdge AI community account.',
-          'Sign in, open the community resource page, and the resource will be unlocked for your account.',
-        ];
-
         try {
-          await emailService.sendContactEmails({
-            name: data.buyerName || 'Buyer',
-            email: data.buyerEmail,
-            phone: '',
-            companyName: '',
-            subject: 'Your paid resource access has been approved',
-            message: messageLines.join('\n'),
+          await emailService.sendAccessApprovedUserEmail({
+            buyerName: data.buyerName || 'Buyer',
+            buyerEmail: data.buyerEmail,
+            resourceTitle: resTitle,
+            priceText,
+          });
+
+          await addDoc(collection(db, 'resource_access_audit_logs'), {
+            resourceId: data.resourceId,
+            buyerId: data.buyerId,
+            action: 'email_sent',
+            performedBy: user.uid,
+            requestId: request.id,
+            emailType: 'approved_user',
+            createdAt: serverTimestamp(),
           });
         } catch (e) {
           console.error('Failed to send approval email from dashboard:', e);
+          await addDoc(collection(db, 'resource_access_audit_logs'), {
+            resourceId: data.resourceId,
+            buyerId: data.buyerId,
+            action: 'email_failed',
+            performedBy: user.uid,
+            requestId: request.id,
+            emailType: 'approved_user',
+            errorMessage: e instanceof Error ? e.message : String(e),
+            createdAt: serverTimestamp(),
+          });
         }
       }
 
       if (user.email) {
         const resTitle = data.resourceTitle || 'Resource';
+
         try {
-          await emailService.sendContactEmails({
-            name: user.displayName || 'Creator',
-            email: user.email,
-            phone: '',
-            companyName: '',
-            subject: 'You approved a paid resource access request',
-            message: `You approved access for ${data.buyerEmail || 'a buyer'} to "${resTitle}".`,
+          await emailService.sendAccessApprovedCreatorEmail({
+            creatorName: user.displayName || 'Creator',
+            creatorEmail: user.email,
+            buyerEmail: data.buyerEmail,
+            resourceTitle: resTitle,
+          });
+
+          await addDoc(collection(db, 'resource_access_audit_logs'), {
+            resourceId: data.resourceId,
+            buyerId: data.buyerId,
+            action: 'email_sent',
+            performedBy: user.uid,
+            requestId: request.id,
+            emailType: 'approved_creator',
+            createdAt: serverTimestamp(),
           });
         } catch (e) {
           console.error('Failed to send creator confirmation email from dashboard:', e);
+          await addDoc(collection(db, 'resource_access_audit_logs'), {
+            resourceId: data.resourceId,
+            buyerId: data.buyerId,
+            action: 'email_failed',
+            performedBy: user.uid,
+            requestId: request.id,
+            emailType: 'approved_creator',
+            errorMessage: e instanceof Error ? e.message : String(e),
+            createdAt: serverTimestamp(),
+          });
         }
       }
 
@@ -264,22 +292,6 @@ const CreatorDashboard = () => {
         });
       } catch (e) {
         console.error('Failed to write access audit log (rejected from dashboard):', e);
-      }
-
-      if (data.buyerEmail) {
-        const resTitle = data.resourceTitle || 'Resource';
-        try {
-          await emailService.sendContactEmails({
-            name: data.buyerName || 'Buyer',
-            email: data.buyerEmail,
-            phone: '',
-            companyName: '',
-            subject: 'Your paid resource access request was rejected',
-            message: `Your request for access to "${resTitle}" was rejected by the creator. You can contact them via the community profile if you believe this is a mistake.`,
-          });
-        } catch (e) {
-          console.error('Failed to send rejection email from dashboard:', e);
-        }
       }
 
       if (data.buyerId && data.resourceId) {

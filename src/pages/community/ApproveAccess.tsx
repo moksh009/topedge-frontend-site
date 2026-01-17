@@ -228,35 +228,71 @@ const ApproveAccess = () => {
               }`
             : 'Free';
 
-        const messageLines = [
-          `Good news – your access request has been approved for: ${resTitle}.`,
-          '',
-          `Price: ${priceText}`,
-          '',
-          'You can now access this resource directly from your TopEdge AI community account.',
-          'Sign in, open the community resource page, and the resource will be unlocked for your account.',
-        ];
+        try {
+          await emailService.sendAccessApprovedUserEmail({
+            buyerName: request.buyerName || 'Buyer',
+            buyerEmail: request.buyerEmail,
+            resourceTitle: resTitle,
+            priceText,
+          });
 
-        await emailService.sendContactEmails({
-          name: request.buyerName || 'Buyer',
-          email: request.buyerEmail,
-          phone: '',
-          companyName: '',
-          subject: 'Your paid resource access has been approved',
-          message: messageLines.join('\n'),
-        });
+          await addDoc(collection(db, 'resource_access_audit_logs'), {
+            resourceId: request.resourceId,
+            buyerId: request.buyerId,
+            action: 'email_sent',
+            performedBy: user.uid,
+            requestId,
+            emailType: 'approved_user',
+            createdAt: serverTimestamp(),
+          });
+        } catch (e) {
+          console.error('Failed to send buyer approved email:', e);
+          await addDoc(collection(db, 'resource_access_audit_logs'), {
+            resourceId: request.resourceId,
+            buyerId: request.buyerId,
+            action: 'email_failed',
+            performedBy: user.uid,
+            requestId,
+            emailType: 'approved_user',
+            errorMessage: e instanceof Error ? e.message : String(e),
+            createdAt: serverTimestamp(),
+          });
+        }
       }
 
       if (request.ownerEmail) {
         const resTitle = resource?.title || request.resourceTitle || 'Resource';
-        await emailService.sendContactEmails({
-          name: resource?.userName || 'Creator',
-          email: request.ownerEmail,
-          phone: '',
-          companyName: '',
-          subject: 'You approved a paid resource access request',
-          message: `You approved access for ${request.buyerEmail || 'a buyer'} to "${resTitle}".`,
-        });
+
+        try {
+          await emailService.sendAccessApprovedCreatorEmail({
+            creatorName: resource?.userName || 'Creator',
+            creatorEmail: request.ownerEmail,
+            buyerEmail: request.buyerEmail,
+            resourceTitle: resTitle,
+          });
+
+          await addDoc(collection(db, 'resource_access_audit_logs'), {
+            resourceId: request.resourceId,
+            buyerId: request.buyerId,
+            action: 'email_sent',
+            performedBy: user.uid,
+            requestId,
+            emailType: 'approved_creator',
+            createdAt: serverTimestamp(),
+          });
+        } catch (e) {
+          console.error('Failed to send creator approved email:', e);
+          await addDoc(collection(db, 'resource_access_audit_logs'), {
+            resourceId: request.resourceId,
+            buyerId: request.buyerId,
+            action: 'email_failed',
+            performedBy: user.uid,
+            requestId,
+            emailType: 'approved_creator',
+            errorMessage: e instanceof Error ? e.message : String(e),
+            createdAt: serverTimestamp(),
+          });
+        }
       }
 
       try {
@@ -306,18 +342,6 @@ const ApproveAccess = () => {
         rejectedAt: serverTimestamp(),
         rejectedBy: user.uid,
       });
-
-      if (request.buyerEmail) {
-        const resTitle = resource?.title || request.resourceTitle || 'Resource';
-        await emailService.sendContactEmails({
-          name: request.buyerName || 'Buyer',
-          email: request.buyerEmail,
-          phone: '',
-          companyName: '',
-          subject: 'Your paid resource access request was rejected',
-          message: `Your request for access to "${resTitle}" was rejected by the creator. You can contact them via the community profile if you believe this is a mistake.`,
-        });
-      }
 
       setRequest(prev => (prev ? { ...prev, status: 'rejected' } : prev));
       toast.success('Request rejected and buyer notified');

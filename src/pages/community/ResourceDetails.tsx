@@ -64,6 +64,7 @@ const ResourceDetails = () => {
   const [hasPendingRequest, setHasPendingRequest] = useState(false);
   const [authorProfile, setAuthorProfile] = useState<any>(null);
   const [protectedLink, setProtectedLink] = useState<string | null>(null);
+  const [hasApprovedAccess, setHasApprovedAccess] = useState(false);
 
   // Edit Form State
   const [editForm, setEditForm] = useState({
@@ -190,6 +191,25 @@ const ResourceDetails = () => {
       }
     };
     checkPendingRequest();
+  }, [resource?.id, user?.uid]);
+
+  useEffect(() => {
+    const checkApprovedAccess = async () => {
+      if (!resource || !user) return;
+      try {
+        const q = query(
+          collection(db, 'resource_access_requests'),
+          where('resourceId', '==', resource.id),
+          where('buyerId', '==', user.uid),
+          where('status', '==', 'approved')
+        );
+        const snap = await getDocs(q);
+        setHasApprovedAccess(!snap.empty);
+      } catch (error) {
+        console.error('Error checking approved access request:', error);
+      }
+    };
+    checkApprovedAccess();
   }, [resource?.id, user?.uid]);
 
   // View Counter logic
@@ -417,7 +437,8 @@ const ResourceDetails = () => {
       (user &&
         (user.uid === resource.userId ||
           isAdminEmail(user.email) ||
-          (resource.purchasers || []).includes(user.uid))));
+          (resource.purchasers || []).includes(user.uid) ||
+          hasApprovedAccess)));
 
   useEffect(() => {
     const fetchProtectedLink = async () => {
@@ -539,42 +560,78 @@ const ResourceDetails = () => {
         requestRef.id
       )}&token=${encodeURIComponent(approvalToken)}`;
 
+      const priceText = resource.isPaid
+        ? `$${resource.price || 0} ${
+            (resource.pricingType || 'one_time') === 'monthly' ? '(Monthly)' : '(One-time)'
+          }`
+        : 'Free';
+
       if (resource.contactEmail) {
-        await emailService.sendContactEmails({
-          name: resource.userName || 'Resource Creator',
-          email: resource.contactEmail,
-          phone: '',
-          companyName: '',
-          subject: `Approval required: Paid resource access request`,
-          message: `
-          A user has requested access to your paid resource in the community.
+        try {
+          await emailService.sendAccessRequestCreatorEmail({
+            creatorName: resource.userName || 'Resource Creator',
+            creatorEmail: resource.contactEmail,
+            buyerName: user.displayName || 'User',
+            buyerEmail: user.email || '',
+            resourceTitle: resource.title,
+            priceText,
+            approvalUrl: approveUrl,
+          });
 
-          Buyer: ${user.displayName || 'N/A'} (${user.email || 'No email'})
-          Resource: ${resource.title}
-          Price: ${
-            resource.isPaid
-              ? `$${resource.price || 0} (${(resource.pricingType || 'one_time') === 'monthly' ? 'Monthly' : 'One-time'})`
-              : 'Free'
-          }
-
-          To review and approve or reject this request, open the approval page:
-          ${approveUrl}
-        `
-        });
+          await addDoc(collection(db, 'resource_access_audit_logs'), {
+            resourceId: resource.id,
+            buyerId: user.uid,
+            action: 'email_sent',
+            performedBy: user.uid,
+            requestId: requestRef.id,
+            emailType: 'request_creator',
+            createdAt: serverTimestamp(),
+          });
+        } catch (e) {
+          console.error('Failed to send creator request email:', e);
+          await addDoc(collection(db, 'resource_access_audit_logs'), {
+            resourceId: resource.id,
+            buyerId: user.uid,
+            action: 'email_failed',
+            performedBy: user.uid,
+            requestId: requestRef.id,
+            emailType: 'request_creator',
+            errorMessage: e instanceof Error ? e.message : String(e),
+            createdAt: serverTimestamp(),
+          });
+        }
       }
 
       if (user.email) {
-        await emailService.sendContactEmails({
-          name: user.displayName || 'Resource Buyer',
-          email: user.email,
-          phone: '',
-          companyName: '',
-          subject: 'Access request sent – awaiting creator approval',
-          message: `
-          Your request for access to "${resource.title}" has been sent to the creator.
-          After you complete payment and the creator approves from their dashboard, this resource will unlock for your account.
-        `
-        });
+        try {
+          await emailService.sendAccessRequestUserEmail({
+            buyerName: user.displayName || 'Resource Buyer',
+            buyerEmail: user.email,
+            resourceTitle: resource.title,
+          });
+
+          await addDoc(collection(db, 'resource_access_audit_logs'), {
+            resourceId: resource.id,
+            buyerId: user.uid,
+            action: 'email_sent',
+            performedBy: user.uid,
+            requestId: requestRef.id,
+            emailType: 'request_user',
+            createdAt: serverTimestamp(),
+          });
+        } catch (e) {
+          console.error('Failed to send buyer request email:', e);
+          await addDoc(collection(db, 'resource_access_audit_logs'), {
+            resourceId: resource.id,
+            buyerId: user.uid,
+            action: 'email_failed',
+            performedBy: user.uid,
+            requestId: requestRef.id,
+            emailType: 'request_user',
+            errorMessage: e instanceof Error ? e.message : String(e),
+            createdAt: serverTimestamp(),
+          });
+        }
       }
 
       try {
