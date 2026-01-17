@@ -10,7 +10,7 @@
     "build:netlify": "vite build && node build-static.js",
     "build:static": "vite build && node build-static.js",
     "deploy": "npm run build:static && firebase deploy --only hosting",
-    "lint": "eslint . --ext js,jsx,ts,tsx --fix",
+    "lint": "eslint . --fix",
     "preview": "vite preview"
   },
   "dependencies": {
