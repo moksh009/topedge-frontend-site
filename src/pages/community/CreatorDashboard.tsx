@@ -3,7 +3,20 @@ import CommunityLayout from '@/components/community/layout/CommunityLayout';
 import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 import { db } from '@/services/firebase';
-import { collection, onSnapshot, query, where, deleteDoc, doc } from 'firebase/firestore';
+import {
+  collection,
+  onSnapshot,
+  query,
+  where,
+  deleteDoc,
+  doc,
+  orderBy,
+  updateDoc,
+  serverTimestamp,
+  addDoc,
+  getDoc,
+  arrayUnion,
+} from 'firebase/firestore';
 import { motion } from 'framer-motion';
 import { 
   BarChart3, Eye, ThumbsUp, FolderPlus, Trash2, ArrowRight, 
@@ -11,6 +24,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { calculateReputation } from '@/utils/reputation';
+import { emailService } from '@/services/emailService';
 
 interface ResourceItem {
   id: string;
@@ -24,12 +38,10 @@ interface ResourceItem {
 }
 interface RequestItem {
   id: string;
-  title: string;
-  description?: string;
-  budget?: string;
-  techStack?: string[];
-  urgency?: 'ASAP' | 'Soon' | 'Flexible';
-  contactEmail: string;
+  resourceTitle: string;
+  buyerName: string;
+  buyerEmail: string;
+  status: 'pending' | 'approved' | 'rejected' | 'expired';
   createdAt?: any;
 }
 
@@ -40,6 +52,7 @@ const CreatorDashboard = () => {
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [requests, setRequests] = useState<RequestItem[]>([]);
   const [deletingReqId, setDeletingReqId] = useState<string | null>(null);
+  const [requestActionLoadingId, setRequestActionLoadingId] = useState<string | null>(null);
 
   useEffect(() => {
     if (loading) return;
@@ -76,19 +89,21 @@ const CreatorDashboard = () => {
   useEffect(() => {
     if (loading) return;
     if (!user) return;
-    const q = query(collection(db, 'community_requests'), where('requesterId', '==', user.uid));
+    const q = query(
+      collection(db, 'resource_access_requests'),
+      where('ownerId', '==', user.uid),
+      orderBy('createdAt', 'desc')
+    );
     const unsub = onSnapshot(q, (snap) => {
       const list = snap.docs
         .map(d => {
           const data = d.data() as any;
           return {
             id: d.id,
-            title: data.title || 'Untitled',
-            description: data.description || '',
-            budget: data.budget || '',
-            techStack: (data.techStack || []) as string[],
-            urgency: (data.urgency || 'ASAP') as RequestItem['urgency'],
-            contactEmail: data.contactEmail || '',
+            resourceTitle: data.resourceTitle || '',
+            buyerName: data.buyerName || 'Buyer',
+            buyerEmail: data.buyerEmail || '',
+            status: (data.status || 'pending') as RequestItem['status'],
             createdAt: data.createdAt
           } as RequestItem;
         })
@@ -101,6 +116,194 @@ const CreatorDashboard = () => {
     }, (e) => console.error(e));
     return () => unsub();
   }, [user, loading]);
+
+  const handleApproveRequest = async (request: RequestItem & { buyerId?: string; resourceId?: string }) => {
+    if (!user) return;
+    if (!request.id) return;
+    setRequestActionLoadingId(request.id);
+    try {
+      const reqRef = doc(db, 'resource_access_requests', request.id);
+      const reqSnap = await getDoc(reqRef);
+      if (!reqSnap.exists()) {
+        setRequestActionLoadingId(null);
+        return;
+      }
+      const data = reqSnap.data() as any;
+      if (data.status !== 'pending') {
+        setRequestActionLoadingId(null);
+        return;
+      }
+
+      await updateDoc(reqRef, {
+        status: 'approved',
+        approvedAt: serverTimestamp(),
+        approvedBy: user.uid,
+      });
+
+      if (data.resourceId && data.buyerId) {
+        await updateDoc(doc(db, 'community_resources', data.resourceId), {
+          purchasers: arrayUnion(data.buyerId),
+        });
+      }
+
+      try {
+        await addDoc(collection(db, 'resource_access_audit_logs'), {
+          resourceId: data.resourceId,
+          buyerId: data.buyerId,
+          action: 'approved',
+          performedBy: user.uid,
+          requestId: request.id,
+          createdAt: serverTimestamp(),
+        });
+      } catch (e) {
+        console.error('Failed to write access audit log (approved from dashboard):', e);
+      }
+
+      if (data.buyerEmail) {
+        const resTitle = data.resourceTitle || 'Resource';
+        const priceText =
+          data.isPaid && typeof data.price === 'number'
+            ? `$${data.price || 0} ${
+                (data.pricingType || 'one_time') === 'monthly' ? '(Monthly)' : '(One-time)'
+              }`
+            : 'Free';
+
+        const messageLines = [
+          `Good news – your access request has been approved for: ${resTitle}.`,
+          '',
+          `Price: ${priceText}`,
+          '',
+          'You can now access this resource directly from your TopEdge AI community account.',
+          'Sign in, open the community resource page, and the resource will be unlocked for your account.',
+        ];
+
+        try {
+          await emailService.sendContactEmails({
+            name: data.buyerName || 'Buyer',
+            email: data.buyerEmail,
+            phone: '',
+            companyName: '',
+            subject: 'Your paid resource access has been approved',
+            message: messageLines.join('\n'),
+          });
+        } catch (e) {
+          console.error('Failed to send approval email from dashboard:', e);
+        }
+      }
+
+      if (user.email) {
+        const resTitle = data.resourceTitle || 'Resource';
+        try {
+          await emailService.sendContactEmails({
+            name: user.displayName || 'Creator',
+            email: user.email,
+            phone: '',
+            companyName: '',
+            subject: 'You approved a paid resource access request',
+            message: `You approved access for ${data.buyerEmail || 'a buyer'} to "${resTitle}".`,
+          });
+        } catch (e) {
+          console.error('Failed to send creator confirmation email from dashboard:', e);
+        }
+      }
+
+      if (data.buyerId && data.resourceId) {
+        try {
+          await addDoc(collection(db, 'notifications'), {
+            recipientId: data.buyerId,
+            senderId: user.uid,
+            senderName: user.displayName || user.email || 'Creator',
+            type: 'access_approved',
+            resourceId: data.resourceId,
+            resourceTitle: data.resourceTitle || 'Paid Resource',
+            read: false,
+            createdAt: serverTimestamp(),
+          });
+        } catch (e) {
+          console.error('Failed to create access approved notification from dashboard:', e);
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setRequestActionLoadingId(null);
+    }
+  };
+
+  const handleRejectRequest = async (request: RequestItem) => {
+    if (!user) return;
+    if (!request.id) return;
+    setRequestActionLoadingId(request.id);
+    try {
+      const reqRef = doc(db, 'resource_access_requests', request.id);
+      const reqSnap = await getDoc(reqRef);
+      if (!reqSnap.exists()) {
+        setRequestActionLoadingId(null);
+        return;
+      }
+      const data = reqSnap.data() as any;
+      if (data.status !== 'pending') {
+        setRequestActionLoadingId(null);
+        return;
+      }
+
+      await updateDoc(reqRef, {
+        status: 'rejected',
+        rejectedAt: serverTimestamp(),
+        rejectedBy: user.uid,
+      });
+
+      try {
+        await addDoc(collection(db, 'resource_access_audit_logs'), {
+          resourceId: data.resourceId,
+          buyerId: data.buyerId,
+          action: 'rejected',
+          performedBy: user.uid,
+          requestId: request.id,
+          createdAt: serverTimestamp(),
+        });
+      } catch (e) {
+        console.error('Failed to write access audit log (rejected from dashboard):', e);
+      }
+
+      if (data.buyerEmail) {
+        const resTitle = data.resourceTitle || 'Resource';
+        try {
+          await emailService.sendContactEmails({
+            name: data.buyerName || 'Buyer',
+            email: data.buyerEmail,
+            phone: '',
+            companyName: '',
+            subject: 'Your paid resource access request was rejected',
+            message: `Your request for access to "${resTitle}" was rejected by the creator. You can contact them via the community profile if you believe this is a mistake.`,
+          });
+        } catch (e) {
+          console.error('Failed to send rejection email from dashboard:', e);
+        }
+      }
+
+      if (data.buyerId && data.resourceId) {
+        try {
+          await addDoc(collection(db, 'notifications'), {
+            recipientId: data.buyerId,
+            senderId: user.uid,
+            senderName: user.displayName || user.email || 'Creator',
+            type: 'access_rejected',
+            resourceId: data.resourceId,
+            resourceTitle: data.resourceTitle || 'Paid Resource',
+            read: false,
+            createdAt: serverTimestamp(),
+          });
+        } catch (e) {
+          console.error('Failed to create access rejected notification from dashboard:', e);
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setRequestActionLoadingId(null);
+    }
+  };
 
   const stats = useMemo(() => {
     const count = items.length;
@@ -395,16 +598,10 @@ const CreatorDashboard = () => {
             </div>
           </div>
 
-          {/* My Requests */}
+          {/* Access Requests */}
           <div className="bg-white rounded-[2rem] border border-slate-200 shadow-sm overflow-hidden mt-10">
             <div className="p-6 sm:p-8 border-b border-slate-100 flex items-center justify-between">
-              <h3 className="text-lg font-bold text-slate-900">Your Requests</h3>
-              <Link
-                to="/community/requests"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900 text-white text-sm font-bold hover:bg-slate-800"
-              >
-                <Zap className="w-4 h-4" /> Explore Board
-              </Link>
+              <h3 className="text-lg font-bold text-slate-900">Access Requests</h3>
             </div>
             <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
               {requests.length === 0 ? (
@@ -412,16 +609,16 @@ const CreatorDashboard = () => {
                   <div className="w-12 h-12 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center mx-auto mb-3 text-slate-400">
                     <FolderPlus className="w-6 h-6" />
                   </div>
-                  <p className="text-sm text-slate-500">No requests yet. Submit one from the Request Board.</p>
+                  <p className="text-sm text-slate-500">No access requests yet.</p>
                 </div>
               ) : (
                 requests.map((r) => (
                   <div key={r.id} className="rounded-2xl border border-slate-200 bg-slate-50/50 p-5 flex flex-col gap-3">
                     <div className="flex items-start justify-between">
                       <div className="min-w-0">
-                        <div className="text-sm font-bold text-slate-900 truncate">{r.title}</div>
+                        <div className="text-sm font-bold text-slate-900 truncate">{r.resourceTitle || 'Paid Resource'}</div>
                         <div className="text-xs text-slate-500 mt-1">
-                          {r.budget ? `$${r.budget}` : 'Open Offer'} • {r.urgency || 'Flexible'}
+                          {r.buyerName} • {r.buyerEmail}
                         </div>
                       </div>
                       <button
@@ -433,21 +630,35 @@ const CreatorDashboard = () => {
                         <Trash2 className="w-3 h-3" /> Delete
                       </button>
                     </div>
-                    <p className="text-sm text-slate-600 line-clamp-3">{r.description}</p>
                     <div className="flex items-center justify-between">
-                      <div className="flex flex-wrap gap-1.5">
-                        {(r.techStack || []).slice(0, 4).map((t, i) => (
-                          <span key={i} className="px-2 py-1 text-[10px] font-bold bg-white border border-slate-200 text-slate-600 rounded">
-                            {t}
-                          </span>
-                        ))}
+                      <span className={cn(
+                        "px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide",
+                        r.status === 'approved'
+                          ? "bg-emerald-50 text-emerald-700 border border-emerald-100"
+                          : r.status === 'rejected'
+                          ? "bg-red-50 text-red-700 border border-red-100"
+                          : r.status === 'expired'
+                          ? "bg-slate-100 text-slate-700 border border-slate-200"
+                          : "bg-amber-50 text-amber-700 border border-amber-100"
+                      )}>
+                        {r.status}
+                      </span>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => handleRejectRequest(r)}
+                          disabled={r.status !== 'pending' || requestActionLoadingId === r.id}
+                          className="px-3 py-2 text-xs font-bold rounded-lg bg-white border border-slate-200 hover:bg-slate-50 disabled:opacity-50"
+                        >
+                          Reject
+                        </button>
+                        <button
+                          onClick={() => handleApproveRequest(r as any)}
+                          disabled={r.status !== 'pending' || requestActionLoadingId === r.id}
+                          className="px-3 py-2 text-xs font-bold rounded-lg bg-slate-900 text-white hover:bg-slate-800 disabled:opacity-50"
+                        >
+                          Approve
+                        </button>
                       </div>
-                      <a
-                        href={`mailto:${r.contactEmail}?subject=${encodeURIComponent('Update: ' + r.title)}`}
-                        className="px-3 py-2 text-xs font-bold rounded-lg bg-white border border-slate-200 hover:bg-slate-50"
-                      >
-                        Contact
-                      </a>
                     </div>
                   </div>
                 ))

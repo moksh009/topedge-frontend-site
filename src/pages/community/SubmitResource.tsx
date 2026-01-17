@@ -3,7 +3,7 @@ import CommunityLayout from '@/components/community/layout/CommunityLayout';
 import CommunitySEO from '@/components/community/CommunitySEO';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Loader2, ArrowLeft, DollarSign, Video, Wrench, Sparkles, Layout, AlertCircle, Rocket, Gift, Tag, Check, User, Upload, Trash2, CheckCircle2 } from 'lucide-react';
-import { serverTimestamp, collection, addDoc, query, where, getCountFromServer } from 'firebase/firestore';
+import { serverTimestamp, collection, addDoc, query, where, getCountFromServer, doc, setDoc } from 'firebase/firestore';
 import { db } from '@/services/firebase';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
@@ -144,10 +144,18 @@ const SubmitResource = () => {
     if (!user || !userProfile) return;
     if (!isAdmin && uploadCount >= 10) return toast.error("Upload limit reached.");
     if (!formData.contactEmail.trim()) return toast.error("Email is required");
-    if (formData.monetization === 'paid' && (!formData.price || isNaN(Number(formData.price)))) return toast.error("Enter a valid price");
+    if (formData.monetization === 'paid' && (!formData.price || isNaN(Number(formData.price)))) {
+    if (formData.monetization === 'paid' && !formData.projectUrl.trim()) return toast.error("Access link is required for paid resources");
+    }
+    if (formData.monetization === 'paid' && !formData.projectUrl.trim()) {
+      return toast.error("For paid resources, please provide a private access link");
+    }
 
     setLoading(true);
     try {
+      const isPaid = formData.monetization === 'paid';
+      const hasProtectedLink = isPaid && !!formData.projectUrl.trim();
+
       const resourceData = {
         userId: user.uid,
         userName: userProfile.fullName,
@@ -158,13 +166,14 @@ const SubmitResource = () => {
         whatItDoes: formData.whatItDoes,
         outcome: formData.outcome,
         videoUrl: formData.youtubeUrl || formData.videoUrl,
-        link: formData.projectUrl || '',
+        link: isPaid ? '' : (formData.projectUrl || ''),
+        hasProtectedLink,
         contactEmail: formData.contactEmail || '',
         contactPhone: formData.contactPhone || '',
         contactWebsite: formData.contactWebsite || '',
-        isPaid: formData.monetization === 'paid',
-        price: formData.monetization === 'paid' ? parseFloat(formData.price) : 0,
-        pricingType: formData.monetization === 'paid' ? formData.pricingType : 'one_time',
+        isPaid,
+        price: isPaid ? parseFloat(formData.price) : 0,
+        pricingType: isPaid ? formData.pricingType : 'one_time',
         tools: formData.toolkit.split(',').map(s => s.trim()).filter(Boolean),
         category: formData.category,
         isHiring: formData.isHiring,
@@ -179,7 +188,16 @@ const SubmitResource = () => {
         purchasers: []
       };
 
-      await addDoc(collection(db, 'community_resources'), resourceData);
+      const resourceRef = await addDoc(collection(db, 'community_resources'), resourceData);
+
+      if (hasProtectedLink) {
+        const protectedLinkRef = doc(db, 'protected_resource_links', resourceRef.id);
+        await setDoc(protectedLinkRef, {
+          resourceId: resourceRef.id,
+          link: formData.projectUrl.trim(),
+          createdAt: serverTimestamp()
+        });
+      }
       toast.success("Resource launched successfully!");
       navigate('/community/automation-hub');
     } catch (error) { console.error(error); toast.error("Failed to publish."); } 

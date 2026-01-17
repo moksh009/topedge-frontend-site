@@ -67,7 +67,8 @@ const CommunityProfiles = () => {
           id: doc.id,
           ...doc.data()
         })) as Profile[];
-        setProfiles(profilesData);
+        const completedProfiles = profilesData.filter(p => !!p.fullName);
+        setProfiles(completedProfiles);
 
         const rQ = query(collection(db, 'community_resources'), orderBy('createdAt', 'desc'));
         const rSnap = await getDocs(rQ);
@@ -156,7 +157,7 @@ const CommunityProfiles = () => {
             <img src={profile.photoURL} alt={profile.fullName} className="w-full h-full rounded-[1.7rem] sm:rounded-[2.1rem] object-cover bg-slate-100" />
           ) : (
             <div className="w-full h-full rounded-[1.7rem] sm:rounded-[2.1rem] bg-slate-100 flex items-center justify-center text-4xl sm:text-5xl font-bold text-slate-300">
-                {profile.fullName.charAt(0)}
+                {(profile.fullName || 'U').charAt(0)}
             </div>
           )}
         </div>

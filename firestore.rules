@@ -1,0 +1,93 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn() &&
+        request.auth.token.email in [
+          'acctopedge@gmail.com',
+          'moksh2031@gmail.com',
+          'smittilva2006@gmail.com',
+          'team@topedgeai.com'
+        ];
+    }
+
+    function isResourceOwner(resource) {
+      return isSignedIn() && resource.data.userId == request.auth.uid;
+    }
+
+    function isOwnerOrAdmin(resource) {
+      return isResourceOwner(resource) || isAdmin();
+    }
+
+    function isRequestBuyer(requestDoc) {
+      return isSignedIn() && requestDoc.data.buyerId == request.auth.uid;
+    }
+
+    function isRequestOwnerOrAdmin(requestDoc) {
+      return isSignedIn() &&
+        (requestDoc.data.ownerId == request.auth.uid || isAdmin());
+    }
+
+    match /community_resources/{resourceId} {
+      allow read: if true;
+
+      allow create: if isSignedIn() &&
+        request.resource.data.userId == request.auth.uid;
+
+      allow update: if isSignedIn() && isOwnerOrAdmin(resource) &&
+        request.resource.data.userId == resource.data.userId &&
+        request.resource.data.createdAt == resource.data.createdAt;
+
+      allow delete: if isSignedIn() && isOwnerOrAdmin(resource);
+    }
+
+    match /protected_resource_links/{resourceId} {
+      allow read, write: if isSignedIn() &&
+        isOwnerOrAdmin(get(/databases/$(database)/documents/community_resources/$(resourceId)));
+    }
+
+    match /resource_access_requests/{requestId} {
+      allow create: if isSignedIn() &&
+        request.resource.data.buyerId == request.auth.uid &&
+        request.resource.data.status == 'pending';
+
+      allow read: if isSignedIn() && (
+        isRequestBuyer(resource) ||
+        isRequestOwnerOrAdmin(resource)
+      );
+
+      allow update: if isSignedIn() &&
+        isRequestOwnerOrAdmin(resource) &&
+        request.resource.data.resourceId == resource.data.resourceId &&
+        request.resource.data.buyerId == resource.data.buyerId &&
+        request.resource.data.ownerId == resource.data.ownerId;
+
+      allow delete: if false;
+    }
+
+    match /resource_access_audit_logs/{logId} {
+      allow create: if isSignedIn() &&
+        request.resource.data.performedBy == request.auth.uid;
+
+      allow read: if isAdmin();
+
+      allow update, delete: if false;
+    }
+
+    match /notifications/{notificationId} {
+      allow create: if isSignedIn();
+
+      allow read, update, delete: if isSignedIn() &&
+        resource.data.recipientId == request.auth.uid;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

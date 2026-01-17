@@ -109,14 +109,8 @@ const Signup = () => {
         email: user.email,
         createdAt: new Date().toISOString(),
         role: 'member',
-      });
-
-      await setDoc(doc(db, 'public_profiles', user.uid), {
-        name: pendingName || name,
-        email: user.email,
         isVerified: true,
-        createdAt: new Date().toISOString(),
-      }, { merge: true });
+      });
 
       navigate('/community/home');
     } catch (err: any) {

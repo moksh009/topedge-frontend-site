@@ -10,9 +10,19 @@ import { collection, query, orderBy, limit, onSnapshot, where, doc, updateDoc } 
 
 interface Notification {
   id: string;
-  type: 'star' | 'review' | 'hire_request' | 'announcement' | 'resource';
+  type:
+    | 'star'
+    | 'review'
+    | 'hire_request'
+    | 'announcement'
+    | 'resource'
+    | 'upvote'
+    | 'access_request'
+    | 'access_approved'
+    | 'access_rejected'
+    | 'access_expired';
   title: string;
-  createdAt: any; 
+  createdAt: any;
   link: string;
   isRead?: boolean;
 }
@@ -43,25 +53,43 @@ const CommunityNavbar = () => {
     const unsub = onSnapshot(q, (snapshot) => {
       const items = snapshot.docs.map(d => {
         const data = d.data() as any;
+        const type = data.type as Notification['type'];
+
+        let title: string;
+        if (type === 'star') {
+          title = `${data.senderName || 'Someone'} starred ${data.resourceTitle || 'your project'}`;
+        } else if (type === 'upvote') {
+          title = `${data.senderName || 'Someone'} upvoted ${data.resourceTitle || 'your resource'}`;
+        } else if (type === 'review') {
+          title = `${data.senderName || 'Someone'} reviewed ${data.resourceTitle || 'your project'}`;
+        } else if (type === 'hire_request') {
+          title = `${data.senderName || 'Someone'} wants to hire you`;
+        } else if (type === 'access_request') {
+          title = `${data.senderName || 'Someone'} requested access to ${data.resourceTitle || 'your resource'}`;
+        } else if (type === 'access_approved') {
+          title = `Your access request for ${data.resourceTitle || 'a paid resource'} was approved`;
+        } else if (type === 'access_rejected') {
+          title = `Your access request for ${data.resourceTitle || 'a paid resource'} was rejected`;
+        } else if (type === 'access_expired') {
+          title = `Your access request for ${data.resourceTitle || 'a paid resource'} expired`;
+        } else {
+          title = 'Activity';
+        }
+
+        const link =
+          type === 'hire_request'
+            ? '/community/promote-profile'
+            : data.resourceId
+            ? `/community/resource/${data.resourceId}`
+            : '/community/home';
+
         return {
           id: d.id,
-          type: data.type,
-          title:
-            data.type === 'star'
-              ? `${data.senderName || 'Someone'} starred ${data.resourceTitle || 'your project'}`
-              : data.type === 'review'
-              ? `${data.senderName || 'Someone'} reviewed ${data.resourceTitle || 'your project'}`
-              : data.type === 'hire_request'
-              ? `${data.senderName || 'Someone'} wants to hire you`
-              : 'Activity',
+          type,
+          title,
           createdAt: data.createdAt,
-          link:
-            data.type === 'hire_request'
-              ? '/community/promote-profile'
-              : data.resourceId
-              ? `/community/resource/${data.resourceId}`
-              : '/community/home',
-          isRead: !!data.read
+          link,
+          isRead: !!data.read,
         };
       });
       setNotifications(items);
@@ -186,15 +214,35 @@ const CommunityNavbar = () => {
                                       className="block px-5 py-4 hover:bg-slate-50 transition-colors border-b border-slate-100 last:border-0 relative group"
                                     >
                                       <div className="flex gap-3">
-                                         <div className={cn("mt-1.5 w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0",
-                                           n.type === 'star' ? "bg-yellow-100 text-yellow-600" :
-                                           n.type === 'review' ? "bg-blue-100 text-blue-600" :
-                                           n.type === 'hire_request' ? "bg-emerald-100 text-emerald-600" : "bg-slate-100 text-slate-500"
-                                         )}>
-                                           {n.type === 'star' ? <Star className="w-4 h-4" /> :
-                                            n.type === 'review' ? <MessageCircle className="w-4 h-4" /> :
-                                            n.type === 'hire_request' ? <Briefcase className="w-4 h-4" /> :
-                                            <Bell className="w-4 h-4" />}
+                                        <div
+                                          className={cn(
+                                            "mt-1.5 w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0",
+                                            n.type === 'star' || n.type === 'upvote'
+                                              ? "bg-yellow-100 text-yellow-600"
+                                              : n.type === 'review'
+                                              ? "bg-blue-100 text-blue-600"
+                                              : n.type === 'hire_request'
+                                              ? "bg-emerald-100 text-emerald-600"
+                                              : n.type === 'access_request'
+                                              ? "bg-indigo-100 text-indigo-600"
+                                              : n.type === 'access_approved'
+                                              ? "bg-emerald-50 text-emerald-700"
+                                              : n.type === 'access_rejected'
+                                              ? "bg-red-50 text-red-600"
+                                              : n.type === 'access_expired'
+                                              ? "bg-slate-100 text-slate-600"
+                                              : "bg-slate-100 text-slate-500"
+                                          )}
+                                        >
+                                           {n.type === 'star' || n.type === 'upvote' ? (
+                                             <Star className="w-4 h-4" />
+                                           ) : n.type === 'review' ? (
+                                             <MessageCircle className="w-4 h-4" />
+                                           ) : n.type === 'hire_request' ? (
+                                             <Briefcase className="w-4 h-4" />
+                                           ) : (
+                                             <Bell className="w-4 h-4" />
+                                           )}
                                          </div>
                                          <div>
                                             <p className="text-sm font-semibold text-slate-800 leading-snug group-hover:text-blue-600 transition-colors">{n.title}</p>

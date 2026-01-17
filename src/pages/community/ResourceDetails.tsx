@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate, useParams, useLocation } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import CommunityLayout from '@/components/community/layout/CommunityLayout';
 import CommunitySEO from '@/components/community/CommunitySEO';
 import { motion, AnimatePresence } from 'framer-motion';
-import { doc, getDoc, updateDoc, serverTimestamp, deleteDoc, arrayUnion, arrayRemove, increment, addDoc, collection } from 'firebase/firestore';
+import { doc, getDoc, updateDoc, serverTimestamp, deleteDoc, arrayUnion, arrayRemove, increment, addDoc, collection, query, where, getDocs, setDoc } from 'firebase/firestore';
 import { db } from '@/services/firebase';
 import { useAuth } from '@/contexts/AuthContext';
 import { cn } from '@/lib/utils';
@@ -43,12 +43,12 @@ interface Resource {
   upvotes?: number;
   upvotedBy?: string[];
   purchasers?: string[];
+  hasProtectedLink?: boolean;
 }
 
 const ResourceDetails = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const location = useLocation();
   const [loading, setLoading] = useState(true);
   const [resource, setResource] = useState<Resource | null>(null);
   const { user } = useAuth();
@@ -61,10 +61,9 @@ const ResourceDetails = () => {
   const [isUpvoted, setIsUpvoted] = useState<boolean>(false);
   const [purchaseRequestLoading, setPurchaseRequestLoading] = useState(false);
   const [purchaseRequestSent, setPurchaseRequestSent] = useState(false);
-  const [pendingApprovalUserId, setPendingApprovalUserId] = useState<string | null>(null);
-  const [pendingRequestId, setPendingRequestId] = useState<string | null>(null);
-  const [approvalLoading, setApprovalLoading] = useState(false);
+  const [hasPendingRequest, setHasPendingRequest] = useState(false);
   const [authorProfile, setAuthorProfile] = useState<any>(null);
+  const [protectedLink, setProtectedLink] = useState<string | null>(null);
 
   // Edit Form State
   const [editForm, setEditForm] = useState({
@@ -86,6 +85,8 @@ const ResourceDetails = () => {
   });
 
   const [videoSourceType, setVideoSourceType] = useState<'link' | 'upload'>('link');
+
+  const isOwner = user && resource && (user.uid === resource.userId || isAdminEmail(user.email));
 
   useEffect(() => {
     const fetchResource = async () => {
@@ -154,17 +155,42 @@ const ResourceDetails = () => {
   }, [resource?.userId]);
 
   useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const approveFor = params.get('approveFor');
-    const requestId = params.get('requestId');
-    if (approveFor) {
-      setPendingApprovalUserId(approveFor);
-      setPendingRequestId(requestId);
-    } else {
-      setPendingApprovalUserId(null);
-      setPendingRequestId(null);
-    }
-  }, [location.search]);
+    const loadProtectedLinkForOwner = async () => {
+      if (!isOwner || !resource?.isPaid || !isEditing) return;
+      try {
+        const ref = doc(db, 'protected_resource_links', resource.id);
+        const snap = await getDoc(ref);
+        if (snap.exists()) {
+          const data = snap.data() as any;
+          setEditForm(prev => ({ ...prev, link: data.privateUrl || '' }));
+        }
+      } catch (error) {
+        console.error('Error loading protected link for edit:', error);
+      }
+    };
+    loadProtectedLinkForOwner();
+  }, [isOwner, resource?.id, resource?.isPaid, isEditing]);
+
+  useEffect(() => {
+    const checkPendingRequest = async () => {
+      if (!resource || !user) return;
+      try {
+        const q = query(
+          collection(db, 'resource_access_requests'),
+          where('resourceId', '==', resource.id),
+          where('buyerId', '==', user.uid),
+          where('status', '==', 'pending')
+        );
+        const snap = await getDocs(q);
+        const has = !snap.empty;
+        setHasPendingRequest(has);
+        setPurchaseRequestSent(has);
+      } catch (error) {
+        console.error('Error checking pending access request:', error);
+      }
+    };
+    checkPendingRequest();
+  }, [resource?.id, user?.uid]);
 
   // View Counter logic
   useEffect(() => {
@@ -299,26 +325,55 @@ const ResourceDetails = () => {
     }
     setSaving(true);
     try {
+      const isPaid = editForm.isPaid;
+      const cleanedLink = editForm.link.trim();
+      const hasProtectedLink = isPaid && !!cleanedLink;
+
       const updatedData = {
         title: editForm.title,
         description: editForm.description,
         whatItDoes: editForm.whatItDoes,
         outcome: editForm.outcome,
         videoUrl: editForm.videoUrl,
-        link: editForm.link,
-        isPaid: editForm.isPaid,
-        price: editForm.isPaid ? parseFloat(editForm.price) || 0 : 0,
+        link: isPaid ? '' : cleanedLink,
+        isPaid,
+        price: isPaid ? parseFloat(editForm.price) || 0 : 0,
         tools: editForm.tools.split(',').map(t => t.trim()).filter(Boolean),
         category: editForm.category,
         contactEmail: editForm.contactEmail,
         contactPhone: editForm.contactPhone,
         contactWebsite: editForm.contactWebsite,
         attachments: editForm.attachments,
-        pricingType: editForm.pricingType
+        pricingType: editForm.pricingType,
+        hasProtectedLink
       };
 
       await updateDoc(doc(db, 'community_resources', resource.id), updatedData as any);
-      setResource(prev => prev ? ({ ...prev, ...updatedData, tools: updatedData.tools as string[], category: updatedData.category as any }) : null);
+      if (isPaid) {
+        const protectedRef = doc(db, 'protected_resource_links', resource.id);
+        if (hasProtectedLink) {
+          await setDoc(protectedRef, {
+            resourceId: resource.id,
+            privateUrl: cleanedLink,
+            updatedAt: serverTimestamp()
+          }, { merge: true });
+        } else {
+          try {
+            await deleteDoc(protectedRef);
+          } catch {}
+        }
+      }
+
+      setResource(prev =>
+        prev
+          ? ({
+              ...prev,
+              ...updatedData,
+              tools: updatedData.tools as string[],
+              category: updatedData.category as any
+            })
+          : null
+      );
       setIsEditing(false);
       toast.success("Resource updated!");
     } catch (error) {
@@ -356,7 +411,6 @@ const ResourceDetails = () => {
     }
   };
 
-  const isOwner = user && resource && (user.uid === resource.userId || isAdminEmail(user.email));
   const hasAccess =
     !!resource &&
     (!resource.isPaid ||
@@ -364,6 +418,62 @@ const ResourceDetails = () => {
         (user.uid === resource.userId ||
           isAdminEmail(user.email) ||
           (resource.purchasers || []).includes(user.uid))));
+
+  useEffect(() => {
+    const fetchProtectedLink = async () => {
+      if (!resource || !resource.isPaid || !hasAccess || !user) {
+        setProtectedLink(null);
+        return;
+      }
+      try {
+        const idToken = await user.getIdToken();
+
+        let baseURL: string | null = null;
+        const envBaseURL =
+          (typeof import.meta !== 'undefined' &&
+            (import.meta as any).env &&
+            (import.meta as any).env.VITE_EMAIL_API_BASE_URL) ||
+          undefined;
+
+        if (envBaseURL && typeof envBaseURL === 'string' && envBaseURL.trim().length > 0) {
+          baseURL = envBaseURL.replace(/\/+$/, '');
+        } else if (typeof window !== 'undefined') {
+          const origin = window.location.origin;
+          baseURL = `${origin.replace(/\/+$/, '')}/.netlify/functions/api`;
+        }
+
+        if (!baseURL) {
+          setProtectedLink(null);
+          return;
+        }
+
+        const response = await fetch(`${baseURL}/api/get-protected-resource-link`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${idToken}`
+          },
+          body: JSON.stringify({ resourceId: resource.id })
+        });
+
+        if (!response.ok) {
+          setProtectedLink(null);
+          return;
+        }
+
+        const data = await response.json();
+        if (data && typeof data.url === 'string' && data.url.trim().length > 0) {
+          setProtectedLink(data.url);
+        } else {
+          setProtectedLink(null);
+        }
+      } catch (error) {
+        console.error('Error fetching protected link:', error);
+        setProtectedLink(null);
+      }
+    };
+    fetchProtectedLink();
+  }, [resource?.id, resource?.isPaid, hasAccess, user]);
 
   const handlePurchaseRequest = async () => {
     if (!resource) return;
@@ -383,15 +493,35 @@ const ResourceDetails = () => {
       toast.success("You already have access to this resource");
       return;
     }
+    if (hasPendingRequest) {
+      toast.error("You already have a pending access request for this resource.");
+      return;
+    }
     if (purchaseRequestLoading) return;
 
     setPurchaseRequestLoading(true);
     try {
+      const existingQ = query(
+        collection(db, 'resource_access_requests'),
+        where('resourceId', '==', resource.id),
+        where('buyerId', '==', user.uid),
+        where('status', '==', 'pending')
+      );
+      const existingSnap = await getDocs(existingQ);
+      if (!existingSnap.empty) {
+        setHasPendingRequest(true);
+        setPurchaseRequestSent(true);
+        toast.error("You already have a pending access request for this resource.");
+        return;
+      }
+
+      const approvalToken = self.crypto?.randomUUID ? self.crypto.randomUUID() : `${Date.now()}_${Math.random().toString(36).slice(2)}`;
+
       const requestRef = await addDoc(collection(db, 'resource_access_requests'), {
         resourceId: resource.id,
         resourceTitle: resource.title,
-        resourceOwnerId: resource.userId,
-        resourceOwnerEmail: resource.contactEmail || null,
+        ownerId: resource.userId,
+        ownerEmail: resource.contactEmail || null,
         buyerId: user.uid,
         buyerName: user.displayName || user.email || 'User',
         buyerEmail: user.email || '',
@@ -399,22 +529,25 @@ const ResourceDetails = () => {
         price: resource.price || 0,
         pricingType: resource.pricingType || 'one_time',
         createdAt: serverTimestamp(),
-        status: 'pending'
+        status: 'pending',
+        approvalToken,
+        expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
       });
 
       const origin = window.location.origin;
-      const approveUrl = `${origin}/community/resource/${resource.id}?approveFor=${encodeURIComponent(
-        user.uid
-      )}&requestId=${encodeURIComponent(requestRef.id)}`;
+      const approveUrl = `${origin}/community/approve-access?requestId=${encodeURIComponent(
+        requestRef.id
+      )}&token=${encodeURIComponent(approvalToken)}`;
 
-      await emailService.sendContactEmails({
-        name: user.displayName || 'Resource Buyer',
-        email: user.email || '',
-        phone: '',
-        companyName: '',
-        subject: `Resource Purchase Request: ${resource.title}`,
-        message: `
-          Resource purchase request from the community.
+      if (resource.contactEmail) {
+        await emailService.sendContactEmails({
+          name: resource.userName || 'Resource Creator',
+          email: resource.contactEmail,
+          phone: '',
+          companyName: '',
+          subject: `Approval required: Paid resource access request`,
+          message: `
+          A user has requested access to your paid resource in the community.
 
           Buyer: ${user.displayName || 'N/A'} (${user.email || 'No email'})
           Resource: ${resource.title}
@@ -424,68 +557,62 @@ const ResourceDetails = () => {
               : 'Free'
           }
 
-          <br/><br/>
-          <strong>Approve access for this buyer:</strong><br/>
-          <a href="${approveUrl}" target="_blank" rel="noopener noreferrer">Click here to approve access</a>
-
-          <br/><br/>
-          You can also open the resource directly:<br/>
-          <a href="${origin}/community/resource/${resource.id}" target="_blank" rel="noopener noreferrer">View resource</a>
+          To review and approve or reject this request, open the approval page:
+          ${approveUrl}
         `
-      });
+        });
+      }
+
+      if (user.email) {
+        await emailService.sendContactEmails({
+          name: user.displayName || 'Resource Buyer',
+          email: user.email,
+          phone: '',
+          companyName: '',
+          subject: 'Access request sent – awaiting creator approval',
+          message: `
+          Your request for access to "${resource.title}" has been sent to the creator.
+          After you complete payment and the creator approves from their dashboard, this resource will unlock for your account.
+        `
+        });
+      }
+
+      try {
+        await addDoc(collection(db, 'resource_access_audit_logs'), {
+          resourceId: resource.id,
+          buyerId: user.uid,
+          action: 'requested',
+          performedBy: user.uid,
+          requestId: requestRef.id,
+          createdAt: serverTimestamp()
+        });
+      } catch (e) {
+        console.error('Failed to write access audit log (requested):', e);
+      }
+
+      try {
+        await addDoc(collection(db, 'notifications'), {
+          recipientId: resource.userId,
+          senderId: user.uid,
+          senderName: user.displayName || user.email || 'User',
+          type: 'access_request',
+          resourceId: resource.id,
+          resourceTitle: resource.title,
+          read: false,
+          createdAt: serverTimestamp()
+        });
+      } catch (e) {
+        console.error('Failed to create access request notification:', e);
+      }
 
       setPurchaseRequestSent(true);
-      toast.success("Purchase request sent to admin. You will get access once approved.");
+      setHasPendingRequest(true);
+      toast.success("Request sent. After you complete payment and the creator approves, this resource will unlock for your account.");
     } catch (error) {
       console.error(error);
       toast.error("Failed to send purchase request. Please try again.");
     } finally {
       setPurchaseRequestLoading(false);
-    }
-  };
-
-  const handleApproveAccess = async () => {
-    if (!resource || !user || !pendingApprovalUserId) return;
-    if (!isAdminEmail(user.email)) {
-      toast.error("Only admins can approve access");
-      return;
-    }
-    if (approvalLoading) return;
-
-    setApprovalLoading(true);
-    try {
-      await updateDoc(doc(db, 'community_resources', resource.id), {
-        purchasers: arrayUnion(pendingApprovalUserId)
-      });
-
-      if (pendingRequestId) {
-        await updateDoc(doc(db, 'resource_access_requests', pendingRequestId), {
-          status: 'approved',
-          approvedAt: serverTimestamp(),
-          approvedBy: user.uid
-        });
-      }
-
-      setResource(prev =>
-        prev
-          ? {
-              ...prev,
-              purchasers: Array.from(
-                new Set([...(prev.purchasers || []), pendingApprovalUserId])
-              )
-            }
-          : prev
-      );
-
-      toast.success("Access approved for buyer");
-      setPendingApprovalUserId(null);
-      setPendingRequestId(null);
-      navigate(`/community/resource/${resource.id}`);
-    } catch (error) {
-      console.error(error);
-      toast.error("Failed to approve access");
-    } finally {
-      setApprovalLoading(false);
     }
   };
 
@@ -533,19 +660,24 @@ const ResourceDetails = () => {
 
         {resource?.isPaid ? (
           hasAccess ? (
-            resource.link ? (
+            protectedLink ? (
               <a 
-                  href={resource.link} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 w-full py-3 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl transition-all shadow-lg shadow-slate-900/20 mb-2 group text-sm"
+                href={protectedLink} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 w-full py-3 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl transition-all shadow-lg shadow-slate-900/20 mb-2 group text-sm"
               >
-                  Get Access <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                Get Access <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </a>
             ) : (
-              <button disabled className="w-full py-3 bg-slate-100 text-slate-400 font-bold rounded-xl cursor-not-allowed text-sm">
-                  Link Unavailable
-              </button>
+              <>
+                <button disabled className="w-full py-3 bg-slate-100 text-slate-400 font-bold rounded-xl cursor-not-allowed text-sm">
+                  Access Approved
+                </button>
+                <p className="text-[10px] text-center text-slate-400 font-medium mt-2">
+                  Access approved. The creator has not provided an external access link yet. You can still download files or contact the creator.
+                </p>
+              </>
             )
           ) : (
             <button
@@ -560,7 +692,7 @@ const ResourceDetails = () => {
                 ? "Request Sent"
                 : purchaseRequestLoading
                 ? "Sending Request..."
-                : "Buy / Request Access"}
+                : "Unlock Resource"}
             </button>
           )
         ) : (
@@ -580,7 +712,7 @@ const ResourceDetails = () => {
           )
         )}
         <p className="text-[10px] text-center text-slate-400 font-medium">
-          For paid resources, you pay the creator directly. TopEdge takes 0% platform fee.
+          For paid resources, click Unlock Resource to send an email to you and the creator. After you complete payment and they approve from the email, the resource unlocks for your account. TopEdge takes 0% platform fee.
         </p>
     </div>
   );
@@ -908,26 +1040,6 @@ const ResourceDetails = () => {
                 </div>
              </div>
         </div>
-
-        {pendingApprovalUserId && isAdminEmail(user?.email) && (
-          <div className="container mx-auto px-4 sm:px-6 max-w-6xl mt-4">
-            <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-              <div>
-                <p className="text-sm font-bold text-emerald-800">Approve resource access</p>
-                <p className="text-xs text-emerald-700">
-                  You opened this page from an approval link. Confirm to grant access to this resource for user ID {pendingApprovalUserId}.
-                </p>
-              </div>
-              <button
-                onClick={handleApproveAccess}
-                disabled={approvalLoading}
-                className="px-4 py-2 bg-emerald-600 text-white text-xs font-bold rounded-xl hover:bg-emerald-700 disabled:opacity-60"
-              >
-                {approvalLoading ? 'Approving...' : 'Approve Access'}
-              </button>
-            </div>
-          </div>
-        )}
 
         {/* Main Grid */}
         <div className="container mx-auto px-4 sm:px-6 max-w-6xl pt-6 lg:pt-8 pb-14 lg:pb-20 relative z-10">

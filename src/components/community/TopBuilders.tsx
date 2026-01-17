@@ -22,7 +22,9 @@ export default function TopBuilders() {
   useEffect(() => {
     const run = async () => {
       const pSnap = await getDocs(query(collection(db, 'public_profiles'), orderBy('createdAt', 'desc')));
-      const profiles = pSnap.docs.map(d => ({ id: d.id, ...(d.data() as any) })) as Profile[];
+      const profiles = pSnap.docs
+        .map(d => ({ id: d.id, ...(d.data() as any) }) as Profile)
+        .filter(p => !!p.fullName);
 
       const rSnap = await getDocs(query(collection(db, 'community_resources'), orderBy('createdAt', 'desc')));
       const byUser: Record<string, { resources: { userId: string; upvotes: number }[] }> = {};

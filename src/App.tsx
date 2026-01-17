@@ -43,6 +43,7 @@ const Settings = React.lazy(() => import('./pages/community/Settings'));
 const Discord = React.lazy(() => import('./pages/community/Discord'));
 const CreatorDashboard = React.lazy(() => import('./pages/community/CreatorDashboard'));
 const RequestBoard = React.lazy(() => import('./pages/community/RequestBoard'));
+const ApproveAccess = React.lazy(() => import('./pages/community/ApproveAccess'));
 
 // ScrollToTop component to handle smooth scrolling
 const ScrollToTop = () => {
@@ -170,6 +171,7 @@ const App: React.FC = () => {
                   <Route path="/community/admin/announcements" element={<AdminAnnouncements />} />
                   <Route path="/community/settings" element={<Settings />} />
                   <Route path="/community/discord" element={<Discord />} />
+                  <Route path="/community/approve-access" element={<ApproveAccess />} />
                   <Route 
                     path="/community/dashboard" 
                     element={

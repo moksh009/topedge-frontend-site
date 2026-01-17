@@ -55,7 +55,9 @@ const CommunityHome = () => {
       try {
         const qp = query(collection(db, 'public_profiles'), orderBy('createdAt', 'desc'), limit(3));
         const rp = await getDocs(qp);
-        setProfiles(rp.docs.map(d => ({ id: d.id, ...d.data() })));
+        const profileDocs = rp.docs.map(d => ({ id: d.id, ...d.data() }));
+        const completedProfiles = profileDocs.filter((p: any) => !!p.fullName);
+        setProfiles(completedProfiles);
       } catch (e) { console.error(e) }
 
       try {
