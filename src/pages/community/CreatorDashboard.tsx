@@ -17,7 +17,7 @@ import {
   getDoc,
   arrayUnion,
 } from 'firebase/firestore';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   BarChart3, Eye, ThumbsUp, FolderPlus, Trash2, ArrowRight, 
   TrendingUp, Trophy, Edit3, DollarSign, Zap 
@@ -53,6 +53,8 @@ const CreatorDashboard = () => {
   const [requests, setRequests] = useState<RequestItem[]>([]);
   const [deletingReqId, setDeletingReqId] = useState<string | null>(null);
   const [requestActionLoadingId, setRequestActionLoadingId] = useState<string | null>(null);
+  const [deleteResourceId, setDeleteResourceId] = useState<string | null>(null);
+  const [deleteRequestId, setDeleteRequestId] = useState<string | null>(null);
 
   useEffect(() => {
     if (loading) return;
@@ -341,7 +343,6 @@ const CreatorDashboard = () => {
   }, [items]);
 
   const handleDelete = async (id: string) => {
-    if (!window.confirm('Are you sure? This cannot be undone.')) return;
     try {
       setDeletingId(id);
       await deleteDoc(doc(db, 'community_resources', id));
@@ -349,10 +350,11 @@ const CreatorDashboard = () => {
       console.error(e);
     } finally {
       setDeletingId(null);
+      setDeleteResourceId(null);
     }
   };
+
   const handleDeleteRequest = async (id: string) => {
-    if (!window.confirm('Delete this request?')) return;
     try {
       setDeletingReqId(id);
       await deleteDoc(doc(db, 'community_requests', id));
@@ -360,6 +362,7 @@ const CreatorDashboard = () => {
       console.error(e);
     } finally {
       setDeletingReqId(null);
+      setDeleteRequestId(null);
     }
   };
 
@@ -593,7 +596,7 @@ const CreatorDashboard = () => {
                                                 <Edit3 className="w-4 h-4" />
                                             </Link>
                                             <button 
-                                                onClick={() => handleDelete(item.id)}
+                                                onClick={() => setDeleteResourceId(item.id)}
                                                 disabled={deletingId === item.id}
                                                 className="p-2 rounded-lg text-slate-400 hover:text-red-600 hover:bg-white border border-transparent hover:border-red-100 transition-all"
                                                 title="Delete"
@@ -634,7 +637,7 @@ const CreatorDashboard = () => {
                         </div>
                       </div>
                       <button
-                        onClick={() => handleDeleteRequest(r.id)}
+                        onClick={() => setDeleteRequestId(r.id)}
                         disabled={deletingReqId === r.id}
                         className="inline-flex items-center gap-1 px-3 py-2 text-xs font-bold rounded-lg bg-red-50 border border-red-100 text-red-600 hover:bg-red-100 disabled:opacity-50"
                         title="Delete Request"
@@ -680,6 +683,112 @@ const CreatorDashboard = () => {
 
         </div>
       </div>
+      <AnimatePresence>
+        {deleteResourceId && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
+              onClick={() => deletingId ? null : setDeleteResourceId(null)}
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl p-6 z-10"
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-xl bg-red-50 flex items-center justify-center text-red-600">
+                  <Trash2 className="w-5 h-5" />
+                </div>
+                <div>
+                  <h2 className="text-lg font-bold text-slate-900">Delete resource?</h2>
+                  <p className="text-sm text-slate-500">
+                    This will remove the resource from the marketplace and your dashboard.
+                  </p>
+                </div>
+              </div>
+              <p className="text-xs text-rose-500 font-medium mb-6">
+                This action cannot be undone.
+              </p>
+              <div className="flex justify-end gap-3">
+                <button
+                  type="button"
+                  onClick={() => setDeleteResourceId(null)}
+                  disabled={!!deletingId}
+                  className="px-4 py-2.5 rounded-xl border border-slate-200 text-sm font-bold text-slate-700 hover:bg-slate-50 disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={() => deleteResourceId && handleDelete(deleteResourceId)}
+                  disabled={!!deletingId}
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-rose-600 text-sm font-bold text-white hover:bg-rose-700 shadow-sm disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  {deletingId ? <div className="w-4 h-4 border-2 border-white/50 border-t-white rounded-full animate-spin" /> : <Trash2 className="w-4 h-4" />}
+                  Delete
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+      <AnimatePresence>
+        {deleteRequestId && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
+              onClick={() => deletingReqId ? null : setDeleteRequestId(null)}
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl p-6 z-10"
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-xl bg-red-50 flex items-center justify-center text-red-600">
+                  <Trash2 className="w-5 h-5" />
+                </div>
+                <div>
+                  <h2 className="text-lg font-bold text-slate-900">Delete access request?</h2>
+                  <p className="text-sm text-slate-500">
+                    This will remove the request from your dashboard.
+                  </p>
+                </div>
+              </div>
+              <p className="text-xs text-rose-500 font-medium mb-6">
+                This action cannot be undone.
+              </p>
+              <div className="flex justify-end gap-3">
+                <button
+                  type="button"
+                  onClick={() => setDeleteRequestId(null)}
+                  disabled={!!deletingReqId}
+                  className="px-4 py-2.5 rounded-xl border border-slate-200 text-sm font-bold text-slate-700 hover:bg-slate-50 disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={() => deleteRequestId && handleDeleteRequest(deleteRequestId)}
+                  disabled={!!deletingReqId}
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-rose-600 text-sm font-bold text-white hover:bg-rose-700 shadow-sm disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  {deletingReqId ? <div className="w-4 h-4 border-2 border-white/50 border-t-white rounded-full animate-spin" /> : <Trash2 className="w-4 h-4" />}
+                  Delete
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </CommunityLayout>
   );
 };

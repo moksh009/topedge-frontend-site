@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import CommunityLayout from '@/components/community/layout/CommunityLayout';
 import CommunitySEO from '@/components/community/CommunitySEO';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { doc, getDoc, collection, query, where, getDocs, orderBy, deleteDoc } from 'firebase/firestore';
 import { db } from '@/services/firebase';
 import { UserProfile } from '@/types/user';
 import { 
   ArrowLeft, Loader2, Edit2, Globe, Mail, MapPin, Briefcase, 
   User, Building2, Brain, Phone, Calendar, 
-  Linkedin, Github, Zap, CheckCircle2, Youtube, Instagram
+  Linkedin, Github, Zap, CheckCircle2, Youtube, Instagram, Trash2
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { cn } from '@/lib/utils';
@@ -93,10 +93,12 @@ const ProfileDetails = () => {
   const isOwner = user?.uid === profile.uid;
   const isAdmin = isAdminEmail(user?.email);
   const canEdit = isOwner || isAdmin;
+  const [showDeleteProfile, setShowDeleteProfile] = useState(false);
+  const [deletingProfile, setDeletingProfile] = useState(false);
 
   const handleDeleteProfile = async () => {
-    if (!id || !user || !isAdmin) return;
-    if (!window.confirm('Are you sure you want to delete this profile?')) return;
+    if (!id || !user || !isAdmin || deletingProfile) return;
+    setDeletingProfile(true);
     try {
       await deleteDoc(doc(db, 'public_profiles', id));
       toast.success('Profile deleted');
@@ -104,6 +106,9 @@ const ProfileDetails = () => {
     } catch (error) {
       console.error(error);
       toast.error('Failed to delete profile');
+    } finally {
+      setDeletingProfile(false);
+      setShowDeleteProfile(false);
     }
   };
 
@@ -147,7 +152,7 @@ const ProfileDetails = () => {
               {isAdmin && (
                 <button
                   type="button"
-                  onClick={handleDeleteProfile}
+                  onClick={() => setShowDeleteProfile(true)}
                   className="px-4 py-2 rounded-full bg-red-50 border border-red-200 text-red-600 text-xs font-bold hover:bg-red-100 transition-colors"
                 >
                   Delete Profile
@@ -428,6 +433,59 @@ const ProfileDetails = () => {
           </motion.div>
         </div>
       </div>
+      <AnimatePresence>
+        {showDeleteProfile && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
+              onClick={() => !deletingProfile && setShowDeleteProfile(false)}
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl p-6 z-10"
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-xl bg-rose-50 flex items-center justify-center text-rose-600">
+                  <Trash2 className="w-5 h-5" />
+                </div>
+                <div>
+                  <h2 className="text-lg font-bold text-slate-900">Delete profile?</h2>
+                  <p className="text-sm text-slate-500">
+                    This will remove this builder from the public directory.
+                  </p>
+                </div>
+              </div>
+              <p className="text-xs text-rose-500 font-medium mb-6">
+                This action cannot be undone.
+              </p>
+              <div className="flex justify-end gap-3">
+                <button
+                  type="button"
+                  onClick={() => setShowDeleteProfile(false)}
+                  disabled={deletingProfile}
+                  className="px-4 py-2.5 rounded-xl border border-slate-200 text-sm font-bold text-slate-700 hover:bg-slate-50 disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={handleDeleteProfile}
+                  disabled={deletingProfile}
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-rose-600 text-sm font-bold text-white hover:bg-rose-700 shadow-sm disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  {deletingProfile ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
+                  Delete
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </CommunityLayout>
   );
 };

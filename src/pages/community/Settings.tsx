@@ -6,7 +6,7 @@ import { doc, setDoc, collection, query, where, getDocs, deleteDoc } from 'fireb
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { useNavigate } from 'react-router-dom';
 import { Loader2, User, Mail, Shield, Save, LogOut, Trash2, Camera, KeyRound, BellRing } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import toast from 'react-hot-toast';
 import { useAuth } from '@/contexts/AuthContext';
 
@@ -15,9 +15,19 @@ const Settings = () => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [displayName, setDisplayName] = useState('');
+  const [uploadingPhoto, setUploadingPhoto] = useState(false);
+  const [isCropOpen, setIsCropOpen] = useState(false);
+  const [cropImageSrc, setCropImageSrc] = useState<string | null>(null);
+  const [cropZoom, setCropZoom] = useState(1);
+  const [cropOffset, setCropOffset] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [deleting, setDeleting] = useState(false);
   const navigate = useNavigate();
   const { refreshProfile, userProfile } = useAuth();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const cropImageRef = useRef<HTMLImageElement | null>(null);
+  const dragStartRef = useRef<{ x: number; y: number } | null>(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -32,7 +42,35 @@ const Settings = () => {
     return () => unsubscribe();
   }, [navigate]);
 
-  const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const uploadCroppedPhoto = async (blob: Blob) => {
+    if (!user) return;
+    setUploadingPhoto(true);
+    const toastId = toast.loading("Uploading photo...");
+    try {
+      const storageRef = ref(storage, `profile_photos/${user.uid}`);
+      await uploadBytes(storageRef, blob);
+      const photoURL = await getDownloadURL(storageRef);
+      await updateProfile(user, { photoURL });
+      const userDocRef = doc(db, 'public_profiles', user.uid);
+      await setDoc(userDocRef, { photoURL }, { merge: true });
+      await refreshProfile();
+      setUser({ ...user, photoURL });
+      toast.success("Profile photo updated!", { id: toastId });
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to upload photo", { id: toastId });
+    } finally {
+      setUploadingPhoto(false);
+      setIsCropOpen(false);
+      setCropImageSrc(null);
+      setCropZoom(1);
+      setCropOffset({ x: 0, y: 0 });
+      setIsDragging(false);
+      dragStartRef.current = null;
+    }
+  };
+
+  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file || !user) return;
 
@@ -41,30 +79,63 @@ const Settings = () => {
       return;
     }
 
-    const toastId = toast.loading("Uploading photo...");
-    try {
-      const storageRef = ref(storage, `profile_photos/${user.uid}`);
-      await uploadBytes(storageRef, file);
-      const photoURL = await getDownloadURL(storageRef);
+    const src = URL.createObjectURL(file);
+    setCropImageSrc(src);
+    setIsCropOpen(true);
+    setCropZoom(1);
+    setCropOffset({ x: 0, y: 0 });
+    if (e.target) e.target.value = '';
+  };
 
-      // Update Auth Profile
-      await updateProfile(user, { photoURL });
+  const handleCropPointerDown = (e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsDragging(true);
+    const point = 'touches' in e ? e.touches[0] : (e as React.MouseEvent);
+    dragStartRef.current = { x: point.clientX, y: point.clientY };
+  };
 
-      // Update Firestore Profile
-      const userDocRef = doc(db, 'public_profiles', user.uid);
-      await setDoc(userDocRef, { photoURL }, { merge: true });
+  const handleCropPointerMove = (e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>) => {
+    if (!isDragging || !dragStartRef.current) return;
+    const point = 'touches' in e ? e.touches[0] : (e as React.MouseEvent);
+    const dx = point.clientX - dragStartRef.current.x;
+    const dy = point.clientY - dragStartRef.current.y;
+    dragStartRef.current = { x: point.clientX, y: point.clientY };
+    setCropOffset(prev => ({ x: prev.x + dx, y: prev.y + dy }));
+  };
 
-      // Refresh Context
-      await refreshProfile();
-      
-      // Update local state
-      setUser({ ...user, photoURL });
+  const handleCropPointerUp = () => {
+    setIsDragging(false);
+    dragStartRef.current = null;
+  };
 
-      toast.success("Profile photo updated!", { id: toastId });
-    } catch (error) {
-      console.error(error);
-      toast.error("Failed to upload photo", { id: toastId });
-    }
+  const handleCropSave = () => {
+    if (!cropImageSrc || !user) return;
+    const img = cropImageRef.current;
+    if (!img) return;
+    const canvasSize = 288;
+    const canvas = document.createElement('canvas');
+    canvas.width = canvasSize;
+    canvas.height = canvasSize;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    const naturalWidth = img.naturalWidth;
+    const naturalHeight = img.naturalHeight;
+    if (!naturalWidth || !naturalHeight) return;
+    const baseScale = Math.max(canvasSize / naturalWidth, canvasSize / naturalHeight);
+    const scale = baseScale * cropZoom;
+    ctx.clearRect(0, 0, canvasSize, canvasSize);
+    ctx.save();
+    ctx.translate(canvasSize / 2 + cropOffset.x, canvasSize / 2 + cropOffset.y);
+    ctx.scale(scale, scale);
+    ctx.drawImage(img, -naturalWidth / 2, -naturalHeight / 2);
+    ctx.restore();
+    canvas.toBlob(blob => {
+      if (!blob) {
+        toast.error("Failed to process image");
+        return;
+      }
+      uploadCroppedPhoto(blob);
+    }, 'image/jpeg', 0.9);
   };
 
   const handleUpdateProfile = async () => {
@@ -109,15 +180,9 @@ const Settings = () => {
   };
 
   const handleDeleteAccount = async () => {
-    if (!user) return;
-
-    const confirmed = window.confirm(
-      "Are you sure you want to delete your account? This will permanently remove your account and your community resources. This action cannot be undone."
-    );
-    if (!confirmed) return;
-
+    if (!user || deleting) return;
     const toastId = toast.loading("Deleting your account...");
-
+    setDeleting(true);
     try {
       const resourcesQ = query(
         collection(db, 'community_resources'),
@@ -155,6 +220,9 @@ const Settings = () => {
     } catch (error) {
       console.error('Error during account deletion:', error);
       toast.error("Something went wrong while deleting your account.", { id: toastId });
+    } finally {
+      setDeleting(false);
+      setShowDeleteConfirm(false);
     }
   };
 
@@ -358,8 +426,9 @@ const Settings = () => {
                   Once you delete your account, there is no going back. Please be certain.
                </p>
                <button
-                 onClick={handleDeleteAccount}
-                 className="px-6 py-3 bg-white border border-rose-200 text-rose-600 font-bold rounded-xl hover:bg-rose-50 hover:border-rose-300 transition-all flex items-center gap-2 shadow-sm"
+                onClick={() => setShowDeleteConfirm(true)}
+                disabled={deleting}
+                className="px-6 py-3 bg-white border border-rose-200 text-rose-600 font-bold rounded-xl hover:bg-rose-50 hover:border-rose-300 transition-all flex items-center gap-2 shadow-sm disabled:opacity-60 disabled:cursor-not-allowed"
                >
                   <Trash2 className="w-4 h-4" />
                   Delete Account
@@ -369,6 +438,137 @@ const Settings = () => {
           </motion.div>
         </div>
       </div>
+      <AnimatePresence>
+        {isCropOpen && cropImageSrc && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
+              onClick={() => !uploadingPhoto && setIsCropOpen(false)}
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl p-6 z-10"
+            >
+              <h2 className="text-lg font-bold text-slate-900 mb-2">Adjust profile photo</h2>
+              <p className="text-sm text-slate-500 mb-4">
+                Drag to reposition and use the slider to zoom.
+              </p>
+              <div
+                className="mx-auto mb-4 w-72 h-72 rounded-2xl bg-slate-900 overflow-hidden relative touch-none"
+                onMouseDown={handleCropPointerDown}
+                onMouseMove={handleCropPointerMove}
+                onMouseUp={handleCropPointerUp}
+                onMouseLeave={handleCropPointerUp}
+                onTouchStart={handleCropPointerDown}
+                onTouchMove={handleCropPointerMove}
+                onTouchEnd={handleCropPointerUp}
+              >
+                {cropImageSrc && (
+                  <img
+                    ref={cropImageRef}
+                    src={cropImageSrc}
+                    alt="Crop"
+                    className="absolute inset-0 m-auto select-none"
+                    style={{
+                      transform: `translate3d(${cropOffset.x}px, ${cropOffset.y}px, 0) scale(${cropZoom})`,
+                      transformOrigin: 'center center'
+                    }}
+                    draggable={false}
+                  />
+                )}
+              </div>
+              <div className="mb-6">
+                <input
+                  type="range"
+                  min={1}
+                  max={3}
+                  step={0.05}
+                  value={cropZoom}
+                  onChange={e => setCropZoom(parseFloat(e.target.value))}
+                  className="w-full accent-slate-900"
+                />
+              </div>
+              <div className="flex justify-end gap-3">
+                <button
+                  type="button"
+                  onClick={() => setIsCropOpen(false)}
+                  disabled={uploadingPhoto}
+                  className="px-4 py-2.5 rounded-xl border border-slate-200 text-sm font-bold text-slate-700 hover:bg-slate-50 disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={handleCropSave}
+                  disabled={uploadingPhoto}
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-900 text-sm font-bold text-white hover:bg-slate-800 shadow-sm disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  {uploadingPhoto ? <Loader2 className="w-4 h-4 animate-spin" /> : <Camera className="w-4 h-4" />}
+                  Save
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+      <AnimatePresence>
+        {showDeleteConfirm && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
+              onClick={() => !deleting && setShowDeleteConfirm(false)}
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl p-6 z-10"
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-xl bg-rose-50 flex items-center justify-center text-rose-600">
+                  <Trash2 className="w-5 h-5" />
+                </div>
+                <div>
+                  <h2 className="text-lg font-bold text-slate-900">Delete account?</h2>
+                  <p className="text-sm text-slate-500">
+                    This will permanently remove your account and your community resources.
+                  </p>
+                </div>
+              </div>
+              <p className="text-xs text-rose-500 font-medium mb-6">
+                This action cannot be undone.
+              </p>
+              <div className="flex justify-end gap-3">
+                <button
+                  type="button"
+                  onClick={() => setShowDeleteConfirm(false)}
+                  disabled={deleting}
+                  className="px-4 py-2.5 rounded-xl border border-slate-200 text-sm font-bold text-slate-700 hover:bg-slate-50 disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={handleDeleteAccount}
+                  disabled={deleting}
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-rose-600 text-sm font-bold text-white hover:bg-rose-700 shadow-sm disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  {deleting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
+                  Delete
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </CommunityLayout>
   );
 };

@@ -4,7 +4,7 @@ import CommunitySEO from '@/components/community/CommunitySEO';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Plus, Search, ArrowRight, Zap, Sparkles,
-  Workflow, Terminal, Box, Filter, Play, CheckCircle2, Star, ArrowBigUp
+  Workflow, Terminal, Box, Filter, Play, CheckCircle2, Star, ArrowBigUp, User
 } from 'lucide-react';
 import { collection, query, getDocs, orderBy, doc, updateDoc, increment, arrayUnion, arrayRemove } from 'firebase/firestore';
 import { db } from '@/services/firebase';
@@ -314,6 +314,7 @@ const AutomationHub = () => {
   const { user } = useAuth();
   const [searchTerm, setSearchTerm] = useState('');
   const [filter, setFilter] = useState<'all' | 'free' | 'paid' | 'collab'>('all');
+  const [showProfilePrompt, setShowProfilePrompt] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -351,9 +352,7 @@ const AutomationHub = () => {
       if (profileDoc.exists()) {
         navigate('/community/submit-resource');
       } else {
-        if (window.confirm("You need a public profile to post a resource. Create one now?")) {
-            navigate('/community/promote-profile');
-        }
+        setShowProfilePrompt(true);
       }
     } catch (error) {
       console.error("Error checking profile:", error);
@@ -557,6 +556,56 @@ const AutomationHub = () => {
           )}
         </div>
       </div>
+      <AnimatePresence>
+        {showProfilePrompt && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
+              onClick={() => setShowProfilePrompt(false)}
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl p-6 z-10"
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-xl bg-slate-900/5 flex items-center justify-center text-slate-900">
+                  <User className="w-5 h-5" />
+                </div>
+                <div>
+                  <h2 className="text-lg font-bold text-slate-900">Create your public profile</h2>
+                  <p className="text-sm text-slate-500">
+                    You need a public profile to post a resource in the community.
+                  </p>
+                </div>
+              </div>
+              <div className="flex justify-end gap-3 mt-4">
+                <button
+                  type="button"
+                  onClick={() => setShowProfilePrompt(false)}
+                  className="px-4 py-2.5 rounded-xl border border-slate-200 text-sm font-bold text-slate-700 hover:bg-slate-50"
+                >
+                  Not now
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowProfilePrompt(false);
+                    navigate('/community/promote-profile');
+                  }}
+                  className="px-4 py-2.5 rounded-xl bg-slate-900 text-sm font-bold text-white hover:bg-slate-800"
+                >
+                  Create profile
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </CommunityLayout>
   );
 };

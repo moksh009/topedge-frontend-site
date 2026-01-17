@@ -42,6 +42,8 @@ export default function RequestBoard() {
   const [filter, setFilter] = useState<'all' | 'urgent' | 'high_budget'>('all');
   const [submitting, setSubmitting] = useState(false);
   const [contactItem, setContactItem] = useState<RequestItem | null>(null);
+  const [showProfilePrompt, setShowProfilePrompt] = useState(false);
+  const [deleteRequestItem, setDeleteRequestItem] = useState<RequestItem | null>(null);
   
   // Edit Mode State
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -77,13 +79,10 @@ export default function RequestBoard() {
       navigate('/community/login');
       return;
     }
-    // Check if user has a profile doc
     try {
         const profileDoc = await getDoc(doc(db, 'public_profiles', user.uid));
         if (!profileDoc.exists()) {
-            if (window.confirm("You need a public profile to post requests. Create one now?")) {
-                navigate('/community/promote-profile');
-            }
+            setShowProfilePrompt(true);
             return;
         }
         // Pre-fill email from profile if available
@@ -192,8 +191,6 @@ export default function RequestBoard() {
       toast.error("You do not have permission to delete this request");
       return;
     }
-
-    if (!window.confirm('Delete this request? This action cannot be undone.')) return;
 
     try {
       await deleteDoc(doc(db, 'community_requests', item.id));
@@ -355,7 +352,7 @@ export default function RequestBoard() {
                                     <Edit3 className="w-4 h-4" />
                                 </button>
                                 <button
-                                    onClick={() => handleDeleteRequest(r)}
+                                    onClick={() => setDeleteRequestItem(r)}
                                     className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-all"
                                     title="Delete Request"
                                 >
@@ -432,8 +429,6 @@ export default function RequestBoard() {
           )}
         </div>
 
-        {/* ... (Existing Modals: Submit/Edit & Contact) ... */}
-        {/* Keeping the modals exactly as they were in your previous code snippet to save space */}
         <AnimatePresence>
           {open && (
             <div className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-4 sm:p-6">
@@ -642,6 +637,112 @@ export default function RequestBoard() {
                     </motion.div>
                 </div>
             )}
+        </AnimatePresence>
+        <AnimatePresence>
+          {showProfilePrompt && (
+            <div className="fixed inset-0 z-[110] flex items-center justify-center px-4">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
+                onClick={() => setShowProfilePrompt(false)}
+              />
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl p-6 z-10"
+              >
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-xl bg-slate-900/5 flex items-center justify-center text-slate-900">
+                    <User className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h2 className="text-lg font-bold text-slate-900">Create your public profile</h2>
+                    <p className="text-sm text-slate-500">
+                      You need a public profile to post requests on the board.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex justify-end gap-3 mt-4">
+                  <button
+                    type="button"
+                    onClick={() => setShowProfilePrompt(false)}
+                    className="px-4 py-2.5 rounded-xl border border-slate-200 text-sm font-bold text-slate-700 hover:bg-slate-50"
+                  >
+                    Not now
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowProfilePrompt(false);
+                      navigate('/community/promote-profile');
+                    }}
+                    className="px-4 py-2.5 rounded-xl bg-slate-900 text-sm font-bold text-white hover:bg-slate-800"
+                  >
+                    Create profile
+                  </button>
+                </div>
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>
+        <AnimatePresence>
+          {deleteRequestItem && (
+            <div className="fixed inset-0 z-[110] flex items-center justify-center px-4">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
+                onClick={() => deleteRequestItem && setDeleteRequestItem(null)}
+              />
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl p-6 z-10"
+              >
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-xl bg-rose-50 flex items-center justify-center text-rose-600">
+                    <Trash2 className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h2 className="text-lg font-bold text-slate-900">Delete request?</h2>
+                    <p className="text-sm text-slate-500">
+                      This will remove the request from the board for everyone.
+                    </p>
+                  </div>
+                </div>
+                <p className="text-xs text-rose-500 font-medium mb-6">
+                  This action cannot be undone.
+                </p>
+                <div className="flex justify-end gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setDeleteRequestItem(null)}
+                    className="px-4 py-2.5 rounded-xl border border-slate-200 text-sm font-bold text-slate-700 hover:bg-slate-50"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (deleteRequestItem) {
+                        handleDeleteRequest(deleteRequestItem);
+                        setDeleteRequestItem(null);
+                      }
+                    }}
+                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-rose-600 text-sm font-bold text-white hover:bg-rose-700 shadow-sm"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                    Delete
+                  </button>
+                </div>
+              </motion.div>
+            </div>
+          )}
         </AnimatePresence>
       </div>
     </CommunityLayout>

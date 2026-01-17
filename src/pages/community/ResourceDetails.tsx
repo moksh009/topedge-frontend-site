@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import CommunityLayout from '@/components/community/layout/CommunityLayout';
 import CommunitySEO from '@/components/community/CommunitySEO';
@@ -67,6 +67,15 @@ const ResourceDetails = () => {
   const [authorProfile, setAuthorProfile] = useState<any>(null);
   const [protectedLink, setProtectedLink] = useState<string | null>(null);
   const [hasApprovedAccess, setHasApprovedAccess] = useState(false);
+  const [isImageCropOpen, setIsImageCropOpen] = useState(false);
+  const [cropImageSrc, setCropImageSrc] = useState<string | null>(null);
+  const [cropZoom, setCropZoom] = useState(1);
+  const [cropOffset, setCropOffset] = useState({ x: 0, y: 0 });
+  const [isCroppingDrag, setIsCroppingDrag] = useState(false);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const cropImageRef = useRef<HTMLImageElement | null>(null);
+  const cropDragStartRef = useRef<{ x: number; y: number } | null>(null);
 
   // Edit Form State
   const [editForm, setEditForm] = useState({
@@ -302,22 +311,12 @@ const ResourceDetails = () => {
     }
   };
 
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    if (!file.type.startsWith('image/')) {
-      toast.error("Please upload an image file");
-      return;
-    }
-    if (file.size > 10 * 1024 * 1024) {
-      toast.error("Image is too large (Max 10MB)");
-      return;
-    }
+  const uploadCroppedImage = async (blob: Blob) => {
     setUploadingImage(true);
     const toastId = toast.loading("Uploading image...");
     try {
       const data = new FormData();
-      data.append("file", file);
+      data.append("file", blob, "cover.jpg");
       data.append("upload_preset", UPLOAD_PRESET as string);
       const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
         method: "POST",
@@ -335,7 +334,83 @@ const ResourceDetails = () => {
       toast.error("Failed to upload image", { id: toastId });
     } finally {
       setUploadingImage(false);
+      setIsImageCropOpen(false);
+      setCropImageSrc(null);
+      setCropZoom(1);
+      setCropOffset({ x: 0, y: 0 });
+      setIsCroppingDrag(false);
+      cropDragStartRef.current = null;
     }
+  };
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!file.type.startsWith('image/')) {
+      toast.error("Please upload an image file");
+      return;
+    }
+    if (file.size > 10 * 1024 * 1024) {
+      toast.error("Image is too large (Max 10MB)");
+      return;
+    }
+    const src = URL.createObjectURL(file);
+    setCropImageSrc(src);
+    setIsImageCropOpen(true);
+    setCropZoom(1);
+    setCropOffset({ x: 0, y: 0 });
+    if (e.target) e.target.value = '';
+  };
+
+  const handleImageCropPointerDown = (e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsCroppingDrag(true);
+    const point = 'touches' in e ? e.touches[0] : (e as React.MouseEvent);
+    cropDragStartRef.current = { x: point.clientX, y: point.clientY };
+  };
+
+  const handleImageCropPointerMove = (e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>) => {
+    if (!isCroppingDrag || !cropDragStartRef.current) return;
+    const point = 'touches' in e ? e.touches[0] : (e as React.MouseEvent);
+    const dx = point.clientX - cropDragStartRef.current.x;
+    const dy = point.clientY - cropDragStartRef.current.y;
+    cropDragStartRef.current = { x: point.clientX, y: point.clientY };
+    setCropOffset(prev => ({ x: prev.x + dx, y: prev.y + dy }));
+  };
+
+  const handleImageCropPointerUp = () => {
+    setIsCroppingDrag(false);
+    cropDragStartRef.current = null;
+  };
+
+  const handleImageCropSave = () => {
+    if (!cropImageSrc) return;
+    const img = cropImageRef.current;
+    if (!img) return;
+    const canvasSize = 288;
+    const canvas = document.createElement('canvas');
+    canvas.width = canvasSize;
+    canvas.height = canvasSize;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    const naturalWidth = img.naturalWidth;
+    const naturalHeight = img.naturalHeight;
+    if (!naturalWidth || !naturalHeight) return;
+    const baseScale = Math.max(canvasSize / naturalWidth, canvasSize / naturalHeight);
+    const scale = baseScale * cropZoom;
+    ctx.clearRect(0, 0, canvasSize, canvasSize);
+    ctx.save();
+    ctx.translate(canvasSize / 2 + cropOffset.x, canvasSize / 2 + cropOffset.y);
+    ctx.scale(scale, scale);
+    ctx.drawImage(img, -naturalWidth / 2, -naturalHeight / 2);
+    ctx.restore();
+    canvas.toBlob(blob => {
+      if (!blob) {
+        toast.error("Failed to process image");
+        return;
+      }
+      uploadCroppedImage(blob);
+    }, 'image/jpeg', 0.9);
   };
 
   const handleAttachmentsUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -452,14 +527,16 @@ const ResourceDetails = () => {
       toast.error("You do not have permission to delete this resource");
       return;
     }
-    if (window.confirm("Are you sure you want to delete this resource?")) {
-      try {
-        await deleteDoc(doc(db, 'community_resources', resource.id));
-        toast.success("Deleted");
-        navigate('/community/automation-hub');
-      } catch (error) {
-        toast.error("Failed to delete");
-      }
+    setDeleting(true);
+    try {
+      await deleteDoc(doc(db, 'community_resources', resource.id));
+      toast.success("Deleted");
+      navigate('/community/automation-hub');
+    } catch (error) {
+      toast.error("Failed to delete");
+    } finally {
+      setDeleting(false);
+      setIsDeleteOpen(false);
     }
   };
 
@@ -854,7 +931,6 @@ const ResourceDetails = () => {
                         initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }}
                         className="relative w-full max-w-4xl bg-white rounded-[2rem] shadow-2xl overflow-hidden max-h-[90vh] flex flex-col"
                     >
-                        {/* Edit Content... (Same as before) */}
                         <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-white sticky top-0 z-10">
                             <h2 className="text-lg font-bold text-slate-900">Edit Resource</h2>
                             <button onClick={() => setIsEditing(false)} className="p-2 rounded-full hover:bg-slate-100 text-slate-500 transition-colors">
@@ -1138,6 +1214,137 @@ const ResourceDetails = () => {
                 </div>
             )}
         </AnimatePresence>
+        <AnimatePresence>
+            {isDeleteOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
+                        onClick={() => !deleting && setIsDeleteOpen(false)}
+                    />
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                        className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl p-6 z-10"
+                    >
+                        <div className="flex items-center gap-3 mb-4">
+                            <div className="w-10 h-10 rounded-xl bg-rose-50 flex items-center justify-center text-rose-600">
+                                <Trash2 className="w-5 h-5" />
+                            </div>
+                            <div>
+                                <h2 className="text-lg font-bold text-slate-900">Delete resource?</h2>
+                                <p className="text-sm text-slate-500">
+                                    This will permanently remove this resource from the community.
+                                </p>
+                            </div>
+                        </div>
+                        <p className="text-xs text-rose-500 font-medium mb-6">
+                            This action cannot be undone.
+                        </p>
+                        <div className="flex justify-end gap-3">
+                            <button
+                                type="button"
+                                onClick={() => setIsDeleteOpen(false)}
+                                disabled={deleting}
+                                className="px-4 py-2.5 rounded-xl border border-slate-200 text-sm font-bold text-slate-700 hover:bg-slate-50 disabled:opacity-60 disabled:cursor-not-allowed"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                type="button"
+                                onClick={handleDelete}
+                                disabled={deleting}
+                                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-rose-600 text-sm font-bold text-white hover:bg-rose-700 shadow-sm disabled:opacity-60 disabled:cursor-not-allowed"
+                            >
+                                {deleting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
+                                Delete
+                            </button>
+                        </div>
+                    </motion.div>
+                </div>
+            )}
+        </AnimatePresence>
+        <AnimatePresence>
+            {isImageCropOpen && cropImageSrc && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
+                        onClick={() => !uploadingImage && setIsImageCropOpen(false)}
+                    />
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                        className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl p-6 z-10"
+                    >
+                        <h2 className="text-lg font-bold text-slate-900 mb-2">Adjust cover image</h2>
+                        <p className="text-sm text-slate-500 mb-4">
+                            Drag to reposition and use the slider to zoom.
+                        </p>
+                        <div
+                            className="mx-auto mb-4 w-72 h-72 rounded-2xl bg-slate-900 overflow-hidden relative touch-none"
+                            onMouseDown={handleImageCropPointerDown}
+                            onMouseMove={handleImageCropPointerMove}
+                            onMouseUp={handleImageCropPointerUp}
+                            onMouseLeave={handleImageCropPointerUp}
+                            onTouchStart={handleImageCropPointerDown}
+                            onTouchMove={handleImageCropPointerMove}
+                            onTouchEnd={handleImageCropPointerUp}
+                        >
+                            {cropImageSrc && (
+                                <img
+                                    ref={cropImageRef}
+                                    src={cropImageSrc}
+                                    alt="Crop"
+                                    className="absolute inset-0 m-auto select-none"
+                                    style={{
+                                        transform: `translate3d(${cropOffset.x}px, ${cropOffset.y}px, 0) scale(${cropZoom})`,
+                                        transformOrigin: 'center center'
+                                    }}
+                                    draggable={false}
+                                />
+                            )}
+                        </div>
+                        <div className="mb-6">
+                            <input
+                                type="range"
+                                min={1}
+                                max={3}
+                                step={0.05}
+                                value={cropZoom}
+                                onChange={e => setCropZoom(parseFloat(e.target.value))}
+                                className="w-full accent-slate-900"
+                            />
+                        </div>
+                        <div className="flex justify-end gap-3">
+                            <button
+                                type="button"
+                                onClick={() => setIsImageCropOpen(false)}
+                                disabled={uploadingImage}
+                                className="px-4 py-2.5 rounded-xl border border-slate-200 text-sm font-bold text-slate-700 hover:bg-slate-50 disabled:opacity-60 disabled:cursor-not-allowed"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                type="button"
+                                onClick={handleImageCropSave}
+                                disabled={uploadingImage}
+                                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-900 text-sm font-bold text-white hover:bg-slate-800 shadow-sm disabled:opacity-60 disabled:cursor-not-allowed"
+                            >
+                                {uploadingImage ? <Loader2 className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />}
+                                Save
+                            </button>
+                        </div>
+                    </motion.div>
+                </div>
+            )}
+        </AnimatePresence>
 
         {/* --- RESOURCE HEADER --- */}
         <div className="bg-white border-b border-slate-200 relative md:sticky md:top-0 z-30 shadow-sm/50 mt-8 md:mt-0">
@@ -1164,8 +1371,9 @@ const ResourceDetails = () => {
                                 <span className="hidden sm:inline">Edit</span>
                             </button>
                             <button
-                                onClick={handleDelete}
-                                className="flex items-center gap-2 px-2.5 sm:px-3 py-1.5 bg-rose-50 text-rose-600 text-xs font-bold uppercase rounded-full hover:bg-rose-100 transition-colors"
+                                onClick={() => setIsDeleteOpen(true)}
+                                disabled={deleting}
+                                className="flex items-center gap-2 px-2.5 sm:px-3 py-1.5 bg-rose-50 text-rose-600 text-xs font-bold uppercase rounded-full hover:bg-rose-100 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
                             >
                                 <Trash2 className="w-3.5 h-3.5" />
                                 <span className="hidden sm:inline">Delete</span>
