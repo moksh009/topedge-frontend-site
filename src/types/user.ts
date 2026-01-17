@@ -37,6 +37,7 @@ export interface Resource {
   whatItDoes: string;
   outcome: string;
   demoVideoUrl?: string;
+  imageUrl?: string;
   isPaid: boolean;
   price?: number;
   toolkit?: string[];

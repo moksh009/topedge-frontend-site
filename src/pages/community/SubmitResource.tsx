@@ -18,6 +18,7 @@ const SubmitResource = () => {
   const [checkingLimit, setCheckingLimit] = useState(true);
   const [needsProfile, setNeedsProfile] = useState(false);
   const [uploadingVideo, setUploadingVideo] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
   const [uploadingAttachment, setUploadingAttachment] = useState(false);
   const [attachments, setAttachments] = useState<Array<{ name: string; url: string; size?: number }>>([]);
   
@@ -30,6 +31,7 @@ const SubmitResource = () => {
     whatItDoes: '', 
     outcome: '', 
     videoUrl: '',
+    imageUrl: '',
     projectUrl: '',
     youtubeUrl: '',
     contactEmail: '',
@@ -118,6 +120,42 @@ const SubmitResource = () => {
     finally { setUploadingVideo(false); }
   };
 
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!file.type.startsWith('image/')) {
+      toast.error("Please upload an image file");
+      return;
+    }
+    if (file.size > 10 * 1024 * 1024) {
+      toast.error("Image is too large (Max 10MB)");
+      return;
+    }
+    try {
+      setUploadingImage(true);
+      const data = new FormData();
+      data.append("file", file);
+      data.append("upload_preset", UPLOAD_PRESET);
+      const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
+        method: "POST",
+        body: data
+      });
+      const result = await response.json();
+      if (result.secure_url) {
+        setFormData(prev => ({ ...prev, imageUrl: result.secure_url }));
+        toast.success("Image uploaded successfully!");
+      } else {
+        throw new Error(result.error?.message || "Upload failed");
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to upload image");
+    } finally {
+      setUploadingImage(false);
+      if (e.target) e.target.value = '';
+    }
+  };
+
   const handleAttachmentsUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
     if (files.length === 0) return;
@@ -166,6 +204,7 @@ const SubmitResource = () => {
         whatItDoes: formData.whatItDoes,
         outcome: formData.outcome,
         videoUrl: formData.youtubeUrl || formData.videoUrl,
+        imageUrl: formData.imageUrl || '',
         link: isPaid ? '' : (formData.projectUrl || ''),
         hasProtectedLink,
         contactEmail: formData.contactEmail || '',
@@ -313,7 +352,7 @@ const SubmitResource = () => {
                         className="w-full px-4 py-3 md:px-5 md:py-4 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-blue-500/20 outline-none font-medium" />
                   </div>
 
-                  {/* Video & Attachments Section */}
+                  {/* Video, Image & Attachments Section */}
                   <div className="pt-2 space-y-4">
                      <div className="space-y-2">
                         <label className="text-sm font-bold text-slate-700">Demo Video</label>
@@ -333,6 +372,42 @@ const SubmitResource = () => {
                         </div>
                         <input type="url" name="youtubeUrl" value={formData.youtubeUrl} onChange={handleChange} placeholder="Or paste YouTube URL..." 
                             className="w-full px-4 py-3 md:px-5 md:py-4 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white outline-none font-medium text-sm" />
+                     </div>
+
+                     <div className="space-y-2">
+                        <label className="text-sm font-bold text-slate-700">Cover Image (optional)</label>
+                        <div className="p-5 md:p-6 border-2 border-dashed border-slate-200 rounded-2xl bg-slate-50 flex flex-col items-center justify-center text-center transition-all hover:border-purple-300">
+                          {formData.imageUrl ? (
+                            <div className="w-full relative">
+                              <img src={formData.imageUrl} alt={formData.title || "Cover"} className="w-full h-48 object-cover rounded-xl bg-slate-100" />
+                              <button
+                                type="button"
+                                onClick={() => setFormData(prev => ({ ...prev, imageUrl: '' }))}
+                                className="absolute top-2 right-2 p-2 bg-red-500 text-white rounded-full shadow-md"
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </button>
+                            </div>
+                          ) : (
+                            <label className="cursor-pointer w-full h-full flex flex-col items-center justify-center py-4">
+                              {uploadingImage ? (
+                                <Loader2 className="w-8 h-8 text-indigo-500 animate-spin mb-2" />
+                              ) : (
+                                <Upload className="w-8 h-8 text-slate-400 mb-2" />
+                              )}
+                              <span className="text-sm font-bold text-slate-700">
+                                {uploadingImage ? "Uploading..." : "Upload Cover Image"}
+                              </span>
+                              <input
+                                type="file"
+                                accept="image/*"
+                                className="hidden"
+                                onChange={handleImageUpload}
+                                disabled={uploadingImage}
+                              />
+                            </label>
+                          )}
+                        </div>
                      </div>
 
                      <div className="space-y-2">

@@ -26,6 +26,7 @@ interface Resource {
   whatItDoes?: string;
   outcome?: string;
   videoUrl?: string;
+  imageUrl?: string;
   isPaid: boolean;
   price?: number;
   pricingType?: 'one_time' | 'monthly';
@@ -56,6 +57,7 @@ const ResourceDetails = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [saving, setSaving] = useState(false);
   const [uploadingVideo, setUploadingVideo] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
   const [uploadingAttachment, setUploadingAttachment] = useState(false);
   const [upvoteCount, setUpvoteCount] = useState<number>(0);
   const [isUpvoted, setIsUpvoted] = useState<boolean>(false);
@@ -73,6 +75,7 @@ const ResourceDetails = () => {
     whatItDoes: '',
     outcome: '',
     videoUrl: '',
+    imageUrl: '',
     link: '',
     price: '',
     tools: '',
@@ -108,6 +111,7 @@ const ResourceDetails = () => {
             whatItDoes: data.whatItDoes || '',
             outcome: data.outcome || '',
             videoUrl: data.videoUrl || '',
+            imageUrl: data.imageUrl || '',
             link: data.link || '',
             price: data.price?.toString() || '',
             tools: data.tools ? data.tools.join(', ') : '',
@@ -298,6 +302,42 @@ const ResourceDetails = () => {
     }
   };
 
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!file.type.startsWith('image/')) {
+      toast.error("Please upload an image file");
+      return;
+    }
+    if (file.size > 10 * 1024 * 1024) {
+      toast.error("Image is too large (Max 10MB)");
+      return;
+    }
+    setUploadingImage(true);
+    const toastId = toast.loading("Uploading image...");
+    try {
+      const data = new FormData();
+      data.append("file", file);
+      data.append("upload_preset", UPLOAD_PRESET as string);
+      const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
+        method: "POST",
+        body: data
+      });
+      const result = await response.json();
+      if (result.secure_url) {
+        setEditForm(prev => ({ ...prev, imageUrl: result.secure_url }));
+        toast.success("Image uploaded!", { id: toastId });
+      } else {
+        throw new Error("Upload failed");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to upload image", { id: toastId });
+    } finally {
+      setUploadingImage(false);
+    }
+  };
+
   const handleAttachmentsUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
     if (files.length === 0) return;
@@ -355,6 +395,7 @@ const ResourceDetails = () => {
         whatItDoes: editForm.whatItDoes,
         outcome: editForm.outcome,
         videoUrl: editForm.videoUrl,
+        imageUrl: editForm.imageUrl,
         link: isPaid ? '' : cleanedLink,
         isPaid,
         price: isPaid ? parseFloat(editForm.price) || 0 : 0,
@@ -833,6 +874,9 @@ const ResourceDetails = () => {
                                         <option value="project">Project</option>
                                         <option value="tool">Tool</option>
                                         <option value="prompt">Prompt</option>
+                                        <option value="resource">Resource</option>
+                              <option value="other">Others</option>
+                                        
                                     </select>
                                 </div>
                             </div>
@@ -1006,6 +1050,30 @@ const ResourceDetails = () => {
                                             )}
                                         </div>
                                     )}
+
+                                    <div className="space-y-2">
+                                        <label className="text-sm font-bold text-slate-700">Cover Image</label>
+                                        <div className="border-2 border-dashed border-slate-200 rounded-2xl bg-slate-50 p-4 flex flex-col gap-3 items-center justify-center text-center">
+                                            {editForm.imageUrl ? (
+                                                <div className="w-full relative">
+                                                    <img src={editForm.imageUrl} alt={editForm.title || "Cover"} className="w-full h-48 object-cover rounded-xl bg-slate-100" />
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => setEditForm(prev => ({ ...prev, imageUrl: '' }))}
+                                                        className="absolute top-2 right-2 p-2 bg-red-500 text-white rounded-full shadow-md"
+                                                    >
+                                                        <Trash2 className="w-4 h-4" />
+                                                    </button>
+                                                </div>
+                                            ) : (
+                                                <label className="cursor-pointer w-full h-full flex flex-col items-center justify-center py-4">
+                                                    {uploadingImage ? <Loader2 className="w-8 h-8 text-indigo-500 animate-spin mb-2" /> : <Upload className="w-8 h-8 text-slate-400 mb-2" />}
+                                                    <span className="text-sm font-bold text-slate-700">{uploadingImage ? "Uploading..." : "Upload Cover Image"}</span>
+                                                    <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} disabled={uploadingImage} />
+                                                </label>
+                                            )}
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div className="space-y-3">
@@ -1087,9 +1155,22 @@ const ResourceDetails = () => {
                 </div>
                 <div className="flex items-center gap-2 shrink-0">
                     {isOwner && (
-                        <button onClick={() => setIsEditing(true)} className="flex items-center gap-2 px-3 py-1.5 bg-slate-100 text-slate-700 text-xs font-bold uppercase rounded-full hover:bg-slate-200 transition-colors">
-                            <Edit2 className="w-3.5 h-3.5" /> <span>Edit</span>
-                        </button>
+                        <>
+                            <button
+                                onClick={() => setIsEditing(true)}
+                                className="flex items-center gap-2 px-2.5 sm:px-3 py-1.5 bg-slate-100 text-slate-700 text-xs font-bold uppercase rounded-full hover:bg-slate-200 transition-colors"
+                            >
+                                <Edit2 className="w-3.5 h-3.5" />
+                                <span className="hidden sm:inline">Edit</span>
+                            </button>
+                            <button
+                                onClick={handleDelete}
+                                className="flex items-center gap-2 px-2.5 sm:px-3 py-1.5 bg-rose-50 text-rose-600 text-xs font-bold uppercase rounded-full hover:bg-rose-100 transition-colors"
+                            >
+                                <Trash2 className="w-3.5 h-3.5" />
+                                <span className="hidden sm:inline">Delete</span>
+                            </button>
+                        </>
                     )}
                     <button onClick={handleShare} className="p-2 hover:bg-slate-100 rounded-full text-slate-400 hover:text-indigo-600 transition-colors">
                         <Share2 className="w-5 h-5" />
@@ -1104,18 +1185,23 @@ const ResourceDetails = () => {
                 
                 {/* LEFT COLUMN */}
                 <div className="lg:col-span-8 space-y-6 min-w-0">
-                    {/* Video */}
                     <div className="w-full rounded-2xl overflow-hidden bg-black shadow-lg ring-1 ring-slate-200 relative aspect-video">
-                        {resource.videoUrl ? (
-                            resource.videoUrl.includes('cloudinary') ? (
-                                <video src={resource.videoUrl} controls className="w-full h-full object-contain bg-black" poster={resource.userPhoto} />
-                            ) : (
-                                <iframe src={getYouTubeEmbed(resource.videoUrl)} title="Resource Video" className="w-full h-full" allowFullScreen />
-                            )
+                        {resource.imageUrl ? (
+                          <img
+                            src={resource.imageUrl}
+                            alt={resource.title}
+                            className="w-full h-full object-cover bg-black"
+                          />
+                        ) : resource.videoUrl ? (
+                          resource.videoUrl.includes('cloudinary') ? (
+                            <video src={resource.videoUrl} controls className="w-full h-full object-contain bg-black" poster={resource.userPhoto} />
+                          ) : (
+                            <iframe src={getYouTubeEmbed(resource.videoUrl)} title="Resource Video" className="w-full h-full" allowFullScreen />
+                          )
                         ) : (
-                            <div className="absolute inset-0 flex items-center justify-center bg-slate-50 text-slate-300">
-                                <PlayCircle className="w-16 h-16 opacity-50" />
-                            </div>
+                          <div className="absolute inset-0 flex items-center justify-center bg-slate-50 text-slate-300">
+                            <PlayCircle className="w-16 h-16 opacity-50" />
+                          </div>
                         )}
                     </div>
 

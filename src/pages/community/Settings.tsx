@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import CommunityLayout from '@/components/community/layout/CommunityLayout';
-import { onAuthStateChanged, updateProfile, sendPasswordResetEmail } from 'firebase/auth';
+import { onAuthStateChanged, updateProfile, sendPasswordResetEmail, deleteUser, signOut } from 'firebase/auth';
 import { auth, db, storage } from '@/services/firebase';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc, collection, query, where, getDocs, deleteDoc } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { useNavigate } from 'react-router-dom';
 import { Loader2, User, Mail, Shield, Save, LogOut, Trash2, Camera, KeyRound, BellRing } from 'lucide-react';
@@ -16,7 +16,7 @@ const Settings = () => {
   const [saving, setSaving] = useState(false);
   const [displayName, setDisplayName] = useState('');
   const navigate = useNavigate();
-  const { refreshProfile } = useAuth();
+  const { refreshProfile, userProfile } = useAuth();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -97,6 +97,67 @@ const Settings = () => {
     }
   };
 
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      toast.success("Signed out successfully");
+      navigate('/community/login');
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to sign out");
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    if (!user) return;
+
+    const confirmed = window.confirm(
+      "Are you sure you want to delete your account? This will permanently remove your account and your community resources. This action cannot be undone."
+    );
+    if (!confirmed) return;
+
+    const toastId = toast.loading("Deleting your account...");
+
+    try {
+      const resourcesQ = query(
+        collection(db, 'community_resources'),
+        where('userId', '==', user.uid)
+      );
+      const resourcesSnap = await getDocs(resourcesQ);
+      for (const docSnap of resourcesSnap.docs) {
+        try {
+          await deleteDoc(docSnap.ref);
+        } catch (e) {
+          console.error('Failed to delete resource while deleting account:', e);
+        }
+      }
+
+      try {
+        await deleteDoc(doc(db, 'public_profiles', user.uid));
+      } catch (e) {
+        console.error('Failed to delete public profile while deleting account:', e);
+      }
+
+      try {
+        await deleteUser(user);
+      } catch (error: any) {
+        console.error('Failed to delete auth user:', error);
+        let message = "Failed to delete account. Please try again.";
+        if (error?.code === 'auth/requires-recent-login') {
+          message = "For security, please log in again and then delete your account.";
+        }
+        toast.error(message, { id: toastId });
+        return;
+      }
+
+      toast.success("Your account has been deleted.", { id: toastId });
+      navigate('/community/automation-hub');
+    } catch (error) {
+      console.error('Error during account deletion:', error);
+      toast.error("Something went wrong while deleting your account.", { id: toastId });
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-[#F8F9FB] flex items-center justify-center">
@@ -151,8 +212,12 @@ const Settings = () => {
                         className="hidden" 
                       />
                       <div className="w-24 h-24 rounded-full border-4 border-slate-50 bg-slate-100 overflow-hidden shadow-inner">
-                         {user?.photoURL ? (
-                            <img src={user.photoURL} alt="Profile" className="w-full h-full object-cover" />
+                         {userProfile?.photoURL || user?.photoURL ? (
+                            <img
+                              src={userProfile?.photoURL || user?.photoURL || ''}
+                              alt="Profile"
+                              className="w-full h-full object-cover"
+                            />
                          ) : (
                             <div className="w-full h-full flex items-center justify-center text-slate-400">
                                <User className="w-10 h-10" />
@@ -210,7 +275,7 @@ const Settings = () => {
             </div>
 
             {/* ================= SECURITY & PREFS ================= */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                
                {/* Security */}
                <div className="bg-white border border-slate-200 rounded-[2rem] p-8 shadow-sm h-full">
@@ -262,6 +327,28 @@ const Settings = () => {
                      </div>
                   </div>
                </div>
+
+               {/* Session */}
+               <div className="bg-white border border-slate-200 rounded-[2rem] p-8 shadow-sm h-full">
+                  <div className="flex items-center gap-3 mb-6">
+                     <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-700">
+                        <LogOut className="w-5 h-5" />
+                     </div>
+                     <h2 className="text-lg font-bold text-slate-900">Session</h2>
+                  </div>
+                  <div className="space-y-4">
+                     <p className="text-sm text-slate-500">
+                        Sign out of your account on this device.
+                     </p>
+                     <button
+                       onClick={handleLogout}
+                       className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 text-sm font-bold text-slate-700 hover:bg-slate-50 transition-colors"
+                     >
+                       <LogOut className="w-4 h-4" />
+                       Log Out
+                     </button>
+                  </div>
+               </div>
             </div>
 
             {/* ================= DANGER ZONE ================= */}
@@ -270,7 +357,10 @@ const Settings = () => {
                <p className="text-sm text-rose-600/80 mb-6">
                   Once you delete your account, there is no going back. Please be certain.
                </p>
-               <button className="px-6 py-3 bg-white border border-rose-200 text-rose-600 font-bold rounded-xl hover:bg-rose-50 hover:border-rose-300 transition-all flex items-center gap-2 shadow-sm">
+               <button
+                 onClick={handleDeleteAccount}
+                 className="px-6 py-3 bg-white border border-rose-200 text-rose-600 font-bold rounded-xl hover:bg-rose-50 hover:border-rose-300 transition-all flex items-center gap-2 shadow-sm"
+               >
                   <Trash2 className="w-4 h-4" />
                   Delete Account
                </button>

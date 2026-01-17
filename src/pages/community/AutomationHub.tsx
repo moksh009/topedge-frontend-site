@@ -28,6 +28,7 @@ interface Resource {
   userName: string;
   userPhoto?: string;
   videoUrl?: string;
+  imageUrl?: string;
   category: 'automation' | 'project' | 'tool' | 'prompt';
   upvotes?: number;
   upvotedBy?: string[];
@@ -176,61 +177,74 @@ const ResourceCard = ({ resource, index, currentUser }: { resource: Resource; in
                </span>
             </div>
 
-            {/* Video Logic */}
-            {resource.videoUrl ? (
-                isYoutube ? (
-                   <div className="w-full h-full relative bg-black">
-                      {isHovering ? (
-                         <iframe 
-                           src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=1&controls=0&modestbranding=1&loop=1&playlist=${youtubeId}`}
-                           className="w-full h-full object-cover pointer-events-none"
-                           allow="autoplay; encrypted-media"
-                           title="Preview"
-                         />
-                      ) : (
-                         <img 
-                            src={`https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`} 
-                            alt={resource.title}
-                            className="w-full h-full object-cover"
-                         />
-                      )}
-                      {!isHovering && (
-                          <div className="absolute inset-0 flex items-center justify-center bg-black/10">
-                              <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                                  <Play className="w-6 h-6 text-white fill-white" />
-                              </div>
-                          </div>
-                      )}
-                   </div>
-                ) : (
-                    <div className="w-full h-full relative">
-                        <video 
-                            ref={videoRef} 
-                            src={resource.videoUrl} 
-                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
-                            muted 
-                            loop 
-                            playsInline
-                            preload="metadata"
-                            poster={smartPoster} // Use generated thumbnail for Cloudinary
-                        />
-                        {/* Play Icon Overlay for Native Video (Hidden on Hover) */}
-                        <div className={cn("absolute inset-0 flex items-center justify-center bg-black/10 transition-opacity duration-300", isHovering ? "opacity-0" : "opacity-100")}>
-                            <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                                <Play className="w-6 h-6 text-white fill-white" />
-                            </div>
-                        </div>
+            {/* Media Logic: prefer image, then video, then placeholder */}
+            {resource.imageUrl ? (
+              <img
+                src={resource.imageUrl}
+                alt={resource.title}
+                className="w-full h-full object-cover"
+              />
+            ) : resource.videoUrl ? (
+              isYoutube ? (
+                <div className="w-full h-full relative bg-black">
+                  {isHovering ? (
+                    <iframe
+                      src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=1&controls=0&modestbranding=1&loop=1&playlist=${youtubeId}`}
+                      className="w-full h-full object-cover pointer-events-none"
+                      allow="autoplay; encrypted-media"
+                      title="Preview"
+                    />
+                  ) : (
+                    <img
+                      src={`https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`}
+                      alt={resource.title}
+                      className="w-full h-full object-cover"
+                    />
+                  )}
+                  {!isHovering && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/10">
+                      <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                        <Play className="w-6 h-6 text-white fill-white" />
+                      </div>
                     </div>
-                )
-            ) : (
-                <div className="w-full h-full bg-slate-50 relative">
-                    <div className="absolute inset-0 opacity-[0.4]" style={{ backgroundImage: 'radial-gradient(#cbd5e1 1px, transparent 1px)', backgroundSize: '16px 16px' }}></div>
-                    <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-16 h-16 rounded-3xl bg-white shadow-sm border border-slate-100 flex items-center justify-center">
-                           {getCategoryIcon(resource.category)}
-                        </div>
-                    </div>
+                  )}
                 </div>
+              ) : (
+                <div className="w-full h-full relative">
+                  <video
+                    ref={videoRef}
+                    src={resource.videoUrl}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                    poster={smartPoster}
+                  />
+                  <div
+                    className={cn(
+                      "absolute inset-0 flex items-center justify-center bg-black/10 transition-opacity duration-300",
+                      isHovering ? "opacity-0" : "opacity-100"
+                    )}
+                  >
+                    <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                      <Play className="w-6 h-6 text-white fill-white" />
+                    </div>
+                  </div>
+                </div>
+              )
+            ) : (
+              <div className="w-full h-full bg-slate-50 relative">
+                <div
+                  className="absolute inset-0 opacity-[0.4]"
+                  style={{ backgroundImage: 'radial-gradient(#cbd5e1 1px, transparent 1px)', backgroundSize: '16px 16px' }}
+                ></div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-16 h-16 rounded-3xl bg-white shadow-sm border border-slate-100 flex items-center justify-center">
+                    {getCategoryIcon(resource.category)}
+                  </div>
+                </div>
+              </div>
             )}
         </div>
 
