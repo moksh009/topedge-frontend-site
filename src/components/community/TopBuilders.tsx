@@ -3,6 +3,7 @@ import { collection, getDocs, orderBy, query, limit } from 'firebase/firestore';
 import { db } from '@/services/firebase';
 import { calculateReputation } from '@/utils/reputation';
 import { Trophy, User } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 interface Profile {
   id: string;
@@ -82,7 +83,14 @@ export default function TopBuilders() {
               ? 'ring-2 ring-blue-300'
               : 'ring-2 ring-slate-200';
           return (
-            <div key={t.profile.id} className="bg-white rounded-2xl border border-slate-200 p-4 text-center">
+            <motion.div
+              key={t.profile.id}
+              className="bg-white rounded-2xl border border-slate-200 p-4 text-center"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35, delay: i * 0.06 }}
+              whileHover={{ y: -4, scale: 1.02 }}
+            >
               <div className={`w-16 h-16 rounded-full mx-auto mb-2 overflow-hidden ${ring}`}>
                 {t.profile.photoURL ? (
                   <img src={t.profile.photoURL} className="w-full h-full object-cover" />
@@ -94,7 +102,7 @@ export default function TopBuilders() {
               </div>
               <div className="text-sm font-bold text-slate-900 line-clamp-1">{t.profile.fullName}</div>
               <div className="text-[10px] text-slate-500">{t.tier} • {t.score} pts</div>
-            </div>
+            </motion.div>
           );
         })}
       </div>

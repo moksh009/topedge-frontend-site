@@ -2,11 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import CommunityLayout from '@/components/community/layout/CommunityLayout';
 import CommunitySEO from '@/components/community/CommunitySEO';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
+import {
   Plus, Search, ArrowRight, Zap, Sparkles,
   Workflow, Terminal, Box, Filter, Play, CheckCircle2, Star, ArrowBigUp, User
 } from 'lucide-react';
-import { collection, query, getDocs, orderBy, doc, updateDoc, increment, arrayUnion, arrayRemove } from 'firebase/firestore';
+import { collection, query, getDocs, orderBy, doc, updateDoc, increment, arrayUnion, arrayRemove, limit } from 'firebase/firestore';
 import { db } from '@/services/firebase';
 import { useAuth } from '@/contexts/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
@@ -55,7 +55,9 @@ const getSmartPoster = (url: string) => {
     return undefined;
 }
 
-// ... ResourceCard Component ...
+const authorProfileCache: Record<string, any> = {};
+const reviewStatsCache: Record<string, { count: number; avg: number }> = {};
+
 const ResourceCard = ({ resource, index, currentUser }: { resource: Resource; index: number; currentUser: any }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isHovering, setIsHovering] = useState(false);
@@ -82,36 +84,55 @@ const ResourceCard = ({ resource, index, currentUser }: { resource: Resource; in
   }, [isHovering, isYoutube]);
 
   useEffect(() => {
+    const cached = reviewStatsCache[resource.id];
+    if (cached) {
+      setReviewCount(cached.count);
+      setAvgRating(cached.avg);
+      return;
+    }
     const fetchReviews = async () => {
       try {
         const q = query(collection(db, 'community_resources', resource.id, 'reviews'), orderBy('createdAt', 'desc'));
         const snap = await getDocs(q);
-        const ratings = snap.docs.map(d => (d.data() as any).rating as number).filter(n => typeof n === 'number');
+        const ratings = snap.docs
+          .map(d => (d.data() as any).rating as number)
+          .filter(n => typeof n === 'number');
         const count = ratings.length;
+        const avg = count > 0 ? ratings.reduce((t, n) => t + n, 0) / count : 0;
+        reviewStatsCache[resource.id] = { count, avg };
         setReviewCount(count);
-        setAvgRating(count > 0 ? ratings.reduce((t, n) => t + n, 0) / count : 0);
+        setAvgRating(avg);
       } catch {}
     };
     fetchReviews();
   }, [resource.id]);
 
   useEffect(() => {
+    if (!resource.userId) {
+      return;
+    }
+    const cached = authorProfileCache[resource.userId];
+    if (cached) {
+      setAuthorProfile(cached);
+      return;
+    }
     const fetchAuthor = async () => {
       try {
         const profileRef = doc(db, 'public_profiles', resource.userId);
         const profileSnap = await getDoc(profileRef);
         if (profileSnap.exists()) {
-          setAuthorProfile(profileSnap.data());
+          const data = profileSnap.data();
+          authorProfileCache[resource.userId] = data;
+          setAuthorProfile(data);
         } else {
+          authorProfileCache[resource.userId] = null;
           setAuthorProfile(null);
         }
       } catch (error) {
         console.error('Error fetching author profile:', error);
       }
     };
-    if (resource.userId) {
-      fetchAuthor();
-    }
+    fetchAuthor();
   }, [resource.userId]);
 
   const getCategoryIcon = (category: string) => {
@@ -322,7 +343,8 @@ const AutomationHub = () => {
       try {
         const q = query(
           collection(db, 'community_resources'),
-          orderBy('createdAt', 'desc')
+          orderBy('createdAt', 'desc'),
+          limit(120)
         );
         const querySnapshot = await getDocs(q);
         const resourcesData = querySnapshot.docs.map(doc => ({

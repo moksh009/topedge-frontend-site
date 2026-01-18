@@ -1,5 +1,6 @@
 import React, { useEffect, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Toaster } from 'react-hot-toast';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider } from './contexts/ThemeContext';
@@ -169,7 +170,30 @@ const App: React.FC = () => {
               <MetaPixel />
               <Layout>
                 <React.Suspense fallback={<div className="min-h-screen flex items-center justify-center text-lg">Loading...</div>}>
-                  <Routes>
+                  <AnimatedRoutes />
+                </React.Suspense>
+              </Layout>
+            </Router>
+          </AppErrorBoundary>
+        </AuthProvider>
+      </ThemeProvider>
+    </HelmetProvider>
+  );
+};
+
+const AnimatedRoutes = () => {
+  const location = useLocation();
+
+  return (
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={location.pathname}
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -8 }}
+        transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
+      >
+        <Routes location={location}>
                   <Route path="/" element={<Home />} />
                   <Route path="/about" element={<About />} />
                   <Route path="/services" element={<Services />} />
@@ -219,15 +243,10 @@ const App: React.FC = () => {
                       </ProtectedRoute>
                     } 
                   />
-                  <Route path="/community/requests" element={<RequestBoard />} />
-                </Routes>
-              </React.Suspense>
-            </Layout>
-            </Router>
-          </AppErrorBoundary>
-        </AuthProvider>
-      </ThemeProvider>
-    </HelmetProvider>
+          <Route path="/community/requests" element={<RequestBoard />} />
+        </Routes>
+      </motion.div>
+    </AnimatePresence>
   );
 };
 
