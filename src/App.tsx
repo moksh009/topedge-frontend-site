@@ -120,17 +120,56 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
+class AppErrorBoundary extends React.Component<{ children: React.ReactNode }, { hasError: boolean }> {
+  constructor(props: { children: React.ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: unknown, info: unknown) {
+    console.error('App error boundary caught an error', error, info);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="min-h-screen flex items-center justify-center bg-[#F8F9FB] text-slate-900">
+          <div className="text-center px-6">
+            <p className="text-xs font-semibold tracking-wide text-slate-400 uppercase mb-2">Something went wrong</p>
+            <p className="text-lg font-bold mb-4">The page failed to load.</p>
+            <button
+              onClick={() => {
+                this.setState({ hasError: false });
+                window.location.reload();
+              }}
+              className="px-5 py-2.5 rounded-full bg-slate-900 text-white text-sm font-semibold hover:bg-slate-800 transition-colors"
+            >
+              Refresh
+            </button>
+          </div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 const App: React.FC = () => {
   return (
     <HelmetProvider>
       <ThemeProvider>
         <AuthProvider>
-          <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
-            <ScrollToTop />
-            <MetaPixel />
-            <Layout>
-              <React.Suspense fallback={<div className="min-h-screen flex items-center justify-center text-lg">Loading...</div>}>
-                <Routes>
+          <AppErrorBoundary>
+            <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+              <ScrollToTop />
+              <MetaPixel />
+              <Layout>
+                <React.Suspense fallback={<div className="min-h-screen flex items-center justify-center text-lg">Loading...</div>}>
+                  <Routes>
                   <Route path="/" element={<Home />} />
                   <Route path="/about" element={<About />} />
                   <Route path="/services" element={<Services />} />
@@ -184,7 +223,8 @@ const App: React.FC = () => {
                 </Routes>
               </React.Suspense>
             </Layout>
-          </Router>
+            </Router>
+          </AppErrorBoundary>
         </AuthProvider>
       </ThemeProvider>
     </HelmetProvider>

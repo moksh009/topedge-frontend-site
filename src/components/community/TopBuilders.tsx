@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { collection, getDocs, orderBy, query } from 'firebase/firestore';
+import { collection, getDocs, orderBy, query, limit } from 'firebase/firestore';
 import { db } from '@/services/firebase';
 import { calculateReputation } from '@/utils/reputation';
 import { Trophy, User } from 'lucide-react';
@@ -21,12 +21,16 @@ export default function TopBuilders() {
 
   useEffect(() => {
     const run = async () => {
-      const pSnap = await getDocs(query(collection(db, 'public_profiles'), orderBy('createdAt', 'desc')));
+      const pSnap = await getDocs(
+        query(collection(db, 'public_profiles'), orderBy('createdAt', 'desc'), limit(100))
+      );
       const profiles = pSnap.docs
         .map(d => ({ id: d.id, ...(d.data() as any) }) as Profile)
         .filter(p => !!p.fullName);
 
-      const rSnap = await getDocs(query(collection(db, 'community_resources'), orderBy('createdAt', 'desc')));
+      const rSnap = await getDocs(
+        query(collection(db, 'community_resources'), orderBy('createdAt', 'desc'), limit(200))
+      );
       const byUser: Record<string, { resources: { userId: string; upvotes: number }[] }> = {};
       rSnap.docs.forEach(d => {
         const data = d.data() as any;
