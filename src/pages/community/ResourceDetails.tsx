@@ -9,6 +9,9 @@ import { useAuth } from '@/contexts/AuthContext';
 import { cn } from '@/lib/utils';
 import { isAdminEmail } from '@/utils/admin';
 import { emailService } from '@/services/emailService';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import config from '@/config';
 import toast from 'react-hot-toast';
 import ResourceReviews from '@/pages/community/ResourceReviews';
 import RelatedResources from '@/components/community/RelatedResources';
@@ -204,7 +207,7 @@ const ResourceDetails = () => {
         const snap = await getDoc(ref);
         if (snap.exists()) {
           const data = snap.data() as any;
-          setEditForm(prev => ({ ...prev, link: data.privateUrl || '' }));
+          setEditForm(prev => ({ ...prev, link: data.privateUrl || data.link || '' }));
         }
       } catch (error) {
         console.error('Error loading protected link for edit:', error);
@@ -327,7 +330,7 @@ const ResourceDetails = () => {
       });
       const result = await response.json();
       if (result.secure_url) {
-        setEditForm(prev => ({ ...prev, videoUrl: result.secure_url }));
+        setEditForm(prev => ({ ...prev, videoUrl: result.secure_url, imageUrl: '' }));
         toast.success("Video uploaded!", { id: toastId });
       } else {
         throw new Error("Upload failed");
@@ -352,7 +355,7 @@ const ResourceDetails = () => {
       });
       const result = await response.json();
       if (result.secure_url) {
-        setEditForm(prev => ({ ...prev, imageUrl: result.secure_url }));
+        setEditForm(prev => ({ ...prev, imageUrl: result.secure_url, videoUrl: '' }));
         toast.success("Image uploaded!", { id: toastId });
       } else {
         throw new Error("Upload failed");
@@ -508,13 +511,20 @@ const ResourceDetails = () => {
       const cleanedLink = editForm.link.trim();
       const hasProtectedLink = isPaid && !!cleanedLink;
 
+      let finalVideoUrl = editForm.videoUrl;
+      const finalImageUrl = editForm.imageUrl;
+
+      if (finalVideoUrl && finalImageUrl) {
+        finalVideoUrl = '';
+      }
+
       const updatedData = {
         title: editForm.title,
         description: editForm.description,
         whatItDoes: editForm.whatItDoes,
         outcome: editForm.outcome,
-        videoUrl: editForm.videoUrl,
-        imageUrl: editForm.imageUrl,
+        videoUrl: finalVideoUrl,
+        imageUrl: finalImageUrl,
         link: isPaid ? '' : cleanedLink,
         isPaid,
         price: isPaid ? parseFloat(editForm.price) || 0 : 0,
@@ -611,26 +621,15 @@ const ResourceDetails = () => {
       try {
         const idToken = await user.getIdToken();
 
-        let baseURL: string | null = null;
-        const envBaseURL =
-          (typeof import.meta !== 'undefined' &&
-            (import.meta as any).env &&
-            (import.meta as any).env.VITE_EMAIL_API_BASE_URL) ||
-          undefined;
-
-        if (envBaseURL && typeof envBaseURL === 'string' && envBaseURL.trim().length > 0) {
-          baseURL = envBaseURL.replace(/\/+$/, '');
-        } else if (typeof window !== 'undefined') {
-          const origin = window.location.origin;
-          baseURL = `${origin.replace(/\/+$/, '')}/.netlify/functions/api`;
-        }
-
-        if (!baseURL) {
+        const apiBase = (config as any)?.apiUrl as string | undefined;
+        if (!apiBase || typeof apiBase !== 'string') {
           setProtectedLink(null);
           return;
         }
 
-        const response = await fetch(`${baseURL}/api/get-protected-resource-link`, {
+        const baseURL = apiBase.replace(/\/+$/, '');
+
+        const response = await fetch(`${baseURL}/get-protected-resource-link`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -645,11 +644,12 @@ const ResourceDetails = () => {
         }
 
         const data = await response.json();
-        if (data && typeof data.url === 'string' && data.url.trim().length > 0) {
-          setProtectedLink(data.url);
-        } else {
-          setProtectedLink(null);
-        }
+        const candidate =
+          (typeof data?.url === 'string' && data.url.trim().length > 0 && data.url) ||
+          (typeof data?.link === 'string' && data.link.trim().length > 0 && data.link) ||
+          (typeof data?.privateUrl === 'string' && data.privateUrl.trim().length > 0 && data.privateUrl);
+
+        setProtectedLink((candidate as string) || null);
       } catch (error) {
         console.error('Error fetching protected link:', error);
         setProtectedLink(null);
@@ -852,7 +852,53 @@ const ResourceDetails = () => {
     </div>
   );
 
-  const AccessCard = () => (
+  const AccessCard = () => {
+    const isPaid = !!resource?.isPaid;
+    const combinedUrl = (protectedLink || resource?.link || '').trim();
+    const hasAnyLink = !!combinedUrl;
+
+    const accessNote = () => {
+      if (!resource) return null;
+
+      if (!isPaid) {
+        if (!hasAnyLink) {
+          return (
+            <p className="text-[10px] text-center text-slate-400 font-medium">
+              This resource is free, but the creator has not added an external link yet. You can still download any files below or contact the creator.
+            </p>
+          );
+        }
+        return (
+          <p className="text-[10px] text-center text-slate-400 font-medium">
+            This resource is free. Click Open Resource to visit the shared link. Files below are also available to download.
+          </p>
+        );
+      }
+
+      if (!hasAccess) {
+        return (
+          <p className="text-[10px] text-center text-slate-400 font-medium">
+            For paid resources, click Unlock Resource to send an email to you and the creator. After you complete payment and they approve from the email, the resource unlocks for your account. TopEdge takes 0% platform fee.
+          </p>
+        );
+      }
+
+      if (hasAnyLink) {
+        return (
+          <p className="text-[10px] text-center text-slate-400 font-medium">
+            This paid resource is unlocked for your account. Open Resource will take you to the private access link configured by the creator.
+          </p>
+        );
+      }
+
+      return (
+        <p className="text-[10px] text-center text-slate-400 font-medium">
+          This paid resource is unlocked for your account. The creator has not added an external access link yet, but you can still download files or contact them directly.
+        </p>
+      );
+    };
+
+    return (
     <div className="bg-white rounded-[1.25rem] p-5 border border-slate-200 shadow-xl shadow-slate-200/50">
         <div className="flex items-end justify-between mb-4 pb-4 border-b border-slate-50">
             <div>
@@ -877,26 +923,21 @@ const ResourceDetails = () => {
             <span className="bg-slate-100 px-2 py-0.5 rounded-full text-xs text-slate-600 ml-1">{upvoteCount}</span>
         </button>
 
-        {resource?.isPaid ? (
+        {isPaid ? (
           hasAccess ? (
-            protectedLink ? (
+            hasAnyLink ? (
               <a 
-                href={protectedLink} 
+                href={combinedUrl} 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 w-full py-3 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl transition-all shadow-lg shadow-slate-900/20 mb-2 group text-sm"
               >
-                Get Access <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                Open Resource <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </a>
             ) : (
-              <>
-                <button disabled className="w-full py-3 bg-slate-100 text-slate-400 font-bold rounded-xl cursor-not-allowed text-sm">
-                  Access Approved
-                </button>
-                <p className="text-[10px] text-center text-slate-400 font-medium mt-2">
-                  Access approved. The creator has not provided an external access link yet. You can still download files or contact the creator.
-                </p>
-              </>
+              <button disabled className="w-full py-3 bg-slate-100 text-slate-400 font-bold rounded-xl cursor-not-allowed text-sm">
+                Access Approved
+              </button>
             )
           ) : (
             <button
@@ -914,27 +955,25 @@ const ResourceDetails = () => {
                 : "Unlock Resource"}
             </button>
           )
-        ) : (
-          resource?.link ? (
+        ) : hasAnyLink ? (
             <a 
-                href={resource.link} 
+                href={combinedUrl} 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 w-full py-3 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl transition-all shadow-lg shadow-slate-900/20 mb-2 group text-sm"
             >
-                Get Access <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                Open Resource <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </a>
           ) : (
             <button disabled className="w-full py-3 bg-slate-100 text-slate-400 font-bold rounded-xl cursor-not-allowed text-sm">
                 Link Unavailable
             </button>
           )
-        )}
-        <p className="text-[10px] text-center text-slate-400 font-medium">
-          For paid resources, click Unlock Resource to send an email to you and the creator. After you complete payment and they approve from the email, the resource unlocks for your account. TopEdge takes 0% platform fee.
-        </p>
+        }
+        {accessNote()}
     </div>
-  );
+    );
+  };
 
   const ContactCard = () => (
     <div className="bg-white rounded-[1.25rem] p-5 border border-slate-200 shadow-sm w-full">
@@ -962,18 +1001,19 @@ const ResourceDetails = () => {
         type="article"
         author={resource.userName}
       />
-        {/* --- EDIT MODAL (Preserved from previous implementation) --- */}
+      <div className="min-h-screen bg-[#FAFAFA] overflow-x-hidden">
+        {/* --- EDIT MODAL --- */}
         <AnimatePresence>
             {isEditing && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
+                <div className="fixed inset-0 z-50 flex items-center justify-center px-4 py-6 sm:p-6 overflow-y-auto">
                     <motion.div 
                         initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} 
-                        className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
+                        className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm"
                         onClick={() => setIsEditing(false)}
                     />
                     <motion.div 
                         initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                        className="relative w-full max-w-4xl bg-white rounded-[2rem] shadow-2xl overflow-hidden max-h-[90vh] flex flex-col"
+                        className="relative w-full max-w-4xl bg-white rounded-[2rem] shadow-2xl overflow-hidden max-h-[calc(100vh-3rem)] sm:max-h-[calc(100vh-4rem)] flex flex-col"
                     >
                         <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-white sticky top-0 z-10">
                             <h2 className="text-lg font-bold text-slate-900">Edit Resource</h2>
@@ -1142,7 +1182,7 @@ const ResourceDetails = () => {
                                         <input
                                             type="url"
                                             value={editForm.videoUrl}
-                                            onChange={e => setEditForm({...editForm, videoUrl: e.target.value})}
+                                            onChange={e => setEditForm(prev => ({ ...prev, videoUrl: e.target.value, imageUrl: '' }))}
                                             className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none"
                                             placeholder="https://youtube.com/..."
                                         />
@@ -1497,9 +1537,14 @@ const ResourceDetails = () => {
                     {/* Content Tabs */}
                     <div className="space-y-8">
                         {/* 1. Overview */}
-                        <section>
-                            <h3 className="text-lg font-bold text-slate-900 mb-3 flex items-center gap-2"><Sparkles className="w-5 h-5 text-indigo-500" /> Overview</h3>
-                            <div className="prose prose-slate max-w-none text-slate-600 leading-relaxed whitespace-pre-line text-sm lg:text-base">{resource.description}</div>
+                        <section className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                            <h3 className="text-lg font-bold text-slate-900 mb-3 flex items-center gap-2">
+                              <Sparkles className="w-5 h-5 text-indigo-500" />
+                              Overview
+                            </h3>
+                            <div className="prose prose-slate max-w-none text-slate-600 leading-relaxed whitespace-pre-line text-sm lg:text-base">
+                              {resource.description}
+                            </div>
                         </section>
 
                         {/* 2. What it Does / Outcome */}
@@ -1563,6 +1608,7 @@ const ResourceDetails = () => {
                 </div>
              </div>
         </div>
+      </div>
     </CommunityLayout>
   );
 };

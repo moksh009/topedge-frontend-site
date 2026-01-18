@@ -382,20 +382,23 @@ const PromoteProfile = () => {
     if (!photoCropImageSrc || !user) return;
     const img = photoCropImageRef.current;
     if (!img) return;
-    const canvasSize = 288;
+    const previewSize = 288;
+    const outputSize = 512;
     const canvas = document.createElement('canvas');
-    canvas.width = canvasSize;
-    canvas.height = canvasSize;
+    canvas.width = outputSize;
+    canvas.height = outputSize;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
     const naturalWidth = img.naturalWidth;
     const naturalHeight = img.naturalHeight;
     if (!naturalWidth || !naturalHeight) return;
-    const baseScale = Math.max(canvasSize / naturalWidth, canvasSize / naturalHeight);
-    const scale = baseScale * photoCropZoom;
-    ctx.clearRect(0, 0, canvasSize, canvasSize);
+    const baseScalePreview = Math.max(previewSize / naturalWidth, previewSize / naturalHeight);
+    const scale = baseScalePreview * photoCropZoom * (outputSize / previewSize);
+    const offsetNormX = photoCropOffset.x / previewSize;
+    const offsetNormY = photoCropOffset.y / previewSize;
+    ctx.clearRect(0, 0, outputSize, outputSize);
     ctx.save();
-    ctx.translate(canvasSize / 2 + photoCropOffset.x, canvasSize / 2 + photoCropOffset.y);
+    ctx.translate(outputSize / 2 + offsetNormX * outputSize, outputSize / 2 + offsetNormY * outputSize);
     ctx.scale(scale, scale);
     ctx.drawImage(img, -naturalWidth / 2, -naturalHeight / 2);
     ctx.restore();
@@ -514,8 +517,8 @@ const PromoteProfile = () => {
                     <User className="w-5 h-5 text-indigo-600" /> Identity & Info
                  </h2>
                  
-                 <div className="flex flex-col md:flex-row gap-8 mb-8 border-b border-slate-100 pb-8">
-                    <div className="flex-shrink-0">
+                 <div className="flex flex-col md:flex-row gap-8 mb-8 border-b border-slate-100 pb-8 items-center md:items-start">
+                    <div className="flex-shrink-0 mx-auto md:mx-0">
                        <div className="group relative w-32 h-32 rounded-2xl bg-slate-100 border-2 border-dashed border-slate-300 hover:border-indigo-500 transition-colors overflow-hidden">
                           {formData.photoURL ? (
                              <img src={formData.photoURL} alt="Preview" className="w-full h-full object-cover" />
@@ -686,7 +689,7 @@ const PromoteProfile = () => {
                  </div>
               </div>
 
-              <div className="flex justify-end pt-4">
+              <div className="flex justify-center md:justify-end pt-4">
                  <button type="submit" disabled={saving} className="px-8 py-4 bg-slate-900 text-white font-bold rounded-xl shadow-xl shadow-slate-200 hover:bg-slate-800 hover:-translate-y-1 transition-all disabled:opacity-50 flex items-center gap-2">
                     {saving && <Loader2 className="w-5 h-5 animate-spin" />}
                     {saving ? 'Saving...' : 'Save Profile Changes'}
@@ -730,6 +733,7 @@ const PromoteProfile = () => {
                     ref={photoCropImageRef}
                     src={photoCropImageSrc}
                     alt="Crop"
+                    crossOrigin="anonymous"
                     className="absolute inset-0 m-auto select-none"
                     style={{
                       transform: `translate3d(${photoCropOffset.x}px, ${photoCropOffset.y}px, 0) scale(${photoCropZoom})`,

@@ -251,10 +251,9 @@ const OpenSource = () => {
                       title="Open source visible after launch"
                       description="Contribute now. Library unlocks on launch day."
                     >
-                      {/* UPDATED: Added max-h-[500px] + overflow-hidden to fix mobile height issue */}
                       <motion.div 
                         layout
-                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-12 max-h-[500px] md:max-h-none overflow-hidden"
+                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-12"
                       >
                         <AnimatePresence>
                           {otherResources.map((resource, index) => (

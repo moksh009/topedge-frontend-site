@@ -76,9 +76,8 @@ export default function LaunchGate({
       <div
         aria-hidden="true"
         className={cn(
-          // Reduced min-height slightly to fit better
-          'transition-all duration-700 ease-in-out select-none pointer-events-none min-h-[340px] md:min-h-[500px]',
-          dark ? 'blur-xl brightness-[0.3] grayscale-[0.6]' : 'blur-xl opacity-30 grayscale-[0.3]'
+          'transition-all duration-700 ease-in-out select-none min-h-[340px] md:min-h-[500px]',
+          dark ? 'brightness-[0.9]' : 'opacity-100'
         )}
       >
         {children}

@@ -101,6 +101,36 @@ const CommunityProfiles = () => {
     (profile.currentWork || '').toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const sortedProfiles = [...filteredProfiles].sort((a, b) => {
+    const entryA = resourcesByUser[a.id];
+    const resourcesA = entryA?.resources || [];
+    const repA = calculateReputation(
+      {
+        bio: a.description,
+        photoURL: a.photoURL,
+        github: a.github,
+        linkedin: a.linkedin,
+        websiteURL: a.websiteURL
+      },
+      resourcesA
+    ).score;
+
+    const entryB = resourcesByUser[b.id];
+    const resourcesB = entryB?.resources || [];
+    const repB = calculateReputation(
+      {
+        bio: b.description,
+        photoURL: b.photoURL,
+        github: b.github,
+        linkedin: b.linkedin,
+        websiteURL: b.websiteURL
+      },
+      resourcesB
+    ).score;
+
+    return repB - repA;
+  });
+
   const hasMyProfile = !!user && profiles.some(p => p.id === (user.uid || ''));
 
   const ProfileCard = ({ profile }: { profile: Profile }) => {
@@ -370,11 +400,8 @@ const CommunityProfiles = () => {
           ) : (
             <>
               {(() => {
-                const myProfiles = filteredProfiles.filter(p => p.id === (user?.uid || ''));
-                const otherProfiles = filteredProfiles.filter(p => p.id !== (user?.uid || ''));
-                const isPreLaunch = new Date() < new Date('2026-01-29');
-                const isAdmin = isAdminEmail(user?.email || null);
-                const showGate = isPreLaunch && !isAdmin;
+                const myProfiles = sortedProfiles.filter(p => p.id === (user?.uid || ''));
+                const otherProfiles = sortedProfiles.filter(p => p.id !== (user?.uid || ''));
                 
                 return (
                   <>
@@ -396,11 +423,11 @@ const CommunityProfiles = () => {
                     </div>
                     
                     <LaunchGate
-                      active={showGate}
+                      active={false}
                       title="Profiles visible after launch"
                       description="Create your profile now. Directory unlocks on launch day."
                     >
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 pb-12 max-h-[500px] md:max-h-none overflow-hidden">
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 pb-12">
                         {otherProfiles.map((profile) => <ProfileCard key={profile.id} profile={profile} />)}
                       </div>
                     </LaunchGate>

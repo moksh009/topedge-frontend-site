@@ -185,20 +185,23 @@ const ProfileDetails = () => {
     if (!photoCropImageSrc || !profile || !profile.uid) return;
     const img = photoCropImageRef.current;
     if (!img) return;
-    const canvasSize = 288;
+    const previewSize = 288;
+    const outputSize = 512;
     const canvas = document.createElement('canvas');
-    canvas.width = canvasSize;
-    canvas.height = canvasSize;
+    canvas.width = outputSize;
+    canvas.height = outputSize;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
     const naturalWidth = img.naturalWidth;
     const naturalHeight = img.naturalHeight;
     if (!naturalWidth || !naturalHeight) return;
-    const baseScale = Math.max(canvasSize / naturalWidth, canvasSize / naturalHeight);
-    const scale = baseScale * photoCropZoom;
-    ctx.clearRect(0, 0, canvasSize, canvasSize);
+    const baseScalePreview = Math.max(previewSize / naturalWidth, previewSize / naturalHeight);
+    const scale = baseScalePreview * photoCropZoom * (outputSize / previewSize);
+    const offsetNormX = photoCropOffset.x / previewSize;
+    const offsetNormY = photoCropOffset.y / previewSize;
+    ctx.clearRect(0, 0, outputSize, outputSize);
     ctx.save();
-    ctx.translate(canvasSize / 2 + photoCropOffset.x, canvasSize / 2 + photoCropOffset.y);
+    ctx.translate(outputSize / 2 + offsetNormX * outputSize, outputSize / 2 + offsetNormY * outputSize);
     ctx.scale(scale, scale);
     ctx.drawImage(img, -naturalWidth / 2, -naturalHeight / 2);
     ctx.restore();
@@ -285,10 +288,9 @@ const ProfileDetails = () => {
         url={`/community/profile/${id}`}
         type="profile"
       />
-      {/* CLEAN BACKGROUND: No gradients, just crisp white/gray */}
       <div className="min-h-screen bg-[#FAFAFA] font-sans selection:bg-slate-900 selection:text-white pb-24">
         
-        <div className="container relative z-10 mx-auto px-4 sm:px-6 max-w-6xl pt-6">
+        <div className="container relative z-10 mx-auto px-4 sm:px-6 max-w-6xl pt-10 sm:pt-20">
           
           <div className="flex justify-between items-center mb-8">
             <Link to="/community/profiles" className="group flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-full text-slate-600 text-sm font-medium hover:bg-slate-50 hover:border-slate-300 transition-all">
@@ -356,7 +358,41 @@ const ProfileDetails = () => {
                         />
                       )}
                     </div>
-                    <div className="relative flex flex-col sm:flex-row gap-6 items-center sm:items-start pt-8 sm:pt-12 text-center sm:text-left">
+
+                    {(profile.workingStatus || rep.tier) && (
+                      <div className="absolute inset-x-0 top-20 sm:top-24 flex justify-center z-20 px-4">
+                        <div className="inline-flex flex-wrap items-center justify-center gap-2 px-4 py-1.5 rounded-full bg-white/95 border border-slate-200 shadow-sm">
+                          {profile.workingStatus && (
+                            <span
+                              className={cn(
+                                "px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide border",
+                                profile.workingStatus === "Open to Work" 
+                                  ? "bg-emerald-50 text-emerald-700 border-emerald-100" 
+                                  : "bg-slate-100 text-slate-600 border-slate-200"
+                              )}
+                            >
+                              {profile.workingStatus}
+                            </span>
+                          )}
+                          <div
+                            className={cn(
+                              "inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border text-[10px] font-bold uppercase tracking-wider",
+                              rep.tier === 'Grandmaster'
+                                ? "bg-yellow-50 text-amber-700 border-amber-100"
+                                : rep.tier === 'Architect'
+                                ? "bg-blue-50 text-blue-700 border-blue-100"
+                                : "bg-slate-100 text-slate-600 border-slate-200"
+                            )}
+                          >
+                            <span>{rep.tier}</span>
+                            <span className="text-slate-300">•</span>
+                            <span>{rep.score} pts</span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="relative flex flex-col sm:flex-row gap-6 items-center sm:items-start pt-10 sm:pt-16 text-center sm:text-left">
                         <div className="flex-shrink-0">
                              <div
                                className={cn(
@@ -377,47 +413,32 @@ const ProfileDetails = () => {
                                       </div>
                                   )}
                                   {canEdit && profile.photoURL && (
-                                    <button
-                                      type="button"
-                                      onClick={openPhotoCrop}
-                                      className="absolute inset-0 flex items-center justify-center rounded-[1.6rem] bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity text-white text-xs font-semibold"
-                                    >
-                                      <Camera className="w-4 h-4 mr-1" />
-                                      Adjust
-                                    </button>
+                                    <div className="absolute inset-0 flex flex-col items-center justify-center rounded-[1.6rem] bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity text-white text-[11px] font-semibold gap-2">
+                                      <button
+                                        type="button"
+                                        onClick={openPhotoCrop}
+                                        className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20"
+                                      >
+                                        <Camera className="w-3.5 h-3.5" />
+                                        Adjust
+                                      </button>
+                                      <Link
+                                        to="/community/promote-profile?edit=1"
+                                        className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-white text-slate-900 hover:bg-slate-100"
+                                      >
+                                        <Edit2 className="w-10 h-3.5" />
+                                        Change photo
+                                      </Link>
+                                    </div>
                                   )}
                                 </div>
                             </div>
                         </div>
 
                         {/* Text Info */}
-                        <div className="flex-1 pt-2 sm:pt-8 w-full">
-                            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-3 mb-2 justify-center sm:justify-start">
+                        <div className="flex-1 pt-4 sm:pt-10 w-full">
+                            <div className="flex flex-col items-center sm:items-start gap-2 mb-3">
                                 <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">{profile.fullName}</h1>
-                                {profile.workingStatus && (
-                                    <span className={cn(
-                                        "px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide border",
-                                        profile.workingStatus === "Open to Work" 
-                                            ? "bg-emerald-50 text-emerald-700 border-emerald-100" 
-                                            : "bg-slate-100 text-slate-600 border-slate-200"
-                                    )}>
-                                        {profile.workingStatus}
-                                    </span>
-                                )}
-                                <div
-                                  className={cn(
-                                    "inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border text-[10px] font-bold uppercase tracking-wider",
-                                    rep.tier === 'Grandmaster'
-                                      ? "bg-yellow-50 text-amber-700 border-amber-100"
-                                      : rep.tier === 'Architect'
-                                      ? "bg-blue-50 text-blue-700 border-blue-100"
-                                      : "bg-slate-100 text-slate-600 border-slate-200"
-                                  )}
-                                >
-                                  <span>{rep.tier}</span>
-                                  <span className="text-slate-300">•</span>
-                                  <span>{rep.score} pts</span>
-                                </div>
                             </div>
                             
                             <p className="text-lg text-slate-500 font-medium mb-5 flex flex-wrap justify-center sm:justify-start items-center gap-2">
@@ -681,6 +702,7 @@ const ProfileDetails = () => {
                     ref={photoCropImageRef}
                     src={photoCropImageSrc}
                     alt="Crop"
+                    crossOrigin="anonymous"
                     className="absolute inset-0 m-auto select-none"
                     style={{
                       transform: `translate3d(${photoCropOffset.x}px, ${photoCropOffset.y}px, 0) scale(${photoCropZoom})`,

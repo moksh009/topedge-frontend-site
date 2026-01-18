@@ -163,9 +163,6 @@ A curated AI community where engineers share automations, sell workflows, and co
             {(() => {
               const myProfiles = profiles.filter(p => (user?.uid || '') === (p.id || p.uid));
               const otherProfiles = profiles.filter(p => (user?.uid || '') !== (p.id || p.uid));
-              const isPreLaunch = new Date() < new Date('2026-01-29');
-              const isAdmin = isAdminEmail(user?.email);
-              const showGate = isPreLaunch && !isAdmin;
               return (
                 <>
                   {myProfiles.length > 0 && (
@@ -230,7 +227,7 @@ A curated AI community where engineers share automations, sell workflows, and co
                     </motion.div>
                   )}
                   <LaunchGate
-                    active={showGate}
+                    active={false}
                     title="Profiles visible after launch"
                     description="You can add your profile now. Listings unlock on launch day."
                   >
@@ -239,8 +236,7 @@ A curated AI community where engineers share automations, sell workflows, and co
                       initial="hidden"
                       whileInView="show"
                       viewport={{ once: true, margin: "-100px" }}
-
-                      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-h-[500px] md:max-h-none overflow-hidden"
+                      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
                     >
                       {otherProfiles.map((p, i) => (
                         <motion.div
@@ -403,8 +399,7 @@ A curated AI community where engineers share automations, sell workflows, and co
                     description="Promote your resource now. Marketplace unlocks on launch day."
                     dark
                   >
-                    {/* CHANGED: Added max-h-[500px] and overflow-hidden on mobile to prevent huge gap */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-h-[550px] md:max-h-none overflow-hidden">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                       {otherResources.map((r, i) => (
                         <motion.div
                           key={r.id || i}
