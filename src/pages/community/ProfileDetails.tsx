@@ -1,21 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import CommunityLayout from '@/components/community/layout/CommunityLayout';
 import CommunitySEO from '@/components/community/CommunitySEO';
 import { motion, AnimatePresence } from 'framer-motion';
-import { doc, getDoc, collection, query, where, getDocs, orderBy, deleteDoc } from 'firebase/firestore';
+import { doc, getDoc, collection, query, where, getDocs, orderBy, deleteDoc, setDoc } from 'firebase/firestore';
 import { db } from '@/services/firebase';
 import { UserProfile } from '@/types/user';
 import { 
   ArrowLeft, Loader2, Edit2, Globe, Mail, MapPin, Briefcase, 
   User, Building2, Brain, Phone, Calendar, 
-  Linkedin, Github, Zap, CheckCircle2, Youtube, Instagram, Trash2
+  Linkedin, Github, Zap, CheckCircle2, Youtube, Instagram, Trash2, Camera
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { cn } from '@/lib/utils';
 import { isAdminEmail } from '@/utils/admin';
 import { calculateReputation } from '@/utils/reputation';
 import toast from 'react-hot-toast';
+
+const CLOUD_NAME = "dn9gh1goq";
+const UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || "YOUR_UPLOAD_PRESET_HERE";
 
 interface Resource {
   id: string;
@@ -36,6 +39,36 @@ const ProfileDetails = () => {
   const [loading, setLoading] = useState(true);
   const [showDeleteProfile, setShowDeleteProfile] = useState(false);
   const [deletingProfile, setDeletingProfile] = useState(false);
+  const [isPhotoCropOpen, setIsPhotoCropOpen] = useState(false);
+  const [photoCropImageSrc, setPhotoCropImageSrc] = useState<string | null>(null);
+  const [photoCropZoom, setPhotoCropZoom] = useState(1);
+  const [photoCropOffset, setPhotoCropOffset] = useState({ x: 0, y: 0 });
+  const [isPhotoDragging, setIsPhotoDragging] = useState(false);
+  const [uploadingPhoto, setUploadingPhoto] = useState(false);
+  const photoCropImageRef = useRef<HTMLImageElement | null>(null);
+  const photoDragStartRef = useRef<{ x: number; y: number } | null>(null);
+
+  const clampProfileOffset = (next: { x: number; y: number }, zoom: number) => {
+    const img = photoCropImageRef.current;
+    if (!img) return next;
+    const canvasSize = 288;
+    const naturalWidth = img.naturalWidth;
+    const naturalHeight = img.naturalHeight;
+    if (!naturalWidth || !naturalHeight) return next;
+    const baseScale = Math.max(canvasSize / naturalWidth, canvasSize / naturalHeight);
+    const scale = baseScale * zoom;
+    const scaledWidth = naturalWidth * scale;
+    const scaledHeight = naturalHeight * scale;
+    const maxX = Math.max(0, (scaledWidth - canvasSize) / 2);
+    const maxY = Math.max(0, (scaledHeight - canvasSize) / 2);
+    let x = next.x;
+    let y = next.y;
+    if (x > maxX) x = maxX;
+    if (x < -maxX) x = -maxX;
+    if (y > maxY) y = maxY;
+    if (y < -maxY) y = -maxY;
+    return { x, y };
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -112,6 +145,110 @@ const ProfileDetails = () => {
     },
     repResources
   );
+
+  const openPhotoCrop = () => {
+    if (!profile?.photoURL) return;
+    setPhotoCropImageSrc(profile.photoURL);
+    setIsPhotoCropOpen(true);
+    setPhotoCropZoom(1);
+    setPhotoCropOffset({ x: 0, y: 0 });
+  };
+
+  const handlePhotoCropPointerDown = (
+    e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
+  ) => {
+    e.preventDefault();
+    setIsPhotoDragging(true);
+    const point = 'touches' in e ? e.touches[0] : (e as React.MouseEvent);
+    photoDragStartRef.current = { x: point.clientX, y: point.clientY };
+  };
+
+  const handlePhotoCropPointerMove = (
+    e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
+  ) => {
+    if (!isPhotoDragging || !photoDragStartRef.current) return;
+    const point = 'touches' in e ? e.touches[0] : (e as React.MouseEvent);
+    const dx = point.clientX - photoDragStartRef.current.x;
+    const dy = point.clientY - photoDragStartRef.current.y;
+    photoDragStartRef.current = { x: point.clientX, y: point.clientY };
+    setPhotoCropOffset(prev =>
+      clampProfileOffset({ x: prev.x + dx, y: prev.y + dy }, photoCropZoom)
+    );
+  };
+
+  const handlePhotoCropPointerUp = () => {
+    setIsPhotoDragging(false);
+    photoDragStartRef.current = null;
+  };
+
+  const handlePhotoCropSave = () => {
+    if (!photoCropImageSrc || !profile || !profile.uid) return;
+    const img = photoCropImageRef.current;
+    if (!img) return;
+    const canvasSize = 288;
+    const canvas = document.createElement('canvas');
+    canvas.width = canvasSize;
+    canvas.height = canvasSize;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    const naturalWidth = img.naturalWidth;
+    const naturalHeight = img.naturalHeight;
+    if (!naturalWidth || !naturalHeight) return;
+    const baseScale = Math.max(canvasSize / naturalWidth, canvasSize / naturalHeight);
+    const scale = baseScale * photoCropZoom;
+    ctx.clearRect(0, 0, canvasSize, canvasSize);
+    ctx.save();
+    ctx.translate(canvasSize / 2 + photoCropOffset.x, canvasSize / 2 + photoCropOffset.y);
+    ctx.scale(scale, scale);
+    ctx.drawImage(img, -naturalWidth / 2, -naturalHeight / 2);
+    ctx.restore();
+    canvas.toBlob(
+      blob => {
+        if (!blob) {
+          toast.error("Failed to process image");
+          return;
+        }
+        if (!UPLOAD_PRESET) {
+          toast.error("Upload config missing");
+          return;
+        }
+        setUploadingPhoto(true);
+        const data = new FormData();
+        data.append("file", blob, "profile-photo.jpg");
+        data.append("upload_preset", UPLOAD_PRESET);
+        data.append("cloud_name", CLOUD_NAME);
+        (async () => {
+          try {
+            const response = await fetch(
+              `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
+              { method: "POST", body: data }
+            );
+            const result = await response.json();
+            if (result.secure_url) {
+              const newUrl = result.secure_url as string;
+              await setDoc(doc(db, 'public_profiles', profile.uid), { photoURL: newUrl }, { merge: true });
+              setProfile(prev => (prev ? { ...prev, photoURL: newUrl } : prev));
+              toast.success("Profile photo updated");
+            } else {
+              toast.error("Failed to upload photo");
+            }
+          } catch (err) {
+            toast.error("Failed to upload photo");
+          } finally {
+            setUploadingPhoto(false);
+            setIsPhotoCropOpen(false);
+            setPhotoCropImageSrc(null);
+            setPhotoCropZoom(1);
+            setPhotoCropOffset({ x: 0, y: 0 });
+            setIsPhotoDragging(false);
+            photoDragStartRef.current = null;
+          }
+        })();
+      },
+      'image/jpeg',
+      0.9
+    );
+  };
 
   const handleDeleteProfile = async () => {
     if (!id || !user || !isAdmin || deletingProfile) return;
@@ -231,13 +368,25 @@ const ProfileDetails = () => {
                                    : "ring-2 ring-slate-200"
                                )}
                              >
-                                {profile.photoURL ? (
-                                    <img src={profile.photoURL} alt={profile.fullName} className="w-full h-full object-cover rounded-[1.6rem] bg-slate-100" />
-                                ) : (
-                                    <div className="w-full h-full flex items-center justify-center bg-slate-50 rounded-[1.6rem] text-slate-300">
-                                        <User className="w-12 h-12" />
-                                    </div>
-                                )}
+                                <div className="relative group">
+                                  {profile.photoURL ? (
+                                      <img src={profile.photoURL} alt={profile.fullName} className="w-full h-full object-cover rounded-[1.6rem] bg-slate-100" />
+                                  ) : (
+                                      <div className="w-full h-full flex items-center justify-center bg-slate-50 rounded-[1.6rem] text-slate-300">
+                                          <User className="w-12 h-12" />
+                                      </div>
+                                  )}
+                                  {canEdit && profile.photoURL && (
+                                    <button
+                                      type="button"
+                                      onClick={openPhotoCrop}
+                                      className="absolute inset-0 flex items-center justify-center rounded-[1.6rem] bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity text-white text-xs font-semibold"
+                                    >
+                                      <Camera className="w-4 h-4 mr-1" />
+                                      Adjust
+                                    </button>
+                                  )}
+                                </div>
                             </div>
                         </div>
 
@@ -497,6 +646,88 @@ const ProfileDetails = () => {
           </motion.div>
         </div>
       </div>
+      <AnimatePresence>
+        {isPhotoCropOpen && photoCropImageSrc && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
+              onClick={() => !uploadingPhoto && setIsPhotoCropOpen(false)}
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl p-6 z-10"
+            >
+              <h2 className="text-lg font-bold text-slate-900 mb-2">Adjust profile photo</h2>
+              <p className="text-sm text-slate-500 mb-4">
+                Drag to reposition and use the slider to zoom.
+              </p>
+              <div
+                className="mx-auto mb-4 w-72 h-72 rounded-2xl bg-slate-900 overflow-hidden relative touch-none"
+                onMouseDown={handlePhotoCropPointerDown}
+                onMouseMove={handlePhotoCropPointerMove}
+                onMouseUp={handlePhotoCropPointerUp}
+                onMouseLeave={handlePhotoCropPointerUp}
+                onTouchStart={handlePhotoCropPointerDown}
+                onTouchMove={handlePhotoCropPointerMove}
+                onTouchEnd={handlePhotoCropPointerUp}
+              >
+                {photoCropImageSrc && (
+                  <img
+                    ref={photoCropImageRef}
+                    src={photoCropImageSrc}
+                    alt="Crop"
+                    className="absolute inset-0 m-auto select-none"
+                    style={{
+                      transform: `translate3d(${photoCropOffset.x}px, ${photoCropOffset.y}px, 0) scale(${photoCropZoom})`,
+                      transformOrigin: 'center center'
+                    }}
+                    draggable={false}
+                  />
+                )}
+              </div>
+              <div className="mb-6">
+                <input
+                  type="range"
+                  min={1}
+                  max={3}
+                  step={0.05}
+                  value={photoCropZoom}
+                  onChange={e => {
+                    const z = parseFloat(e.target.value);
+                    setPhotoCropZoom(z);
+                    setPhotoCropOffset(prev => clampProfileOffset(prev, z));
+                  }}
+                  className="w-full accent-slate-900"
+                />
+              </div>
+              <div className="flex justify-end gap-3">
+                <button
+                  type="button"
+                  onClick={() => setIsPhotoCropOpen(false)}
+                  disabled={uploadingPhoto}
+                  className="px-4 py-2.5 rounded-xl border border-slate-200 text-sm font-bold text-slate-700 hover:bg-slate-50 disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={handlePhotoCropSave}
+                  disabled={uploadingPhoto}
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-900 text-sm font-bold text-white hover:bg-slate-800 shadow-sm disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  {uploadingPhoto ? <Loader2 className="w-4 h-4 animate-spin" /> : <Camera className="w-4 h-4" />}
+                  Save
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
       <AnimatePresence>
         {showDeleteProfile && (
           <div className="fixed inset-0 z-50 flex items-center justify-center px-4">

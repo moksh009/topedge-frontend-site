@@ -165,7 +165,7 @@ const OpenSource = () => {
               {(() => {
                 const myResources = filteredResources.filter(r => r.userId === (user?.uid || ''));
                 const otherResources = filteredResources.filter(r => r.userId !== (user?.uid || ''));
-                const isPreLaunch = new Date() < new Date('2026-01-19');
+                const isPreLaunch = new Date() < new Date('2026-01-29');
                 const isAdmin = isAdminEmail(user?.email);
                 const showGate = isPreLaunch && !isAdmin;
                 return (
@@ -230,7 +230,7 @@ const OpenSource = () => {
                                      to={`/community/resource/${resource.id}`}
                                      className="flex items-center gap-1 text-xs font-bold text-slate-900 hover:text-slate-600 transition-colors"
                                    >
-                                     View Code <ArrowRight className="w-3 h-3" />
+                                     View Card <ArrowRight className="w-3 h-3" />
                                    </Link>
                                 </div>
                               </motion.div>
@@ -306,7 +306,7 @@ const OpenSource = () => {
                                    to={`/community/resource/${resource.id}`}
                                    className="flex items-center gap-1 text-xs font-bold text-slate-900 hover:text-slate-600 transition-colors"
                                  >
-                                   View Code <ArrowRight className="w-3 h-3" />
+                                   View Card <ArrowRight className="w-3 h-3" />
                                  </Link>
                               </div>
                             </motion.div>

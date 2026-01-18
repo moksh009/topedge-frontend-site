@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import CommunityLayout from '@/components/community/layout/CommunityLayout';
 import { 
   ArrowLeft, Loader2, Edit2, Globe, Phone, User, 
@@ -6,12 +6,13 @@ import {
   Youtube, Instagram, Github, Linkedin, Mail
 } from 'lucide-react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { doc, setDoc, serverTimestamp, getDoc } from 'firebase/firestore';
 import { db } from '@/services/firebase';
 import { useAuth } from '@/contexts/AuthContext';
 import { UserProfile } from '@/types/user';
 import toast from 'react-hot-toast';
 import { cn } from '@/lib/utils';
+import { motion, AnimatePresence } from 'framer-motion';
 
 // --- CONFIGURATION ---
 const CLOUD_NAME = "dn9gh1goq"; 
@@ -92,6 +93,13 @@ const PromoteProfile = () => {
   
   const [saving, setSaving] = useState(false);
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
+  const [isPhotoCropOpen, setIsPhotoCropOpen] = useState(false);
+  const [photoCropImageSrc, setPhotoCropImageSrc] = useState<string | null>(null);
+  const [photoCropZoom, setPhotoCropZoom] = useState(1);
+  const [photoCropOffset, setPhotoCropOffset] = useState({ x: 0, y: 0 });
+  const [isPhotoDragging, setIsPhotoDragging] = useState(false);
+  const photoCropImageRef = useRef<HTMLImageElement | null>(null);
+  const photoDragStartRef = useRef<{ x: number; y: number } | null>(null);
 
   // Phone State Management
   const [phoneCode, setPhoneCode] = useState("+234"); // Default to Nigeria
@@ -120,6 +128,29 @@ const PromoteProfile = () => {
   });
 
   const [skillsInput, setSkillsInput] = useState('');
+  const [isDirty, setIsDirty] = useState(false);
+
+  const clampProfileOffset = (next: { x: number; y: number }, zoom: number) => {
+    const img = photoCropImageRef.current;
+    if (!img) return next;
+    const canvasSize = 288;
+    const naturalWidth = img.naturalWidth;
+    const naturalHeight = img.naturalHeight;
+    if (!naturalWidth || !naturalHeight) return next;
+    const baseScale = Math.max(canvasSize / naturalWidth, canvasSize / naturalHeight);
+    const scale = baseScale * zoom;
+    const scaledWidth = naturalWidth * scale;
+    const scaledHeight = naturalHeight * scale;
+    const maxX = Math.max(0, (scaledWidth - canvasSize) / 2);
+    const maxY = Math.max(0, (scaledHeight - canvasSize) / 2);
+    let x = next.x;
+    let y = next.y;
+    if (x > maxX) x = maxX;
+    if (x < -maxX) x = -maxX;
+    if (y > maxY) y = maxY;
+    if (y < -maxY) y = -maxY;
+    return { x, y };
+  };
 
   const normalizeUrl = (value?: string) => {
     const v = (value || '').trim();
@@ -135,46 +166,97 @@ const PromoteProfile = () => {
     }
   }, [authLoading, user, navigate]);
 
-  // Load Data
   useEffect(() => {
-    const editParam = new URLSearchParams(location.search).get('edit') === '1';
-    
-    if (userProfile) {
-      setFormData({
-        ...userProfile,
-        aiSkills: userProfile.aiSkills || [],
-        location: userProfile.location || '',
-        youtube: (userProfile as any).youtube || '',
-        instagram: (userProfile as any).instagram || ''
-      });
-      setSkillsInput(userProfile.aiSkills?.join(', ') || '');
+    const loadProfile = async () => {
+      const editParam = new URLSearchParams(location.search).get('edit') === '1';
+      if (!user) return;
 
-      // Parse Phone Number
-      if (userProfile.phoneNumber) {
-        // Try to split by space first (our format: "+Code Number")
-        const parts = userProfile.phoneNumber.split(' ');
-        if (parts.length === 2) {
-            setPhoneCode(parts[0]);
-            setPhoneDigits(parts[1]);
-        } else {
-            // Fallback: If just a number, try to guess or just set digits
-            setPhoneDigits(userProfile.phoneNumber.replace(/[^0-9]/g, ''));
+      try {
+        const snap = await getDoc(doc(db, 'public_profiles', user.uid));
+        const data = (snap.exists() ? snap.data() : userProfile) as any | null;
+
+        if (data) {
+          setFormData(prev => ({
+            ...prev,
+            ...data,
+            aiSkills: data.aiSkills || [],
+            location: data.location || '',
+            youtube: data.youtube || '',
+            instagram: data.instagram || '',
+            contactDetails: data.contactDetails || user.email || ''
+          }));
+          setSkillsInput((data.aiSkills || []).join(', ') || '');
+
+          if (data.phoneNumber) {
+            const parts = String(data.phoneNumber).split(' ');
+            if (parts.length === 2) {
+              setPhoneCode(parts[0]);
+              setPhoneDigits(parts[1]);
+            } else {
+              setPhoneDigits(String(data.phoneNumber).replace(/[^0-9]/g, ''));
+            }
+          }
+
+          if (editParam) setIsEditing(true);
+          return;
         }
+      } catch (error) {
+        console.error('Error loading profile for edit:', error);
       }
 
-      if (editParam) setIsEditing(true); 
-    } else if (user) {
-      setFormData(prev => ({
-        ...prev,
-        fullName: user.displayName || '',
-        photoURL: user.photoURL || '',
-        contactDetails: user.email || ''
-      }));
-      setIsEditing(true);
-    }
-  }, [userProfile, user, location.search]);
+      if (user) {
+        setFormData(prev => ({
+          ...prev,
+          fullName: user.displayName || '',
+          photoURL: user.photoURL || '',
+          contactDetails: user.email || ''
+        }));
+        setIsEditing(true);
+      }
+    };
 
-  // Handlers
+    if (!authLoading) {
+      loadProfile();
+    }
+  }, [authLoading, user, userProfile, location.search]);
+
+  const buildProfilePayload = () => {
+    if (!user) return null;
+    const skills = skillsInput.split(',').map(s => s.trim()).filter(s => s);
+    const finalPhoneNumber = phoneDigits ? `${phoneCode} ${phoneDigits}` : "";
+    const profileData: UserProfile & { youtube?: string; instagram?: string } = {
+      uid: user.uid,
+      email: user.email || '',
+      fullName: formData.fullName || '',
+      photoURL: formData.photoURL || '',
+      bannerURL: formData.bannerURL || undefined,
+      location: formData.location || '',
+      age: (formData as any).age ? Number((formData as any).age) : undefined,
+      gender: formData.gender || '',
+      buildingInAI: formData.buildingInAI || '',
+      companyName: formData.companyName || '',
+      websiteURL: normalizeUrl(formData.websiteURL),
+      description: formData.description || '',
+      currentWork: formData.currentWork || '',
+      aiSkills: skills,
+      workingStatus: formData.workingStatus || '',
+      networkingIntent: formData.networkingIntent || [],
+      contactDetails: formData.contactDetails || '',
+      phoneNumber: finalPhoneNumber,
+      createdAt: userProfile?.createdAt || serverTimestamp(),
+      updatedAt: serverTimestamp(),
+      linkedin: normalizeUrl(formData.linkedin) || undefined,
+      github: normalizeUrl(formData.github) || undefined,
+      youtube: normalizeUrl(formData.youtube) || undefined,
+      instagram: normalizeUrl(formData.instagram) || undefined,
+      bio: ''
+    };
+    const sanitized = Object.fromEntries(
+      Object.entries(profileData).filter(([, v]) => v !== undefined)
+    );
+    return sanitized;
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
     if (type === 'checkbox') {
@@ -183,6 +265,7 @@ const PromoteProfile = () => {
     } else {
         setFormData(prev => ({ ...prev, [name]: value }));
     }
+    setIsDirty(true);
   };
 
   // Strict Phone Handler
@@ -191,8 +274,23 @@ const PromoteProfile = () => {
     // Only allow digits, max 10
     if (/^\d{0,10}$/.test(value)) {
         setPhoneDigits(value);
+        setIsDirty(true);
     }
   };
+
+  useEffect(() => {
+    if (!user || !isDirty) return;
+    const timer = setTimeout(async () => {
+      try {
+        const payload = buildProfilePayload();
+        if (!payload) return;
+        await setDoc(doc(db, 'public_profiles', user.uid), payload, { merge: true });
+      } catch (error) {
+        console.error('Auto-save profile failed:', error);
+      }
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, [user, isDirty, formData, phoneDigits, phoneCode, skillsInput]);
 
   // --- CANCEL HANDLER (REDIRECTS TO PROFILE) ---
   const handleCancel = () => {
@@ -218,44 +316,9 @@ const PromoteProfile = () => {
     setSaving(true);
 
     try {
-      const skills = skillsInput.split(',').map(s => s.trim()).filter(s => s);
-      
-      // Combine phone code and digits
-      const finalPhoneNumber = phoneDigits ? `${phoneCode} ${phoneDigits}` : "";
-
-      const profileData: UserProfile & { youtube?: string, instagram?: string } = {
-         uid: user.uid,
-         email: user.email || '',
-         fullName: formData.fullName || '',
-         photoURL: formData.photoURL || '',
-         bannerURL: formData.bannerURL || undefined,
-         location: formData.location || '',
-         age: formData.age ? Number(formData.age) : undefined,
-         gender: formData.gender || '',
-         buildingInAI: formData.buildingInAI || '',
-         companyName: formData.companyName || '',
-         websiteURL: normalizeUrl(formData.websiteURL),
-         description: formData.description || '',
-         currentWork: formData.currentWork || '',
-         aiSkills: skills,
-         workingStatus: formData.workingStatus || '',
-         networkingIntent: formData.networkingIntent || [],
-         contactDetails: formData.contactDetails || '',
-         phoneNumber: finalPhoneNumber, // Save combined
-         createdAt: userProfile?.createdAt || serverTimestamp(),
-         updatedAt: serverTimestamp(),
-         linkedin: normalizeUrl(formData.linkedin) || undefined,
-         github: normalizeUrl(formData.github) || undefined,
-         youtube: normalizeUrl(formData.youtube) || undefined,
-         instagram: normalizeUrl(formData.instagram) || undefined,
-         bio: ''
-      };
-
-      const sanitized = Object.fromEntries(
-        Object.entries(profileData).filter(([, v]) => v !== undefined)
-      );
-
-      await setDoc(doc(db, 'public_profiles', user.uid), sanitized);
+      const payload = buildProfilePayload();
+      if (!payload) return;
+      await setDoc(doc(db, 'public_profiles', user.uid), payload);
       await refreshProfile();
       toast.success('Profile saved successfully');
       setIsEditing(false);
@@ -271,23 +334,115 @@ const PromoteProfile = () => {
   };
 
   // --- CLOUDINARY HANDLERS ---
-  const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file || !user) return;
-    if (!UPLOAD_PRESET) { toast.error("Upload config missing"); return; }
-    try {
-      setUploadingPhoto(true);
-      const data = new FormData();
-      data.append("file", file);
-      data.append("upload_preset", UPLOAD_PRESET); 
-      data.append("cloud_name", CLOUD_NAME);
-      const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, { method: "POST", body: data });
-      const result = await response.json();
-      if (result.secure_url) {
-        setFormData(prev => ({ ...prev, photoURL: result.secure_url }));
-        toast.success('Photo uploaded');
-      }
-    } catch (err) { toast.error('Failed to upload photo'); } finally { setUploadingPhoto(false); }
+
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error("File size should be less than 5MB");
+      return;
+    }
+
+    const src = URL.createObjectURL(file);
+    setPhotoCropImageSrc(src);
+    setIsPhotoCropOpen(true);
+    setPhotoCropZoom(1);
+    setPhotoCropOffset({ x: 0, y: 0 });
+    if (e.target) e.target.value = '';
+  };
+
+  const handlePhotoCropPointerDown = (
+    e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
+  ) => {
+    e.preventDefault();
+    setIsPhotoDragging(true);
+    const point = 'touches' in e ? e.touches[0] : (e as React.MouseEvent);
+    photoDragStartRef.current = { x: point.clientX, y: point.clientY };
+  };
+
+  const handlePhotoCropPointerMove = (
+    e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
+  ) => {
+    if (!isPhotoDragging || !photoDragStartRef.current) return;
+    const point = 'touches' in e ? e.touches[0] : (e as React.MouseEvent);
+    const dx = point.clientX - photoDragStartRef.current.x;
+    const dy = point.clientY - photoDragStartRef.current.y;
+    photoDragStartRef.current = { x: point.clientX, y: point.clientY };
+    setPhotoCropOffset(prev =>
+      clampProfileOffset({ x: prev.x + dx, y: prev.y + dy }, photoCropZoom)
+    );
+  };
+
+  const handlePhotoCropPointerUp = () => {
+    setIsPhotoDragging(false);
+    photoDragStartRef.current = null;
+  };
+
+  const handlePhotoCropSave = () => {
+    if (!photoCropImageSrc || !user) return;
+    const img = photoCropImageRef.current;
+    if (!img) return;
+    const canvasSize = 288;
+    const canvas = document.createElement('canvas');
+    canvas.width = canvasSize;
+    canvas.height = canvasSize;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    const naturalWidth = img.naturalWidth;
+    const naturalHeight = img.naturalHeight;
+    if (!naturalWidth || !naturalHeight) return;
+    const baseScale = Math.max(canvasSize / naturalWidth, canvasSize / naturalHeight);
+    const scale = baseScale * photoCropZoom;
+    ctx.clearRect(0, 0, canvasSize, canvasSize);
+    ctx.save();
+    ctx.translate(canvasSize / 2 + photoCropOffset.x, canvasSize / 2 + photoCropOffset.y);
+    ctx.scale(scale, scale);
+    ctx.drawImage(img, -naturalWidth / 2, -naturalHeight / 2);
+    ctx.restore();
+    canvas.toBlob(
+      blob => {
+        if (!blob) {
+          toast.error("Failed to process image");
+          return;
+        }
+        if (!UPLOAD_PRESET) {
+          toast.error("Upload config missing");
+          return;
+        }
+        setUploadingPhoto(true);
+        const data = new FormData();
+        data.append("file", blob, "profile-photo.jpg");
+        data.append("upload_preset", UPLOAD_PRESET);
+        data.append("cloud_name", CLOUD_NAME);
+        (async () => {
+          try {
+            const response = await fetch(
+              `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
+              { method: "POST", body: data }
+            );
+            const result = await response.json();
+            if (result.secure_url) {
+              setFormData(prev => ({ ...prev, photoURL: result.secure_url }));
+              toast.success("Photo uploaded");
+            } else {
+              toast.error("Failed to upload photo");
+            }
+          } catch (err) {
+            toast.error("Failed to upload photo");
+          } finally {
+            setUploadingPhoto(false);
+            setIsPhotoCropOpen(false);
+            setPhotoCropImageSrc(null);
+            setPhotoCropZoom(1);
+            setPhotoCropOffset({ x: 0, y: 0 });
+            setIsPhotoDragging(false);
+            photoDragStartRef.current = null;
+          }
+        })();
+      },
+      'image/jpeg',
+      0.9
+    );
   };
 
   const handleBannerUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -540,6 +695,88 @@ const PromoteProfile = () => {
            </form>
         </div>
       </div>
+      <AnimatePresence>
+        {isPhotoCropOpen && photoCropImageSrc && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
+              onClick={() => !uploadingPhoto && setIsPhotoCropOpen(false)}
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl p-6 z-10"
+            >
+              <h2 className="text-lg font-bold text-slate-900 mb-2">Adjust profile photo</h2>
+              <p className="text-sm text-slate-500 mb-4">
+                Drag to reposition and use the slider to zoom.
+              </p>
+              <div
+                className="mx-auto mb-4 w-72 h-72 rounded-2xl bg-slate-900 overflow-hidden relative touch-none"
+                onMouseDown={handlePhotoCropPointerDown}
+                onMouseMove={handlePhotoCropPointerMove}
+                onMouseUp={handlePhotoCropPointerUp}
+                onMouseLeave={handlePhotoCropPointerUp}
+                onTouchStart={handlePhotoCropPointerDown}
+                onTouchMove={handlePhotoCropPointerMove}
+                onTouchEnd={handlePhotoCropPointerUp}
+              >
+                {photoCropImageSrc && (
+                  <img
+                    ref={photoCropImageRef}
+                    src={photoCropImageSrc}
+                    alt="Crop"
+                    className="absolute inset-0 m-auto select-none"
+                    style={{
+                      transform: `translate3d(${photoCropOffset.x}px, ${photoCropOffset.y}px, 0) scale(${photoCropZoom})`,
+                      transformOrigin: 'center center'
+                    }}
+                    draggable={false}
+                  />
+                )}
+              </div>
+              <div className="mb-6">
+                <input
+                  type="range"
+                  min={1}
+                  max={3}
+                  step={0.05}
+                  value={photoCropZoom}
+                  onChange={e => {
+                    const z = parseFloat(e.target.value);
+                    setPhotoCropZoom(z);
+                    setPhotoCropOffset(prev => clampProfileOffset(prev, z));
+                  }}
+                  className="w-full accent-slate-900"
+                />
+              </div>
+              <div className="flex justify-end gap-3">
+                <button
+                  type="button"
+                  onClick={() => setIsPhotoCropOpen(false)}
+                  disabled={uploadingPhoto}
+                  className="px-4 py-2.5 rounded-xl border border-slate-200 text-sm font-bold text-slate-700 hover:bg-slate-50 disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={handlePhotoCropSave}
+                  disabled={uploadingPhoto}
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-900 text-sm font-bold text-white hover:bg-slate-800 shadow-sm disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  {uploadingPhoto ? <Loader2 className="w-4 h-4 animate-spin" /> : <Camera className="w-4 h-4" />}
+                  Save
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </CommunityLayout>
   );
 };

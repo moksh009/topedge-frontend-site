@@ -16,8 +16,8 @@ interface LinkItem {
   isNew?: boolean;
 }
 
-// Target Launch Date: Jan 19, 2026
-const LAUNCH_DATE = new Date('2026-01-19T00:00:00');
+// Target Launch Date: Jan 29, 2026
+const LAUNCH_DATE = new Date('2026-01-29T00:00:00');
 
 // Custom Discord Icon
 const DiscordIcon = ({ className }: { className?: string }) => (

@@ -6,7 +6,7 @@ import { db } from '@/services/firebase';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { collection, getDocs, limit, orderBy, query } from 'firebase/firestore';
-import { ArrowRight, Code2, Sparkles, MoveRight, Terminal } from 'lucide-react';
+import { ArrowRight, Code2, Sparkles, MoveRight, Terminal, User } from 'lucide-react';
 import LaunchGate from '@/components/ui/LaunchGate';
 import { useAuth } from '@/contexts/AuthContext';
 import { isAdminEmail } from '@/utils/admin';
@@ -104,26 +104,42 @@ const CommunityHome = () => {
 A curated AI community where engineers share automations, sell workflows, and collaborate with serious builders working on production-grade systems.
               </p>
 
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-5 px-6">
-                <PremiumButton to="/community/automation-hub" variant="primary" className="w-20% sm:w-auto">
-                  Explore Hub <ArrowRight className="w-4 h-4" />
-                </PremiumButton>
-                <div className="flex flex-col items-center sm:items-start gap-3">
-                  {user && (!userProfile || !userProfile.fullName) && (
-                    <div className="max-w-xs sm:max-w-sm rounded-2xl border border-amber-200 bg-amber-50/90 px-4 py-3 shadow-sm text-left">
-                      <p className="text-xs sm:text-sm font-semibold text-amber-900">
-                        Your profile isn't visible to community members, let's setup your profile first and boost your visibility.
-                      </p>
-                      <div className="mt-2 flex items-center gap-2 text-[11px] sm:text-xs font-semibold text-amber-800">
-                        <span>Start with Promote Profile</span>
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </div>
-                    </div>
-                  )}
-                  <PremiumButton to="/community/promote-profile" variant="secondary" className="w-20% sm:w-auto">
+              <div className="flex flex-col items-center gap-4 px-6">
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
+                  <PremiumButton to="/community/automation-hub" variant="primary" className="w-full sm:w-auto">
+                    Explore Hub <ArrowRight className="w-4 h-4" />
+                  </PremiumButton>
+                  <PremiumButton to="/community/promote-profile" variant="secondary" className="w-full sm:w-auto">
                     Share Work
                   </PremiumButton>
                 </div>
+                {user && (!userProfile || !userProfile.fullName) && (
+                 <Link
+      to="/community/promote-profile"
+      className="
+        group relative flex w-full max-w-lg items-center justify-between
+        overflow-hidden rounded-2xl border border-indigo-100
+        bg-gradient-to-r from-white via-indigo-50/50 to-indigo-50
+        p-5 shadow-sm transition-all duration-300
+        hover:border-indigo-200 hover:shadow-md hover:to-indigo-100/60
+      "
+    >
+      {/* Text Section */}
+      <div className="flex flex-col gap-1 pr-4">
+        <h3 className="text-[15px] font-semibold text-slate-900 leading-tight">
+          Your profile isn't visible to community members.
+        </h3>
+        <p className="text-sm text-slate-500 leading-snug">
+          Let's setup your profile first and boost your visibility.
+        </p>
+      </div>
+
+      {/* Arrow Section - Vertically Centered */}
+      <div className="flex shrink-0 items-center justify-center rounded-full bg-white/60 p-2 shadow-sm ring-1 ring-indigo-100 transition-all duration-300 group-hover:translate-x-1 group-hover:bg-indigo-600 group-hover:ring-indigo-600">
+        <ArrowRight className="h-5 w-5 text-indigo-600 transition-colors duration-300 group-hover:text-white" />
+      </div>
+    </Link>
+                )}
               </div>
             </motion.div>
           </div>
@@ -147,7 +163,7 @@ A curated AI community where engineers share automations, sell workflows, and co
             {(() => {
               const myProfiles = profiles.filter(p => (user?.uid || '') === (p.id || p.uid));
               const otherProfiles = profiles.filter(p => (user?.uid || '') !== (p.id || p.uid));
-              const isPreLaunch = new Date() < new Date('2026-01-19');
+              const isPreLaunch = new Date() < new Date('2026-01-29');
               const isAdmin = isAdminEmail(user?.email);
               const showGate = isPreLaunch && !isAdmin;
               return (
@@ -323,7 +339,7 @@ A curated AI community where engineers share automations, sell workflows, and co
             {(() => {
               const myResources = resources.filter(r => (user?.uid || '') === r.userId);
               const otherResources = resources.filter(r => (user?.uid || '') !== r.userId);
-              const isPreLaunch = new Date() < new Date('2026-01-19');
+              const isPreLaunch = new Date() < new Date('2026-01-29');
               const isAdmin = isAdminEmail(user?.email);
               const showGate = isPreLaunch && !isAdmin;
               return (

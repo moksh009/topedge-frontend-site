@@ -125,8 +125,9 @@ const CommunityNavbar = () => {
     { label: 'Home', path: '/community/home', icon: Home, desc: 'Community Dashboard' },
     { label: 'Profiles', path: '/community/profiles', icon: Users, desc: 'Connect with Builders' },
     { label: 'Automation Hub', path: '/community/automation-hub', icon: Zap, desc: 'Tools & Workflows' },
-    { label: 'Requests', path: '/community/requests', icon: Briefcase, desc: 'Reverse Marketplace' },
     { label: 'Open Source', path: '/community/open-source', icon: BookOpen, desc: 'Library of Code' },
+    { label: 'Requests', path: '/community/requests', icon: Briefcase, desc: 'Reverse Marketplace' },
+    
     { label: 'Announcements', path: '/community/announcements', icon: Megaphone, desc: 'Latest Updates' },
     { label: 'Discord', path: '/community/discord', icon: MessageCircle, desc: 'Live Chat' },
   ];
@@ -171,7 +172,11 @@ const CommunityNavbar = () => {
                   {/* Notifications */}
                   <div className="relative">
                     <button 
-                      onClick={() => { setShowNotifications(!showNotifications); setShowProfileMenu(false); }}
+                      onClick={() => { 
+                        setShowNotifications(!showNotifications); 
+                        setShowProfileMenu(false); 
+                        setIsOpen(false);
+                      }}
                       className={cn(
                         "w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-all duration-200 active:scale-95",
                         showNotifications ? "bg-slate-900 text-white" : "hover:bg-slate-100 text-slate-600"
@@ -268,7 +273,11 @@ const CommunityNavbar = () => {
                   {/* Profile */}
                   <div className="relative">
                     <button 
-                      onClick={() => { setShowProfileMenu(!showProfileMenu); setShowNotifications(false); }}
+                      onClick={() => { 
+                        setShowProfileMenu(!showProfileMenu); 
+                        setShowNotifications(false); 
+                        setIsOpen(false);
+                      }}
                       className="w-9 h-9 sm:w-10 sm:h-10 rounded-full p-0.5 ring-2 ring-transparent hover:ring-slate-200 transition-all active:scale-95"
                     >
                       <img 
@@ -341,7 +350,11 @@ const CommunityNavbar = () => {
 
               {/* Menu Toggle Button */}
               <button 
-                onClick={() => setIsOpen(!isOpen)}
+                onClick={() => { 
+                  setIsOpen(!isOpen); 
+                  setShowProfileMenu(false); 
+                  setShowNotifications(false);
+                }}
                 className={cn(
                   "flex items-center gap-2 pl-3 sm:pl-4 pr-1.5 sm:pr-2 py-1.5 sm:py-2 rounded-full transition-all duration-300 border",
                   isOpen 

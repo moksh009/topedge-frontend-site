@@ -13,8 +13,8 @@ type Props = {
   dark?: boolean;
 };
 
-// Target Date: January 19, 2026
-const TARGET_DATE = new Date('2026-01-19T00:00:00');
+// Target Date: January 29, 2026
+const TARGET_DATE = new Date('2026-01-29T00:00:00');
 
 export default function LaunchGate({
   active = false,
@@ -127,7 +127,7 @@ export default function LaunchGate({
                   : "bg-white border-slate-200 text-slate-900"
               )}>
                 <Calendar className="w-3 h-3 sm:w-4 sm:h-4 text-indigo-500" />
-                <span>Launch: Jan 19, 2026</span>
+                <span>Launch: Jan 29, 2026</span>
               </div>
 
               {/* 2. Floating Lock Icon */}

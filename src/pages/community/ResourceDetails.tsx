@@ -77,11 +77,16 @@ const ResourceDetails = () => {
   const cropImageRef = useRef<HTMLImageElement | null>(null);
   const cropDragStartRef = useRef<{ x: number; y: number } | null>(null);
 
+  const COVER_PREVIEW_WIDTH = 288;
+  const COVER_PREVIEW_HEIGHT = 162;
+  const COVER_OUTPUT_WIDTH = 1280;
+  const COVER_OUTPUT_HEIGHT = 720;
+
   const clampCoverOffset = (next: { x: number; y: number }, zoom: number) => {
     const img = cropImageRef.current;
     if (!img) return next;
-    const cropWidth = 288;
-    const cropHeight = 162;
+    const cropWidth = COVER_PREVIEW_WIDTH;
+    const cropHeight = COVER_PREVIEW_HEIGHT;
     const naturalWidth = img.naturalWidth;
     const naturalHeight = img.naturalHeight;
     if (!naturalWidth || !naturalHeight) return next;
@@ -421,21 +426,25 @@ const ResourceDetails = () => {
     if (!cropImageSrc) return;
     const img = cropImageRef.current;
     if (!img) return;
-    const cropWidth = 288;
-    const cropHeight = 162;
+    const previewWidth = COVER_PREVIEW_WIDTH;
+    const previewHeight = COVER_PREVIEW_HEIGHT;
+    const outputWidth = COVER_OUTPUT_WIDTH;
+    const outputHeight = COVER_OUTPUT_HEIGHT;
     const canvas = document.createElement('canvas');
-    canvas.width = cropWidth;
-    canvas.height = cropHeight;
+    canvas.width = outputWidth;
+    canvas.height = outputHeight;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
     const naturalWidth = img.naturalWidth;
     const naturalHeight = img.naturalHeight;
     if (!naturalWidth || !naturalHeight) return;
-    const baseScale = Math.max(cropWidth / naturalWidth, cropHeight / naturalHeight);
-    const scale = baseScale * cropZoom;
-    ctx.clearRect(0, 0, cropWidth, cropHeight);
+    const baseScalePreview = Math.max(previewWidth / naturalWidth, previewHeight / naturalHeight);
+    const scale = baseScalePreview * cropZoom * (outputWidth / previewWidth);
+    const offsetNormX = cropOffset.x / previewWidth;
+    const offsetNormY = cropOffset.y / previewHeight;
+    ctx.clearRect(0, 0, outputWidth, outputHeight);
     ctx.save();
-    ctx.translate(cropWidth / 2 + cropOffset.x, cropHeight / 2 + cropOffset.y);
+    ctx.translate(outputWidth / 2 + offsetNormX * outputWidth, outputHeight / 2 + offsetNormY * outputHeight);
     ctx.scale(scale, scale);
     ctx.drawImage(img, -naturalWidth / 2, -naturalHeight / 2);
     ctx.restore();

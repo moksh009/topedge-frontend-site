@@ -415,15 +415,31 @@ const AutomationHub = () => {
 
                <div className="flex flex-col items-center lg:items-end gap-3 w-full">
                  {user && (!userProfile || !userProfile.fullName) && (
-                   <div className="w-full max-w-sm rounded-2xl border border-amber-200 bg-amber-50/90 px-4 py-3 shadow-sm text-left">
-                     <p className="text-xs sm:text-sm font-semibold text-amber-900">
-                       Your profile isn't visible to community members, let's setup your profile first and boost your visibility.
-                     </p>
-                     <div className="mt-2 flex items-center gap-2 text-[11px] sm:text-xs font-semibold text-amber-800">
-                       <span>Set up profile before promoting resources</span>
-                       <ArrowRight className="w-3.5 h-3.5" />
-                     </div>
-                   </div>
+                   <Link
+      to="/community/promote-profile"
+      className="
+        group relative flex w-full max-w-lg items-center justify-between
+        overflow-hidden rounded-2xl border border-indigo-100
+        bg-gradient-to-r from-white via-indigo-50/50 to-indigo-50
+        p-5 shadow-sm transition-all duration-300
+        hover:border-indigo-200 hover:shadow-md hover:to-indigo-100/60
+      "
+    >
+      {/* Text Section */}
+      <div className="flex flex-col gap-1 pr-4">
+        <h3 className="text-[15px] font-semibold text-slate-900 leading-tight">
+          Your profile isn't visible to community members.
+        </h3>
+        <p className="text-sm text-slate-500 leading-snug">
+          Let's setup your profile first and boost your visibility.
+        </p>
+      </div>
+
+      {/* Arrow Section - Vertically Centered */}
+      <div className="flex shrink-0 items-center justify-center rounded-full bg-white/60 p-2 shadow-sm ring-1 ring-indigo-100 transition-all duration-300 group-hover:translate-x-1 group-hover:bg-indigo-600 group-hover:ring-indigo-600">
+        <ArrowRight className="h-5 w-5 text-indigo-600 transition-colors duration-300 group-hover:text-white" />
+      </div>
+    </Link>
                  )}
 
                  <motion.button 
@@ -495,7 +511,7 @@ const AutomationHub = () => {
               {(() => {
                 const myResources = filteredResources.filter(r => r.userId === (user?.uid || ''));
                 const otherResources = filteredResources.filter(r => r.userId !== (user?.uid || ''));
-                const isPreLaunch = new Date() < new Date('2026-01-19');
+                const isPreLaunch = new Date() < new Date('2026-01-29');
                 const isAdmin = isAdminEmail(user?.email);
                 const showGate = isPreLaunch && !isAdmin;
                 return (

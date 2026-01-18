@@ -64,10 +64,10 @@ export default function TopBuilders() {
   if (top.length === 0) return null;
 
   return (
-    <div className="mb-10">
+    <div className="mb-0">
       <div className="flex items-center gap-2 mb-4">
         <Trophy className="w-4 h-4 text-amber-500" />
-        <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Top Builders</span>
+        <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Profile Billboard</span>
       </div>
       <div className="grid grid-cols-3 gap-4">
         {top.map((t, i) => {
