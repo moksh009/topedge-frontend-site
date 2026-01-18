@@ -9,9 +9,6 @@ import { useAuth } from '@/contexts/AuthContext';
 import { cn } from '@/lib/utils';
 import { isAdminEmail } from '@/utils/admin';
 import { emailService } from '@/services/emailService';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import config from '@/config';
 import toast from 'react-hot-toast';
 import ResourceReviews from '@/pages/community/ResourceReviews';
 import RelatedResources from '@/components/community/RelatedResources';
@@ -619,37 +616,15 @@ const ResourceDetails = () => {
         return;
       }
       try {
-        const idToken = await user.getIdToken();
-
-        const apiBase = (config as any)?.apiUrl as string | undefined;
-        if (!apiBase || typeof apiBase !== 'string') {
+        const ref = doc(db, 'protected_resource_links', resource.id);
+        const snap = await getDoc(ref);
+        if (!snap.exists()) {
           setProtectedLink(null);
           return;
         }
-
-        const baseURL = apiBase.replace(/\/+$/, '');
-
-        const response = await fetch(`${baseURL}/get-protected-resource-link`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${idToken}`
-          },
-          body: JSON.stringify({ resourceId: resource.id })
-        });
-
-        if (!response.ok) {
-          setProtectedLink(null);
-          return;
-        }
-
-        const data = await response.json();
-        const candidate =
-          (typeof data?.url === 'string' && data.url.trim().length > 0 && data.url) ||
-          (typeof data?.link === 'string' && data.link.trim().length > 0 && data.link) ||
-          (typeof data?.privateUrl === 'string' && data.privateUrl.trim().length > 0 && data.privateUrl);
-
-        setProtectedLink((candidate as string) || null);
+        const data = snap.data() as any;
+        const candidate = (data.privateUrl || data.link || data.url || '').trim();
+        setProtectedLink(candidate || null);
       } catch (error) {
         console.error('Error fetching protected link:', error);
         setProtectedLink(null);

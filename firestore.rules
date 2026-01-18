@@ -47,7 +47,12 @@ service cloud.firestore {
     }
 
     match /protected_resource_links/{resourceId} {
-      allow read, write: if isSignedIn() &&
+      allow read: if isSignedIn() && (
+        isOwnerOrAdmin(get(/databases/$(database)/documents/community_resources/$(resourceId))) ||
+        request.auth.uid in get(/databases/$(database)/documents/community_resources/$(resourceId)).data.purchasers
+      );
+
+      allow write: if isSignedIn() &&
         isOwnerOrAdmin(get(/databases/$(database)/documents/community_resources/$(resourceId)));
     }
 
