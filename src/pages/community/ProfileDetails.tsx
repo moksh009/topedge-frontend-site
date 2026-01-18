@@ -33,6 +33,8 @@ const ProfileDetails = () => {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [resources, setResources] = useState<Resource[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showDeleteProfile, setShowDeleteProfile] = useState(false);
+  const [deletingProfile, setDeletingProfile] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -93,8 +95,6 @@ const ProfileDetails = () => {
   const isOwner = user?.uid === profile.uid;
   const isAdmin = isAdminEmail(user?.email);
   const canEdit = isOwner || isAdmin;
-  const [showDeleteProfile, setShowDeleteProfile] = useState(false);
-  const [deletingProfile, setDeletingProfile] = useState(false);
 
   const handleDeleteProfile = async () => {
     if (!id || !user || !isAdmin || deletingProfile) return;

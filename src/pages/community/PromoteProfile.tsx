@@ -121,6 +121,13 @@ const PromoteProfile = () => {
 
   const [skillsInput, setSkillsInput] = useState('');
 
+  const normalizeUrl = (value?: string) => {
+    const v = (value || '').trim();
+    if (!v) return '';
+    if (/^https?:\/\//i.test(v)) return v;
+    return `https://${v}`;
+  };
+
   // Auth Redirect
   useEffect(() => {
     if (!authLoading && !user) {
@@ -227,7 +234,7 @@ const PromoteProfile = () => {
          gender: formData.gender || '',
          buildingInAI: formData.buildingInAI || '',
          companyName: formData.companyName || '',
-         websiteURL: formData.websiteURL || '',
+         websiteURL: normalizeUrl(formData.websiteURL),
          description: formData.description || '',
          currentWork: formData.currentWork || '',
          aiSkills: skills,
@@ -237,10 +244,10 @@ const PromoteProfile = () => {
          phoneNumber: finalPhoneNumber, // Save combined
          createdAt: userProfile?.createdAt || serverTimestamp(),
          updatedAt: serverTimestamp(),
-         linkedin: formData.linkedin || undefined,
-         github: formData.github || undefined,
-         youtube: formData.youtube || undefined,
-         instagram: formData.instagram || undefined,
+         linkedin: normalizeUrl(formData.linkedin) || undefined,
+         github: normalizeUrl(formData.github) || undefined,
+         youtube: normalizeUrl(formData.youtube) || undefined,
+         instagram: normalizeUrl(formData.instagram) || undefined,
          bio: ''
       };
 
@@ -430,11 +437,11 @@ const PromoteProfile = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="space-y-2">
                             <label className="text-sm font-semibold text-slate-700 flex items-center gap-2"><Youtube className="w-4 h-4 text-red-500"/> YouTube URL</label>
-                            <input type="url" name="youtube" value={formData.youtube || ''} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 outline-none" placeholder="https://youtube.com/@..." />
+                            <input type="text" name="youtube" value={formData.youtube || ''} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 outline-none" placeholder="https://youtube.com/@... or youtube.com/@..." />
                         </div>
                         <div className="space-y-2">
                             <label className="text-sm font-semibold text-slate-700 flex items-center gap-2"><Instagram className="w-4 h-4 text-pink-500"/> Instagram URL</label>
-                            <input type="url" name="instagram" value={formData.instagram || ''} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 outline-none" placeholder="https://instagram.com/..." />
+                            <input type="text" name="instagram" value={formData.instagram || ''} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 outline-none" placeholder="https://instagram.com/... or instagram.com/..." />
                         </div>
                         <div className="space-y-2 md:col-span-2">
                             <label className="text-sm font-semibold text-slate-700 flex items-center gap-2"><Mail className="w-4 h-4 text-slate-500"/> Email Address</label>
@@ -442,11 +449,11 @@ const PromoteProfile = () => {
                         </div>
                         <div className="space-y-2">
                             <label className="text-sm font-semibold text-slate-700 flex items-center gap-2"><Github className="w-4 h-4 text-slate-900"/> GitHub URL</label>
-                            <input type="url" name="github" value={(formData as any).github || ''} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 outline-none" placeholder="https://github.com/..." />
+                            <input type="text" name="github" value={(formData as any).github || ''} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 outline-none" placeholder="https://github.com/... or github.com/..." />
                         </div>
                         <div className="space-y-2">
                             <label className="text-sm font-semibold text-slate-700 flex items-center gap-2"><Linkedin className="w-4 h-4 text-blue-600"/> LinkedIn URL</label>
-                            <input type="url" name="linkedin" value={(formData as any).linkedin || ''} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 outline-none" placeholder="https://linkedin.com/in/..." />
+                            <input type="text" name="linkedin" value={(formData as any).linkedin || ''} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 outline-none" placeholder="https://linkedin.com/in/... or linkedin.com/in/..." />
                         </div>
                     </div>
                  </div>
@@ -475,7 +482,7 @@ const PromoteProfile = () => {
                     </div>
                     <div className="space-y-2 md:col-span-2">
                        <label className="text-sm font-semibold text-slate-700 flex items-center gap-2"><Globe className="w-4 h-4 text-indigo-500"/> Website URL</label>
-                       <input type="url" name="websiteURL" value={formData.websiteURL} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 outline-none" placeholder="https://mywebsite.com" />
+                       <input type="text" name="websiteURL" value={formData.websiteURL} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 outline-none" placeholder="https://mywebsite.com or mywebsite.com" />
                     </div>
                  </div>
                  <div className="space-y-2 mb-6">
