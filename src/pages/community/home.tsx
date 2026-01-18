@@ -48,7 +48,7 @@ const PremiumButton = ({ children, variant = 'primary', className, to }: any) =>
 const CommunityHome = () => {
   const [profiles, setProfiles] = useState<any[]>([]);
   const [resources, setResources] = useState<any[]>([]);
-  const { user } = useAuth();
+  const { user, userProfile } = useAuth();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -90,27 +90,40 @@ const CommunityHome = () => {
             >
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-slate-200 shadow-sm text-xs font-bold uppercase tracking-widest text-indigo-600 mb-8">
                 <Sparkles className="w-3 h-3" />
-                Community 2.0
+                Web Based Community
               </div>
 
               <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tighter text-slate-900 leading-[1.15] md:leading-[1.05] mb-6">
-                Build smarter. <br />
+                Build Once. <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-br from-indigo-600 to-violet-500">
-                  Ship faster.
+                  Share Forever.
                 </span>
               </h1>
 
               <p className="text-base sm:text-lg text-slate-500 max-w-2xl mx-auto mb-8 leading-relaxed font-light px-4">
-                The premier ecosystem for AI engineers. Access production-grade workflows and connect with top-tier talent.
+A curated AI community where engineers share automations, sell workflows, and collaborate with serious builders working on production-grade systems.
               </p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-5 px-6">
                 <PremiumButton to="/community/automation-hub" variant="primary" className="w-20% sm:w-auto">
                   Explore Hub <ArrowRight className="w-4 h-4" />
                 </PremiumButton>
-                <PremiumButton to="/community/promote-profile" variant="secondary" className="w-20% sm:w-auto">
-                  Share Work
-                </PremiumButton>
+                <div className="flex flex-col items-center sm:items-start gap-3">
+                  {user && (!userProfile || !userProfile.fullName) && (
+                    <div className="max-w-xs sm:max-w-sm rounded-2xl border border-amber-200 bg-amber-50/90 px-4 py-3 shadow-sm text-left">
+                      <p className="text-xs sm:text-sm font-semibold text-amber-900">
+                        Your profile isn't visible to community members, let's setup your profile first and boost your visibility.
+                      </p>
+                      <div className="mt-2 flex items-center gap-2 text-[11px] sm:text-xs font-semibold text-amber-800">
+                        <span>Start with Promote Profile</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </div>
+                    </div>
+                  )}
+                  <PremiumButton to="/community/promote-profile" variant="secondary" className="w-20% sm:w-auto">
+                    Share Work
+                  </PremiumButton>
+                </div>
               </div>
             </motion.div>
           </div>
@@ -462,9 +475,9 @@ const CommunityHome = () => {
                     <button className="w-20% sm:w-auto px-8 md:px-10 py-4 md:py-5 rounded-2xl bg-white text-slate-950 font-bold text-lg hover:scale-105 transition-transform shadow-[0_0_40px_-10px_rgba(255,255,255,0.3)]">
                       Join Community Free
                     </button>
-                    <button className="w-20% sm:w-auto px-8 md:px-10 py-4 md:py-5 rounded-2xl bg-white/10 border border-white/10 text-white font-bold text-lg hover:bg-white/20 transition-colors backdrop-blur-sm">
+                    {/* <button className="w-20% sm:w-auto px-8 md:px-10 py-4 md:py-5 rounded-2xl bg-white/10 border border-white/10 text-white font-bold text-lg hover:bg-white/20 transition-colors backdrop-blur-sm">
                       View Documentation
-                    </button>
+                    </button> */}
                   </div>
                 </motion.div>
               </div>

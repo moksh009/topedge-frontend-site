@@ -77,6 +77,29 @@ const ResourceDetails = () => {
   const cropImageRef = useRef<HTMLImageElement | null>(null);
   const cropDragStartRef = useRef<{ x: number; y: number } | null>(null);
 
+  const clampCoverOffset = (next: { x: number; y: number }, zoom: number) => {
+    const img = cropImageRef.current;
+    if (!img) return next;
+    const cropWidth = 288;
+    const cropHeight = 162;
+    const naturalWidth = img.naturalWidth;
+    const naturalHeight = img.naturalHeight;
+    if (!naturalWidth || !naturalHeight) return next;
+    const baseScale = Math.max(cropWidth / naturalWidth, cropHeight / naturalHeight);
+    const scale = baseScale * zoom;
+    const scaledWidth = naturalWidth * scale;
+    const scaledHeight = naturalHeight * scale;
+    const maxX = Math.max(0, (scaledWidth - cropWidth) / 2);
+    const maxY = Math.max(0, (scaledHeight - cropHeight) / 2);
+    let x = next.x;
+    let y = next.y;
+    if (x > maxX) x = maxX;
+    if (x < -maxX) x = -maxX;
+    if (y > maxY) y = maxY;
+    if (y < -maxY) y = -maxY;
+    return { x, y };
+  };
+
   // Edit Form State
   const [editForm, setEditForm] = useState({
     title: '',
@@ -354,11 +377,22 @@ const ResourceDetails = () => {
       toast.error("Image is too large (Max 10MB)");
       return;
     }
-    const src = URL.createObjectURL(file);
-    setCropImageSrc(src);
-    setIsImageCropOpen(true);
-    setCropZoom(1);
-    setCropOffset({ x: 0, y: 0 });
+    const reader = new FileReader();
+    reader.onload = () => {
+      const result = reader.result;
+      if (typeof result !== 'string') {
+        toast.error("Failed to load image");
+        return;
+      }
+      setCropImageSrc(result);
+      setIsImageCropOpen(true);
+      setCropZoom(1);
+      setCropOffset({ x: 0, y: 0 });
+    };
+    reader.onerror = () => {
+      toast.error("Failed to load image");
+    };
+    reader.readAsDataURL(file);
     if (e.target) e.target.value = '';
   };
 
@@ -375,7 +409,7 @@ const ResourceDetails = () => {
     const dx = point.clientX - cropDragStartRef.current.x;
     const dy = point.clientY - cropDragStartRef.current.y;
     cropDragStartRef.current = { x: point.clientX, y: point.clientY };
-    setCropOffset(prev => ({ x: prev.x + dx, y: prev.y + dy }));
+    setCropOffset(prev => clampCoverOffset({ x: prev.x + dx, y: prev.y + dy }, cropZoom));
   };
 
   const handleImageCropPointerUp = () => {
@@ -387,20 +421,21 @@ const ResourceDetails = () => {
     if (!cropImageSrc) return;
     const img = cropImageRef.current;
     if (!img) return;
-    const canvasSize = 288;
+    const cropWidth = 288;
+    const cropHeight = 162;
     const canvas = document.createElement('canvas');
-    canvas.width = canvasSize;
-    canvas.height = canvasSize;
+    canvas.width = cropWidth;
+    canvas.height = cropHeight;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
     const naturalWidth = img.naturalWidth;
     const naturalHeight = img.naturalHeight;
     if (!naturalWidth || !naturalHeight) return;
-    const baseScale = Math.max(canvasSize / naturalWidth, canvasSize / naturalHeight);
+    const baseScale = Math.max(cropWidth / naturalWidth, cropHeight / naturalHeight);
     const scale = baseScale * cropZoom;
-    ctx.clearRect(0, 0, canvasSize, canvasSize);
+    ctx.clearRect(0, 0, cropWidth, cropHeight);
     ctx.save();
-    ctx.translate(canvasSize / 2 + cropOffset.x, canvasSize / 2 + cropOffset.y);
+    ctx.translate(cropWidth / 2 + cropOffset.x, cropHeight / 2 + cropOffset.y);
     ctx.scale(scale, scale);
     ctx.drawImage(img, -naturalWidth / 2, -naturalHeight / 2);
     ctx.restore();
@@ -1288,7 +1323,7 @@ const ResourceDetails = () => {
                             Drag to reposition and use the slider to zoom.
                         </p>
                         <div
-                            className="mx-auto mb-4 w-72 h-72 rounded-2xl bg-slate-900 overflow-hidden relative touch-none"
+                            className="mx-auto mb-4 w-[288px] h-[162px] rounded-2xl bg-slate-900 overflow-hidden relative touch-none"
                             onMouseDown={handleImageCropPointerDown}
                             onMouseMove={handleImageCropPointerMove}
                             onMouseUp={handleImageCropPointerUp}
@@ -1318,7 +1353,11 @@ const ResourceDetails = () => {
                                 max={3}
                                 step={0.05}
                                 value={cropZoom}
-                                onChange={e => setCropZoom(parseFloat(e.target.value))}
+                                onChange={e => {
+                                  const z = parseFloat(e.target.value);
+                                  setCropZoom(z);
+                                  setCropOffset(prev => clampCoverOffset(prev, z));
+                                }}
                                 className="w-full accent-slate-900"
                             />
                         </div>

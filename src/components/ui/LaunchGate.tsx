@@ -201,7 +201,7 @@ export default function LaunchGate({
                         : "bg-slate-900 text-white hover:bg-slate-800"
                     )}
                   >
-                    Create Profile 
+                    Promote Profile 
                     <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
                   </Link>
                   

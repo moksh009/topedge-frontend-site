@@ -112,7 +112,7 @@ const Signup = () => {
         isVerified: true,
       });
 
-      navigate('/community/home');
+      navigate('/community/promote-profile');
     } catch (err: any) {
       console.error(err);
       setError(err.message || 'Failed to verify code');

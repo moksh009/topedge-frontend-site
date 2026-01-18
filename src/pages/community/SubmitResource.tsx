@@ -267,7 +267,7 @@ const SubmitResource = () => {
                 <div className="flex-1">
                   <p className="text-sm font-bold">Create your public profile to submit resources</p>
                   <div className="mt-4 flex gap-3">
-                    <Link to="/community/promote-profile" className="px-4 py-2 bg-slate-900 text-white rounded-xl text-sm font-bold">Create Profile</Link>
+                    <Link to="/community/promote-profile" className="px-4 py-2 bg-slate-900 text-white rounded-xl text-sm font-bold">Promote Profile</Link>
                     <Link to="/community/automation-hub" className="px-4 py-2 bg-slate-100 text-slate-700 rounded-xl text-sm font-bold">Back</Link>
                   </div>
                 </div>

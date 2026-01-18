@@ -19,7 +19,7 @@ export const ComparisonSection = () => {
     {
       id: 1,
       type: 'traditional',
-      content: "I\'m stuck with a fixed-cost subscription, even if I barely use the service…",
+      content: "I'm stuck with a fixed-cost subscription, even if I barely use the service…",
       typingDuration: 1000
     },
     {
@@ -49,7 +49,7 @@ export const ComparisonSection = () => {
     {
       id: 6,
       type: 'topedge',
-      content: "We offer full customization at zero extra cost. Need a feature? We\'ll build it for you!",
+      content: "We offer full customization at zero extra cost. Need a feature? We'll build it for you!",
       typingDuration: 2500
     },
     {

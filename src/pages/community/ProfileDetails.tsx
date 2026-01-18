@@ -14,6 +14,7 @@ import {
 import { useAuth } from '@/contexts/AuthContext';
 import { cn } from '@/lib/utils';
 import { isAdminEmail } from '@/utils/admin';
+import { calculateReputation } from '@/utils/reputation';
 import toast from 'react-hot-toast';
 
 interface Resource {
@@ -96,6 +97,22 @@ const ProfileDetails = () => {
   const isAdmin = isAdminEmail(user?.email);
   const canEdit = isOwner || isAdmin;
 
+  const repResources = resources.map(r => ({
+    userId: id || '',
+    upvotes: Number(((r as any).upvotes ?? (r as any).stars) || 0)
+  }));
+
+  const rep = calculateReputation(
+    {
+      bio: profile.description || profile.bio,
+      photoURL: profile.photoURL,
+      github: profile.github,
+      linkedin: profile.linkedin,
+      websiteURL: profile.websiteURL
+    },
+    repResources
+  );
+
   const handleDeleteProfile = async () => {
     if (!id || !user || !isAdmin || deletingProfile) return;
     setDeletingProfile(true);
@@ -143,7 +160,7 @@ const ProfileDetails = () => {
                 <span className="sm:hidden">Back</span>
             </Link>
 
-            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3">
               {canEdit && (
                 <Link to="/community/promote-profile?edit=1" className="flex items-center gap-2 px-5 py-2 bg-slate-900 text-white rounded-full text-sm font-bold shadow-lg shadow-slate-900/10 hover:scale-105 transition-transform">
                   <Edit2 className="w-3.5 h-3.5" /> <span className="hidden sm:inline">Edit Profile</span><span className="sm:hidden">Edit</span>
@@ -169,18 +186,51 @@ const ProfileDetails = () => {
           >
             
             {/* ================= LEFT COLUMN ================= */}
-            <div className="lg:col-span-8 space-y-6">
-                
-                {/* 1. HERO IDENTITY CARD - MOBILE OPTIMIZED */}
-                <motion.div variants={itemVars} className="relative bg-white rounded-[2rem] p-6 sm:p-8 border border-slate-200 shadow-sm overflow-hidden">
-                    {/* Header Decoration (Subtle Grey) */}
-                    <div className="absolute top-0 left-0 w-full h-24 sm:h-32 bg-slate-50 border-b border-slate-100"></div>
-                    
-                    {/* Content */}
+              <div className="lg:col-span-8 space-y-6">
+
+                <motion.div
+                  variants={itemVars}
+                  className={cn(
+                    "relative bg-white rounded-[2rem] p-6 sm:p-8 overflow-hidden transition-shadow",
+                    rep.tier === 'Grandmaster'
+                      ? "border-2 border-amber-200 shadow-[0_18px_45px_rgba(245,158,11,0.18)]"
+                      : rep.tier === 'Architect'
+                      ? "border-2 border-blue-200 shadow-[0_18px_45px_rgba(37,99,235,0.16)]"
+                      : "border border-slate-200 shadow-sm"
+                  )}
+                >
+                    <div className="absolute top-0 left-0 w-full h-24 sm:h-32 border-b border-slate-100 overflow-hidden">
+                      {profile.bannerURL ? (
+                        <img
+                          src={profile.bannerURL}
+                          alt={`${profile.fullName} banner`}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div
+                          className={cn(
+                            "w-full h-full",
+                            rep.tier === 'Grandmaster'
+                              ? "bg-gradient-to-r from-amber-100 via-yellow-50 to-emerald-50"
+                              : rep.tier === 'Architect'
+                              ? "bg-gradient-to-r from-blue-100 via-indigo-50 to-cyan-50"
+                              : "bg-gradient-to-r from-slate-50 via-slate-100 to-indigo-50"
+                          )}
+                        />
+                      )}
+                    </div>
                     <div className="relative flex flex-col sm:flex-row gap-6 items-center sm:items-start pt-8 sm:pt-12 text-center sm:text-left">
-                        {/* Avatar */}
                         <div className="flex-shrink-0">
-                             <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-[2rem] p-1.5 bg-white shadow-xl">
+                             <div
+                               className={cn(
+                                 "w-28 h-28 sm:w-32 sm:h-32 rounded-[2rem] p-1.5 bg-white shadow-xl",
+                                 rep.tier === 'Grandmaster'
+                                   ? "ring-4 ring-amber-200"
+                                   : rep.tier === 'Architect'
+                                   ? "ring-4 ring-blue-200"
+                                   : "ring-2 ring-slate-200"
+                               )}
+                             >
                                 {profile.photoURL ? (
                                     <img src={profile.photoURL} alt={profile.fullName} className="w-full h-full object-cover rounded-[1.6rem] bg-slate-100" />
                                 ) : (
@@ -205,6 +255,20 @@ const ProfileDetails = () => {
                                         {profile.workingStatus}
                                     </span>
                                 )}
+                                <div
+                                  className={cn(
+                                    "inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border text-[10px] font-bold uppercase tracking-wider",
+                                    rep.tier === 'Grandmaster'
+                                      ? "bg-yellow-50 text-amber-700 border-amber-100"
+                                      : rep.tier === 'Architect'
+                                      ? "bg-blue-50 text-blue-700 border-blue-100"
+                                      : "bg-slate-100 text-slate-600 border-slate-200"
+                                  )}
+                                >
+                                  <span>{rep.tier}</span>
+                                  <span className="text-slate-300">•</span>
+                                  <span>{rep.score} pts</span>
+                                </div>
                             </div>
                             
                             <p className="text-lg text-slate-500 font-medium mb-5 flex flex-wrap justify-center sm:justify-start items-center gap-2">

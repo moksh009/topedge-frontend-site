@@ -100,16 +100,55 @@ const CommunityProfiles = () => {
     (profile.currentWork || '').toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const ProfileCard = ({ profile }: { profile: Profile }) => (
+  const hasMyProfile = !!user && profiles.some(p => p.id === (user.uid || ''));
+
+  const ProfileCard = ({ profile }: { profile: Profile }) => {
+    const entry = resourcesByUser[profile.id];
+    const resourcesArr = entry?.resources || [];
+    const rep = calculateReputation(
+      {
+        bio: profile.description,
+        photoURL: profile.photoURL,
+        github: profile.github,
+        linkedin: profile.linkedin,
+        websiteURL: profile.websiteURL
+      },
+      resourcesArr
+    );
+
+    const cardBorder =
+      rep.tier === 'Grandmaster'
+        ? 'border-2 border-amber-200 hover:border-amber-300 hover:shadow-[0_20px_45px_-12px_rgba(245,158,11,0.25)]'
+        : rep.tier === 'Architect'
+        ? 'border-2 border-blue-200 hover:border-blue-300 hover:shadow-[0_20px_45px_-12px_rgba(37,99,235,0.22)]'
+        : 'border border-slate-200 hover:border-indigo-200 hover:shadow-[0_20px_40px_-12px_rgba(79,70,229,0.1)]';
+
+    const avatarRing =
+      rep.tier === 'Grandmaster'
+        ? 'ring-4 ring-amber-200'
+        : rep.tier === 'Architect'
+        ? 'ring-4 ring-blue-200'
+        : 'ring-2 ring-slate-200';
+
+    const bannerBg =
+      rep.tier === 'Grandmaster'
+        ? 'bg-gradient-to-br from-amber-50 via-yellow-50 to-emerald-50'
+        : rep.tier === 'Architect'
+        ? 'bg-gradient-to-br from-blue-50 via-slate-50 to-cyan-50'
+        : 'bg-gradient-to-br from-indigo-50 via-slate-50 to-purple-50';
+
+    return (
     <motion.div
       layout
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95 }}
-      className="group relative flex flex-col bg-white rounded-[2rem] sm:rounded-[2.5rem] border border-slate-200 overflow-hidden hover:border-indigo-200 hover:shadow-[0_20px_40px_-12px_rgba(79,70,229,0.1)] transition-all duration-300 hover:-translate-y-2 text-center h-full w-full"
+      className={cn(
+        "group relative flex flex-col bg-white rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden transition-all duration-300 hover:-translate-y-2 text-center h-full w-full",
+        cardBorder
+      )}
     >
-      {/* Banner */}
-      <div className="h-28 sm:h-32 bg-gradient-to-br from-indigo-50 via-slate-50 to-purple-50 relative overflow-hidden">
+      <div className={cn("h-28 sm:h-32 relative overflow-hidden", bannerBg)}>
           {profile.bannerURL ? (
             <img src={profile.bannerURL} alt="Banner" className="absolute inset-0 w-full h-full object-cover" />
           ) : (
@@ -148,10 +187,10 @@ const CommunityProfiles = () => {
 
       <div className="px-4 sm:px-8 pb-6 sm:pb-8 flex-1 flex flex-col relative items-center">
         
-        {/* Avatar */}
         <div className={cn(
           'w-40 h-40 sm:w-60 sm:h-60 rounded-[2rem] sm:rounded-[2.5rem] p-1.5 bg-white shadow-xl rotate-0 group-hover:rotate-1 transition-transform duration-300 relative z-10 -mt-12 sm:-mt-16',
-          profile.workingStatus === 'Open to Work' ? 'ring-4 ring-emerald-100' : ''
+          avatarRing,
+          profile.workingStatus === 'Open to Work' ? 'ring-offset-2 ring-offset-emerald-50' : ''
         )}>
           {profile.photoURL ? (
             <img src={profile.photoURL} alt={profile.fullName} className="w-full h-full rounded-[1.7rem] sm:rounded-[2.1rem] object-cover bg-slate-100" />
@@ -168,28 +207,20 @@ const CommunityProfiles = () => {
               {profile.fullName}
             </h3>
             
-            {/* Reputation */}
-            {(() => {
-              const entry = resourcesByUser[profile.id];
-              const resourcesArr = entry?.resources || [];
-              const rep = calculateReputation(
-                {
-                  bio: profile.description,
-                  photoURL: profile.photoURL,
-                  github: profile.github,
-                  linkedin: profile.linkedin,
-                  websiteURL: profile.websiteURL
-                },
-                resourcesArr
-              );
-              return (
-                <div className="mt-2 inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border text-[10px] font-bold uppercase tracking-wider bg-slate-100 text-slate-600 border-slate-200">
-                  <span>{rep.tier}</span>
-                  <span className="text-slate-300">•</span>
-                  <span>{rep.score} pts</span>
-                </div>
-              );
-            })()}
+            <div
+              className={cn(
+                "mt-2 inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border text-[10px] font-bold uppercase tracking-wider",
+                rep.tier === 'Grandmaster'
+                  ? "bg-yellow-50 text-amber-700 border-amber-100"
+                  : rep.tier === 'Architect'
+                  ? "bg-blue-50 text-blue-700 border-blue-100"
+                  : "bg-slate-100 text-slate-600 border-slate-200"
+              )}
+            >
+              <span>{rep.tier}</span>
+              <span className="text-slate-300">•</span>
+              <span>{rep.score} pts</span>
+            </div>
 
             <p className="text-slate-500 font-medium text-xs sm:text-sm flex flex-wrap items-center gap-2 justify-center mt-3">
               {profile.currentWork || 'Member'}
@@ -241,6 +272,7 @@ const CommunityProfiles = () => {
       </div>
     </motion.div>
   );
+  };
 
   return (
     <CommunityLayout>
@@ -275,13 +307,24 @@ const CommunityProfiles = () => {
             <motion.div 
               initial={{ opacity: 0, scale: 0.9 }} 
               animate={{ opacity: 1, scale: 1 }} 
-              className="w-full sm:w-auto flex justify-center lg:justify-end"
+              className="w-full sm:w-auto flex flex-col items-center lg:items-end gap-3 justify-center lg:justify-end"
             >
+              {user && !hasMyProfile && (
+                <div className="max-w-xs rounded-2xl border border-amber-200 bg-amber-50/90 px-4 py-3 shadow-sm text-left">
+                  <p className="text-xs sm:text-sm font-semibold text-amber-900">
+                    Your profile isn't visible to community members, let's setup your profile first and boost your visibility.
+                  </p>
+                  <div className="mt-2 flex items-center justify-end gap-2 text-[11px] sm:text-xs font-semibold text-amber-800">
+                    <span>Tap below</span>
+                    <ArrowRight className="w-3.5 h-3.5 transform rotate-90" />
+                  </div>
+                </div>
+              )}
               <Link 
                 to="/community/promote-profile"
                 className="group w-auto relative inline-flex items-center justify-center gap-3 px-6 py-3.5 sm:px-8 sm:py-4 bg-slate-900 text-white rounded-2xl font-bold overflow-hidden shadow-xl shadow-slate-200 hover:-translate-y-1 transition-all"
               >
-                <span className="relative text-sm sm:text-base">Create Public Profile</span>
+                <span className="relative text-sm sm:text-base">Promote My Profile</span>
                 <ArrowRight className="w-4 h-4 relative transition-transform group-hover:translate-x-1" />
               </Link>
             </motion.div>

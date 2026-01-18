@@ -67,7 +67,7 @@ const AboutCTA: React.FC = () => {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="text-lg sm:text-xl text-theme-text-secondary mb-12"
           >
-Ready to take the next step and unlock extra revenue in just 45 days?
+            Ready to take the next step and unlock extra revenue in just 45 days?
           </motion.p>
 
           {/* CTA Button */}

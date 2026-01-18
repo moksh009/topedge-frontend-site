@@ -1,8 +1,15 @@
 import React from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, type MotionValue } from 'framer-motion';
 import { Code2, Blocks, Cpu, Workflow } from 'lucide-react';
 
-const showcaseItems = [
+interface ShowcaseItemData {
+  icon: React.ComponentType<{ className?: string }>;
+  title: string;
+  description: string;
+  color: string;
+}
+
+const showcaseItems: ShowcaseItemData[] = [
   {
     icon: Code2,
     title: "Smart Code Generation",
@@ -29,6 +36,71 @@ const showcaseItems = [
   }
 ];
 
+interface ShowcaseItemProps {
+  item: ShowcaseItemData;
+  index: number;
+  scrollYProgress: MotionValue<number>;
+}
+
+const ShowcaseItemCard: React.FC<ShowcaseItemProps> = ({ item, index, scrollYProgress }) => {
+  const yProgress = useTransform(
+    scrollYProgress,
+    [index * 0.25, (index + 1) * 0.25],
+    [100, 0]
+  );
+  const opacityProgress = useTransform(
+    scrollYProgress,
+    [index * 0.25, (index + 0.1) * 0.25],
+    [0, 1]
+  );
+
+  const colorToken = item.color.split(' ')[1].replace('to-', '');
+
+  return (
+    <motion.div
+      className="mb-40 relative"
+      style={{
+        opacity: opacityProgress,
+        y: yProgress
+      }}
+    >
+      <div className="flex items-center gap-8">
+        <motion.div
+          className={`w-24 h-24 rounded-2xl bg-gradient-to-br ${item.color} flex items-center justify-center`}
+          whileHover={{ scale: 1.1, rotate: 5 }}
+          transition={{ type: "spring", stiffness: 300 }}
+        >
+          <item.icon className="w-12 h-12 text-white" />
+        </motion.div>
+        <div className="flex-1">
+          <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">
+            {item.title}
+          </h3>
+          <p className="text-gray-400 text-lg">
+            {item.description}
+          </p>
+        </div>
+      </div>
+
+      <motion.div
+        className="absolute -inset-4 -z-10 rounded-xl"
+        style={{
+          background: `radial-gradient(circle at 50% 50%, ${colorToken}33, transparent 70%)`
+        }}
+        animate={{
+          opacity: [0.3, 0.5, 0.3],
+          scale: [1, 1.05, 1],
+        }}
+        transition={{
+          duration: 3,
+          repeat: Infinity,
+          ease: "linear"
+        }}
+      />
+    </motion.div>
+  );
+};
+
 export const ScrollingShowcase = () => {
   const { scrollYProgress } = useScroll();
   
@@ -47,63 +119,14 @@ export const ScrollingShowcase = () => {
         </motion.div>
 
         <div className="relative">
-          {showcaseItems.map((item, index) => {
-            const yProgress = useTransform(
-              scrollYProgress,
-              [index * 0.25, (index + 1) * 0.25],
-              [100, 0]
-            );
-            const opacityProgress = useTransform(
-              scrollYProgress,
-              [index * 0.25, (index + 0.1) * 0.25],
-              [0, 1]
-            );
-
-            return (
-              <motion.div
-                key={item.title}
-                className="mb-40 relative"
-                style={{
-                  opacity: opacityProgress,
-                  y: yProgress
-                }}
-              >
-                <div className="flex items-center gap-8">
-                  <motion.div
-                    className={`w-24 h-24 rounded-2xl bg-gradient-to-br ${item.color} flex items-center justify-center`}
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                    transition={{ type: "spring", stiffness: 300 }}
-                  >
-                    <item.icon className="w-12 h-12 text-white" />
-                  </motion.div>
-                  <div className="flex-1">
-                    <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">
-                      {item.title}
-                    </h3>
-                    <p className="text-gray-400 text-lg">
-                      {item.description}
-                    </p>
-                  </div>
-                </div>
-
-                <motion.div
-                  className="absolute -inset-4 -z-10 rounded-xl"
-                  style={{
-                    background: `radial-gradient(circle at 50% 50%, ${item.color.split(' ')[1].replace('to-', '')}33, transparent 70%)`
-                  }}
-                  animate={{
-                    opacity: [0.3, 0.5, 0.3],
-                    scale: [1, 1.05, 1],
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "linear"
-                  }}
-                />
-              </motion.div>
-            );
-          })}
+          {showcaseItems.map((item, index) => (
+            <ShowcaseItemCard
+              key={item.title}
+              item={item}
+              index={index}
+              scrollYProgress={scrollYProgress}
+            />
+          ))}
         </div>
       </div>
     </section>

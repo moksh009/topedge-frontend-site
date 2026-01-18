@@ -659,7 +659,7 @@ export default function RequestBoard() {
                     <User className="w-5 h-5" />
                   </div>
                   <div>
-                    <h2 className="text-lg font-bold text-slate-900">Create your public profile</h2>
+                    <h2 className="text-lg font-bold text-slate-900">Promote your public profile</h2>
                     <p className="text-sm text-slate-500">
                       You need a public profile to post requests on the board.
                     </p>
@@ -681,7 +681,7 @@ export default function RequestBoard() {
                     }}
                     className="px-4 py-2.5 rounded-xl bg-slate-900 text-sm font-bold text-white hover:bg-slate-800"
                   >
-                    Create profile
+                    Promote profile
                   </button>
                 </div>
               </motion.div>

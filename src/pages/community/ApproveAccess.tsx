@@ -69,7 +69,7 @@ const ApproveAccess = () => {
         const data = reqSnap.data() as any;
 
         let status: AccessRequest['status'] = data.status || 'pending';
-        let expiresAt: any = data.expiresAt;
+        const expiresAt: any = data.expiresAt;
 
         if (status === 'pending' && expiresAt && typeof expiresAt.toDate === 'function') {
           const expiresDate = expiresAt.toDate();

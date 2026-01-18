@@ -29,6 +29,28 @@ const Settings = () => {
   const cropImageRef = useRef<HTMLImageElement | null>(null);
   const dragStartRef = useRef<{ x: number; y: number } | null>(null);
 
+  const clampProfileOffset = (next: { x: number; y: number }, zoom: number) => {
+    const img = cropImageRef.current;
+    if (!img) return next;
+    const canvasSize = 288;
+    const naturalWidth = img.naturalWidth;
+    const naturalHeight = img.naturalHeight;
+    if (!naturalWidth || !naturalHeight) return next;
+    const baseScale = Math.max(canvasSize / naturalWidth, canvasSize / naturalHeight);
+    const scale = baseScale * zoom;
+    const scaledWidth = naturalWidth * scale;
+    const scaledHeight = naturalHeight * scale;
+    const maxX = Math.max(0, (scaledWidth - canvasSize) / 2);
+    const maxY = Math.max(0, (scaledHeight - canvasSize) / 2);
+    let x = next.x;
+    let y = next.y;
+    if (x > maxX) x = maxX;
+    if (x < -maxX) x = -maxX;
+    if (y > maxY) y = maxY;
+    if (y < -maxY) y = -maxY;
+    return { x, y };
+  };
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
@@ -100,7 +122,7 @@ const Settings = () => {
     const dx = point.clientX - dragStartRef.current.x;
     const dy = point.clientY - dragStartRef.current.y;
     dragStartRef.current = { x: point.clientX, y: point.clientY };
-    setCropOffset(prev => ({ x: prev.x + dx, y: prev.y + dy }));
+    setCropOffset(prev => clampProfileOffset({ x: prev.x + dx, y: prev.y + dy }, cropZoom));
   };
 
   const handleCropPointerUp = () => {
@@ -489,7 +511,11 @@ const Settings = () => {
                   max={3}
                   step={0.05}
                   value={cropZoom}
-                  onChange={e => setCropZoom(parseFloat(e.target.value))}
+                  onChange={e => {
+                    const z = parseFloat(e.target.value);
+                    setCropZoom(z);
+                    setCropOffset(prev => clampProfileOffset(prev, z));
+                  }}
                   className="w-full accent-slate-900"
                 />
               </div>

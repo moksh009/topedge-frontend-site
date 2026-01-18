@@ -400,7 +400,7 @@ const CreatorDashboard = () => {
               className="group inline-flex items-center justify-center gap-2 px-6 py-3 bg-slate-900 text-white rounded-xl font-bold hover:bg-slate-800 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5"
             >
               <FolderPlus className="w-5 h-5" />
-              <span>New Resource</span>
+              <span>Promote Resource</span>
             </Link>
           </div>
 
@@ -483,7 +483,6 @@ const CreatorDashboard = () => {
                 </div>
             </div>
 
-            {/* QUICK TIPS WIDGET */}
             <div className="bg-slate-900 rounded-[2rem] p-8 text-white relative overflow-hidden flex flex-col justify-between shadow-xl shadow-slate-900/10">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/20 rounded-full blur-[80px] pointer-events-none" />
                 <div className="relative z-10">
@@ -494,6 +493,41 @@ const CreatorDashboard = () => {
                     <p className="text-slate-300 text-sm leading-relaxed">
                         Top creators update their resources weekly. Adding a <span className="text-white font-bold">Demo Video</span> increases views by 3.5x on average.
                     </p>
+                    <div className="mt-5 space-y-3">
+                        <div className="bg-white/5 border border-white/10 rounded-xl p-3">
+                            <div className="flex items-center justify-between text-[11px] font-semibold text-slate-200 mb-2">
+                                <span>How your points are calculated</span>
+                                <span className="text-[10px] uppercase tracking-wide text-indigo-200">Reputation</span>
+                            </div>
+                            <div className="space-y-1.5 text-[11px] text-slate-300">
+                                <div className="flex items-center justify-between">
+                                    <span>Each published resource</span>
+                                    <span className="font-bold text-white">+15 pts</span>
+                                </div>
+                                <div className="flex items-center justify-between">
+                                    <span>Each upvote on your resources</span>
+                                    <span className="font-bold text-white">+2 pts</span>
+                                </div>
+                                <div className="flex items-center justify-between">
+                                    <span>Complete profile (bio, photo, link)</span>
+                                    <span className="font-bold text-white">+10 pts</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="flex items-start justify-between text-[11px] text-slate-300">
+                            <div>
+                                <div className="font-semibold text-slate-100">Tiers</div>
+                                <div className="text-[10px] mt-1">
+                                    Builder 0–50 pts, Architect 51–200 pts, Grandmaster 201+ pts
+                                </div>
+                            </div>
+                            <div className="text-right">
+                                <div className="text-[10px] uppercase tracking-wider text-slate-400">Current tier</div>
+                                <div className="text-sm font-bold text-white mt-1">{stats.tier}</div>
+                                <div className="text-[10px] text-slate-400">{stats.score} pts</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div className="relative z-10 mt-6 pt-6 border-t border-white/10">
                     <div className="flex items-center justify-between text-xs font-medium text-slate-400">
@@ -539,7 +573,7 @@ const CreatorDashboard = () => {
                                     </div>
                                     <p className="text-slate-900 font-bold mb-1">No resources found</p>
                                     <p className="text-slate-500 text-sm mb-4">Start building your portfolio today.</p>
-                                    <Link to="/community/submit-resource" className="text-indigo-600 font-bold text-sm hover:underline">Create your first resource</Link>
+                                    <Link to="/community/submit-resource" className="text-indigo-600 font-bold text-sm hover:underline">Promote your first resource</Link>
                                 </td>
                             </tr>
                         ) : (
