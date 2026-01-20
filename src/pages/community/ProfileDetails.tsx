@@ -42,6 +42,8 @@ const ProfileDetails = () => {
   const [isPhotoCropOpen, setIsPhotoCropOpen] = useState(false);
   const [photoCropImageSrc, setPhotoCropImageSrc] = useState<string | null>(null);
   const [photoCropZoom, setPhotoCropZoom] = useState(1);
+  const [baseScale, setBaseScale] = useState(1);
+  const [minZoom, setMinZoom] = useState(1);
   const [photoCropOffset, setPhotoCropOffset] = useState({ x: 0, y: 0 });
   const [isPhotoDragging, setIsPhotoDragging] = useState(false);
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
@@ -151,6 +153,7 @@ const ProfileDetails = () => {
     setPhotoCropImageSrc(profile.photoURL);
     setIsPhotoCropOpen(true);
     setPhotoCropZoom(1);
+    setBaseScale(1);
     setPhotoCropOffset({ x: 0, y: 0 });
   };
 
@@ -195,8 +198,12 @@ const ProfileDetails = () => {
     const naturalWidth = img.naturalWidth;
     const naturalHeight = img.naturalHeight;
     if (!naturalWidth || !naturalHeight) return;
-    const baseScalePreview = Math.max(previewSize / naturalWidth, previewSize / naturalHeight);
-    const scale = baseScalePreview * photoCropZoom * (outputSize / previewSize);
+    
+    // Calculate the same base scale as in the view
+    const currentBaseScale = Math.max(previewSize / naturalWidth, previewSize / naturalHeight);
+    // Scale for output (base * zoom * (output/preview))
+    const scale = currentBaseScale * photoCropZoom * (outputSize / previewSize);
+    
     const offsetNormX = photoCropOffset.x / previewSize;
     const offsetNormY = photoCropOffset.y / previewSize;
     ctx.clearRect(0, 0, outputSize, outputSize);
@@ -697,25 +704,36 @@ const ProfileDetails = () => {
               >
                 {photoCropImageSrc && (
                   <img
-                    ref={photoCropImageRef}
-                    src={photoCropImageSrc}
-                    alt="Crop"
-                    crossOrigin="anonymous"
-                    className="absolute inset-0 m-auto select-none max-w-none"
-                    style={{
-                      transform: `translate3d(${photoCropOffset.x}px, ${photoCropOffset.y}px, 0) scale(${photoCropZoom})`,
-                      transformOrigin: 'center center'
-                    }}
-                    draggable={false}
-                  />
+  ref={photoCropImageRef}
+  src={photoCropImageSrc}
+  onLoad={(e) => {
+    const { naturalWidth, naturalHeight } = e.currentTarget;
+    // Safety check to ensure dimensions are loaded
+    if (!naturalWidth || !naturalHeight) return; 
+    
+    const canvasSize = 288;
+    // Calculate scale based on the smaller dimension to ensure the image covers the box
+    const scale = Math.max(canvasSize / naturalWidth, canvasSize / naturalHeight);
+    setBaseScale(scale);
+  }}
+  alt="Crop"
+  // absolute left-1/2 top-1/2 forces the image center to align with the box center
+  className="absolute left-1/2 top-1/2 max-w-none max-h-none select-none"
+  style={{
+    // translate3d(-50%, -50%) centers the image, then we add the user's manual offset
+    transform: `translate3d(calc(-50% + ${photoCropOffset.x}px), calc(-50% + ${photoCropOffset.y}px), 0) scale(${baseScale * photoCropZoom})`,
+    transformOrigin: 'center center'
+  }}
+  draggable={false}
+/>
                 )}
               </div>
               <div className="mb-6">
                 <input
                   type="range"
-                  min={1}
+                  min={minZoom}
                   max={3}
-                  step={0.05}
+                  step={0.01}
                   value={photoCropZoom}
                   onChange={e => {
                     const z = parseFloat(e.target.value);

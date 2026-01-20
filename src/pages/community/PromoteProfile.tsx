@@ -96,6 +96,8 @@ const PromoteProfile = () => {
   const [isPhotoCropOpen, setIsPhotoCropOpen] = useState(false);
   const [photoCropImageSrc, setPhotoCropImageSrc] = useState<string | null>(null);
   const [photoCropZoom, setPhotoCropZoom] = useState(1);
+  const [baseScale, setBaseScale] = useState(1);
+  const [minZoom, setMinZoom] = useState(1);
   const [photoCropOffset, setPhotoCropOffset] = useState({ x: 0, y: 0 });
   const [isPhotoDragging, setIsPhotoDragging] = useState(false);
   const photoCropImageRef = useRef<HTMLImageElement | null>(null);
@@ -347,6 +349,7 @@ const PromoteProfile = () => {
     setPhotoCropImageSrc(src);
     setIsPhotoCropOpen(true);
     setPhotoCropZoom(1);
+    setBaseScale(1);
     setPhotoCropOffset({ x: 0, y: 0 });
     if (e.target) e.target.value = '';
   };
@@ -392,8 +395,12 @@ const PromoteProfile = () => {
     const naturalWidth = img.naturalWidth;
     const naturalHeight = img.naturalHeight;
     if (!naturalWidth || !naturalHeight) return;
-    const baseScalePreview = Math.max(previewSize / naturalWidth, previewSize / naturalHeight);
-    const scale = baseScalePreview * photoCropZoom * (outputSize / previewSize);
+
+    // Calculate the same base scale as in the view
+    const currentBaseScale = Math.max(previewSize / naturalWidth, previewSize / naturalHeight);
+    // Scale for output (base * zoom * (output/preview))
+    const scale = currentBaseScale * photoCropZoom * (outputSize / previewSize);
+
     const offsetNormX = photoCropOffset.x / previewSize;
     const offsetNormY = photoCropOffset.y / previewSize;
     ctx.clearRect(0, 0, outputSize, outputSize);
@@ -719,36 +726,49 @@ const PromoteProfile = () => {
                 Drag to reposition and use the slider to zoom.
               </p>
               <div
-                className="mx-auto mb-4 w-72 h-72 rounded-2xl bg-slate-900 overflow-hidden relative touch-none"
-                onMouseDown={handlePhotoCropPointerDown}
-                onMouseMove={handlePhotoCropPointerMove}
-                onMouseUp={handlePhotoCropPointerUp}
-                onMouseLeave={handlePhotoCropPointerUp}
-                onTouchStart={handlePhotoCropPointerDown}
-                onTouchMove={handlePhotoCropPointerMove}
-                onTouchEnd={handlePhotoCropPointerUp}
-              >
-                {photoCropImageSrc && (
-                  <img
-                    ref={photoCropImageRef}
-                    src={photoCropImageSrc}
-                    alt="Crop"
-                    crossOrigin="anonymous"
-                    className="absolute inset-0 m-auto select-none max-w-none"
-                    style={{
-                      transform: `translate3d(${photoCropOffset.x}px, ${photoCropOffset.y}px, 0) scale(${photoCropZoom})`,
-                      transformOrigin: 'center center'
-                    }}
-                    draggable={false}
-                  />
-                )}
-              </div>
+  className="mx-auto mb-4 w-72 h-72 rounded-2xl bg-slate-900 overflow-hidden relative touch-none"
+  onMouseDown={handlePhotoCropPointerDown}
+  onMouseMove={handlePhotoCropPointerMove}
+  onMouseUp={handlePhotoCropPointerUp}
+  onMouseLeave={handlePhotoCropPointerUp}
+  onTouchStart={handlePhotoCropPointerDown}
+  onTouchMove={handlePhotoCropPointerMove}
+  onTouchEnd={handlePhotoCropPointerUp}
+>
+  {photoCropImageSrc && (
+    <img
+      ref={photoCropImageRef}
+      src={photoCropImageSrc}
+      onLoad={(e) => {
+        const { naturalWidth, naturalHeight } = e.currentTarget;
+        // Safety check to prevent division by zero
+        if (!naturalWidth || !naturalHeight) return;
+        
+        const canvasSize = 288;
+        const scale = Math.max(canvasSize / naturalWidth, canvasSize / naturalHeight);
+        setBaseScale(scale);
+      }}
+      alt="Crop"
+      // Remove crossOrigin for local blob URLs to avoid potential CORS quirks
+      // crossOrigin="anonymous" 
+      
+      // FIX 1: Use absolute positioning from the center + max-h-none
+      className="absolute left-1/2 top-1/2 max-w-none max-h-none select-none"
+      style={{
+        // FIX 2: Translate -50% -50% to perfectly center the image, then apply user offset
+        transform: `translate3d(calc(-50% + ${photoCropOffset.x}px), calc(-50% + ${photoCropOffset.y}px), 0) scale(${baseScale * photoCropZoom})`,
+        transformOrigin: 'center center' // Ensure zooming happens from the center
+      }}
+      draggable={false}
+    />
+  )}
+</div>
               <div className="mb-6">
                 <input
                   type="range"
-                  min={1}
+                  min={minZoom}
                   max={3}
-                  step={0.05}
+                  step={0.01}
                   value={photoCropZoom}
                   onChange={e => {
                     const z = parseFloat(e.target.value);
