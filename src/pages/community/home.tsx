@@ -94,9 +94,9 @@ const CommunityHome = () => {
               </div>
 
               <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tighter text-slate-900 leading-[1.15] md:leading-[1.05] mb-6">
-                Build Once. <br />
+                Build First. <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-br from-indigo-600 to-violet-500">
-                  Share Forever.
+                  Ship Faster.
                 </span>
               </h1>
 

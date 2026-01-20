@@ -359,39 +359,6 @@ const ProfileDetails = () => {
                       )}
                     </div>
 
-                    {(profile.workingStatus || rep.tier) && (
-                      <div className="absolute inset-x-0 top-20 sm:top-24 flex justify-center z-20 px-4">
-                        <div className="inline-flex flex-wrap items-center justify-center gap-2 px-4 py-1.5 rounded-full bg-white/95 border border-slate-200 shadow-sm">
-                          {profile.workingStatus && (
-                            <span
-                              className={cn(
-                                "px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide border",
-                                profile.workingStatus === "Open to Work" 
-                                  ? "bg-emerald-50 text-emerald-700 border-emerald-100" 
-                                  : "bg-slate-100 text-slate-600 border-slate-200"
-                              )}
-                            >
-                              {profile.workingStatus}
-                            </span>
-                          )}
-                          <div
-                            className={cn(
-                              "inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border text-[10px] font-bold uppercase tracking-wider",
-                              rep.tier === 'Grandmaster'
-                                ? "bg-yellow-50 text-amber-700 border-amber-100"
-                                : rep.tier === 'Architect'
-                                ? "bg-blue-50 text-blue-700 border-blue-100"
-                                : "bg-slate-100 text-slate-600 border-slate-200"
-                            )}
-                          >
-                            <span>{rep.tier}</span>
-                            <span className="text-slate-300">•</span>
-                            <span>{rep.score} pts</span>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-
                     <div className="relative flex flex-col sm:flex-row gap-6 items-center sm:items-start pt-10 sm:pt-16 text-center sm:text-left">
                         <div className="flex-shrink-0">
                              <div
@@ -438,7 +405,38 @@ const ProfileDetails = () => {
                         {/* Text Info */}
                         <div className="flex-1 pt-4 sm:pt-10 w-full">
                             <div className="flex flex-col items-center sm:items-start gap-2 mb-3">
-                                <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">{profile.fullName}</h1>
+                                <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight mb-2 sm:mb-3">{profile.fullName}</h1>
+                                
+                                {(profile.workingStatus || rep.tier) && (
+                                  <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 mb-1">
+                                    {profile.workingStatus && (
+                                      <span
+                                        className={cn(
+                                          "px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide border",
+                                          profile.workingStatus === "Open to Work" 
+                                            ? "bg-emerald-50 text-emerald-700 border-emerald-100" 
+                                            : "bg-slate-100 text-slate-600 border-slate-200"
+                                        )}
+                                      >
+                                        {profile.workingStatus}
+                                      </span>
+                                    )}
+                                    <div
+                                      className={cn(
+                                        "inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border text-[10px] font-bold uppercase tracking-wider",
+                                        rep.tier === 'Grandmaster'
+                                          ? "bg-yellow-50 text-amber-700 border-amber-100"
+                                          : rep.tier === 'Architect'
+                                          ? "bg-blue-50 text-blue-700 border-blue-100"
+                                          : "bg-slate-100 text-slate-600 border-slate-200"
+                                      )}
+                                    >
+                                      <span>{rep.tier}</span>
+                                      <span className="text-slate-300">•</span>
+                                      <span>{rep.score} pts</span>
+                                    </div>
+                                  </div>
+                                )}
                             </div>
                             
                             <p className="text-lg text-slate-500 font-medium mb-5 flex flex-wrap justify-center sm:justify-start items-center gap-2">
@@ -703,7 +701,7 @@ const ProfileDetails = () => {
                     src={photoCropImageSrc}
                     alt="Crop"
                     crossOrigin="anonymous"
-                    className="absolute inset-0 m-auto select-none"
+                    className="absolute inset-0 m-auto select-none max-w-none"
                     style={{
                       transform: `translate3d(${photoCropOffset.x}px, ${photoCropOffset.y}px, 0) scale(${photoCropZoom})`,
                       transformOrigin: 'center center'

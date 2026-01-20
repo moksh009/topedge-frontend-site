@@ -392,7 +392,7 @@ const CommunityNavbar = () => {
                 transition={{ type: "spring", duration: 0.5, bounce: 0.3 }}
                 className={cn(
                   "fixed z-50 flex flex-col",
-                  "inset-x-4 top-24 bottom-6 rounded-[2rem]", 
+                  "inset-x-4 top-24 bottom-auto max-h-[calc(100vh-8rem)] rounded-[2rem]", 
                   "sm:inset-auto sm:top-28 sm:left-1/2 sm:-translate-x-1/2 sm:w-[400px] sm:max-h-[85vh] sm:h-auto sm:rounded-[2rem]",
                   glassDropdown
                 )}

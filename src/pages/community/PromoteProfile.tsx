@@ -734,7 +734,7 @@ const PromoteProfile = () => {
                     src={photoCropImageSrc}
                     alt="Crop"
                     crossOrigin="anonymous"
-                    className="absolute inset-0 m-auto select-none"
+                    className="absolute inset-0 m-auto select-none max-w-none"
                     style={{
                       transform: `translate3d(${photoCropOffset.x}px, ${photoCropOffset.y}px, 0) scale(${photoCropZoom})`,
                       transformOrigin: 'center center'
