@@ -459,8 +459,9 @@ const CreatorDashboard = () => {
                             return (
                                 <div key={item.id} className="flex-1 flex flex-col items-center group h-full justify-end relative">
                                     {/* Tooltip */}
-                                    <div className="absolute bottom-[calc(100%+8px)] bg-slate-900 text-white text-[10px] font-bold py-1.5 px-3 rounded-lg opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0 z-10 shadow-xl whitespace-nowrap">
-                                        {item.views} Views
+                                    <div className="absolute bottom-[calc(100%+8px)] bg-slate-900 text-white text-[10px] font-bold py-1.5 px-3 rounded-lg opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0 z-10 shadow-xl whitespace-nowrap text-center">
+                                        <div className="mb-0.5">{item.title}</div>
+                                        <div className="text-indigo-200">{item.views} Views</div>
                                         <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-slate-900"></div>
                                     </div>
 
@@ -470,11 +471,6 @@ const CreatorDashboard = () => {
                                         style={{ height: `${heightPercentage}%` }}
                                     >
                                         <div className="absolute bottom-0 left-0 right-0 top-0 bg-gradient-to-t from-indigo-500 to-violet-400 opacity-80 group-hover:opacity-100 transition-opacity" />
-                                    </div>
-
-                                    {/* Label */}
-                                    <div className="mt-3 w-full text-center">
-                                        <p className="text-[10px] font-bold text-slate-500 truncate w-full px-1">{item.title}</p>
                                     </div>
                                 </div>
                             );

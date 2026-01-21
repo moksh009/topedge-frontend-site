@@ -278,6 +278,28 @@ const ResourceDetails = () => {
     toast.error("Unlock attachments by requesting access and completing payment with the creator.");
   };
 
+  const handleDownload = async (file: { name: string; url: string }) => {
+    if (!resource) return;
+    try {
+      await updateDoc(doc(db, 'community_resources', resource.id), { 
+        downloads: increment(1) 
+      });
+    } catch (e) {
+      console.error("Error tracking download:", e);
+    }
+  };
+
+  const handleLinkClick = async () => {
+    if (!resource) return;
+    try {
+      await updateDoc(doc(db, 'community_resources', resource.id), { 
+        linkClicks: increment(1) 
+      });
+    } catch (e) {
+      console.error("Error tracking link click:", e);
+    }
+  };
+
   const toggleUpvote = async () => {
     if (!resource || !user) return toast.error("Please login to upvote");
     try {
@@ -346,6 +368,7 @@ const ResourceDetails = () => {
       const data = new FormData();
       data.append("file", blob, "cover.jpg");
       data.append("upload_preset", UPLOAD_PRESET as string);
+      data.append("cloud_name", CLOUD_NAME);
       const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
         method: "POST",
         body: data
@@ -1553,7 +1576,7 @@ const ResourceDetails = () => {
                                        Download
                                     </button>
                                   ) : (
-                                    <a href={f.url} target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 text-xs font-bold bg-slate-900 text-white rounded-lg hover:bg-slate-800">
+                                    <a href={f.url} target="_blank" rel="noopener noreferrer" onClick={() => handleDownload(f)} className="px-3 py-1.5 text-xs font-bold bg-slate-900 text-white rounded-lg hover:bg-slate-800">
                                       Download
                                     </a>
                                   )}

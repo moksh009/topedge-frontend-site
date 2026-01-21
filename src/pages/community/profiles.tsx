@@ -60,20 +60,28 @@ const CommunityProfiles = () => {
     const fetchProfiles = async () => {
       try {
         const q = query(
-          collection(db, 'public_profiles'),
-          orderBy('createdAt', 'desc')
+          collection(db, 'public_profiles')
         );
         const querySnapshot = await getDocs(q);
         const profilesData = querySnapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data()
         })) as Profile[];
-        const completedProfiles = profilesData.filter(p => !!p.fullName);
-        setProfiles(completedProfiles);
+        
+        // Sort by createdAt desc (handle missing dates)
+        profilesData.sort((a: any, b: any) => {
+           const dateA = a.createdAt?.seconds || 0;
+           const dateB = b.createdAt?.seconds || 0;
+           return dateB - dateA;
+        });
+
+        // Filter out incomplete profiles (must have a name)
+        const validProfiles = profilesData.filter(p => p.fullName && p.fullName.trim().length > 0);
+        setProfiles(validProfiles);
 
         const rQ = query(collection(db, 'community_resources'), orderBy('createdAt', 'desc'));
         const rSnap = await getDocs(rQ);
-        const byUser: Record<string, { resources: { userId: string; upvotes: number }[] }> = {};
+        const byUser: Record<string, { resources: { userId: string; upvotes: number; views?: number; downloads?: number; linkClicks?: number; purchasers?: string[] }[] }> = {};
         rSnap.docs.forEach(d => {
           const data = d.data() as any;
           const uid = data.userId as string;
@@ -81,7 +89,11 @@ const CommunityProfiles = () => {
           if (!byUser[uid]) byUser[uid] = { resources: [] };
           byUser[uid].resources.push({
             userId: uid,
-            upvotes: Number((data.upvotes ?? data.stars) || 0)
+            upvotes: Number((data.upvotes ?? data.stars) || 0),
+            views: Number(data.views || 0),
+            downloads: Number(data.downloads || 0),
+            linkClicks: Number(data.linkClicks || 0),
+            purchasers: data.purchasers || []
           });
         });
         setResourcesByUser(byUser);
@@ -235,7 +247,7 @@ const CommunityProfiles = () => {
         {/* Identity */}
         <div className="mb-4 sm:mb-5 flex flex-col items-center mt-4">
             <h3 className="text-xl sm:text-2xl font-bold text-slate-900 leading-tight mb-1 group-hover:text-indigo-600 transition-colors">
-              {profile.fullName}
+              {profile.fullName || 'Anonymous Member'}
             </h3>
             
             <div

@@ -10,6 +10,7 @@ import { ArrowRight, Code2, Sparkles, MoveRight, Terminal, User } from 'lucide-r
 import LaunchGate from '@/components/ui/LaunchGate';
 import { useAuth } from '@/contexts/AuthContext';
 import { isAdminEmail } from '@/utils/admin';
+import { calculateReputation } from '@/utils/reputation';
 
 // --- ANIMATION VARIANTS ---
 const containerVar = {
@@ -53,11 +54,44 @@ const CommunityHome = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const qp = query(collection(db, 'public_profiles'), orderBy('createdAt', 'desc'), limit(3));
+        // Fetch profiles
+        const qp = query(collection(db, 'public_profiles'));
         const rp = await getDocs(qp);
-        const profileDocs = rp.docs.map(d => ({ id: d.id, ...d.data() }));
-        const completedProfiles = profileDocs.filter((p: any) => !!p.fullName);
-        setProfiles(completedProfiles);
+        const allProfiles = rp.docs.map(d => ({ id: d.id, ...d.data() })) as any[];
+
+        // Fetch resources for reputation calculation
+        const qrAll = query(collection(db, 'community_resources'));
+        const rrAll = await getDocs(qrAll);
+        const allResources = rrAll.docs.map(d => ({ ...d.data() })) as any[];
+
+        // Calculate scores and sort
+        const scoredProfiles = allProfiles
+          .filter(p => !!p.fullName)
+          .map(p => {
+            const userResources = allResources.filter(r => r.userId === p.id || r.userId === p.uid);
+            const { score, tier } = calculateReputation(
+              {
+                bio: p.description,
+                photoURL: p.photoURL,
+                github: p.github,
+                linkedin: p.linkedin,
+                websiteURL: p.websiteURL
+              },
+              userResources.map(r => ({
+                userId: r.userId,
+                upvotes: Number((r.upvotes ?? r.stars) || 0),
+                views: Number(r.views || 0),
+                downloads: Number(r.downloads || 0),
+                linkClicks: Number(r.linkClicks || 0),
+                purchasers: r.purchasers || []
+              }))
+            );
+            return { ...p, score, tier };
+          })
+          .sort((a, b) => b.score - a.score)
+          .slice(0, 3);
+
+        setProfiles(scoredProfiles);
       } catch (e) { console.error(e) }
 
       try {
@@ -93,7 +127,7 @@ const CommunityHome = () => {
                 Web Based Community
               </div>
 
-              <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tighter text-slate-900 leading-[1.15] md:leading-[1.05] mb-6">
+              <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tighter text-slate-900 leading-[1.15] md:leading-[1.05] mb-6">
                 Build First. <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-br from-indigo-600 to-violet-500">
                   Ship Faster.
@@ -106,10 +140,10 @@ A curated AI community where engineers share automations, sell workflows, and co
 
               <div className="flex flex-col items-center gap-4 px-6">
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
-                  <PremiumButton to="/community/automation-hub" variant="primary" className="w-full sm:w-auto">
+                  <PremiumButton to="/community/automation-hub" variant="primary" className="w-auto px-6 py-3 text-sm sm:text-base">
                     Explore Hub <ArrowRight className="w-4 h-4" />
                   </PremiumButton>
-                  <PremiumButton to="/community/promote-profile" variant="secondary" className="w-full sm:w-auto">
+                  <PremiumButton to="/community/promote-profile" variant="secondary" className="w-auto px-6 py-3 text-sm sm:text-base">
                     Share Work
                   </PremiumButton>
                 </div>
@@ -160,146 +194,79 @@ A curated AI community where engineers share automations, sell workflows, and co
               </div>
             </div>
 
-            {(() => {
-              const myProfiles = profiles.filter(p => (user?.uid || '') === (p.id || p.uid));
-              const otherProfiles = profiles.filter(p => (user?.uid || '') !== (p.id || p.uid));
-              return (
-                <>
-                  {myProfiles.length > 0 && (
-                    <motion.div 
-                      variants={containerVar}
-                      initial="hidden"
-                      whileInView="show"
-                      viewport={{ once: true, margin: "-100px" }}
-                      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-4"
-                    >
-                      {myProfiles.map((p, i) => (
-                        <motion.div
-                          key={p.id || i}
-                          variants={itemVar}
-                          className="group relative bg-white rounded-[32px] p-2 transition-all duration-500 hover:-translate-y-2 shadow-sm border border-slate-100"
-                        >
-                      <div className="absolute -inset-0.5 bg-gradient-to-b from-slate-200 to-transparent rounded-[34px] opacity-50 group-hover:opacity-100 transition duration-500 blur-[1px]" />
-                      <div className="relative h-full bg-white rounded-[30px] p-6 flex flex-col justify-between overflow-hidden">
-                        <div>
-                          <div className="flex justify-between items-start mb-6">
-                            <div className="relative">
-                              <div className="w-20 h-20 rounded-2xl bg-slate-100 p-1 shadow-inner overflow-hidden">
-                                {p.photoURL ? (
-                                  <img src={p.photoURL} alt={p.fullName} className="w-full h-full rounded-xl object-cover" />
-                                ) : (
-                                  <div className="w-full h-full rounded-xl bg-slate-200 flex items-center justify-center text-xl font-bold text-slate-400">
-                                    {(p.fullName || 'U')[0]}
-                                  </div>
-                                )}
-                              </div>
-                              <div className="absolute -bottom-2 -right-2 bg-green-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full border-[3px] border-white">
-                                PRO
-                              </div>
-                            </div>
-                            <button className="w-10 h-10 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-400 hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-100 transition-colors">
-                              <MoveRight className="w-5 h-5 -rotate-45" />
-                            </button>
-                          </div>
-                          <h3 className="text-xl font-bold text-slate-900 mb-1">
-                            {p.fullName || 'Anonymous User'}
-                          </h3>
-                          <p className="text-sm font-medium text-slate-500 mb-6">
-                            {p.currentWork || 'AI Enthusiast'}
-                          </p>
-                          <div className="flex flex-wrap gap-2 mb-8">
-                            {(p.aiSkills || ['Python', 'System Design']).slice(0, 3).map((skill: string, idx: number) => (
-                              <span key={idx} className="px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-100 text-xs font-semibold text-slate-600 group-hover:border-indigo-100 group-hover:bg-indigo-50/50 group-hover:text-indigo-600 transition-colors">
-                                {skill}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                        <Link 
-                          to={`/community/profile/${p.id}`}
-                          className="w-full py-4 rounded-xl bg-slate-50 text-slate-600 font-semibold text-sm flex items-center justify-center gap-2 group-hover:bg-slate-900 group-hover:text-white transition-all duration-300"
-                        >
-                          View Full Profile
-                        </Link>
-                      </div>
-                        </motion.div>
-                      ))}
-                    </motion.div>
-                  )}
-                  <LaunchGate
-                    active={false}
-                    title="Profiles visible after launch"
-                    description="You can add your profile now. Listings unlock on launch day."
+            {profiles.length > 0 ? (
+              <>
+              <motion.div 
+                variants={containerVar}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, margin: "-100px" }}
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-4"
+              >
+                {profiles.map((p, i) => (
+                  <motion.div
+                    key={p.id || i}
+                    variants={itemVar}
+                    className="group relative bg-white rounded-[32px] p-2 transition-all duration-500 hover:-translate-y-2 shadow-sm border border-slate-100"
                   >
-                    <motion.div 
-                      variants={containerVar}
-                      initial="hidden"
-                      whileInView="show"
-                      viewport={{ once: true, margin: "-100px" }}
-                      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
-                    >
-                      {otherProfiles.map((p, i) => (
-                        <motion.div
-                          key={p.id || i}
-                          variants={itemVar}
-                          className="group relative bg-white rounded-[32px] p-2 transition-all duration-500 hover:-translate-y-2 shadow-sm border border-slate-100"
-                        >
-                          <div className="absolute -inset-0.5 bg-gradient-to-b from-slate-200 to-transparent rounded-[34px] opacity-50 group-hover:opacity-100 transition duration-500 blur-[1px]" />
-                          <div className="relative h-full bg-white rounded-[30px] p-6 flex flex-col justify-between overflow-hidden">
-                            <div>
-                              <div className="flex justify-between items-start mb-6">
-                                <div className="relative">
-                                  <div className="w-20 h-20 rounded-2xl bg-slate-100 p-1 shadow-inner overflow-hidden">
-                                    {p.photoURL ? (
-                                      <img src={p.photoURL} alt={p.fullName} className="w-full h-full rounded-xl object-cover" />
-                                    ) : (
-                                      <div className="w-full h-full rounded-xl bg-slate-200 flex items-center justify-center text-xl font-bold text-slate-400">
-                                        {(p.fullName || 'U')[0]}
-                                      </div>
-                                    )}
-                                  </div>
-                                  <div className="absolute -bottom-2 -right-2 bg-green-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full border-[3px] border-white">
-                                    PRO
-                                  </div>
+                    <div className="absolute -inset-0.5 bg-gradient-to-b from-slate-200 to-transparent rounded-[34px] opacity-50 group-hover:opacity-100 transition duration-500 blur-[1px]" />
+                    <div className="relative h-full bg-white rounded-[30px] p-6 flex flex-col justify-between overflow-hidden">
+                      <div>
+                        <div className="flex justify-between items-start mb-6">
+                          <div className="relative">
+                            <div className="w-20 h-20 rounded-2xl bg-slate-100 p-1 shadow-inner overflow-hidden">
+                              {p.photoURL ? (
+                                <img src={p.photoURL} alt={p.fullName} className="w-full h-full rounded-xl object-cover" />
+                              ) : (
+                                <div className="w-full h-full rounded-xl bg-slate-200 flex items-center justify-center text-xl font-bold text-slate-400">
+                                  {(p.fullName || 'U')[0]}
                                 </div>
-                                <button className="w-10 h-10 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-400 hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-100 transition-colors">
-                                  <MoveRight className="w-5 h-5 -rotate-45" />
-                                </button>
-                              </div>
-                              <h3 className="text-xl font-bold text-slate-900 mb-1">
-                                {p.fullName || 'Anonymous User'}
-                              </h3>
-                              <p className="text-sm font-medium text-slate-500 mb-6">
-                                {p.currentWork || 'AI Enthusiast'}
-                              </p>
-                              <div className="flex flex-wrap gap-2 mb-8">
-                                {(p.aiSkills || ['Python', 'System Design']).slice(0, 3).map((skill: string, idx: number) => (
-                                  <span key={idx} className="px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-100 text-xs font-semibold text-slate-600 group-hover:border-indigo-100 group-hover:bg-indigo-50/50 group-hover:text-indigo-600 transition-colors">
-                                    {skill}
-                                  </span>
-                                ))}
-                              </div>
+                              )}
                             </div>
-                            <Link 
-                              to={`/community/profile/${p.id}`}
-                              className="w-full py-4 rounded-xl bg-slate-50 text-slate-600 font-semibold text-sm flex items-center justify-center gap-2 group-hover:bg-slate-900 group-hover:text-white transition-all duration-300"
-                            >
-                              View Full Profile
-                            </Link>
+                            <div className="absolute -bottom-3 -right-2 bg-slate-900 text-white text-[10px] font-bold px-2 py-1 rounded-full border-[3px] border-white shadow-sm flex items-center gap-1">
+                              <Sparkles className="w-3 h-3 text-yellow-400" />
+                              {p.score || 0}
+                            </div>
                           </div>
-                        </motion.div>
-                      ))}
-                    </motion.div>
-                  </LaunchGate>
-                  {/* CHANGED: Removed negative margin and used normal spacing since the huge gap is gone */}
-                  <div className=" md:hidden flex justify-center mt-40 items-center">
-                     <PremiumButton to="/community/profiles" variant="secondary" className="w-20%">
-                       View All Talent
-                     </PremiumButton>
-                  </div>
-                </>
-              );
-            })()}
+                          <button className="w-10 h-10 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-400 hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-100 transition-colors">
+                            <MoveRight className="w-5 h-5 -rotate-45" />
+                          </button>
+                        </div>
+                        <h3 className="text-xl font-bold text-slate-900 mb-1">
+                          {p.fullName || 'Anonymous User'}
+                        </h3>
+                        <p className="text-sm font-medium text-slate-500 mb-6">
+                          {p.currentWork || 'AI Enthusiast'}
+                        </p>
+                        <div className="flex flex-wrap gap-2 mb-8">
+                          {(p.aiSkills || ['Python', 'System Design']).slice(0, 3).map((skill: string, idx: number) => (
+                            <span key={idx} className="px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-100 text-xs font-semibold text-slate-600 group-hover:border-indigo-100 group-hover:bg-indigo-50/50 group-hover:text-indigo-600 transition-colors">
+                              {skill}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                      <Link 
+                        to={`/community/profile/${p.id}`}
+                        className="w-full py-4 rounded-xl bg-slate-50 text-slate-600 font-semibold text-sm flex items-center justify-center gap-2 group-hover:bg-slate-900 group-hover:text-white transition-all duration-300"
+                      >
+                        View Full Profile
+                      </Link>
+                    </div>
+                  </motion.div>
+                ))}
+              </motion.div>
+              <div className="md:hidden flex justify-center mt-8">
+                 <PremiumButton to="/community/profiles" variant="secondary" className="w-auto px-6 py-3 text-sm">
+                   View All Talent
+                 </PremiumButton>
+              </div>
+             </>
+            ) : (
+               <div className="text-center py-20">
+                 <p className="text-slate-500">Loading experts...</p>
+               </div>
+            )}
           </div>
         </section>
 
@@ -326,7 +293,7 @@ A curated AI community where engineers share automations, sell workflows, and co
               </div>
               
               <div className="flex justify-center lg:justify-end">
-                <PremiumButton to="/community/automation-hub" variant="glow" className="w-20% sm:w-auto">
+                <PremiumButton to="/community/automation-hub" variant="glow" className="w-auto sm:w-auto">
                   Browse Marketplace
                 </PremiumButton>
               </div>
@@ -483,7 +450,7 @@ A curated AI community where engineers share automations, sell workflows, and co
                   </p>
 
                   <div className="flex flex-col sm:flex-row justify-center gap-4 md:gap-6">
-                    <button className="w-20% sm:w-auto px-8 md:px-10 py-4 md:py-5 rounded-2xl bg-white text-slate-950 font-bold text-lg hover:scale-105 transition-transform shadow-[0_0_40px_-10px_rgba(255,255,255,0.3)]">
+                    <button className="w-auto sm:w-auto px-8 md:px-10 py-4 md:py-5 rounded-2xl bg-white text-slate-950 font-bold text-lg hover:scale-105 transition-transform shadow-[0_0_40px_-10px_rgba(255,255,255,0.3)]">
                       Join Community Free
                     </button>
                     {/* <button className="w-20% sm:w-auto px-8 md:px-10 py-4 md:py-5 rounded-2xl bg-white/10 border border-white/10 text-white font-bold text-lg hover:bg-white/20 transition-colors backdrop-blur-sm">
