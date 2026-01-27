@@ -37,7 +37,7 @@ const PremiumButton = ({ children, variant = 'primary', className, to }: any) =>
     <>
       <span className="relative z-10 flex items-center gap-2">{children}</span>
       {variant === 'primary' && (
-        <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-shimmer" />
+        <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-shimmer pointer-events-none" />
       )}
     </>
   );
@@ -62,16 +62,16 @@ const CommunityHome = () => {
         // Fetch resources for reputation calculation
         const qrAll = query(collection(db, 'community_resources'));
         const rrAll = await getDocs(qrAll);
-        const allResources = rrAll.docs.map(d => ({ ...d.data() })) as any[];
+        const allResources = rrAll.docs.map(d => ({ id: d.id, ...d.data() })) as any[];
 
         // Calculate scores and sort
         const scoredProfiles = allProfiles
-          .filter(p => !!p.fullName)
+          .filter(p => p.fullName && p.fullName.trim().length > 0)
           .map(p => {
-            const userResources = allResources.filter(r => r.userId === p.id || r.userId === p.uid);
+            const userResources = allResources.filter(r => r.userId === p.id || (p.uid && r.userId === p.uid));
             const { score, tier } = calculateReputation(
               {
-                bio: p.description,
+                bio: p.description || p.bio,
                 photoURL: p.photoURL,
                 github: p.github,
                 linkedin: p.linkedin,
@@ -139,11 +139,11 @@ A curated AI community where engineers share automations, sell workflows, and co
               </p>
 
               <div className="flex flex-col items-center gap-4 px-6">
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
-                  <PremiumButton to="/community/automation-hub" variant="primary" className="w-auto px-6 py-3 text-sm sm:text-base">
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto relative z-20">
+                  <PremiumButton to="/community/automation-hub" variant="primary" className="w-auto px-6 py-3 text-sm sm:text-base relative z-30">
                     Explore Hub <ArrowRight className="w-4 h-4" />
                   </PremiumButton>
-                  <PremiumButton to="/community/promote-profile" variant="secondary" className="w-auto px-6 py-3 text-sm sm:text-base">
+                  <PremiumButton to="/community/promote-profile" variant="secondary" className="w-auto px-6 py-3 text-sm sm:text-base relative z-30">
                     Share Work
                   </PremiumButton>
                 </div>
@@ -207,51 +207,60 @@ A curated AI community where engineers share automations, sell workflows, and co
                   <motion.div
                     key={p.id || i}
                     variants={itemVar}
-                    className="group relative bg-white rounded-[32px] p-2 transition-all duration-500 hover:-translate-y-2 shadow-sm border border-slate-100"
+                    className="group relative h-full"
                   >
-                    <div className="absolute -inset-0.5 bg-gradient-to-b from-slate-200 to-transparent rounded-[34px] opacity-50 group-hover:opacity-100 transition duration-500 blur-[1px]" />
-                    <div className="relative h-full bg-white rounded-[30px] p-6 flex flex-col justify-between overflow-hidden">
-                      <div>
-                        <div className="flex justify-between items-start mb-6">
-                          <div className="relative">
-                            <div className="w-20 h-20 rounded-2xl bg-slate-100 p-1 shadow-inner overflow-hidden">
-                              {p.photoURL ? (
-                                <img src={p.photoURL} alt={p.fullName} className="w-full h-full rounded-xl object-cover" />
-                              ) : (
-                                <div className="w-full h-full rounded-xl bg-slate-200 flex items-center justify-center text-xl font-bold text-slate-400">
+                    <div className="relative h-full bg-white rounded-[2rem] p-8 flex flex-col items-center text-center transition-all duration-500 hover:shadow-2xl border border-slate-100 hover:border-indigo-100 group-hover:-translate-y-2 overflow-hidden">
+                       {/* Gradient Overlay Effect */}
+                       <div className="absolute inset-0 bg-gradient-to-b from-indigo-50/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                       
+                       {/* Profile Image Area */}
+                       <div className="relative mb-6 z-10">
+                         <div className="w-32 h-32 rounded-full p-1.5 bg-white shadow-xl shadow-indigo-100/50 ring-1 ring-slate-100">
+                           <div className="w-full h-full rounded-full overflow-hidden relative">
+                             {p.photoURL ? (
+                                <img src={p.photoURL} alt={p.fullName} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                             ) : (
+                                <div className="w-full h-full bg-slate-50 flex items-center justify-center text-3xl font-bold text-slate-300">
                                   {(p.fullName || 'U')[0]}
                                 </div>
-                              )}
-                            </div>
-                            <div className="absolute -bottom-3 -right-2 bg-slate-900 text-white text-[10px] font-bold px-2 py-1 rounded-full border-[3px] border-white shadow-sm flex items-center gap-1">
-                              <Sparkles className="w-3 h-3 text-yellow-400" />
-                              {p.score || 0}
-                            </div>
-                          </div>
-                          <button className="w-10 h-10 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-400 hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-100 transition-colors">
-                            <MoveRight className="w-5 h-5 -rotate-45" />
-                          </button>
-                        </div>
-                        <h3 className="text-xl font-bold text-slate-900 mb-1">
-                          {p.fullName || 'Anonymous User'}
-                        </h3>
-                        <p className="text-sm font-medium text-slate-500 mb-6">
-                          {p.currentWork || 'AI Enthusiast'}
-                        </p>
-                        <div className="flex flex-wrap gap-2 mb-8">
-                          {(p.aiSkills || ['Python', 'System Design']).slice(0, 3).map((skill: string, idx: number) => (
-                            <span key={idx} className="px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-100 text-xs font-semibold text-slate-600 group-hover:border-indigo-100 group-hover:bg-indigo-50/50 group-hover:text-indigo-600 transition-colors">
-                              {skill}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                      <Link 
-                        to={`/community/profile/${p.id}`}
-                        className="w-full py-4 rounded-xl bg-slate-50 text-slate-600 font-semibold text-sm flex items-center justify-center gap-2 group-hover:bg-slate-900 group-hover:text-white transition-all duration-300"
-                      >
-                        View Full Profile
-                      </Link>
+                             )}
+                           </div>
+                         </div>
+                         {/* Score Badge */}
+                         <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-slate-900 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg border-2 border-white z-10 whitespace-nowrap">
+                            <Sparkles className="w-3 h-3 text-yellow-400" />
+                            <span>{p.score || 0} Rep</span>
+                         </div>
+                       </div>
+
+                       {/* Info */}
+                       <div className="relative z-10 w-full flex flex-col items-center">
+                         <h3 className="text-2xl font-bold text-slate-900 mb-2 group-hover:text-indigo-600 transition-colors">
+                           {p.fullName || 'Anonymous User'}
+                         </h3>
+                         <p className="text-slate-500 font-medium mb-6 line-clamp-2 max-w-[240px] h-12">
+                           {p.currentWork || 'AI Enthusiast & Builder'}
+                         </p>
+
+                         {/* Skills */}
+                         <div className="flex flex-wrap justify-center gap-2 mb-8 w-full min-h-[32px]">
+                            {(p.aiSkills || ['Python', 'System Design']).slice(0, 3).map((skill: string, idx: number) => (
+                              <span key={idx} className="px-3 py-1 rounded-full bg-slate-50 border border-slate-100 text-xs font-semibold text-slate-600 group-hover:border-indigo-100 group-hover:bg-indigo-50/50 group-hover:text-indigo-600 transition-colors">
+                                {skill}
+                              </span>
+                            ))}
+                         </div>
+
+                         {/* Action */}
+                         <div className="mt-auto w-full">
+                           <Link 
+                             to={`/community/profile/${p.id}`}
+                             className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl bg-slate-900 text-white font-semibold transition-all duration-300 hover:bg-indigo-600 hover:shadow-lg hover:shadow-indigo-600/20 active:scale-95 group/btn"
+                           >
+                             View Profile <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                           </Link>
+                         </div>
+                       </div>
                     </div>
                   </motion.div>
                 ))}
@@ -449,10 +458,10 @@ A curated AI community where engineers share automations, sell workflows, and co
                     Join a high-signal community where serious builders share code, feedback, and opportunities.
                   </p>
 
-                  <div className="flex flex-col sm:flex-row justify-center gap-4 md:gap-6">
-                    <button className="w-auto sm:w-auto px-8 md:px-10 py-4 md:py-5 rounded-2xl bg-white text-slate-950 font-bold text-lg hover:scale-105 transition-transform shadow-[0_0_40px_-10px_rgba(255,255,255,0.3)]">
+                  <div className="flex flex-col sm:flex-row justify-center gap-4 md:gap-6 relative z-30">
+                    <PremiumButton to="/community/signup" variant="secondary" className="w-auto sm:w-auto px-8 md:px-10 py-4 md:py-5 text-lg font-bold shadow-[0_0_40px_-10px_rgba(255,255,255,0.3)] border-0">
                       Join Community Free
-                    </button>
+                    </PremiumButton>
                     {/* <button className="w-20% sm:w-auto px-8 md:px-10 py-4 md:py-5 rounded-2xl bg-white/10 border border-white/10 text-white font-bold text-lg hover:bg-white/20 transition-colors backdrop-blur-sm">
                       View Documentation
                     </button> */}

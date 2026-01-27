@@ -27,6 +27,7 @@ interface Profile {
   companyName?: string;
   aiSkills?: string[];
   description?: string;
+  bio?: string; // Added for compatibility
   websiteURL?: string;
   email?: string;
   github?: string;
@@ -37,6 +38,7 @@ interface Profile {
   networkingIntent?: string[];
   resourcesCount?: number;
   totalUpvotesReceived?: number;
+  uid?: string;
 }
 
 const CommunityProfiles = () => {
@@ -79,7 +81,7 @@ const CommunityProfiles = () => {
         const validProfiles = profilesData.filter(p => p.fullName && p.fullName.trim().length > 0);
         setProfiles(validProfiles);
 
-        const rQ = query(collection(db, 'community_resources'), orderBy('createdAt', 'desc'));
+        const rQ = query(collection(db, 'community_resources'));
         const rSnap = await getDocs(rQ);
         const byUser: Record<string, { resources: { userId: string; upvotes: number; views?: number; downloads?: number; linkClicks?: number; purchasers?: string[] }[] }> = {};
         rSnap.docs.forEach(d => {
@@ -113,32 +115,43 @@ const CommunityProfiles = () => {
     (profile.currentWork || '').toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const sortedProfiles = [...filteredProfiles].sort((a, b) => {
-    const entryA = resourcesByUser[a.id];
-    const resourcesA = entryA?.resources || [];
-    const repA = calculateReputation(
-      {
-        bio: a.description,
-        photoURL: a.photoURL,
-        github: a.github,
-        linkedin: a.linkedin,
-        websiteURL: a.websiteURL
-      },
-      resourcesA
-    ).score;
+  const getResourcesForProfile = (p: Profile) => {
+    const entry = resourcesByUser[p.id];
+    let resourcesArr = entry?.resources || [];
+    const pUid = p.uid;
+    
+    // Merge resources from uid bucket if different from id bucket
+    if (pUid && pUid !== p.id && resourcesByUser[pUid]) {
+        // Resources are bucketed by userId, so these sets are disjoint. Safe to merge.
+        resourcesArr = [...resourcesArr, ...resourcesByUser[pUid].resources];
+    }
+    return resourcesArr;
+  };
 
-    const entryB = resourcesByUser[b.id];
-    const resourcesB = entryB?.resources || [];
-    const repB = calculateReputation(
-      {
-        bio: b.description,
-        photoURL: b.photoURL,
-        github: b.github,
-        linkedin: b.linkedin,
-        websiteURL: b.websiteURL
-      },
-      resourcesB
-    ).score;
+  const sortedProfiles = [...filteredProfiles].sort((a, b) => {
+    const resourcesA = getResourcesForProfile(a);
+    const repA = calculateReputation(
+        {
+          bio: a.description || a.bio,
+          photoURL: a.photoURL,
+          github: a.github,
+          linkedin: a.linkedin,
+          websiteURL: a.websiteURL
+        },
+        resourcesA
+      ).score;
+
+      const resourcesB = getResourcesForProfile(b);
+      const repB = calculateReputation(
+        {
+          bio: b.description || b.bio,
+          photoURL: b.photoURL,
+          github: b.github,
+          linkedin: b.linkedin,
+          websiteURL: b.websiteURL
+        },
+        resourcesB
+      ).score;
 
     return repB - repA;
   });
@@ -146,11 +159,10 @@ const CommunityProfiles = () => {
   const hasMyProfile = !!user && profiles.some(p => p.id === (user.uid || ''));
 
   const ProfileCard = ({ profile }: { profile: Profile }) => {
-    const entry = resourcesByUser[profile.id];
-    const resourcesArr = entry?.resources || [];
+    const resourcesArr = getResourcesForProfile(profile);
     const rep = calculateReputation(
       {
-        bio: profile.description,
+        bio: profile.description || profile.bio,
         photoURL: profile.photoURL,
         github: profile.github,
         linkedin: profile.linkedin,

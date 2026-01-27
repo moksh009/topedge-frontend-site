@@ -180,14 +180,20 @@ const SubmitResource = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!user || !userProfile) return;
+    if (!user || !userProfile) {
+      toast.error("You must be logged in and have a profile to submit.");
+      return;
+    }
     if (!isAdmin && uploadCount >= 10) return toast.error("Upload limit reached.");
     if (!formData.contactEmail.trim()) return toast.error("Email is required");
-    if (formData.monetization === 'paid' && (!formData.price || isNaN(Number(formData.price)))) {
-    if (formData.monetization === 'paid' && !formData.projectUrl.trim()) return toast.error("Access link is required for paid resources");
-    }
-    if (formData.monetization === 'paid' && !formData.projectUrl.trim()) {
-      return toast.error("For paid resources, please provide a private access link");
+    
+    if (formData.monetization === 'paid') {
+      if (!formData.price || isNaN(Number(formData.price))) {
+        return toast.error("Price is required for paid resources");
+      }
+      if (!formData.projectUrl.trim()) {
+        return toast.error("Access link is required for paid resources");
+      }
     }
 
     setLoading(true);
@@ -197,14 +203,14 @@ const SubmitResource = () => {
 
       const resourceData = {
         userId: user.uid,
-        userName: userProfile.fullName,
-        userPhoto: userProfile.photoURL,
+        userName: userProfile.fullName || 'Anonymous Member',
+        userPhoto: userProfile.photoURL || '',
         title: formData.title,
         description: formData.description,
         fullDescription: formData.description,
-        whatItDoes: formData.whatItDoes,
-        outcome: formData.outcome,
-        videoUrl: formData.youtubeUrl || formData.videoUrl,
+        whatItDoes: formData.whatItDoes || '',
+        outcome: formData.outcome || '',
+        videoUrl: formData.youtubeUrl || formData.videoUrl || '',
         imageUrl: formData.imageUrl || '',
         link: isPaid ? '' : (formData.projectUrl || ''),
         hasProtectedLink,
@@ -212,13 +218,17 @@ const SubmitResource = () => {
         contactPhone: formData.contactPhone || '',
         contactWebsite: formData.contactWebsite || '',
         isPaid,
-        price: isPaid ? parseFloat(formData.price) : 0,
+        price: isPaid ? (Number(formData.price) || 0) : 0,
         pricingType: isPaid ? formData.pricingType : 'one_time',
         tools: formData.toolkit.split(',').map(s => s.trim()).filter(Boolean),
         category: formData.category,
-        isHiring: formData.isHiring,
+        isHiring: formData.isHiring || false,
         tags: [],
-        attachments,
+        attachments: (attachments || []).map(a => ({
+          name: a.name || 'Attachment',
+          url: a.url,
+          size: a.size || 0
+        })),
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
         downloads: 0,
@@ -227,6 +237,13 @@ const SubmitResource = () => {
         upvotedBy: [],
         purchasers: []
       };
+
+      // Remove any undefined values to prevent Firestore errors
+      Object.keys(resourceData).forEach(key => {
+        if ((resourceData as any)[key] === undefined) {
+          delete (resourceData as any)[key];
+        }
+      });
 
       const resourceRef = await addDoc(collection(db, 'community_resources'), resourceData);
 
@@ -240,7 +257,10 @@ const SubmitResource = () => {
       }
       toast.success("Resource launched successfully!");
       navigate('/community/automation-hub');
-    } catch (error) { console.error(error); toast.error("Failed to publish."); } 
+    } catch (error: any) { 
+      console.error(error); 
+      toast.error(`Failed to publish: ${error.message || 'Unknown error'}`); 
+    } 
     finally { setLoading(false); }
   };
 
@@ -280,7 +300,7 @@ const SubmitResource = () => {
             <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" /> Cancel & Back
           </Link>
 
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+          <div>
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 md:mb-12 gap-6">
                <div>
                   <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 mb-2">Launch Resource</h1>
@@ -557,7 +577,7 @@ const SubmitResource = () => {
               </div>
 
             </form>
-          </motion.div>
+          </div>
         </div>
       </div>
     </CommunityLayout>

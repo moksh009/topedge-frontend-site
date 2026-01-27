@@ -79,15 +79,31 @@ const ProfileDetails = () => {
         const docRef = doc(db, 'public_profiles', id);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
-          setProfile(docSnap.data() as UserProfile);
+          const profileData = docSnap.data() as UserProfile;
+          setProfile(profileData);
           
-          const q = query(
-            collection(db, 'community_resources'),
-            where('userId', '==', id),
-            orderBy('createdAt', 'desc')
-          );
-          const resourceSnap = await getDocs(q);
-          setResources(resourceSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })) as Resource[]);
+          // Fetch resources for both ID and UID (if different) to match home page logic
+          const queries = [
+            query(collection(db, 'community_resources'), where('userId', '==', id))
+          ];
+          
+          if (profileData.uid && profileData.uid !== id) {
+             queries.push(query(collection(db, 'community_resources'), where('userId', '==', profileData.uid)));
+          }
+
+          const snapshots = await Promise.all(queries.map(q => getDocs(q)));
+          const allDocs = snapshots.flatMap(s => s.docs);
+          
+          // Deduplicate by ID and sort
+          const uniqueResources = Array.from(new Map(allDocs.map(d => [d.id, { id: d.id, ...d.data() }])).values()) as Resource[];
+          
+          uniqueResources.sort((a: any, b: any) => {
+             const tA = a.createdAt?.seconds || 0;
+             const tB = b.createdAt?.seconds || 0;
+             return tB - tA;
+          });
+
+          setResources(uniqueResources);
         } else {
           setProfile(null);
         }
@@ -134,7 +150,11 @@ const ProfileDetails = () => {
 
   const repResources = resources.map(r => ({
     userId: id || '',
-    upvotes: Number(((r as any).upvotes ?? (r as any).stars) || 0)
+    upvotes: Number(((r as any).upvotes ?? (r as any).stars) || 0),
+    views: Number((r as any).views || 0),
+    downloads: Number((r as any).downloads || 0),
+    linkClicks: Number((r as any).linkClicks || 0),
+    purchasers: (r as any).purchasers || []
   }));
 
   const rep = calculateReputation(

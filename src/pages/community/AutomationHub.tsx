@@ -287,12 +287,12 @@ const ResourceCard = ({ resource, index, currentUser }: { resource: Resource; in
                 {/* Author Info */}
                 <div className="flex items-center gap-2">
                     {resource.userPhoto ? (
-                        <img src={resource.userPhoto} alt={resource.userName} className="w-8 h-8 rounded-full object-cover border border-slate-100" />
+                        <img src={resource.userPhoto} alt={resource.userName || 'User'} className="w-8 h-8 rounded-full object-cover border border-slate-100" />
                     ) : (
-                        <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-[10px] font-bold text-slate-400">{resource.userName?.charAt(0)}</div>
+                        <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-[10px] font-bold text-slate-400">{(resource.userName || 'A').charAt(0)}</div>
                     )}
                     <div className="flex flex-col">
-                        <span className="text-xs font-bold text-slate-900">{resource.userName}</span>
+                        <span className="text-xs font-bold text-slate-900">{resource.userName || 'Anonymous Member'}</span>
                         {authorProfile?.isVerified && (
                           <span className="text-[10px] text-slate-400 flex items-center gap-0.5">
                             <CheckCircle2 className="w-2.5 h-2.5 text-emerald-500" /> Verified

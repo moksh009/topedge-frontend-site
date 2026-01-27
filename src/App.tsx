@@ -6,6 +6,7 @@ import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { AuthProvider } from './contexts/AuthContext';
 import Navbar from './components/navigation/Navbar';
+import CommunityNavbar from './components/community/layout/CommunityNavbar';
 import FloatingVoiceChat from './components/FloatingVoiceChat';
 import Footer from './components/Footer';
 import MetaPixel from './components/MetaPixel';
@@ -64,6 +65,7 @@ const ScrollToTop = () => {
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
   const isCommunityRoute = location.pathname.startsWith('/community');
+  const isAuthPage = location.pathname === '/community/login' || location.pathname === '/community/signup';
 
   // Dynamic Metadata based on route
   const pageTitle = isCommunityRoute 
@@ -102,6 +104,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       </Helmet>
       
       {!isCommunityRoute && <Navbar />}
+      {isCommunityRoute && !isAuthPage && <CommunityNavbar />}
       
       {isCommunityRoute ? (
         <>
@@ -117,6 +120,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       
       {!isCommunityRoute && <Footer />}
       {!isCommunityRoute && <FloatingVoiceChat />}
+      {isCommunityRoute && !isAuthPage && <Footer />}
     </div>
   );
 };
@@ -188,10 +192,10 @@ const AnimatedRoutes = () => {
     <AnimatePresence mode="wait">
       <motion.div
         key={location.pathname}
-        initial={{ opacity: 0, y: 8 }}
+        initial={{ opacity: 0, y: 5 }}
         animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -8 }}
-        transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
+        exit={{ opacity: 0, y: -5 }}
+        transition={{ duration: 0.15, ease: "easeInOut" }}
       >
         <Routes location={location}>
                   <Route path="/" element={<Home />} />
