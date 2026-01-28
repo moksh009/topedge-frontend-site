@@ -40,7 +40,7 @@ export default function RelatedResources({ current }: Props) {
           <Link
             key={r.id}
             to={`/community/resource/${r.id}`}
-            className="group bg-white rounded-xl border border-slate-200 p-4 hover:border-indigo-200 transition-all"
+            className="group bg-white rounded-xl border border-slate-200 p-4 hover:border-indigo-200 transition-all duration-300 hover:-translate-y-1 hover:shadow-md active:scale-[0.99]"
           >
             <div className="h-28 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center mb-3">
               <div className="text-xs font-bold text-slate-400 uppercase">{r.category}</div>

@@ -144,7 +144,7 @@ const CommunityNavbar = () => {
         <motion.div 
           initial={{ y: -100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ type: "spring", stiffness: 260, damping: 20 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className={cn(
             "pointer-events-auto w-full max-w-5xl px-4 transition-all duration-300",
           )}
@@ -389,7 +389,7 @@ const CommunityNavbar = () => {
                 initial={{ opacity: 0, scale: 0.9, y: -20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.9, y: -20 }}
-                transition={{ type: "spring", duration: 0.5, bounce: 0.3 }}
+                transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                 className={cn(
                   "fixed z-50 flex flex-col",
                   "inset-x-4 top-24 bottom-auto max-h-[calc(100vh-8rem)] rounded-[2rem]", 

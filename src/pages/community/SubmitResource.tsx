@@ -322,7 +322,12 @@ const SubmitResource = () => {
               
               {/* ================= SECTION 1: ESSENTIALS ================= */}
               {/* Adjusted padding: p-5 on mobile, p-8 on desktop */}
-              <div className="bg-white rounded-2xl md:rounded-[2rem] border border-slate-200 p-5 md:p-8 shadow-sm relative overflow-hidden">
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+                className="bg-white rounded-2xl md:rounded-[2rem] border border-slate-200 p-5 md:p-8 shadow-sm relative overflow-hidden"
+              >
                 <div className="flex items-center gap-3 mb-6 md:mb-8">
                   <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600"><Layout className="w-5 h-5" /></div>
                   <h2 className="text-xl font-bold text-slate-900">The Essentials</h2>
@@ -332,13 +337,13 @@ const SubmitResource = () => {
                   <div className="space-y-2">
                     <label className="text-sm font-bold text-slate-700">Resource Title</label>
                     <input type="text" name="title" value={formData.title} onChange={handleChange} required placeholder="e.g. Real Estate AI Caller" 
-                        className="w-full px-4 py-3 md:px-5 md:py-4 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-blue-500/20 outline-none font-medium" />
+                        className="w-full px-4 py-3 md:px-5 md:py-4 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-blue-500/20 outline-none font-medium transition-all" />
                   </div>
 
                   <div className="space-y-2">
                     <label className="text-sm font-bold text-slate-700">Description</label>
                     <textarea name="description" value={formData.description} onChange={handleChange} required rows={2} placeholder="A quick hook..." 
-                        className="w-full px-4 py-3 md:px-5 md:py-4 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-blue-500/20 outline-none font-medium resize-none" />
+                        className="w-full px-4 py-3 md:px-5 md:py-4 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-blue-500/20 outline-none font-medium resize-none transition-all" />
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -346,7 +351,7 @@ const SubmitResource = () => {
                         <label className="text-sm font-bold text-slate-700">Category</label>
                         <div className="relative">
                            <select name="category" value={formData.category} onChange={handleChange} 
-                                className="w-full px-4 py-3 md:px-5 md:py-4 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-blue-500/20 outline-none font-medium appearance-none">
+                                className="w-full px-4 py-3 md:px-5 md:py-4 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-blue-500/20 outline-none font-medium appearance-none transition-all">
                               <option value="automation">Automation Workflow</option>
                               <option value="project">Full Project / Codebase</option>
                               <option value="tool">Tool / Utility</option>
@@ -361,7 +366,7 @@ const SubmitResource = () => {
                         <label className="text-sm font-bold text-slate-700">Toolkit Used</label>
                         <div className="relative">
                            <input type="text" name="toolkit" value={formData.toolkit} onChange={handleChange} placeholder="n8n, OpenAI..." 
-                                className="w-full px-4 py-3 md:px-5 md:py-4 pl-11 md:pl-12 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-blue-500/20 outline-none font-medium" />
+                                className="w-full px-4 py-3 md:px-5 md:py-4 pl-11 md:pl-12 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-blue-500/20 outline-none font-medium transition-all" />
                            <Wrench className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
                         </div>
                      </div>
@@ -370,41 +375,41 @@ const SubmitResource = () => {
                   <div className="space-y-2">
                     <label className="text-sm font-bold text-slate-700">Live Project Link</label>
                     <input type="url" name="projectUrl" value={formData.projectUrl} onChange={handleChange} placeholder="https://..." 
-                        className="w-full px-4 py-3 md:px-5 md:py-4 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-blue-500/20 outline-none font-medium" />
+                        className="w-full px-4 py-3 md:px-5 md:py-4 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-blue-500/20 outline-none font-medium transition-all" />
                   </div>
 
                   {/* Video, Image & Attachments Section */}
                   <div className="pt-2 space-y-4">
                      <div className="space-y-2">
                         <label className="text-sm font-bold text-slate-700">Demo Video</label>
-                        <div className="p-5 md:p-6 border-2 border-dashed border-slate-200 rounded-2xl bg-slate-50 flex flex-col items-center justify-center text-center transition-all hover:border-purple-300">
+                        <div className="p-5 md:p-6 border-2 border-dashed border-slate-200 rounded-2xl bg-slate-50 flex flex-col items-center justify-center text-center transition-all hover:border-purple-300 group cursor-pointer">
                             {formData.videoUrl ? (
                                 <div className="w-full relative">
                                     <video src={formData.videoUrl} className="w-full h-48 object-cover rounded-xl bg-black" controls />
-                                    <button type="button" onClick={() => setFormData(prev => ({...prev, videoUrl: ''}))} className="absolute top-2 right-2 p-2 bg-red-500 text-white rounded-full shadow-md"><Trash2 className="w-4 h-4" /></button>
+                                    <button type="button" onClick={() => setFormData(prev => ({...prev, videoUrl: ''}))} className="absolute top-2 right-2 p-2 bg-red-500 text-white rounded-full shadow-md hover:scale-110 transition-transform"><Trash2 className="w-4 h-4" /></button>
                                 </div>
                             ) : (
                                 <label className="cursor-pointer w-full h-full flex flex-col items-center justify-center py-4">
-                                    {uploadingVideo ? <Loader2 className="w-8 h-8 text-indigo-500 animate-spin mb-2" /> : <Upload className="w-8 h-8 text-slate-400 mb-2" />}
+                                    {uploadingVideo ? <Loader2 className="w-8 h-8 text-indigo-500 animate-spin mb-2" /> : <Upload className="w-8 h-8 text-slate-400 mb-2 group-hover:scale-110 transition-transform" />}
                                     <span className="text-sm font-bold text-slate-700">{uploadingVideo ? "Uploading..." : "Upload Demo Video"}</span>
                                     <input type="file" accept="video/*" className="hidden" onChange={handleVideoUpload} disabled={uploadingVideo} />
                                 </label>
                             )}
                         </div>
                         <input type="url" name="youtubeUrl" value={formData.youtubeUrl} onChange={handleChange} placeholder="Or paste YouTube URL..." 
-                            className="w-full px-4 py-3 md:px-5 md:py-4 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white outline-none font-medium text-sm" />
+                            className="w-full px-4 py-3 md:px-5 md:py-4 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white outline-none font-medium text-sm transition-all" />
                      </div>
 
                      <div className="space-y-2">
                         <label className="text-sm font-bold text-slate-700">Cover Image (optional)</label>
-                        <div className="p-5 md:p-6 border-2 border-dashed border-slate-200 rounded-2xl bg-slate-50 flex flex-col items-center justify-center text-center transition-all hover:border-purple-300">
+                        <div className="p-5 md:p-6 border-2 border-dashed border-slate-200 rounded-2xl bg-slate-50 flex flex-col items-center justify-center text-center transition-all hover:border-purple-300 group cursor-pointer">
                           {formData.imageUrl ? (
                             <div className="w-full relative">
                               <img src={formData.imageUrl} alt={formData.title || "Cover"} className="w-full h-48 object-cover rounded-xl bg-slate-100" />
                               <button
                                 type="button"
                                 onClick={() => setFormData(prev => ({ ...prev, imageUrl: '' }))}
-                                className="absolute top-2 right-2 p-2 bg-red-500 text-white rounded-full shadow-md"
+                                className="absolute top-2 right-2 p-2 bg-red-500 text-white rounded-full shadow-md hover:scale-110 transition-transform"
                               >
                                 <Trash2 className="w-4 h-4" />
                               </button>
@@ -414,7 +419,7 @@ const SubmitResource = () => {
                               {uploadingImage ? (
                                 <Loader2 className="w-8 h-8 text-indigo-500 animate-spin mb-2" />
                               ) : (
-                                <Upload className="w-8 h-8 text-slate-400 mb-2" />
+                                <Upload className="w-8 h-8 text-slate-400 mb-2 group-hover:scale-110 transition-transform" />
                               )}
                               <span className="text-sm font-bold text-slate-700">
                                 {uploadingImage ? "Uploading..." : "Upload Cover Image"}
@@ -433,9 +438,9 @@ const SubmitResource = () => {
 
                      <div className="space-y-2">
                         <label className="text-sm font-bold text-slate-700">Attachments</label>
-                        <div className="p-4 md:p-6 border-2 border-dashed border-slate-200 rounded-2xl bg-slate-50 flex flex-col gap-3 items-center justify-center text-center hover:border-indigo-300">
+                        <div className="p-4 md:p-6 border-2 border-dashed border-slate-200 rounded-2xl bg-slate-50 flex flex-col gap-3 items-center justify-center text-center hover:border-indigo-300 transition-all group cursor-pointer">
                             <label className="cursor-pointer w-full flex flex-col items-center justify-center py-2">
-                                {uploadingAttachment ? <Loader2 className="w-6 h-6 animate-spin text-indigo-500" /> : <Upload className="w-6 h-6 text-slate-400" />}
+                                {uploadingAttachment ? <Loader2 className="w-6 h-6 animate-spin text-indigo-500" /> : <Upload className="w-6 h-6 text-slate-400 group-hover:scale-110 transition-transform" />}
                                 <span className="text-sm font-bold text-slate-700 mt-2">{uploadingAttachment ? "Uploading..." : "Upload files (.zip, .json, .csv)"}</span>
                                 <input type="file" multiple className="hidden" onChange={handleAttachmentsUpload} disabled={uploadingAttachment} />
                             </label>
@@ -444,7 +449,7 @@ const SubmitResource = () => {
                                     {attachments.map((f, i) => (
                                         <div key={i} className="flex justify-between items-center bg-white p-2 rounded border border-slate-200 text-xs">
                                             <span className="truncate">{f.name}</span>
-                                            <button type="button" onClick={() => setAttachments(prev => prev.filter((_, idx) => idx !== i))} className="text-rose-500"><Trash2 className="w-4 h-4" /></button>
+                                            <button type="button" onClick={() => setAttachments(prev => prev.filter((_, idx) => idx !== i))} className="text-rose-500 hover:scale-110 transition-transform"><Trash2 className="w-4 h-4" /></button>
                                         </div>
                                     ))}
                                 </div>
@@ -453,11 +458,16 @@ const SubmitResource = () => {
                      </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
               {/* ================= SECTION 2: DEEP DIVE ================= */}
               {/* Separate Card, same padding adjustments */}
-              <div className="bg-white rounded-2xl md:rounded-[2rem] border border-slate-200 p-5 md:p-8 shadow-sm">
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                className="bg-white rounded-2xl md:rounded-[2rem] border border-slate-200 p-5 md:p-8 shadow-sm"
+              >
                 <div className="flex items-center gap-3 mb-6 md:mb-8">
                   <div className="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center text-purple-600"><Sparkles className="w-5 h-5" /></div>
                   <h2 className="text-xl font-bold text-slate-900">Deep Dive</h2>
@@ -467,38 +477,48 @@ const SubmitResource = () => {
                   <div className="space-y-2">
                     <label className="text-sm font-bold text-slate-700">Setup User Guide</label>
                     <textarea name="whatItDoes" value={formData.whatItDoes} onChange={handleChange} required placeholder="Step-by-step instructions..." 
-                        className="w-full px-4 py-3 md:px-5 md:py-4 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-purple-500/20 outline-none font-medium h-40 resize-none" />
+                        className="w-full px-4 py-3 md:px-5 md:py-4 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-purple-500/20 outline-none font-medium h-40 resize-none transition-all" />
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-bold text-slate-700">Outcome Achieved (What it does)</label>
                     <textarea name="outcome" value={formData.outcome} onChange={handleChange} required placeholder="What is the ROI?..." 
-                        className="w-full px-4 py-3 md:px-5 md:py-4 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-purple-500/20 outline-none font-medium h-40 resize-none" />
+                        className="w-full px-4 py-3 md:px-5 md:py-4 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-purple-500/20 outline-none font-medium h-40 resize-none transition-all" />
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
               {/* ================= SECTION 3: CONTACT ================= */}
-              <div className="bg-white rounded-2xl md:rounded-[2rem] border border-slate-200 p-5 md:p-8 shadow-sm">
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                className="bg-white rounded-2xl md:rounded-[2rem] border border-slate-200 p-5 md:p-8 shadow-sm"
+              >
                 <div className="flex items-center gap-3 mb-6 md:mb-8">
                   <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600"><User className="w-5 h-5" /></div>
                   <h2 className="text-xl font-bold text-slate-900">Contact Details</h2>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <input type="email" name="contactEmail" value={formData.contactEmail} onChange={handleChange} placeholder="Email" 
-                    className="w-full px-4 py-3 md:px-5 md:py-4 bg-slate-50 border border-slate-200 rounded-xl outline-none font-medium" />
+                    className="w-full px-4 py-3 md:px-5 md:py-4 bg-slate-50 border border-slate-200 rounded-xl outline-none font-medium transition-all" />
                   <input type="text" name="contactPhone" value={formData.contactPhone} onChange={handleChange} placeholder="Phone" 
-                    className="w-full px-4 py-3 md:px-5 md:py-4 bg-slate-50 border border-slate-200 rounded-xl outline-none font-medium" />
+                    className="w-full px-4 py-3 md:px-5 md:py-4 bg-slate-50 border border-slate-200 rounded-xl outline-none font-medium transition-all" />
                   <input type="url" name="contactWebsite" value={formData.contactWebsite} onChange={handleChange} placeholder="Website" 
-                    className="w-full px-4 py-3 md:px-5 md:py-4 bg-slate-50 border border-slate-200 rounded-xl outline-none font-medium" />
+                    className="w-full px-4 py-3 md:px-5 md:py-4 bg-slate-50 border border-slate-200 rounded-xl outline-none font-medium transition-all" />
                 </div>
                 <div className="mt-6 flex items-center gap-3 p-4 rounded-xl border border-slate-200 bg-slate-50">
                   <input type="checkbox" name="isHiring" checked={formData.isHiring} onChange={handleCheckboxChange} className="w-5 h-5 rounded text-indigo-600" />
                   <label className="font-bold text-slate-700 text-sm">I am looking for collaborators</label>
                 </div>
-              </div>
+              </motion.div>
 
               {/* ================= SECTION 4: COMMERCE ================= */}
-              <div className="bg-white rounded-2xl md:rounded-[2rem] border border-slate-200 p-5 md:p-8 shadow-sm">
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                className="bg-white rounded-2xl md:rounded-[2rem] border border-slate-200 p-5 md:p-8 shadow-sm"
+              >
                 <div className="flex items-center gap-3 mb-6 md:mb-8">
                   <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600"><DollarSign className="w-5 h-5" /></div>
                   <h2 className="text-xl font-bold text-slate-900">Distribution</h2>
@@ -509,7 +529,7 @@ const SubmitResource = () => {
                     <div
                       onClick={() => setFormData(p => ({ ...p, monetization: 'free', pricingType: 'one_time' }))}
                       className={cn(
-                        "cursor-pointer p-5 md:p-6 rounded-2xl border-2 transition-all",
+                        "cursor-pointer p-5 md:p-6 rounded-2xl border-2 transition-all hover:scale-[1.02] active:scale-[0.98]",
                         formData.monetization === 'free' ? "bg-emerald-50/30 border-emerald-500" : "bg-slate-50 border-transparent"
                       )}
                     >
@@ -523,7 +543,7 @@ const SubmitResource = () => {
                     <div
                       onClick={() => setFormData(p => ({ ...p, monetization: 'paid', pricingType: 'one_time' }))}
                       className={cn(
-                        "cursor-pointer p-5 md:p-6 rounded-2xl border-2 transition-all",
+                        "cursor-pointer p-5 md:p-6 rounded-2xl border-2 transition-all hover:scale-[1.02] active:scale-[0.98]",
                         formData.monetization === 'paid' && formData.pricingType === 'one_time'
                           ? "bg-slate-900/5 border-slate-900"
                           : "bg-slate-50 border-transparent"
@@ -539,7 +559,7 @@ const SubmitResource = () => {
                     <div
                       onClick={() => setFormData(p => ({ ...p, monetization: 'paid', pricingType: 'monthly' }))}
                       className={cn(
-                        "cursor-pointer p-5 md:p-6 rounded-2xl border-2 transition-all",
+                        "cursor-pointer p-5 md:p-6 rounded-2xl border-2 transition-all hover:scale-[1.02] active:scale-[0.98]",
                         formData.monetization === 'paid' && formData.pricingType === 'monthly'
                           ? "bg-slate-900/5 border-slate-900"
                           : "bg-slate-50 border-transparent"
@@ -561,20 +581,25 @@ const SubmitResource = () => {
                               <div className="relative max-w-xs">
                                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-900 font-bold text-lg">$</span>
                                  <input type="number" name="price" value={formData.price} onChange={handleChange} placeholder="0.00" min="0" step="0.01" 
-                                    className="w-full px-5 py-4 pl-10 bg-white border-2 border-slate-200 rounded-xl focus:border-slate-900 outline-none font-bold text-lg" />
+                                    className="w-full px-5 py-4 pl-10 bg-white border-2 border-slate-200 rounded-xl focus:border-slate-900 outline-none font-bold text-lg transition-all" />
                               </div>
                            </div>
                         </motion.div>
                      )}
                   </AnimatePresence>
                 </div>
-              </div>
+              </motion.div>
 
-              <div className="pt-6">
-                <button type="submit" disabled={loading} className="w-full py-5 bg-slate-900 text-white text-lg font-bold rounded-2xl hover:bg-slate-800 shadow-xl flex items-center justify-center gap-3">
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                className="pt-6"
+              >
+                <button type="submit" disabled={loading} className="w-full py-5 bg-slate-900 text-white text-lg font-bold rounded-2xl hover:bg-slate-800 shadow-xl flex items-center justify-center gap-3 active:scale-[0.98] transition-all">
                   {loading ? <Loader2 className="animate-spin" /> : <Rocket />} Launch Resource
                 </button>
-              </div>
+              </motion.div>
 
             </form>
           </div>

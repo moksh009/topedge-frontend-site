@@ -835,7 +835,12 @@ const ResourceDetails = () => {
 
   // --- SUB-COMPONENTS ---
   const TechStack = () => (
-    <div className="bg-white rounded-[1.25rem] p-5 border border-slate-200 shadow-sm w-full">
+    <motion.div 
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+        className="bg-white rounded-[1.25rem] p-5 border border-slate-200 shadow-sm w-full"
+    >
         <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-2">
             <Box className="w-3.5 h-3.5" /> Tech Stack
         </h3>
@@ -847,7 +852,7 @@ const ResourceDetails = () => {
             ))}
             {(!resource?.tools || resource.tools.length === 0) && <span className="text-slate-400 text-xs italic">No tools listed</span>}
         </div>
-    </div>
+    </motion.div>
   );
 
   const AccessCard = () => {
@@ -897,7 +902,12 @@ const ResourceDetails = () => {
     };
 
     return (
-    <div className="bg-white rounded-[1.25rem] p-5 border border-slate-200 shadow-xl shadow-slate-200/50">
+    <motion.div 
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        className="bg-white rounded-[1.25rem] p-5 border border-slate-200 shadow-xl shadow-slate-200/50"
+    >
         <div className="flex items-end justify-between mb-4 pb-4 border-b border-slate-50">
             <div>
                 <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Access</p>
@@ -914,7 +924,7 @@ const ResourceDetails = () => {
 
         <button 
             onClick={toggleUpvote} 
-            className={cn("w-full py-3 rounded-xl text-sm font-bold border mb-3 flex items-center justify-center gap-2 transition-all", isUpvoted ? "bg-orange-50 border-orange-200 text-orange-600" : "bg-white text-slate-700 border-slate-200 hover:bg-slate-50")}
+            className={cn("w-full py-3 rounded-xl text-sm font-bold border mb-3 flex items-center justify-center gap-2 transition-all active:scale-[0.98]", isUpvoted ? "bg-orange-50 border-orange-200 text-orange-600" : "bg-white text-slate-700 border-slate-200 hover:bg-slate-50")}
         >
             <ArrowBigUp className={cn("w-5 h-5", isUpvoted ? "fill-orange-600 text-orange-600" : "text-slate-400")} />
             <span>{isUpvoted ? "Upvoted" : "Upvote"}</span>
@@ -928,7 +938,8 @@ const ResourceDetails = () => {
                 href={combinedUrl} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full py-3 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl transition-all shadow-lg shadow-slate-900/20 mb-2 group text-sm"
+                onClick={handleLinkClick}
+                className="flex items-center justify-center gap-2 w-full py-3 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl transition-all shadow-lg shadow-slate-900/20 mb-2 group text-sm active:scale-[0.98]"
               >
                 Open Resource <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </a>
@@ -942,7 +953,7 @@ const ResourceDetails = () => {
               onClick={handlePurchaseRequest}
               disabled={purchaseRequestLoading || purchaseRequestSent}
               className={cn(
-                "w-full py-3 bg-slate-900 text-white font-bold rounded-xl transition-all shadow-lg shadow-slate-900/20 mb-2 text-sm",
+                "w-full py-3 bg-slate-900 text-white font-bold rounded-xl transition-all shadow-lg shadow-slate-900/20 mb-2 text-sm active:scale-[0.98]",
                 (purchaseRequestLoading || purchaseRequestSent) && "opacity-60 cursor-not-allowed"
               )}
             >
@@ -958,7 +969,8 @@ const ResourceDetails = () => {
                 href={combinedUrl} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full py-3 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl transition-all shadow-lg shadow-slate-900/20 mb-2 group text-sm"
+                onClick={handleLinkClick}
+                className="flex items-center justify-center gap-2 w-full py-3 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl transition-all shadow-lg shadow-slate-900/20 mb-2 group text-sm active:scale-[0.98]"
             >
                 Open Resource <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </a>
@@ -969,12 +981,17 @@ const ResourceDetails = () => {
           )
         }
         {accessNote()}
-    </div>
+    </motion.div>
     );
   };
 
   const ContactCard = () => (
-    <div className="bg-white rounded-[1.25rem] p-5 border border-slate-200 shadow-sm w-full">
+    <motion.div 
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+        className="bg-white rounded-[1.25rem] p-5 border border-slate-200 shadow-sm w-full"
+    >
         <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-2">
             <User className="w-3.5 h-3.5" /> Contact Creator
         </h3>
@@ -984,7 +1001,7 @@ const ResourceDetails = () => {
             {resource?.contactWebsite && <a href={resource.contactWebsite} target="_blank" rel="noopener noreferrer" className="block text-sm font-medium text-slate-700 hover:text-indigo-600 truncate">{resource.contactWebsite.replace(/^https?:\/\//, '')}</a>}
             {!resource?.contactEmail && !resource?.contactPhone && !resource?.contactWebsite && <div className="text-xs text-slate-400">No contact details provided.</div>}
         </div>
-    </div>
+    </motion.div>
   );
 
   if (loading) return <div className="min-h-screen flex items-center justify-center"><Loader2 className="animate-spin" /></div>;
@@ -1006,11 +1023,13 @@ const ResourceDetails = () => {
                 <div className="fixed inset-0 z-50 flex items-center justify-center px-4 py-6 sm:p-6 overflow-y-auto">
                     <motion.div 
                         initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} 
+                        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                         className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm"
                         onClick={() => setIsEditing(false)}
                     />
                     <motion.div 
                         initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                         className="relative w-full max-w-4xl bg-white rounded-[2rem] shadow-2xl overflow-hidden max-h-[calc(100vh-3rem)] sm:max-h-[calc(100vh-4rem)] flex flex-col"
                     >
                         <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-white sticky top-0 z-10">
@@ -1303,6 +1322,7 @@ const ResourceDetails = () => {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
+                        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                         className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
                         onClick={() => !deleting && setIsDeleteOpen(false)}
                     />
@@ -1310,6 +1330,7 @@ const ResourceDetails = () => {
                         initial={{ opacity: 0, scale: 0.95, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                         className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl p-6 z-10"
                     >
                         <div className="flex items-center gap-3 mb-4">
@@ -1356,6 +1377,7 @@ const ResourceDetails = () => {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
+                        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                         className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
                         onClick={() => !uploadingImage && setIsImageCropOpen(false)}
                     />
@@ -1363,6 +1385,7 @@ const ResourceDetails = () => {
                         initial={{ opacity: 0, scale: 0.95, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                         className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl p-6 z-10"
                     >
                         <h2 className="text-lg font-bold text-slate-900 mb-2">Adjust cover image</h2>
@@ -1433,7 +1456,12 @@ const ResourceDetails = () => {
         </AnimatePresence>
 
         {/* --- RESOURCE HEADER --- */}
-        <div className="bg-white border-b border-slate-200 relative md:sticky md:top-0 z-30 shadow-sm/50 mt-8 md:mt-0">
+        <motion.div 
+             initial={{ opacity: 0, y: -20 }}
+             animate={{ opacity: 1, y: 0 }}
+             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+             className="bg-white border-b border-slate-200 relative md:sticky md:top-0 z-30 shadow-sm/50 mt-8 md:mt-0"
+        >
              <div className="container mx-auto px-4 sm:px-6 max-w-6xl h-16 lg:h-20 flex items-center justify-between">
                 <div className="flex items-center gap-3 flex-1 min-w-0">
                     <Link to="/community/automation-hub" className="p-2 -ml-2 hover:bg-slate-100 rounded-full text-slate-400 hover:text-slate-900 transition-colors shrink-0">
@@ -1471,10 +1499,15 @@ const ResourceDetails = () => {
                     </button>
                 </div>
              </div>
-        </div>
+        </motion.div>
 
         {/* Main Grid */}
-        <div className="container mx-auto px-4 sm:px-6 max-w-6xl pt-6 lg:pt-8 pb-14 lg:pb-20 relative z-10">
+        <motion.div 
+             initial={{ opacity: 0, y: 20 }}
+             animate={{ opacity: 1, y: 0 }}
+             transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+             className="container mx-auto px-4 sm:px-6 max-w-6xl pt-6 lg:pt-8 pb-14 lg:pb-20 relative z-10"
+        >
              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
                 
                 {/* LEFT COLUMN */}
@@ -1535,7 +1568,13 @@ const ResourceDetails = () => {
                     {/* Content Tabs */}
                     <div className="space-y-8">
                         {/* 1. Overview */}
-                        <section className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                        <motion.section 
+                            initial={{ opacity: 0, y: 10 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+                            className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm"
+                        >
                             <h3 className="text-lg font-bold text-slate-900 mb-3 flex items-center gap-2">
                               <Sparkles className="w-5 h-5 text-indigo-500" />
                               Overview
@@ -1543,27 +1582,45 @@ const ResourceDetails = () => {
                             <div className="prose prose-slate max-w-none text-slate-600 leading-relaxed whitespace-pre-line text-sm lg:text-base">
                               {resource.description}
                             </div>
-                        </section>
+                        </motion.section>
 
                         {/* 2. What it Does / Outcome */}
                         {(resource.outcome) && (
-                            <section className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                            <motion.section 
+                                initial={{ opacity: 0, y: 10 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.5, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                                className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm"
+                            >
                                 <h3 className="text-lg font-bold text-slate-900 mb-3 flex items-center gap-2"><CheckCircle2 className="w-5 h-5 text-emerald-500" /> What it Does / Outcome Achieved</h3>
                                 <div className="prose prose-slate max-w-none text-slate-600 leading-relaxed whitespace-pre-line text-sm lg:text-base">{resource.outcome}</div>
-                            </section>
+                            </motion.section>
                         )}
 
                         {/* 3. Setup Guide */}
                         {resource.whatItDoes && (
-                            <section className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                            <motion.section 
+                                initial={{ opacity: 0, y: 10 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.5, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                                className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm"
+                            >
                                 <h3 className="text-lg font-bold text-slate-900 mb-3 flex items-center gap-2"><Zap className="w-5 h-5 text-amber-500" /> Setup User Guide</h3>
                                 <div className="prose prose-slate max-w-none text-slate-600 leading-relaxed whitespace-pre-line text-sm lg:text-base">{resource.whatItDoes}</div>
-                            </section>
+                            </motion.section>
                         )}
 
                         {/* 4. Files */}
                         {resource.attachments && resource.attachments.length > 0 && (
-                          <section className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                          <motion.section 
+                            initial={{ opacity: 0, y: 10 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.5, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                            className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm"
+                          >
                             <h3 className="text-lg font-bold text-slate-900 mb-3 flex items-center gap-2"><Box className="w-5 h-5 text-indigo-500" /> Resource Files</h3>
                             <ul className="divide-y divide-slate-100 bg-white rounded-xl border border-slate-200">
                               {resource.attachments.map((f, i) => (
@@ -1583,19 +1640,38 @@ const ResourceDetails = () => {
                                 </li>
                               ))}
                             </ul>
-                          </section>
+                          </motion.section>
                         )}
                         
-                        <div className="pt-8 border-t border-slate-200">
+                        <motion.div 
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.5, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                            className="pt-8 border-t border-slate-200"
+                        >
                             <ResourceDiscussion resourceId={resource.id} />
-                        </div>
+                        </motion.div>
                     </div>
 
-                    <div className="pt-8 border-t border-slate-200">
+                    <motion.div 
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                        className="pt-8 border-t border-slate-200"
+                    >
                         <ResourceReviews resourceId={resource.id} />
-                    </div>
+                    </motion.div>
 
-                    <RelatedResources current={{ id: resource.id, title: resource.title, tools: resource.tools || [], category: resource.category, userId: resource.userId }} />
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                    >
+                        <RelatedResources current={{ id: resource.id, title: resource.title, tools: resource.tools || [], category: resource.category, userId: resource.userId }} />
+                    </motion.div>
                 </div>
 
                 {/* RIGHT COLUMN (Desktop Sidebar) */}
@@ -1605,7 +1681,7 @@ const ResourceDetails = () => {
                     <ContactCard />
                 </div>
              </div>
-        </div>
+        </motion.div>
       </div>
     </CommunityLayout>
   );

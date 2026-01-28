@@ -38,6 +38,16 @@ interface Resource {
   isHiring?: boolean;
 }
 
+const containerVar = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1, transition: { staggerChildren: 0.05 } }
+};
+
+const itemVar = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] } }
+};
+
 // Helper to extract YouTube ID
 const getYouTubeId = (url: string) => {
     if (!url) return null;
@@ -166,10 +176,7 @@ const ResourceCard = ({ resource, index, currentUser }: { resource: Resource; in
   return (
     <motion.div
       layout
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.95 }}
-      transition={{ delay: index * 0.05 }}
+      variants={itemVar}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
       className="group flex flex-col h-full bg-white rounded-[2rem] border border-slate-200 overflow-hidden hover:border-indigo-200 hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.1)] transition-all duration-500 hover:-translate-y-2 relative"
@@ -413,6 +420,7 @@ const AutomationHub = () => {
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               className="max-w-2xl text-center lg:text-left flex-1"
             >
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-slate-200 shadow-sm text-xs font-bold uppercase tracking-wider text-slate-600 mb-6 mx-auto lg:mx-0">
@@ -467,6 +475,7 @@ const AutomationHub = () => {
                  <motion.button 
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={handlePromoteProject}
@@ -484,7 +493,7 @@ const AutomationHub = () => {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
+            transition={{ delay: 0.1, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             className="relative z-30 mb-12"
           >
             <div className="p-2 bg-white/80 backdrop-blur-xl border border-slate-200 rounded-[24px] shadow-lg shadow-slate-200/50 flex flex-col md:flex-row gap-2">
@@ -550,7 +559,7 @@ const AutomationHub = () => {
   
   {/* Your Grid code follows here... */}
 
-                        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-2">
+                        <motion.div layout variants={containerVar} initial="hidden" animate="show" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-2">
                           <AnimatePresence>
                             {myResources.map((resource, index) => (
                               <ResourceCard key={resource.id} resource={resource} index={index} currentUser={user} />
@@ -570,6 +579,9 @@ const AutomationHub = () => {
                     >
                       <motion.div 
                         layout
+                        variants={containerVar}
+                        initial="hidden"
+                        animate="show"
                         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-12"
                       >
                         <AnimatePresence>
@@ -589,6 +601,7 @@ const AutomationHub = () => {
              <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
               className="text-center py-24 bg-white rounded-[32px] border border-dashed border-slate-300"
             >
                 <div className="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-inner">
@@ -622,6 +635,7 @@ const AutomationHub = () => {
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
               className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl p-6 z-10"
             >
               <div className="flex items-center gap-3 mb-4">

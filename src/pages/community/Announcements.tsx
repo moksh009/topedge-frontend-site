@@ -106,6 +106,7 @@ const Announcements = () => {
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               // UPDATED: flex-col items-center text-center (mobile) -> md:items-start md:text-left (desktop)
               className="flex flex-col items-center md:items-start text-center md:text-left"
             >
@@ -123,12 +124,13 @@ const Announcements = () => {
               <motion.div 
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                 // UPDATED: Centering wrapper for mobile button
                 className="w-full md:w-auto flex justify-center md:justify-end"
               >
                 <Link 
                   to="/community/admin/announcements"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-slate-900 text-white font-semibold rounded-xl hover:bg-slate-800 hover:-translate-y-1 transition-all shadow-[0_10px_20px_-10px_rgba(0,0,0,0.5)]"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-slate-900 text-white font-semibold rounded-xl hover:bg-slate-800 active:scale-[0.98] hover:-translate-y-1 transition-all shadow-[0_10px_20px_-10px_rgba(0,0,0,0.5)]"
                 >
                   <Plus className="w-5 h-5" />
                   New Post
@@ -158,8 +160,8 @@ const Announcements = () => {
                           key={item.id}
                           initial={{ opacity: 0, y: 30 }}
                           whileInView={{ opacity: 1, y: 0 }}
-                          viewport={{ once: true, margin: "-100px" }}
-                          transition={{ delay: index * 0.1 }}
+                          viewport={{ once: true, margin: "-50px" }}
+                          transition={{ duration: 0.6, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
                           className="relative flex flex-col md:flex-row gap-6 md:gap-16 group"
                         >
                           {/* Date Column */}
@@ -184,7 +186,7 @@ const Announcements = () => {
 
                           {/* Content Card */}
                           <div className="flex-grow">
-                             <div className="bg-white rounded-[24px] border border-slate-200 p-6 md:p-8 shadow-sm hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] hover:border-slate-300 transition-all duration-300 relative overflow-hidden group/card">
+                             <div className="bg-white rounded-[24px] border border-slate-200 p-6 md:p-8 shadow-sm hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] hover:border-slate-300 hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group/card">
                                 
                                 {/* Top Badges */}
                                 <div className="flex flex-wrap items-center gap-3 mb-6">
@@ -223,8 +225,9 @@ const Announcements = () => {
                     })
                   ) : (
                     <motion.div 
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                       className="ml-0 md:ml-[140px] text-center py-24 bg-white rounded-[32px] border border-dashed border-slate-300"
                     >
                         <div className="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center mx-auto mb-6">

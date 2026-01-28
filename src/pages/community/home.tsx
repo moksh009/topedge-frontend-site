@@ -20,16 +20,16 @@ const containerVar = {
 
 const itemVar = {
   hidden: { opacity: 0, y: 30 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } }
+  show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] } }
 };
 
 // --- CUSTOM BUTTON COMPONENT ---
 const PremiumButton = ({ children, variant = 'primary', className, to }: any) => {
-  const baseStyles = "relative inline-flex items-center justify-center px-8 py-4 overflow-hidden font-medium rounded-2xl transition-all duration-300 group";
+  const baseStyles = "relative inline-flex items-center justify-center px-8 py-4 overflow-hidden font-medium rounded-2xl transition-all duration-300 group active:scale-[0.98]";
   
   const variants = {
     primary: "bg-slate-900 text-white shadow-[0_1px_2px_rgba(0,0,0,0.1),0_8px_16px_rgba(0,0,0,0.1)] hover:-translate-y-1 hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.3)]",
-    secondary: "bg-white text-slate-900 border border-slate-200 shadow-sm hover:border-slate-300 hover:bg-slate-50 hover:-translate-y-1",
+    secondary: "bg-white text-slate-900 border border-slate-200 shadow-sm hover:border-slate-300 hover:bg-slate-50 hover:-translate-y-1 hover:shadow-md",
     glow: "bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-[0_0_20px_rgba(79,70,229,0.3)] hover:shadow-[0_0_40px_rgba(79,70,229,0.5)] hover:-translate-y-1"
   };
 
@@ -323,9 +323,9 @@ A curated AI community where engineers share automations, sell workflows, and co
                           key={r.id || i}
                           initial={{ opacity: 0, y: 40 }}
                           whileInView={{ opacity: 1, y: 0 }}
-                          transition={{ delay: i * 0.1, duration: 0.6 }}
+                          transition={{ delay: i * 0.1, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                           viewport={{ once: true }}
-                          className="group relative rounded-[2rem] bg-white/[0.03] border border-white/10 hover:border-white/20 transition-all duration-500 overflow-hidden hover:bg-white/[0.05]"
+                          className="group relative rounded-[2rem] bg-white/[0.03] border border-white/10 hover:border-white/20 transition-all duration-500 overflow-hidden hover:bg-white/[0.05] active:scale-[0.99]"
                         >
                           <div className="p-8 md:p-10 flex flex-col h-full">
                             <div className="flex justify-between items-start mb-8">

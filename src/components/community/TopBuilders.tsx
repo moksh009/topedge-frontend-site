@@ -85,11 +85,12 @@ export default function TopBuilders() {
           return (
             <motion.div
               key={t.profile.id}
-              className="bg-white rounded-2xl border border-slate-200 p-4 text-center"
+              className="bg-white rounded-2xl border border-slate-200 p-4 text-center cursor-pointer"
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.35, delay: i * 0.06 }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1], delay: i * 0.06 }}
               whileHover={{ y: -4, scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
               <div className={`w-16 h-16 rounded-full mx-auto mb-2 overflow-hidden ${ring}`}>
                 {t.profile.photoURL ? (

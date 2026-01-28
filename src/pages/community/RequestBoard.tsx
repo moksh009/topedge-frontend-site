@@ -255,6 +255,7 @@ export default function RequestBoard() {
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
+              transition={{ type: "spring", stiffness: 400, damping: 17 }}
               onClick={handlePostClick}
               className="w-fit group relative inline-flex justify-center gap-3 px-8 py-4 bg-slate-900 text-white rounded-2xl font-bold shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-slate-300/50 transition-all overflow-hidden"
             >

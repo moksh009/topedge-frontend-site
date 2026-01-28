@@ -60,6 +60,28 @@ const OpenSource = () => {
     fetchResources();
   }, []);
 
+  const containerVar = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.05
+      }
+    }
+  };
+
+  const itemVar = {
+    hidden: { opacity: 0, y: 20 },
+    show: { 
+      opacity: 1, 
+      y: 0,
+      transition: {
+        duration: 0.4,
+        ease: [0.22, 1, 0.36, 1]
+      }
+    }
+  };
+
   const filteredResources = resources.filter(resource => {
     const matchesSearch = resource.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                           resource.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -90,6 +112,7 @@ const OpenSource = () => {
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               // UPDATED: text-center (mobile) -> md:text-left (desktop)
               className="max-w-2xl text-center md:text-left"
             >
@@ -113,7 +136,7 @@ const OpenSource = () => {
           <motion.div 
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
+            transition={{ delay: 0.1, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             className="relative z-30 mb-12"
           >
              <div className="p-2 bg-white/80 backdrop-blur-xl border border-slate-200 rounded-2xl shadow-lg shadow-slate-200/50 flex flex-col md:flex-row gap-2">
@@ -188,7 +211,7 @@ const OpenSource = () => {
                                 initial={{ opacity: 0, scale: 0.95 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 exit={{ opacity: 0, scale: 0.95 }}
-                                transition={{ delay: index * 0.05 }}
+                                transition={{ duration: 0.4, delay: index * 0.05, ease: [0.22, 1, 0.36, 1] }}
                                 className="group relative flex flex-col bg-white rounded-[24px] border border-slate-200 p-6 hover:border-slate-300 hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-300 hover:-translate-y-1"
                               >
                                 <div className="flex justify-between items-start mb-6">
@@ -253,18 +276,18 @@ const OpenSource = () => {
                     >
                       <motion.div 
                         layout
+                        variants={containerVar}
+                        initial="hidden"
+                        animate="show"
                         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-12"
                       >
                         <AnimatePresence>
                           {otherResources.map((resource, index) => (
                             <motion.div
                               layout
+                              variants={itemVar}
                               key={resource.id}
-                              initial={{ opacity: 0, scale: 0.95 }}
-                              animate={{ opacity: 1, scale: 1 }}
-                              exit={{ opacity: 0, scale: 0.95 }}
-                              transition={{ delay: index * 0.05 }}
-                              className="group relative flex flex-col bg-white rounded-[24px] border border-slate-200 p-6 hover:border-slate-300 hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-300 hover:-translate-y-1"
+                              className="group relative flex flex-col bg-white rounded-[24px] border border-slate-200 p-6 hover:border-slate-300 hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-300 hover:-translate-y-1 active:scale-[0.99]"
                             >
                               <div className="flex justify-between items-start mb-6">
                                  <div className="w-12 h-12 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-600 group-hover:bg-slate-900 group-hover:text-white transition-colors">
@@ -324,6 +347,7 @@ const OpenSource = () => {
              <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               className="text-center py-24 bg-white rounded-[32px] border border-dashed border-slate-300"
             >
                 <div className="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center mx-auto mb-6">
