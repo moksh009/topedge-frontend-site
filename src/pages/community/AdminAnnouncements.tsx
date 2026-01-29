@@ -6,6 +6,7 @@ import { db } from '@/services/firebase';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { isAdminEmail } from '@/utils/admin';
+import { emailService } from '@/services/emailService';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import toast from 'react-hot-toast';
@@ -45,6 +46,17 @@ const AdminAnnouncements = () => {
         authorId: user.uid,
         createdAt: serverTimestamp(),
       });
+      
+      // Send a copy to the admin to verify the email template
+      if (user.email) {
+        await emailService.sendCommunityUpdateEmail(
+          user.email,
+          formData.title,
+          formData.content,
+          'View Announcement',
+          'https://topedge-community.netlify.app/community/announcements'
+        );
+      }
       
       toast.success("Announcement broadcasted successfully.");
       navigate('/community/announcements');

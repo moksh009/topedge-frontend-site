@@ -452,18 +452,35 @@ const CommunityProfiles = () => {
 
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-2">
                       <h2 className="text-xl sm:text-2xl font-bold text-slate-900">Community Profiles</h2>
-                      <span className="text-xs sm:text-sm font-semibold text-slate-400 bg-slate-100 px-3 py-1 rounded-full self-start sm:self-auto">Locked until launch</span>
                     </div>
                     
-                    <LaunchGate
-                      active={false}
-                      title="Profiles visible after launch"
-                      description="Create your profile now. Directory unlocks on launch day."
-                    >
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 pb-12">
-                        {otherProfiles.map((profile) => <ProfileCard key={profile.id} profile={profile} />)}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 pb-12">
+                      {(!user ? otherProfiles.slice(0, 3) : otherProfiles).map((profile) => <ProfileCard key={profile.id} profile={profile} />)}
+                    </div>
+
+                    {!user && (
+                      <div className="w-full flex flex-col items-center justify-center py-16 text-center bg-white/50 backdrop-blur-sm rounded-[2.5rem] border border-slate-200 border-dashed mt-4 relative overflow-hidden group">
+                          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-slate-50/50 pointer-events-none" />
+                          
+                          <div className="relative z-10 flex flex-col items-center px-4">
+                              <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-6 shadow-md ring-1 ring-slate-100 group-hover:scale-110 transition-transform duration-500">
+                                  <UserPlus className="w-8 h-8 text-indigo-500" />
+                              </div>
+                              <h3 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-3 tracking-tight">
+                                  Login to view all {otherProfiles.length} profiles
+                              </h3>
+                              <p className="text-slate-500 max-w-md mb-8 leading-relaxed">
+                                  Join our community to connect with top AI talent, founders, and builders. It's free to join.
+                              </p>
+                              <Link 
+                                  to="/community/signup"
+                                  className="px-8 py-4 bg-slate-900 text-white font-bold rounded-2xl hover:bg-slate-800 transition-all shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-indigo-500/20 hover:-translate-y-1 flex items-center gap-2"
+                              >
+                                  Sign Up Now <ArrowRight className="w-4 h-4" />
+                              </Link>
+                          </div>
                       </div>
-                    </LaunchGate>
+                    )}
                   </>
                 );
               })()}

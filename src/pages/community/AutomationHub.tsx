@@ -69,6 +69,7 @@ const authorProfileCache: Record<string, any> = {};
 const reviewStatsCache: Record<string, { count: number; avg: number }> = {};
 
 const ResourceCard = ({ resource, index, currentUser }: { resource: Resource; index: number; currentUser: any }) => {
+  const navigate = useNavigate();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isHovering, setIsHovering] = useState(false);
   const [upvoteCount, setUpvoteCount] = useState<number>(resource.upvotes ?? ((resource as any).stars ?? 0));
@@ -326,6 +327,12 @@ const ResourceCard = ({ resource, index, currentUser }: { resource: Resource; in
                     <Link 
                         to={`/community/resource/${resource.id}`} 
                         className="relative z-30 h-10 px-4 bg-slate-900 text-white text-xs font-bold rounded-xl flex items-center justify-center gap-2 hover:bg-slate-800 transition-all shadow-sm flex-[2] sm:flex-none"
+                        onClick={(e) => {
+                          if (!currentUser) {
+                            e.preventDefault();
+                            navigate('/community/signup');
+                          }
+                        }}
                     >
                         View Details <ArrowRight className="w-3.5 h-3.5" />
                     </Link>
@@ -542,9 +549,7 @@ const AutomationHub = () => {
               {(() => {
                 const myResources = filteredResources.filter(r => r.userId === (user?.uid || ''));
                 const otherResources = filteredResources.filter(r => r.userId !== (user?.uid || ''));
-                const isPreLaunch = new Date() < new Date('2026-01-29');
-                const isAdmin = isAdminEmail(user?.email);
-                const showGate = isPreLaunch && !isAdmin;
+                
                 return (
                   <>
                     {myResources.length > 0 && (
@@ -570,13 +575,8 @@ const AutomationHub = () => {
                     )}
                     <div className="flex items-center justify-between mb-6">
                       <h2 className="text-2xl font-bold text-slate-900">Community Marketplace</h2>
-                      <span className="text-sm font-semibold text-slate-400">Locked until launch</span>
                     </div>
-                    <LaunchGate
-                      active={showGate}
-                      title="Marketplace visible after launch"
-                      description="Promote your resource now. Listings unlock on launch day."
-                    >
+                    
                       <motion.div 
                         layout
                         variants={containerVar}
@@ -585,12 +585,34 @@ const AutomationHub = () => {
                         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-12"
                       >
                         <AnimatePresence>
-                          {otherResources.map((resource, index) => (
+                          {(!user ? otherResources.slice(0, 3) : otherResources).map((resource, index) => (
                             <ResourceCard key={resource.id} resource={resource} index={index} currentUser={user} />
                           ))}
                         </AnimatePresence>
                       </motion.div>
-                    </LaunchGate>
+
+                    {!user && (
+                       <div className="w-full flex flex-col items-center justify-center py-16 text-center bg-white/50 backdrop-blur-sm rounded-[2.5rem] border border-slate-200 border-dashed mt-4 relative overflow-hidden group">
+                           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-slate-50/50 pointer-events-none" />
+                           <div className="relative z-10 flex flex-col items-center px-4">
+                               <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-6 shadow-md ring-1 ring-slate-100 group-hover:scale-110 transition-transform duration-500">
+                                   <Zap className="w-8 h-8 text-amber-500" />
+                               </div>
+                               <h3 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-3 tracking-tight">
+                                   Login to explore all {otherResources.length} resources
+                               </h3>
+                               <p className="text-slate-500 max-w-md mb-8 leading-relaxed">
+                                   Access production-ready automations, agents, and templates. It's free to join.
+                               </p>
+                               <Link 
+                                   to="/community/signup"
+                                   className="px-8 py-4 bg-slate-900 text-white font-bold rounded-2xl hover:bg-slate-800 transition-all shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-amber-500/20 hover:-translate-y-1 flex items-center gap-2"
+                               >
+                                   Sign Up Now <ArrowRight className="w-4 h-4" />
+                               </Link>
+                           </div>
+                       </div>
+                    )}
                   </>
                 );
               })()}

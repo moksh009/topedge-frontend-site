@@ -1,5 +1,11 @@
 import { format } from 'date-fns';
 import axios, { AxiosError } from 'axios';
+import { 
+  getWelcomeEmailTemplate, 
+  getProfileReminderTemplate, 
+  getResourceUploadNudgeTemplate,
+  getCommunityUpdateTemplate 
+} from './emailTemplates';
 
 export interface Service {
   id: string;
@@ -283,6 +289,59 @@ export class EmailService {
     } catch (error) {
       console.error('Error sending maintenance admin email:', error);
       throw new Error('Failed to send maintenance admin email');
+    }
+  }
+
+  public async sendWelcomeEmail(email: string, name: string): Promise<void> {
+    try {
+      const html = getWelcomeEmailTemplate(name);
+      await this.sendEmail('user', '/api/send-automation-email', {
+        email,
+        subject: 'Welcome to TopEdge Community! 🚀',
+        html
+      });
+    } catch (error) {
+      console.error('Error sending welcome email:', error);
+      // Non-blocking error for UI
+    }
+  }
+
+  public async sendProfileReminderEmail(email: string, name: string, daysAgo: number): Promise<void> {
+    try {
+      const html = getProfileReminderTemplate(name, daysAgo);
+      await this.sendEmail('user', '/api/send-automation-email', {
+        email,
+        subject: 'Complete your TopEdge Profile ⚠️',
+        html
+      });
+    } catch (error) {
+      console.error('Error sending profile reminder email:', error);
+    }
+  }
+
+  public async sendResourceNudgeEmail(email: string, name: string): Promise<void> {
+    try {
+      const html = getResourceUploadNudgeTemplate(name);
+      await this.sendEmail('user', '/api/send-automation-email', {
+        email,
+        subject: 'Start Earning with Your Resources 💰',
+        html
+      });
+    } catch (error) {
+      console.error('Error sending resource nudge email:', error);
+    }
+  }
+
+  public async sendCommunityUpdateEmail(email: string, title: string, content: string, ctaText: string, ctaLink: string): Promise<void> {
+    try {
+      const html = getCommunityUpdateTemplate(title, content, ctaText, ctaLink);
+      await this.sendEmail('user', '/api/send-automation-email', {
+        email,
+        subject: title,
+        html
+      });
+    } catch (error) {
+      console.error('Error sending community update email:', error);
     }
   }
 

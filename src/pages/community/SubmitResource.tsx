@@ -7,6 +7,7 @@ import { serverTimestamp, collection, addDoc, query, where, getCountFromServer, 
 import { db } from '@/services/firebase';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import { emailService } from '@/services/emailService';
 import { cn } from '@/lib/utils';
 import toast from 'react-hot-toast';
 
@@ -255,6 +256,18 @@ const SubmitResource = () => {
           createdAt: serverTimestamp()
         });
       }
+
+      // Send confirmation email to user
+      if (user.email) {
+        await emailService.sendCommunityUpdateEmail(
+          user.email,
+          `Resource Submitted: ${formData.title} 🚀`,
+          `Your resource "${formData.title}" has been successfully submitted to TopEdge Community. It is now live for others to discover!`,
+          'View Resource',
+          `https://topedge-community.netlify.app/community/resource/${resourceRef.id}`
+        );
+      }
+
       toast.success("Resource launched successfully!");
       navigate('/community/automation-hub');
     } catch (error: any) { 

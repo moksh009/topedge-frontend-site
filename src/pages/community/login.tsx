@@ -108,26 +108,43 @@ const Login = () => {
       {/* --- Main Content --- */}
       <div className="flex-1 flex items-center justify-center p-4 z-10">
         <motion.div 
-          initial={{ opacity: 0, y: 15 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, ease: "easeOut" }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="w-full max-w-[440px]"
         >
           <div className="bg-white/90 backdrop-blur-xl rounded-[2rem] shadow-[0_20px_40px_-10px_rgba(0,0,0,0.08)] border border-white/50 p-8 sm:p-12 relative overflow-hidden ring-1 ring-gray-100">
             
             {/* Header */}
             <div className="text-center mb-8 md:mb-10">
-              <div className="flex justify-center mb-8">
+              <motion.div 
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className="flex justify-center mb-8"
+              >
                 <img 
                   src="/logo.png" 
                   alt="TopEdge Logo" 
                   className="h-12 w-auto object-contain drop-shadow-sm" 
                 />
-              </div>
-              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 tracking-tight">Welcome Back</h1>
-              <p className="text-gray-500 text-sm font-medium">
+              </motion.div>
+              <motion.h1 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 tracking-tight"
+              >
+                Welcome Back
+              </motion.h1>
+              <motion.p 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="text-gray-500 text-sm font-medium"
+              >
                 Enter your credentials to access your account
-              </p>
+              </motion.p>
             </div>
 
             {/* ALERTS SECTION */}
@@ -135,10 +152,10 @@ const Login = () => {
               {/* Success Message (Password Reset) */}
               {resetMessage && (
                 <motion.div 
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
-                  exit={{ opacity: 0, height: 0 }}
-                  className="bg-emerald-50/90 backdrop-blur-sm border border-emerald-200 text-emerald-800 px-4 py-3 rounded-xl text-sm mb-6 flex items-start gap-3 shadow-sm"
+                  initial={{ opacity: 0, height: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, height: 'auto', scale: 1 }}
+                  exit={{ opacity: 0, height: 0, scale: 0.95 }}
+                  className="bg-emerald-50/90 backdrop-blur-sm border border-emerald-200 text-emerald-800 px-4 py-3 rounded-xl text-sm mb-6 flex items-start gap-3 shadow-sm overflow-hidden"
                 >
                   <CheckCircle className="w-5 h-5 shrink-0 mt-0.5 text-emerald-600" />
                   <div className="leading-snug">
@@ -151,10 +168,10 @@ const Login = () => {
               {/* Error Message */}
               {error && (
                 <motion.div 
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
-                  exit={{ opacity: 0, height: 0 }}
-                  className="bg-red-50/90 backdrop-blur-sm border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm mb-6 flex items-start gap-3 shadow-sm"
+                  initial={{ opacity: 0, height: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, height: 'auto', scale: 1 }}
+                  exit={{ opacity: 0, height: 0, scale: 0.95 }}
+                  className="bg-red-50/90 backdrop-blur-sm border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm mb-6 flex items-start gap-3 shadow-sm overflow-hidden"
                 >
                   {error.includes("enter your email") ? (
                     <Info className="w-5 h-5 shrink-0 mt-0.5 text-red-500" />
@@ -169,7 +186,12 @@ const Login = () => {
             {/* Form */}
             <form onSubmit={handleLogin} className="space-y-6">
               
-              <div className="space-y-2">
+              <motion.div 
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+                className="space-y-2"
+              >
                 <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest ml-1">Email Address</label>
                 <div className="relative group">
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -184,9 +206,14 @@ const Login = () => {
                     required
                   />
                 </div>
-              </div>
+              </motion.div>
 
-              <div className="space-y-2">
+              <motion.div 
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 0.5 }}
+                className="space-y-2"
+              >
                 <div className="flex justify-between items-center ml-1">
                   <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest">Password</label>
                   
@@ -212,12 +239,17 @@ const Login = () => {
                     required
                   />
                 </div>
-              </div>
+              </motion.div>
 
-              <button 
+              <motion.button 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.6 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 type="submit" 
                 disabled={loading}
-                className="w-full relative group overflow-hidden py-4 px-6 bg-gray-900 text-white font-bold rounded-xl hover:bg-black transition-all shadow-lg shadow-gray-900/10 hover:shadow-xl hover:shadow-gray-900/20 hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:translate-y-0 mt-2"
+                className="w-full relative group overflow-hidden py-4 px-6 bg-gray-900 text-white font-bold rounded-xl hover:bg-black transition-all shadow-lg shadow-gray-900/10 hover:shadow-xl hover:shadow-gray-900/20 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100 mt-2"
               >
                 <div className="flex items-center justify-center gap-2">
                   {loading ? (
@@ -229,7 +261,7 @@ const Login = () => {
                     </>
                   )}
                 </div>
-              </button>
+              </motion.button>
             </form>
 
             {/* Footer */}

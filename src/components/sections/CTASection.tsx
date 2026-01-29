@@ -1,5 +1,5 @@
 import { motion, useInView } from 'framer-motion';
-import { ArrowRight, Sparkles, Rocket } from 'lucide-react';
+import { ArrowRight, Sparkles } from 'lucide-react';
 import { useRef } from 'react';
 
 export const CTASection = () => {
@@ -9,45 +9,19 @@ export const CTASection = () => {
   return (
     <motion.section
       ref={sectionRef}
-      className="relative py-16 sm:py-32 overflow-hidden"
+      className="relative py-24 sm:py-32 overflow-hidden bg-white"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      style={{ willChange: 'transform' }}
     >
-      {/* Optimized background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-theme-bg-primary via-theme-glow-primary/5 to-theme-bg-primary">
-        <div className="absolute inset-0 pointer-events-none">
-          {[...Array(20)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-1 h-1 bg-theme-glow-primary/20 rounded-full"
-              animate={{
-                y: [Math.random() * 500, -10],
-                opacity: [0, 0.5, 0],
-                scale: [0, 1.2, 0]
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                repeatType: "loop",
-                ease: "linear",
-                delay: Math.random() * 2
-              }}
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                willChange: 'transform'
-              }}
-            />
-          ))}
-        </div>
+      {/* Premium Background Gradients */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[1000px] bg-gradient-to-b from-blue-50/50 to-purple-50/50 rounded-full blur-[120px] opacity-60" />
       </div>
           
-
-      <div className="relative container mx-auto px-4 sm:px-6">
+      <div className="relative container mx-auto px-4 sm:px-6 z-10">
         <motion.div
-          className="max-w-4xl mx-auto text-center"
+          className="max-w-5xl mx-auto text-center"
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.1 }}
@@ -57,153 +31,57 @@ export const CTASection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="relative inline-flex items-center gap-2 rounded-full bg-white/5 px-6 py-3 overflow-hidden mb-4 sm:mb-6"
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 border border-blue-100 text-blue-600 text-sm font-semibold uppercase tracking-wide mb-8 shadow-sm"
           >
-            {/* Premium border design */}
-            <div className="absolute inset-0">
-              <div className="absolute inset-0 bg-gradient-to-r from-theme-glow-primary/20 via-theme-glow-accent/20 to-theme-glow-secondary/20 animate-gradient-xy" />
-              <div className="absolute inset-0 backdrop-blur-xl" />
-              <div className="absolute inset-0 border-[1.5px] border-white/10 rounded-full" />
-              <div className="absolute inset-0 bg-white/5" />
-            </div>
-
-            {/* Content */}
-            <Sparkles className="relative w-4 h-4 text-blue-400" />
-            <span className="relative text-sm font-medium text-black/90">
-            Ready to take the next step to add extra revenue within the next 45 days?
-            </span>
+            <Sparkles className="w-4 h-4" />
+            <span>Ready to scale?</span>
           </motion.div>
 
           <motion.h2
-            className="text-3xl sm:text-5xl md:text-6xl font-bold mb-6 sm:mb-8"
+            className="text-4xl sm:text-6xl md:text-7xl font-bold mb-8 tracking-tight text-[#1d1d1f]"
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <span className="inline-block bg-gradient-to-r from-theme-text-primary via-theme-glow-accent to-theme-text-primary text-transparent bg-clip-text">
-              Transform Your Business
-            </span>
-            <br className="hidden sm:block" />
-            <span className="inline-block bg-gradient-to-r from-theme-glow-primary via-theme-text-accent to-theme-glow-secondary text-transparent bg-clip-text mt-2 sm:mt-0">
-              With TopEdge AI
-            </span>
+            Transform your business <br className="hidden sm:block" />
+            with <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">TopEdge AI</span> today.
           </motion.h2>
 
           <motion.p
-            className="text-base sm:text-xl text-theme-text-secondary mb-8 sm:mb-12 leading-relaxed px-4"
+            className="text-xl sm:text-2xl text-gray-500 mb-12 leading-relaxed max-w-3xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-Ready to take the next step and unlock extra revenue in just 45 days?          </motion.p>
+            Unlock extra revenue in just 45 days with our intelligent voice agents and chatbots.
+          </motion.p>
 
           <motion.div
-            className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-stretch sm:items-center px-4"
+            className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center"
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
             <motion.a
               href="/contact"
-              className="group relative inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 rounded-full w-full sm:w-auto overflow-hidden"
-              whileHover={{ scale: 1.02 }}
+              className="group relative inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-[#1d1d1f] text-white font-medium text-lg overflow-hidden shadow-lg hover:shadow-xl transition-all hover:scale-105"
               whileTap={{ scale: 0.98 }}
             >
-              {/* Premium Glow Effect */}
-              <div className="absolute inset-0">
-                <div className="absolute inset-0 bg-gradient-to-r from-theme-glow-primary/20 via-theme-glow-accent/20 to-theme-glow-secondary/20 opacity-0 group-hover:opacity-100 transition-all duration-500" />
-                <div className="absolute -inset-[1px] bg-gradient-to-r from-theme-glow-primary/30 via-theme-glow-accent/30 to-theme-glow-secondary/30 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm" />
-              </div>
-
-              {/* Button Background */}
-              <div className="absolute inset-0 bg-theme-bg-surface border-[1.5px] rounded-full border-theme-border-accent/50 group-hover:border-theme-border-accent transition-all duration-300" />
-              
-              {/* Button Content */}
-              <div className="relative flex items-center gap-3">
-                <span className="text-base font-medium bg-gradient-to-r from-theme-text-primary via-theme-text-accent to-theme-text-primary bg-clip-text text-transparent">
-                  Tell me more
-                </span>
-                <motion.div
-                  animate={{
-                    x: [0, 5, 0],
-                  }}
-                  transition={{
-                    duration: 1.5,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                >
-                  <ArrowRight className="w-5 h-5 text-theme-text-accent group-hover:text-theme-text-primary transition-colors duration-300" />
-                </motion.div>
-              </div>
+              <span className="relative z-10">Get Started Now</span>
+              <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform" />
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </motion.a>
 
             <motion.a
               href="/services"
-              className="group relative inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 rounded-full w-full sm:w-auto overflow-hidden"
-              whileHover={{ scale: 1.02 }}
+              className="group relative inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-white text-[#1d1d1f] font-medium text-lg border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition-all hover:scale-105 hover:border-gray-300"
               whileTap={{ scale: 0.98 }}
             >
-              {/* Premium Glow Effect */}
-              <div className="absolute inset-0">
-                <div className="absolute inset-0 bg-gradient-to-r from-theme-glow-primary/10 via-theme-glow-accent/10 to-theme-glow-secondary/10 opacity-0 group-hover:opacity-100 transition-all duration-500" />
-                <div className="absolute -inset-[1px] bg-gradient-to-r from-theme-glow-primary/20 via-theme-glow-accent/20 to-theme-glow-secondary/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm" />
-              </div>
-
-              {/* Button Background */}
-              <div className="absolute inset-0 bg-theme-bg-surface/80 border-[1.5px] rounded-full border-theme-border-accent/50 group-hover:border-theme-border-accent transition-all duration-300 backdrop-blur-sm" />
-              
-              {/* Button Content */}
-              <div className="relative flex items-center gap-3">
-                <span className="text-base font-medium text-theme-text-primary/90 group-hover:text-theme-text-primary transition-colors duration-300">
-                  Explore Services
-                </span>
-                <motion.div
-                  className="relative"
-                  animate={{
-                    rotate: [0, 360],
-                  }}
-                  transition={{
-                    duration: 4,
-                    repeat: Infinity,
-                    ease: "linear"
-                  }}
-                >
-                  <Sparkles className="w-5 h-5 text-theme-text-accent group-hover:text-theme-text-primary transition-colors duration-300" />
-                  <div className="absolute inset-0 blur-lg bg-theme-glow-accent/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </motion.div>
-              </div>
+              <span className="relative z-10">View Services</span>
+              <div className="absolute inset-0 bg-gray-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </motion.a>
           </motion.div>
         </motion.div>
-
-        {/* Optimized decorative elements */}
-        <motion.div
-          className="absolute -left-32 top-1/2 -translate-y-1/2 w-48 h-48 sm:w-64 sm:h-64 bg-theme-glow-primary/5 rounded-full blur-2xl pointer-events-none"
-          animate={{
-            scale: [1, 1.1, 1],
-            opacity: [0.2, 0.4, 0.2],
-          }}
-          transition={{
-            duration: 4,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          style={{ willChange: 'transform' }}
-        />
-        <motion.div
-          className="absolute -right-32 top-1/2 -translate-y-1/2 w-48 h-48 sm:w-64 sm:h-64 bg-theme-glow-secondary/5 rounded-full blur-2xl pointer-events-none"
-          animate={{
-            scale: [1.1, 1, 1.1],
-            opacity: [0.2, 0.4, 0.2],
-          }}
-          transition={{
-            duration: 4,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          style={{ willChange: 'transform' }}
-        />
       </div>
     </motion.section>
   );

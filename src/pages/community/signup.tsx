@@ -151,36 +151,53 @@ const Signup = () => {
       {/* --- Main Content --- */}
       <div className="flex-1 flex items-center justify-center p-4 z-10 my-6 md:my-0">
         <motion.div 
-          initial={{ opacity: 0, y: 15 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, ease: "easeOut" }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="w-full max-w-[460px]"
         >
           <div className="bg-white/90 backdrop-blur-xl rounded-[2rem] shadow-[0_20px_40px_-10px_rgba(0,0,0,0.08)] border border-white/50 p-8 sm:p-12 relative overflow-hidden ring-1 ring-gray-100">
             
             {/* Header Section with LOGO */}
             <div className="text-center mb-6 md:mb-8">
-              <div className="flex justify-center mb-6">
+              <motion.div 
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className="flex justify-center mb-6"
+              >
                 <img 
                   src="/logo.png" 
                   alt="TopEdge Logo" 
                   className="h-10 w-auto object-contain drop-shadow-sm" 
                 />
-              </div>
-              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 tracking-tight">Create Account</h1>
-              <p className="text-gray-500 text-sm font-medium">
+              </motion.div>
+              <motion.h1 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 tracking-tight"
+              >
+                Create Account
+              </motion.h1>
+              <motion.p 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="text-gray-500 text-sm font-medium"
+              >
                 Join our community of innovators today
-              </p>
+              </motion.p>
             </div>
 
             {/* Alerts */}
             <AnimatePresence mode="wait">
               {error && (
                 <motion.div 
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
-                  exit={{ opacity: 0, height: 0 }}
-                  className="bg-red-50/80 backdrop-blur-sm border border-red-100 text-red-600 px-4 py-3 rounded-xl text-sm mb-6 flex items-start gap-3"
+                  initial={{ opacity: 0, height: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, height: 'auto', scale: 1 }}
+                  exit={{ opacity: 0, height: 0, scale: 0.95 }}
+                  className="bg-red-50/80 backdrop-blur-sm border border-red-100 text-red-600 px-4 py-3 rounded-xl text-sm mb-6 flex items-start gap-3 overflow-hidden"
                 >
                   <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
                   <p>{error}</p>
@@ -188,11 +205,25 @@ const Signup = () => {
               )}
             </AnimatePresence>
 
-            {!showOtp && (
-            <form onSubmit={handleSignup} className="space-y-5">
+            <AnimatePresence mode="wait">
+            {!showOtp ? (
+            <motion.form 
+              key="signup-form"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.4 }}
+              onSubmit={handleSignup} 
+              className="space-y-5"
+            >
               
               {/* Name Input */}
-              <div className="space-y-1.5">
+              <motion.div 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.4 }}
+                className="space-y-1.5"
+              >
                 <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest ml-1">Full Name</label>
                 <div className="relative group">
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -207,10 +238,15 @@ const Signup = () => {
                     required
                   />
                 </div>
-              </div>
+              </motion.div>
 
               {/* Email Input */}
-              <div className="space-y-1.5">
+              <motion.div 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.5 }}
+                className="space-y-1.5"
+              >
                 <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest ml-1">Email Address</label>
                 <div className="relative group">
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -225,10 +261,15 @@ const Signup = () => {
                     required
                   />
                 </div>
-              </div>
+              </motion.div>
 
               {/* Password Input */}
-              <div className="space-y-1.5">
+              <motion.div 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.6 }}
+                className="space-y-1.5"
+              >
                 <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest ml-1">Password</label>
                 <div className="relative group">
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -244,13 +285,18 @@ const Signup = () => {
                     minLength={6}
                   />
                 </div>
-              </div>
+              </motion.div>
 
               {/* Premium Button */}
-              <button 
+              <motion.button 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.7 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 type="submit" 
                 disabled={loading}
-                className="w-full relative group overflow-hidden py-3.5 px-6 bg-gray-900 text-white font-bold rounded-xl hover:bg-black transition-all shadow-lg shadow-gray-900/10 hover:shadow-xl hover:shadow-gray-900/20 hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:translate-y-0 mt-4"
+                className="w-full relative group overflow-hidden py-3.5 px-6 bg-gray-900 text-white font-bold rounded-xl hover:bg-black transition-all shadow-lg shadow-gray-900/10 hover:shadow-xl hover:shadow-gray-900/20 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100 mt-4"
               >
                 <div className="flex items-center justify-center gap-2">
                   {loading ? (
@@ -262,12 +308,18 @@ const Signup = () => {
                     </>
                   )}
                 </div>
-              </button>
-            </form>
-            )}
-
-            {showOtp && (
-              <form onSubmit={handleVerifyOtp} className="space-y-6">
+              </motion.button>
+            </motion.form>
+            ) : (
+              <motion.form 
+                key="otp-form"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                transition={{ duration: 0.4 }}
+                onSubmit={handleVerifyOtp} 
+                className="space-y-6"
+              >
                 <div className="mb-4">
                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-semibold mb-3">
                     <ShieldCheck className="w-4 h-4" />
@@ -281,7 +333,10 @@ const Signup = () => {
 
                 <div className="flex justify-center gap-3">
                   {otp.map((digit, index) => (
-                    <input
+                    <motion.input
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3, delay: index * 0.1 }}
                       key={index}
                       type="text"
                       inputMode="numeric"
@@ -295,10 +350,12 @@ const Signup = () => {
                   ))}
                 </div>
 
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                   type="submit"
                   disabled={loading}
-                  className="w-full relative group overflow-hidden py-3.5 px-6 bg-gray-900 text-white font-bold rounded-xl hover:bg-black transition-all shadow-lg shadow-gray-900/10 hover:shadow-xl hover:shadow-gray-900/20 hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:translate-y-0 mt-4"
+                  className="w-full relative group overflow-hidden py-3.5 px-6 bg-gray-900 text-white font-bold rounded-xl hover:bg-black transition-all shadow-lg shadow-gray-900/10 hover:shadow-xl hover:shadow-gray-900/20 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100 mt-4"
                 >
                   <div className="flex items-center justify-center gap-2">
                     {loading ? (
@@ -310,9 +367,10 @@ const Signup = () => {
                       </>
                     )}
                   </div>
-                </button>
-              </form>
+                </motion.button>
+              </motion.form>
             )}
+            </AnimatePresence>
 
             {/* Footer */}
             <div className="mt-8 text-center pt-6 border-t border-gray-100/60">

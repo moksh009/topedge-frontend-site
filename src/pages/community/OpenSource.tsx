@@ -6,7 +6,7 @@ import { Search, ArrowRight, BookOpen, GitBranch, Terminal, FolderGit2, Code2 } 
 import { collection, query, where, getDocs, orderBy } from 'firebase/firestore';
 import { db } from '@/services/firebase';
 import { cn } from '@/lib/utils';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import LaunchGate from '@/components/ui/LaunchGate';
 import { useAuth } from '@/contexts/AuthContext';
 import { isAdminEmail } from '@/utils/admin';
@@ -30,6 +30,7 @@ const OpenSource = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeFilter, setActiveFilter] = useState<'all' | 'automation' | 'prompt' | 'tool' | 'project'>('all');
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchResources = async () => {
@@ -282,7 +283,7 @@ const OpenSource = () => {
                         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-12"
                       >
                         <AnimatePresence>
-                          {otherResources.map((resource, index) => (
+                          {(!user ? otherResources.slice(0, 3) : otherResources).map((resource, index) => (
                             <motion.div
                               layout
                               variants={itemVar}
@@ -327,6 +328,12 @@ const OpenSource = () => {
                                  <Link 
                                    to={`/community/resource/${resource.id}`}
                                    className="flex items-center gap-1 text-xs font-bold text-slate-900 hover:text-slate-600 transition-colors"
+                                   onClick={(e) => {
+                                     if (!user) {
+                                       e.preventDefault();
+                                       navigate('/community/signup');
+                                     }
+                                   }}
                                  >
                                    View Card <ArrowRight className="w-3 h-3" />
                                  </Link>
@@ -335,6 +342,29 @@ const OpenSource = () => {
                           ))}
                         </AnimatePresence>
                       </motion.div>
+                      {!user && (
+                         <div className="w-full flex flex-col items-center justify-center py-16 text-center bg-white/50 backdrop-blur-sm rounded-[2.5rem] border border-slate-200 border-dashed mt-4 relative overflow-hidden group">
+                             <div className="absolute inset-0 bg-gradient-to-b from-transparent to-slate-50/50 pointer-events-none" />
+                             
+                             <div className="relative z-10 flex flex-col items-center px-4">
+                                 <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-6 shadow-md ring-1 ring-slate-100 group-hover:scale-110 transition-transform duration-500">
+                                     <GitBranch className="w-8 h-8 text-indigo-500" />
+                                 </div>
+                                 <h3 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-3 tracking-tight">
+                                     Login to access all {otherResources.length} open source projects
+                                 </h3>
+                                 <p className="text-slate-500 max-w-md mb-8 leading-relaxed">
+                                     Join our community to fork, learn, and deploy production-ready automations. It's free to join.
+                                 </p>
+                                 <Link 
+                                     to="/community/signup"
+                                     className="px-8 py-4 bg-slate-900 text-white font-bold rounded-2xl hover:bg-slate-800 transition-all shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-indigo-500/20 hover:-translate-y-1 flex items-center gap-2"
+                                 >
+                                     Sign Up Now <ArrowRight className="w-4 h-4" />
+                                 </Link>
+                             </div>
+                         </div>
+                      )}
                     </LaunchGate>
                   </>
                 );

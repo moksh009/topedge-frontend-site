@@ -6,7 +6,7 @@ import { db } from '@/services/firebase';
 import { addDoc, collection, doc, getDoc, increment, onSnapshot, orderBy, query, serverTimestamp, updateDoc, deleteDoc } from 'firebase/firestore';
 import { useAuth } from '@/contexts/AuthContext';
 import { cn } from '@/lib/utils';
-import { Sparkles, DollarSign, AlarmClock, X, Plus, Search, ThumbsUp, ArrowUpRight, Phone, Mail, ChevronRight, Edit3, User, Briefcase, Trash2 } from 'lucide-react';
+import { Sparkles, DollarSign, AlarmClock, X, Plus, Search, ThumbsUp, ArrowUpRight, Phone, Mail, ChevronRight, Edit3, User, Briefcase, Trash2, ArrowRight } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useNavigate, Link } from 'react-router-dom';
 import { isAdminEmail } from '@/utils/admin';
@@ -217,12 +217,19 @@ export default function RequestBoard() {
     });
   }, [items, searchTerm, filter]);
 
+  const displayedItems = useMemo(() => {
+    if (!user && filteredItems.length > 3) {
+      return filteredItems.slice(0, 3);
+    }
+    return filteredItems;
+  }, [filteredItems, user]);
+
   const masonry = useMemo(() => {
     const left: RequestItem[] = [];
     const right: RequestItem[] = [];
-    filteredItems.forEach((r, i) => (i % 2 === 0 ? left : right).push(r));
+    displayedItems.forEach((r, i) => (i % 2 === 0 ? left : right).push(r));
     return { left, right };
-  }, [filteredItems]);
+  }, [displayedItems]);
 
   return (
     <CommunityLayout>
@@ -311,6 +318,7 @@ export default function RequestBoard() {
                 <p className="text-slate-500">Try adjusting your filters or be the first to post.</p>
              </div>
           ) : (
+            <>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {[masonry.left, masonry.right].map((col, ci) => (
                 <div key={ci} className="space-y-6">
@@ -414,7 +422,13 @@ export default function RequestBoard() {
                            </button>
 
                            <button
-                              onClick={() => handleSolveClick(r)}
+                              onClick={() => {
+                                if (!user) {
+                                  navigate('/community/signup');
+                                  return;
+                                }
+                                handleSolveClick(r);
+                              }}
                               className="inline-flex items-center gap-2 px-6 py-3 bg-slate-900 text-white text-xs font-bold rounded-xl hover:bg-indigo-600 transition-all shadow-md hover:shadow-lg group/btn transform active:scale-95"
                            >
                               Solve This
@@ -427,6 +441,30 @@ export default function RequestBoard() {
                 </div>
               ))}
             </div>
+            {!user && (
+               <div className="w-full flex flex-col items-center justify-center py-16 text-center bg-white/50 backdrop-blur-sm rounded-[2.5rem] border border-slate-200 border-dashed mt-8 relative overflow-hidden group">
+                   <div className="absolute inset-0 bg-gradient-to-b from-transparent to-slate-50/50 pointer-events-none" />
+                   
+                   <div className="relative z-10 flex flex-col items-center px-4">
+                       <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-6 shadow-md ring-1 ring-slate-100 group-hover:scale-110 transition-transform duration-500">
+                           <Briefcase className="w-8 h-8 text-indigo-500" />
+                       </div>
+                       <h3 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-3 tracking-tight">
+                           Login to view all {filteredItems.length} requests
+                       </h3>
+                       <p className="text-slate-500 max-w-md mb-8 leading-relaxed">
+                           Join our community to access paid opportunities and collaborate on projects. It's free to join.
+                       </p>
+                       <Link 
+                           to="/community/signup"
+                           className="px-8 py-4 bg-slate-900 text-white font-bold rounded-2xl hover:bg-slate-800 transition-all shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-indigo-500/20 hover:-translate-y-1 flex items-center gap-2"
+                       >
+                           Sign Up Now <ArrowRight className="w-4 h-4" />
+                       </Link>
+                   </div>
+               </div>
+            )}
+            </>
           )}
         </div>
 

@@ -52,7 +52,7 @@ const ResourceDetails = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [resource, setResource] = useState<Resource | null>(null);
-  const { user } = useAuth();
+  const { user, userProfile } = useAuth();
 
   const [isEditing, setIsEditing] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -284,6 +284,18 @@ const ResourceDetails = () => {
       await updateDoc(doc(db, 'community_resources', resource.id), { 
         downloads: increment(1) 
       });
+
+      // Send email notification to creator if user is not the creator
+      if (user && user.uid !== resource.userId && authorProfile?.email) {
+         emailService.sendCommunityUpdateEmail(
+           authorProfile.email,
+           `New Download: ${resource.title} 📥`,
+           `Good news! ${user.displayName || userProfile?.fullName || 'A user'} just downloaded your resource "${resource.title}".`,
+           'View Analytics',
+           `https://topedge-community.netlify.app/community/resource/${resource.id}`
+         ).catch(console.error);
+      }
+
     } catch (e) {
       console.error("Error tracking download:", e);
     }

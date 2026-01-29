@@ -24,6 +24,12 @@ export interface UserProfile {
   lookingToGetHired?: boolean;
   createdAt: any; // Firestore Timestamp
   updatedAt: any; // Firestore Timestamp
+  // Email Automation Tracking
+  welcomeEmailSent?: boolean;
+  profileReminderSentCount?: number;
+  lastProfileReminderSentAt?: any;
+  resourceNudgeSentCount?: number;
+  lastResourceNudgeSentAt?: any;
 }
 
 export interface Resource {
