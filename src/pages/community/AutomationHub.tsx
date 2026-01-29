@@ -354,6 +354,7 @@ const AutomationHub = () => {
 
   useEffect(() => {
     const fetchResources = async () => {
+      setLoading(true);
       try {
         const q = query(
           collection(db, 'community_resources'),
@@ -361,13 +362,12 @@ const AutomationHub = () => {
           limit(120)
         );
         const querySnapshot = await getDocs(q);
-        const resourcesData = querySnapshot.docs.map(doc => ({
+        let fetched = querySnapshot.docs.map(doc => ({
           id: doc.id,
-          ...doc.data(),
-          upvotes: (doc.data() as any).upvotes ?? (doc.data() as any).stars ?? 0,
-          upvotedBy: (doc.data() as any).upvotedBy ?? (doc.data() as any).starredBy ?? []
+          ...doc.data()
         })) as Resource[];
-        setResources(resourcesData);
+
+        setResources(fetched);
       } catch (error) {
         console.error("Error fetching resources:", error);
       } finally {

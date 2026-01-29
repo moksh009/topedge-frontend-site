@@ -68,7 +68,10 @@ export default function RequestBoard() {
         techStack: d.data().techStack || [],
         upvotes: d.data().upvotes || 0,
       })) as RequestItem[];
+      
       setItems(list);
+    }, (error) => {
+      console.error("Error fetching requests:", error);
     });
     return () => unsub();
   }, []);

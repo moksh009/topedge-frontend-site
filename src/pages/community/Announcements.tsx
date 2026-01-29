@@ -37,6 +37,7 @@ const Announcements = () => {
           id: doc.id,
           ...doc.data()
         })) as Announcement[];
+
         setAnnouncements(announcementsData);
       } catch (error) {
         console.error("Error fetching announcements:", error);

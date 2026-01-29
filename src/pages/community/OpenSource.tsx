@@ -41,18 +41,14 @@ const OpenSource = () => {
           where('isPaid', '==', false)
         );
         const querySnapshot = await getDocs(q);
-        const resourcesRaw = querySnapshot.docs.map(doc => ({
+        let fetched = querySnapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data()
-        })) as any[];
-        const resourcesData = resourcesRaw.sort((a, b) => {
-          const ad = a.createdAt?.toDate?.() || new Date(0);
-          const bd = b.createdAt?.toDate?.() || new Date(0);
-          return bd.getTime() - ad.getTime();
-        }) as Resource[];
-        setResources(resourcesData);
+        })) as Resource[];
+
+        setResources(fetched);
       } catch (error) {
-        console.error("Error fetching open source resources:", error);
+        console.error("Error fetching open source projects:", error);
       } finally {
         setLoading(false);
       }

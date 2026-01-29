@@ -10,7 +10,7 @@ import {
 import { collection, query, getDocs, orderBy } from 'firebase/firestore';
 import { db, auth } from '@/services/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import LaunchGate from '@/components/ui/LaunchGate';
 import HireModal from '@/components/community/HireModal';
@@ -53,6 +53,7 @@ const itemVar = {
 };
 
 const CommunityProfiles = () => {
+  const navigate = useNavigate();
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(auth.currentUser);
@@ -76,7 +77,7 @@ const CommunityProfiles = () => {
           collection(db, 'public_profiles')
         );
         const querySnapshot = await getDocs(q);
-        const profilesData = querySnapshot.docs.map(doc => ({
+        let profilesData = querySnapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data()
         })) as Profile[];
@@ -322,12 +323,24 @@ const CommunityProfiles = () => {
         <Link 
             to={`/community/profile/${profile.id}`}
             className="block w-full p-2.5 sm:p-3 text-center rounded-[1.2rem] sm:rounded-[1.5rem] bg-slate-900 text-xs sm:text-sm font-bold text-white group-hover:bg-slate-800 transition-all shadow-md"
+            onClick={(e) => {
+              if (!user) {
+                e.preventDefault();
+                navigate('/community/signup');
+              }
+            }}
         >
             View Profile
         </Link>
         {profile.workingStatus === 'Open to Work' && (
           <button
-            onClick={() => setActiveHireId(profile.id)}
+            onClick={() => {
+              if (!user) {
+                 navigate('/community/signup');
+                 return;
+              }
+              setActiveHireId(profile.id);
+            }}
             className="block w-full p-2.5 sm:p-3 text-center rounded-[1.2rem] sm:rounded-[1.5rem] bg-emerald-600 text-xs sm:text-sm font-bold text-white hover:bg-emerald-700 transition-all shadow-md"
           >
             Hire Me
