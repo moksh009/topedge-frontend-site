@@ -118,7 +118,13 @@ const Signup = () => {
         await emailService.sendWelcomeEmail(user.email, pendingName || name);
       }
 
-      navigate('/community/promote-profile');
+      const returnUrl = localStorage.getItem('returnUrl');
+      if (returnUrl) {
+        localStorage.removeItem('returnUrl');
+        navigate(returnUrl);
+      } else {
+        navigate('/community/promote-profile');
+      }
     } catch (err: any) {
       console.error(err);
       setError(err.message || 'Failed to verify code');

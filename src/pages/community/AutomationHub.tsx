@@ -15,6 +15,7 @@ import LaunchGate from '@/components/ui/LaunchGate';
 import TopBuilders from '@/components/community/TopBuilders';
 import { getDoc } from 'firebase/firestore'; // Fixed import
 import { isAdminEmail } from '@/utils/admin';
+import { EmailService } from '@/services/emailService';
 
 interface Resource {
   id: string;
@@ -74,11 +75,12 @@ const ResourceCard = ({ resource, index, currentUser }: { resource: Resource; in
   const [isHovering, setIsHovering] = useState(false);
   const [upvoteCount, setUpvoteCount] = useState<number>(resource.upvotes ?? ((resource as any).stars ?? 0));
   const [upvoted, setUpvoted] = useState<boolean>(!!(((resource.upvotedBy ?? ((resource as any).starredBy ?? [])) as string[])).includes(currentUser?.uid));
-  const [reviewCount, setReviewCount] = useState<number>(0);
-  const [avgRating, setAvgRating] = useState<number>(0);
-  const [authorProfile, setAuthorProfile] = useState<any>(null);
+    const [reviewCount, setReviewCount] = useState<number>(0);
+    const [avgRating, setAvgRating] = useState<number>(0);
+    const [authorProfile, setAuthorProfile] = useState<any>(null);
+    const [isVoting, setIsVoting] = useState(false);
 
-  const youtubeId = getYouTubeId(resource.videoUrl || '');
+    const youtubeId = getYouTubeId(resource.videoUrl || '');
   const isYoutube = !!youtubeId;
   const smartPoster = getSmartPoster(resource.videoUrl || '');
 
@@ -156,23 +158,28 @@ const ResourceCard = ({ resource, index, currentUser }: { resource: Resource; in
   };
 
   const toggleUpvote = async (e: React.MouseEvent) => {
-    e.preventDefault();
-    if (!currentUser) return;
-    try {
-      setUpvoted(!upvoted);
-      setUpvoteCount(prev => upvoted ? Math.max(0, prev - 1) : prev + 1);
-      const ref = doc(db, 'community_resources', resource.id);
-      if (upvoted) {
-        await updateDoc(ref, { upvotes: increment(-1), upvotedBy: arrayRemove(currentUser.uid) });
-      } else {
-        await updateDoc(ref, { upvotes: increment(1), upvotedBy: arrayUnion(currentUser.uid) });
+      e.preventDefault();
+      if (!currentUser) return;
+      if (isVoting) return;
+      
+      setIsVoting(true);
+      try {
+        setUpvoted(!upvoted);
+        setUpvoteCount(prev => upvoted ? Math.max(0, prev - 1) : prev + 1);
+        const ref = doc(db, 'community_resources', resource.id);
+        if (upvoted) {
+          await updateDoc(ref, { upvotes: increment(-1), upvotedBy: arrayRemove(currentUser.uid) });
+        } else {
+          await updateDoc(ref, { upvotes: increment(1), upvotedBy: arrayUnion(currentUser.uid) });
+        }
+      } catch (e) {
+        console.error(e);
+        setUpvoted(!upvoted);
+        setUpvoteCount(prev => upvoted ? prev + 1 : prev - 1);
+      } finally {
+        setIsVoting(false);
       }
-    } catch (e) {
-      console.error(e);
-      setUpvoted(!upvoted);
-      setUpvoteCount(prev => upvoted ? prev + 1 : prev - 1);
-    }
-  };
+    };
 
   return (
     <motion.div
@@ -282,6 +289,19 @@ const ResourceCard = ({ resource, index, currentUser }: { resource: Resource; in
             <div className="mb-4">
                 <h3 className="text-lg font-bold text-slate-900 mb-2 leading-tight group-hover:text-indigo-600 transition-colors line-clamp-1">{resource.title}</h3>
                 <p className="text-sm text-slate-500 leading-relaxed line-clamp-2 min-h-[40px]">{resource.description}</p>
+                {/* Resource Count / Author Stats */}
+                <div className="flex items-center gap-3 mt-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                  {authorProfile?.resourcesCount !== undefined && (
+                     <span className="flex items-center gap-1">
+                       <Box className="w-3 h-3" /> {authorProfile.resourcesCount} Resources
+                     </span>
+                  )}
+                  {reviewCount > 0 && (
+                     <span className="flex items-center gap-1">
+                       <Star className="w-3 h-3 text-yellow-400 fill-current" /> {reviewCount} Reviews
+                     </span>
+                  )}
+                </div>
             </div>
             
             <div className="flex flex-wrap gap-2 mb-6">
@@ -330,6 +350,7 @@ const ResourceCard = ({ resource, index, currentUser }: { resource: Resource; in
                         onClick={(e) => {
                           if (!currentUser) {
                             e.preventDefault();
+                            localStorage.setItem('returnUrl', `/community/resource/${resource.id}`);
                             navigate('/community/signup');
                           }
                         }}
@@ -346,6 +367,7 @@ const ResourceCard = ({ resource, index, currentUser }: { resource: Resource; in
 const AutomationHub = () => {
   const [resources, setResources] = useState<Resource[]>([]);
   const [loading, setLoading] = useState(true);
+  const [totalCountFromApi, setTotalCountFromApi] = useState<number | null>(null);
   const { user, userProfile } = useAuth();
   const [searchTerm, setSearchTerm] = useState('');
   const [filter, setFilter] = useState<'all' | 'free' | 'paid' | 'collab'>('all');
@@ -355,6 +377,18 @@ const AutomationHub = () => {
   useEffect(() => {
     const fetchResources = async () => {
       setLoading(true);
+
+      // 1. Try API first (Guest friendly & Total Count)
+      try {
+        const emailService = new EmailService();
+        const apiData = await emailService.getPublicStats();
+        if (apiData && apiData.success) {
+           if (apiData.stats?.totalResources) setTotalCountFromApi(apiData.stats.totalResources);
+           if (apiData.newResources) setResources(apiData.newResources as Resource[]);
+        }
+      } catch (e) { console.error("API fetch failed", e); }
+
+      // 2. Try Firestore (For authenticated users or full list)
       try {
         const q = query(
           collection(db, 'community_resources'),
@@ -407,6 +441,10 @@ const AutomationHub = () => {
 
     return matchesSearch && matchesFilter;
   }).sort((a, b) => (b.upvotes ?? 0) - (a.upvotes ?? 0));
+
+  // Teaser Logic for Guests
+  const displayResources = !user ? filteredResources.slice(0, 3) : filteredResources;
+  const totalCount = totalCountFromApi || filteredResources.length;
 
   return (
     <CommunityLayout>
@@ -591,7 +629,7 @@ const AutomationHub = () => {
                         </AnimatePresence>
                       </motion.div>
 
-                    {!user && (
+                    {!user && (totalCountFromApi ? totalCountFromApi > 3 : otherResources.length > 3) && (
                        <div className="w-full flex flex-col items-center justify-center py-16 text-center bg-white/50 backdrop-blur-sm rounded-[2.5rem] border border-slate-200 border-dashed mt-4 relative overflow-hidden group">
                            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-slate-50/50 pointer-events-none" />
                            <div className="relative z-10 flex flex-col items-center px-4">
@@ -599,7 +637,7 @@ const AutomationHub = () => {
                                    <Zap className="w-8 h-8 text-amber-500" />
                                </div>
                                <h3 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-3 tracking-tight">
-                                   Login to explore all {otherResources.length} resources
+                                   Login to explore all {totalCountFromApi || otherResources.length} resources
                                </h3>
                                <p className="text-slate-500 max-w-md mb-8 leading-relaxed">
                                    Access production-ready automations, agents, and templates. It's free to join.
@@ -607,8 +645,9 @@ const AutomationHub = () => {
                                <Link 
                                    to="/community/signup"
                                    className="px-8 py-4 bg-slate-900 text-white font-bold rounded-2xl hover:bg-slate-800 transition-all shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-amber-500/20 hover:-translate-y-1 flex items-center gap-2"
+                                   onClick={() => localStorage.setItem('returnUrl', '/community/automation-hub')}
                                >
-                                   Sign Up Now <ArrowRight className="w-4 h-4" />
+                                   See all {totalCountFromApi || otherResources.length} Resources <ArrowRight className="w-4 h-4" />
                                </Link>
                            </div>
                        </div>

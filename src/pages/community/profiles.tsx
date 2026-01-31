@@ -7,7 +7,7 @@ import {
   Youtube, Instagram, User, 
   ArrowDown
 } from 'lucide-react';
-import { collection, query, getDocs, orderBy } from 'firebase/firestore';
+import { collection, query, getDocs, orderBy, limit } from 'firebase/firestore';
 import { db, auth } from '@/services/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { Link, useNavigate } from 'react-router-dom';
@@ -16,6 +16,7 @@ import LaunchGate from '@/components/ui/LaunchGate';
 import HireModal from '@/components/community/HireModal';
 import { calculateReputation } from '@/utils/reputation';
 import { isAdminEmail } from '@/utils/admin';
+import { EmailService } from '@/services/emailService';
 
 interface Profile {
 
@@ -56,6 +57,7 @@ const CommunityProfiles = () => {
   const navigate = useNavigate();
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [loading, setLoading] = useState(true);
+  const [totalCountFromApi, setTotalCountFromApi] = useState<number | null>(null);
   const [user, setUser] = useState(auth.currentUser);
   const [searchTerm, setSearchTerm] = useState('');
   const [activeHireId, setActiveHireId] = useState<string | null>(null);
@@ -67,11 +69,38 @@ const CommunityProfiles = () => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
     });
-    return () => unsubscribe();
+  
+  return () => unsubscribe();
   }, []);
 
   useEffect(() => {
     const fetchProfiles = async () => {
+      // 1. Try API first (Guest friendly & Total Count)
+      try {
+        const emailService = new EmailService();
+        const apiData = await emailService.getPublicStats();
+        if (apiData && apiData.success) {
+           if (apiData.stats?.totalProfiles) setTotalCountFromApi(apiData.stats.totalProfiles);
+           
+           // If guest, use API data for the teaser view (Top 3) and skip Firestore
+           if (!auth.currentUser && apiData.topProfiles && apiData.topProfiles.length > 0) {
+             setProfiles(apiData.topProfiles as any[]); // Cast as any or Profile
+             setLoading(false);
+             return;
+           }
+        }
+      } catch (e) { console.error("API fetch failed", e); }
+
+      // If guest and API failed, we might hit permission errors on Firestore, but let's try safely
+      if (!auth.currentUser) {
+         console.warn("Guest user: API failed or partial. Firestore might fail due to permissions.");
+         // If we want to be safe, we could return here or set empty. 
+         // But maybe public_profiles is public? If not, we should return.
+         // Assuming strict rules:
+         // return; 
+         // For now, let it fall through but handle error gracefully
+      }
+
       try {
         const q = query(
           collection(db, 'public_profiles')
@@ -93,7 +122,7 @@ const CommunityProfiles = () => {
         const validProfiles = profilesData.filter(p => p.fullName && p.fullName.trim().length > 0);
         setProfiles(validProfiles);
 
-        const rQ = query(collection(db, 'community_resources'));
+        const rQ = query(collection(db, 'community_resources'), limit(1000));
         const rSnap = await getDocs(rQ);
         const byUser: Record<string, { resources: { userId: string; upvotes: number; views?: number; downloads?: number; linkClicks?: number; purchasers?: string[] }[] }> = {};
         rSnap.docs.forEach(d => {
@@ -168,9 +197,12 @@ const CommunityProfiles = () => {
     return repB - repA;
   });
 
+  // Teaser Logic for Guests
+  const displayProfiles = !user ? sortedProfiles.slice(0, 3) : sortedProfiles;
+
   const hasMyProfile = !!user && profiles.some(p => p.id === (user.uid || ''));
 
-  const ProfileCard = ({ profile }: { profile: Profile }) => {
+  const ProfileCard = ({ profile, index }: { profile: Profile; index: number }) => {
     const resourcesArr = getResourcesForProfile(profile);
     const rep = calculateReputation(
       {
@@ -214,6 +246,11 @@ const CommunityProfiles = () => {
       )}
     >
       <div className={cn("h-28 sm:h-32 relative overflow-hidden", bannerBg)}>
+          {/* Rank Badge */}
+          <div className="absolute top-4 left-4 z-10 bg-white/90 backdrop-blur-sm px-2.5 py-1 rounded-full text-xs font-bold text-slate-700 shadow-sm border border-slate-100">
+             #{index + 1}
+          </div>
+
           {profile.bannerURL ? (
             <img src={profile.bannerURL} alt="Banner" className="absolute inset-0 w-full h-full object-cover" />
           ) : (
@@ -326,6 +363,7 @@ const CommunityProfiles = () => {
             onClick={(e) => {
               if (!user) {
                 e.preventDefault();
+                localStorage.setItem('returnUrl', `/community/profile/${profile.id}`);
                 navigate('/community/signup');
               }
             }}
@@ -458,7 +496,16 @@ const CommunityProfiles = () => {
                           <Link to={`/community/profile/${myProfiles[0].id}`} className="text-sm font-semibold text-indigo-600 hover:text-indigo-700">View</Link>
                         </div>
                         <motion.div variants={containerVar} initial="hidden" animate="show" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-                            {myProfiles.map((profile) => <ProfileCard key={profile.id} profile={profile} />)}
+                            {myProfiles.map((profile) => {
+                              const rank = sortedProfiles.findIndex(p => p.id === profile.id);
+                              return (
+                                <ProfileCard 
+                                  key={profile.id} 
+                                  profile={profile} 
+                                  index={rank}
+                                />
+                              );
+                            })}
                         </motion.div>
                       </div>
                     )}
@@ -467,33 +514,50 @@ const CommunityProfiles = () => {
                       <h2 className="text-xl sm:text-2xl font-bold text-slate-900">Community Profiles</h2>
                     </div>
                     
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 pb-12">
-                      {(!user ? otherProfiles.slice(0, 3) : otherProfiles).map((profile) => <ProfileCard key={profile.id} profile={profile} />)}
-                    </div>
+                    {/* Grid */}
+                    <motion.div
+                      layout
+                      variants={containerVar}
+                      initial="hidden"
+                      animate="show"
+                      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 pb-12"
+        >
+          {displayProfiles.map((profile, index) => (
+            <ProfileCard key={profile.id} profile={profile} index={index} />
+          ))}
+        </motion.div>
 
-                    {!user && (
-                      <div className="w-full flex flex-col items-center justify-center py-16 text-center bg-white/50 backdrop-blur-sm rounded-[2.5rem] border border-slate-200 border-dashed mt-4 relative overflow-hidden group">
-                          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-slate-50/50 pointer-events-none" />
-                          
-                          <div className="relative z-10 flex flex-col items-center px-4">
-                              <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-6 shadow-md ring-1 ring-slate-100 group-hover:scale-110 transition-transform duration-500">
-                                  <UserPlus className="w-8 h-8 text-indigo-500" />
+                    {/* Guest Banner */}
+                    {!user && (() => {
+                        const otherProfiles = sortedProfiles; // Use sortedProfiles as the full list
+                        if (otherProfiles.length === 0 && !loading) return null;
+                        // Only show if we have more profiles than what is displayed
+                        if (otherProfiles.length <= 3 && !totalCountFromApi) return null;
+
+                        return (
+                          <div className="w-full flex flex-col items-center justify-center py-16 text-center bg-white/50 backdrop-blur-sm rounded-[2.5rem] border border-slate-200 border-dashed mt-4 relative overflow-hidden group">
+                              <div className="absolute inset-0 bg-gradient-to-b from-transparent to-indigo-50/50 pointer-events-none" />
+                              <div className="relative z-10 flex flex-col items-center px-4">
+                                  <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-6 shadow-md ring-1 ring-slate-100 group-hover:scale-110 transition-transform duration-500">
+                                      <User className="w-8 h-8 text-indigo-500" />
+                                  </div>
+                                  <h3 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-3 tracking-tight">
+                                      Login to view all {totalCountFromApi || otherProfiles.length} profiles
+                                  </h3>
+                                  <p className="text-slate-500 max-w-md mb-8 leading-relaxed">
+                                      Join our community to connect with top AI talent, founders, and builders. It's free to join.
+                                  </p>
+                                  <Link 
+                                      to="/community/signup"
+                                      className="px-8 py-4 bg-slate-900 text-white font-bold rounded-2xl hover:bg-slate-800 transition-all shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-indigo-500/20 hover:-translate-y-1 flex items-center gap-2"
+                                      onClick={() => localStorage.setItem('returnUrl', '/community/profiles')}
+                                  >
+                                      See all {totalCountFromApi || otherProfiles.length} Profiles <ArrowRight className="w-4 h-4" />
+                                  </Link>
                               </div>
-                              <h3 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-3 tracking-tight">
-                                  Login to view all {otherProfiles.length} profiles
-                              </h3>
-                              <p className="text-slate-500 max-w-md mb-8 leading-relaxed">
-                                  Join our community to connect with top AI talent, founders, and builders. It's free to join.
-                              </p>
-                              <Link 
-                                  to="/community/signup"
-                                  className="px-8 py-4 bg-slate-900 text-white font-bold rounded-2xl hover:bg-slate-800 transition-all shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-indigo-500/20 hover:-translate-y-1 flex items-center gap-2"
-                              >
-                                  Sign Up Now <ArrowRight className="w-4 h-4" />
-                              </Link>
                           </div>
-                      </div>
-                    )}
+                        );
+                    })()}
                   </>
                 );
               })()}

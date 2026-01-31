@@ -47,16 +47,13 @@ const AdminAnnouncements = () => {
         createdAt: serverTimestamp(),
       });
       
-      // Send a copy to the admin to verify the email template
-      if (user.email) {
-        await emailService.sendCommunityUpdateEmail(
-          user.email,
-          formData.title,
-          formData.content,
-          'View Announcement',
-          'https://topedgeai.com/community/announcements'
-        );
-      }
+      // Trigger broadcast to all users
+      await emailService.broadcastAnnouncement(
+        formData.title,
+        formData.content,
+        'https://topedgeai.com/community/announcements',
+        'View Announcement'
+      );
       
       toast.success("Announcement broadcasted successfully.");
       navigate('/community/announcements');

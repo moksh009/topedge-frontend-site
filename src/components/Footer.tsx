@@ -9,6 +9,8 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { collection, query, getDocs, orderBy, limit } from 'firebase/firestore';
 import { db } from '@/services/firebase';
+import { useAuth } from '@/contexts/AuthContext';
+import { EmailService } from '@/services/emailService';
 
 interface LinkItem {
   label: string;
@@ -112,6 +114,7 @@ const socialLinks = [
 
 const Footer = () => {
   const { t } = useTranslation();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const isCommunity = location.pathname.startsWith('/community');
@@ -138,6 +141,18 @@ const Footer = () => {
       // Only fetch if community route AND launched
       if (!isCommunity || !isLaunched) return;
       try {
+        // 1. Try fetching from public API (works for guests)
+        const emailService = new EmailService();
+        const apiData = await emailService.getPublicStats();
+        
+        if (apiData && apiData.success && apiData.topResourcesByUpvotes) {
+           setTopResources(apiData.topResourcesByUpvotes);
+           return;
+        }
+
+        // 2. Fallback to Firestore (requires auth if rules are strict)
+        // Note: Rules allow public read for community_resources, so guests can fetch too.
+        
         const q = query(
           collection(db, 'community_resources'),
           orderBy('upvotes', 'desc'),
@@ -151,7 +166,7 @@ const Footer = () => {
       }
     };
     fetchTop();
-  }, [isCommunity, isLaunched]);
+  }, [isCommunity, isLaunched, user]);
 
   return (
     <footer className="relative bg-white pt-12 md:pt-20 pb-0 overflow-hidden">
@@ -317,3 +332,5 @@ const Footer = () => {
 };
 
 export default Footer;
+
+

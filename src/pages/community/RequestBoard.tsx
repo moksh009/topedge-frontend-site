@@ -45,6 +45,7 @@ export default function RequestBoard() {
   const [contactItem, setContactItem] = useState<RequestItem | null>(null);
   const [showProfilePrompt, setShowProfilePrompt] = useState(false);
   const [deleteRequestItem, setDeleteRequestItem] = useState<RequestItem | null>(null);
+  const [totalCountFromApi, setTotalCountFromApi] = useState<number | null>(null);
   
   // Edit Mode State
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -61,6 +62,20 @@ export default function RequestBoard() {
 
   // Fetch Requests
   useEffect(() => {
+    // 1. Try API first (Guest friendly & Total Count)
+    const fetchApiStats = async () => {
+      try {
+        const apiData = await emailService.getPublicStats();
+        if (apiData && apiData.success) {
+           if (apiData.stats?.totalRequests) setTotalCountFromApi(apiData.stats.totalRequests);
+           if (apiData.recentRequests) setItems(apiData.recentRequests as RequestItem[]);
+        }
+      } catch (e) { console.error("API fetch failed", e); }
+    };
+    
+    fetchApiStats();
+
+    // 2. Setup Firestore listener (will override if successful)
     const q = query(collection(db, 'community_requests'), orderBy('createdAt', 'desc'));
     const unsub = onSnapshot(q, (snap) => {
       const list = snap.docs.map(d => ({
@@ -245,11 +260,13 @@ export default function RequestBoard() {
     return { left, right };
   }, [displayedItems]);
 
+  const totalCount = totalCountFromApi || filteredItems.length;
+
   return (
     <CommunityLayout>
       <CommunitySEO 
-        title="Request Board - Hire AI Talent & Projects"
-        description="Post your AI project requests or find paid opportunities. Connect with skilled developers and founders."
+        title="Community Request Board - TopEdge AI"
+        description="Post and find paid automation opportunities. Connect with businesses looking for AI solutions."
         url="/community/requests"
       />
       <div className="min-h-screen bg-[#FAFAFA] text-slate-900 font-sans pb-24 relative overflow-hidden">
@@ -455,7 +472,7 @@ export default function RequestBoard() {
                 </div>
               ))}
             </div>
-            {!user && (
+            {!user && (totalCount ? totalCount > 3 : filteredItems.length > 3) && (
                <div className="w-full flex flex-col items-center justify-center py-16 text-center bg-white/50 backdrop-blur-sm rounded-[2.5rem] border border-slate-200 border-dashed mt-8 relative overflow-hidden group">
                    <div className="absolute inset-0 bg-gradient-to-b from-transparent to-slate-50/50 pointer-events-none" />
                    
@@ -464,7 +481,7 @@ export default function RequestBoard() {
                            <Briefcase className="w-8 h-8 text-indigo-500" />
                        </div>
                        <h3 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-3 tracking-tight">
-                           Login to view all {filteredItems.length} requests
+                           Login to view all {totalCount || filteredItems.length} requests
                        </h3>
                        <p className="text-slate-500 max-w-md mb-8 leading-relaxed">
                            Join our community to access paid opportunities and collaborate on projects. It's free to join.

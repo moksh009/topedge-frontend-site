@@ -64,6 +64,37 @@ export class EmailService {
     }
   }
 
+  async getPublicStats(): Promise<any> {
+    const endpoints = [
+      `${this.baseURL}/api/public-stats`,
+      `${this.baseURL}/public-stats`,
+    ];
+
+    // Add Netlify Functions path (relative) if in browser
+    if (typeof window !== 'undefined') {
+       endpoints.push('/.netlify/functions/api/public-stats');
+       endpoints.push('/.netlify/functions/api/api/public-stats');
+    }
+
+    // Add Production fallback
+    endpoints.push('https://topedge-backend.netlify.app/api/public-stats');
+    endpoints.push('https://topedge-backend.netlify.app/public-stats');
+
+    for (const url of endpoints) {
+      try {
+        const response = await axios.get(url);
+        if (response.data && (response.data.success || response.data.stats)) {
+             return response.data;
+        }
+      } catch (e) {
+        // Continue to next endpoint
+      }
+    }
+    
+    console.warn('[EmailService] All public stats fetch attempts failed');
+    return null;
+  }
+
   private async sendEmail(type: EmailType, endpoint: string, details: any): Promise<void> {
     const maxRetries = 3;
     let retryCount = 0;
@@ -286,6 +317,23 @@ export class EmailService {
       });
     } catch (error) {
       console.error('Error sending community update email:', error);
+    }
+  }
+
+  public async broadcastAnnouncement(subject: string, message: string, actionUrl: string, actionText: string): Promise<void> {
+    try {
+      console.log('Broadcasting announcement:', { subject });
+      await axios.post(`${this.baseURL}/api/admin/broadcast-announcement`, {
+        title: subject,
+        content: message,
+        ctaLink: actionUrl,
+        ctaText: actionText,
+        secret: 'topedge-secret-key-change-in-prod' // Hardcoded for now
+      });
+      console.log('Announcement broadcast initiated successfully');
+    } catch (error) {
+      console.error('Error broadcasting announcement:', error);
+      throw error;
     }
   }
 

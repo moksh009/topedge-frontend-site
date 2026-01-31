@@ -11,6 +11,8 @@ import LaunchGate from '@/components/ui/LaunchGate';
 import { useAuth } from '@/contexts/AuthContext';
 import { isAdminEmail } from '@/utils/admin';
 
+import { emailService } from '@/services/emailService';
+
 interface Resource {
   id: string;
   title: string;
@@ -29,11 +31,24 @@ const OpenSource = () => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [activeFilter, setActiveFilter] = useState<'all' | 'automation' | 'prompt' | 'tool' | 'project'>('all');
+  const [totalCountFromApi, setTotalCountFromApi] = useState<number | null>(null);
   const { user } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchResources = async () => {
+      setLoading(true);
+
+      // 1. Try API first (Guest friendly & Total Count)
+      try {
+        const apiData = await emailService.getPublicStats();
+        if (apiData && apiData.success) {
+           if (apiData.stats?.totalOpenSource) setTotalCountFromApi(apiData.stats.totalOpenSource);
+           if (apiData.openSourceProjects) setResources(apiData.openSourceProjects as Resource[]);
+        }
+      } catch (e) { console.error("API fetch failed", e); }
+
+      // 2. Try Firestore (For authenticated users or full list)
       try {
         // Fetch only free resources
         const q = query(
@@ -88,6 +103,10 @@ const OpenSource = () => {
 
     return matchesSearch && matchesFilter;
   });
+
+  // Teaser Logic for Guests
+  const displayResources = !user ? filteredResources.slice(0, 3) : filteredResources;
+  const totalCount = totalCountFromApi || filteredResources.length;
 
   return (
     <CommunityLayout>
@@ -183,8 +202,8 @@ const OpenSource = () => {
           ) : (
             <>
               {(() => {
-                const myResources = filteredResources.filter(r => r.userId === (user?.uid || ''));
-                const otherResources = filteredResources.filter(r => r.userId !== (user?.uid || ''));
+                const myResources = displayResources.filter(r => r.userId === (user?.uid || ''));
+                const otherResources = displayResources.filter(r => r.userId !== (user?.uid || ''));
                 const isPreLaunch = new Date() < new Date('2026-01-29');
                 const isAdmin = isAdminEmail(user?.email);
                 const showGate = isPreLaunch && !isAdmin;
@@ -279,7 +298,7 @@ const OpenSource = () => {
                         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-12"
                       >
                         <AnimatePresence>
-                          {(!user ? otherResources.slice(0, 3) : otherResources).map((resource, index) => (
+                          {otherResources.map((resource, index) => (
                             <motion.div
                               layout
                               variants={itemVar}
@@ -338,16 +357,15 @@ const OpenSource = () => {
                           ))}
                         </AnimatePresence>
                       </motion.div>
-                      {!user && (
+                      {!user && (totalCount ? totalCount > 3 : otherResources.length > 3) && (
                          <div className="w-full flex flex-col items-center justify-center py-16 text-center bg-white/50 backdrop-blur-sm rounded-[2.5rem] border border-slate-200 border-dashed mt-4 relative overflow-hidden group">
                              <div className="absolute inset-0 bg-gradient-to-b from-transparent to-slate-50/50 pointer-events-none" />
-                             
                              <div className="relative z-10 flex flex-col items-center px-4">
                                  <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-6 shadow-md ring-1 ring-slate-100 group-hover:scale-110 transition-transform duration-500">
                                      <GitBranch className="w-8 h-8 text-indigo-500" />
                                  </div>
                                  <h3 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-3 tracking-tight">
-                                     Login to access all {otherResources.length} open source projects
+                                     Login to access all {totalCount || otherResources.length} open source projects
                                  </h3>
                                  <p className="text-slate-500 max-w-md mb-8 leading-relaxed">
                                      Join our community to fork, learn, and deploy production-ready automations. It's free to join.

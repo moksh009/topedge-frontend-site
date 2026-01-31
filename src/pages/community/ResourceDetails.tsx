@@ -671,7 +671,8 @@ const ResourceDetails = () => {
   const handlePurchaseRequest = async () => {
     if (!resource) return;
     if (!user) {
-      toast.error("Please login to request access");
+      localStorage.setItem('returnUrl', `/community/resource/${resource.id}`);
+      navigate('/community/signup');
       return;
     }
     if (!resource.isPaid) {
@@ -1546,7 +1547,17 @@ const ResourceDetails = () => {
 
                     {/* Author Row - UPDATED */}
                     <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-4 border-b border-slate-200 gap-4 sm:gap-0">
-                        <Link to={`/community/profile/${resource.userId}`} className="flex items-center gap-3 group">
+                        <Link 
+                            to={`/community/profile/${resource.userId}`} 
+                            className="flex items-center gap-3 group"
+                            onClick={(e) => {
+                                if (!user) {
+                                    e.preventDefault();
+                                    localStorage.setItem('returnUrl', `/community/resource/${resource.id}`);
+                                    navigate('/community/signup');
+                                }
+                            }}
+                        >
                             {resource.userPhoto ? (
                                 <img src={resource.userPhoto} alt={resource.userName} className="w-12 h-12 rounded-full object-cover border border-slate-200 shadow-sm" />
                             ) : (

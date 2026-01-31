@@ -4,6 +4,8 @@ import { db } from '@/services/firebase';
 import { calculateReputation } from '@/utils/reputation';
 import { Trophy, User } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useAuth } from '@/contexts/AuthContext';
+import { EmailService } from '@/services/emailService';
 
 interface Profile {
   id: string;
@@ -16,55 +18,90 @@ interface Profile {
 }
 
 export default function TopBuilders() {
+  const { user } = useAuth();
   const [top, setTop] = useState<
     Array<{ profile: Profile; score: number; tier: 'Builder' | 'Architect' | 'Grandmaster' }>
   >([]);
 
   useEffect(() => {
     const run = async () => {
-      const pSnap = await getDocs(
-        query(collection(db, 'public_profiles'), orderBy('createdAt', 'desc'), limit(100))
-      );
-      const profiles = pSnap.docs
-        .map(d => ({ id: d.id, ...(d.data() as any) }) as Profile)
-        .filter(p => !!p.fullName);
+      try {
+        // 1. Try fetching from public API (works for guests)
+        const emailService = new EmailService();
+        const apiData = await emailService.getPublicStats();
 
-      const rSnap = await getDocs(
-        query(collection(db, 'community_resources'), orderBy('createdAt', 'desc'), limit(200))
-      );
-      const byUser: Record<string, { resources: { userId: string; upvotes: number }[] }> = {};
-      rSnap.docs.forEach(d => {
-        const data = d.data() as any;
-        const uid = data.userId as string;
-        if (!uid) return;
-        if (!byUser[uid]) byUser[uid] = { resources: [] };
-        byUser[uid].resources.push({
-          userId: uid,
-          upvotes: Number((data.upvotes ?? data.stars) || 0)
-        });
-      });
+        if (apiData && apiData.success && apiData.topProfiles && apiData.topProfiles.length > 0) {
+          // Map API data to component structure
+          const mapped = apiData.topProfiles.map((p: any) => ({
+            profile: {
+              id: p.id,
+              fullName: p.fullName,
+              photoURL: p.photoURL,
+              description: p.description || p.bio,
+              github: p.github,
+              linkedin: p.linkedin,
+              websiteURL: p.websiteURL
+            },
+            score: p.score,
+            tier: p.tier
+          }));
+          setTop(mapped);
+          return;
+        }
+      } catch (e) {
+        console.error("API fetch failed in TopBuilders", e);
+      }
 
-      const scored = profiles.map(p => {
-        const entry = byUser[p.id];
-        const resources = entry?.resources || [];
-        const rep = calculateReputation(
-          {
-            bio: p.description,
-            photoURL: p.photoURL,
-            github: p.github,
-            linkedin: p.linkedin,
-            websiteURL: p.websiteURL
-          },
-          resources
+      // 2. Fallback to Firestore (skip for guests to avoid permission errors)
+      // Note: Rules allow public read for public_profiles, so guests can fetch too.
+      
+      try {
+        const pSnap = await getDocs(
+          query(collection(db, 'public_profiles'), orderBy('createdAt', 'desc'), limit(100))
         );
-        return { profile: p, score: rep.score, tier: rep.tier };
-      });
+        const profiles = pSnap.docs
+          .map(d => ({ id: d.id, ...(d.data() as any) }) as Profile)
+          .filter(p => !!p.fullName);
 
-      scored.sort((a, b) => b.score - a.score);
-      setTop(scored.slice(0, 3));
+        const rSnap = await getDocs(
+          query(collection(db, 'community_resources'), orderBy('createdAt', 'desc'), limit(200))
+        );
+        const byUser: Record<string, { resources: { userId: string; upvotes: number }[] }> = {};
+        rSnap.docs.forEach(d => {
+          const data = d.data() as any;
+          const uid = data.userId as string;
+          if (!uid) return;
+          if (!byUser[uid]) byUser[uid] = { resources: [] };
+          byUser[uid].resources.push({
+            userId: uid,
+            upvotes: Number((data.upvotes ?? data.stars) || 0)
+          });
+        });
+
+        const scored = profiles.map(p => {
+          const entry = byUser[p.id];
+          const resources = entry?.resources || [];
+          const rep = calculateReputation(
+            {
+              bio: p.description,
+              photoURL: p.photoURL,
+              github: p.github,
+              linkedin: p.linkedin,
+              websiteURL: p.websiteURL
+            },
+            resources
+          );
+          return { profile: p, score: rep.score, tier: rep.tier };
+        });
+
+        scored.sort((a, b) => b.score - a.score);
+        setTop(scored.slice(0, 3));
+      } catch (error) {
+        console.error("Firestore fetch failed in TopBuilders", error);
+      }
     };
     run();
-  }, []);
+  }, [user]);
 
   if (top.length === 0) return null;
 

@@ -3,32 +3,66 @@ import { collection, getDocs, orderBy, query } from 'firebase/firestore';
 import { db } from '@/services/firebase';
 import { getRelatedResources, ResourceLite } from '@/utils/recommendations';
 import { Link } from 'react-router-dom';
+import { useAuth } from '@/contexts/AuthContext';
+import { EmailService } from '@/services/emailService';
 
 interface Props {
   current: ResourceLite;
 }
 
 export default function RelatedResources({ current }: Props) {
+  const { user } = useAuth();
   const [items, setItems] = useState<ResourceLite[]>([]);
 
   useEffect(() => {
     const run = async () => {
-      const snap = await getDocs(query(collection(db, 'community_resources'), orderBy('createdAt', 'desc')));
-      const all = snap.docs.map(d => {
-        const data = d.data() as any;
-        return {
-          id: d.id,
-          title: data.title,
-          tools: data.tools || [],
-          category: (data.category || 'automation') as ResourceLite['category'],
-          userId: data.userId
-        } as ResourceLite;
-      });
-      const related = getRelatedResources(current, all);
-      setItems(related);
+      let pool: ResourceLite[] = [];
+
+      try {
+        // 1. Try fetching from public API (works for guests)
+        const emailService = new EmailService();
+        const apiData = await emailService.getPublicStats();
+
+        if (apiData && apiData.success && apiData.newResources && apiData.newResources.length > 0) {
+           pool = apiData.newResources.map((r: any) => ({
+             id: r.id,
+             title: r.title,
+             tools: r.tools || [],
+             category: (r.category || 'automation') as ResourceLite['category'],
+             userId: r.userId
+           }));
+        }
+      } catch (e) {
+        console.error("API fetch failed in RelatedResources", e);
+      }
+
+      // 2. If pool is empty, try Firestore
+      // Note: Fetching ALL resources is expensive, but keeping original logic.
+      if (pool.length === 0) {
+        try {
+          const snap = await getDocs(query(collection(db, 'community_resources'), orderBy('createdAt', 'desc')));
+          pool = snap.docs.map(d => {
+            const data = d.data() as any;
+            return {
+              id: d.id,
+              title: data.title,
+              tools: data.tools || [],
+              category: (data.category || 'automation') as ResourceLite['category'],
+              userId: data.userId
+            } as ResourceLite;
+          });
+        } catch (error) {
+          console.error("Firestore fetch failed in RelatedResources", error);
+        }
+      }
+
+      if (pool.length > 0) {
+        const related = getRelatedResources(current, pool);
+        setItems(related);
+      }
     };
     run();
-  }, [current.id]);
+  }, [current.id, user]);
 
   if (items.length === 0) return null;
 

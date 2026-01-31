@@ -3,7 +3,7 @@ import CommunityLayout from '@/components/community/layout/CommunityLayout';
 import CommunitySEO from '@/components/community/CommunitySEO';
 import { motion } from 'framer-motion';
 import { db } from '@/services/firebase';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { collection, getDocs, limit, orderBy, query } from 'firebase/firestore';
 import { ArrowRight, Code2, Sparkles, MoveRight, Terminal, User } from 'lucide-react';
@@ -11,6 +11,8 @@ import LaunchGate from '@/components/ui/LaunchGate';
 import { useAuth } from '@/contexts/AuthContext';
 import { isAdminEmail } from '@/utils/admin';
 import { calculateReputation } from '@/utils/reputation';
+import { EmailService } from '@/services/emailService';
+import HireModal from '@/components/community/HireModal';
 
 // --- ANIMATION VARIANTS ---
 const containerVar = {
@@ -49,10 +51,30 @@ const PremiumButton = ({ children, variant = 'primary', className, to }: any) =>
 const CommunityHome = () => {
   const [profiles, setProfiles] = useState<any[]>([]);
   const [resources, setResources] = useState<any[]>([]);
+  const [activeHireId, setActiveHireId] = useState<string | null>(null);
   const { user, userProfile } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
+      try {
+        // 1. Try fetching from public API (works for guests)
+        const emailService = new EmailService();
+        const apiData = await emailService.getPublicStats();
+
+        if (apiData && apiData.success) {
+           if (apiData.topProfiles && apiData.topProfiles.length > 0) setProfiles(apiData.topProfiles);
+           if (apiData.newResources && apiData.newResources.length > 0) setResources(apiData.newResources);
+           
+           // If we got both, we are good. If partial, maybe fallback?
+           // Usually API returns both or fails.
+           if (apiData.topProfiles?.length > 0 && apiData.newResources?.length > 0) return;
+        }
+      } catch (e) { console.error("API fetch failed, falling back to Firestore", e); }
+
+      // If user is not logged in, we rely on public API first.
+      // If API fails, we fallback to Firestore which allows public read.
+      
       try {
         // Fetch profiles
         const qp = query(collection(db, 'public_profiles'));
@@ -252,13 +274,27 @@ A curated AI community where engineers share automations, sell workflows, and co
                          </div>
 
                          {/* Action */}
-                         <div className="mt-auto w-full">
+                         <div className="mt-auto w-full flex flex-col gap-2">
                            <Link 
                              to={`/community/profile/${p.id}`}
-                             className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl bg-slate-900 text-white font-semibold transition-all duration-300 hover:bg-indigo-600 hover:shadow-lg hover:shadow-indigo-600/20 active:scale-95 group/btn"
+                             className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl bg-slate-900 text-white font-semibold transition-all duration-300 hover:bg-slate-800 hover:shadow-lg active:scale-95 group/btn"
                            >
-                             View Profile <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                             View Profile
                            </Link>
+                           {p.workingStatus === 'Open to Work' && (
+                             <button
+                               onClick={() => {
+                                 if (!user) {
+                                   navigate('/community/signup');
+                                   return;
+                                 }
+                                 setActiveHireId(p.id);
+                               }}
+                               className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl bg-emerald-600 text-white font-semibold transition-all duration-300 hover:bg-emerald-700 hover:shadow-lg active:scale-95"
+                             >
+                               Hire Me
+                             </button>
+                           )}
                          </div>
                        </div>
                     </div>
@@ -473,6 +509,22 @@ A curated AI community where engineers share automations, sell workflows, and co
         </section>
 
       </div>
+      {activeHireId && (() => {
+        const p = profiles.find(x => x.id === activeHireId);
+        if (!p) return null;
+        return (
+          <HireModal
+            open={!!activeHireId}
+            onClose={() => setActiveHireId(null)}
+            name={p.fullName}
+            photoURL={p.photoURL}
+            contactEmail={p.email} 
+            contactWebsite={p.websiteURL} 
+            availableFor={p.workingStatus === 'Open to Work' ? ['Freelance', 'Full-time', 'Consulting'] : ['Networking']}
+            recipientId={p.id}
+          />
+        );
+      })()}
     </CommunityLayout>
   );
 };
