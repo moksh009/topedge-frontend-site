@@ -1,23 +1,4 @@
-import { format } from 'date-fns';
 import axios, { AxiosError } from 'axios';
-import { 
-  getWelcomeEmailTemplate, 
-  getProfileReminderTemplate, 
-  getResourceUploadNudgeTemplate,
-  getCommunityUpdateTemplate 
-} from './emailTemplates';
-
-export interface Service {
-  id: string;
-  name: string;
-  price: string;
-  description: string;
-  monthlyFee?: string;
-  type: 'voice' | 'chatbot';
-  features: string[];
-  duration: string;
-  popular?: boolean;
-}
 
 export interface BookingDetails {
   name: string;
@@ -68,39 +49,6 @@ export class EmailService {
         ? 'http://localhost:3001'
         : 'https://topedge-backend.netlify.app';
     }
-  }
-
-  private formatDate(date: Date): string {
-    return format(date, 'MMMM do, yyyy');
-  }
-
-  private formatServices(services: Service[]): string {
-    return services.map(service => `
-      <div style="margin-bottom: 20px;">
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
-          <div>
-            <h5 style="margin: 0; color: #1F2937; font-size: 16px; font-weight: 600;">${service.name}</h5>
-            ${service.popular ? '<span style="display: inline-block; margin-left: 8px; padding: 2px 8px; background: linear-gradient(135deg, #4D07E3 0%, #7A0BC0 100%); color: white; border-radius: 12px; font-size: 12px;">Popular</span>' : ''}
-          </div>
-          <div style="text-align: right;">
-            <span style="color: #4D07E3; font-weight: 600;">$${service.price}</span>
-            ${service.monthlyFee ? `<br><span style="color: #6B7280; font-size: 14px;">+$${service.monthlyFee}/month</span>` : ''}
-          </div>
-        </div>
-        <p style="margin: 8px 0; color: #6B7280; font-size: 14px;">${service.description}</p>
-        <div style="margin-top: 12px;">
-          <p style="margin: 0 0 8px 0; color: #4B5563; font-size: 14px; font-weight: 500;">Key Features:</p>
-          <ul style="margin: 0; padding-left: 20px; color: #6B7280; font-size: 14px;">
-            ${service.features.slice(0, 3).map(feature => `<li style="margin-bottom: 4px;">${feature}</li>`).join('')}
-            ${service.features.length > 3 ? `<li style="color: #4D07E3;">+${service.features.length - 3} more features</li>` : ''}
-          </ul>
-        </div>
-        <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid #E5E7EB;">
-          <span style="color: #6B7280; font-size: 14px;">Duration: ${service.duration}</span>
-          <span style="color: #6B7280; font-size: 14px; margin-left: 16px;">Type: ${service.type === 'voice' ? 'AI Voice Agent' : 'Chatbot'}</span>
-        </div>
-      </div>
-    `).join('');
   }
 
   private getFallbackBaseURL(): string | null {
@@ -294,11 +242,9 @@ export class EmailService {
 
   public async sendWelcomeEmail(email: string, name: string): Promise<void> {
     try {
-      const html = getWelcomeEmailTemplate(name);
-      await this.sendEmail('user', '/api/send-automation-email', {
+      await this.sendEmail('user', '/api/send-welcome-email', {
         email,
-        subject: 'Welcome to TopEdge Community! 🚀',
-        html
+        name
       });
     } catch (error) {
       console.error('Error sending welcome email:', error);
@@ -308,11 +254,10 @@ export class EmailService {
 
   public async sendProfileReminderEmail(email: string, name: string, daysAgo: number): Promise<void> {
     try {
-      const html = getProfileReminderTemplate(name, daysAgo);
-      await this.sendEmail('user', '/api/send-automation-email', {
+      await this.sendEmail('user', '/api/send-profile-reminder', {
         email,
-        subject: 'Complete your TopEdge Profile ⚠️',
-        html
+        name,
+        daysAgo
       });
     } catch (error) {
       console.error('Error sending profile reminder email:', error);
@@ -321,11 +266,9 @@ export class EmailService {
 
   public async sendResourceNudgeEmail(email: string, name: string): Promise<void> {
     try {
-      const html = getResourceUploadNudgeTemplate(name);
-      await this.sendEmail('user', '/api/send-automation-email', {
+      await this.sendEmail('user', '/api/send-resource-nudge', {
         email,
-        subject: 'Start Earning with Your Resources 💰',
-        html
+        name
       });
     } catch (error) {
       console.error('Error sending resource nudge email:', error);
@@ -334,11 +277,12 @@ export class EmailService {
 
   public async sendCommunityUpdateEmail(email: string, title: string, content: string, ctaText: string, ctaLink: string): Promise<void> {
     try {
-      const html = getCommunityUpdateTemplate(title, content, ctaText, ctaLink);
-      await this.sendEmail('user', '/api/send-automation-email', {
+      await this.sendEmail('user', '/api/send-community-update', {
         email,
-        subject: title,
-        html
+        title,
+        content,
+        ctaText,
+        ctaLink
       });
     } catch (error) {
       console.error('Error sending community update email:', error);
