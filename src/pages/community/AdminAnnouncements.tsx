@@ -54,7 +54,7 @@ const AdminAnnouncements = () => {
           formData.title,
           formData.content,
           'View Announcement',
-          'https://topedge-community.netlify.app/community/announcements'
+          'https://topedgeai.com/community/announcements'
         );
       }
       

@@ -264,7 +264,7 @@ const SubmitResource = () => {
           `Resource Submitted: ${formData.title} 🚀`,
           `Your resource "${formData.title}" has been successfully submitted to TopEdge Community. It is now live for others to discover!`,
           'View Resource',
-          `https://topedge-community.netlify.app/community/resource/${resourceRef.id}`
+          `https://topedgeai.com/community/resource/${resourceRef.id}`
         );
       }
 

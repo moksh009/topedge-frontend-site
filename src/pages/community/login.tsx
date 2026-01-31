@@ -4,7 +4,7 @@ import CommunitySEO from '@/components/community/CommunitySEO';
 import { signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
 import { auth } from '@/services/firebase'; 
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Loader2, Mail, Lock, AlertCircle, ChevronRight, CheckCircle, Info, ShieldCheck } from 'lucide-react';
+import { ArrowLeft, Loader2, Mail, Lock, AlertCircle, ChevronRight, CheckCircle, Info, ShieldCheck, Eye, EyeOff } from 'lucide-react';
 
 interface FirebaseError {
   code: string;
@@ -14,6 +14,7 @@ interface FirebaseError {
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [resetMessage, setResetMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -231,13 +232,24 @@ const Login = () => {
                     <Lock className="w-5 h-5 text-gray-400 group-focus-within:text-gray-900 transition-colors" />
                   </div>
                   <input
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="block w-full pl-11 pr-4 py-4 bg-gray-50/50 border border-gray-200 text-gray-900 text-sm rounded-xl focus:bg-white focus:ring-4 focus:ring-gray-100 focus:border-gray-300 transition-all placeholder:text-gray-400 font-medium"
+                    className="block w-full pl-11 pr-12 py-4 bg-gray-50/50 border border-gray-200 text-gray-900 text-sm rounded-xl focus:bg-white focus:ring-4 focus:ring-gray-100 focus:border-gray-300 transition-all placeholder:text-gray-400 font-medium"
                     placeholder="••••••••"
                     required
                   />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-gray-600 focus:outline-none transition-colors"
+                  >
+                    {showPassword ? (
+                      <EyeOff className="w-5 h-5" />
+                    ) : (
+                      <Eye className="w-5 h-5" />
+                    )}
+                  </button>
                 </div>
               </motion.div>
 

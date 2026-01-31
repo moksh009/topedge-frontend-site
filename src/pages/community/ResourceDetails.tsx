@@ -292,7 +292,7 @@ const ResourceDetails = () => {
            `New Download: ${resource.title} 📥`,
            `Good news! ${user.displayName || userProfile?.fullName || 'A user'} just downloaded your resource "${resource.title}".`,
            'View Analytics',
-           `https://topedge-community.netlify.app/community/resource/${resource.id}`
+           `https://topedgeai.com/community/resource/${resource.id}`
          ).catch(console.error);
       }
 
