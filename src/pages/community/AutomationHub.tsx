@@ -414,6 +414,7 @@ const AutomationHub = () => {
 
   const handlePromoteProject = async () => {
     if (!user) {
+      localStorage.setItem('returnUrl', '/community/automation-hub');
       navigate('/community/login');
       return;
     }

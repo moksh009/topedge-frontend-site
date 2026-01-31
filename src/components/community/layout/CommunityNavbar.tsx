@@ -330,10 +330,18 @@ const CommunityNavbar = () => {
                 <>
                     {/* DESKTOP AUTH BUTTONS */}
                     <div className="hidden sm:flex items-center gap-2 mr-2">
-                        <Link to="/community/login" className="px-5 py-2.5 text-sm font-semibold text-slate-600 hover:text-slate-900 transition-colors">
+                        <Link 
+                            to="/community/login" 
+                            className="px-5 py-2.5 text-sm font-semibold text-slate-600 hover:text-slate-900 transition-colors"
+                            onClick={() => localStorage.setItem('returnUrl', location.pathname)}
+                        >
                             Log In
                         </Link>
-                        <Link to="/community/signup" className="px-5 py-2.5 bg-slate-900 text-white rounded-full text-sm font-semibold shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all">
+                        <Link 
+                            to="/community/signup" 
+                            className="px-5 py-2.5 bg-slate-900 text-white rounded-full text-sm font-semibold shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all"
+                            onClick={() => localStorage.setItem('returnUrl', location.pathname)}
+                        >
                             Join Free
                         </Link>
                     </div>
@@ -342,6 +350,7 @@ const CommunityNavbar = () => {
                     <Link 
                         to="/community/login" 
                         className="sm:hidden flex items-center justify-center w-9 h-9 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors mr-1"
+                        onClick={() => localStorage.setItem('returnUrl', location.pathname)}
                     >
                         <User className="w-4 h-4" />
                     </Link>
@@ -440,14 +449,20 @@ const CommunityNavbar = () => {
                       <div className="p-3 mt-auto border-t border-slate-100 shrink-0 grid grid-cols-2 gap-3">
                         <Link 
                           to="/community/login" 
-                          onClick={() => setIsOpen(false)}
+                          onClick={() => {
+                            setIsOpen(false);
+                            localStorage.setItem('returnUrl', location.pathname);
+                          }}
                           className="flex items-center justify-center w-full py-3.5 rounded-xl bg-white border border-slate-200 text-slate-700 font-bold text-sm hover:bg-slate-50 transition-colors"
                         >
                           Log In
                         </Link>
                         <Link 
                           to="/community/signup" 
-                          onClick={() => setIsOpen(false)}
+                          onClick={() => {
+                            setIsOpen(false);
+                            localStorage.setItem('returnUrl', location.pathname);
+                          }}
                           className="flex items-center justify-center w-full py-3.5 rounded-xl bg-slate-900 text-white font-bold text-sm shadow-md hover:bg-slate-800 transition-colors"
                         >
                           Join Free

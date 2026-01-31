@@ -346,6 +346,7 @@ const OpenSource = () => {
                                    onClick={(e) => {
                                      if (!user) {
                                        e.preventDefault();
+                                       localStorage.setItem('returnUrl', `/community/resource/${resource.id}`);
                                        navigate('/community/signup');
                                      }
                                    }}
@@ -372,6 +373,7 @@ const OpenSource = () => {
                                  </p>
                                  <Link 
                                      to="/community/signup"
+                                     onClick={() => localStorage.setItem('returnUrl', '/community/open-source')}
                                      className="px-8 py-4 bg-slate-900 text-white font-bold rounded-2xl hover:bg-slate-800 transition-all shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-indigo-500/20 hover:-translate-y-1 flex items-center gap-2"
                                  >
                                      Sign Up Now <ArrowRight className="w-4 h-4" />

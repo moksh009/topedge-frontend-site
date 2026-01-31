@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams, useLocation } from 'react-router-dom';
 import CommunityLayout from '@/components/community/layout/CommunityLayout';
 import CommunitySEO from '@/components/community/CommunitySEO';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -13,7 +13,7 @@ import toast from 'react-hot-toast';
 import ResourceReviews from '@/pages/community/ResourceReviews';
 import RelatedResources from '@/components/community/RelatedResources';
 import ResourceDiscussion from '@/pages/community/ResourceDiscussion';
-import { ArrowBigUp, ArrowLeft, ArrowRight, Box, CheckCircle2, Clock, Edit2, Loader2, PlayCircle, Share2, Sparkles, Trash2, Upload, User, X, Zap, ExternalLink } from 'lucide-react';
+import { ArrowBigUp, ArrowLeft, ArrowRight, Box, CheckCircle2, Clock, Edit2, Loader2, PlayCircle, Share2, Sparkles, Trash2, Upload, User, X, Zap, ExternalLink, Lock as LockIcon, AlertCircle } from 'lucide-react';
 
 // CLOUDINARY CONFIG
 const CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || "dn9gh1goq";
@@ -50,6 +50,7 @@ interface Resource {
 const ResourceDetails = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const location = useLocation();
   const [loading, setLoading] = useState(true);
   const [resource, setResource] = useState<Resource | null>(null);
   const { user, userProfile } = useAuth();
@@ -132,16 +133,43 @@ const ResourceDetails = () => {
   useEffect(() => {
     const fetchResource = async () => {
       if (!id) return;
+      
       try {
-        const docRef = doc(db, 'community_resources', id);
-        const docSnap = await getDoc(docRef);
-        
-        if (docSnap.exists()) {
-          const data = docSnap.data();
-          setResource({ ...data, id: docSnap.id } as Resource);
-          setUpvoteCount((data as any).upvotes || 0);
-          setIsUpvoted(((data as any).upvotedBy || []).includes(user?.uid));
+        let resourceData: Resource | null = null;
+
+        // 1. Try Firestore (Client SDK)
+        try {
+            const docRef = doc(db, 'community_resources', id);
+            const docSnap = await getDoc(docRef);
+            
+            if (docSnap.exists()) {
+              resourceData = { ...docSnap.data(), id: docSnap.id } as Resource;
+            }
+        } catch (e) {
+            console.warn('Firestore client fetch failed, trying API fallback...', e);
+        }
+
+        // 2. Try API (Server SDK) if Firestore failed or returned nothing
+        if (!resourceData) {
+            try {
+                const baseUrl = import.meta.env.VITE_EMAIL_API_BASE_URL || 
+                    (window.location.hostname === 'localhost' ? 'http://localhost:3001' : 'https://topedge-backend.netlify.app');
+                
+                const response = await fetch(`${baseUrl}/api/public-resource/${id}`);
+                if (response.ok) {
+                    resourceData = await response.json() as Resource;
+                }
+            } catch (e) {
+                console.error('API fallback fetch failed', e);
+            }
+        }
+
+        if (resourceData) {
+          setResource(resourceData);
+          setUpvoteCount((resourceData as any).upvotes || 0);
+          setIsUpvoted(((resourceData as any).upvotedBy || []).includes(user?.uid));
           
+          const data = resourceData;
           setEditForm({
             title: data.title || '',
             description: data.description || '',
@@ -167,8 +195,7 @@ const ResourceDetails = () => {
             setVideoSourceType('link');
           }
         } else {
-          toast.error("Resource not found");
-          navigate('/community/automation-hub');
+           // Resource not found - UI handles this
         }
       } catch (error) {
         console.error(error);
@@ -1018,7 +1045,102 @@ const ResourceDetails = () => {
   );
 
   if (loading) return <div className="min-h-screen flex items-center justify-center"><Loader2 className="animate-spin" /></div>;
-  if (!resource) return null;
+  if (!resource) {
+    return (
+      <CommunityLayout>
+        <div className="min-h-[60vh] flex flex-col items-center justify-center text-center px-4">
+          <div className="bg-slate-50 p-6 rounded-2xl border border-slate-200 mb-4">
+            <AlertCircle className="w-10 h-10 text-slate-400 mx-auto mb-3" />
+            <h2 className="text-xl font-bold text-slate-900 mb-2">Resource Not Found</h2>
+            <p className="text-slate-500 mb-6 max-w-md">
+              The resource you are looking for might have been removed or is temporarily unavailable.
+            </p>
+            <div className="flex gap-3 justify-center">
+              <Link to="/community/automation-hub" className="px-5 py-2.5 bg-slate-900 text-white font-bold rounded-xl text-sm">
+                Browse Resources
+              </Link>
+              <button onClick={() => window.location.reload()} className="px-5 py-2.5 bg-white border border-slate-200 text-slate-700 font-bold rounded-xl text-sm hover:bg-slate-50">
+                Retry
+              </button>
+            </div>
+            <p className="text-xs text-slate-300 mt-6 font-mono">ID: {id}</p>
+          </div>
+        </div>
+      </CommunityLayout>
+    );
+  }
+
+  if (!user) {
+    return (
+      <CommunityLayout>
+        <CommunitySEO 
+          title={`${resource.title} - ${resource.category} | TopEdge AI`}
+          description={resource.description}
+          url={`/community/resource/${id}`}
+          type="article"
+          author={resource.userName}
+        />
+        <div className="min-h-screen bg-[#FAFAFA] flex flex-col items-center justify-center p-4 relative overflow-hidden">
+            {/* Background Decoration */}
+            <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+                <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-indigo-50/50 rounded-full blur-[100px]" />
+                <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-blue-50/50 rounded-full blur-[100px]" />
+            </div>
+
+            <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="relative w-full max-w-2xl bg-white rounded-[2rem] shadow-xl border border-slate-100 p-8 md:p-12 text-center"
+            >
+                <div className="mb-8">
+                    <span className="inline-block px-3 py-1 bg-slate-100 text-slate-600 text-xs font-bold uppercase tracking-wider rounded-full mb-4">
+                        {resource.category}
+                    </span>
+                    <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4 tracking-tight">
+                        {resource.title}
+                    </h1>
+                    <p className="text-slate-500 text-lg leading-relaxed max-w-lg mx-auto line-clamp-3">
+                        {resource.description}
+                    </p>
+                </div>
+
+                <div className="bg-slate-50 rounded-2xl p-8 border border-slate-200/60">
+                    <div className="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center mx-auto mb-6">
+                        <LockIcon className="w-8 h-8 text-indigo-600" />
+                    </div>
+                    <h2 className="text-xl font-bold text-slate-900 mb-2">
+                        Sign up to view this resource
+                    </h2>
+                    <p className="text-slate-500 mb-8 max-w-sm mx-auto">
+                        Join our community of innovators to access this resource, download files, and connect with the creator.
+                    </p>
+                    
+                    <div className="flex flex-col gap-3 max-w-xs mx-auto">
+                        <button 
+                            onClick={() => {
+                                localStorage.setItem('returnUrl', location.pathname);
+                                navigate('/community/signup');
+                            }}
+                            className="w-full py-3.5 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl shadow-lg shadow-slate-900/20 transition-all active:scale-[0.98]"
+                        >
+                            Sign Up Free
+                        </button>
+                        <button 
+                            onClick={() => {
+                                localStorage.setItem('returnUrl', location.pathname);
+                                navigate('/community/login');
+                            }}
+                            className="w-full py-3.5 bg-white border border-slate-200 text-slate-700 font-bold rounded-xl hover:bg-slate-50 transition-all active:scale-[0.98]"
+                        >
+                            Log In
+                        </button>
+                    </div>
+                </div>
+            </motion.div>
+        </div>
+      </CommunityLayout>
+    );
+  }
 
   return (
     <CommunityLayout>

@@ -95,6 +95,7 @@ export default function RequestBoard() {
   // Handle "Post Request" Click (Profile Check)
   const handlePostClick = async () => {
     if (!user) {
+      localStorage.setItem('returnUrl', '/community/request-board');
       navigate('/community/login');
       return;
     }
@@ -455,6 +456,7 @@ export default function RequestBoard() {
                            <button
                               onClick={() => {
                                 if (!user) {
+                                  localStorage.setItem('returnUrl', '/community/request-board');
                                   navigate('/community/signup');
                                   return;
                                 }
@@ -488,6 +490,7 @@ export default function RequestBoard() {
                        </p>
                        <Link 
                            to="/community/signup"
+                           onClick={() => localStorage.setItem('returnUrl', '/community/request-board')}
                            className="px-8 py-4 bg-slate-900 text-white font-bold rounded-2xl hover:bg-slate-800 transition-all shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-indigo-500/20 hover:-translate-y-1 flex items-center gap-2"
                        >
                            Sign Up Now <ArrowRight className="w-4 h-4" />
