@@ -112,6 +112,11 @@ const Signup = () => {
         isVerified: true,
       });
 
+      // Send Welcome Email
+      if (user.email) {
+        await emailService.sendWelcomeEmail(user.email, pendingName || name);
+      }
+
       navigate('/community/promote-profile');
     } catch (err: any) {
       console.error(err);

@@ -345,6 +345,41 @@ export class EmailService {
     }
   }
 
+  public async sendResourceBroadcast(resourceId: string, title: string, authorName: string): Promise<void> {
+    try {
+      console.log('Sending resource broadcast:', { resourceId, title, authorName });
+      await axios.post(`${this.baseURL}/api/send-resource-notification`, {
+        resourceId,
+        title,
+        authorName,
+        secret: 'topedge-secret-key-change-in-prod' // Hardcoded for now matching backend
+      });
+      console.log('Resource broadcast sent successfully');
+    } catch (error) {
+      console.error('Error sending resource broadcast:', error);
+      // Non-blocking
+    }
+  }
+
+  public async sendRequestBroadcast(requestId: string, title: string, requesterName: string, budget: string, description: string): Promise<void> {
+    try {
+      console.log('Sending request broadcast:', { requestId, title, requesterName });
+      await axios.post(`${this.baseURL}/api/send-request-notification`, {
+        requestId,
+        title,
+        requesterName,
+        budget,
+        description,
+        secret: 'topedge-secret-key-change-in-prod' // Hardcoded for now matching backend
+      });
+      console.log('Request broadcast sent successfully');
+    } catch (error) {
+      console.error('Error sending request broadcast:', error);
+      // Non-blocking
+    }
+  }
+
+
   public async sendOtp(email: string): Promise<{ hash: string; email: string }> {
     try {
       console.log('Requesting OTP for:', email);

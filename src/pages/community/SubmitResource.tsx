@@ -268,6 +268,14 @@ const SubmitResource = () => {
         );
       }
 
+      // Trigger broadcast to all community members
+      // Using fire-and-forget pattern so the user doesn't wait for the broadcast trigger
+      emailService.sendResourceBroadcast(
+        resourceRef.id,
+        formData.title,
+        userProfile.fullName || 'A Community Member'
+      ).catch(err => console.error("Background broadcast trigger failed:", err));
+
       toast.success("Resource launched successfully!");
       navigate('/community/automation-hub');
     } catch (error: any) { 

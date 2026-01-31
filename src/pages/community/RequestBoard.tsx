@@ -10,6 +10,7 @@ import { Sparkles, DollarSign, AlarmClock, X, Plus, Search, ThumbsUp, ArrowUpRig
 import toast from 'react-hot-toast';
 import { useNavigate, Link } from 'react-router-dom';
 import { isAdminEmail } from '@/utils/admin';
+import { emailService } from '@/services/emailService';
 
 type RequestItem = {
   id: string;
@@ -153,7 +154,7 @@ export default function RequestBoard() {
           toast.success("Request updated!");
       } else {
           // Create New
-          await addDoc(collection(db, 'community_requests'), {
+          const docRef = await addDoc(collection(db, 'community_requests'), {
             ...data,
             upvotes: 0,
             createdAt: serverTimestamp(),
@@ -161,6 +162,16 @@ export default function RequestBoard() {
             requesterName: userProfile?.fullName || 'Anonymous',
             requesterPhoto: userProfile?.photoURL || ''
           });
+
+          // Send Broadcast Notification (Fire & Forget)
+          emailService.sendRequestBroadcast(
+            docRef.id,
+            data.title,
+            userProfile?.fullName || 'Community Member',
+            data.budget,
+            data.description
+          );
+
           toast.success("Request posted successfully!");
       }
       
