@@ -422,7 +422,7 @@ const SubmitResource = () => {
                      </div>
 
                      <div className="space-y-2">
-                        <label className="text-sm font-bold text-slate-700">Cover Image (optional)</label>
+                        <label className="text-sm font-bold text-slate-700">Cover Image <span className="text-slate-400 font-normal">(Recommended: 1280x720px)</span></label>
                         <div className="p-5 md:p-6 border-2 border-dashed border-slate-200 rounded-2xl bg-slate-50 flex flex-col items-center justify-center text-center transition-all hover:border-purple-300 group cursor-pointer">
                           {formData.imageUrl ? (
                             <div className="w-full relative">
