@@ -73,50 +73,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
 
     // 2. Profile Completion Reminder
-    if (!isProfileComplete) {
-      const reminderCount = profile.profileReminderSentCount || 0;
-      
-      // Reminder 1: 1 day after join
-      if (daysSinceJoined >= 1 && reminderCount === 0) {
-        await emailService.sendProfileReminderEmail(email, profile.fullName || 'User', Math.floor(daysSinceJoined));
-        updates.profileReminderSentCount = 1;
-        updates.lastProfileReminderSentAt = serverTimestamp();
-        needsUpdate = true;
-      }
-      // Reminder 2: 3-4 days after join (so >= 3 days)
-      else if (daysSinceJoined >= 3 && reminderCount === 1) {
-         await emailService.sendProfileReminderEmail(email, profile.fullName || 'User', Math.floor(daysSinceJoined));
-         updates.profileReminderSentCount = 2;
-         updates.lastProfileReminderSentAt = serverTimestamp();
-         needsUpdate = true;
-      }
-    }
+    // Handled by server-side scheduled function (netlify/functions/scheduled-email-automation.js)
+    // to ensure reliable delivery even if user doesn't log in.
 
     // 3. Resource Nudge (Only if profile is complete)
-    if (isProfileComplete) {
-       const nudgeCount = profile.resourceNudgeSentCount || 0;
-       const lastNudge = profile.lastResourceNudgeSentAt && typeof profile.lastResourceNudgeSentAt.toDate === 'function'
-          ? profile.lastResourceNudgeSentAt.toDate() 
-          : null;
-       
-       // Send first nudge immediately upon completion detection (if not sent)
-       if (nudgeCount === 0) {
-          await emailService.sendResourceNudgeEmail(email, profile.fullName || 'User');
-          updates.resourceNudgeSentCount = 1;
-          updates.lastResourceNudgeSentAt = serverTimestamp();
-          needsUpdate = true;
-       }
-       // Send second nudge after 2 days from first nudge
-       else if (nudgeCount === 1 && lastNudge) {
-          const daysSinceLastNudge = (now.getTime() - lastNudge.getTime()) / (1000 * 3600 * 24);
-          if (daysSinceLastNudge >= 2) {
-              await emailService.sendResourceNudgeEmail(email, profile.fullName || 'User');
-              updates.resourceNudgeSentCount = 2;
-              updates.lastResourceNudgeSentAt = serverTimestamp();
-              needsUpdate = true;
-          }
-       }
-    }
+    // Handled by server-side scheduled function.
 
     if (needsUpdate) {
        try {
