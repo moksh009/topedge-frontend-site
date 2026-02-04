@@ -6,6 +6,7 @@ import { Trophy, User } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useAuth } from '@/contexts/AuthContext';
 import { EmailService } from '@/services/emailService';
+import { Link } from 'react-router-dom';
 
 interface Profile {
   id: string;
@@ -120,27 +121,29 @@ export default function TopBuilders() {
               ? 'ring-2 ring-blue-300'
               : 'ring-2 ring-slate-200';
           return (
-            <motion.div
-              key={t.profile.id}
-              className="bg-white rounded-2xl border border-slate-200 p-4 text-center cursor-pointer"
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1], delay: i * 0.06 }}
-              whileHover={{ y: -4, scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <div className={`w-16 h-16 rounded-full mx-auto mb-2 overflow-hidden ${ring}`}>
-                {t.profile.photoURL ? (
-                  <img src={t.profile.photoURL} className="w-full h-full object-cover" />
-                ) : (
-                  <div className="w-full h-full bg-slate-100 flex items-center justify-center">
-                    <User className="w-6 h-6 text-slate-400" />
-                  </div>
-                )}
-              </div>
-              <div className="text-sm font-bold text-slate-900 line-clamp-1">{t.profile.fullName}</div>
-              <div className="text-[10px] text-slate-500">{t.tier} • {t.score} pts</div>
-            </motion.div>
+            <Link to={`/community/profile/${t.profile.id}`} className="block">
+              <motion.div
+                key={t.profile.id}
+                className="bg-white rounded-2xl border border-slate-200 p-4 text-center cursor-pointer"
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1], delay: i * 0.06 }}
+                whileHover={{ y: -4, scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <div className={`w-16 h-16 rounded-full mx-auto mb-2 overflow-hidden ${ring}`}>
+                  {t.profile.photoURL ? (
+                    <img src={t.profile.photoURL} className="w-full h-full object-cover" />
+                  ) : (
+                    <div className="w-full h-full bg-slate-100 flex items-center justify-center">
+                      <User className="w-6 h-6 text-slate-400" />
+                    </div>
+                  )}
+                </div>
+                <div className="text-sm font-bold text-slate-900 line-clamp-1">{t.profile.fullName}</div>
+                <div className="text-[10px] text-slate-500">{t.tier} • {t.score} pts</div>
+              </motion.div>
+            </Link>
           );
         })}
       </div>

@@ -13,7 +13,7 @@ import toast from 'react-hot-toast';
 import ResourceReviews from '@/pages/community/ResourceReviews';
 import RelatedResources from '@/components/community/RelatedResources';
 import ResourceDiscussion from '@/pages/community/ResourceDiscussion';
-import { ArrowBigUp, ArrowLeft, ArrowRight, Box, CheckCircle2, Clock, Edit2, Loader2, PlayCircle, Share2, Sparkles, Trash2, Upload, User, X, Zap, ExternalLink, Lock as LockIcon, AlertCircle } from 'lucide-react';
+import { ArrowBigUp, ArrowLeft, ArrowRight, Box, CheckCircle2, Clock, Edit2, Loader2, PlayCircle, Share2, Sparkles, Trash2, Upload, User, X, Zap, ExternalLink, Lock as LockIcon, AlertCircle, MessageCircle } from 'lucide-react';
 
 // CLOUDINARY CONFIG
 const CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || "dn9gh1goq";
@@ -365,6 +365,32 @@ const ResourceDetails = () => {
         }
       }
     } catch (e) { console.error(e); }
+  };
+
+  const ensureUpvoteOnOpen = async () => {
+    try {
+      if (!resource || !user) return;
+      if (user.uid === resource.userId) return;
+      if (isUpvoted) return;
+      const ref = doc(db, 'community_resources', resource.id);
+      await updateDoc(ref, { upvotes: increment(1), upvotedBy: arrayUnion(user.uid) });
+      setUpvoteCount(c => c + 1);
+      setIsUpvoted(true);
+      try {
+        await addDoc(collection(db, 'notifications'), {
+          recipientId: resource.userId,
+          senderId: user.uid,
+          senderName: user.displayName || user.email || 'User',
+          type: 'upvote',
+          resourceId: resource.id,
+          resourceTitle: resource.title,
+          read: false,
+          createdAt: serverTimestamp()
+        });
+      } catch {}
+    } catch (e) {
+      console.error('Auto-upvote on open failed:', e);
+    }
   };
 
   const handleVideoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -943,9 +969,7 @@ const ResourceDetails = () => {
 
     return (
     <motion.div 
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        initial={false}
         className="bg-white rounded-[1.25rem] p-5 border border-slate-200 shadow-xl shadow-slate-200/50"
     >
         <div className="flex items-end justify-between mb-4 pb-4 border-b border-slate-50">
@@ -978,7 +1002,7 @@ const ResourceDetails = () => {
                 href={combinedUrl} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                onClick={handleLinkClick}
+                onClick={() => { handleLinkClick(); ensureUpvoteOnOpen(); }}
                 className="flex items-center justify-center gap-2 w-full py-3 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl transition-all shadow-lg shadow-slate-900/20 mb-2 group text-sm active:scale-[0.98]"
               >
                 Open Resource <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -1009,7 +1033,7 @@ const ResourceDetails = () => {
                 href={combinedUrl} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                onClick={handleLinkClick}
+                onClick={() => { handleLinkClick(); ensureUpvoteOnOpen(); }}
                 className="flex items-center justify-center gap-2 w-full py-3 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl transition-all shadow-lg shadow-slate-900/20 mb-2 group text-sm active:scale-[0.98]"
             >
                 Open Resource <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -1021,6 +1045,19 @@ const ResourceDetails = () => {
           )
         }
         {accessNote()}
+        <div className="mt-4 text-center">
+          <p className="text-sm font-bold text-slate-700 mb-2">Need guidance?</p>
+          <a
+            href="https://discord.gg/cvRnZTjZ8r"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-2 w-full py-3 bg-[#5865F2] hover:bg-[#4752C4] text-white font-bold rounded-xl transition-all shadow-lg shadow-[#5865F2]/25 mb-2 group text-sm active:scale-[0.98]"
+          >
+            <MessageCircle className="w-4 h-4" />
+            <span>Join Discord</span>
+            <ArrowRight className="w-4 h-4 opacity-60 group-hover:translate-x-1 group-hover:opacity-100 transition-all" />
+          </a>
+        </div>
     </motion.div>
     );
   };
