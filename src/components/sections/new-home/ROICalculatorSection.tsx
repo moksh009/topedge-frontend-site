@@ -1,295 +1,370 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Bar } from 'react-chartjs-2';
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { Line } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
-  BarElement,
+  PointElement,
+  LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  Filler
 } from 'chart.js';
-import { Calculator, TrendingUp, DollarSign, PieChart, ArrowUpRight } from 'lucide-react';
+import { 
+  Calculator, TrendingUp, DollarSign, Users, 
+  Clock, Zap, ArrowRight, BarChart3, RefreshCcw 
+} from 'lucide-react';
 
 ChartJS.register(
   CategoryScale,
   LinearScale,
-  BarElement,
+  PointElement,
+  LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  Filler
 );
 
 const ROICalculatorSection = () => {
-  const [formData, setFormData] = useState({
-    businessName: '',
-    ticketCount: '1000',
-    aov: '500',
-    closeRate: '15'
+  // Input State
+  const [inputs, setInputs] = useState({
+    monthlyVisitors: 5000,
+    leadsGenerated: 200,
+    avgDealValue: 1000,
+    closeRate: 10,
+    qualificationRate: 30 // Slider for AI efficiency
   });
+
+  // Output State
   const [results, setResults] = useState<any>(null);
 
-  const calculateROI = () => {
-    // Base calculations
-    const totalLeads = parseInt(formData.ticketCount) || 0;
-    const extraLeads = Math.round(totalLeads * 0.28); // 28% increase
-    const newTotalLeads = totalLeads + extraLeads;
+  // Real-time Calculation Effect
+  useEffect(() => {
+    calculateMetrics();
+  }, [inputs]);
+
+  const calculateMetrics = () => {
+    // 1. Current State
+    const currentRevenue = inputs.leadsGenerated * (inputs.closeRate / 100) * inputs.avgDealValue;
     
-    const currentCloseRate = parseInt(formData.closeRate) || 0;
+    // 2. AI Impact Assumptions
+    // TopEdge increases lead capture by engaging 24/7 (Conservative +40%)
+    const aiLeads = Math.round(inputs.leadsGenerated * 1.4); 
     
-    // Calculate customers
-    const currentCustomers = Math.round(totalLeads * (currentCloseRate / 100));
-    const newCustomersFromGainOnly = Math.round(extraLeads * (currentCloseRate / 100));
-    const totalCustomers = currentCustomers + newCustomersFromGainOnly;
+    // AI pre-qualifies, so close rate on qualified leads usually goes up (+20% efficiency)
+    const aiCloseRate = inputs.closeRate * 1.2; 
     
-    // Calculate revenue
-    const aov = parseInt(formData.aov) || 0;
-    const currentRevenue = Math.round(currentCustomers * aov);
-    const newRevenue = Math.round(totalCustomers * aov);
-    const revenueGain = newRevenue - currentRevenue;
-    const annualGain = revenueGain * 12;
+    // AI Revenue
+    const aiRevenue = aiLeads * (aiCloseRate / 100) * inputs.avgDealValue;
+    
+    // 3. Operational Savings (Assume 15 mins saved per lead via auto-qualification)
+    const hoursSaved = Math.round((aiLeads * 15) / 60); 
+    const operationalSavings = hoursSaved * 50; // Assume $50/hr blended cost for sales rep
+
+    // 4. Totals
+    const monthlyGain = (aiRevenue - currentRevenue) + operationalSavings;
+    const annualGain = monthlyGain * 12;
 
     setResults({
       currentRevenue,
-      newRevenue,
-      revenueGain,
+      aiRevenue,
+      monthlyGain,
       annualGain,
-      totalLeads,
-      newTotalLeads,
-      extraLeads
+      aiLeads,
+      hoursSaved,
+      operationalSavings
     });
   };
 
-  const chartData = results ? {
-    labels: ['Current Monthly', 'Projected Monthly'],
+  // Chart Data Generation (12 Month Projection)
+  const chartData = {
+    labels: ['Month 1', 'Month 3', 'Month 6', 'Month 9', 'Month 12'],
     datasets: [
       {
-        label: 'Revenue ($)',
-        data: [results.currentRevenue, results.newRevenue],
-        backgroundColor: ['rgba(156, 163, 175, 0.5)', 'rgba(0, 113, 227, 0.8)'],
-        borderColor: ['rgba(156, 163, 175, 1)', 'rgba(0, 113, 227, 1)'],
-        borderWidth: 1,
-        borderRadius: 8,
+        label: 'With TopEdge AI',
+        data: results ? [
+          results.aiRevenue, 
+          results.aiRevenue * 3, 
+          results.aiRevenue * 6, 
+          results.aiRevenue * 9, 
+          results.aiRevenue * 12
+        ] : [],
+        borderColor: '#6366f1', // Indigo 500
+        backgroundColor: (context: any) => {
+          const ctx = context.chart.ctx;
+          const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+          gradient.addColorStop(0, 'rgba(99, 102, 241, 0.5)');
+          gradient.addColorStop(1, 'rgba(99, 102, 241, 0)');
+          return gradient;
+        },
+        fill: true,
+        tension: 0.4,
+        pointRadius: 4,
+        pointBackgroundColor: '#fff',
+        pointBorderColor: '#6366f1',
+        pointBorderWidth: 2,
+      },
+      {
+        label: 'Current Trajectory',
+        data: results ? [
+          results.currentRevenue, 
+          results.currentRevenue * 3, 
+          results.currentRevenue * 6, 
+          results.currentRevenue * 9, 
+          results.currentRevenue * 12
+        ] : [],
+        borderColor: '#94a3b8', // Slate 400
+        borderDash: [5, 5],
+        borderWidth: 2,
+        pointRadius: 0,
+        fill: false,
+        tension: 0.4
       }
     ]
-  } : null;
+  };
 
   const chartOptions = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-      legend: { display: false },
-      title: { display: false },
+      legend: { 
+        position: 'top' as const, 
+        align: 'end' as const,
+        labels: { color: '#94a3b8', font: { family: "'Inter', sans-serif", size: 11 }, usePointStyle: true, boxWidth: 6 } 
+      },
       tooltip: {
-        backgroundColor: 'rgba(255, 255, 255, 0.9)',
-        titleColor: '#1d1d1f',
-        bodyColor: '#1d1d1f',
-        borderColor: '#e5e7eb',
+        backgroundColor: 'rgba(15, 23, 42, 0.9)',
+        padding: 12,
+        titleColor: '#fff',
+        bodyColor: '#cbd5e1',
+        borderColor: 'rgba(255,255,255,0.1)',
         borderWidth: 1,
-        padding: 10,
-        displayColors: false,
         callbacks: {
-            label: function(context: any) {
-                let label = context.dataset.label || '';
-                if (label) {
-                    label += ': ';
-                }
-                if (context.parsed.y !== null) {
-                    label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(context.parsed.y);
-                }
-                return label;
-            }
+          label: (context: any) => ` ${context.dataset.label}: $${(context.parsed.y).toLocaleString()}`
         }
       }
     },
     scales: {
       y: {
-        beginAtZero: true,
-        grid: { color: 'rgba(0,0,0,0.05)' },
-        ticks: {
-            font: { family: "'Inter', sans-serif" },
-            callback: function(value: any) {
-                return '$' + value / 1000 + 'k';
-            }
-        }
+        grid: { color: 'rgba(255,255,255,0.05)' },
+        ticks: { color: '#64748b', callback: (value: any) => '$' + value / 1000 + 'k' },
+        border: { display: false }
       },
       x: {
         grid: { display: false },
-        ticks: { font: { family: "'Inter', sans-serif" } }
+        ticks: { color: '#64748b' },
+        border: { display: false }
       }
-    }
+    },
+    interaction: {
+      mode: 'index' as const,
+      intersect: false,
+    },
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, field: string) => {
+    setInputs(prev => ({ ...prev, [field]: parseInt(e.target.value) || 0 }));
   };
 
   return (
-    <section className="py-32 bg-white relative overflow-hidden">
-      {/* Background Gradients */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-50/50 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-green-50/50 rounded-full blur-[120px] pointer-events-none" />
+    <section className="py-24 md:py-32 bg-slate-950 relative overflow-hidden">
+      
+      {/* Background Ambience */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl pointer-events-none">
+         <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-indigo-500/10 rounded-full blur-[120px]" />
+         <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[120px]" />
+      </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
+        {/* Header */}
         <div className="text-center mb-16">
           <motion.div 
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-blue-600 text-xs font-semibold uppercase tracking-wide mb-6 shadow-sm"
+            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-indigo-400 text-xs font-semibold uppercase tracking-wide mb-6 shadow-sm"
           >
-            <TrendingUp className="w-3 h-3" />
-            Growth Calculator
+            <Calculator className="w-3 h-3" />
+            ROI Engine
           </motion.div>
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-semibold text-[#1d1d1f] mb-6 tracking-tight"
+            className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 tracking-tight"
           >
             Calculate Your <br/>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">AI Potential</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400">
+              AI Growth Potential
+            </span>
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="text-xl text-[#86868b] max-w-2xl mx-auto leading-relaxed"
+            transition={{ delay: 0.1 }}
+            className="text-lg text-slate-400 max-w-2xl mx-auto"
           >
-            See how TopEdge AI can impact your bottom line with a 28% increase in lead engagement.
+            Adjust the sliders below to see how TopEdge AI can impact your revenue, lead volume, and operational efficiency.
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          {/* Calculator Inputs */}
-          <motion.div 
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="lg:col-span-5 bg-white rounded-[2.5rem] p-8 shadow-2xl shadow-blue-900/5 border border-gray-100 relative overflow-hidden group"
-          >
-             {/* Subtle Glow */}
-             <div className="absolute -top-20 -right-20 w-40 h-40 bg-blue-50 rounded-full blur-3xl opacity-50 group-hover:opacity-100 transition-opacity" />
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+          
+          {/* LEFT: INPUT CONSOLE */}
+          <div className="lg:col-span-4 space-y-6">
+             <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-xl relative overflow-hidden">
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 to-cyan-500" />
+                <h3 className="text-white font-bold text-lg mb-6 flex items-center gap-2">
+                   <Zap className="w-5 h-5 text-indigo-400" />
+                   Your Metrics
+                </h3>
 
-            <div className="relative z-10 space-y-6">
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2 ml-1">Monthly Inquiries</label>
-                <div className="relative">
-                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                     <PieChart className="h-5 w-5 text-gray-400" />
-                   </div>
-                   <input
-                    type="number"
-                    value={formData.ticketCount}
-                    onChange={(e) => setFormData({...formData, ticketCount: e.target.value})}
-                    className="w-full pl-11 pr-4 py-4 rounded-xl bg-[#F5F5F7] border border-transparent focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 text-[#1d1d1f] transition-all outline-none font-medium"
-                    placeholder="e.g. 1000"
-                  />
-                </div>
-              </div>
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2 ml-1">Average Order Value ($)</label>
-                 <div className="relative">
-                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                     <DollarSign className="h-5 w-5 text-gray-400" />
-                   </div>
-                  <input
-                    type="number"
-                    value={formData.aov}
-                    onChange={(e) => setFormData({...formData, aov: e.target.value})}
-                    className="w-full pl-11 pr-4 py-4 rounded-xl bg-[#F5F5F7] border border-transparent focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 text-[#1d1d1f] transition-all outline-none font-medium"
-                    placeholder="e.g. 500"
-                  />
-                </div>
-              </div>
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2 ml-1">Close Rate (%)</label>
-                 <div className="relative">
-                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                     <TrendingUp className="h-5 w-5 text-gray-400" />
-                   </div>
-                  <input
-                    type="number"
-                    value={formData.closeRate}
-                    onChange={(e) => setFormData({...formData, closeRate: e.target.value})}
-                    className="w-full pl-11 pr-4 py-4 rounded-xl bg-[#F5F5F7] border border-transparent focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 text-[#1d1d1f] transition-all outline-none font-medium"
-                    placeholder="e.g. 15"
-                  />
-                </div>
-              </div>
-              
-              <button
-                onClick={calculateROI}
-                className="w-full py-4 bg-[#0071e3] hover:bg-[#0077ED] text-white rounded-xl font-semibold text-lg transition-all shadow-lg hover:shadow-blue-500/25 hover:-translate-y-0.5 flex items-center justify-center gap-2 mt-4"
-              >
-                <Calculator className="w-5 h-5" />
-                Calculate Impact
-              </button>
-            </div>
-          </motion.div>
-
-          {/* Results Display */}
-          <motion.div 
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="lg:col-span-7 space-y-6"
-          >
-            <AnimatePresence mode="wait">
-              {results ? (
-                <motion.div
-                  key="results"
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.4, type: "spring" }}
-                  className="bg-white rounded-[2.5rem] p-8 shadow-2xl shadow-blue-900/5 border border-gray-100 h-full flex flex-col"
-                >
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
-                    <div className="p-6 rounded-2xl bg-[#F5F5F7] border border-gray-100 group hover:border-blue-100 transition-colors">
-                      <p className="text-sm text-gray-500 mb-2 font-medium">Projected Monthly Revenue</p>
-                      <p className="text-3xl font-bold text-[#1d1d1f] tracking-tight">
-                        ${new Intl.NumberFormat('en-US').format(results.newRevenue)}
-                      </p>
-                      <div className="flex items-center gap-1 mt-3 text-green-600 text-sm font-semibold bg-green-50 inline-block px-2 py-1 rounded-md border border-green-100">
-                        <TrendingUp className="w-3.5 h-3.5" />
-                        <span>+${new Intl.NumberFormat('en-US').format(results.revenueGain)} increase</span>
+                <div className="space-y-8">
+                   {/* Monthly Leads */}
+                   <div className="space-y-3">
+                      <div className="flex justify-between items-center text-sm">
+                         <label className="text-slate-400 font-medium">Monthly Leads</label>
+                         <span className="text-white font-mono bg-slate-800 px-2 py-1 rounded border border-slate-700">{inputs.leadsGenerated}</span>
                       </div>
-                    </div>
-                    <div className="p-6 rounded-2xl bg-blue-50 border border-blue-100 group hover:border-blue-200 transition-colors">
-                      <p className="text-sm text-blue-600 mb-2 font-medium">Projected Annual Gain</p>
-                      <p className="text-3xl font-bold text-[#0071e3] tracking-tight">
-                        +${new Intl.NumberFormat('en-US').format(results.annualGain)}
-                      </p>
-                      <p className="text-xs text-blue-400 mt-3 font-medium flex items-center gap-1">
-                        <ArrowUpRight className="w-3 h-3" />
-                        Based on 28% efficiency boost
-                      </p>
-                    </div>
-                  </div>
+                      <input 
+                         type="range" min="50" max="5000" step="50"
+                         value={inputs.leadsGenerated}
+                         onChange={(e) => handleInputChange(e, 'leadsGenerated')}
+                         className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-500"
+                      />
+                   </div>
 
-                  <div className="flex-1 min-h-[300px] w-full bg-white rounded-2xl p-4 border border-gray-50">
-                    <Bar data={chartData!} options={chartOptions} />
-                  </div>
-                </motion.div>
-              ) : (
-                <motion.div
-                  key="empty"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }} 
-                  className="h-full min-h-[500px] flex flex-col items-center justify-center bg-white rounded-[2.5rem] border border-gray-200 border-dashed text-center p-8"
+                   {/* Average Deal Value */}
+                   <div className="space-y-3">
+                      <div className="flex justify-between items-center text-sm">
+                         <label className="text-slate-400 font-medium">Avg. Deal Value</label>
+                         <span className="text-white font-mono bg-slate-800 px-2 py-1 rounded border border-slate-700">${inputs.avgDealValue}</span>
+                      </div>
+                      <input 
+                         type="range" min="100" max="10000" step="100"
+                         value={inputs.avgDealValue}
+                         onChange={(e) => handleInputChange(e, 'avgDealValue')}
+                         className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-500"
+                      />
+                   </div>
+
+                   {/* Close Rate */}
+                   <div className="space-y-3">
+                      <div className="flex justify-between items-center text-sm">
+                         <label className="text-slate-400 font-medium">Current Close Rate</label>
+                         <span className="text-white font-mono bg-slate-800 px-2 py-1 rounded border border-slate-700">{inputs.closeRate}%</span>
+                      </div>
+                      <input 
+                         type="range" min="1" max="50" step="1"
+                         value={inputs.closeRate}
+                         onChange={(e) => handleInputChange(e, 'closeRate')}
+                         className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-500"
+                      />
+                   </div>
+                </div>
+
+                <div className="mt-8 p-4 bg-indigo-500/10 border border-indigo-500/20 rounded-xl">
+                   <div className="flex items-start gap-3">
+                      <div className="w-5 h-5 mt-0.5 rounded-full bg-indigo-500 flex items-center justify-center shrink-0">
+                         <RefreshCcw className="w-3 h-3 text-white" />
+                      </div>
+                      <p className="text-xs text-indigo-200 leading-relaxed">
+                         <strong>AI Impact:</strong> We conservatively estimate a <span className="text-white font-bold">40% lift</span> in lead engagement and <span className="text-white font-bold">20% boost</span> in close rates due to instant 24/7 responses.
+                      </p>
+                   </div>
+                </div>
+             </div>
+          </div>
+
+          {/* RIGHT: RESULTS DASHBOARD */}
+          <div className="lg:col-span-8 space-y-6">
+             
+             {/* Key Metrics Cards */}
+             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <motion.div 
+                   initial={{ opacity: 0, y: 10 }}
+                   whileInView={{ opacity: 1, y: 0 }}
+                   className="bg-slate-900 border border-slate-800 p-5 rounded-3xl"
                 >
-                  <div className="w-20 h-20 rounded-full bg-blue-50 flex items-center justify-center mb-6 animate-pulse">
-                    <Calculator className="w-10 h-10 text-[#0071e3]" />
-                  </div>
-                  <h3 className="text-2xl font-semibold text-[#1d1d1f] mb-2">Ready to Calculate?</h3>
-                  <p className="text-gray-500 max-w-sm leading-relaxed">
-                    Enter your current business metrics to see how TopEdge AI can scale your revenue exponentially.
-                  </p>
+                   <div className="flex items-center gap-3 mb-2">
+                      <div className="p-2 bg-emerald-500/10 rounded-lg">
+                         <DollarSign className="w-5 h-5 text-emerald-400" />
+                      </div>
+                      <span className="text-sm text-slate-400 font-medium">Added Monthly Revenue</span>
+                   </div>
+                   <div className="text-2xl md:text-3xl font-bold text-white">
+                      +${Math.round(results?.monthlyGain || 0).toLocaleString()}
+                   </div>
+                   <div className="text-xs text-emerald-500 mt-1 font-medium">+{(results?.monthlyGain / results?.currentRevenue * 100).toFixed(1)}% Growth</div>
                 </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.div>
+
+                <motion.div 
+                   initial={{ opacity: 0, y: 10 }}
+                   whileInView={{ opacity: 1, y: 0 }}
+                   transition={{ delay: 0.1 }}
+                   className="bg-slate-900 border border-slate-800 p-5 rounded-3xl"
+                >
+                   <div className="flex items-center gap-3 mb-2">
+                      <div className="p-2 bg-blue-500/10 rounded-lg">
+                         <Users className="w-5 h-5 text-blue-400" />
+                      </div>
+                      <span className="text-sm text-slate-400 font-medium">Qualified Leads</span>
+                   </div>
+                   <div className="text-2xl md:text-3xl font-bold text-white">
+                      {Math.round(results?.aiLeads || 0)} <span className="text-lg text-slate-500 font-normal">/mo</span>
+                   </div>
+                   <div className="text-xs text-blue-400 mt-1 font-medium">Up from {inputs.leadsGenerated}</div>
+                </motion.div>
+
+                <motion.div 
+                   initial={{ opacity: 0, y: 10 }}
+                   whileInView={{ opacity: 1, y: 0 }}
+                   transition={{ delay: 0.2 }}
+                   className="bg-slate-900 border border-slate-800 p-5 rounded-3xl"
+                >
+                   <div className="flex items-center gap-3 mb-2">
+                      <div className="p-2 bg-amber-500/10 rounded-lg">
+                         <Clock className="w-5 h-5 text-amber-400" />
+                      </div>
+                      <span className="text-sm text-slate-400 font-medium">Hours Saved</span>
+                   </div>
+                   <div className="text-2xl md:text-3xl font-bold text-white">
+                      {results?.hoursSaved || 0} <span className="text-lg text-slate-500 font-normal">hrs</span>
+                   </div>
+                   <div className="text-xs text-amber-400 mt-1 font-medium">Automated work</div>
+                </motion.div>
+             </div>
+
+             {/* Main Chart Area */}
+             <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 md:p-8 h-[400px] flex flex-col relative shadow-2xl">
+                <div className="flex justify-between items-center mb-6">
+                   <h4 className="text-white font-bold flex items-center gap-2">
+                      <BarChart3 className="w-5 h-5 text-indigo-400" />
+                      12-Month Revenue Projection
+                   </h4>
+                   <div className="text-xs font-mono text-slate-500 bg-slate-800 px-3 py-1 rounded-full">
+                      Total Annual Uplift: <span className="text-emerald-400 font-bold">+${Math.round(results?.annualGain || 0).toLocaleString()}</span>
+                   </div>
+                </div>
+                
+                <div className="flex-1 w-full min-h-0">
+                   <Line data={chartData} options={chartOptions} />
+                </div>
+             </div>
+
+             <div className="flex justify-center pt-4">
+                <button className="flex items-center gap-2 text-indigo-400 hover:text-indigo-300 transition-colors text-sm font-medium group">
+                   Get a detailed audit for your business <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </button>
+             </div>
+
+          </div>
+
         </div>
       </div>
     </section>

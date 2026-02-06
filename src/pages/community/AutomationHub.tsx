@@ -11,11 +11,12 @@ import { db } from '@/services/firebase';
 import { useAuth } from '@/contexts/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import LaunchGate from '@/components/ui/LaunchGate';
 import TopBuilders from '@/components/community/TopBuilders';
 import { getDoc } from 'firebase/firestore'; // Fixed import
 import { isAdminEmail } from '@/utils/admin';
 import { EmailService } from '@/services/emailService';
+import { ResourceCardSkeleton } from '@/components/ui/Skeleton';
+import { useCommunityCache } from '@/contexts/CommunityCacheContext';
 
 interface Resource {
   id: string;
@@ -370,6 +371,7 @@ const ResourceCard = ({ resource, index, currentUser }: { resource: Resource; in
 };
 
 const AutomationHub = () => {
+  const { cache, setCachedResources } = useCommunityCache();
   const [resources, setResources] = useState<Resource[]>([]);
   const [loading, setLoading] = useState(true);
   const [totalCountFromApi, setTotalCountFromApi] = useState<number | null>(null);
@@ -381,6 +383,13 @@ const AutomationHub = () => {
 
   useEffect(() => {
     const fetchResources = async () => {
+      // Check cache first
+      if (cache.resources.length > 0 && (Date.now() - (cache.lastFetched.resources || 0) < 5 * 60 * 1000)) {
+        setResources(cache.resources);
+        setLoading(false);
+        return;
+      }
+
       setLoading(true);
 
       // 1. Try API first (Guest friendly & Total Count)
@@ -389,7 +398,11 @@ const AutomationHub = () => {
         const apiData = await emailService.getPublicStats();
         if (apiData && apiData.success) {
            if (apiData.stats?.totalResources) setTotalCountFromApi(apiData.stats.totalResources);
-           if (apiData.newResources) setResources(apiData.newResources as Resource[]);
+           if (apiData.newResources) {
+             const newRes = apiData.newResources as Resource[];
+             setResources(newRes);
+             setCachedResources(newRes);
+           }
         }
       } catch (e) { console.error("API fetch failed", e); }
 
@@ -407,6 +420,7 @@ const AutomationHub = () => {
         })) as Resource[];
 
         setResources(fetched);
+        setCachedResources(fetched);
       } catch (error) {
         console.error("Error fetching resources:", error);
       } finally {
@@ -584,9 +598,10 @@ const AutomationHub = () => {
 
           {/* Grid Section */}
           {loading ? (
-             <div className="flex flex-col items-center justify-center py-32 opacity-50">
-                <div className="w-10 h-10 border-4 border-slate-200 border-t-slate-900 rounded-full animate-spin mb-4"></div>
-                <p className="text-sm font-medium text-slate-500">Loading marketplace...</p>
+             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+               {[...Array(6)].map((_, i) => (
+                  <ResourceCardSkeleton key={i} />
+               ))}
              </div>
           ) : (
             <>

@@ -5,6 +5,7 @@ import { Toaster } from 'react-hot-toast';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { AuthProvider } from './contexts/AuthContext';
+import { CommunityCacheProvider } from './contexts/CommunityCacheContext';
 import Navbar from './components/navigation/Navbar';
 import CommunityNavbar from './components/community/layout/CommunityNavbar';
 import FloatingVoiceChat from './components/FloatingVoiceChat';
@@ -66,6 +67,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
   const isCommunityRoute = location.pathname.startsWith('/community');
   const isAuthPage = location.pathname === '/community/login' || location.pathname === '/community/signup';
+  const isHomePage = location.pathname === '/';
 
   // Dynamic Metadata based on route
   const pageTitle = isCommunityRoute 
@@ -77,7 +79,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     : "Transform your customer service with TopEdge AI's advanced voice agents and chatbots. 24/7 availability, reduced costs, and improved customer satisfaction.";
 
   return (
-    <div className="min-h-screen bg-background text-text transition-colors duration-200 relative">
+    <div className={`min-h-screen bg-background text-text transition-colors duration-200 relative ${isHomePage ? 'lg:[zoom:0.9]' : ''}`}>
       <Helmet>
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription} />
@@ -168,17 +170,19 @@ const App: React.FC = () => {
     <HelmetProvider>
       <ThemeProvider>
         <AuthProvider>
-          <AppErrorBoundary>
-            <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
-              <ScrollToTop />
-              <MetaPixel />
-              <Layout>
-                <React.Suspense fallback={<div className="min-h-screen flex items-center justify-center text-lg">Loading...</div>}>
-                  <AnimatedRoutes />
-                </React.Suspense>
-              </Layout>
-            </Router>
-          </AppErrorBoundary>
+          <CommunityCacheProvider>
+            <AppErrorBoundary>
+              <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+                <ScrollToTop />
+                <MetaPixel />
+                <Layout>
+                  <React.Suspense fallback={<div className="min-h-screen flex items-center justify-center text-lg">Loading...</div>}>
+                    <AnimatedRoutes />
+                  </React.Suspense>
+                </Layout>
+              </Router>
+            </AppErrorBoundary>
+          </CommunityCacheProvider>
         </AuthProvider>
       </ThemeProvider>
     </HelmetProvider>

@@ -5,8 +5,10 @@ import { calculateReputation } from '@/utils/reputation';
 import { Trophy, User } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useAuth } from '@/contexts/AuthContext';
+import { useCommunityCache } from '@/contexts/CommunityCacheContext';
 import { EmailService } from '@/services/emailService';
 import { Link } from 'react-router-dom';
+import { TopBuildersSkeleton } from '@/components/ui/Skeleton';
 
 interface Profile {
   id: string;
@@ -20,12 +22,27 @@ interface Profile {
 
 export default function TopBuilders() {
   const { user } = useAuth();
+  const { cache, setCachedTopBuilders } = useCommunityCache();
+  const [loading, setLoading] = useState(true);
   const [top, setTop] = useState<
     Array<{ profile: Profile; score: number; tier: 'Builder' | 'Architect' | 'Grandmaster' }>
   >([]);
 
   useEffect(() => {
     const run = async () => {
+      // Check cache first
+      if (cache.topBuilders && cache.topBuilders.length > 0) {
+        setTop(cache.topBuilders);
+        // Check if cache is stale (e.g. 10 minutes)
+        const lastFetched = cache.lastFetched?.topBuilders || 0;
+        if (Date.now() - lastFetched < 10 * 60 * 1000) {
+          setLoading(false);
+          return;
+        }
+      }
+
+      setLoading(true);
+      
       try {
         // 1. Try fetching from public API (works for guests)
         const emailService = new EmailService();
@@ -47,6 +64,8 @@ export default function TopBuilders() {
             tier: p.tier
           }));
           setTop(mapped);
+          setCachedTopBuilders(mapped);
+          setLoading(false);
           return;
         }
       } catch (e) {
@@ -96,14 +115,19 @@ export default function TopBuilders() {
         });
 
         scored.sort((a, b) => b.score - a.score);
-        setTop(scored.slice(0, 3));
+        const finalTop = scored.slice(0, 3);
+        setTop(finalTop);
+        setCachedTopBuilders(finalTop);
       } catch (error) {
         console.error("Firestore fetch failed in TopBuilders", error);
+      } finally {
+        setLoading(false);
       }
     };
     run();
   }, [user]);
 
+  if (loading) return <TopBuildersSkeleton />;
   if (top.length === 0) return null;
 
   return (

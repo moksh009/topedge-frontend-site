@@ -17,6 +17,8 @@ import HireModal from '@/components/community/HireModal';
 import { calculateReputation } from '@/utils/reputation';
 import { isAdminEmail } from '@/utils/admin';
 import { EmailService } from '@/services/emailService';
+import { useCommunityCache } from '@/contexts/CommunityCacheContext';
+import { ProfileCardSkeleton } from '@/components/ui/Skeleton';
 
 interface Profile {
 
@@ -55,6 +57,7 @@ const itemVar = {
 
 const CommunityProfiles = () => {
   const navigate = useNavigate();
+  const { cache, setCachedPublicProfilesList } = useCommunityCache();
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [loading, setLoading] = useState(true);
   const [totalCountFromApi, setTotalCountFromApi] = useState<number | null>(null);
@@ -75,6 +78,39 @@ const CommunityProfiles = () => {
 
   useEffect(() => {
     const fetchProfiles = async () => {
+      // Check cache first
+      if (cache.publicProfilesList && cache.publicProfilesList.length > 0) {
+        setProfiles(cache.publicProfilesList);
+        
+        // If we also have resources cached, we can rebuild the resourcesByUser map
+        if (cache.resources && cache.resources.length > 0) {
+           const byUser: Record<string, { resources: { userId: string; upvotes: number; views?: number; downloads?: number; linkClicks?: number; purchasers?: string[] }[] }> = {};
+           cache.resources.forEach(data => {
+              const uid = data.userId as string;
+              if (!uid) return;
+              if (!byUser[uid]) byUser[uid] = { resources: [] };
+              byUser[uid].resources.push({
+                userId: uid,
+                upvotes: Number((data.upvotes ?? data.stars) || 0),
+                views: Number(data.views || 0),
+                downloads: Number(data.downloads || 0),
+                linkClicks: Number(data.linkClicks || 0),
+                purchasers: data.purchasers || []
+              });
+           });
+           setResourcesByUser(byUser);
+        }
+
+        // Check freshness
+        const lastFetched = cache.lastFetched?.publicProfilesList || 0;
+        if (Date.now() - lastFetched < 5 * 60 * 1000) {
+          setLoading(false);
+          return;
+        }
+      }
+
+      setLoading(true);
+
       // 1. Try API first (Guest friendly & Total Count)
       try {
         const emailService = new EmailService();
@@ -84,7 +120,9 @@ const CommunityProfiles = () => {
            
            // If guest, use API data for the teaser view (Top 3) and skip Firestore
            if (!auth.currentUser && apiData.topProfiles && apiData.topProfiles.length > 0) {
-             setProfiles(apiData.topProfiles as any[]); // Cast as any or Profile
+             const apiProfiles = apiData.topProfiles as any[];
+             setProfiles(apiProfiles);
+             setCachedPublicProfilesList(apiProfiles);
              setLoading(false);
              return;
            }
@@ -94,10 +132,6 @@ const CommunityProfiles = () => {
       // If guest and API failed, we might hit permission errors on Firestore, but let's try safely
       if (!auth.currentUser) {
          console.warn("Guest user: API failed or partial. Firestore might fail due to permissions.");
-         // If we want to be safe, we could return here or set empty. 
-         // But maybe public_profiles is public? If not, we should return.
-         // Assuming strict rules:
-         // return; 
          // For now, let it fall through but handle error gracefully
       }
 
@@ -121,22 +155,33 @@ const CommunityProfiles = () => {
         // Filter out incomplete profiles (must have a name)
         const validProfiles = profilesData.filter(p => p.fullName && p.fullName.trim().length > 0);
         setProfiles(validProfiles);
+        setCachedPublicProfilesList(validProfiles);
 
         const rQ = query(collection(db, 'community_resources'), limit(1000));
         const rSnap = await getDocs(rQ);
+        
+        // Cache resources too
+        const fetchedResources = rSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+        // Note: we might not want to overwrite cache.resources if it has more data (like full text), 
+        // but here we are fetching up to 1000, so it's likely comprehensive for stats.
+        // But we need to use setCachedResources from context which expects specific format.
+        // Ideally we should merge or just store. For now, let's just use it locally and maybe not overwrite global resources cache 
+        // to avoid wiping out detailed data if the limit 1000 is partial.
+        // Actually, let's skip updating global resources cache for now to be safe, 
+        // or update it if we are sure.
+        
         const byUser: Record<string, { resources: { userId: string; upvotes: number; views?: number; downloads?: number; linkClicks?: number; purchasers?: string[] }[] }> = {};
-        rSnap.docs.forEach(d => {
-          const data = d.data() as any;
-          const uid = data.userId as string;
+        fetchedResources.forEach(data => {
+          const uid = (data as any).userId as string;
           if (!uid) return;
           if (!byUser[uid]) byUser[uid] = { resources: [] };
           byUser[uid].resources.push({
             userId: uid,
-            upvotes: Number((data.upvotes ?? data.stars) || 0),
-            views: Number(data.views || 0),
-            downloads: Number(data.downloads || 0),
-            linkClicks: Number(data.linkClicks || 0),
-            purchasers: data.purchasers || []
+            upvotes: Number(((data as any).upvotes ?? (data as any).stars) || 0),
+            views: Number((data as any).views || 0),
+            downloads: Number((data as any).downloads || 0),
+            linkClicks: Number((data as any).linkClicks || 0),
+            purchasers: (data as any).purchasers || []
           });
         });
         setResourcesByUser(byUser);
@@ -478,8 +523,10 @@ const CommunityProfiles = () => {
 
           {/* Profiles Grid */}
           {loading ? (
-             <div className="flex flex-col items-center justify-center py-32 opacity-50">
-                <div className="w-10 h-10 border-4 border-slate-200 border-t-slate-900 rounded-full animate-spin mb-4"></div>
+             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 pb-12">
+               {[...Array(6)].map((_, i) => (
+                 <ProfileCardSkeleton key={i} />
+               ))}
              </div>
           ) : (
             <>

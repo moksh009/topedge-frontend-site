@@ -9,6 +9,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { doc, setDoc, serverTimestamp, getDoc } from 'firebase/firestore';
 import { db } from '@/services/firebase';
 import { useAuth } from '@/contexts/AuthContext';
+import { useCommunityCache } from '@/contexts/CommunityCacheContext';
 import { UserProfile } from '@/types/user';
 import toast from 'react-hot-toast';
 import { cn } from '@/lib/utils';
@@ -85,6 +86,7 @@ const PromoteProfile = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, userProfile, loading: authLoading, refreshProfile } = useAuth();
+  const { setCachedProfile } = useCommunityCache();
   
   const [isEditing, setIsEditing] = useState(() => {
     const params = new URLSearchParams(location.search);
@@ -287,6 +289,7 @@ const PromoteProfile = () => {
         const payload = buildProfilePayload();
         if (!payload) return;
         await setDoc(doc(db, 'public_profiles', user.uid), payload, { merge: true });
+        setCachedProfile(user.uid, payload);
       } catch (error) {
         console.error('Auto-save profile failed:', error);
       }
@@ -321,6 +324,7 @@ const PromoteProfile = () => {
       const payload = buildProfilePayload();
       if (!payload) return;
       await setDoc(doc(db, 'public_profiles', user.uid), payload);
+      setCachedProfile(user.uid, payload);
       await refreshProfile();
       toast.success('Profile saved successfully');
       setIsEditing(false);

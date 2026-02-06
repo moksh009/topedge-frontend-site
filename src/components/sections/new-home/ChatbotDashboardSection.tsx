@@ -37,11 +37,11 @@ const ChatbotDashboardSection = () => {
   ];
 
   return (
-    <section className="py-32 bg-[#F5F5F7] relative overflow-hidden border-t border-gray-200">
+    <section className="py-32 bg-slate-50 relative overflow-hidden border-t border-slate-200">
       {/* Background Gradients/Glows */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-          <div className="absolute top-[-10%] left-[20%] w-[500px] h-[500px] bg-blue-600/5 rounded-full blur-[100px]" />
-          <div className="absolute bottom-[-10%] right-[20%] w-[500px] h-[500px] bg-purple-600/5 rounded-full blur-[100px]" />
+          <div className="absolute top-[-10%] left-[20%] w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-[100px]" />
+          <div className="absolute bottom-[-10%] right-[20%] w-[500px] h-[500px] bg-teal-500/5 rounded-full blur-[100px]" />
       </div>
 
       <div className="container mx-auto px-4 max-w-7xl relative z-10">
@@ -52,7 +52,7 @@ const ChatbotDashboardSection = () => {
              initial={{ opacity: 0, y: 20 }}
              whileInView={{ opacity: 1, y: 0 }}
              viewport={{ once: true }}
-             className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-gray-200 text-blue-600 text-xs font-semibold uppercase tracking-wide mb-6 shadow-sm"
+             className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-slate-200 text-emerald-600 text-xs font-semibold uppercase tracking-wide mb-6 shadow-sm"
           >
             <BarChart3 className="w-3 h-3" />
             Chatbot Dashboard
@@ -62,10 +62,10 @@ const ChatbotDashboardSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-semibold text-[#1d1d1f] mb-6 tracking-tight"
+            className="text-4xl md:text-5xl lg:text-6xl font-semibold text-slate-900 mb-6 tracking-tight"
           >
             Complete control over <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">every conversation.</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-600">every conversation.</span>
           </motion.h2>
         </div>
 
@@ -84,29 +84,29 @@ const ChatbotDashboardSection = () => {
                 onMouseEnter={() => setActiveFeature(index)}
                 className={`group cursor-pointer p-6 rounded-2xl transition-all duration-300 border relative overflow-hidden ${
                   activeFeature === index 
-                    ? 'bg-white border-blue-100 shadow-xl shadow-blue-900/5' 
-                    : 'bg-white/50 border-transparent hover:bg-white hover:border-gray-200 hover:shadow-lg'
+                    ? 'bg-white border-emerald-100 shadow-xl shadow-emerald-900/5' 
+                    : 'bg-white/50 border-transparent hover:bg-white hover:border-slate-200 hover:shadow-lg'
                 }`}
               >
                 {activeFeature === index && (
                   <motion.div 
                     layoutId="activeGlowChat"
-                    className="absolute inset-0 bg-gradient-to-r from-blue-50/50 to-purple-50/50 opacity-100"
+                    className="absolute inset-0 bg-gradient-to-r from-emerald-50/50 to-teal-50/50 opacity-100"
                   />
                 )}
                 <div className="relative z-10 flex items-start gap-4">
                   <div className={`p-3 rounded-xl transition-colors ${
-                    activeFeature === index ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20' : 'bg-gray-100 text-gray-500 group-hover:bg-blue-50 group-hover:text-blue-600'
+                    activeFeature === index ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-600/20' : 'bg-slate-100 text-slate-500 group-hover:bg-emerald-50 group-hover:text-emerald-600'
                   }`}>
                     <feature.icon className="w-6 h-6" />
                   </div>
                   <div>
                     <h3 className={`text-lg font-semibold mb-2 transition-colors ${
-                      activeFeature === index ? 'text-[#1d1d1f]' : 'text-gray-600 group-hover:text-[#1d1d1f]'
+                      activeFeature === index ? 'text-slate-900' : 'text-slate-600 group-hover:text-slate-900'
                     }`}>
                       {feature.title}
                     </h3>
-                    <p className="text-sm text-gray-500 leading-relaxed">
+                    <p className="text-sm text-slate-500 leading-relaxed">
                       {feature.description}
                     </p>
                   </div>
@@ -117,15 +117,15 @@ const ChatbotDashboardSection = () => {
 
           {/* Right Column: Dynamic Preview */}
           <div className="lg:col-span-8">
-            <div className="relative h-[600px] bg-white rounded-3xl border border-gray-200 overflow-hidden shadow-2xl shadow-black/5">
+            <div className="relative h-[600px] bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-2xl shadow-slate-900/5">
               {/* Window Controls */}
-              <div className="absolute top-0 left-0 w-full h-12 bg-gray-50/80 backdrop-blur-sm border-b border-gray-100 flex items-center px-4 gap-2 z-20">
+              <div className="absolute top-0 left-0 w-full h-12 bg-slate-50/80 backdrop-blur-sm border-b border-slate-100 flex items-center px-4 gap-2 z-20">
                 <div className="w-3 h-3 rounded-full bg-[#FF5F57] border border-[#E0443E]" />
                 <div className="w-3 h-3 rounded-full bg-[#FEBC2E] border border-[#D89E24]" />
                 <div className="w-3 h-3 rounded-full bg-[#28C840] border border-[#1AAB29]" />
-                <div className="ml-auto flex items-center gap-2 px-3 py-1 rounded-md bg-white border border-gray-200 shadow-sm">
-                   <Globe className="w-3 h-3 text-gray-400" />
-                   <span className="text-xs text-gray-500 font-medium">dashboard.topedge.ai</span>
+                <div className="ml-auto flex items-center gap-2 px-3 py-1 rounded-md bg-white border border-slate-200 shadow-sm">
+                   <Globe className="w-3 h-3 text-slate-400" />
+                   <span className="text-xs text-slate-500 font-medium">dashboard.topedge.ai</span>
                 </div>
               </div>
 
@@ -158,31 +158,31 @@ const AnalyticsView = () => (
   <div className="h-full flex flex-col gap-6">
     <div className="grid grid-cols-3 gap-4">
       {[
-        { label: 'Total Conversations', value: '12,450', change: '+12%', color: 'blue' },
-        { label: 'Avg Response Time', value: '1.2s', change: '-5%', color: 'green' },
-        { label: 'Resolution Rate', value: '94.2%', change: '+2%', color: 'purple' },
+        { label: 'Total Conversations', value: '12,450', change: '+12%', color: 'emerald' },
+        { label: 'Avg Response Time', value: '1.2s', change: '-5%', color: 'teal' },
+        { label: 'Resolution Rate', value: '94.2%', change: '+2%', color: 'emerald' },
       ].map((stat, i) => (
-        <div key={i} className="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-          <p className="text-xs text-gray-500 uppercase mb-1 font-semibold">{stat.label}</p>
+        <div key={i} className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+          <p className="text-xs text-slate-500 uppercase mb-1 font-semibold">{stat.label}</p>
           <div className="flex items-end justify-between">
-            <h4 className="text-2xl font-bold text-[#1d1d1f]">{stat.value}</h4>
+            <h4 className="text-2xl font-bold text-slate-900">{stat.value}</h4>
             <span className={`text-xs font-medium px-1.5 py-0.5 rounded ${
-              stat.color === 'green' ? 'bg-green-50 text-green-600' : 'bg-blue-50 text-blue-600'
+              stat.color === 'emerald' ? 'bg-emerald-50 text-emerald-600' : 'bg-teal-50 text-teal-600'
             }`}>{stat.change}</span>
           </div>
         </div>
       ))}
     </div>
-    <div className="flex-1 bg-gray-50/50 rounded-2xl border border-gray-100 p-6 relative overflow-hidden flex items-end justify-between gap-2">
+    <div className="flex-1 bg-slate-50/50 rounded-2xl border border-slate-100 p-6 relative overflow-hidden flex items-end justify-between gap-2">
        {/* Fake Chart */}
-       <div className="absolute top-6 left-6 text-sm text-[#1d1d1f] font-medium">Weekly Conversation Volume</div>
+       <div className="absolute top-6 left-6 text-sm text-slate-900 font-medium">Weekly Conversation Volume</div>
        {[40, 65, 50, 80, 55, 90, 70, 85, 60, 75, 95, 80, 60, 70].map((h, i) => (
          <motion.div 
            key={i}
            initial={{ height: 0 }}
            animate={{ height: `${h}%` }}
            transition={{ duration: 1, delay: i * 0.05 }}
-           className="w-full bg-gradient-to-t from-blue-500 to-purple-500 rounded-t-lg opacity-80 hover:opacity-100 transition-opacity shadow-sm"
+           className="w-full bg-gradient-to-t from-emerald-500 to-teal-500 rounded-t-lg opacity-80 hover:opacity-100 transition-opacity shadow-sm"
          />
        ))}
     </div>
@@ -192,10 +192,10 @@ const AnalyticsView = () => (
 const LiveMonitorView = () => (
   <div className="h-full flex flex-col gap-4">
     <div className="flex items-center justify-between mb-2">
-       <h4 className="text-[#1d1d1f] font-semibold flex items-center gap-2">
+       <h4 className="text-slate-900 font-semibold flex items-center gap-2">
          <span className="relative flex h-2.5 w-2.5">
-           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-           <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
+           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+           <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
          </span>
          Live Now
        </h4>

@@ -12,10 +12,12 @@ import {
   Linkedin, Github, Zap, CheckCircle2, Youtube, Instagram, Trash2, Camera
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import { useCommunityCache } from '@/contexts/CommunityCacheContext';
 import { cn } from '@/lib/utils';
 import { isAdminEmail } from '@/utils/admin';
 import { calculateReputation } from '@/utils/reputation';
 import toast from 'react-hot-toast';
+import { ProfileSkeleton } from '@/components/ui/Skeleton';
 
 const CLOUD_NAME = "dn9gh1goq";
 const UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || "YOUR_UPLOAD_PRESET_HERE";
@@ -33,6 +35,7 @@ interface Resource {
 const ProfileDetails = () => {
   const { id } = useParams<{ id: string }>();
   const { user } = useAuth();
+  const { cache, setCachedProfile, setCachedUserResources } = useCommunityCache();
   const navigate = useNavigate();
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [resources, setResources] = useState<Resource[]>([]);
@@ -75,12 +78,29 @@ const ProfileDetails = () => {
   useEffect(() => {
     const fetchData = async () => {
       if (!id) return;
+
+      // Check cache first
+      if (cache.profiles[id]) {
+        setProfile(cache.profiles[id]);
+        if (cache.userResources[id]) {
+          setResources(cache.userResources[id]);
+        }
+        // If we have both, we can stop loading early
+        if (cache.profiles[id] && cache.userResources[id]) {
+          setLoading(false);
+          // Optional: re-fetch in background if data is stale (e.g. > 5 mins)
+          const lastFetched = cache.lastFetched?.[`profile_${id}`] || 0;
+          if (Date.now() - lastFetched < 5 * 60 * 1000) return;
+        }
+      }
+
       try {
         const docRef = doc(db, 'public_profiles', id);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           const profileData = docSnap.data() as UserProfile;
           setProfile(profileData);
+          setCachedProfile(id, profileData);
           
           // Fetch resources for both ID and UID (if different) to match home page logic
           const queries = [
@@ -104,6 +124,7 @@ const ProfileDetails = () => {
           });
 
           setResources(uniqueResources);
+          setCachedUserResources(id, uniqueResources);
         } else {
           setProfile(null);
         }
@@ -120,9 +141,7 @@ const ProfileDetails = () => {
   if (loading) {
     return (
       <CommunityLayout>
-        <div className="min-h-screen flex items-center justify-center bg-[#FAFAFA]">
-          <Loader2 className="w-10 h-10 animate-spin text-slate-900" />
-        </div>
+        <ProfileSkeleton />
       </CommunityLayout>
     );
   }
@@ -257,7 +276,14 @@ const ProfileDetails = () => {
             if (result.secure_url) {
               const newUrl = result.secure_url as string;
               await setDoc(doc(db, 'public_profiles', profile.uid), { photoURL: newUrl }, { merge: true });
-              setProfile(prev => (prev ? { ...prev, photoURL: newUrl } : prev));
+              
+              setProfile(prev => {
+                  if (!prev) return null;
+                  const updated = { ...prev, photoURL: newUrl };
+                  setCachedProfile(profile.uid, updated);
+                  return updated;
+              });
+              
               toast.success("Profile photo updated");
             } else {
               toast.error("Failed to upload photo");

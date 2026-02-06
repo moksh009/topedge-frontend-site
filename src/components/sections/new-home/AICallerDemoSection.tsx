@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Phone, Mic, X, Activity, Globe, Shield, Zap, Volume2, User, FileText, Smile, Clock } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { Mic, Volume2 } from 'lucide-react';
 import { vapiService } from '../../../services/vapiService';
 
 const AICallerDemoSection = () => {
@@ -90,12 +90,13 @@ const AICallerDemoSection = () => {
   };
 
   return (
-    <section id="ai-caller-demo" className="py-32 bg-[#F5F5F7] relative overflow-hidden">
-      {/* Premium Background Gradients */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-          <div className="absolute top-[-10%] left-[20%] w-[600px] h-[600px] bg-blue-100/40 rounded-full blur-[120px]" />
-          <div className="absolute bottom-[-10%] right-[20%] w-[600px] h-[600px] bg-purple-100/40 rounded-full blur-[120px]" />
-      </div>
+    <section id="ai-caller-demo" className="py-32 bg-white relative overflow-hidden">
+      {/* Clean Premium Background - White Theme */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-slate-50 via-white to-white pointer-events-none" />
+      
+      {/* Subtle Glow Effects - Adjusted for White */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-500/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="container mx-auto px-4 max-w-7xl relative z-10">
         
@@ -104,9 +105,9 @@ const AICallerDemoSection = () => {
              initial={{ opacity: 0, y: 10 }}
              whileInView={{ opacity: 1, y: 0 }}
              viewport={{ once: true }}
-             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-blue-100 text-blue-600 text-xs font-semibold uppercase tracking-wide mb-6 shadow-sm"
+             className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-600 text-xs font-semibold uppercase tracking-wide mb-6 shadow-sm"
             >
-              <Mic className="w-3 h-3" />
+              <Mic className="w-3 h-3 text-indigo-500" />
               Live Interactive Demo
             </motion.div>
             <motion.h2 
@@ -114,17 +115,17 @@ const AICallerDemoSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="text-4xl md:text-5xl lg:text-6xl font-semibold text-[#1d1d1f] mb-6 tracking-tight leading-tight"
+              className="text-4xl md:text-5xl lg:text-6xl font-semibold text-slate-900 mb-6 tracking-tight leading-tight"
             >
               Experience the <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Future of Voice</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-violet-600 to-indigo-600">Future of Voice</span>
             </motion.h2>
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="text-xl text-[#86868b] max-w-2xl mx-auto leading-relaxed"
+              className="text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed font-normal"
             >
               Try our AI voice agent right now. See real-time analytics, sentiment tracking, and instant transcription as you speak.
             </motion.p>
@@ -132,25 +133,25 @@ const AICallerDemoSection = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           
-          {/* Left: Phone UI (Call Interface) */}
+          {/* Left: Phone UI (Call Interface) - Keeping Dark for Contrast/Device Look */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             className="lg:col-span-4 lg:col-start-2"
           >
-            <div className="relative bg-white rounded-[3rem] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] border border-gray-100 overflow-hidden mx-auto h-[640px] flex flex-col transform transition-transform hover:scale-[1.01] group ring-8 ring-gray-50">
+            <div className="relative bg-slate-900 rounded-[3rem] shadow-2xl shadow-slate-200 border border-slate-800 overflow-hidden mx-auto h-[640px] flex flex-col transform transition-transform hover:scale-[1.01] group ring-8 ring-slate-100">
               {/* Dynamic Header */}
-              <div className={`p-8 text-center transition-colors duration-500 ${isCallActive ? 'bg-blue-50/50' : 'bg-gray-50/50'} border-b border-gray-100`}>
-                <div className="w-16 h-1 bg-gray-200 rounded-full mx-auto mb-6" />
-                <h3 className="text-xl font-semibold text-[#1d1d1f] mb-1">{isCallActive ? 'Maya (AI Agent)' : 'Ready to Call'}</h3>
-                <p className={`text-sm font-medium ${isCallActive ? 'text-green-600' : 'text-gray-400'}`}>
+              <div className={`p-8 text-center transition-colors duration-500 ${isCallActive ? 'bg-slate-800/90' : 'bg-slate-900'} border-b border-slate-800`}>
+                <div className="w-16 h-1 bg-slate-700 rounded-full mx-auto mb-6" />
+                <h3 className="text-xl font-semibold text-white mb-1">{isCallActive ? 'Maya (AI Agent)' : 'Ready to Call'}</h3>
+                <p className={`text-sm font-medium ${isCallActive ? 'text-emerald-400' : 'text-slate-400'}`}>
                   {isCallActive ? formatTime(callDuration) : 'Tap to start'}
                 </p>
               </div>
 
               {/* Visualizer / Avatar Area */}
-              <div className="flex-1 bg-white relative flex items-center justify-center overflow-hidden">
+              <div className="flex-1 bg-slate-900 relative flex items-center justify-center overflow-hidden">
                 {isCallActive ? (
                   // Active Call Visualizer
                   <div className="relative w-full h-full flex items-center justify-center">
@@ -168,145 +169,124 @@ const AICallerDemoSection = () => {
                             delay: i * 0.6,
                             ease: "easeOut",
                           }}
-                          className="absolute w-48 h-48 rounded-full border border-blue-500/20 bg-blue-500/5"
+                          className="absolute w-48 h-48 rounded-full border border-indigo-500/30 bg-indigo-500/10"
                         />
                       ))}
                       
                       {/* Avatar */}
-                      <div className="relative z-10 w-36 h-36 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 p-1 shadow-2xl shadow-blue-500/20">
+                      <div className="relative z-10 w-36 h-36 rounded-full bg-slate-800 p-1 shadow-xl shadow-indigo-500/20">
                          <img 
-                          src="https://ui-avatars.com/api/?name=Maya+AI&background=0D8ABC&color=fff&size=128" 
+                          src="https://ui-avatars.com/api/?name=Maya+AI&background=0f172a&color=fff&size=128" 
                           alt="Maya" 
-                          className="w-full h-full rounded-full object-cover border-4 border-white"
+                          className="w-full h-full rounded-full object-cover border-4 border-slate-700"
                         />
                       </div>
                   </div>
                 ) : (
                   // Idle State
-                  <div className="relative z-10 w-36 h-36 rounded-full bg-gray-50 p-1 shadow-xl border border-gray-100">
+                  <div className="relative z-10 w-36 h-36 rounded-full bg-slate-800 p-1 shadow-lg border border-slate-700">
                     <img 
-                      src="https://ui-avatars.com/api/?name=Maya+AI&background=random&color=fff&size=128" 
+                      src="https://ui-avatars.com/api/?name=Maya+AI&background=1e293b&color=fff&size=128" 
                       alt="Maya" 
-                      className="w-full h-full rounded-full object-cover border-4 border-white grayscale opacity-50"
+                      className="w-full h-full rounded-full object-cover border-4 border-slate-700 grayscale opacity-60"
                     />
                   </div>
                 )}
               </div>
 
               {/* Controls */}
-              <div className="p-10 bg-white pb-14 border-t border-gray-100">
+              <div className="p-10 bg-slate-900 pb-14 border-t border-slate-800">
                 <div className="flex items-center justify-center gap-10">
-                  <button className="p-5 rounded-full bg-gray-50 text-gray-400 hover:bg-gray-100 transition-colors border border-gray-100 shadow-sm">
+                  <button className="p-5 rounded-full bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white transition-colors border border-slate-700 shadow-sm">
                     <Volume2 className="w-6 h-6" />
                   </button>
                   
-                  {isCallActive ? (
-                     <button
-                      onClick={handleEndCall}
-                      className="p-7 rounded-full bg-red-50 text-red-500 shadow-lg shadow-red-500/20 border border-red-100 hover:bg-red-500 hover:text-white hover:scale-105 transition-all"
-                    >
-                      <Phone className="w-8 h-8 rotate-[135deg]" />
-                    </button>
-                  ) : (
-                    <button
+                  {!isCallActive ? (
+                    <button 
                       onClick={handleStartCall}
                       disabled={isConnecting}
-                      className="p-7 rounded-full bg-[#1d1d1f] text-white shadow-xl shadow-black/20 hover:bg-black hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="p-8 rounded-full bg-indigo-600 text-white shadow-xl shadow-indigo-500/40 hover:scale-105 transition-all active:scale-95 disabled:opacity-70 disabled:scale-100 hover:bg-indigo-500 ring-4 ring-indigo-500/20"
                     >
-                      <Phone className="w-8 h-8" />
+                      <Mic className={`w-8 h-8 ${isConnecting ? 'animate-pulse' : ''}`} />
+                    </button>
+                  ) : (
+                    <button 
+                      onClick={handleEndCall}
+                      disabled={isConnecting}
+                      className="p-8 rounded-full bg-rose-500 text-white shadow-xl shadow-rose-500/40 hover:bg-rose-600 hover:scale-105 transition-all active:scale-95 ring-4 ring-rose-500/20"
+                    >
+                      <Mic className="w-8 h-8 rotate-45" />
                     </button>
                   )}
-                  
-                  <button className="p-5 rounded-full bg-gray-50 text-gray-400 hover:bg-gray-100 transition-colors border border-gray-100 shadow-sm">
-                    <Mic className="w-6 h-6" />
+
+                  <button className="p-5 rounded-full bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white transition-colors border border-slate-700 shadow-sm">
+                    <Volume2 className="w-6 h-6" />
                   </button>
                 </div>
               </div>
             </div>
           </motion.div>
 
-          {/* Right: Live Dashboard Panel */}
+          {/* Right: Live Analytics Dashboard - Adapted for White Background */}
           <motion.div
-             initial={{ opacity: 0, x: 20 }}
-             whileInView={{ opacity: 1, x: 0 }}
-             viewport={{ once: true }}
-             className="lg:col-span-6 bg-white rounded-[2.5rem] p-8 h-[640px] border border-gray-200 shadow-2xl shadow-blue-900/5 flex flex-col group hover:border-blue-100 transition-all duration-500 relative overflow-hidden"
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="lg:col-span-6 lg:col-start-7 space-y-6"
           >
-            {/* Glass effect gradient */}
-            <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-gradient-to-br from-blue-50/50 to-purple-50/50 rounded-full blur-3xl opacity-50 pointer-events-none" />
-
-            <div className="flex items-center justify-between mb-8 relative z-10">
-              <h3 className="text-xl font-semibold text-[#1d1d1f] flex items-center gap-3">
-                <div className="p-2 bg-blue-50 rounded-lg text-blue-600 shadow-sm border border-blue-100">
-                  <Activity className="w-5 h-5" />
+             {/* Live Transcript Card */}
+             <div className="bg-white rounded-2xl border border-slate-200 shadow-xl shadow-slate-200/50 p-6 h-[400px] flex flex-col">
+                <div className="flex items-center justify-between mb-4 border-b border-slate-100 pb-4">
+                  <h3 className="font-semibold text-slate-900 flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                    Live Transcript
+                  </h3>
+                  <span className="text-xs text-slate-500 font-mono">EN-US</span>
                 </div>
-                Live Call Analytics
-              </h3>
-              <div className="flex items-center gap-2 px-3 py-1 bg-gray-50 rounded-full border border-gray-100">
-                <span className={`w-2 h-2 rounded-full ${isCallActive ? 'bg-green-500 animate-pulse' : 'bg-gray-400'}`} />
-                <span className="text-xs text-gray-500 uppercase font-bold tracking-wider">{isCallActive ? 'Connected' : 'Offline'}</span>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-6 mb-8">
-              <div className="bg-[#F5F5F7] p-6 rounded-2xl border border-transparent hover:border-gray-200 transition-colors">
-                <div className="text-xs text-gray-500 uppercase font-semibold tracking-wider mb-2 flex items-center gap-2">
-                  <Smile className="w-4 h-4" /> Sentiment
-                </div>
-                <div className={`text-2xl font-bold ${
-                  sentiment === 'Positive' ? 'text-green-600' : sentiment === 'Engaged' ? 'text-blue-600' : 'text-gray-400'
-                }`}>
-                  {isCallActive ? sentiment : '--'}
-                </div>
-              </div>
-              <div className="bg-[#F5F5F7] p-6 rounded-2xl border border-transparent hover:border-gray-200 transition-colors">
-                 <div className="text-xs text-gray-500 uppercase font-semibold tracking-wider mb-2 flex items-center gap-2">
-                  <Clock className="w-4 h-4" /> Duration
-                </div>
-                <div className="text-2xl font-bold text-[#1d1d1f]">
-                  {formatTime(callDuration)}
-                </div>
-              </div>
-            </div>
-
-            {/* Live Transcript */}
-            <div className="flex-1 bg-white rounded-2xl border border-gray-100 p-6 overflow-hidden flex flex-col relative shadow-inner">
-              <div className="text-xs text-gray-400 uppercase font-bold tracking-wider mb-4 flex items-center gap-2 sticky top-0 bg-white z-10 pb-2 border-b border-gray-50">
-                <FileText className="w-3 h-3" /> Live Transcript
-              </div>
-              <div className="flex-1 overflow-y-auto space-y-4 pr-2 custom-scrollbar">
-                {isCallActive ? (
-                  transcript.length > 0 ? (
+                <div className="flex-1 overflow-y-auto space-y-4 pr-2 custom-scrollbar">
+                  {transcript.length === 0 ? (
+                    <div className="h-full flex flex-col items-center justify-center text-slate-400">
+                      <Mic className="w-8 h-8 mb-2 opacity-20" />
+                      <p className="text-sm">Waiting for conversation...</p>
+                    </div>
+                  ) : (
                     transcript.map((line, i) => (
                       <motion.div 
                         key={i}
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className={`p-4 rounded-2xl text-sm leading-relaxed ${
-                          line.startsWith("AI:") 
-                            ? "bg-blue-50 text-blue-800 ml-8 rounded-tr-sm" 
-                            : "bg-gray-50 text-gray-700 mr-8 rounded-tl-sm"
+                        className={`p-3 rounded-lg text-sm ${
+                          line.startsWith('AI:') 
+                            ? 'bg-slate-50 text-slate-700 ml-4 border border-slate-100' 
+                            : 'bg-indigo-50 text-indigo-700 mr-4 border border-indigo-100'
                         }`}
                       >
-                        <span className="block text-xs font-bold mb-1 opacity-60 uppercase">{line.split(":")[0]}</span>
-                        {line.split(":")[1]}
+                        <span className="font-bold mr-1 opacity-70">{line.split(':')[0]}:</span>
+                        {line.split(':')[1]}
                       </motion.div>
                     ))
-                  ) : (
-                    <div className="h-full flex items-center justify-center text-gray-400 text-sm italic">
-                      Listening for conversation...
-                    </div>
-                  )
-                ) : (
-                  <div className="h-full flex flex-col items-center justify-center text-gray-400 text-sm">
-                    <div className="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center mb-3">
-                        <Mic className="w-6 h-6 opacity-40" />
-                    </div>
-                    <p>Start the call to see live transcription</p>
-                  </div>
-                )}
-              </div>
-            </div>
+                  )}
+                </div>
+             </div>
+
+             {/* Metrics Grid */}
+             <div className="grid grid-cols-2 gap-4">
+                <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-lg shadow-slate-200/50">
+                   <div className="text-xs font-medium text-slate-500 mb-2 uppercase tracking-wider">Sentiment</div>
+                   <div className={`text-2xl font-bold ${
+                     sentiment === 'Positive' ? 'text-emerald-500' : 
+                     sentiment === 'Engaged' ? 'text-indigo-500' : 'text-slate-600'
+                   }`}>
+                     {sentiment}
+                   </div>
+                </div>
+                <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-lg shadow-slate-200/50">
+                   <div className="text-xs font-medium text-slate-500 mb-2 uppercase tracking-wider">Latency</div>
+                   <div className="text-2xl font-bold text-slate-900">
+                     ~75<span className="text-sm text-slate-500 font-normal ml-1">ms</span>
+                   </div>
+                </div>
+             </div>
           </motion.div>
 
         </div>

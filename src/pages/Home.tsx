@@ -4,16 +4,16 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 // New Home Sections
 import HeroSection from '../components/sections/new-home/HeroSection';
 import AICallerDemoSection from '../components/sections/new-home/AICallerDemoSection';
+import HowAICallerWorksSection from '../components/sections/new-home/HowAICallerWorksSection';
 import AICallerDashboardSection from '../components/sections/new-home/AICallerDashboardSection';
 import EndToEndSolutionsSection from '../components/sections/new-home/EndToEndSolutionsSection';
 import BenefitsSection from '../components/sections/new-home/BenefitsSection';
 import WhatsAppChatbotSection from '../components/sections/new-home/WhatsAppChatbotSection';
+import HowChatbotWorksSection from '../components/sections/new-home/HowChatbotWorksSection';
 import ChatbotDashboardSection from '../components/sections/new-home/ChatbotDashboardSection';
 import ChatbotBenefitsSection from '../components/sections/new-home/ChatbotBenefitsSection';
 import ReviewsSection from '../components/sections/new-home/ReviewsSection';
 import ROICalculatorSection from '../components/sections/new-home/ROICalculatorSection';
-
-// Existing Sections (keeping CTA and Footer from Layout)
 import { CTASection } from '../components/sections/CTASection';
 
 const Home = () => {
@@ -109,14 +109,20 @@ const Home = () => {
           <AICallerDemoSection />
 
           <AICallerDashboardSection />
+
+          <HowAICallerWorksSection/>
           
           <EndToEndSolutionsSection />
+
+          
           
           <BenefitsSection />
           
           <WhatsAppChatbotSection />
 
           <ChatbotDashboardSection />
+
+          <HowChatbotWorksSection/>
           
           <ChatbotBenefitsSection />
           

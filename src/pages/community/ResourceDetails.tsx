@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { doc, getDoc, updateDoc, serverTimestamp, deleteDoc, arrayUnion, arrayRemove, increment, addDoc, collection, query, where, getDocs, setDoc } from 'firebase/firestore';
 import { db } from '@/services/firebase';
 import { useAuth } from '@/contexts/AuthContext';
+import { useCommunityCache } from '@/contexts/CommunityCacheContext';
 import { cn } from '@/lib/utils';
 import { isAdminEmail } from '@/utils/admin';
 import { emailService } from '@/services/emailService';
@@ -14,6 +15,7 @@ import ResourceReviews from '@/pages/community/ResourceReviews';
 import RelatedResources from '@/components/community/RelatedResources';
 import ResourceDiscussion from '@/pages/community/ResourceDiscussion';
 import { ArrowBigUp, ArrowLeft, ArrowRight, Box, CheckCircle2, Clock, Edit2, Loader2, PlayCircle, Share2, Sparkles, Trash2, Upload, User, X, Zap, ExternalLink, Lock as LockIcon, AlertCircle, MessageCircle } from 'lucide-react';
+import { ResourceDetailsSkeleton } from '@/components/ui/Skeleton';
 
 // CLOUDINARY CONFIG
 const CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || "dn9gh1goq";
@@ -54,6 +56,7 @@ const ResourceDetails = () => {
   const [loading, setLoading] = useState(true);
   const [resource, setResource] = useState<Resource | null>(null);
   const { user, userProfile } = useAuth();
+  const { cache, cacheResource, setCachedResources, setCachedUserResources } = useCommunityCache();
 
   const [isEditing, setIsEditing] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -137,8 +140,15 @@ const ResourceDetails = () => {
       try {
         let resourceData: Resource | null = null;
 
+        // Check cache first
+        if (cache.resources?.length > 0) {
+           const cached = cache.resources.find((r: any) => r.id === id);
+           if (cached) resourceData = cached;
+        }
+
         // 1. Try Firestore (Client SDK)
-        try {
+        if (!resourceData) {
+          try {
             const docRef = doc(db, 'community_resources', id);
             const docSnap = await getDoc(docRef);
             
@@ -147,6 +157,7 @@ const ResourceDetails = () => {
             }
         } catch (e) {
             console.warn('Firestore client fetch failed, trying API fallback...', e);
+        }
         }
 
         // 2. Try API (Server SDK) if Firestore failed or returned nothing
@@ -166,6 +177,9 @@ const ResourceDetails = () => {
 
         if (resourceData) {
           setResource(resourceData);
+          // Cache the fresh resource data
+          cacheResource(resourceData);
+
           setUpvoteCount((resourceData as any).upvotes || 0);
           setIsUpvoted(((resourceData as any).upvotedBy || []).includes(user?.uid));
           
@@ -209,6 +223,12 @@ const ResourceDetails = () => {
   useEffect(() => {
     if (resource?.userId) {
       const fetchAuthorProfile = async () => {
+        // Check cache first
+        if (cache.profiles && cache.profiles[resource.userId]) {
+           setAuthorProfile(cache.profiles[resource.userId]);
+           return;
+        }
+
         try {
           const profileDocRef = doc(db, 'public_profiles', resource.userId);
           const profileDoc = await getDoc(profileDocRef);
@@ -221,7 +241,7 @@ const ResourceDetails = () => {
       };
       fetchAuthorProfile();
     }
-  }, [resource?.userId]);
+  }, [resource?.userId, cache.profiles]);
 
   useEffect(() => {
     const loadProtectedLinkForOwner = async () => {
@@ -343,14 +363,23 @@ const ResourceDetails = () => {
     if (!resource || !user) return toast.error("Please login to upvote");
     try {
       const ref = doc(db, 'community_resources', resource.id);
+      let updatedResource = { ...resource };
+
       if (isUpvoted) {
         await updateDoc(ref, { upvotes: increment(-1), upvotedBy: arrayRemove(user.uid) });
         setUpvoteCount(c => Math.max(0, c - 1));
         setIsUpvoted(false);
+        
+        updatedResource.upvotes = Math.max(0, (resource.upvotes || 0) - 1);
+        updatedResource.upvotedBy = (resource.upvotedBy || []).filter(id => id !== user.uid);
       } else {
         await updateDoc(ref, { upvotes: increment(1), upvotedBy: arrayUnion(user.uid) });
         setUpvoteCount(c => c + 1);
         setIsUpvoted(true);
+        
+        updatedResource.upvotes = (resource.upvotes || 0) + 1;
+        updatedResource.upvotedBy = [...(resource.upvotedBy || []), user.uid];
+
         if (resource.userId !== user.uid) {
             addDoc(collection(db, 'notifications'), {
                 recipientId: resource.userId,
@@ -364,6 +393,8 @@ const ResourceDetails = () => {
             });
         }
       }
+      setResource(updatedResource);
+      cacheResource(updatedResource);
     } catch (e) { console.error(e); }
   };
 
@@ -639,16 +670,14 @@ const ResourceDetails = () => {
         }
       }
 
-      setResource(prev =>
-        prev
-          ? ({
-              ...prev,
-              ...updatedData,
-              tools: updatedData.tools as string[],
-              category: updatedData.category as any
-            })
-          : null
-      );
+      const newResourceData = {
+          ...resource,
+          ...updatedData,
+          tools: updatedData.tools as string[],
+          category: updatedData.category as any
+      };
+      setResource(newResourceData);
+      cacheResource(newResourceData);
       setIsEditing(false);
       toast.success("Resource updated!");
     } catch (error) {
@@ -669,6 +698,15 @@ const ResourceDetails = () => {
     setDeleting(true);
     try {
       await deleteDoc(doc(db, 'community_resources', resource.id));
+      
+      // Update cache
+      if (cache.resources) {
+          setCachedResources(cache.resources.filter((r: any) => r.id !== resource.id));
+      }
+      if (cache.userResources && cache.userResources[resource.userId]) {
+          setCachedUserResources(resource.userId, cache.userResources[resource.userId].filter((r: any) => r.id !== resource.id));
+      }
+
       toast.success("Deleted");
       navigate('/community/automation-hub');
     } catch (error) {
@@ -1081,7 +1119,7 @@ const ResourceDetails = () => {
     </motion.div>
   );
 
-  if (loading) return <div className="min-h-screen flex items-center justify-center"><Loader2 className="animate-spin" /></div>;
+  if (loading) return <ResourceDetailsSkeleton />;
   if (!resource) {
     return (
       <CommunityLayout>
