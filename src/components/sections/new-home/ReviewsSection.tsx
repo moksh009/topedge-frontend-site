@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useInView, useAnimation, useScroll, useTransform } from 'framer-motion';
 import { Star, Quote, Play, Pause, Volume2, VolumeX, Building2 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 // --- TYPES ---
 interface Company {
@@ -30,26 +31,26 @@ const featuredTestimonials: Testimonial[] = [
     id: "vid-1",
     name: "Steven Mugabe",
     role: "Doctor at Code Clinic",
-    image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=2070&auto=format&fit=crop",
+    image: "/images/testimonials/dr-steven.jpeg",
     content: "TopEdge's AI solutions transformed our customer service. Response times dropped by 90% while satisfaction increased by 55%. It's like having a superhuman team that never sleeps.",
     rating: 5,
-    company: { name: "Code Clinic", logo: "/logos/code-clinic.png" },
+    company: { name: "Code Clinic", logo: "/images/logos/code-clinic.png" },
     video: {
-      url: "https://assets.mixkit.co/videos/preview/mixkit-man-working-on-his-laptop-308-large.mp4",
-      poster: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=2070&auto=format&fit=crop"
+      url: "/images/testimonials/steeven.mp4",
+      poster: "/images/testimonials/dr-steven.jpeg"
     }
   },
   {
     id: "vid-2",
     name: "Shubham Patel",
     role: "Realtor",
-    image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=2544&auto=format&fit=crop",
-    content: "As a realtor running ads, I get hundreds of inquiries. My TopEdge Voice Agent handles them all—answering questions and sending brochures automatically. I only talk to serious buyers now.",
+    image: "/images/testimonials/jake-miller.jpeg",
+    content: "TopEdge AI has completely changed how I manage inbound leads. As a realtor running ads across platforms, I get a lot of inquiries—and my Inbound Voice Agent (Edge V2 Model) handles them all. It answers questions, shares property info, and even sends brochures automatically. Now I only deal with high-intent clients, saving hours every day. It's like having a 24/7 lead manager that never misses a beat.",
     rating: 5,
-    company: { name: "Patel Realty", logo: "/logos/realty.png" },
+    company: { name: "Patel Realty", logo: "/images/logos/your-realty-logo.png" },
     video: {
-      url: "https://assets.mixkit.co/videos/preview/mixkit-young-man-talking-on-phone-at-home-406-large.mp4",
-      poster: "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=2544&auto=format&fit=crop"
+      url: "/images/testimonials/shubham.mp4",
+      poster: "/images/testimonials/jake-miller.jpeg"
     }
   }
 ];
@@ -59,40 +60,24 @@ const scrollingTestimonials: Testimonial[] = [
     id: 1,
     name: "Sarah Johnson",
     role: "CEO at TechFlow",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=2576&auto=format&fit=crop",
-    content: "Implementing TopEdge AI was a game-changer. Our customer engagement is up 200%.",
+    image: "/images/testimonials/harold.jpeg",
+    content: "Implementing TopEdge AI has been a game-changer for our business. Our customer engagement is up 200% and our team can focus on strategic tasks while AI handles routine inquiries.",
     rating: 5
   },
   {
     id: 2,
     name: "Michael Chen",
-    role: "Director at Innovate",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2070&auto=format&fit=crop",
-    content: "The ROI has been incredible. We've seen a 40% reduction in operational costs.",
+    role: "Operations Director at InnovateCorp",
+    image: "/images/testimonials/jake-miller.jpeg",
+    content: "The ROI with TopEdge AI has been incredible. We've seen a 40% reduction in operational costs and our customer satisfaction scores have never been higher.",
     rating: 5
   },
   {
     id: 3,
     name: "Emma Rodriguez",
-    role: "Support Lead",
-    image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1961&auto=format&fit=crop",
-    content: "The chatbots are remarkably human-like. Customers can't tell the difference.",
-    rating: 5
-  },
-  {
-    id: 4,
-    name: "David Kim",
-    role: "Founder",
-    image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=1887&auto=format&fit=crop",
-    content: "Setup was instant. We were live and closing leads within 24 hours.",
-    rating: 5
-  },
-  {
-    id: 5,
-    name: "Lisa Wong",
-    role: "Marketing Head",
-    image: "https://images.unsplash.com/photo-1559526324-593bc8141829?q=80&w=2070&auto=format&fit=crop",
-    content: "Our conversion rate on inbound traffic doubled in the first month.",
+    role: "Support Manager at CloudScale",
+    image: "/images/testimonials/dr-steven.jpeg",
+    content: "TopEdge AI's chatbots are remarkably human-like. Our customers often can't tell they're talking to an AI, and that's exactly what we wanted - seamless, natural interactions 24/7.",
     rating: 5
   }
 ];
@@ -127,21 +112,10 @@ const MarqueeCard = ({ review }: { review: Testimonial }) => (
 // --- COMPONENT: FEATURED VIDEO CARD ---
 const VideoTestimonialCard = ({ testimonial, index }: { testimonial: Testimonial, index: number }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
 
-  const togglePlay = () => {
-    if (!videoRef.current) return;
-    if (isPlaying) {
-      videoRef.current.pause();
-    } else {
-      videoRef.current.play();
-    }
-    setIsPlaying(!isPlaying);
-  };
-
-  const toggleMute = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const toggleMute = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
     if (!videoRef.current) return;
     videoRef.current.muted = !videoRef.current.muted;
     setIsMuted(!isMuted);
@@ -158,7 +132,7 @@ const VideoTestimonialCard = ({ testimonial, index }: { testimonial: Testimonial
       <div className="flex flex-col lg:flex-row">
         
         {/* Video Half */}
-        <div className="lg:w-5/12 relative aspect-[4/5] lg:aspect-auto min-h-[400px] cursor-pointer" onClick={togglePlay}>
+        <div className="lg:w-5/12 relative aspect-video lg:aspect-auto lg:min-h-[400px] cursor-pointer group/video" onClick={toggleMute}>
           <video
             ref={videoRef}
             src={testimonial.video?.url}
@@ -166,19 +140,15 @@ const VideoTestimonialCard = ({ testimonial, index }: { testimonial: Testimonial
             className="absolute inset-0 w-full h-full object-cover"
             playsInline
             loop
-            // Auto-play on hover for desktop, click for mobile
-            onMouseEnter={() => videoRef.current?.play()}
-            onMouseLeave={() => {
-               videoRef.current?.pause();
-               videoRef.current!.currentTime = 0; // Reset
-            }}
+            autoPlay
+            muted={isMuted}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0B1121] via-transparent to-transparent lg:bg-gradient-to-r lg:from-transparent lg:to-[#0B1121]" />
           
-          {/* Controls Overlay */}
-          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          {/* Controls Overlay - Sound Indicator */}
+          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/video:opacity-100 transition-opacity duration-300 pointer-events-none">
              <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20">
-                <Play className="w-6 h-6 text-white fill-white ml-1" />
+                {isMuted ? <VolumeX className="w-6 h-6 text-white fill-white ml-1" /> : <Volume2 className="w-6 h-6 text-white fill-white ml-1" />}
              </div>
           </div>
 
@@ -191,9 +161,9 @@ const VideoTestimonialCard = ({ testimonial, index }: { testimonial: Testimonial
         </div>
 
         {/* Content Half */}
-        <div className="lg:w-7/12 p-8 lg:p-12 flex flex-col justify-center relative">
+        <div className="lg:w-7/12 p-6 md:p-8 lg:p-12 flex flex-col justify-center relative">
           <div className="absolute top-8 right-8 text-slate-800">
-             <Quote size={80} />
+             <Quote size={60} className="md:w-20 md:h-20" />
           </div>
 
           <div className="relative z-10">
@@ -203,22 +173,22 @@ const VideoTestimonialCard = ({ testimonial, index }: { testimonial: Testimonial
                 ))}
              </div>
 
-             <h3 className="text-2xl md:text-3xl font-medium text-white leading-relaxed mb-8">
+             <h3 className="text-xl md:text-2xl lg:text-3xl font-medium text-white leading-relaxed mb-8">
                "{testimonial.content}"
              </h3>
 
              <div className="flex items-center gap-4 pt-8 border-t border-white/5">
-                <div className="w-14 h-14 rounded-full p-0.5 bg-gradient-to-tr from-indigo-500 to-violet-500">
+                <div className="w-12 h-12 md:w-14 md:h-14 rounded-full p-0.5 bg-gradient-to-tr from-indigo-500 to-violet-500 flex-shrink-0">
                    <img src={testimonial.image} alt={testimonial.name} className="w-full h-full rounded-full object-cover border-2 border-[#0B1121]" />
                 </div>
                 <div>
-                   <div className="text-white font-bold text-lg">{testimonial.name}</div>
-                   <div className="text-indigo-400 text-sm flex items-center gap-2">
+                   <div className="text-white font-bold text-base md:text-lg">{testimonial.name}</div>
+                   <div className="text-indigo-400 text-xs md:text-sm flex flex-wrap items-center gap-2">
                       {testimonial.role} 
                       {testimonial.company && (
                          <>
-                           <span className="w-1 h-1 bg-slate-600 rounded-full" />
-                           <span className="text-slate-500">{testimonial.company.name}</span>
+                           <span className="hidden md:inline w-1 h-1 bg-slate-600 rounded-full" />
+                           <span className="text-slate-500 block md:inline w-full md:w-auto">{testimonial.company.name}</span>
                          </>
                       )}
                    </div>
@@ -235,7 +205,7 @@ const VideoTestimonialCard = ({ testimonial, index }: { testimonial: Testimonial
 // --- MAIN SECTION ---
 const TestimonialsSection = () => {
   return (
-    <section className="bg-[#020617] py-24 relative overflow-hidden">
+    <section id="reviews-section" className="bg-[#020617] py-24 relative overflow-hidden">
       
       {/* Background Ambience */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-indigo-600/10 rounded-full blur-[120px] pointer-events-none" />
@@ -252,9 +222,9 @@ const TestimonialsSection = () => {
                <Star className="w-3 h-3 fill-current" />
                Client Love
             </motion.div>
-            <h2 className="text-4xl md:text-6xl font-bold text-white tracking-tight mb-6">
+            <h2 className="text-4xl md:text-6xl font-semibold text-white tracking-tight mb-6">
                Trusted by the world's <br />
-               <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-violet-400">fastest growing brands.</span>
+               <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-indigo-400 animate-gradient-x">fastest growing brands.</span>
             </h2>
          </div>
 

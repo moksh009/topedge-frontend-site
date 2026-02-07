@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 
 // New Home Sections
 import HeroSection from '../components/sections/new-home/HeroSection';
+import TrustedBySection from '../components/sections/new-home/TrustedBySection';
 import AICallerDemoSection from '../components/sections/new-home/AICallerDemoSection';
 import HowAICallerWorksSection from '../components/sections/new-home/HowAICallerWorksSection';
 import AICallerDashboardSection from '../components/sections/new-home/AICallerDashboardSection';
@@ -105,6 +106,8 @@ const Home = () => {
         {/* Content */}
         <div className="relative z-10">
           <HeroSection />
+
+          <TrustedBySection />
           
           <AICallerDemoSection />
 
@@ -130,9 +133,7 @@ const Home = () => {
 
           <ROICalculatorSection />
           
-          <div className="bg-[#F8F9FB] py-16">
-            <CTASection />
-          </div>
+          <CTASection />
         </div>
       </div>
     </>

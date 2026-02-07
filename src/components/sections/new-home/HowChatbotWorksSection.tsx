@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Clock, Calendar, Gift, Database, 
-  CheckCircle2, Bot, ArrowRight, Star,
-  MessageSquare, Bell, User, ChevronRight, Zap
+  CheckCircle2, Bot, ArrowRight,
+  ChevronRight, Zap
 } from 'lucide-react';
 
-const CYCLE_DURATION = 5000; // 5 Seconds per slide
+const CYCLE_DURATION = 5000;
 
-// --- VISUAL COMPONENTS (Defined FIRST) ---
+// --- VISUAL COMPONENTS (Phone Screen Content) ---
 
 const CaptureVisual = () => (
   <div className="flex flex-col h-full justify-end pb-4 px-4 space-y-4">
@@ -24,7 +24,7 @@ const CaptureVisual = () => (
         transition={{ delay: 0.2 }}
         className="self-end bg-blue-600 text-white p-3 rounded-2xl rounded-tr-sm shadow-lg shadow-blue-600/20 max-w-[85%]"
      >
-        <p className="text-sm font-medium">Hi, I'm browsing your site. Can I get a quote?</p>
+        <p className="text-sm font-medium leading-snug">Hi, I'm browsing your site. Can I get a quote?</p>
      </motion.div>
 
      <motion.div 
@@ -38,10 +38,10 @@ const CaptureVisual = () => (
            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Instantly</span>
         </div>
         <p className="text-sm text-slate-700 leading-relaxed">
-           Hey! 👋 Thanks for reaching out. We are 24/7. I can generate that quote for you right now. 
+           Hey! 👋 We are 24/7. I can generate that quote for you right now. 
         </p>
         <div className="mt-3">
-           <span className="px-3 py-1.5 bg-blue-50 text-blue-600 text-xs font-bold rounded-lg border border-blue-100">Start Quote</span>
+           <span className="px-3 py-1.5 bg-blue-50 text-blue-600 text-xs font-bold rounded-lg border border-blue-100 block text-center cursor-pointer hover:bg-blue-100 transition-colors">Start Quote</span>
         </div>
      </motion.div>
   </div>
@@ -62,7 +62,7 @@ const ScheduleVisual = () => (
         </div>
         
         <p className="text-sm text-slate-600 mb-4 font-medium">
-           I've checked the team's calendar. Best slots for tomorrow:
+           Best slots for tomorrow:
         </p>
 
         <div className="space-y-2">
@@ -105,7 +105,7 @@ const ProactiveVisual = () => (
         </div>
         <div>
            <div className="text-xs font-bold text-slate-900">TopEdge Spa</div>
-           <div className="text-[10px] text-slate-500 font-medium leading-tight mt-0.5">🎂 Happy Birthday, Sarah! A gift is waiting...</div>
+           <div className="text-[10px] text-slate-500 font-medium leading-tight mt-0.5">🎂 Happy Birthday! A gift is waiting...</div>
         </div>
      </motion.div>
 
@@ -148,9 +148,9 @@ const CrmVisual = () => (
         
         <div className="p-4 space-y-3">
            {[
-              { label: "Name", value: "Alex Johnson", delay: 0.2 },
+              { label: "Name", value: "Alex J.", delay: 0.2 },
               { label: "Email", value: "alex@gmail.com", delay: 0.4 },
-              { label: "Intent", value: "High (Booking)", color: "text-emerald-700 bg-emerald-100 border-emerald-200", delay: 0.6 }
+              { label: "Intent", value: "Booking", color: "text-emerald-700 bg-emerald-100 border-emerald-200", delay: 0.6 }
            ].map((item, i) => (
               <motion.div 
                  key={i}
@@ -182,14 +182,12 @@ const CrmVisual = () => (
   </div>
 );
 
-// --- STEPS DATA ---
-
 const steps = [
   {
     id: 0,
     tag: "Capture",
     title: "24/7 Lead Capture",
-    description: "Your bot never sleeps. Whether it's 2 PM or 2 AM, it engages visitors instantly, answers queries, and stops lead leakage before it happens.",
+    description: "Your bot never sleeps. It engages visitors instantly, answers queries, and stops lead leakage before it happens.",
     icon: Clock,
     color: "blue",
     visualComponent: <CaptureVisual />
@@ -198,7 +196,7 @@ const steps = [
     id: 1,
     tag: "Schedule",
     title: "Smart Scheduling",
-    description: "Connects directly to your calendar. The AI checks your real-time availability and books appointments for you without any back-and-forth emails.",
+    description: "Connects directly to your calendar. The AI checks availability and books appointments without back-and-forth emails.",
     icon: Calendar,
     color: "emerald",
     visualComponent: <ScheduleVisual />
@@ -207,7 +205,7 @@ const steps = [
     id: 2,
     tag: "Retain",
     title: "Proactive Growth",
-    description: "It doesn't just wait. The bot automatically sends birthday wishes, appointment reminders, and re-activation offers to keep your clients loyal.",
+    description: "The bot automatically sends birthday wishes, appointment reminders, and re-activation offers to keep clients loyal.",
     icon: Gift,
     color: "rose",
     visualComponent: <ProactiveVisual />
@@ -216,14 +214,12 @@ const steps = [
     id: 3,
     tag: "Sync",
     title: "Instant CRM Sync",
-    description: "Zero data entry. Every conversation, contact detail, and user intent is automatically formatted and pushed to your CRM dashboard.",
+    description: "Zero data entry. Every conversation, contact detail, and user intent is automatically formatted and pushed to your CRM.",
     icon: Database,
     color: "violet",
     visualComponent: <CrmVisual />
   }
 ];
-
-// --- MAIN COMPONENT ---
 
 const HowChatbotWorksSection = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -239,41 +235,42 @@ const HowChatbotWorksSection = () => {
   const ActiveIcon = steps[activeStep].icon;
 
   return (
-    <section className="py-24 md:py-32 bg-white relative overflow-hidden">
+    <section className="py-20 md:py-32 bg-white relative overflow-hidden">
       
       {/* Background Ambience */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-         <div className="absolute top-[-20%] right-[-10%] w-[800px] h-[800px] bg-blue-50/60 rounded-full blur-[120px]" />
-         <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-emerald-50/60 rounded-full blur-[120px]" />
+         <div className="absolute top-[-20%] right-[-10%] w-[400px] md:w-[800px] h-[400px] md:h-[800px] bg-blue-50/60 rounded-full blur-[80px] md:blur-[120px]" />
+         <div className="absolute bottom-[-10%] left-[-10%] w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-emerald-50/60 rounded-full blur-[80px] md:blur-[120px]" />
          <div className="absolute inset-0 bg-[linear-gradient(to_right,#f1f5f9_1px,transparent_1px),linear-gradient(to_bottom,#f1f5f9_1px,transparent_1px)] bg-[size:40px_40px] opacity-60"></div>
       </div>
 
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         
-        {/* Main Flex Container */}
-        <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 items-center">
+        {/* Main Grid Container */}
+        {/* Flex layout naturally places Left Column (Text) before Right Column (Phone) on all screens */}
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 items-center">
           
-          {/* LEFT: Dynamic Text Content */}
-          <div className="w-full lg:w-1/2 flex flex-col justify-center lg:h-[600px] relative order-2 lg:order-1 -mt-10 lg:mt-0">
+          {/* LEFT COLUMN: Header + Text Content */}
+          <div className="w-full lg:w-1/2 flex flex-col justify-center">
              
-             {/* Header + Title moved here */}
-             <div className="mb-8">
-               <motion.div 
-                 initial={{ opacity: 0, y: 10 }}
-                 whileInView={{ opacity: 1, y: 0 }}
-                 viewport={{ once: true }}
-                 className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-50 border border-slate-200 text-slate-600 text-xs font-bold uppercase tracking-widest mb-6 shadow-sm"
-               >
-                 <Bot className="w-3 h-3 text-blue-600" />
-                 Workflow Engine
-               </motion.div>
-               <h2 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tight leading-tight">
-                 How it works.
-               </h2>
+             {/* Header Section - Now Part of Flow to prevent overlap */}
+             <div className="mb-10 text-center lg:text-left">
+                <motion.div 
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-50 border border-slate-200 text-slate-600 text-xs font-bold uppercase tracking-widest mb-6 shadow-sm"
+                >
+                  <Bot className="w-3 h-3 text-blue-600" />
+                  Workflow Engine
+                </motion.div>
+                <h2 className="text-3xl md:text-5xl lg:text-6xl font-semibold text-slate-900 tracking-tight leading-tight">
+                  How <span className="text-[#25D366]">Chatbot</span> works.
+                </h2>
              </div>
 
              {/* Dynamic Step Content */}
-             <div className="relative min-h-[220px]">
+             <div className="relative min-h-[240px]">
                <AnimatePresence mode="wait">
                  <motion.div
                    key={activeStep}
@@ -281,22 +278,22 @@ const HowChatbotWorksSection = () => {
                    animate={{ opacity: 1, x: 0 }}
                    exit={{ opacity: 0, x: 20 }}
                    transition={{ duration: 0.5, ease: "circOut" }}
-                   className="space-y-6"
+                   className="space-y-6 text-center lg:text-left"
                  >
-                    <div className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-lg text-sm font-bold uppercase tracking-wider shadow-sm border ${getBadgeColor(steps[activeStep].color)}`}>
+                    <div className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-lg text-sm font-bold uppercase tracking-wider shadow-sm border mx-auto lg:mx-0 ${getBadgeColor(steps[activeStep].color)}`}>
                        <ActiveIcon className="w-4 h-4" />
                        {steps[activeStep].tag}
                     </div>
                     
-                    <h3 className="text-3xl md:text-4xl font-extrabold text-slate-900 leading-tight">
+                    <h3 className="text-2xl md:text-4xl font-semibold text-slate-900 leading-tight">
                        {steps[activeStep].title}
                     </h3>
                     
-                    <p className="text-lg text-slate-500 leading-relaxed max-w-lg font-medium">
+                    <p className="text-lg text-slate-500 leading-relaxed max-w-lg mx-auto lg:mx-0 font-medium">
                        {steps[activeStep].description}
                     </p>
 
-                    <div className="pt-2">
+                    <div className="pt-2 flex justify-center lg:justify-start">
                        <button className="flex items-center gap-2 text-sm font-bold text-slate-900 hover:gap-3 transition-all group">
                           Explore Feature <ArrowRight className="w-4 h-4 text-blue-600 group-hover:text-blue-700" />
                        </button>
@@ -306,14 +303,13 @@ const HowChatbotWorksSection = () => {
              </div>
 
              {/* Progress Indicators */}
-             <div className="grid grid-cols-4 gap-4 mt-12">
+             <div className="grid grid-cols-4 gap-2 md:gap-4 mt-12">
                 {steps.map((step, index) => (
                    <div 
                       key={index}
                       onClick={() => setActiveStep(index)}
                       className="cursor-pointer group"
                    >
-                      {/* Premium Progress Bar */}
                       <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden mb-4 relative ring-1 ring-slate-900/5">
                          <div className="absolute inset-0 bg-slate-100" />
                          
@@ -323,9 +319,7 @@ const HowChatbotWorksSection = () => {
                                initial={{ width: "0%" }}
                                animate={{ width: "100%" }}
                                transition={{ duration: CYCLE_DURATION / 1000, ease: "linear" }}
-                            >
-                               <div className="absolute top-0 right-0 bottom-0 w-[10px] bg-white/50 blur-[2px] shadow-[0_0_8px_white]" />
-                            </motion.div>
+                            />
                          )}
                          
                          {activeStep > index && (
@@ -333,19 +327,19 @@ const HowChatbotWorksSection = () => {
                          )}
                       </div>
                       
-                      <span className={`text-xs font-bold transition-colors duration-300 ${
+                      <span className={`text-[10px] md:text-xs font-bold transition-colors duration-300 uppercase tracking-wide block text-center lg:text-left ${
                          activeStep === index ? 'text-slate-900' : 'text-slate-400 group-hover:text-slate-600'
                       }`}>
-                         0{index + 1} {step.tag}
+                         {step.tag}
                       </span>
                    </div>
                 ))}
              </div>
           </div>
 
-          {/* RIGHT: Visual Phone Mockup */}
-          <div className="w-full lg:w-1/2 flex items-center justify-center order-1 lg:order-2">
-             <div className="relative w-full max-w-[360px] aspect-[9/18]">
+          {/* RIGHT COLUMN: Visual Phone Mockup */}
+          <div className="w-full lg:w-1/2 flex items-center justify-center mt-8 lg:mt-0">
+             <div className="relative w-full max-w-[320px] aspect-[9/18]">
                 
                 {/* Phone Frame */}
                 <div className="absolute inset-0 bg-white rounded-[3rem] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.15)] border-[8px] border-white ring-1 ring-slate-900/5 overflow-hidden z-10">

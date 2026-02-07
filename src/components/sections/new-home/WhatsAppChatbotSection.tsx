@@ -1,30 +1,31 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
-import { MessageCircle, Check, ArrowRight, Play, Mic, Plus, Camera, Phone, Video } from 'lucide-react';
+import { MessageCircle, Check, ArrowRight, Play, Mic, Plus, Camera, Phone, Video, ArrowUpRight, ChevronLeft } from 'lucide-react';
 
 const WhatsAppChatbotSection = () => {
   return (
-    <section className="py-24 md:py-32 bg-[#0B1121] overflow-hidden relative">
-      {/* Background Ambience */}
+    <section className="py-24 md:py-32 bg-slate-50 overflow-hidden relative font-sans">
+      
+      {/* Background Ambience - Light Theme */}
       <div className="absolute inset-0 pointer-events-none">
-         <div className="absolute top-[-20%] left-[-10%] w-[1000px] h-[1000px] bg-emerald-900/20 rounded-full blur-[120px]" />
-         <div className="absolute bottom-[-10%] right-[-10%] w-[800px] h-[800px] bg-[#075E54]/20 rounded-full blur-[100px]" />
-         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-5"></div>
+         <div className="absolute top-[-10%] right-[-5%] w-[800px] h-[800px] bg-emerald-100/50 rounded-full blur-[100px]" />
+         <div className="absolute bottom-[10%] left-[-10%] w-[600px] h-[600px] bg-teal-50/60 rounded-full blur-[100px]" />
+         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] mix-blend-multiply"></div>
       </div>
 
       <div className="container mx-auto px-4 max-w-7xl relative z-10">
         <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
           
           {/* Left Content */}
-          <div className="lg:w-1/2">
+          <div className="lg:w-1/2 relative z-20 text-center lg:text-left">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold uppercase tracking-widest mb-6 backdrop-blur-sm"
+              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 text-[11px] font-bold uppercase tracking-widest mb-6 shadow-sm"
             >
-              <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              WhatsApp Business API
+              <MessageCircle className="w-3 h-3 fill-current" />
+              WhatsApp Automation
             </motion.div>
             
             <motion.h2
@@ -32,11 +33,11 @@ const WhatsAppChatbotSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-6 tracking-tight leading-[1.1]"
+              className="text-4xl md:text-5xl lg:text-6xl font-semibold text-slate-900 mb-6 tracking-tight leading-[1.1]"
             >
-              Meet your customers <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#25D366] to-emerald-400">
-                where they live.
+              Convert Leads on <br />
+              <span className="text-[#25D366]">
+                WhatsApp 24/7
               </span>
             </motion.h2>
             
@@ -45,33 +46,30 @@ const WhatsAppChatbotSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="text-xl text-slate-400 mb-10 leading-relaxed max-w-lg"
+              className="text-lg text-slate-500 mb-8 leading-relaxed max-w-xl mx-auto lg:mx-0"
             >
-              Automate 90% of support and sales on the world's most popular messaging app. No apps to download, just instant connection.
+              WhatsApp has a 98% open rate but Response time kills deals. Our WhatsApp agents respond instantly to qualify intent, handle objections, and book meetings before your competitor opens the app.
             </motion.p>
             
-            <ul className="space-y-5 mb-12">
+            <ul className="space-y-4 mb-10 text-left max-w-lg mx-auto lg:mx-0">
               {[
-                { label: "Zero Wait Time", desc: "Instant AI responses 24/7" },
-                { label: "High Open Rates", desc: "98% vs 20% for email" },
-                { label: "Rich Media", desc: "Send PDFs, images, & videos" },
-                { label: "Seamless Handoff", desc: "Smart escalation to humans" }
+                "Engage every lead the second they message.",
+                "Filter tire-kickers from serious buyers instantly.",
+                "Syncs with your calendar to lock in bookings on the spot.",
+                "Seamless handoff to humans for high-value deals with our own Dashboard"
               ].map((item, i) => (
                 <motion.li 
                   key={i}
-                  initial={{ opacity: 0, x: -20 }}
+                  initial={{ opacity: 0, x: -10 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.3 + i * 0.1 }}
-                  className="flex items-start gap-4 group"
+                  className="flex items-start gap-3"
                 >
-                  <div className="w-8 h-8 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center flex-shrink-0 border border-emerald-500/20 group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300">
-                    <Check className="w-4 h-4" />
+                  <div className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <Check className="w-3 h-3 stroke-[3]" />
                   </div>
-                  <div>
-                     <h4 className="text-white font-bold text-lg leading-none mb-1">{item.label}</h4>
-                     <p className="text-slate-500 text-sm">{item.desc}</p>
-                  </div>
+                  <span className="text-slate-600 text-base font-medium leading-snug">{item}</span>
                 </motion.li>
               ))}
             </ul>
@@ -83,16 +81,15 @@ const WhatsAppChatbotSection = () => {
               transition={{ delay: 0.6 }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="group bg-[#25D366] text-white hover:bg-[#128C7E] px-8 py-4 rounded-full text-lg font-bold shadow-[0_0_30px_-5px_rgba(37,211,102,0.4)] flex items-center gap-3 transition-all"
+              className="bg-[#25D366] text-white hover:bg-[#1faa53] px-8 py-4 rounded-full text-lg font-bold shadow-[0_10px_30px_-10px_rgba(37,211,102,0.4)] flex items-center gap-2 transition-all w-full sm:w-auto justify-center mx-auto lg:mx-0"
             >
-              <MessageCircle className="w-6 h-6 fill-current" />
-              <span>Start WhatsApp Demo</span>
-              <ArrowRight className="w-5 h-5 opacity-60 group-hover:translate-x-1 transition-transform" />
+              <span>Click me if interested</span>
+              <ArrowUpRight className="w-5 h-5 stroke-[2.5]" />
             </motion.button>
           </div>
 
           {/* Right Content - Ultra Realistic Phone */}
-          <div className="lg:w-1/2 flex justify-center lg:justify-end perspective-1000">
+          <div className="lg:w-1/2 w-full flex justify-center lg:justify-end relative z-20 perspective-1000">
              <PhoneSimulation />
           </div>
 
@@ -104,147 +101,184 @@ const WhatsAppChatbotSection = () => {
 
 const PhoneSimulation = () => {
    const containerRef = useRef(null);
+   const chatContainerRef = useRef<HTMLDivElement>(null);
    const isInView = useInView(containerRef, { margin: "-20% 0px -20% 0px" });
-   const [step, setStep] = useState(0);
+   
+   const [messages, setMessages] = useState<any[]>([]);
+   const [isTyping, setIsTyping] = useState(false);
 
+   // Auto Scroll
    useEffect(() => {
-      if (isInView) {
-         const interval = setInterval(() => {
-            setStep(prev => prev < 4 ? prev + 1 : prev); // Stop at 4
-         }, 1500);
-         return () => clearInterval(interval);
-      } else {
-         setStep(0); // Reset when out of view
+      if (chatContainerRef.current) {
+         chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
       }
+   }, [messages, isTyping]);
+
+   // Chat Sequence (Exact Match to Image)
+   useEffect(() => {
+      let timeouts: NodeJS.Timeout[] = [];
+
+      if (isInView) {
+         const runSequence = async () => {
+            setMessages([]);
+            setIsTyping(false);
+
+            // 1. Bot Welcome (Immediate)
+            timeouts.push(setTimeout(() => {
+                setMessages([{ 
+                   id: 1, type: 'bot', 
+                   text: "Hello! 👋 Welcome to TopEdge AI. How can I help you automate your business today?", 
+                   time: "10:00 AM" 
+                }]);
+            }, 500));
+
+            // 2. User Response
+            timeouts.push(setTimeout(() => {
+               setMessages(prev => [...prev, { 
+                  id: 2, type: 'user', 
+                  text: "I'm interested in AI Voice Agents.", 
+                  time: "10:01 AM" 
+               }]);
+            }, 2000));
+
+            // 3. Bot Typing -> Reply
+            timeouts.push(setTimeout(() => setIsTyping(true), 2800));
+            timeouts.push(setTimeout(() => {
+               setIsTyping(false);
+               setMessages(prev => [...prev, { 
+                  id: 3, type: 'bot', 
+                  text: "Great choice! Our Voice Agents can handle inbound/outbound calls 24/7. Would you like to hear a demo or see pricing?", 
+                  time: "10:01 AM" 
+               }]);
+            }, 4500));
+
+            // 4. User Response
+            timeouts.push(setTimeout(() => {
+               setMessages(prev => [...prev, { 
+                  id: 4, type: 'user', 
+                  text: "Hear a demo please.", 
+                  time: "10:02 AM" 
+               }]);
+            }, 6500));
+
+            // 5. Bot Typing -> Audio Reply
+            timeouts.push(setTimeout(() => setIsTyping(true), 7200));
+            timeouts.push(setTimeout(() => {
+               setIsTyping(false);
+               setMessages(prev => [...prev, { 
+                  id: 5, type: 'bot', 
+                  text: "Sure! 🎧 Here is a sample of our AI Agent in action:", 
+                  isAudio: true,
+                  time: "10:02 AM" 
+               }]);
+            }, 9000));
+         };
+
+         runSequence();
+      } else {
+         setMessages([]);
+         setIsTyping(false);
+         timeouts.forEach(clearTimeout);
+      }
+
+      return () => timeouts.forEach(clearTimeout);
    }, [isInView]);
 
    return (
-      <motion.div 
+      <div 
          ref={containerRef}
-         initial={{ rotateY: 15, rotateX: 5 }}
-         whileHover={{ rotateY: 0, rotateX: 0 }}
-         transition={{ duration: 0.8, ease: "easeOut" }}
-         className="relative w-[380px] h-[780px] bg-[#1c1c1e] rounded-[3.5rem] p-3 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] border-[6px] border-[#2d2d2f] ring-1 ring-white/10"
+         className="relative w-full max-w-[360px] h-[720px] bg-[#2A2A2A] rounded-[3.5rem] p-3 shadow-2xl border-[6px] border-[#333333] ring-1 ring-black/10 transform transition-transform hover:scale-[1.01]"
       >
-         {/* Dynamic Island */}
-         <div className="absolute top-7 left-1/2 -translate-x-1/2 w-32 h-9 bg-black rounded-full z-50 flex items-center justify-center gap-2 px-3">
-            <div className="w-2 h-2 rounded-full bg-[#075E54]/50 animate-pulse" />
-         </div>
+         {/* Dynamic Island / Notch */}
+         <div className="absolute top-6 left-1/2 -translate-x-1/2 w-32 h-7 bg-black rounded-full z-50" />
 
          {/* Screen */}
-         <div className="w-full h-full bg-[#EFE7DE] rounded-[3rem] overflow-hidden relative flex flex-col">
+         <div className="w-full h-full bg-[#E5DDD5] rounded-[3rem] overflow-hidden relative flex flex-col font-sans">
             
-            {/* WhatsApp Header */}
-            <div className="bg-[#F6F6F6] bg-opacity-90 backdrop-blur-xl pt-14 pb-3 px-4 border-b border-slate-200 flex items-center justify-between z-20 sticky top-0">
-               <div className="flex items-center gap-3">
-                  <div className="text-blue-500 flex items-center gap-1 -ml-2">
-                     <ArrowRight className="w-6 h-6 rotate-180" />
-                     <span className="text-lg">95</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                     <div className="w-10 h-10 rounded-full bg-slate-200 overflow-hidden relative border border-slate-300">
-                        <div className="absolute inset-0 bg-gradient-to-tr from-[#25D366] to-emerald-400 flex items-center justify-center text-white font-bold text-lg">
-                           TE
-                        </div>
-                     </div>
-                     <div>
-                        <div className="font-bold text-black text-sm flex items-center gap-1">
-                           TopEdge AI <Check className="w-3 h-3 text-blue-500 fill-current" />
-                        </div>
-                        <div className="text-[10px] text-slate-500">Official Business Account</div>
-                     </div>
-                  </div>
+            {/* WhatsApp Business Header (Official Colors) */}
+            <div className="bg-[#075E54] pt-12 pb-3 px-4 flex items-center gap-3 shadow-md z-20 sticky top-0 text-white">
+               <ChevronLeft className="w-6 h-6 -ml-2" />
+               <div className="w-10 h-10 rounded-full bg-emerald-400 flex items-center justify-center text-white font-bold text-sm border-2 border-white/20">
+                  TE
                </div>
-               <div className="flex gap-4 text-blue-500">
-                  <Video className="w-6 h-6" />
-                  <Phone className="w-6 h-6" />
+               <div className="flex-1 min-w-0">
+                  <div className="font-bold text-base truncate flex items-center gap-1.5">
+                     TopEdge AI <div className="w-3 h-3 bg-white rounded-full flex items-center justify-center"><Check className="w-2 h-2 text-emerald-600 stroke-[4]" /></div>
+                  </div>
+                  <div className="text-[11px] opacity-80 truncate">Business Account</div>
+               </div>
+               <div className="flex gap-4 opacity-90">
+                  <Video className="w-5 h-5" />
+                  <Phone className="w-5 h-5" />
                </div>
             </div>
 
             {/* Chat Area */}
-            <div className="flex-1 p-4 space-y-4 overflow-y-auto relative">
-               {/* Wallpaper Pattern */}
-               <div className="absolute inset-0 opacity-[0.06] bg-[url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png')] pointer-events-none" />
+            <div 
+               ref={chatContainerRef}
+               className="flex-1 p-4 space-y-3 overflow-y-auto relative scroll-smooth"
+            >
+               {/* WhatsApp Wallpaper Pattern */}
+               <div className="absolute inset-0 opacity-[0.4] bg-[url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png')] pointer-events-none" />
 
-               {/* Date Badge */}
-               <div className="flex justify-center mb-6 relative z-10">
-                  <span className="bg-[#E1F3FB] text-slate-600 text-[10px] font-medium px-3 py-1 rounded-lg shadow-sm uppercase tracking-wide">Today</span>
-               </div>
-
-               <AnimatePresence>
-                  {step >= 1 && (
-                     <motion.div 
+               <AnimatePresence mode='popLayout'>
+                  {messages.map((msg) => (
+                     <motion.div
+                        key={msg.id}
                         initial={{ opacity: 0, y: 10, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
-                        className="bg-white p-3 rounded-xl rounded-tl-none shadow-sm max-w-[80%] self-start relative z-10"
+                        transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                        className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'} relative z-10`}
                      >
-                        <p className="text-[15px] text-black leading-snug">
-                           Hi! 👋 Welcome to TopEdge AI. Looking to automate your business?
-                        </p>
-                        <div className="text-[10px] text-gray-400 text-right mt-1">10:41 AM</div>
-                     </motion.div>
-                  )}
+                        <div className={`${
+                           msg.type === 'user' ? 'bg-[#DCF8C6]' : 'bg-white'
+                        } px-3 py-2 rounded-lg shadow-[0_1px_1px_rgba(0,0,0,0.1)] max-w-[85%] text-[14px] text-slate-800 leading-snug relative`}
+                        style={{
+                           borderTopLeftRadius: msg.type === 'bot' ? '0' : '8px',
+                           borderTopRightRadius: msg.type === 'user' ? '0' : '8px'
+                        }}>
+                           {/* Bubble Arrow Tail */}
+                           <div className={`absolute top-0 w-3 h-3 ${msg.type === 'user' ? 'right-[-6px] bg-[#DCF8C6]' : 'left-[-6px] bg-white'}`} 
+                                style={{ clipPath: msg.type === 'user' ? 'polygon(0 0, 100% 0, 0 100%)' : 'polygon(0 0, 100% 0, 100% 100%)' }} />
 
-                  {step >= 2 && (
-                     <motion.div 
-                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        transition={{ delay: 0.5 }}
-                        className="bg-[#DCF8C6] p-3 rounded-xl rounded-tr-none shadow-sm max-w-[80%] ml-auto relative z-10"
-                     >
-                        <p className="text-[15px] text-black leading-snug">
-                           Yes! I need a chatbot for my real estate agency. 🏠
-                        </p>
-                        <div className="text-[10px] text-[#559C78] text-right mt-1 flex items-center justify-end gap-1">
-                           10:42 AM <Check className="w-3 h-3 text-blue-500" />
-                        </div>
-                     </motion.div>
-                  )}
-
-                  {step >= 3 && (
-                     <motion.div 
-                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        transition={{ delay: 1 }}
-                        className="bg-white p-3 rounded-xl rounded-tl-none shadow-sm max-w-[85%] self-start relative z-10"
-                     >
-                        <p className="text-[15px] text-black leading-snug mb-2">
-                           Great! 🚀 Our Real Estate Bot can qualify leads and book viewings 24/7. Here is a quick audio demo:
-                        </p>
-                        
-                        {/* Audio Player UI */}
-                        <div className="flex items-center gap-3 bg-slate-50 p-2 rounded-lg border border-slate-100">
-                           <div className="w-10 h-10 rounded-full bg-[#F5F5F5] flex items-center justify-center border border-slate-200">
-                              <Play className="w-4 h-4 text-slate-500 fill-current ml-0.5" />
-                           </div>
-                           <div className="flex-1">
-                              <div className="h-8 flex items-center gap-0.5 opacity-50">
-                                 {[...Array(20)].map((_, i) => (
-                                    <motion.div 
-                                       key={i}
-                                       animate={{ height: [8, 16, 8] }}
-                                       transition={{ duration: 0.8, repeat: Infinity, delay: i * 0.05 }}
-                                       className="w-1 bg-slate-400 rounded-full"
-                                       style={{ height: Math.random() * 20 + 5 }}
-                                    />
-                                 ))}
+                           {msg.isAudio ? (
+                              <div>
+                                 <p className="mb-2">{msg.text}</p>
+                                 <div className="flex items-center gap-3 bg-slate-50 p-2 rounded border border-slate-100 pr-4">
+                                    <div className="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center">
+                                       <Play className="w-4 h-4 text-slate-500 ml-0.5 fill-current" />
+                                    </div>
+                                    <div className="h-6 flex items-center gap-0.5 flex-1 opacity-40">
+                                       {[...Array(15)].map((_, i) => (
+                                          <div key={i} className="w-0.5 bg-slate-800 rounded-full" style={{ height: Math.random() * 16 + 4 }} />
+                                       ))}
+                                    </div>
+                                 </div>
                               </div>
+                           ) : (
+                              msg.text
+                           )}
+                           
+                           <div className="text-[10px] text-slate-400 text-right mt-1 flex items-center justify-end gap-1 select-none">
+                              {msg.time}
+                              {msg.type === 'user' && <span className="text-blue-400">✓✓</span>}
                            </div>
-                           <div className="text-[10px] text-slate-400 font-mono">0:14</div>
                         </div>
-                        <div className="text-[10px] text-gray-400 text-right mt-1">10:42 AM</div>
                      </motion.div>
-                  )}
+                  ))}
 
-                  {step >= 4 && (
+                  {/* Typing Indicator */}
+                  {isTyping && (
                      <motion.div 
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 1.5 }}
-                        className="flex justify-center pt-4"
+                        initial={{ opacity: 0, scale: 0.8, y: 10 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.8, y: 10 }}
+                        className="flex justify-start relative z-10"
                      >
-                        <div className="bg-white border border-slate-200 rounded-full px-4 py-2 shadow-sm text-blue-500 font-medium text-sm flex items-center gap-2 cursor-pointer hover:bg-slate-50 transition-colors">
-                           <MessageCircle className="w-4 h-4" /> Start Live Demo
+                        <div className="bg-white px-4 py-3 rounded-lg rounded-tl-none shadow-sm flex items-center gap-1.5 ml-2">
+                           <motion.div animate={{ y: [0, -4, 0] }} transition={{ repeat: Infinity, duration: 0.6, delay: 0 }} className="w-1.5 h-1.5 bg-slate-400 rounded-full" />
+                           <motion.div animate={{ y: [0, -4, 0] }} transition={{ repeat: Infinity, duration: 0.6, delay: 0.2 }} className="w-1.5 h-1.5 bg-slate-400 rounded-full" />
+                           <motion.div animate={{ y: [0, -4, 0] }} transition={{ repeat: Infinity, duration: 0.6, delay: 0.4 }} className="w-1.5 h-1.5 bg-slate-400 rounded-full" />
                         </div>
                      </motion.div>
                   )}
@@ -252,19 +286,20 @@ const PhoneSimulation = () => {
             </div>
 
             {/* Footer Input Area */}
-            <div className="bg-[#F6F6F6] px-4 py-3 pb-8 border-t border-slate-200 flex items-center gap-3 relative z-20">
-               <Plus className="w-6 h-6 text-blue-500" />
-               <div className="flex-1 bg-white border border-slate-200 rounded-full h-9 px-4 text-[15px] flex items-center text-slate-400 shadow-sm">
+            <div className="bg-[#F0F2F5] px-2 py-2 flex items-center gap-2 relative z-20 pb-6">
+               <Plus className="w-6 h-6 text-slate-500 p-1" />
+               <div className="flex-1 bg-white rounded-full h-10 px-4 text-[15px] flex items-center text-slate-400 shadow-sm">
                   Type a message...
                </div>
-               <Camera className="w-6 h-6 text-blue-500" />
-               <Mic className="w-6 h-6 text-blue-500" />
+               <div className="w-10 h-10 bg-[#075E54] rounded-full flex items-center justify-center shadow-sm text-white shrink-0">
+                  <Mic className="w-5 h-5" />
+               </div>
             </div>
 
             {/* Home Indicator */}
-            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-32 h-1 bg-black/20 rounded-full z-50" />
+            <div className="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-32 h-1 bg-black/20 rounded-full z-50" />
          </div>
-      </motion.div>
+      </div>
    );
 }
 
