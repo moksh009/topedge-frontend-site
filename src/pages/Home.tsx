@@ -120,6 +120,8 @@ const Home = () => {
           
           
           <BenefitsSection />
+
+          <ROICalculatorSection />
           
           <WhatsAppChatbotSection />
 
@@ -131,7 +133,7 @@ const Home = () => {
           
           <ReviewsSection />
 
-          <ROICalculatorSection />
+          
           
           <CTASection />
         </div>
