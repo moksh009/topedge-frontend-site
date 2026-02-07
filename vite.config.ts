@@ -60,8 +60,8 @@ export default defineConfig(({ mode }) => {
       include: ['react', 'react-dom', 'react-router-dom', 'framer-motion'],
       exclude: ['firebase'],
     },
-    define: {
-      global: 'globalThis',
-    },
+    // define: {
+    //   global: 'globalThis',
+    // },
   };
 });
