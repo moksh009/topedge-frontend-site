@@ -42,7 +42,7 @@ const AICallerDashboardSection = () => {
   }, [activeFeature, isMobile]);
 
   return (
-    <section className="py-24 md:py-32 bg-black relative overflow-hidden">
+    <section className="py-16 md:py-32 bg-black relative overflow-hidden">
       
       {/* Background Ambience */}
       <div className="absolute inset-0 pointer-events-none">
@@ -54,7 +54,7 @@ const AICallerDashboardSection = () => {
       <div className="container mx-auto px-4 max-w-7xl relative z-10">
         
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 lg:mb-24">
+        <div className="text-center max-w-3xl mx-auto mb-12 lg:mb-24">
           <motion.div
              initial={{ opacity: 0, y: 20 }}
              whileInView={{ opacity: 1, y: 0 }}
@@ -68,7 +68,7 @@ const AICallerDashboardSection = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-6xl lg:text-7xl font-semibold text-white mb-6 tracking-tight"
+            className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-semibold text-white mb-6 tracking-tight"
           >
             Manage your <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-white to-indigo-400">
@@ -179,7 +179,7 @@ const AICallerDashboardSection = () => {
            >
               {features.map((feature, index) => (
                  <div key={feature.id} className="min-w-[100vw] sm:min-w-[90vw] snap-center px-4">
-                    <div className="bg-[#09090B] rounded-[2rem] border border-white/10 overflow-hidden shadow-2xl relative h-[550px] flex flex-col">
+                    <div className="bg-[#09090B] rounded-[2rem] border border-white/10 overflow-hidden shadow-2xl relative h-[480px] sm:h-[550px] flex flex-col">
                        <div className="p-5 border-b border-white/5 bg-black/40 backdrop-blur-md z-10 flex items-center gap-4">
                           <div className="w-10 h-10 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 shrink-0">
                              <feature.icon className="w-5 h-5" />

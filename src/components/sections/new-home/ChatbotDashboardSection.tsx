@@ -33,7 +33,7 @@ const ChatbotDashboardSection = () => {
   }, [isMobile]);
 
   return (
-    <section className="py-24 md:py-32 bg-black relative overflow-hidden">
+    <section className="py-16 md:py-32 bg-black relative overflow-hidden">
       
       {/* Background */}
       <div className="absolute inset-0 pointer-events-none">
@@ -45,7 +45,7 @@ const ChatbotDashboardSection = () => {
       <div className="container mx-auto px-4 max-w-7xl relative z-10">
         
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 lg:mb-20">
+        <div className="text-center max-w-3xl mx-auto mb-12 lg:mb-20">
           <motion.div
              initial={{ opacity: 0, y: 20 }}
              whileInView={{ opacity: 1, y: 0 }}
@@ -59,7 +59,7 @@ const ChatbotDashboardSection = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-6xl lg:text-7xl font-semibold text-white mb-6 tracking-tight"
+            className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-semibold text-white mb-6 tracking-tight"
           >
             Total Control Over <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-200 to-emerald-400">
@@ -96,7 +96,7 @@ const ChatbotDashboardSection = () => {
            </div>
 
            {/* 2. The Dashboard Card */}
-           <div className="w-full max-w-md aspect-[4/5] bg-[#09090B] rounded-[2rem] border border-white/10 overflow-hidden shadow-2xl relative flex flex-col">
+           <div className="w-full max-w-md h-[420px] sm:h-auto sm:aspect-[4/5] bg-[#09090B] rounded-[2rem] border border-white/10 overflow-hidden shadow-2xl relative flex flex-col">
               <div className="h-10 bg-black/40 border-b border-white/5 flex items-center px-4 gap-2 shrink-0">
                  <div className="flex gap-1.5"><div className="w-2 h-2 rounded-full bg-zinc-700" /><div className="w-2 h-2 rounded-full bg-zinc-700" /></div>
                  <div className="ml-auto flex items-center gap-1"><div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" /><span className="text-[9px] text-zinc-500">Live</span></div>

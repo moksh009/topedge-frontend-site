@@ -19,12 +19,13 @@ const Navbar = () => {
 
   const navItems = [
     { path: '/', label: 'Home', icon: Home, desc: 'Main Page' },
-    { path: '/community/home', label: 'Community', icon: Users, desc: 'Join Builders' },
+    { path: '/contact', label: 'Contact', icon: Mail, desc: 'Get in Touch' },
     { path: '/about', label: 'About', icon: User, desc: 'Our Story' },
     { path: '/services', label: 'Services', icon: Calendar, desc: 'What We Do' },
     { path: '/testimonials', label: 'Testimonials', icon: Star, desc: 'Client Love' },
     { path: '/pricing', label: 'Pricing', icon: Tag, desc: 'Plans & Costs' },
-    { path: '/contact', label: 'Contact', icon: Mail, desc: 'Get in Touch' },
+    { path: '/community/home', label: 'Community', icon: Users, desc: 'Join Builders' },
+    
   ];
 
   // Apple-style Glass Morphism Classes

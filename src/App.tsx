@@ -79,7 +79,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     : "Transform your customer service with TopEdge AI's advanced voice agents and chatbots. 24/7 availability, reduced costs, and improved customer satisfaction.";
 
   return (
-    <div className={`min-h-screen bg-background text-text transition-colors duration-200 relative ${isHomePage ? 'lg:[zoom:0.9]' : ''}`}>
+    <div className={`min-h-screen bg-background text-text transition-colors duration-200 relative [zoom:0.9]`}>
       <Helmet>
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription} />

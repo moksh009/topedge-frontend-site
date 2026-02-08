@@ -26,12 +26,12 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <div className="relative bg-white min-h-[100vh] overflow-hidden text-slate-900 font-sans selection:bg-indigo-500 selection:text-white">
+    <div className="relative bg-white min-h-[100dvh] overflow-hidden text-slate-900 font-sans selection:bg-indigo-500 selection:text-white">
        
        {/* Background */}
        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-50/50 via-white to-white pointer-events-none" />
        
-       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-32">
+       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-20 md:pt-24 md:pb-32">
          
          <div className="flex flex-col items-center text-center">
             
@@ -41,7 +41,7 @@ const HeroSection = () => {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-slate-200 shadow-sm mb-4 mt-8 hover:border-indigo-200 transition-colors cursor-pointer group"
+                className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-slate-200 shadow-sm mb-4 mt-4 md:mt-8 hover:border-indigo-200 transition-colors cursor-pointer group"
               >
                 <span className="flex h-2 w-2 rounded-full bg-indigo-500 animate-pulse"></span>
                 <span className="text-xs font-bold text-slate-600 tracking-wide uppercase">TopEdge AI 3.0 Live</span>
@@ -51,7 +51,7 @@ const HeroSection = () => {
             
             <motion.h1 
               style={{ opacity }}
-              className="text-5xl md:text-7xl lg:text-8xl font-semibold tracking-tight mb-8 text-slate-900 leading-[1.1]"
+              className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-semibold tracking-tight mb-6 md:mb-8 text-slate-900 leading-[1.1]"
             >
               Human-level AI. <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-500 to-indigo-600 animate-gradient-x">
@@ -60,7 +60,7 @@ const HeroSection = () => {
             </motion.h1>
 
             <motion.p 
-              className="text-lg md:text-xl text-slate-500 max-w-2xl mx-auto mb-10 leading-relaxed font-light"
+              className="text-base sm:text-lg md:text-xl text-slate-500 max-w-2xl mx-auto mb-8 md:mb-10 leading-relaxed font-light"
             >
               Our AI Communication agents outperform manual inquiry managers. <br className="hidden md:block"/>
 whose manual, slow & energy in response get dull after tired.

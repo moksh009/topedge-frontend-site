@@ -18,7 +18,7 @@ export const CTASection = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative py-24 md:py-32 overflow-hidden bg-[#020617]"
+      className="relative py-16 md:py-32 overflow-hidden bg-[#020617]"
     >
       {/* --- ANIMATED BACKGROUND FLOW LINES --- */}
       <div className="absolute inset-0 w-full h-full opacity-30">
@@ -76,7 +76,7 @@ export const CTASection = () => {
 
           {/* Headline */}
           <motion.h2
-            className="text-5xl md:text-7xl font-semibold mb-8 tracking-tight text-white leading-[1.1]"
+            className="text-3xl sm:text-5xl md:text-7xl font-semibold mb-6 md:mb-8 tracking-tight text-white leading-[1.1]"
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.1 }}
@@ -89,7 +89,7 @@ export const CTASection = () => {
 
           {/* Subtext */}
           <motion.p
-            className="text-lg md:text-2xl text-slate-400 mb-12 leading-relaxed max-w-3xl mx-auto font-light"
+            className="text-base sm:text-lg md:text-2xl text-slate-400 mb-8 md:mb-12 leading-relaxed max-w-3xl mx-auto font-light"
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -99,7 +99,7 @@ export const CTASection = () => {
 
           {/* CTA Buttons */}
           <motion.div
-            className="flex flex-col sm:flex-row gap-5 justify-center items-center w-full"
+            className="flex flex-col sm:flex-row gap-4 sm:gap-5 justify-center items-center w-full"
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.3 }}
@@ -107,7 +107,7 @@ export const CTASection = () => {
             {/* Primary Button */}
             <Link
               to="/booking"
-              className="group relative w-full sm:w-auto overflow-hidden rounded-full bg-white p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 block"
+              className="group relative w-auto overflow-hidden rounded-full bg-white p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 block"
             >
               <motion.div
                 whileHover={{ scale: 1.05 }}
@@ -115,9 +115,9 @@ export const CTASection = () => {
                 className="w-full h-full"
               >
                 <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-                <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-8 py-4 text-lg font-bold text-white backdrop-blur-3xl gap-2">
+                <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-5 py-2.5 md:px-8 md:py-4 text-sm md:text-lg font-bold text-white backdrop-blur-3xl gap-2">
                   Launch My AI Agent
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
                 </span>
               </motion.div>
             </Link>
@@ -125,11 +125,11 @@ export const CTASection = () => {
             {/* Secondary Button */}
             <motion.a
               onClick={() => document.getElementById('roi-calculator-section')?.scrollIntoView({ behavior: 'smooth' })}
-              className="cursor-pointer group flex items-center justify-center gap-2 px-8 py-4 w-full sm:w-auto rounded-full bg-white/5 text-white font-medium text-lg border border-white/10 hover:bg-white/10 transition-all backdrop-blur-sm"
+              className="cursor-pointer group flex items-center justify-center gap-2 px-5 py-2.5 md:px-8 md:py-4 w-auto rounded-full bg-white/5 text-white font-medium text-sm md:text-lg border border-white/10 hover:bg-white/10 transition-all backdrop-blur-sm"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.98 }}
             >
-              <Zap className="w-5 h-5 text-indigo-400 fill-current" />
+              <Zap className="w-4 h-4 md:w-5 md:h-5 text-indigo-400 fill-current" />
               <span>Calculate ROI</span>
             </motion.a>
           </motion.div>
@@ -139,7 +139,7 @@ export const CTASection = () => {
              initial={{ opacity: 0 }}
              animate={isInView ? { opacity: 1 } : {}}
              transition={{ delay: 0.6, duration: 1 }}
-             className="mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12 text-sm text-slate-500 font-medium"
+             className="mt-10 pt-6 md:mt-16 md:pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-center gap-4 md:gap-12 text-xs md:text-sm text-slate-500 font-medium"
           >
              <div className="flex items-center gap-2">
                 <div className="p-1 bg-green-500/10 rounded-full"><div className="w-1.5 h-1.5 bg-green-500 rounded-full" /></div>

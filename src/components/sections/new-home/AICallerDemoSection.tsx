@@ -185,14 +185,14 @@ const AICallerDemoSection = () => {
   };
 
   return (
-    <section className="py-24 md:py-32 bg-white relative overflow-hidden" id="voice-demo">
+    <section className="pt-8 pb-12 md:py-32 bg-white relative overflow-hidden" id="voice-demo">
       {/* Background Decor */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
       
       <div className="container mx-auto px-4 max-w-7xl relative z-10">
         
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 lg:mb-24">
+        <div className="text-center max-w-3xl mx-auto mb-6 lg:mb-24">
           <motion.div
              initial={{ opacity: 0, y: 10 }}
              whileInView={{ opacity: 1, y: 0 }}
@@ -206,14 +206,14 @@ const AICallerDemoSection = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-5xl lg:text-7xl font-semibold text-slate-900 mb-6 tracking-tight leading-[1.1]"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-semibold text-slate-900 mb-6 tracking-tight leading-[1.1]"
           >
             Don't just chat. <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-indigo-400 to-indigo-600">
               Make it sell to you.
             </span>
           </motion.h2>
-          <p className="text-lg md:text-xl text-slate-500 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg md:text-xl text-slate-500 max-w-2xl mx-auto leading-relaxed">
             Experience our sales-trained AI. Start the demo call below to talk to Maya in real-time.
           </p>
         </div>
@@ -223,7 +223,7 @@ const AICallerDemoSection = () => {
           {/* LEFT: PHONE INTERFACE */}
           <div className="lg:col-span-5 flex justify-center">
              {/* Phone Container - Responsive Width & Aspect Ratio */}
-             <div className="relative w-full max-w-[360px] aspect-[9/19] bg-[#0B1121] rounded-[3rem] shadow-[0_50px_100px_-20px_rgba(50,50,93,0.25)] border-[8px] border-[#1f2937] ring-1 ring-slate-900/10 overflow-hidden flex flex-col">
+             <div className="relative w-full max-w-[320px] sm:max-w-[360px] aspect-[9/19] bg-[#0B1121] rounded-[3rem] shadow-[0_50px_100px_-20px_rgba(50,50,93,0.25)] border-[8px] border-[#1f2937] ring-1 ring-slate-900/10 overflow-hidden flex flex-col">
                 
                 {/* Dynamic Island */}
                 <div className="absolute top-0 inset-x-0 h-8 bg-[#0B1121] z-20 flex justify-center">

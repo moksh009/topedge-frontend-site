@@ -143,22 +143,22 @@ const EndToEndSolutionsSection = () => {
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
             whileHover={{ y: -5 }}
-            className="lg:col-span-12 bg-white border border-slate-200 rounded-[2.5rem] p-8 md:p-12 shadow-sm hover:shadow-2xl transition-all duration-500 relative overflow-hidden"
+            className="lg:col-span-12 bg-white border border-slate-200 rounded-[2.5rem] p-6 md:p-12 shadow-sm hover:shadow-2xl transition-all duration-500 relative overflow-hidden"
           >
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-indigo-50/50 via-white to-white pointer-events-none" />
 
-            <div className="relative z-10 grid lg:grid-cols-12 gap-12 items-center">
+            <div className="relative z-10 grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
                 
                 {/* Text Content (4 Cols) */}
-                <div className="lg:col-span-4">
+                <div className="lg:col-span-4 text-center lg:text-left">
                     <div className="inline-flex items-center gap-2 text-indigo-600 font-bold mb-4 bg-indigo-50 px-3 py-1 rounded-full text-[10px] uppercase tracking-wide border border-indigo-100">
                         <Cpu className="w-3 h-3" />
                         <span>Orchestration Layer</span>
                     </div>
-                    <h3 className="text-3xl font-bold text-slate-900 mb-4 leading-tight">
+                    <h3 className="text-2xl md:text-3xl font-bold text-slate-900 mb-4 leading-tight">
                         Agnostic AI Pipeline
                     </h3>
-                    <div className="text-slate-600 text-lg space-y-4 leading-relaxed">
+                    <div className="text-slate-600 text-base md:text-lg space-y-4 leading-relaxed">
                         <p>We don't lock you into one provider.</p>
                         <p>We utilize a "Router" architecture that dynamically selects the best model for the task.</p>
                     </div>
@@ -166,10 +166,10 @@ const EndToEndSolutionsSection = () => {
 
                 {/* Animated Pipeline Diagram (8 Cols) */}
                 <div className="lg:col-span-8 w-full">
-                    <div className="relative flex items-center justify-between px-4 md:px-12 py-8">
+                    <div className="relative flex items-center justify-between px-0 md:px-12 py-4 md:py-8">
                         
                         {/* Connecting Line Track */}
-                        <div className="absolute top-1/2 left-16 right-16 h-1 bg-slate-100 -translate-y-1/2 z-0 rounded-full overflow-hidden">
+                        <div className="absolute top-1/2 left-8 right-8 md:left-16 md:right-16 h-1 bg-slate-100 -translate-y-1/2 z-0 rounded-full overflow-hidden">
                            {/* Animated Pulse Beam */}
                            <motion.div 
                               animate={{ x: ["-100%", "100%"] }}
@@ -179,32 +179,32 @@ const EndToEndSolutionsSection = () => {
                         </div>
                         
                         {/* Node 1: DEEPGRAM (Input) */}
-                        <div className="relative z-10 flex flex-col items-center gap-4 group">
-                            <div className="w-20 h-20 bg-white rounded-2xl border-2 border-slate-100 shadow-lg flex items-center justify-center relative transition-all duration-300 group-hover:border-blue-400 group-hover:shadow-blue-500/20 group-hover:-translate-y-1">
-                                <span className="absolute -top-3 bg-slate-100 text-slate-500 text-[10px] font-bold px-2 py-0.5 rounded-md border border-slate-200">IN</span>
-                                <Database className="w-8 h-8 text-blue-500" />
+                        <div className="relative z-10 flex flex-col items-center gap-2 md:gap-4 group">
+                            <div className="w-14 h-14 md:w-20 md:h-20 bg-white rounded-2xl border-2 border-slate-100 shadow-lg flex items-center justify-center relative transition-all duration-300 group-hover:border-blue-400 group-hover:shadow-blue-500/20 group-hover:-translate-y-1">
+                                <span className="absolute -top-3 bg-slate-100 text-slate-500 text-[8px] md:text-[10px] font-bold px-1.5 py-0.5 rounded-md border border-slate-200">IN</span>
+                                <Database className="w-5 h-5 md:w-8 md:h-8 text-blue-500" />
                             </div>
-                            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest group-hover:text-blue-600 transition-colors">Deepgram</span>
+                            <span className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest group-hover:text-blue-600 transition-colors">Deepgram</span>
                         </div>
 
                         {/* Node 2: LLAMA/GPT-4O (Processing) */}
-                        <div className="relative z-20 flex flex-col items-center gap-4 group">
-                            <div className="w-24 h-24 bg-indigo-600 rounded-[20px] shadow-2xl shadow-indigo-600/30 flex items-center justify-center relative transition-all duration-300 group-hover:scale-110">
-                                <div className="absolute inset-0 bg-gradient-to-br from-indigo-500 to-violet-600 rounded-[20px]" />
-                                <Zap className="w-10 h-10 text-white relative z-10 fill-current animate-pulse" />
+                        <div className="relative z-20 flex flex-col items-center gap-2 md:gap-4 group">
+                            <div className="w-16 h-16 md:w-24 md:h-24 bg-indigo-600 rounded-[16px] md:rounded-[20px] shadow-2xl shadow-indigo-600/30 flex items-center justify-center relative transition-all duration-300 group-hover:scale-110">
+                                <div className="absolute inset-0 bg-gradient-to-br from-indigo-500 to-violet-600 rounded-[16px] md:rounded-[20px]" />
+                                <Zap className="w-6 h-6 md:w-10 md:h-10 text-white relative z-10 fill-current animate-pulse" />
                                 {/* Orbit Ring */}
-                                <div className="absolute inset-[-8px] border border-indigo-200/50 rounded-[26px] opacity-0 group-hover:opacity-100 transition-opacity" />
+                                <div className="absolute inset-[-6px] md:inset-[-8px] border border-indigo-200/50 rounded-[22px] md:rounded-[26px] opacity-0 group-hover:opacity-100 transition-opacity" />
                             </div>
-                            <span className="text-xs font-bold text-indigo-600 uppercase tracking-widest bg-indigo-50 px-3 py-1 rounded-full">Llama/GPT-4o</span>
+                            <span className="text-[10px] md:text-xs font-bold text-indigo-600 uppercase tracking-widest bg-indigo-50 px-2 py-1 md:px-3 rounded-full text-center max-w-[80px] md:max-w-none leading-tight">Llama/ GPT-4o</span>
                         </div>
 
                         {/* Node 3: ELEVENLABS (Output) */}
-                        <div className="relative z-10 flex flex-col items-center gap-4 group">
-                            <div className="w-20 h-20 bg-white rounded-2xl border-2 border-slate-100 shadow-lg flex items-center justify-center relative transition-all duration-300 group-hover:border-emerald-400 group-hover:shadow-emerald-500/20 group-hover:-translate-y-1">
-                                <span className="absolute -top-3 bg-slate-100 text-slate-500 text-[10px] font-bold px-2 py-0.5 rounded-md border border-slate-200">OUT</span>
-                                <Lock className="w-8 h-8 text-emerald-500" />
+                        <div className="relative z-10 flex flex-col items-center gap-2 md:gap-4 group">
+                            <div className="w-14 h-14 md:w-20 md:h-20 bg-white rounded-2xl border-2 border-slate-100 shadow-lg flex items-center justify-center relative transition-all duration-300 group-hover:border-emerald-400 group-hover:shadow-emerald-500/20 group-hover:-translate-y-1">
+                                <span className="absolute -top-3 bg-slate-100 text-slate-500 text-[8px] md:text-[10px] font-bold px-1.5 py-0.5 rounded-md border border-slate-200">OUT</span>
+                                <Lock className="w-5 h-5 md:w-8 md:h-8 text-emerald-500" />
                             </div>
-                            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest group-hover:text-emerald-600 transition-colors">ElevenLabs</span>
+                            <span className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest group-hover:text-emerald-600 transition-colors">ElevenLabs</span>
                         </div>
                     </div>
                 </div>

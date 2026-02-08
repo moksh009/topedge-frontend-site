@@ -19,8 +19,8 @@ const AIOrbIcon = () => (
 );
 
 const PhoneIcon = () => (
-  <div className="relative w-10 h-10 rounded-full bg-gradient-to-tr from-emerald-400 to-teal-500 flex items-center justify-center shadow-lg shadow-emerald-200">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <div className="relative w-8 h-8 md:w-10 md:h-10 rounded-full bg-gradient-to-tr from-emerald-400 to-teal-500 flex items-center justify-center shadow-lg shadow-emerald-200">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="md:w-[20px] md:h-[20px]">
       <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
     </svg>
     <div className="absolute inset-0 rounded-full border border-white/20" />
@@ -86,30 +86,31 @@ const FloatingVoiceChat: React.FC = () => {
   };
 
   return (
-    <div className="fixed z-[9999] bottom-6 right-6 font-sans">
-      <AnimatePresence mode="wait">
+    <div className="fixed z-[9999] bottom-2 right-2 md:bottom-6 md:right-6 font-sans">
+      <AnimatePresence>
         
         {/* 1. COLLAPSED PILL */}
         {!isOpen && (
           <motion.button
             layoutId="voice-widget"
-            initial={{ scale: 0.9, opacity: 0, y: 20 }}
-            animate={{ scale: 1, opacity: 1, y: 0 }}
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
-            whileHover={{ scale: 1.02, y: -2 }}
+            whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 400, damping: 30 }}
             onClick={() => setIsOpen(true)}
-            className="group flex items-center gap-3 pl-2 pr-6 py-2 bg-white/90 backdrop-blur-xl border border-white/50 rounded-full shadow-[0_8px_30px_rgba(0,0,0,0.08)] hover:shadow-[0_15px_35px_rgba(99,102,241,0.15)] transition-all duration-500"
+            className="group flex items-center gap-2 pl-1.5 pr-4 py-1.5 md:gap-3 md:pl-2 md:pr-6 md:py-2 bg-white/90 backdrop-blur-md border border-white/50 rounded-full shadow-[0_8px_30px_rgba(0,0,0,0.08)] hover:shadow-[0_15px_35px_rgba(99,102,241,0.15)]"
           >
             <PhoneIcon />
             <div className="flex flex-col items-start">
-               <span className="text-sm font-bold text-slate-800 leading-none">Talk to AI</span>
-               <div className="flex items-center gap-1.5 mt-1">
+               <span className="text-xs md:text-sm font-bold text-slate-800 leading-none">Talk to AI</span>
+               <div className="flex items-center gap-1 md:gap-1.5 mt-0.5 md:mt-1">
                   <span className="relative flex h-1.5 w-1.5">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
                   </span>
-                  <span className="text-[10px] font-medium text-slate-500 uppercase tracking-wide">Online</span>
+                  <span className="text-[9px] md:text-[10px] font-medium text-slate-500 uppercase tracking-wide">Online</span>
                </div>
             </div>
           </motion.button>
@@ -119,11 +120,11 @@ const FloatingVoiceChat: React.FC = () => {
         {isOpen && (
           <motion.div
             layoutId="voice-widget"
-            initial={{ opacity: 0, y: 20, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            transition={{ type: "spring", bounce: 0.3, duration: 0.5 }}
-            className="w-[360px] bg-white/95 backdrop-blur-2xl border border-white/60 rounded-[2.5rem] shadow-[0_20px_60px_-10px_rgba(0,0,0,0.1)] overflow-hidden relative"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 400, damping: 30 }}
+            className="w-[320px] md:w-[360px] bg-white/95 backdrop-blur-xl border border-white/60 rounded-[2.5rem] shadow-[0_20px_60px_-10px_rgba(0,0,0,0.1)] overflow-hidden relative"
           >
             {/* Soft Gradient Background */}
             <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-indigo-50/80 to-transparent pointer-events-none" />

@@ -90,44 +90,44 @@ const testimonials: Testimonial[] = [
 
 // --- COMPONENT: CARD ---
 const ReviewCard = ({ review }: { review: Testimonial }) => (
-  <div className="w-[280px] md:w-[400px] flex-shrink-0 mx-3 md:mx-5 bg-white/80 backdrop-blur-sm p-6 md:p-8 rounded-3xl border border-slate-100 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.1)] hover:border-indigo-100 transition-all duration-500 group relative overflow-hidden">
+  <div className="w-[230px] md:w-[400px] flex-shrink-0 mx-2 md:mx-5 bg-white/80 backdrop-blur-sm p-4 md:p-8 rounded-2xl md:rounded-3xl border border-slate-100 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.1)] hover:border-indigo-100 transition-all duration-500 group relative overflow-hidden">
     
     {/* Decorative Background Quote */}
-    <Quote className="absolute top-4 right-6 w-16 h-16 text-slate-50 rotate-12 -z-10 group-hover:text-indigo-50 transition-colors duration-500" />
+    <Quote className="absolute top-4 right-6 w-10 h-10 md:w-16 md:h-16 text-slate-50 rotate-12 -z-10 group-hover:text-indigo-50 transition-colors duration-500" />
 
     <div className="flex flex-col h-full">
       {/* Stars */}
-      <div className="flex gap-1 mb-3">
+      <div className="flex gap-1 mb-2 md:mb-3">
         {[...Array(review.rating)].map((_, i) => (
-          <Star key={i} size={14} className="fill-amber-400 text-amber-400" />
+          <Star key={i} size={12} className="fill-amber-400 text-amber-400 md:w-3.5 md:h-3.5" />
         ))}
       </div>
 
       {/* Content */}
-      <p className="text-slate-700 text-sm md:text-base leading-relaxed font-medium mb-6 line-clamp-3">
+      <p className="text-slate-700 text-xs md:text-base leading-relaxed font-medium mb-3 md:mb-6 line-clamp-3">
         "{review.content}"
       </p>
 
       {/* User Profile */}
-      <div className="mt-auto flex items-center gap-3 pt-6 border-t border-slate-50">
+      <div className="mt-auto flex items-center gap-2 md:gap-3 pt-3 md:pt-6 border-t border-slate-50">
         <div className="relative">
             <img 
                 src={review.image} 
                 alt={review.name} 
-                className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover border-2 border-white shadow-sm ring-1 ring-slate-100" 
+                className="w-8 h-8 md:w-12 md:h-12 rounded-full object-cover border-2 border-white shadow-sm ring-1 ring-slate-100" 
             />
             <div className="absolute -bottom-1 -right-1 bg-white rounded-full p-0.5 shadow-sm">
-                <CheckCircle2 className="w-3.5 h-3.5 text-blue-500 fill-white" />
+                <CheckCircle2 className="w-3 h-3 md:w-3.5 md:h-3.5 text-blue-500 fill-white" />
             </div>
         </div>
         
         <div>
-          <h4 className="text-slate-900 text-sm font-bold leading-tight">{review.name}</h4>
+          <h4 className="text-slate-900 text-xs md:text-sm font-bold leading-tight">{review.name}</h4>
           <div className="flex items-center gap-1.5 mt-0.5">
-             <span className="text-slate-500 text-xs font-medium">{review.role}</span>
+             <span className="text-slate-500 text-[9px] md:text-xs font-medium">{review.role}</span>
              <span className="text-slate-300">•</span>
-             <span className="text-indigo-600 text-xs font-bold flex items-center gap-1">
-                <Building2 size={10} /> {review.company}
+             <span className="text-indigo-600 text-[9px] md:text-xs font-bold flex items-center gap-1">
+                <Building2 size={9} className="md:w-[10px] md:h-[10px]" /> {review.company}
              </span>
           </div>
         </div>
@@ -138,7 +138,7 @@ const ReviewCard = ({ review }: { review: Testimonial }) => (
 
 const TrustedBySection = () => {
   return (
-    <section className="py-10 md:py-14 bg-white relative overflow-hidden">
+    <section className="pt-6 pb-2 md:py-14 bg-white relative overflow-hidden">
       
       {/* Subtle Background Pattern */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808005_1px,transparent_1px),linear-gradient(to_bottom,#80808005_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
@@ -164,7 +164,7 @@ const TrustedBySection = () => {
            whileInView={{ opacity: 1, y: 0 }}
            viewport={{ once: true }}
            transition={{ delay: 0.1 }}
-           className="text-2xl md:text-3xl font-semibold text-slate-900 tracking-tight"
+           className="text-xl md:text-3xl font-semibold text-slate-900 tracking-tight"
         >
            Trusted by <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-500 to-indigo-600 animate-gradient-x">500+ High-Growth Teams</span>
         </motion.h2>
@@ -174,7 +174,7 @@ const TrustedBySection = () => {
       {/* Mask Image creates the fade effect on left/right edges */}
       <div className="relative w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
         <motion.div 
-          className="flex py-8 md:py-10"
+          className="flex py-2 md:py-10"
           animate={{ x: "-50%" }}
           transition={{ 
             repeat: Infinity, 

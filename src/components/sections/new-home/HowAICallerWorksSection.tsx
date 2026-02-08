@@ -70,7 +70,7 @@ const HowAICallerWorksSection = () => {
   }, [isPaused]);
 
   return (
-    <section className="py-20 md:py-32 bg-slate-50 relative overflow-hidden">
+    <section className="py-16 md:py-32 bg-slate-50 relative overflow-hidden">
       
       {/* Background Decor */}
       <div className="absolute inset-0 pointer-events-none">
@@ -82,7 +82,7 @@ const HowAICallerWorksSection = () => {
       <div className="container mx-auto px-4 max-w-7xl relative z-10">
         
         {/* Section Header */}
-        <div className="text-center mb-12 lg:mb-20">
+        <div className="text-center mb-8 lg:mb-20">
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -96,7 +96,7 @@ const HowAICallerWorksSection = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-5xl lg:text-7xl font-semibold text-slate-900 mb-6 tracking-tight leading-[1.1]"
+            className="text-3xl md:text-5xl lg:text-7xl font-semibold text-slate-900 mb-6 tracking-tight leading-[1.1]"
           >
             From "Missed Call" <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-indigo-400 to-indigo-600">
@@ -112,13 +112,13 @@ const HowAICallerWorksSection = () => {
            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[350px] h-[500px] bg-indigo-500/20 rounded-full blur-[100px] pointer-events-none" />
 
            {/* The Phone - Centered & Scaled */}
-           <div className="relative z-10 scale-[0.85] sm:scale-90 origin-top mb-[-60px]">
+           <div className="relative z-10 scale-[0.75] sm:scale-90 origin-top mb-[-100px] sm:mb-[-60px]">
               <PhoneSimulation activeStep={activeStep} />
            </div>
 
            {/* Premium Floating Card (iOS 26 Style) */}
-           <div className="relative z-20 w-full max-w-[360px] px-4 -mt-20">
-              <div className="bg-white/70 backdrop-blur-2xl border border-white/60 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.15)] rounded-[2rem] p-6 overflow-hidden relative ring-1 ring-white/40">
+           <div className="relative z-20 w-full max-w-[360px] px-4 -mt-16 sm:-mt-20">
+              <div className="bg-white/70 backdrop-blur-2xl border border-white/60 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.15)] rounded-[2rem] p-5 sm:p-6 overflow-hidden relative ring-1 ring-white/40">
                  
                  {/* Animated Progress Line */}
                  <div className="absolute top-0 left-0 w-full h-[3px] bg-slate-100/50">
@@ -138,7 +138,7 @@ const HowAICallerWorksSection = () => {
                        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                        exit={{ opacity: 0, y: -15, filter: "blur(8px)" }}
                        transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }} // iOS ease
-                       className="flex flex-col gap-4"
+                       className="flex flex-col gap-3 sm:gap-4"
                     >
                        <div className="flex items-center justify-between">
                           <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[11px] font-bold text-white shadow-lg shadow-indigo-500/20 ${steps[activeStep].color}`}>
@@ -150,11 +150,11 @@ const HowAICallerWorksSection = () => {
                           </span>
                        </div>
 
-                       <div className="space-y-2">
-                          <h3 className="text-2xl font-black text-slate-900 leading-tight tracking-tight">
+                       <div className="space-y-1 sm:space-y-2">
+                          <h3 className="text-xl sm:text-2xl font-black text-slate-900 leading-tight tracking-tight">
                              {steps[activeStep].title}
                           </h3>
-                          <p className="text-[15px] text-slate-600 leading-relaxed font-medium">
+                          <p className="text-sm sm:text-[15px] text-slate-600 leading-relaxed font-medium">
                              {steps[activeStep].description}
                           </p>
                        </div>
