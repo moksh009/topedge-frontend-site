@@ -6,7 +6,7 @@ import { Phone, Calendar, MessageSquare, Gift, CheckCircle2, Bot, Clock, Sparkle
 const steps = [
   {
     id: 0,
-    title: "2:00 AM — The Inquiry",
+    title: "2:00 AM The Inquiry",
     description: "Moksh calls late at night. Usually, this lead is lost. But not tonight.",
     icon: Phone,
     color: "bg-blue-600",

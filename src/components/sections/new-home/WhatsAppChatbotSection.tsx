@@ -4,7 +4,7 @@ import { MessageCircle, Check, ArrowRight, Play, Mic, Plus, Camera, Phone, Video
 
 const WhatsAppChatbotSection = () => {
   return (
-    <section className="py-24 md:py-32 bg-slate-50 overflow-hidden relative font-sans">
+    <section id="chatbot-start" className="py-24 md:py-32 bg-slate-50 overflow-hidden relative font-sans">
       
       {/* Background Ambience - Light Theme */}
       <div className="absolute inset-0 pointer-events-none">
