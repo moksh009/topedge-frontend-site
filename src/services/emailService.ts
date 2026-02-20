@@ -42,7 +42,7 @@ export class EmailService {
         (import.meta as any).env.VITE_EMAIL_API_BASE_URL) ||
       undefined;
 
-    const defaultProdBase = 'https://topedge-backend-site-1.onrender.com';
+    const defaultProdBase = 'https://topedge-backend.netlify.app';
 
     if (envBaseURL && typeof envBaseURL === 'string' && envBaseURL.trim().length > 0) {
       const trimmed = envBaseURL.trim();
@@ -71,14 +71,14 @@ export class EmailService {
         hostname === 'www.topedgeai.com' ||
         hostname.endsWith('.netlify.app')
       ) {
-        return 'https://topedge-backend-site-1.onrender.com';
+        return 'https://topedge-backend.netlify.app';
       }
 
       if (hostname === 'localhost' || hostname === '127.0.0.1') {
         return 'http://localhost:3001';
       }
 
-      return 'https://topedge-backend-site-1.onrender.com';
+      return 'https://topedge-backend.netlify.app';
     } catch {
       return null;
     }
@@ -95,10 +95,10 @@ export class EmailService {
        endpoints.push('/.netlify/functions/api/api/public-stats');
     }
 
-    endpoints.push('https://topedge-backend-site-1.onrender.com/api/public-stats');
-    endpoints.push('https://topedge-backend-site-1.onrender.com/public-stats');
     endpoints.push('https://topedge-backend.netlify.app/api/public-stats');
     endpoints.push('https://topedge-backend.netlify.app/public-stats');
+    endpoints.push('https://topedge-backend-site-1.onrender.com/api/public-stats');
+    endpoints.push('https://topedge-backend-site-1.onrender.com/public-stats');
 
     for (const url of endpoints) {
       try {
