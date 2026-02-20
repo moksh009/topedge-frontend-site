@@ -42,12 +42,17 @@ export class EmailService {
         (import.meta as any).env.VITE_EMAIL_API_BASE_URL) ||
       undefined;
 
+    const defaultProdBase = 'https://topedge-backend-site-1.onrender.com';
+
     if (envBaseURL && typeof envBaseURL === 'string' && envBaseURL.trim().length > 0) {
-      this.baseURL = envBaseURL.replace(/\/+$/, '');
+      const trimmed = envBaseURL.trim();
+      if (trimmed.includes('.netlify/functions')) {
+        this.baseURL = this.isDevelopment ? 'http://localhost:3001' : defaultProdBase;
+      } else {
+        this.baseURL = trimmed.replace(/\/+$/, '');
+      }
     } else {
-      this.baseURL = this.isDevelopment
-        ? 'http://localhost:3001'
-        : 'https://topedge-backend-site-1.onrender.com';
+      this.baseURL = this.isDevelopment ? 'http://localhost:3001' : defaultProdBase;
     }
   }
 
@@ -58,6 +63,13 @@ export class EmailService {
 
     try {
       const origin = window.location.origin;
+      const url = new URL(origin);
+      const hostname = url.hostname;
+
+      if (hostname === 'topedgeai.com' || hostname === 'www.topedgeai.com') {
+        return 'https://topedge-backend-site-1.onrender.com';
+      }
+
       return `${origin.replace(/\/+$/, '')}/.netlify/functions/api`;
     } catch {
       return null;
