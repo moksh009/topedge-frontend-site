@@ -47,7 +47,7 @@ export class EmailService {
     } else {
       this.baseURL = this.isDevelopment
         ? 'http://localhost:3001'
-        : 'https://topedge-backend.netlify.app';
+        : 'https://topedge-backend-site-1.onrender.com';
     }
   }
 
@@ -76,7 +76,9 @@ export class EmailService {
        endpoints.push('/.netlify/functions/api/api/public-stats');
     }
 
-    // Add Production fallback
+    // Add Production fallbacks (Render first, then legacy Netlify)
+    endpoints.push('https://topedge-backend-site-1.onrender.com/api/public-stats');
+    endpoints.push('https://topedge-backend-site-1.onrender.com/public-stats');
     endpoints.push('https://topedge-backend.netlify.app/api/public-stats');
     endpoints.push('https://topedge-backend.netlify.app/public-stats');
 
