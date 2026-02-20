@@ -66,11 +66,19 @@ export class EmailService {
       const url = new URL(origin);
       const hostname = url.hostname;
 
-      if (hostname === 'topedgeai.com' || hostname === 'www.topedgeai.com') {
+      if (
+        hostname === 'topedgeai.com' ||
+        hostname === 'www.topedgeai.com' ||
+        hostname.endsWith('.netlify.app')
+      ) {
         return 'https://topedge-backend-site-1.onrender.com';
       }
 
-      return `${origin.replace(/\/+$/, '')}/.netlify/functions/api`;
+      if (hostname === 'localhost' || hostname === '127.0.0.1') {
+        return 'http://localhost:3001';
+      }
+
+      return 'https://topedge-backend-site-1.onrender.com';
     } catch {
       return null;
     }
