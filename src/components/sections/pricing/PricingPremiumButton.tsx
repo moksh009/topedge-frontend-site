@@ -24,78 +24,76 @@ const PremiumButton: React.FC<PremiumButtonProps> = ({
   // Color maps for different variants
   const colorMap = {
     green: {
-      glow: 'from-green-400/30 via-emerald-500/30 to-green-700/30',
-      border: 'border-green-400/60 group-hover:border-green-600',
-      icon: 'text-green-600 group-hover:text-green-700',
-      text: 'text-green-700 group-hover:text-green-800',
-      arrow: 'text-green-600 group-hover:text-green-800',
-      bg: 'bg-white',
+      glow: 'from-blue-400/30 via-indigo-500/30 to-blue-700/30',
+      border: 'border-blue-500/30 group-hover:border-blue-400',
+      icon: 'text-blue-400 group-hover:text-white',
+      text: 'text-blue-100 group-hover:text-white',
+      arrow: 'text-blue-400 group-hover:text-white',
+      bg: 'bg-indigo-600/10 backdrop-blur-md',
     },
     red: {
-      glow: 'from-red-400/30 via-red-500/30 to-red-700/30',
-      border: 'border-red-400/60 group-hover:border-red-600',
-      icon: 'text-red-600 group-hover:text-red-700',
-      text: 'text-red-700 group-hover:text-red-800',
-      arrow: 'text-red-600 group-hover:text-red-800',
-      bg: 'bg-white',
+      glow: 'from-rose-400/30 via-red-500/30 to-rose-700/30',
+      border: 'border-red-500/30 group-hover:border-red-400',
+      icon: 'text-red-400 group-hover:text-white',
+      text: 'text-red-100 group-hover:text-white',
+      arrow: 'text-red-400 group-hover:text-white',
+      bg: 'bg-red-600/10 backdrop-blur-md',
     },
     purple: {
-      glow: 'from-purple-400/30 via-indigo-500/30 to-purple-900/30',
-      border: 'border-purple-400/60 group-hover:border-purple-600',
-      icon: 'text-purple-600 group-hover:text-purple-700',
-      text: 'text-purple-700 group-hover:text-purple-800',
-      arrow: 'text-purple-600 group-hover:text-purple-800',
-      bg: 'bg-white',
+      glow: 'from-indigo-400/30 via-purple-500/30 to-indigo-900/30',
+      border: 'border-indigo-500/30 group-hover:border-indigo-400',
+      icon: 'text-indigo-400 group-hover:text-white',
+      text: 'text-indigo-100 group-hover:text-white',
+      arrow: 'text-indigo-400 group-hover:text-white',
+      bg: 'bg-indigo-600/10 backdrop-blur-md',
     },
   };
   const colors = colorMap[variant];
 
   return (
-  <motion.button
-    whileHover={disabled ? undefined : "hover"}
-    whileTap={disabled ? undefined : "tap"}
-    variants={{
-      hover: { scale: 1.05 },
-      tap: { scale: 0.95 },
-    }}
-    onClick={disabled ? undefined : onClick}
-    aria-disabled={disabled}
-    disabled={disabled}
-    className={`group relative rounded-full w-full sm:w-auto ${disabled ? 'opacity-60 pointer-events-none' : ''}`}
-    type={type}
-  >
-    <div className="relative px-4 sm:px-8 py-3 sm:py-4 rounded-full">
-      {/* Outer Glow */}
-      <div className={`absolute inset-0 blur-xl opacity-30 group-hover:opacity-70 transition-opacity duration-500 rounded-full bg-gradient-to-r ${colors.glow}`} />
-      {/* Main Button Background */}
-      <div className={`absolute inset-0 ${colors.bg} border ${colors.border} rounded-full`} />
-      {/* Button Content */}
-      <div className="relative flex items-center justify-center gap-2 sm:gap-3">
-        <div className="relative flex items-center gap-2 sm:gap-3">
-          <span className={`text-sm sm:text-base font-medium ${colors.text} transition-colors duration-300`}>
+    <motion.button
+      whileHover={disabled ? undefined : "hover"}
+      whileTap={disabled ? undefined : "tap"}
+      variants={{
+        hover: { scale: 1.05 },
+        tap: { scale: 0.95 },
+      }}
+      onClick={disabled ? undefined : onClick}
+      aria-disabled={disabled}
+      disabled={disabled}
+      className={`group relative rounded-full w-full sm:w-auto ${disabled ? 'opacity-60 pointer-events-none' : ''}`}
+      type={type}
+    >
+      <div className="relative px-6 sm:px-10 py-3 sm:py-4 rounded-full overflow-hidden">
+        {/* Outer Glow */}
+        <div className={`absolute inset-0 blur-2xl opacity-40 group-hover:opacity-80 transition-opacity duration-500 rounded-full bg-gradient-to-r ${colors.glow}`} />
+
+        {/* Main Button Background */}
+        <div className={`absolute inset-0 ${colors.bg} border ${colors.border} rounded-full transition-all duration-300 group-hover:bg-indigo-600/20`} />
+
+        {/* Animated Shine */}
+        <motion.div
+          className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full"
+          animate={{
+            translateX: ['-100%', '200%'],
+          }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            ease: "linear",
+            repeatDelay: 2
+          }}
+        />
+
+        {/* Button Content */}
+        <div className="relative flex items-center justify-center gap-3">
+          <span className={`text-sm sm:text-base font-bold ${colors.text} transition-colors duration-300 tracking-wide uppercase`}>
             {text}
           </span>
           <Icon className={`w-4 h-4 sm:w-5 sm:h-5 ${colors.icon} transition-colors duration-300`} />
         </div>
-        {/* Only show the animated arrow if no icon is provided */}
-        {Icon === undefined && (
-          <motion.div
-            animate={{
-              x: [0, 5, 0],
-              y: [0, -2, 0],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          >
-            <span className={`${colors.arrow} transition-colors duration-300`}>→</span>
-          </motion.div>
-        )}
       </div>
-    </div>
-  </motion.button>
-);
+    </motion.button>
+  );
 }
 export default PremiumButton;

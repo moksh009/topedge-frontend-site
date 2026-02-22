@@ -72,10 +72,10 @@ const Contact = () => {
       }
 
       await emailService.sendContactEmails(formData);
-      
+
       formRef.current.reset();
       setSubmitStatus('success');
-      
+
       // Reset success state after 3 seconds
       setTimeout(() => {
         setSubmitStatus('idle');
@@ -130,7 +130,7 @@ const Contact = () => {
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
       >
-        
+
 
         {/* Content Container */}
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
@@ -165,7 +165,8 @@ const Contact = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
             >
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.15] relative z-20">
-                <span className="block text-black mb-1">Let's transform with</span>
+                <span className="block text-black mb-1">Let’s have a quick coffee chat.
+                </span>
                 <span className="block bg-gradient-to-r from-black via-purple-500 to-purple-700 bg-clip-text text-transparent">AI-Powered Support Squad</span>
               </h1>
               <div className="space-y-2">

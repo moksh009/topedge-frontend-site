@@ -1,156 +1,161 @@
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { Clock, DollarSign, Database, Settings, Zap, Sparkles, Shield, Users, BarChart, Brain, Gem } from 'lucide-react';
-import { useRef } from 'react';
+import React from 'react';
+import { motion } from 'framer-motion';
+import { MessageSquare, BarChart3, Settings2, Globe2, Sparkles, ArrowRight } from 'lucide-react';
 
 const benefits = [
   {
-    icon: Brain,
-    title: "100% Custom-Built AI Agents",
-    description: "Your brand's voice deserves its own voice. Your AI voice agent is fully customised, tailored to your industry, tone, and goals. No limitations. No compromises.",
-    gradient: "from-theme-glow-primary to-theme-glow-accent",
-    delay: 0,
-    direction: "left"
+    icon: MessageSquare,
+    title: "Smarter AI Conversations",
+    description: "Our AI doesn't just guess keywords; it understands context. It handles complex customer questions naturally, giving accurate answers every single time so your human team doesn't have to.",
+    highlight: "99% Accuracy",
+    colSpan: "md:col-span-2", // Full width on desktop
+    theme: "dark",
   },
   {
-    icon: DollarSign,
-    title: "Free Development & Deployment",
-    description: "We invest in you first — because your success is ours. While others charge thousands to get started, we handle everything strategy, build, training & deployment - all 100% free.",
-    gradient: "from-theme-glow-accent to-theme-glow-secondary",
-    delay: 0.1,
-    direction: "right"
+    icon: BarChart3,
+    title: "Live Tracking & Analytics",
+    description: "See exactly what your AI is saying to customers in real-time. Track costs, monitor conversations, and seamlessly take over manually whenever you need to.",
+    highlight: "Full Transparency",
+    colSpan: "md:col-span-1", // Half width
+    theme: "light",
   },
   {
-    icon: Database,
-    title: "Live Dashboard Access",
-    description: "Make script tweaks, monitor conversations, and track performance all from your own dashboard. Built with code, designed for clarity. Change what you want, when you want.",
-    gradient: "from-theme-glow-secondary to-theme-glow-primary",
-    delay: 0.2,
-    direction: "left"
+    icon: Settings2,
+    title: "Easy No-Code Setup",
+    description: "You don't need a developer to make changes. Update your AI's behavior, add new rules, or change responses instantly with our visual builder.",
+    highlight: "Zero Coding",
+    colSpan: "md:col-span-1", // Half width
+    theme: "light",
   },
   {
-    icon: Settings,
-    title: "Real-Time Customization Control",
-    description: "Full control over your AI's behavior, responses, and personality. Adjust and optimize in real-time based on your business needs. No tech skills needed.",
-    gradient: "from-theme-glow-accent to-theme-glow-primary",
-    delay: 0.4,
-    direction: "left"
+    icon: Globe2,
+    title: "Speaks 30+ Languages",
+    description: "Expand your business globally without hiring international teams. The AI automatically detects your customer's language and replies fluently, making every user feel at home.",
+    highlight: "Global Reach",
+    colSpan: "md:col-span-2", // Full width
+    theme: "glass",
   }
 ];
 
 const PricingBenefits = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"]
-  });
-
-  const opacity = useTransform(scrollYProgress, [0, 0.1, 0.9, 1], [0, 1, 1, 0]);
-  const y = useTransform(scrollYProgress, [0, 0.2], ["5%", "0%"]);
-  const scale = useTransform(scrollYProgress, [0, 0.2], [0.95, 1]);
-
   return (
-    <motion.section
-      ref={containerRef}
-      id="pricing-benefits"
-      className="relative py-24 overflow-hidden bg-theme-bg-primary"
-      style={{
-        opacity,
-        y,
-        scale
-      }}
-    >
-      
-      {/* Background with subtle gradient */}
-      
+    // Natural layout: No fixed heights, no sticky positioning. It takes exactly the space it needs.
+    <section className="relative bg-[#FAFAFC] z-20 py-24 md:py-32 border-t border-slate-200">
 
-      <div className="relative max-w-7xl mx-auto">
-        {/* Title Section */}
-        <div className="text-center mb-16 sm:mb-24 px-4">
-          <motion.div 
-            className="inline-flex items-center justify-center gap-1.5 px-3 py-1 sm:px-4 sm:py-1.5 rounded-full bg-theme-glow-primary/10 border border-theme-glow-primary/20 mb-3 sm:mb-4"
+      {/* Subtle Premium Background Grid */}
+      <div
+        className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none"
+        style={{
+          backgroundImage: `linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)`,
+          backgroundSize: '64px 64px'
+        }}
+      />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
+
+        {/* Header Section - Centered and Clean */}
+        <div className="max-w-3xl mx-auto text-center mb-20">
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
           >
-            <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-green-500" />
-            <span className="text-xs sm:text-sm text-green-700">Why Choose Us</span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-200 shadow-sm text-slate-600 text-[10px] font-bold uppercase tracking-widest mb-8">
+              <Sparkles className="w-3.5 h-3.5 text-indigo-600" />
+              <span>Why Choose TopEdge AI?</span>
+            </div>
+
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-slate-900 tracking-[-0.03em] leading-[1.1] mb-6">
+              Everything you need to <br className="hidden md:block" />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-blue-600">
+                scale effortlessly.
+              </span>
+            </h2>
+
+            <p className="text-slate-500 text-lg md:text-xl font-light leading-relaxed max-w-2xl mx-auto">
+              Stop worrying about missed messages or paying for expensive support teams. Our AI handles the heavy lifting so you can focus on growing your business.
+            </p>
           </motion.div>
-          
-          <motion.h2 
-            className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-          >
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-500 via-emerald-500 to-green-700">
-              Benefits That Set Us Apart
-            </span>
-          </motion.h2>
-          
-          <motion.p 
-            className="text-xl text-theme-text-secondary max-w-3xl mx-auto"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            Experience the future of customer service with our AI-powered solutions
-          </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-10 sm:gap-12 md:gap-16 px-4 sm:px-6">
+        {/* The Bento Grid - Bulletproof Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {benefits.map((benefit, index) => (
             <motion.div
               key={index}
-              className="w-full"
-              initial={{ opacity: 0, y: 30, scale: 0.96 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.6, delay: benefit.delay, ease: [0.16, 1, 0.3, 1] }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.5, delay: index * 0.1, ease: "easeOut" }}
+              className={`
+                relative overflow-hidden rounded-[2rem] p-8 md:p-12 group transition-all duration-500
+                ${benefit.colSpan}
+                ${benefit.theme === 'dark'
+                  ? 'bg-slate-900 border border-slate-800 shadow-2xl hover:shadow-[0_20px_60px_-15px_rgba(79,70,229,0.3)] hover:-translate-y-1'
+                  : benefit.theme === 'glass'
+                    ? 'bg-white/60 backdrop-blur-xl border border-white shadow-xl hover:shadow-2xl hover:-translate-y-1'
+                    : 'bg-white border border-slate-200/60 shadow-sm hover:shadow-xl hover:-translate-y-1'}
+              `}
             >
-              <motion.div
-                className="relative p-6 sm:p-8 rounded-2xl backdrop-blur-xl border border-theme-border-primary bg-theme-bg-secondary/50 h-full overflow-hidden group"
-                whileHover={{ scale: 1.02 }}
-                transition={{ duration: 0.2 }}
-              >
-                {/* Icon */}
-                <motion.div
-                  className="relative w-12 h-12 sm:w-16 sm:h-16 rounded-xl bg-gradient-to-r from-green-500 via-black to-green-700 p-0.5 mb-4 sm:mb-6"
-                  whileHover={{ rotate: [0, -5, 5, 0] }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <div className="w-full h-full bg-theme-bg-primary rounded-xl flex items-center justify-center">
-                    <benefit.icon className="w-6 h-6 sm:w-8 sm:h-8 text-green-600" />
+              {/* Animated Hover Backgrounds */}
+              {benefit.theme === 'dark' && (
+                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-500/10 blur-[100px] rounded-full group-hover:bg-indigo-500/20 transition-colors duration-700 pointer-events-none" />
+              )}
+              {benefit.theme === 'glass' && (
+                <div className="absolute -bottom-32 -right-32 w-[400px] h-[400px] bg-blue-400/10 blur-[80px] rounded-full group-hover:bg-blue-500/20 transition-colors duration-700 pointer-events-none" />
+              )}
+              {benefit.theme === 'light' && (
+                <div className="absolute inset-0 bg-gradient-to-br from-slate-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+              )}
+
+              <div className="relative z-10 flex flex-col h-full">
+
+                {/* Card Header (Icon & Badge) */}
+                <div className="flex items-start justify-between mb-10 md:mb-16">
+                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shadow-sm transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-3
+                    ${benefit.theme === 'dark' ? 'bg-white/10 text-white' : 'bg-indigo-50 text-indigo-600'}
+                  `}>
+                    <benefit.icon className="w-6 h-6" />
                   </div>
-                </motion.div>
-                {/* Content */}
-                <h3 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-4">
-                  <span className="bg-gradient-to-r from-green-500 via-black to-green-700 bg-clip-text text-transparent">{benefit.title}</span>
-                </h3>
-                <p className="text-sm sm:text-base text-theme-text-secondary">{benefit.description}</p>
-                {/* Hover Effects */}
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-green-400/0 via-green-600/10 to-green-400/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  initial={false}
-                  animate={{
-                    background: [
-                      "radial-gradient(600px circle at var(--x) var(--y), rgba(var(--theme-glow-primary-rgb), 0.1), transparent 40%)"
-                    ],
-                  }}
-                  transition={{ duration: 0.2 }}
-                  style={{
-                    "--x": "50%",
-                    "--y": "50%"
-                  } as any}
-                />
-              </motion.div>
+
+                  <div className={`px-4 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-widest
+                    ${benefit.theme === 'dark' ? 'bg-indigo-500/20 text-indigo-200 border border-indigo-500/30' : 'bg-white text-indigo-600 border border-slate-100 shadow-sm'}
+                  `}>
+                    {benefit.highlight}
+                  </div>
+                </div>
+
+                {/* Card Content */}
+                <div className="mt-auto">
+                  <h3 className={`text-2xl md:text-3xl font-bold tracking-tight mb-4
+                    ${benefit.theme === 'dark' ? 'text-white' : 'text-slate-900'}
+                  `}>
+                    {benefit.title}
+                  </h3>
+
+                  <p className={`text-base md:text-lg font-light leading-relaxed max-w-2xl
+                    ${benefit.theme === 'dark' ? 'text-slate-400' : 'text-slate-500'}
+                  `}>
+                    {benefit.description}
+                  </p>
+                </div>
+
+                {/* Arrow for the large cards to indicate action */}
+                {(benefit.theme === 'dark' || benefit.theme === 'glass') && (
+                  <div className="absolute bottom-8 right-8 md:bottom-12 md:right-12 opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500">
+                    <div className={`w-12 h-12 rounded-full flex items-center justify-center ${benefit.theme === 'dark' ? 'bg-white/10 text-white' : 'bg-indigo-600 text-white shadow-lg'}`}>
+                      <ArrowRight className="w-5 h-5" />
+                    </div>
+                  </div>
+                )}
+              </div>
             </motion.div>
           ))}
         </div>
+
       </div>
-    </motion.section>
+    </section>
   );
 };
 

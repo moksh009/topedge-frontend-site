@@ -1,65 +1,27 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState, useRef } from 'react';
-import {
-  ChevronDown, Coins, CreditCard, Gem, Crown, Wallet, Sparkles, Star, PhoneCall, Calculator, CheckCircle, DollarSign, DollarSign as DollarSignIcon
-} from 'lucide-react';
+import { useState } from 'react';
+import { ChevronDown, Plus, Minus, HelpCircle } from 'lucide-react';
 
 export const faqs = [
   {
     question: "What exactly does TopEdge offer?",
-    answer: "TopEdge is an AI agency that provides 24/7 AI caller systems to handle your client calls automatically — answering queries, booking appointments, and capturing leads. We also offer a real-time dashboard that shows how your AI agents are performing with detailed analytics like call count, costs, summaries, and transcripts."
+    answer: "TopEdge is an AI architecture agency. We build, deploy, and manage 24/7 AI-driven voice and chat systems that handle everything from basic queries to complex multi-step conversions. You get a fully-managed ecosystem with a dedicated performance dashboard."
   },
   {
-    question: "How can your AI agent help my business?",
-    answer: "Our AI agents take care of routine and repetitive calls like answering FAQs, scheduling appointments, and collecting information — freeing up your staff's time and ensuring no call is ever missed, even after business hours."
+    question: "How can your AI agent help my scaling business?",
+    answer: "Our agents eliminate the bottleneck of human intervention for repetitive tasks. They qualify leads, book calendar slots, and update your CRM in real-time, ensuring zero lead abandonment and 100% conversation coverage."
   },
   {
-    question: "What type of businesses is this for?",
-    answer: "TopEdge is ideal for businesses like:\n• Clinics & Dental Offices\n• Real Estate Agencies\n• Local Service Providers\n• Lead Generation Agencies\nBasically, anyone who receives client inquiries and appointments by phone."
+    question: "Is integration complex for my current team?",
+    answer: "No. We handle the entire deployment lifecycle. Our 'Concierge Integration' model means we connect to your existing phone systems, CRMs, and APIs. Your team just receives the qualified meetings."
   },
   {
-    question: "Do I need to install anything or change my current system?",
-    answer: "Nope. Our system works with your current phone setup. We handle the backend — you just need to provide us with the call flow or intent, and we'll do the rest."
+    question: "How do you handle accents and diverse languages?",
+    answer: "Our voice agents utilize proprietary neural speech synthesis, allowing for perfect regional accents and native-level fluency in over 30 languages. It feels less like a bot and more like a professional representative."
   },
   {
-    question: "Can your AI speak in different languages or accents?",
-    answer: "Yes! Our AI callers can be customized with neutral or regional accents (like Indian/US) and support multiple languages based on your target audience."
-  },
-  {
-    question: "Will clients know they're talking to an AI?",
-    answer: "Not unless you tell them. Our AI sounds human-like, understands natural language, and responds intelligently — most clients assume it's a real agent."
-  },
-  {
-    question: "How do I know the performance of my AI agent?",
-    answer: "You'll get access to a personalized TopEdge Dashboard where you can track:\n• Number of calls made\n• End reasons (e.g., successful, rejected, voicemail)\n• Cost per call\n• Transcripts\n• Summaries & key metrics\nIt's all in real-time, no waiting."
-  },
-  {
-    question: "Is this better than hiring a human caller or VA?",
-    answer: "Definitely. Our AI agent is faster, doesn't sleep, never forgets scripts, doesn't require training, and is available 24/7 — all at a fraction of the cost of a full-time employee."
-  },
-  {
-    question: "How do I get started with TopEdge?",
-    answer: "Just click on \"Get Started\" or book a demo. We'll understand your business needs, customize the AI, and deploy your first agent within 1–2 days."
-  },
-  {
-    question: "What's the pricing model?",
-    answer: "We follow a pay-as-you-go model — meaning you only pay based on the actual AI call activity, not a fixed subscription. It's transparent, affordable, and scales with your business."
-  },
-  {
-    question: "Can I integrate this with my CRM or calendar system?",
-    answer: "Yes! We can integrate with most CRMs, Google Calendar, and booking systems to automatically log appointments, follow-ups, and leads."
-  },
-  {
-    question: "Is my data secure?",
-    answer: "Absolutely. We use industry-standard encryption and data handling practices. Your call data, summaries, and analytics are stored securely and visible only to you."
-  },
-  {
-    question: "Can I customize what the AI says?",
-    answer: "Yes, you have full control over the script, tone, and flow of the conversation. Our team helps you craft the perfect conversation based on your business needs."
-  },
-  {
-    question: "What if I need support or want to make changes later?",
-    answer: "We offer dedicated customer support and a user-friendly settings manager where you can update preferences, change scripts, or request adjustments anytime."
+    question: "Explain the transparency in your pricing model.",
+    answer: "We believe in outcome-based costs. You pay a foundation fee for management and continuous evolution, plus a transparent pay-per-minute or pay-per-message operational cost. No surprises, just scale."
   }
 ];
 
@@ -72,122 +34,71 @@ const FAQItem = ({ question, answer, isOpen, onToggle, index }: {
 }) => {
   return (
     <motion.div
-      initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="relative group"
+      transition={{ duration: 0.8, delay: index * 0.05, ease: [0.16, 1, 0.3, 1] }}
+      className="mb-6"
     >
-      <motion.div
-        // className="absolute -inset-0.5 bg-gradient-to-r from-theme-glow-primary/20 to-theme-glow-accent/20 rounded-xl opacity-0 group-hover:opacity-100 transition duration-300 blur"
-        initial={false}
-        animate={{
-          opacity: isOpen ? 1 : 0
-        }}
-      />
-      
-      <motion.div
-        className="relative p-6 bg-theme-bg-secondary/40 backdrop-blur-sm border border-theme-border-primary rounded-xl cursor-pointer overflow-hidden hover:border-theme-glow-primary/30 transition-colors duration-300"
+      <button
         onClick={onToggle}
-        whileHover={{ scale: 1.02 }}
-        transition={{ duration: 0.2 }}
+        className={`w-full text-left p-6 rounded-[1.5rem] border transition-all duration-500 flex items-center justify-between gap-4 group ${isOpen
+          ? 'bg-white border-indigo-100 shadow-[0_20px_40px_-10px_rgba(99,102,241,0.08)]'
+          : 'bg-slate-50/50 border-slate-100 hover:border-indigo-100 hover:bg-white'
+          }`}
       >
-        <div className="flex justify-between items-center gap-4">
-          <h3 className="text-lg font-semibold bg-clip-text text-transparent bg-gradient-to-r from-green-500 via-emerald-500 to-green-700">{question}</h3>
-          <motion.div
-            animate={{ rotate: isOpen ? 180 : 0 }}
-            transition={{ duration: 0.3 }}
-            className="flex-shrink-0"
-          >
-            <ChevronDown className="w-5 h-5 text-theme-glow-primary" />
-          </motion.div>
+        <span className={`text-lg font-bold tracking-tight transition-colors duration-300 ${isOpen ? 'text-indigo-600' : 'text-slate-900 group-hover:text-indigo-500'}`}>
+          {question}
+        </span>
+        <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-all duration-500 ${isOpen ? 'bg-indigo-600 text-white rotate-180' : 'bg-white text-slate-400 group-hover:text-indigo-400'}`}>
+          <ChevronDown className="w-5 h-5" />
         </div>
+      </button>
 
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="overflow-hidden"
-            >
-              <motion.p 
-                className="mt-4 text-theme-text-secondary"
-                initial={{ y: -20 }}
-                animate={{ y: 0 }}
-                exit={{ y: -20 }}
-                transition={{ duration: 0.3 }}
-              >
-                {answer}
-              </motion.p>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.div>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            className="overflow-hidden"
+          >
+            <div className="p-6 pt-3 text-slate-500 text-base font-light leading-relaxed max-w-3xl">
+              {answer}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 };
 
-
-
 const PricingFAQ = () => {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <motion.section
-      className="relative py-24 overflow-hidden"
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.5 }}
-    >
-     
-           
-      {/* Background Effects */}
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-theme-bg-primary via-theme-glow-primary/10 to-theme-bg-primary" />
-        <motion.div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: "radial-gradient(circle at 50% 50%, var(--theme-glow-primary-rgb) 0%, transparent 70%)",
-          }}
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.5, 0.3]
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            repeatType: "reverse"
-          }}
-        />
-      </div>
+    <section className="py-24 bg-white overflow-hidde">
+      <div className="max-w-5xl mx-auto px-4">
+        <div className="text-center mb-10">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="flex justify-center mb-6"
+          >
+            <div className="p-3 rounded-2xl bg-slate-50 -mt-28">
+              <HelpCircle className="w-6 h-6 text-indigo-600" />
+            </div>
+          </motion.div>
+          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 tracking-tighter mb-4 -mt-20">Clarifications.</h2>
+          <p className="text-slate-400 text-lg font-light">Direct answers to the foundations of our AI logic.</p>
+        </div>
 
-      <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Title */}
-        <motion.div
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            <span className="bg-gradient-to-r from-green-400 via-emerald-500 to-green-700 bg-clip-text text-transparent">
-              Frequently Asked Questions
-            </span>
-          </h2>
-          <p className="text-theme-text-secondary">Everything you need to know about our AI agents</p>
-        </motion.div>
-
-        {/* FAQ List */}
-        <div className="space-y-4">
+        <div className="max-w-4xl mx-auto">
           {faqs.map((faq, index) => (
             <FAQItem
               key={index}
-              question={faq.question}
-              answer={faq.answer}
+              {...faq}
               isOpen={openIndex === index}
               onToggle={() => setOpenIndex(openIndex === index ? null : index)}
               index={index}
@@ -195,7 +106,7 @@ const PricingFAQ = () => {
           ))}
         </div>
       </div>
-    </motion.section>
+    </section>
   );
 };
 

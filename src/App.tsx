@@ -12,7 +12,6 @@ import FloatingVoiceChat from './components/FloatingVoiceChat';
 import Footer from './components/Footer';
 import MetaPixel from './components/MetaPixel';
 import Home from './pages/Home';
-import Landing from './pages/Landing';
 import AICaller from './pages/AICaller';
 import AIChatbot from './pages/AIChatbot';
 const About = React.lazy(() => import('./pages/About'));
@@ -70,8 +69,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   const isHomePage = location.pathname === '/';
 
   // Dynamic Metadata based on route
-  const pageTitle = isCommunityRoute 
-    ? "Community | TopEdge AI" 
+  const pageTitle = isCommunityRoute
+    ? "Community | TopEdge AI"
     : "TopEdge AI - Advanced AI Voice Agents & Chatbots";
 
   const pageDescription = isCommunityRoute
@@ -84,7 +83,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription} />
         <meta name="keywords" content="AI voice agents, chatbots, customer service automation, TopEdge AI, business automation, AI community, automation workflows" />
-        
+
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://topedgeai.com/" />
@@ -104,10 +103,10 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         <meta name="robots" content="index, follow" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Helmet>
-      
+
       {!isCommunityRoute && <Navbar />}
       {isCommunityRoute && !isAuthPage && <CommunityNavbar />}
-      
+
       {isCommunityRoute ? (
         <>
           <Toaster />
@@ -119,7 +118,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           {children}
         </main>
       )}
-      
+
       {!isCommunityRoute && <Footer />}
       {!isCommunityRoute && <FloatingVoiceChat />}
       {isCommunityRoute && !isAuthPage && <Footer />}
@@ -202,55 +201,54 @@ const AnimatedRoutes = () => {
         transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
       >
         <Routes location={location}>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/about" element={<About />} />
-                  <Route path="/services" element={<Services />} />
-                  <Route path="/testimonials" element={<Testimonials />} />
-                  <Route path="/contact" element={<Contact />} />
-                  <Route path="/booking" element={<Booking />} />
-                  <Route path="/pricing" element={<Pricing />} />
-                  <Route path="/roi" element={<ROI />} />
-                  <Route path="/ai-caller" element={<AICaller />} />
-                  <Route path="/ai-chatbot" element={<AIChatbot />} />
-                  <Route path="/blog" element={<Blog />} />
-                  <Route path="/blog/:slug" element={<BlogPost />} />
-                  <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-                  <Route path="/admin/login" element={<CommunityLogin />} />
-                  <Route 
-                    path="/admin/maintenance-inquiries" 
-                    element={
-                      <ProtectedRoute requireAdmin>
-                        <MaintenanceInquiries />
-                      </ProtectedRoute>
-                    } 
-                  />
-                  <Route path="/landing" element={<Landing />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/testimonials" element={<Testimonials />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/booking" element={<Booking />} />
+          <Route path="/pricing" element={<Pricing />} />
+          <Route path="/roi" element={<ROI />} />
+          <Route path="/ai-caller" element={<AICaller />} />
+          <Route path="/ai-chatbot" element={<AIChatbot />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/admin/login" element={<CommunityLogin />} />
+          <Route
+            path="/admin/maintenance-inquiries"
+            element={
+              <ProtectedRoute requireAdmin>
+                <MaintenanceInquiries />
+              </ProtectedRoute>
+            }
+          />
 
-                  {/* Community Routes */}
-                  <Route path="/community" element={<CommunityHome />} />
-                  <Route path="/community/home" element={<CommunityHome />} />
-                  <Route path="/community/login" element={<CommunityLogin />} />
-                  <Route path="/community/signup" element={<CommunitySignup />} />
-                  <Route path="/community/profiles" element={<CommunityProfiles />} />
-                  <Route path="/community/profile/:id" element={<ProfileDetails />} />
-                  <Route path="/community/promote-profile" element={<CommunityPromoteProfile />} />
-                  <Route path="/community/automation-hub" element={<AutomationHub />} />
-                  <Route path="/community/submit-resource" element={<SubmitResource />} />
-                  <Route path="/community/resource/:id" element={<ResourceDetails />} />
-                  <Route path="/community/open-source" element={<OpenSource />} />
-                  <Route path="/community/announcements" element={<Announcements />} />
-                  <Route path="/community/admin/announcements" element={<AdminAnnouncements />} />
-                  <Route path="/community/settings" element={<Settings />} />
-                  <Route path="/community/discord" element={<Discord />} />
-                  <Route path="/community/approve-access" element={<ApproveAccess />} />
-                  <Route 
-                    path="/community/dashboard" 
-                    element={
-                      <ProtectedRoute>
-                        <CreatorDashboard />
-                      </ProtectedRoute>
-                    } 
-                  />
+          {/* Community Routes */}
+          <Route path="/community" element={<CommunityHome />} />
+          <Route path="/community/home" element={<CommunityHome />} />
+          <Route path="/community/login" element={<CommunityLogin />} />
+          <Route path="/community/signup" element={<CommunitySignup />} />
+          <Route path="/community/profiles" element={<CommunityProfiles />} />
+          <Route path="/community/profile/:id" element={<ProfileDetails />} />
+          <Route path="/community/promote-profile" element={<CommunityPromoteProfile />} />
+          <Route path="/community/automation-hub" element={<AutomationHub />} />
+          <Route path="/community/submit-resource" element={<SubmitResource />} />
+          <Route path="/community/resource/:id" element={<ResourceDetails />} />
+          <Route path="/community/open-source" element={<OpenSource />} />
+          <Route path="/community/announcements" element={<Announcements />} />
+          <Route path="/community/admin/announcements" element={<AdminAnnouncements />} />
+          <Route path="/community/settings" element={<Settings />} />
+          <Route path="/community/discord" element={<Discord />} />
+          <Route path="/community/approve-access" element={<ApproveAccess />} />
+          <Route
+            path="/community/dashboard"
+            element={
+              <ProtectedRoute>
+                <CreatorDashboard />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/community/requests" element={<RequestBoard />} />
         </Routes>
       </motion.div>

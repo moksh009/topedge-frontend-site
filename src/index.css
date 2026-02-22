@@ -5,42 +5,90 @@
 @layer base {
   :root {
     /* Enhanced Light Theme Colors - Apple Style */
-    --bg-primary: 255 255 255; /* Pure White */
-    --bg-secondary: 245 245 247; /* Apple's Light Gray */
-    --bg-accent: 242 242 247; /* System Gray 6 */
+    --bg-primary: 255 255 255;
+    /* Pure White */
+    --bg-secondary: 245 245 247;
+    /* Apple's Light Gray */
+    --bg-accent: 242 242 247;
+    /* System Gray 6 */
     --bg-surface: 255 255 255;
     --bg-overlay: 255 255 255;
-    --bg-inverse: 29 29 31; /* Apple's Dark Gray */
+    --bg-inverse: 29 29 31;
+    /* Apple's Dark Gray */
 
-    --text-primary: 29 29 31; /* Apple's Text Black */
-    --text-secondary: 134 134 139; /* Apple's Secondary Text */
-    --text-accent: 0 102 204; /* Apple's Blue */
+    --text-primary: 29 29 31;
+    /* Apple's Text Black */
+    --text-secondary: 134 134 139;
+    /* Apple's Secondary Text */
+    --text-accent: 0 102 204;
+    /* Apple's Blue */
     --text-inverse: 255 255 255;
 
-    --border-primary: 210 210 215; /* Apple's Border Gray */
+    --border-primary: 210 210 215;
+    /* Apple's Border Gray */
     --border-secondary: 229 229 234;
     --border-accent: 0 102 204;
 
-    --glow-primary: 0 113 227; /* Apple Blue Glow */
-    --glow-secondary: 94 92 230; /* Apple Indigo */
-    --glow-accent: 175 82 222; /* Apple Purple */
+    --glow-primary: 0 113 227;
+    /* Apple Blue Glow */
+    --glow-secondary: 94 92 230;
+    /* Apple Indigo */
+    --glow-accent: 175 82 222;
+    /* Apple Purple */
 
     /* Typography */
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   }
 
-  html, body {
+  .dark {
+    /* Enhanced Dark Theme Colors - Apple Style */
+    --bg-primary: 0 0 0;
+    /* Pure Black */
+    --bg-secondary: 28 28 30;
+    /* Apple's Dark Gray */
+    --bg-accent: 44 44 46;
+    /* System Gray 4 */
+    --bg-surface: 28 28 30;
+    --bg-overlay: 38 38 40;
+    --bg-inverse: 255 255 255;
+
+    --text-primary: 255 255 255;
+    --text-secondary: 174 174 178;
+    /* Apple's Dark Secondary Text */
+    --text-accent: 10 132 255;
+    /* Apple's Dark Blue */
+    --text-inverse: 29 29 31;
+
+    --border-primary: 56 56 58;
+    /* Apple's Dark Border Gray */
+    --border-secondary: 72 72 74;
+    --border-accent: 10 132 255;
+
+    --glow-primary: 0 113 227;
+    --glow-secondary: 94 92 230;
+    --glow-accent: 175 82 222;
+  }
+
+  html,
+  body {
     @apply overflow-x-hidden w-full;
   }
 
   body {
-    @apply bg-white text-[#1d1d1f] antialiased selection:bg-[#0066cc]/20 selection:text-[#1d1d1f];
+    @apply bg-theme-bg-primary text-theme-text-primary antialiased selection:bg-blue-600/30 selection:text-white;
+    background-color: rgb(var(--bg-primary));
+    color: rgb(var(--text-primary));
     font-feature-settings: "kern" 1, "liga" 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply tracking-tight;
   }
 }
@@ -49,11 +97,11 @@
   .apple-button {
     @apply inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-300 transform active:scale-95;
   }
-  
+
   .apple-button-primary {
     @apply bg-[#0071e3] text-white hover:bg-[#0077ed] shadow-sm hover:shadow-md;
   }
-  
+
   .apple-button-secondary {
     @apply bg-[#e8e8ed] text-[#1d1d1f] hover:bg-[#d2d2d7];
   }
@@ -67,13 +115,16 @@
 ::-webkit-scrollbar {
   width: 8px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   background: #d1d1d6;
   border-radius: 4px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: #aeaeb2;
 }

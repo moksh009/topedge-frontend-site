@@ -28,7 +28,7 @@ const Pricing = () => {
           __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'FAQPage',
-            'mainEntity': faqs.map(faq => ({
+            'mainEntity': faqs.map((faq: { question: string; answer: string }) => ({
               '@type': 'Question',
               'name': faq.question,
               'acceptedAnswer': {
@@ -64,21 +64,21 @@ const Pricing = () => {
         }}
       />
       <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.5 }}
-      className="min-h-screen bg-theme-bg-primary overflow-x-hidden"
-      ref={containerRef}
-    >
-      <div className="space-y-8 sm:space-y-12 md:space-y-16 lg:space-y-20">
-        <PricingHero />
-        <PricingBenefits />
-        <PricingPlans />
-        <PricingFAQ />
-        <PricingCTA />
-      </div>
-    </motion.div>
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.5 }}
+        className="min-h-screen bg-theme-bg-primary overflow-x-hidden"
+        ref={containerRef}
+      >
+        <div className="space-y-8 sm:space-y-12 md:space-y-16 lg:space-y-20">
+          <PricingHero />
+          <PricingBenefits />
+          <PricingPlans />
+          <PricingFAQ />
+          <PricingCTA />
+        </div>
+      </motion.div>
     </>
   );
 };

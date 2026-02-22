@@ -5,12 +5,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Sparkles, Code2, Brain, Cpu, Globe, Shield, Zap, Users, Trophy, Rocket, Star } from 'lucide-react';
 
 // Lazy load components for better initial load time
-const AboutHero = React.lazy(() => import('../components/sections/about/AboutHero'));
-const AboutMission = React.lazy(() => import('../components/sections/about/AboutMission'));
-const AboutValues = React.lazy(() => import('../components/sections/about/AboutValues'));
-const AboutTimeline = React.lazy(() => import('../components/sections/about/AboutTimeline'));
-const AboutStats = React.lazy(() => import('../components/sections/about/AboutStats'));
-const AboutTeam = React.lazy(() => import('../components/sections/about/AboutTeam'));
+
 
 // Loading fallback component
 const SectionLoader = () => (
@@ -26,9 +21,9 @@ const AboutCTA: React.FC = () => {
 
   return (
     <section className="relative py-24 sm:py-32 overflow-hidden">
-    
 
-      
+
+
 
       {/* Content Container */}
       <motion.div
@@ -173,7 +168,7 @@ const DeveloperShowcase: React.FC = () => {
 
   return (
     <section className="relative py-32 overflow-hidden">
-     
+
 
       <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Enhanced Header */}
@@ -222,7 +217,7 @@ const DeveloperShowcase: React.FC = () => {
         <div className="relative">
           {/* Decorative Line */}
           <div className="absolute top-1/2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-theme-border-accent/20 to-transparent" />
-          
+
           <div className="relative grid grid-cols-2 md:grid-cols-4 gap-8">
             {offerings.map((offering, index) => (
               <div
@@ -286,48 +281,29 @@ const About: React.FC = () => {
         }}
       />
       <main className="bg-theme-bg-primary min-h-screen relative">
-      {/* Progress Bar */}
-      <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-theme-glow-primary to-theme-glow-secondary transform origin-left z-50"
-        style={{ scaleX: scrollYProgress }}
-      />
+        {/* Progress Bar */}
+        <motion.div
+          className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-theme-glow-primary to-theme-glow-secondary transform origin-left z-50"
+          style={{ scaleX: scrollYProgress }}
+        />
 
-      {/* Sections */}
-      <Suspense fallback={<SectionLoader />}>
-        <AboutHero />
-      </Suspense>
 
-      <Suspense fallback={<SectionLoader />}>
-        <AboutMission />
-      </Suspense>
 
-      <Suspense fallback={<SectionLoader />}>
-        <AboutValues />
-      </Suspense>
+        {/* Developer Showcase - Adjusted spacing for mobile */}
+        <div className="animate-on-scroll fade-up sm:py-0 py-0 -mt-8 sm:mt-0">
+          <DeveloperShowcase />
+        </div>
 
-      <Suspense fallback={<SectionLoader />}>
-        <AboutStats />
-      </Suspense>
+        {/* CTA Section - Adjusted spacing for mobile */}
+        <div className="animate-on-scroll fade-up sm:py-0 py-0 -mt-8 sm:mt-0">
+          <AboutCTA />
+        </div>
 
-      <Suspense fallback={<SectionLoader />}>
-        <AboutTimeline />
-      </Suspense>
-
-      {/* Developer Showcase - Adjusted spacing for mobile */}
-      <div className="animate-on-scroll fade-up sm:py-0 py-0 -mt-8 sm:mt-0">
-        <DeveloperShowcase />
-      </div>
-
-      {/* CTA Section - Adjusted spacing for mobile */}
-      <div className="animate-on-scroll fade-up sm:py-0 py-0 -mt-8 sm:mt-0">
-        <AboutCTA />
-      </div>
-
-      {/* Team Section - Commented out as in original */}
-      {/* <div className="animate-on-scroll blur-in">
+        {/* Team Section - Commented out as in original */}
+        {/* <div className="animate-on-scroll blur-in">
         <AboutTeam />
       </div> */}
-    </main>
+      </main>
     </>
   );
 };

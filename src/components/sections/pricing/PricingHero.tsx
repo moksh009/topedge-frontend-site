@@ -1,321 +1,187 @@
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import React from 'react';
+import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { useRef } from 'react';
-import { ChevronRight, Coins, CreditCard, Gem, Crown, Wallet, Sparkles, Star, PhoneCall, Calculator, CheckCircle, DollarSign, DollarSignIcon } from 'lucide-react';
+import { CreditCard, Calculator, Sparkles, Zap, Star, ShieldCheck } from 'lucide-react';
 
-interface PremiumButtonProps {
-  icon: React.ElementType;
-  text: string;
-  onClick?: () => void;
-  variant?: 'primary' | 'secondary';
-}
+const PricingHero = () => {
+  const navigate = useNavigate();
 
-const PremiumButton: React.FC<PremiumButtonProps> = ({ 
-  icon: Icon, 
-  text, 
-  onClick,
-  variant = 'primary'
-}) => {
-  const colors = {
-    primary: {
-      glow: 'from-green-400/70 via-emerald-500/70 to-green-400/70',
-      glowHover: 'from-green-400/100 via-emerald-500/100 to-green-400/100',
-      border: 'border-green-400/50 group-hover:border-green-400',
-      text: 'from-white via-green-200 to-white',
-      icon: 'text-green-400 group-hover:text-white',
-      line: 'via-green-400'
-    },
-    secondary: {
-      glow: 'from-green-400/70 via-emerald-500/70 to-green-400/70',
-      glowHover: 'from-green-400/100 via-emerald-500/100 to-green-400/100',
-      border: 'border-green-400/50 group-hover:border-green-400',
-      text: 'from-white via-green-200 to-white',
-      icon: 'text-green-400 group-hover:text-white',
-      particle: 'bg-green-400',
-      line: 'via-green-400'
+  // --- Premium Entrance Animations ---
+  // These play once on page load. The "exit" is handled by the next section scrolling over this one.
+  const titleVariants = {
+    hidden: { opacity: 0, y: 60 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 1, ease: [0.16, 1, 0.3, 1] }
+    }
+  };
+
+  const subtitleVariants = {
+    hidden: { opacity: 0, y: 40 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }
+    }
+  };
+
+  const actionsVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }
     }
   };
 
   return (
-    <motion.button
-      onClick={onClick}
-      whileHover="hover"
-      whileTap="tap"
-      variants={{
-        hover: { scale: 1.05 },
-        tap: { scale: 0.95 }
-      }}
-      className="group relative rounded-full"
-    >
-      <div className="relative px-8 py-4 rounded-full">
-        {/* Outer Glow */}
-        <div className={`absolute inset-0 bg-gradient-to-r ${colors[variant].glow} blur-xl opacity-40 group-hover:opacity-100 transition-opacity duration-500 rounded-full`} />
-        
-        {/* Moving Particles */}
-        
+    // CRITICAL CHANGE: The container is now sticky, h-screen, and has z-0.
+    // This allows the next section (with a higher z-index) to scroll over it.
+    <div className="sticky top-0 h-screen w-full overflow-hidden bg-[#FAFAFC] z-0">
+      <div className="relative h-full w-full flex flex-col justify-center">
 
-        {/* Button Background */}
-        <div className={`absolute inset-0 bg-transparent border ${colors[variant].border} transition-colors duration-300 rounded-full`} />
-        
-        {/* Animated Border */}
-        <div className="absolute inset-0 rounded-full overflow-hidden">
+        {/* --- Premium Background Elements --- */}
+        <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+          {/* Subtle noise texture for a premium feel */}
+          <div className="absolute inset-0 opacity-[0.02] mix-blend-overlay pointer-events-none"
+            style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }} />
+
+          {/* Smooth Mesh Gradients with gentle breathing animation */}
           <motion.div
-            className={`absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent ${colors[variant].line} to-transparent`}
-            animate={{
-              x: [-100, 100, -100],
-              opacity: [0.3, 1, 0.3]
-            }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              ease: "linear"
-            }}
+            animate={{ scale: [1, 1.05, 1], opacity: [0.4, 0.5, 0.4], y: [0, -30, 0] }}
+            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-[-10%] left-[-5%] w-[80vw] h-[80vw] max-w-[800px] max-h-[800px] bg-indigo-200/40 rounded-full blur-[120px] will-change-transform"
           />
           <motion.div
-            className={`absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent ${colors[variant].line} to-transparent`}
-            animate={{
-              x: [100, -100, 100],
-              opacity: [0.3, 1, 0.3]
-            }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              ease: "linear"
-            }}
+            animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.4, 0.3], y: [0, 30, 0] }}
+            transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            className="absolute bottom-[-10%] right-[-5%] w-[90vw] h-[90vw] max-w-[1000px] max-h-[1000px] bg-blue-200/30 rounded-full blur-[140px] will-change-transform"
           />
-        </div>
 
-        {/* Content */}
-        <div className="relative flex items-center gap-3">
-          <div className="relative flex items-center gap-3">
-            <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-[#006400] group-hover:text-[#111] transition-colors duration-300" />
-            <span className={`text-base sm:text-lg font-medium ${colors[variant].text}`}>
-              {text}
-            </span>
-          </div>
-          <motion.div
-            animate={{
-              x: [0, 5, 0],
-              y: [0, -2, 0]
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          >
-            <ChevronRight className={`w-5 h-5 sm:w-6 sm:h-6 text-[#00000] transition-colors duration-300`} />
-          </motion.div>
-        </div>
-      </div>
-    </motion.button>
-  );
-};
-
-const PricingHero = () => {
-  const navigate = useNavigate();
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"]
-  });
-
-  // Use spring physics for smoother animations
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  });
-
-  const y = useTransform(smoothProgress, [0, 1], ["0%", "25%"]);
-  const opacity = useTransform(smoothProgress, [0, 0.5, 0.8], [1, 1, 0]);
-  const scale = useTransform(smoothProgress, [0, 0.5, 1], [1, 0.98, 0.95]);
-
-  // Background icons configuration with optimized animations
-  const backgroundIcons = [
-    
-    {
-      Icon: DollarSign,
-      size: 0,
-      brightness: 0.9,
-      color: '#22C55E',
-      position: { bottom: '10%', left: '35%' },
-      rotation: 12,
-      delay: 0.8,
-      floatRange: 22,
-      duration: 7.2,
-      scale: 1
-    }
-  ];
-
-  return (
-    <motion.section
-      ref={containerRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-theme-bg-primary py-20"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 1 }}
-      style={{ opacity, scale }}
-    >
-
-      {/* Animated grid background */}
-      <div 
-        className="absolute inset-0 opacity-20"
-        style={{
-          backgroundImage: `
-            linear-gradient(to right, rgba(var(--glow-primary), 0.1) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(var(--glow-primary), 0.1) 1px, transparent 1px)
-          `,
-          backgroundSize: '40px 40px',
-          maskImage: 'radial-gradient(circle at center, black 30%, transparent 80%)',
-        }}
-      />
-
-      {/* Floating sparkles */}
-     
-        
-  
-
-      {/* Background Icons with enhanced animations */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {backgroundIcons.map((item, i) => (
-          <motion.div
-            key={i}
-            className="absolute"
-            style={{
-              ...item.position,
-              zIndex: 10 - i,
-            }}
-            initial={{ 
-              opacity: 0, 
-              scale: 0,
-              y: 50,
-              rotate: item.rotation - 10,
-            }}
-            animate={{ 
-              opacity: item.brightness,
-              scale: item.scale,
-              y: 0,
-              rotate: item.rotation,
-            }}
-            transition={{
-              duration: 1.2,
-              delay: item.delay,
-              ease: "easeOut",
-            }}
-          >
+          {/* Floating Tech Annotations */}
+          <div className="absolute inset-0 z-0 max-w-7xl mx-auto hidden md:block">
             <motion.div
-              animate={{
-                y: [-item.floatRange/2, item.floatRange/2, -item.floatRange/2],
-                rotate: [item.rotation - 5, item.rotation + 5, item.rotation - 5],
-                scale: [1, 1.05, 1]
-              }}
-              transition={{
-                duration: item.duration,
-                repeat: Infinity,
-                ease: "easeInOut",
-                times: [0, 0.5, 1]
-              }}
-              style={{
-                filter: `brightness(${item.brightness}) drop-shadow(0 0 30px ${item.color}40)`,
-              }}
+              animate={{ y: [0, -10, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute top-[20%] left-[5%] p-4 border border-slate-200/60 rounded-xl backdrop-blur-md bg-white/40 shadow-sm pointer-events-none"
             >
-              <item.Icon 
-                style={{ 
-                  width: item.size,
-                  height: item.size,
-                  color: item.color,
-                }}
-              />
-              {/* Glow effect */}
-              <motion.div
-                className="absolute inset-0"
-                animate={{
-                  opacity: [0.3, 0.6, 0.3],
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                style={{
-                  background: `radial-gradient(circle at center, ${item.color}20 0%, transparent 70%)`,
-                  filter: 'blur(10px)',
-                }}
-              />
+              <div className="text-[9px] font-mono text-slate-400 uppercase tracking-widest mb-2">System.Status</div>
+              <div className="flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)] animate-pulse" />
+                <span className="text-[10px] font-mono text-slate-700 font-medium">NEURAL_READY :: EDGE</span>
+              </div>
             </motion.div>
-          </motion.div>
-        ))}
+
+            <motion.div
+              animate={{ y: [0, 10, 0] }}
+              transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+              className="absolute bottom-[35%] right-[5%] p-4 border border-slate-200/60 rounded-xl backdrop-blur-md bg-white/40 shadow-sm pointer-events-none"
+            >
+              <div className="text-[9px] font-mono text-slate-400 uppercase tracking-widest mb-2">Latency.Target</div>
+              <div className="flex items-center gap-2">
+                <span className="text-[11px] font-mono text-indigo-600 font-bold">&lt; 12ms</span>
+                <span className="text-[9px] font-mono text-slate-500">@GLOBAL_ACCEL</span>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+
+        {/* --- Main Content Area --- */}
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+          <div className="text-center flex flex-col items-center justify-center">
+
+            {/* Top Badge */}
+            <motion.div
+              initial={{ opacity: 0, y: 20, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white border border-slate-200 shadow-sm text-[11px] font-bold uppercase tracking-[0.2em] mb-10"
+            >
+              <Sparkles className="w-4 h-4 text-indigo-500" />
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-500">Investment Reveal 2026</span>
+            </motion.div>
+
+            {/* Staggered Content Reveal */}
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={{ visible: { transition: { staggerChildren: 0.15 } } }}
+            >
+              {/* Title */}
+              <motion.div variants={titleVariants} className="relative z-20 will-change-transform mb-6">
+                <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-extrabold tracking-[-0.04em] text-slate-900 leading-[1.05]">
+                  Pricing for <br />
+                  <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-blue-500 to-indigo-600 pb-2">
+                    Visionaries.
+                    {/* Subtle glow behind the gradient text */}
+                    <span className="absolute inset-0 bg-gradient-to-r from-indigo-600 via-blue-500 to-indigo-600 blur-2xl opacity-20 -z-10 bg-clip-text text-transparent mix-blend-multiply" aria-hidden="true">
+                      Visionaries.
+                    </span>
+                  </span>
+                </h1>
+              </motion.div>
+
+              {/* Subtitle */}
+              <motion.div variants={subtitleVariants} className="relative px-4 z-10 will-change-transform mb-12">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl text-slate-500 font-medium leading-tight tracking-tight max-w-4xl mx-auto">
+                  Transparent economics.
+                  <span className="text-slate-900 font-bold block sm:inline"> Built for meaningful impact.</span>
+                </h2>
+              </motion.div>
+
+              {/* Actions */}
+              <motion.div variants={actionsVariants} className="flex flex-col sm:flex-row items-center justify-center gap-4 relative z-30 will-change-transform">
+                <button
+                  onClick={() => document.getElementById('pricing-plans')?.scrollIntoView({ behavior: 'smooth' })}
+                  className="group relative px-8 py-4 rounded-full bg-slate-900 text-white font-bold text-lg flex items-center gap-3 overflow-hidden shadow-xl shadow-slate-900/20 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <CreditCard className="w-5 h-5 relative z-10" />
+                  <span className="relative z-10">Explore Economics</span>
+                </button>
+
+                <button
+                  onClick={() => navigate('/roi')}
+                  className="group px-8 py-4 rounded-full bg-white/80 backdrop-blur-md border border-slate-200/80 text-slate-900 font-bold text-lg flex items-center gap-3 hover:bg-white hover:border-slate-300 hover:-translate-y-1 transition-all duration-300 shadow-sm"
+                >
+                  <Calculator className="w-5 h-5 text-indigo-600 group-hover:rotate-12 transition-transform duration-300" />
+                  Project My ROI
+                </button>
+              </motion.div>
+            </motion.div>
+
+          </div>
+        </div>
+
+
+
+        {/* Global Trust Bar */}
+        <div className="absolute bottom-0 left-0 w-full py-6 border-t border-slate-200/50 bg-white/50 backdrop-blur-xl z-30">
+          <div className="max-w-7xl mx-auto flex flex-wrap justify-center gap-6 sm:gap-12 md:gap-24 items-center px-4">
+            {[
+              { icon: ShieldCheck, text: "Privacy First", color: "text-emerald-600", bg: "bg-emerald-100" },
+              { icon: Zap, text: "Global Edge", color: "text-blue-600", bg: "bg-blue-100" },
+              { icon: Star, text: "24/7 Support", color: "text-indigo-600", bg: "bg-indigo-100" }
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1 + i * 0.1, duration: 0.6 }}
+                className="flex items-center gap-2.5"
+              >
+                <div className={`p-1.5 rounded-lg ${item.bg}`}>
+                  <item.icon className={`w-4 h-4 ${item.color}`} />
+                </div>
+                <span className="text-[11px] font-bold uppercase tracking-wider text-slate-600">{item.text}</span>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
       </div>
-
-      {/* Content Container */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <motion.div
-          className="mb-12 sm:mb-16"
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          {/* Pre-title */}
-          <motion.p
-            className="text-lg md:text-xl tracking-wider uppercase font-medium mb-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-          >
-            <span className="animate-gradient-text bg-gradient-to-r from-green-400 via-black to-green-400 bg-clip-text text-transparent bg-300% font-bold">
-              Pricing That Makes Sense
-            </span>
-          </motion.p>
-
-          {/* Main Title */}
-          <motion.h1 
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[1.1] mb-8"
-            style={{ y }}
-          >
-            <span className="animate-gradient-text bg-gradient-to-r from-green-400 via-black to-green-400 bg-clip-text text-transparent bg-300% font-bold">
-              Optimal Pricing
-            </span>
-          </motion.h1>
-
-          {/* Description */}
-          <motion.p 
-            className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-theme-text-secondary max-w-4xl mx-auto mb-12"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-          >
-            Get every high-impact feature that drives results
-            <br className="hidden sm:block" />
-            Not just fancy, over-techy stuff at a price that makes sense.
-          </motion.p>
-
-          {/* CTA Buttons */}
-          <motion.div 
-            className="flex flex-col sm:flex-row items-center justify-center gap-6"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-          >
-            <PremiumButton 
-              icon={CreditCard}
-              text="View Plans"
-              onClick={() => {
-                document.getElementById('pricing-plans')?.scrollIntoView({ behavior: 'smooth' });
-              }}
-              variant="primary"
-            />
-            <PremiumButton 
-              icon={Calculator}
-              text="Calculate ROI"
-              onClick={() => navigate('/roi')}
-              variant="secondary"
-            />
-          </motion.div>
-        </motion.div>
-      </div>
-    </motion.section>
+    </div>
   );
 };
 

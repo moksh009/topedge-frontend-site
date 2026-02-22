@@ -13,8 +13,8 @@ import WhatsAppChatbotSection from '../components/sections/new-home/WhatsAppChat
 import HowChatbotWorksSection from '../components/sections/new-home/HowChatbotWorksSection';
 import ChatbotDashboardSection from '../components/sections/new-home/ChatbotDashboardSection';
 import ChatbotBenefitsSection from '../components/sections/new-home/ChatbotBenefitsSection';
-import ReviewsSection from '../components/sections/new-home/ReviewsSection';
 import ROICalculatorSection from '../components/sections/new-home/ROICalculatorSection';
+import ReviewsSection from '../components/sections/new-home/ReviewsSection';
 import { CTASection } from '../components/sections/CTASection';
 
 const Home = () => {
@@ -93,10 +93,10 @@ const Home = () => {
           })
         }}
       />
-      
-      {/* Force Light Theme Wrapper for Home Page */}
-      <div className="relative min-h-screen bg-white text-gray-900 font-sans selection:bg-gray-900 selection:text-white">
-        
+
+      {/* Theme-aware Wrapper for Home Page */}
+      <div className="relative min-h-screen bg-theme-bg-primary text-theme-text-primary font-sans selection:bg-theme-text-primary selection:text-theme-text-inverse">
+
         {/* Progress Bar */}
         <motion.div
           className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 transform origin-left z-50"
@@ -108,33 +108,31 @@ const Home = () => {
           <HeroSection />
 
           <TrustedBySection />
-          
+
           <AICallerDemoSection />
 
           <AICallerDashboardSection />
 
-          <HowAICallerWorksSection/>
-          
+          <HowAICallerWorksSection />
+
           <EndToEndSolutionsSection />
 
-          
-          
+
+
           <BenefitsSection />
 
           <ROICalculatorSection />
-          
+
           <WhatsAppChatbotSection />
 
           <ChatbotDashboardSection />
 
-          <HowChatbotWorksSection/>
-          
+          <HowChatbotWorksSection />
+
           <ChatbotBenefitsSection />
-          
+
           <ReviewsSection />
 
-          
-          
           <CTASection />
         </div>
       </div>

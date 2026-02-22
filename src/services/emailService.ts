@@ -5,6 +5,7 @@ export interface BookingDetails {
   email: string;
   phone: string;
   companyName?: string;
+  monthlyInquiry?: string;
   date: string;
   time: string;
   additionalInfo?: string;
@@ -91,8 +92,8 @@ export class EmailService {
     ];
 
     if (typeof window !== 'undefined') {
-       endpoints.push('/.netlify/functions/api/public-stats');
-       endpoints.push('/.netlify/functions/api/api/public-stats');
+      endpoints.push('/.netlify/functions/api/public-stats');
+      endpoints.push('/.netlify/functions/api/api/public-stats');
     }
 
     endpoints.push('https://topedge-backend.netlify.app/api/public-stats');
@@ -104,13 +105,13 @@ export class EmailService {
       try {
         const response = await axios.get(url);
         if (response.data && (response.data.success || response.data.stats)) {
-             return response.data;
+          return response.data;
         }
       } catch (e) {
         // Continue to next endpoint
       }
     }
-    
+
     console.warn('[EmailService] All public stats fetch attempts failed');
     return null;
   }
@@ -120,11 +121,11 @@ export class EmailService {
     let retryCount = 0;
     let url = `${this.baseURL}${endpoint}`;
     let usedFallback = false;
-    
+
     while (retryCount < maxRetries) {
       try {
         console.log(`Sending ${type} email to endpoint:`, url);
-        
+
         const response = await axios.post(url, details, {
           headers: {
             'Content-Type': 'application/json',
@@ -138,7 +139,7 @@ export class EmailService {
         if (response.status !== 200) {
           throw new Error(`Failed to send ${type} email: ${response.statusText}`);
         }
-        
+
         console.log(`${type} email sent successfully:`, response.data);
         return;
       } catch (error) {
@@ -194,12 +195,12 @@ export class EmailService {
   public async sendContactEmails(details: ContactDetails): Promise<void> {
     try {
       console.log('Sending contact form emails with details:', details);
-      
+
       const [userEmailResult, adminEmailResult] = await Promise.allSettled([
         this.sendEmail('user', '/api/send-contact-user-email', details),
         this.sendEmail('admin', '/api/send-contact-admin-email', details)
       ]);
-      
+
       const errors = [];
       if (userEmailResult.status === 'rejected') {
         errors.push(`User email failed: ${userEmailResult.reason}`);
@@ -207,11 +208,11 @@ export class EmailService {
       if (adminEmailResult.status === 'rejected') {
         errors.push(`Admin email failed: ${adminEmailResult.reason}`);
       }
-      
+
       if (errors.length > 0) {
         throw new Error(`Failed to send some emails: ${errors.join('; ')}`);
       }
-      
+
       console.log('Both contact form emails sent successfully');
     } catch (error) {
       console.error('Error sending contact form emails:', error);
@@ -254,25 +255,25 @@ export class EmailService {
   public async sendWelcomeEmail(email: string, name: string): Promise<void> {
     try {
       await this.sendEmail('user', '/api/send-welcome-email', { email, name });
-    } catch (error) {}
+    } catch (error) { }
   }
 
   public async sendProfileReminderEmail(email: string, name: string, daysAgo: number): Promise<void> {
     try {
       await this.sendEmail('user', '/api/send-profile-reminder', { email, name, daysAgo });
-    } catch (error) {}
+    } catch (error) { }
   }
 
   public async sendResourceNudgeEmail(email: string, name: string): Promise<void> {
     try {
       await this.sendEmail('user', '/api/send-resource-nudge', { email, name });
-    } catch (error) {}
+    } catch (error) { }
   }
 
   public async sendCommunityUpdateEmail(email: string, title: string, content: string, ctaText: string, ctaLink: string): Promise<void> {
     try {
       await this.sendEmail('user', '/api/send-community-update', { email, title, content, ctaText, ctaLink });
-    } catch (error) {}
+    } catch (error) { }
   }
 
   public async broadcastAnnouncement(subject: string, message: string, actionUrl: string, actionText: string): Promise<void> {
@@ -290,7 +291,7 @@ export class EmailService {
       await axios.post(`${this.baseURL}/api/send-resource-notification`, {
         resourceId, title, authorName, secret: 'topedge-secret-key-change-in-prod'
       });
-    } catch (error) {}
+    } catch (error) { }
   }
 
   public async sendRequestBroadcast(requestId: string, title: string, requesterName: string, budget: string, description: string): Promise<void> {
@@ -298,22 +299,22 @@ export class EmailService {
       await axios.post(`${this.baseURL}/api/send-request-notification`, {
         requestId, title, requesterName, budget, description, secret: 'topedge-secret-key-change-in-prod'
       });
-    } catch (error) {}
+    } catch (error) { }
   }
 
   public async sendOtp(email: string): Promise<{ hash: string; email: string }> {
     try {
-      const response = await axios.post(`${this.baseURL}/api/generate-otp`, { email }, { headers: { 'Content-Type': 'application/json' }});
+      const response = await axios.post(`${this.baseURL}/api/generate-otp`, { email }, { headers: { 'Content-Type': 'application/json' } });
       return response.data;
     } catch (error) {
       const fallbackBaseURL = this.getFallbackBaseURL();
       if (fallbackBaseURL) {
-          try {
-             const response = await axios.post(`${fallbackBaseURL}/api/generate-otp`, { email });
-             return response.data;
-          } catch (e) {
-             throw new Error('Failed to send OTP via fallback');
-          }
+        try {
+          const response = await axios.post(`${fallbackBaseURL}/api/generate-otp`, { email });
+          return response.data;
+        } catch (e) {
+          throw new Error('Failed to send OTP via fallback');
+        }
       }
       throw new Error('Failed to send OTP');
     }
@@ -321,17 +322,17 @@ export class EmailService {
 
   public async verifyOtp(email: string, otp: string, hash: string): Promise<boolean> {
     try {
-      const response = await axios.post(`${this.baseURL}/api/verify-otp`, { email, otp, hash }, { headers: { 'Content-Type': 'application/json' }});
+      const response = await axios.post(`${this.baseURL}/api/verify-otp`, { email, otp, hash }, { headers: { 'Content-Type': 'application/json' } });
       return response.data.success;
     } catch (error) {
-       const fallbackBaseURL = this.getFallbackBaseURL();
+      const fallbackBaseURL = this.getFallbackBaseURL();
       if (fallbackBaseURL) {
-          try {
-             const response = await axios.post(`${fallbackBaseURL}/api/verify-otp`, { email, otp, hash });
-             return response.data.success;
-          } catch (e) {
-             return false;
-          }
+        try {
+          const response = await axios.post(`${fallbackBaseURL}/api/verify-otp`, { email, otp, hash });
+          return response.data.success;
+        } catch (e) {
+          return false;
+        }
       }
       return false;
     }
