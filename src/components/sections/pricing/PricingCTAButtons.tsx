@@ -8,8 +8,8 @@ const PricingCTAButtons = () => {
     <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
       <PremiumButton
         icon={DollarSign}
-        text="Try Demo"
-        onClick={() => navigate('/demo')}
+        text="Book Coffee Call"
+        onClick={() => navigate('/booking')}
         variant="green"
       />
       <PremiumButton

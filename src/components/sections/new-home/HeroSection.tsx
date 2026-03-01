@@ -27,16 +27,16 @@ const HeroSection = () => {
   }, []);
 
   return (
-    // Container: h-[100dvh] ensures full viewport height on mobile browsers
-    <div className="relative bg-white h-[100dvh] w-full overflow-hidden text-slate-900 font-sans selection:bg-indigo-500 selection:text-white flex flex-col">
+    // Container: min-h-[100dvh] ensures full viewport height on mobile browsers while allowing growth
+    <div className="relative bg-white min-h-[100dvh] w-full overflow-x-hidden text-slate-900 font-sans selection:bg-indigo-500 selection:text-white flex flex-col">
 
       {/* Background */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-50/50 via-white to-white pointer-events-none" />
 
       {/* Main Content */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto flex-grow flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 w-full max-w-7xl mx-auto flex-grow flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 pt-32 pb-20 lg:pt-0 lg:pb-0">
 
-        <div className="flex flex-col items-center text-center w-full max-w-4xl mx-auto">
+        <div className="flex flex-col items-center text-center w-full max-w-4xl mx-auto mt-16 sm:mt-0">
 
           {/* Toggle Button */}
           <motion.div

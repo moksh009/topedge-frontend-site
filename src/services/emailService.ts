@@ -6,8 +6,13 @@ export interface BookingDetails {
   phone: string;
   companyName?: string;
   monthlyInquiry?: string;
+  channel?: string;
+  model?: string;
   date: string;
   time: string;
+  isoDate?: string;
+  isoEndDate?: string;
+  selectedTimezone?: string;
   additionalInfo?: string;
 }
 

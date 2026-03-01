@@ -87,7 +87,7 @@ const Navbar = () => {
                   className="group relative overflow-hidden px-5 py-2.5 rounded-full text-sm font-bold text-white shadow-lg shadow-blue-500/30 transition-all hover:scale-105 active:scale-95 bg-slate-900"
                 >
                   <span className="relative flex items-center gap-2">
-                    Book Now <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                    Book Coffe Call <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                   </span>
                 </Link>
               </div>

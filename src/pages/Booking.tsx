@@ -5,7 +5,7 @@ import {
   Clock, Mail, ArrowRight, ArrowLeft, User,
   Phone, Building2, ShieldCheck, Sparkles,
   ChevronDown, Check, Coffee, MessageSquare,
-  Globe, Zap
+  Globe, Zap, Target
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
@@ -48,15 +48,20 @@ const Booking = () => {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [companyName, setCompanyName] = useState('');
+  const [channel, setChannel] = useState('');
+  const [model, setModel] = useState('');
   const [monthlyInquiry, setMonthlyInquiry] = useState('');
   const [additionalInfo, setAdditionalInfo] = useState('');
+
+  const chatModels = ['CX Agent (V1) - $249/month', 'CX Agent (V2) - $549/month', 'Enterprise - Custom'];
+  const voiceModels = ['CORE (V1) - $249/month', 'EDGE (V2) - $529/month', 'EDGE (V3) - $987/month'];
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const [selectedTime, setSelectedTime] = useState('');
   const [selectedTimezone] = useState(Intl.DateTimeFormat().resolvedOptions().timeZone);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const totalSteps = 4;
+  const totalSteps = 3;
 
   const handleNext = () => setStep(s => Math.min(s + 1, totalSteps - 1));
   const handleBack = () => setStep(s => Math.max(s - 1, 0));
@@ -68,9 +73,39 @@ const Booking = () => {
   const handleSubmit = async () => {
     setIsSubmitting(true);
     try {
+      // Convert selected time to ISO string
+      let isoStart = new Date().toISOString();
+      let isoEnd = new Date(Date.now() + 30 * 60 * 1000).toISOString();
+      if (selectedDate && selectedTime) {
+        // selectedTime is like "10:00 AM" (ET)
+        const [timePart, ampm] = selectedTime.split(' ');
+        let [hours, minutes] = timePart.split(':').map(Number);
+        if (ampm === 'PM' && hours < 12) hours += 12;
+        if (ampm === 'AM' && hours === 12) hours = 0;
+
+        // Construct the date in the local timezone (since the calendar picker picks local days)
+        // But we want it to represent the ET time. To keep it simple, we format it as a string
+        // and add the ET offset to parse it into an exact UTC ISO string.
+        const year = selectedDate.getFullYear();
+        const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
+        const day = String(selectedDate.getDate()).padStart(2, '0');
+        const hh = String(hours).padStart(2, '0');
+        const mm = String(minutes).padStart(2, '0');
+
+        // ET is UTC-5 (or UTC-4 in daylight savings). 
+        // A simple way is to send this formatted localized string to the backend, or a local Date.
+        const dt = new Date(`${year}-${month}-${day}T${hh}:${mm}:00`);
+        isoStart = dt.toISOString();
+        isoEnd = new Date(dt.getTime() + 30 * 60000).toISOString();
+      }
+
       const data: BookingDetails = {
         name, email, phone, companyName, monthlyInquiry,
+        channel, model,
         date: formattedDateTime, time: selectedTime,
+        isoDate: isoStart,
+        isoEndDate: isoEnd,
+        selectedTimezone,
         additionalInfo
       };
       await emailService.sendBookingEmails(data);
@@ -101,6 +136,28 @@ const Booking = () => {
                   className="w-full pl-6 pr-6 pt-9 pb-4 rounded-2xl bg-slate-50 border border-slate-100 focus:bg-white focus:border-indigo-600 font-bold text-slate-900 transition-all outline-none"
                 />
               </div>
+              <div className="space-y-4">
+                <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 pl-6">Select your channel to automate</p>
+                <div className="grid grid-cols-2 gap-4">
+                  <button onClick={() => { setChannel('Chat'); setModel(''); }} className={`py-4 rounded-2xl font-bold border transition-all ${channel === 'Chat' ? 'bg-indigo-600 text-white border-indigo-600' : 'bg-slate-50 text-slate-600 border-slate-100 hover:border-indigo-200'}`}>Chat</button>
+                  <button onClick={() => { setChannel('Voice'); setModel(''); }} className={`py-4 rounded-2xl font-bold border transition-all ${channel === 'Voice' ? 'bg-indigo-600 text-white border-indigo-600' : 'bg-slate-50 text-slate-600 border-slate-100 hover:border-indigo-200'}`}>Voice</button>
+                </div>
+              </div>
+              <AnimatePresence>
+                {channel && (
+                  <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="relative group overflow-hidden">
+                    <p className="absolute left-6 top-3 text-[10px] font-bold uppercase tracking-widest text-slate-400 z-10">Which model do you think can help you the most?</p>
+                    <select
+                      value={model} onChange={e => setModel(e.target.value)}
+                      className="w-full pl-6 pr-6 pt-9 pb-4 rounded-2xl bg-slate-50 border border-slate-100 focus:bg-white focus:border-indigo-600 font-bold text-slate-900 transition-all outline-none appearance-none cursor-pointer"
+                    >
+                      <option value="">Select model...</option>
+                      {(channel === 'Voice' ? voiceModels : chatModels).map(m => <option key={m} value={m}>{m}</option>)}
+                    </select>
+                    <ChevronDown className="absolute right-6 bottom-5 text-slate-400 w-5 h-5 pointer-events-none" />
+                  </motion.div>
+                )}
+              </AnimatePresence>
               <div className="relative group">
                 <p className="absolute left-6 top-3 text-[10px] font-bold uppercase tracking-widest text-slate-400 z-10">Monthly Lead Volume</p>
                 <select
@@ -113,7 +170,7 @@ const Booking = () => {
                 <ChevronDown className="absolute right-6 bottom-5 text-slate-400 w-5 h-5 pointer-events-none" />
               </div>
             </div>
-            <button onClick={handleNext} disabled={!companyName || !monthlyInquiry} className="w-full py-5 rounded-2xl bg-indigo-600 text-white font-bold text-lg shadow-xl shadow-indigo-600/20 disabled:opacity-50 group flex items-center justify-center gap-3 transition-all hover:bg-slate-900">
+            <button onClick={handleNext} disabled={!companyName || !monthlyInquiry || !channel || !model} className="w-full py-5 rounded-2xl bg-indigo-600 text-white font-bold text-lg shadow-xl shadow-indigo-600/20 disabled:opacity-50 group flex items-center justify-center gap-3 transition-all hover:bg-slate-900">
               <span>Choose a Time</span>
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>
@@ -128,7 +185,7 @@ const Booking = () => {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <div className="p-4 bg-slate-50 border border-slate-100 rounded-3xl flex justify-center scale-90 sm:scale-100">
+              <div className="p-4 bg-slate-50 border border-slate-100 rounded-3xl flex justify-center scale-90 sm:scale-100 [&_.rdp-day]:text-slate-900 [&_.rdp-nav_button]:text-slate-900">
                 <DayPicker
                   mode="single"
                   selected={selectedDate}
@@ -138,12 +195,14 @@ const Booking = () => {
                     caption: { color: '#0f172a', fontWeight: 'bold' },
                     head_cell: { color: '#64748b', fontWeight: 'bold', fontSize: '0.75rem' },
                     day_selected: { backgroundColor: '#4f46e5', color: 'white', borderRadius: '12px' },
-                    day_today: { color: '#4f46e5', fontWeight: 'bold' }
+                    day_today: { color: '#4f46e5', fontWeight: 'bold' },
+                    day: { color: '#0f172a' }
                   }}
+                  className="text-slate-900"
                 />
               </div>
               <div className="space-y-3">
-                <p className="text-xs font-bold text-slate-400 uppercase tracking-widest pl-2">Available Slots (ET)</p>
+                <p className="text-xs font-bold text-slate-400 uppercase tracking-widest pl-2">Available Slots ({selectedTimezone})</p>
                 <div className="grid grid-cols-2 gap-3 max-h-[300px] overflow-y-auto px-1 pb-4 scrollbar-hide">
                   {availableTimes.map(t => (
                     <button
@@ -201,66 +260,21 @@ const Booking = () => {
               </div>
             </div>
             <div className="flex gap-4">
-              <button onClick={handleBack} className="px-6 py-5 rounded-2xl border border-slate-200 text-slate-600 hover:bg-slate-50 transition-colors"><ArrowLeft className="w-6 h-6" /></button>
-              <button onClick={handleNext} disabled={!name || !email} className="flex-1 py-5 rounded-2xl bg-indigo-600 text-white font-bold text-lg shadow-xl shadow-indigo-600/20 disabled:opacity-50 group flex items-center justify-center gap-3 transition-all">
-                <span>Summary</span>
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </button>
-            </div>
-          </motion.div>
-        );
-      case 3:
-        return (
-          <motion.div key="step3" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} className="space-y-10">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-indigo-50 rounded-2xl flex items-center justify-center mx-auto mb-6 text-indigo-600 shadow-inner">
-                <ShieldCheck className="w-8 h-8" />
-              </div>
-              <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Review your request</h2>
-              <p className="text-slate-500 text-lg">A quick confirmation before we lock it in.</p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {[
-                { label: 'Chat Window', val: formattedDateTime, icon: CalendarIcon },
-                { label: 'Organization', val: companyName, icon: Building2 },
-                { label: 'Strategist', val: name, icon: User },
-                { label: 'Deliverable', val: email, icon: Mail },
-              ].map((item, i) => (
-                <div key={i} className="p-5 bg-slate-50 rounded-2xl border border-slate-100 flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-sm text-indigo-600 shrink-0">
-                    <item.icon className="w-5 h-5" />
-                  </div>
-                  <div className="min-w-0">
-                    <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-0.5">{item.label}</p>
-                    <p className="text-slate-900 font-bold text-sm truncate">{item.val}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {additionalInfo && (
-              <div className="p-6 bg-slate-50 rounded-2xl border border-slate-100">
-                <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">Notes</p>
-                <p className="text-slate-700 text-sm italic">"{additionalInfo}"</p>
-              </div>
-            )}
-
-            <div className="flex gap-4">
               <button onClick={handleBack} disabled={isSubmitting} className="px-6 py-5 rounded-2xl border border-slate-200 text-slate-600 hover:bg-slate-50 transition-colors"><ArrowLeft className="w-6 h-6" /></button>
-              <button onClick={handleSubmit} disabled={isSubmitting} className="flex-1 py-5 rounded-2xl bg-slate-900 text-white font-bold text-lg shadow-2xl flex items-center justify-center gap-3 hover:translate-y-[-2px] transition-all">
+              <button onClick={handleSubmit} disabled={isSubmitting} className="flex-1 py-5 rounded-2xl bg-slate-900 text-white font-bold text-lg shadow-2xl flex items-center justify-center gap-3 hover:translate-y-[-2px] transition-all group">
                 {isSubmitting ? (
                   <div className="w-6 h-6 border-4 border-white/30 border-t-white rounded-full animate-spin" />
                 ) : (
                   <>
-                    <span>Confirm Booking</span>
-                    <Sparkles className="w-5 h-5" />
+                    <span>Book Coffee Call</span>
+                    <Sparkles className="w-5 h-5 group-hover:text-amber-300 transition-colors" />
                   </>
                 )}
               </button>
             </div>
           </motion.div>
         );
+
       default: return null;
     }
   };

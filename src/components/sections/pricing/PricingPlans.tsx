@@ -16,7 +16,7 @@ interface Plan {
 const plans: Plan[] = [
   {
     name: "Core (V1)",
-    monthlyFee: "$249/month",
+    monthlyFee: "$149/month",
     icon: Gem,
     gradient: "from-blue-500 to-indigo-600",
     features: [
@@ -28,7 +28,7 @@ const plans: Plan[] = [
   },
   {
     name: "Edge (V2)",
-    monthlyFee: "$529/month",
+    monthlyFee: "$229/month",
     icon: Orbit,
     gradient: "from-indigo-400 to-blue-500",
     popular: true,
@@ -43,7 +43,7 @@ const plans: Plan[] = [
   },
   {
     name: "Edge (V3)",
-    monthlyFee: "$987/month",
+    monthlyFee: "$387/month",
     icon: Sparkles,
     gradient: "from-purple-600 to-pink-600",
     features: [
@@ -60,7 +60,7 @@ const plans: Plan[] = [
 const chatbotPlans: Plan[] = [
   {
     name: "CX Agent (V1)",
-    monthlyFee: "$249/month",
+    monthlyFee: "$149/month",
     icon: Gem,
     gradient: "from-blue-500 to-indigo-600",
     features: [
@@ -72,7 +72,7 @@ const chatbotPlans: Plan[] = [
   },
   {
     name: "CX Agent (V2)",
-    monthlyFee: "$549/month",
+    monthlyFee: "$249/month",
     icon: Cpu,
     gradient: "from-indigo-400 to-blue-500",
     popular: true,
@@ -127,12 +127,8 @@ const SpotlightCard = ({ plan, index, type }: { plan: Plan; index: number; type:
     mouseY.set(0);
   };
 
-  const handleTryDemo = () => {
-    if (type === 'voice') {
-      navigate('/#voice-demo');
-    } else {
-      navigate('/#chat-demo');
-    }
+  const handleBookCall = () => {
+    navigate('/booking');
   };
 
   const isDark = plan.popular;
@@ -242,13 +238,13 @@ const SpotlightCard = ({ plan, index, type }: { plan: Plan; index: number; type:
 
           <motion.div style={{ transform: "translateZ(15px)" }} className="mt-auto">
             <button
-              onClick={handleTryDemo}
+              onClick={handleBookCall}
               className={`w-full py-3.5 md:py-4 rounded-xl md:rounded-2xl font-bold text-xs md:text-sm uppercase tracking-widest flex items-center justify-center gap-2 md:gap-3 transition-all duration-300 relative overflow-hidden group/btn ${isDark
                 ? 'bg-white text-slate-900 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(255,255,255,0.3)] hover:-translate-y-1'
                 : 'bg-slate-50 border border-slate-200 text-slate-900 hover:bg-slate-900 hover:text-white hover:-translate-y-1'
                 }`}
             >
-              <span className="relative z-10">Try Demo</span>
+              <span className="relative z-10">Book Coffee Call</span>
               <ArrowRight className="w-3 h-3 md:w-4 md:h-4 relative z-10 group-hover/btn:translate-x-1 transition-transform" />
             </button>
           </motion.div>
