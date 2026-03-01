@@ -239,7 +239,13 @@ const Booking = () => {
               <div className="space-y-3">
                 <p className="text-xs font-bold text-slate-400 uppercase tracking-widest pl-2">Available Slots ({selectedTimezone})</p>
                 <div className="grid grid-cols-2 gap-3 max-h-[300px] overflow-y-auto px-1 pb-4 scrollbar-hide">
-                  {isLoadingTimes ? (
+                  {!selectedDate ? (
+                    <div className="col-span-2 flex flex-col items-center justify-center py-12 px-6 text-center bg-slate-50 border border-slate-100 rounded-2xl">
+                      <CalendarIcon className="w-10 h-10 text-indigo-200 mb-3" />
+                      <p className="text-slate-600 font-medium text-sm">Select a date on the left to see available times.</p>
+                      <p className="text-slate-400 text-xs mt-1">Times are shown in your local timezone.</p>
+                    </div>
+                  ) : isLoadingTimes ? (
                     <div className="col-span-2 flex flex-col items-center justify-center py-12 text-slate-400">
                       <div className="w-8 h-8 border-4 border-indigo-100 border-t-indigo-600 rounded-full animate-spin mb-4" />
                       <p className="font-medium text-sm">Checking availability...</p>
