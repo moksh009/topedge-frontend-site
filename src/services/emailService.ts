@@ -33,7 +33,7 @@ export interface MaintenanceDetails {
   emailTemplate?: string;
 }
 
-export type EmailType = 'user' | 'admin';
+export type EmailType = 'user' | 'admin' | 'booking';
 
 export class EmailService {
   private baseURL: string;
@@ -187,13 +187,10 @@ export class EmailService {
 
   public async sendBookingEmails(bookingDetails: BookingDetails): Promise<void> {
     try {
-      await Promise.all([
-        this.sendEmail('user', '/api/send-user-email', bookingDetails),
-        this.sendEmail('admin', '/api/send-admin-email', bookingDetails)
-      ]);
+      await this.sendEmail('booking', '/api/book-session', bookingDetails);
     } catch (error) {
-      console.error('Error sending booking emails:', error);
-      throw new Error('Failed to send booking confirmation emails');
+      console.error('Error in sendBookingEmails:', error);
+      throw error;
     }
   }
 

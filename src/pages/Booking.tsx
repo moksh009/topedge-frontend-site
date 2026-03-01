@@ -15,9 +15,7 @@ import 'react-day-picker/dist/style.css';
 import { formatInTimeZone } from 'date-fns-tz';
 import Footer from '../components/Footer';
 
-const availableTimes = [
-  '09:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '01:00 PM', '02:00 PM', '03:00 PM', '04:00 PM', '05:00 PM', '06:00 PM', '07:00 PM', '08:00 PM', '09:00 PM'
-];
+
 
 const monthlyInquiryOptions = [
   '0 - 100 Calls',
@@ -58,6 +56,43 @@ const Booking = () => {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const [selectedTime, setSelectedTime] = useState('');
   const [selectedTimezone] = useState(Intl.DateTimeFormat().resolvedOptions().timeZone);
+  const [availableTimes, setAvailableTimes] = useState<string[]>([]);
+  const [isLoadingTimes, setIsLoadingTimes] = useState(false);
+
+  useEffect(() => {
+    if (!selectedDate) {
+      setAvailableTimes([]);
+      return;
+    }
+    const fetchSlots = async () => {
+      setIsLoadingTimes(true);
+      try {
+        const year = selectedDate.getFullYear();
+        const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
+        const day = String(selectedDate.getDate()).padStart(2, '0');
+        const dateStr = `${year}-${month}-${day}`;
+
+        const baseURL = import.meta.env.VITE_EMAIL_API_BASE_URL || 'https://topedge-backend.netlify.app';
+        const res = await fetch(`${baseURL}/api/available-slots?date=${dateStr}&timezone=${encodeURIComponent(selectedTimezone)}`);
+        const data = await res.json();
+
+        if (data.slots) {
+          setAvailableTimes(data.slots);
+        } else {
+          setAvailableTimes([]);
+        }
+      } catch (e) {
+        console.error('Failed to fetch slots', e);
+        setAvailableTimes([]);
+      } finally {
+        setIsLoadingTimes(false);
+      }
+    };
+
+    fetchSlots();
+    // Reset selected time if date changes
+    setSelectedTime('');
+  }, [selectedDate, selectedTimezone]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
@@ -204,7 +239,16 @@ const Booking = () => {
               <div className="space-y-3">
                 <p className="text-xs font-bold text-slate-400 uppercase tracking-widest pl-2">Available Slots ({selectedTimezone})</p>
                 <div className="grid grid-cols-2 gap-3 max-h-[300px] overflow-y-auto px-1 pb-4 scrollbar-hide">
-                  {availableTimes.map(t => (
+                  {isLoadingTimes ? (
+                    <div className="col-span-2 flex flex-col items-center justify-center py-12 text-slate-400">
+                      <div className="w-8 h-8 border-4 border-indigo-100 border-t-indigo-600 rounded-full animate-spin mb-4" />
+                      <p className="font-medium text-sm">Checking availability...</p>
+                    </div>
+                  ) : availableTimes.length === 0 && selectedDate ? (
+                    <div className="col-span-2 text-center py-8 text-slate-500 font-medium bg-slate-50 rounded-xl border border-slate-100">
+                      No matching slots available for this day.
+                    </div>
+                  ) : availableTimes.map(t => (
                     <button
                       key={t}
                       onClick={() => setSelectedTime(t)}
