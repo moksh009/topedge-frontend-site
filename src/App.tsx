@@ -23,6 +23,7 @@ const Blog = React.lazy(() => import('./pages/Blog'));
 const BlogPost = React.lazy(() => import('./pages/BlogPost'));
 const ROI = React.lazy(() => import('./pages/ROI'));
 const PrivacyPolicy = React.lazy(() => import('./pages/PrivacyPolicy'));
+const Ecommerce = React.lazy(() => import('./pages/Ecommerce'));
 const MaintenanceInquiries = React.lazy(() => import('./components/admin/MaintenanceInquiries').then(module => ({ default: module.MaintenanceInquiries })));
 import { ProtectedRoute } from './components/admin/ProtectedRoute';
 import Testimonials from './pages/Testimonials';
@@ -64,6 +65,7 @@ const ScrollToTop = () => {
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
+  const isEcommerce = location.pathname === '/ecommerce';
   const isCommunityRoute = location.pathname.startsWith('/community');
   const isAuthPage = location.pathname === '/community/login' || location.pathname === '/community/signup';
   const isHomePage = location.pathname === '/';
@@ -78,7 +80,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     : "Transform your customer service with TopEdge AI's advanced voice agents and chatbots. 24/7 availability, reduced costs, and improved customer satisfaction.";
 
   return (
-    <div className={`min-h-screen bg-background text-text transition-colors duration-200 relative [zoom:0.9]`}>
+    <div className={`min-h-screen transition-colors duration-200 relative ${isEcommerce ? 'bg-black overflow-hidden' : 'bg-background text-text [zoom:0.9]'}`}>
       <Helmet>
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription} />
@@ -104,7 +106,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Helmet>
 
-      {!isCommunityRoute && <Navbar />}
+      {!isCommunityRoute && location.pathname !== '/ecommerce' && <Navbar />}
       {isCommunityRoute && !isAuthPage && <CommunityNavbar />}
 
       {isCommunityRoute ? (
@@ -119,8 +121,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         </main>
       )}
 
-      {!isCommunityRoute && <Footer />}
-      {!isCommunityRoute && <FloatingVoiceChat />}
+      {!isCommunityRoute && location.pathname !== '/ecommerce' && <Footer />}
+      {!isCommunityRoute && location.pathname !== '/ecommerce' && <FloatingVoiceChat />}
       {isCommunityRoute && !isAuthPage && <Footer />}
     </div>
   );
@@ -213,6 +215,7 @@ const AnimatedRoutes = () => {
           <Route path="/ai-chatbot" element={<AIChatbot />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
+          <Route path="/ecommerce" element={<Ecommerce />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/admin/login" element={<CommunityLogin />} />
           <Route
