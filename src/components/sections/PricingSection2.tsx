@@ -152,29 +152,29 @@ export default function PricingSection2() {
 
   const features = useMemo(() => {
     const base = [
-      "AI Chatbot trained on your store",
-      "Product FAQ — 24/7 instant replies",
-      "Order tracking automated",
-      "Cart abandonment recovery",
-      "Smart lead escalation alerts",
+      "Custom AI Trained on Your Brand",
+      "Instant 0.1s Hero Support",
+      "Auto-Pilot Tracking Updates",
+      "Never Lose a Cart Again",
+      "Real-Time VIP Lead Sniper",
     ];
     if (tier === "v2") {
       return [
         ...base,
-        "Human handoff — live agent takeover",
-        "Marketing broadcast campaigns",
-        "Ad-to-WhatsApp performance tracking",
-        "Full funnel attribution data",
-        "One custom feature build",
+        "Human handoff — Elite takeover",
+        "Viral Broadcast Campaigns",
+        "Precision WhatsApp ROI Tracking",
+        "Deep Attribution Analytics",
+        "Custom Infinite Feature Build",
       ];
     }
     return base;
   }, [tier]);
 
   const handleGetStarted = () => {
-    const planName = tier === "v1" ? "CX Agent v1" : "CX Agent v2";
-    const cycleName = cycle === "monthly" ? "1 Month" : "3 Month (Growth)";
-    const message = `Hi! I'm interested in the ${planName} ${cycleName} plan. I'd like to initialize my scale momentum. Please provide more details.`;
+    const planName = tier === "v1" ? "Standard Protocol" : "Elite Scale Protocol";
+    const cycleName = cycle === "monthly" ? "Monthly" : "Growth (3 Mo)";
+    const message = `Hi! I'm ready to stop losing revenue. I want to activate the ${planName} ${cycleName} plan immediately. Let's get started.`;
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/919313045439?text=${encodedMessage}`;
     window.open(whatsappUrl, "_blank");
@@ -212,7 +212,7 @@ export default function PricingSection2() {
                 type: "spring", stiffness: 250, damping: 40, delay: 0.4,
               }}
             >
-              Initialize Scale Momentum
+              Scale Beyond Human Limits
             </VerticalCutReveal>
           </h1>
 
@@ -223,7 +223,7 @@ export default function PricingSection2() {
             customVariants={revealVariants}
             className="text-lg md:text-xl text-zinc-500 font-bold italic mb-8 md:mb-12 max-w-lg"
           >
-            Stop losing customers. Deploy TopEdge AI to handle your sales, answer FAQs, and close deals for you 24/7.
+            Don't let another lead slip away. Join elite brands using TopEdge AI to automate sales and close deals while you sleep.
           </TimelineContent>
 
           <div className="space-y-4 md:space-y-6 w-full max-w-md">
@@ -254,10 +254,10 @@ export default function PricingSection2() {
               {/* Toggles */}
               <div className="space-y-6 md:space-y-8 relative z-10">
                 <TimelineContent as="div" animationNum={0} timelineRef={pricingRef} customVariants={delayedRevealVariants}>
-                  <h4 className="text-[9px] md:text-[10px] font-black uppercase text-zinc-700 tracking-[0.4em] mb-3 md:mb-4">Select Tier</h4>
+                  <h4 className="text-[9px] md:text-[10px] font-black uppercase text-zinc-700 tracking-[0.4em] mb-3 md:mb-4">Select Protocol</h4>
                   <PricingSwitch
-                    button1="CX Agent v1"
-                    button2="CX Agent v2"
+                    button1="Standard"
+                    button2="Elite Scale"
                     onSwitch={(v) => setTier(v === "0" ? "v1" : "v2")}
                     className="w-full"
                     layoutId="tier-toggle"
@@ -267,7 +267,7 @@ export default function PricingSection2() {
                 <TimelineContent as="div" animationNum={1} timelineRef={pricingRef} customVariants={delayedRevealVariants}>
                   <h4 className="text-[9px] md:text-[10px] font-black uppercase text-zinc-700 tracking-[0.4em] mb-3 md:mb-4">Select Cycle</h4>
                   <PricingSwitch
-                    button1="Monthly Cycle"
+                    button1="Monthly"
                     button2="Growth (3 Mo)"
                     onSwitch={(v) => setCycle(v === "0" ? "monthly" : "quarterly")}
                     className="w-full"
@@ -330,7 +330,7 @@ export default function PricingSection2() {
                       className="w-full bg-white text-black py-5 md:py-8 rounded-2xl md:rounded-[2rem] font-black text-xl md:text-2xl hover:bg-purple-600 hover:text-white transition-all transform hover:scale-[1.02] active:scale-95 shadow-[0_20px_60px_rgba(168,85,247,0.25)] relative overflow-hidden group/btn"
                     >
                       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/btn:animate-[shimmer_1.5s_infinite]" />
-                      GET STARTED NOW
+                      START SCALING NOW
                     </button>
 
                     <div className="flex items-center justify-center gap-2 text-[9px] md:text-[10px] font-black text-zinc-700 tracking-[0.3em] uppercase">
