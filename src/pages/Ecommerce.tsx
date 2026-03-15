@@ -171,10 +171,9 @@ const Ecommerce = () => {
       <div className="absolute inset-0 pointer-events-none opacity-[0.03]"
         style={{ backgroundImage: 'radial-gradient(circle at 1.5px 1.5px, #fff 1px, transparent 0)', backgroundSize: '40px 40px' }} />
 
-      {/* HUD Branding */}
       <div className="fixed top-8 left-8 z-50 flex items-center gap-4">
-        <div className="h-10 w-10 flex items-center justify-center bg-white rounded-xl shadow-[0_0_30px_rgba(255,255,255,0.2)]">
-          <Zap className="w-6 h-6 text-black fill-current" />
+        <div className="h-10 w-10 flex items-center justify-center overflow-hidden">
+          <img src="https://media.licdn.com/dms/image/v2/D560BAQG_IuVqZoJuBQ/company-logo_200_200/B56ZaHeAqCG4AI-/0/1746029513961/topedgeai_logo?e=2147483647&v=beta&t=4tHgxJch8-YhRwX92cZ9iaVkMOR-b-_GDeRbdCsr_LI" alt="TopEdge AI Logo" className="w-full h-full object-contain" />
         </div>
         <div>
           <div className="text-base font-black tracking-[0.4em] uppercase leading-none">TopEdge AI</div>
@@ -201,7 +200,7 @@ const Ecommerce = () => {
                 Revenue System Alert
               </span>
             </motion.div>
-            <WordReveal text="Every single day, you are missing out on major revenue." className="text-[clamp(1.75rem,8vw,5.5rem)] font-black tracking-tighter leading-[1.0] max-w-6xl mb-8 px-4" delay={0.5} />
+            <WordReveal text="Every single day, you are missing out on revenue." className="text-[clamp(1.75rem,8vw,5.5rem)] font-black tracking-tighter leading-[1.0] max-w-6xl mb-8 px-4" delay={0.5} />
             <motion.p variants={item} className="text-zinc-600 text-lg md:text-2xl font-black italic tracking-tight px-6 underline decoration-purple-500/30">Scale your protocol. Reclaim your time.</motion.p>
           </motion.div>
         )}

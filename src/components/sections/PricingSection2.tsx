@@ -109,9 +109,10 @@ export default function PricingSection2() {
       opacity: 1,
       filter: "blur(0px)",
       transition: {
-        delay: (i * 0.15) + 2.5,
-        duration: 0.8,
-        ease: [0.16, 1, 0.3, 1]
+        type: "spring",
+        stiffness: 100,
+        damping: 20,
+        delay: (i * 0.15) + 0.5,
       },
     }),
     hidden: {
@@ -181,13 +182,13 @@ export default function PricingSection2() {
   };
 
   return (
-    <div className="w-full min-h-screen bg-black relative flex flex-col items-center justify-center py-16 px-8 md:px-12 overflow-hidden md:overflow-visible" ref={pricingRef}>
+    <div className="w-full min-h-screen bg-black relative flex flex-col items-center justify-center py-16 px-6 md:px-24 overflow-hidden md:overflow-visible" ref={pricingRef}>
       {/* Background Glow */}
       <div className="absolute inset-0 z-0 pointer-events-none opacity-20">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-purple-600/20 blur-[80px] md:blur-[120px] rounded-full" />
       </div>
 
-      <div className="max-w-[1300px] w-full relative z-10 grid grid-cols-1 lg:grid-cols-[1fr_540px] gap-12 lg:gap-24 items-start pt-4 lg:pt-10">
+      <div className="max-w-[1200px] w-full relative z-10 grid grid-cols-1 lg:grid-cols-[1fr_540px] gap-12 lg:gap-16 items-start pt-4 lg:pt-10">
 
         {/* Left Side: Content */}
         <div className="flex flex-col items-center lg:items-start text-center lg:text-left lg:pt-4">
