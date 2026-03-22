@@ -142,11 +142,11 @@ export default function PricingSection2() {
   const prices = useMemo(() => {
     if (tier === "v1") {
       return cycle === "monthly"
-        ? { current: 3499, original: 4499, setup: 4999, label: "/month" }
+        ? { current: 3499, original: 4499, setup: 0, label: "/month" }
         : { current: 8999, original: 10497, setup: 0, label: "Total / 3 Months" };
     } else {
       return cycle === "monthly"
-        ? { current: 4999, original: 6499, setup: 4999, label: "/month" }
+        ? { current: 4999, original: 6499, setup: 0, label: "/month" }
         : { current: 12999, original: 14997, setup: 0, label: "Total / 3 Months" };
     }
   }, [tier, cycle]);
@@ -303,25 +303,23 @@ export default function PricingSection2() {
                     <div className="flex items-center gap-4 mt-2">
                       <span className="text-zinc-600 text-xl md:text-2xl font-bold line-through">₹{prices.original}</span>
 
-                      {(prices.setup > 0 || cycle === 'quarterly') && (
+                      <div className={cn(
+                        "border px-3 py-1.5 rounded-full flex items-center gap-2 backdrop-blur-md transition-all duration-300",
+                        cycle === 'quarterly'
+                          ? "bg-emerald-500/10 border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.1)]"
+                          : "bg-purple-600/15 border-purple-500/30 shadow-[0_0_15px_rgba(168,85,247,0.1)]"
+                      )}>
                         <div className={cn(
-                          "border px-3 py-1.5 rounded-full flex items-center gap-2 backdrop-blur-md transition-all duration-300",
-                          cycle === 'quarterly'
-                            ? "bg-emerald-500/10 border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.1)]"
-                            : "bg-purple-600/15 border-purple-500/30 shadow-[0_0_15px_rgba(168,85,247,0.1)]"
+                          "w-1.5 h-1.5 rounded-full animate-pulse",
+                          cycle === 'quarterly' ? "bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.5)]" : "bg-purple-500 shadow-[0_0_8px_rgba(168,85,247,0.5)]"
+                        )} />
+                        <span className={cn(
+                          "text-[10px] md:text-xs font-black uppercase tracking-widest",
+                          cycle === 'quarterly' ? "text-emerald-300" : "text-purple-300"
                         )}>
-                          <div className={cn(
-                            "w-1.5 h-1.5 rounded-full animate-pulse",
-                            cycle === 'quarterly' ? "bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.5)]" : "bg-purple-500 shadow-[0_0_8px_rgba(168,85,247,0.5)]"
-                          )} />
-                          <span className={cn(
-                            "text-[10px] md:text-xs font-black uppercase tracking-widest",
-                            cycle === 'quarterly' ? "text-emerald-300" : "text-purple-300"
-                          )}>
-                            {cycle === 'quarterly' ? "FREE Setup Included" : `+ ₹${prices.setup} Setup`}
-                          </span>
-                        </div>
-                      )}
+                          FREE Setup Included
+                        </span>
+                      </div>
                     </div>
                   </div>
 
