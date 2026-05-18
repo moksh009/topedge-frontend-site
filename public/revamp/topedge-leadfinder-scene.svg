@@ -1,0 +1,36 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg2" x1="120" y1="100" x2="1450" y2="840" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1E3A8A"/>
+      <stop offset="0.5" stop-color="#2563EB"/>
+      <stop offset="1" stop-color="#8B5CF6"/>
+    </linearGradient>
+  </defs>
+  <rect x="40" y="40" width="1520" height="820" rx="42" fill="url(#bg2)"/>
+  <rect x="500" y="260" width="820" height="420" rx="28" fill="#F8FAFC"/>
+  <circle cx="910" cy="370" r="48" fill="#DBEAFE"/>
+  <circle cx="892" cy="360" r="10" fill="#1D4ED8"/>
+  <circle cx="928" cy="360" r="10" fill="#1D4ED8"/>
+  <path d="M888 392C899 408 921 408 932 392" stroke="#2563EB" stroke-width="8" stroke-linecap="round"/>
+  <text x="910" y="470" text-anchor="middle" fill="#0F172A" font-size="52" font-family="Inter, Arial" font-weight="700">Start your search with TopEdge AI</text>
+  <rect x="690" y="520" width="520" height="48" rx="14" fill="white" stroke="#CBD5E1"/>
+  <text x="715" y="551" fill="#94A3B8" font-size="22" font-family="Inter, Arial">Tag: eCommerce founders in New York</text>
+  <rect x="1130" y="526" width="70" height="34" rx="10" fill="#2563EB"/>
+  <text x="1165" y="548" text-anchor="middle" fill="white" font-size="16" font-family="Inter, Arial">AI Search</text>
+  <rect x="330" y="200" width="300" height="500" rx="24" fill="white"/>
+  <text x="365" y="255" fill="#0F172A" font-size="28" font-family="Inter, Arial" font-weight="700">Leads Finder</text>
+  <g fill="#64748B" font-size="18" font-family="Inter, Arial">
+    <text x="365" y="320">Job Titles</text>
+    <text x="365" y="390">Location</text>
+    <text x="365" y="460">Industry</text>
+    <text x="365" y="530">Keywords</text>
+    <text x="365" y="600">Employees</text>
+  </g>
+  <g stroke="#E2E8F0" stroke-width="2">
+    <line x1="360" y1="338" x2="600" y2="338"/>
+    <line x1="360" y1="408" x2="600" y2="408"/>
+    <line x1="360" y1="478" x2="600" y2="478"/>
+    <line x1="360" y1="548" x2="600" y2="548"/>
+    <line x1="360" y1="618" x2="600" y2="618"/>
+  </g>
+</svg>

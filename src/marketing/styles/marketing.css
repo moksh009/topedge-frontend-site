@@ -1,0 +1,750 @@
+/* TopEdge marketing — premium design system */
+.marketing-site {
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #0c1222;
+  --violet: #7c3aed;
+  --violet-dark: #6d28d9;
+  --violet-deep: #5b21b6;
+  --violet-soft: #f5f3ff;
+  --violet-muted: #ede9fe;
+  --ink: #0c1222;
+  --ink-muted: #64748b;
+  --marketing-nav-h: 4rem;
+  --marketing-nav-height: 4rem;
+  --section-py: 5rem;
+  --section-py-md: 7rem;
+  --content-max: 80rem;
+  --prose-max: 48rem;
+}
+
+.marketing-container {
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  max-width: 80rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .marketing-container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .marketing-container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+.marketing-page-hero {
+  padding-top: calc(var(--marketing-nav-h) + 2.5rem);
+  padding-bottom: 3.5rem;
+}
+
+@media (min-width: 768px) {
+  .marketing-page-hero {
+    padding-top: calc(var(--marketing-nav-h) + 3.5rem);
+    padding-bottom: 5rem;
+  }
+}
+
+.marketing-site h1,
+.marketing-site h2,
+.marketing-site h3 {
+  font-weight: 500;
+  letter-spacing: -0.03em;
+}
+
+.marketing-site p {
+  line-height: 1.65;
+}
+
+.marketing-section-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(124, 58, 237, 0.75);
+}
+
+.marketing-divider-fade {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(196, 181, 253, 0.6), transparent);
+}
+
+.marketing-hero-bg {
+  background: linear-gradient(180deg, #faf5ff 0%, #f5f3ff 40%, #ffffff 100%);
+}
+
+.marketing-section-subtle {
+  background: linear-gradient(180deg, #faf5ff 0%, #ffffff 100%);
+}
+
+.marketing-grain {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+}
+
+.marketing-glow {
+  box-shadow:
+    0 0 0 1px rgba(124, 58, 237, 0.08),
+    0 24px 80px -24px rgba(124, 58, 237, 0.28),
+    0 8px 32px -8px rgba(15, 23, 42, 0.06);
+}
+
+.marketing-card-interactive {
+  transition:
+    box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.35s ease;
+}
+
+.marketing-card-interactive:hover {
+  border-color: rgba(167, 139, 250, 0.45);
+  box-shadow:
+    0 0 0 1px rgba(124, 58, 237, 0.08),
+    0 24px 48px -16px rgba(124, 58, 237, 0.18);
+}
+
+/* Premium logo / trust strip */
+.marketing-logo-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(196, 181, 253, 0.5);
+  background: rgba(255, 255, 255, 0.85);
+  padding: 0.5rem 1rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #475569;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+.marketing-logo-pill--shopify {
+  border-color: rgba(149, 191, 71, 0.35);
+  background: linear-gradient(180deg, #f7faf4 0%, #fff 100%);
+}
+
+.marketing-logo-pill-dot {
+  height: 0.5rem;
+  width: 0.5rem;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #7c3aed, #a78bfa);
+}
+
+/* Bento product previews */
+.marketing-bento-visual {
+  min-height: 9rem;
+}
+
+@media (min-width: 768px) {
+  .marketing-bento-visual {
+    min-height: 11rem;
+  }
+}
+
+.marketing-bento-visual--tall {
+  min-height: 13rem;
+}
+
+@media (min-width: 768px) {
+  .marketing-bento-visual--tall {
+    min-height: 16rem;
+  }
+}
+
+/* Feature mockup on homepage — one shadow layer */
+.marketing-mockup-stage {
+  border-radius: 1.25rem;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px rgba(124, 58, 237, 0.08),
+    0 40px 100px -32px rgba(124, 58, 237, 0.35);
+}
+
+/* Pricing page */
+.marketing-pricing-tab {
+  border-radius: 9999px;
+  padding: 0.5rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.marketing-pricing-tab--active {
+  background: linear-gradient(135deg, #7c3aed, #6d28d9);
+  color: #fff;
+  box-shadow: 0 8px 24px -8px rgba(124, 58, 237, 0.45);
+}
+
+.marketing-pricing-tab--inactive {
+  color: #64748b;
+}
+
+.marketing-pricing-tab--inactive:hover {
+  color: #0c1222;
+}
+
+.marketing-table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.marketing-table-scroll table {
+  min-width: 36rem;
+}
+
+.marketing-plan-popular {
+  border-color: rgba(124, 58, 237, 0.45) !important;
+  box-shadow:
+    0 0 0 1px rgba(124, 58, 237, 0.1),
+    0 24px 56px -16px rgba(124, 58, 237, 0.22) !important;
+}
+
+/* How it works connector */
+.marketing-step-line {
+  top: 1.25rem;
+  left: 12.5%;
+  right: 12.5%;
+}
+
+.marketing-gradient-border {
+  position: relative;
+  background: linear-gradient(white, white) padding-box,
+    linear-gradient(135deg, rgba(124, 58, 237, 0.4), rgba(167, 139, 250, 0.2)) border-box;
+  border: 1px solid transparent;
+}
+
+.marketing-btn-gradient {
+  background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 50%, #5b21b6 100%);
+  box-shadow: 0 8px 28px -6px rgba(124, 58, 237, 0.45);
+}
+
+.marketing-btn-gradient:hover {
+  background: linear-gradient(135deg, #6d28d9 0%, #5b21b6 50%, #4c1d95 100%);
+  box-shadow: 0 12px 32px -6px rgba(124, 58, 237, 0.5);
+}
+
+.marketing-step-line {
+  background: linear-gradient(90deg, transparent 0%, #c4b5fd 20%, #a78bfa 50%, #c4b5fd 80%, transparent 100%);
+}
+
+.marketing-image-frame {
+  position: relative;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  background: linear-gradient(145deg, #faf5ff 0%, #ffffff 100%);
+  border: 1px solid rgba(196, 181, 253, 0.35);
+}
+
+.marketing-image-frame::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.25), rgba(167, 139, 250, 0.1));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+@keyframes marketing-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes marketing-orb-drift {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(16px, -12px) scale(1.04);
+  }
+}
+
+.marketing-orb {
+  animation: marketing-orb-drift 20s ease-in-out infinite;
+}
+
+.marketing-marquee {
+  animation: marketing-marquee 42s linear infinite;
+}
+
+@keyframes marketing-marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.marketing-shine {
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.35) 48%,
+    rgba(255, 255, 255, 0.12) 52%,
+    transparent 60%
+  );
+  background-size: 200% 100%;
+  animation: marketing-shine 5s ease-in-out infinite;
+}
+
+@keyframes marketing-shine {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.marketing-range {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #e9d5ff, #c4b5fd);
+  outline: none;
+}
+
+.marketing-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #7c3aed, #6d28d9);
+  border: 3px solid #fff;
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.35);
+  cursor: pointer;
+}
+
+.marketing-range::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #7c3aed, #6d28d9);
+  border: 3px solid #fff;
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.35);
+  cursor: pointer;
+}
+
+.roi-range {
+  background: transparent !important;
+}
+
+.roi-range::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 999px;
+  background: #ede9fe;
+}
+
+.roi-range::-moz-range-track {
+  height: 6px;
+  border-radius: 999px;
+  background: #ede9fe;
+}
+
+/* Premium cards */
+.marketing-premium-card {
+  background: linear-gradient(165deg, #ffffff 0%, #faf5ff 100%);
+  border: 1px solid rgba(196, 181, 253, 0.45);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 12px 40px -16px rgba(124, 58, 237, 0.18);
+  transition:
+    box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.35s ease;
+}
+
+.marketing-premium-card:hover {
+  border-color: rgba(167, 139, 250, 0.65);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 1) inset,
+    0 28px 60px -20px rgba(124, 58, 237, 0.32);
+}
+
+.marketing-visual-interactive {
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.marketing-visual-interactive:hover {
+  transform: translateY(-4px) scale(1.01);
+}
+
+.marketing-visual-ring::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 1.35rem;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.35), rgba(167, 139, 250, 0.1), rgba(124, 58, 237, 0.2));
+  z-index: -1;
+  opacity: 0.7;
+}
+
+.marketing-visual-shine {
+  background: linear-gradient(
+    105deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.45) 50%,
+    transparent 65%
+  );
+  background-size: 220% 100%;
+  animation: marketing-visual-shine 6s ease-in-out infinite;
+}
+
+@keyframes marketing-visual-shine {
+  0% {
+    background-position: 220% 0;
+  }
+  100% {
+    background-position: -220% 0;
+  }
+}
+
+.marketing-hero-float {
+  animation: marketing-hero-float 7s ease-in-out infinite;
+}
+
+@keyframes marketing-hero-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.marketing-ai-orb {
+  box-shadow: 0 0 24px rgba(124, 58, 237, 0.55);
+}
+
+.marketing-float-card {
+  animation: marketing-card-float 5s ease-in-out infinite;
+}
+
+@keyframes marketing-card-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(var(--tw-rotate, 0deg));
+  }
+  50% {
+    transform: translateY(-6px) rotate(var(--tw-rotate, 0deg));
+  }
+}
+
+/* Feature detail pages */
+.feature-showcase-band {
+  --feature-glow: rgba(124, 58, 237, 0.12);
+}
+
+.feature-live-dot {
+  animation: feature-live-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes feature-live-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.55;
+    transform: scale(0.85);
+  }
+}
+
+.feature-gif-player .feature-animation-frame img {
+  min-height: 280px;
+  object-fit: cover;
+  object-position: top center;
+}
+
+@media (min-width: 1024px) {
+  .feature-showcase-mockup {
+    position: sticky;
+    top: calc(var(--marketing-nav-height, 72px) + 1.5rem);
+  }
+}
+
+/* Interactive product graphics (feature detail pages) */
+.feature-graphic-panel {
+  transform-style: preserve-3d;
+}
+
+.feature-graphic-crop {
+  max-height: 420px;
+  overflow: hidden;
+}
+
+.feature-graphic-crop-top .marketing-image-frame,
+.feature-graphic-crop-top > div {
+  transform: translateY(0);
+}
+
+.feature-graphic-crop-mid .marketing-image-frame,
+.feature-graphic-crop-mid > div {
+  transform: translateY(-12%);
+}
+
+.feature-graphic-crop-low .marketing-image-frame,
+.feature-graphic-crop-low > div {
+  transform: translateY(-22%);
+}
+
+.feature-graphic-panel .marketing-image-frame {
+  border: none;
+  box-shadow: none;
+  padding: 0;
+}
+
+.feature-cap-card .feature-graphic-panel .marketing-visual-ring {
+  border-radius: 1rem;
+  box-shadow: 0 12px 40px -16px rgba(124, 58, 237, 0.2);
+}
+
+.feature-cap-card .feature-graphic-crop {
+  max-height: 200px;
+}
+
+.feature-related-card .feature-graphic-crop {
+  max-height: 180px;
+}
+
+.feature-outcome-card {
+  transition:
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.4s ease;
+}
+
+.feature-ps-card {
+  transition:
+    box-shadow 0.45s ease,
+    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.feature-steps-line {
+  background: linear-gradient(180deg, #7c3aed 0%, #a78bfa 45%, #e9d5ff 75%, transparent 100%);
+}
+
+.feature-step-badge-wrap {
+  position: relative;
+  padding-top: 2.5rem;
+}
+
+.feature-step-badge {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  z-index: 10;
+  display: flex;
+  height: 3.25rem;
+  width: 3.25rem;
+  translate: -50% 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1rem;
+  background: linear-gradient(145deg, #8b5cf6, #6d28d9);
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #fff;
+  box-shadow:
+    0 16px 40px -12px rgba(124, 58, 237, 0.55),
+    0 0 0 4px rgba(255, 255, 255, 0.9);
+}
+
+@media (min-width: 768px) {
+  .feature-step-badge-wrap[data-side='right'] .feature-step-badge {
+    left: auto;
+    right: 0;
+    translate: 0 0;
+  }
+
+  .feature-step-badge-wrap[data-side='left'] .feature-step-badge {
+    left: 0;
+    translate: 0 0;
+  }
+}
+
+.feature-step-title {
+  margin-top: 0.25rem;
+}
+
+.feature-stat-chip {
+  min-width: 7.5rem;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+}
+
+.feature-stat-chip:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px -12px rgba(124, 58, 237, 0.25);
+}
+
+.feature-mockup-compact .marketing-mockup-frame,
+.feature-mockup-compact [class*='MockupFrame'] {
+  max-height: 420px;
+  overflow: hidden;
+}
+
+.feature-hero-mockup .feature-mockup-compact {
+  transform-origin: top center;
+}
+
+.feature-related-thumb {
+  isolation: isolate;
+}
+
+.feature-related-thumb .feature-mockup-compact {
+  min-height: 280px;
+}
+
+.feature-ps-card {
+  transition: box-shadow 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.feature-ps-card:hover {
+  transform: translateY(-2px);
+}
+
+.feature-cap-card {
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.feature-cap-card:hover {
+  transform: translateY(-4px);
+}
+
+.feature-related-card {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+
+.feature-related-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 48px -24px rgba(124, 58, 237, 0.35);
+}
+
+.feature-steps-line {
+  border-radius: 999px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marketing-hero-float,
+  .marketing-float-card,
+  .marketing-visual-shine,
+  .marketing-marquee,
+  .feature-stat-chip,
+  .feature-ps-card,
+  .feature-cap-card,
+  .feature-related-card {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .feature-stat-chip:hover,
+  .feature-ps-card:hover,
+  .feature-cap-card:hover,
+  .feature-related-card:hover {
+    transform: none;
+  }
+}
+
+/* Home hero — static, performant */
+.home-hero .home-hero-float-card {
+  animation: none;
+}
+
+.home-hero-visual-stage {
+  transform: none !important;
+}
+
+.home-hero-visual-stage {
+  isolation: isolate;
+}
+
+.home-hero-float-card {
+  animation: home-hero-card-float 5.5s ease-in-out infinite;
+}
+
+.home-hero-float-card:nth-child(odd) {
+  animation-delay: 0.4s;
+}
+
+@keyframes home-hero-card-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-hero-scrolly {
+    height: auto !important;
+  }
+
+  .home-hero-float-card {
+    animation: none;
+  }
+}
+
+/* Marketing graphics — animated flow connectors */
+.marketing-graphic-canvas .graphic-connector-base {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.38);
+  stroke-width: 0.55;
+  stroke-linecap: round;
+  stroke-dasharray: 2.2 1.8;
+}
+
+.marketing-graphic-canvas .graphic-connector-anim {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.95);
+  stroke-width: 0.65;
+  stroke-linecap: round;
+  stroke-dasharray: 3 200;
+  stroke-dashoffset: 203;
+  opacity: 0;
+}
+
+.marketing-graphic-canvas .graphic-connector-dot {
+  fill: rgba(255, 255, 255, 0.9);
+  opacity: 0.85;
+}
+
+.marketing-graphic-canvas:hover .graphic-connector-anim,
+.marketing-graphic-canvas.group\/graphic:hover .graphic-connector-anim {
+  opacity: 1;
+  animation: graphic-connector-flow 1.35s linear infinite;
+}
+
+@keyframes graphic-connector-flow {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marketing-graphic-canvas .graphic-connector-anim {
+    opacity: 0 !important;
+    animation: none !important;
+  }
+}

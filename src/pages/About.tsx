@@ -1,311 +1,99 @@
-import React, { useEffect, Suspense } from 'react';
-import SEO from '../components/SEO';
-import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Sparkles, Code2, Brain, Cpu, Globe, Shield, Zap, Users, Trophy, Rocket, Star } from 'lucide-react';
+import SEO from '../components/SEO';
+import { PageHero, Section, SectionHeading, MarketingCard, PrimaryButton, Eyebrow } from '../marketing/components/ui';
+import { Stagger, StaggerItem } from '../marketing/components/motion';
+import MarketingPage from '../marketing/components/MarketingPage';
 
-// Lazy load components for better initial load time
+const values = [
+  {
+    title: 'Built for Indian D2C',
+    desc: 'COD, ₹ pricing, RTO economics, and Meta template rules — not a US-first playbook pasted onto WhatsApp.',
+  },
+  {
+    title: 'Revenue over vanity metrics',
+    desc: 'We measure recovered carts, reply rates, and campaign ROI — not message volume for its own sake.',
+  },
+  {
+    title: 'You stay in control',
+    desc: 'Every template goes through your review before Meta. Humans can pause AI any time in Live Chat.',
+  },
+];
 
+const stats = [
+  { value: '15 min', label: 'Typical time to first live flow' },
+  { value: '3×', label: 'Common cart recovery uplift vs email-only' },
+  { value: '24–48h', label: 'Meta template approval window' },
+  { value: '₹', label: 'Transparent pricing for India' },
+];
 
-// Loading fallback component
-const SectionLoader = () => (
-  <div className="min-h-screen bg-theme-bg-primary flex items-center justify-center">
-    <div className="w-8 h-8 border-2 border-theme-glow-primary border-t-transparent rounded-full animate-spin" />
-  </div>
-);
-
-// Premium CTA Component
-const AboutCTA: React.FC = () => {
-  const { scrollYProgress } = useScroll();
-  const y = useTransform(scrollYProgress, [0, 1], [100, -100]);
-
-  return (
-    <section className="relative py-24 sm:py-32 overflow-hidden">
-
-
-
-
-      {/* Content Container */}
-      <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false, amount: 0.3 }}
-        transition={{ duration: 0.8 }}
-        className="relative container mx-auto px-4 sm:px-6 lg:px-8"
-      >
-        <div className="max-w-4xl mx-auto text-center">
-          {/* Glowing Line */}
-          <motion.div
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={{ once: false }}
-            transition={{ duration: 1 }}
-            className="h-px w-24 bg-gradient-to-r from-transparent via-theme-glow-primary to-transparent mx-auto mb-8"
-          />
-
-          {/* Title */}
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-theme-text-primary via-theme-glow-primary to-theme-text-primary bg-clip-text text-transparent"
-          >
-            Ready to Transform Your Business?
-          </motion.h2>
-
-          {/* Description */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-lg sm:text-xl text-theme-text-secondary mb-12"
-          >
-            Ready to take the next step and unlock extra revenue in just 45 days?
-          </motion.p>
-
-          {/* CTA Button */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-          >
-            <Link
-              to="/contact"
-            >
-              <motion.button
-                whileHover="hover"
-                whileTap="tap"
-                variants={{
-                  hover: { scale: 1.05 },
-                  tap: { scale: 0.95 }
-                }}
-                className="group relative inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full w-full sm:w-auto overflow-hidden"
-              >
-                {/* Base Glow Layer */}
-                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-theme-glow-primary/20 via-theme-glow-accent/30 to-theme-glow-primary/20" />
-                {/* Outer Glow */}
-                <div className="absolute inset-0 blur-xl opacity-30 group-hover:opacity-70 transition-opacity duration-500 rounded-full bg-gradient-to-r from-theme-glow-primary/30 via-theme-glow-accent/40 to-theme-glow-primary/30 opacity-20 group-hover:opacity-70 transition-all duration-500 rounded-full" />
-                {/* Button Background */}
-                <div className="absolute inset-0 bg-theme-bg-surface border-[1.5px] rounded-full border-theme-border-accent/50 group-hover:border-theme-border-accent transition-all duration-300" />
-                {/* Button Content */}
-                <div className="relative flex items-center gap-3">
-                  <span className="text-base font-semibold text-theme-text-primary">
-                    Transform My Business
-                  </span>
-                  <motion.div
-                    animate={{ x: [0, 5, 0] }}
-                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-                  >
-                    <ArrowRight className="w-5 h-5 text-theme-text-accent group-hover:text-theme-text-primary transition-colors duration-300" />
-                  </motion.div>
-                </div>
-              </motion.button>
-            </Link>
-          </motion.div>
-        </div>
-      </motion.div>
-    </section>
-  );
-};
-
-// Developer Showcase Component
-const DeveloperShowcase: React.FC = () => {
-  const { scrollYProgress } = useScroll();
-  const y = useTransform(scrollYProgress, [0, 1], [50, -50]);
-
-  const expertiseAreas = [
-    {
-      icon: Code2,
-      title: "Elite Development",
-      description: "Fortune 500 veterans crafting enterprise solutions",
-      stats: "100K+ Production Code"
-    },
-    {
-      icon: Brain,
-      title: "AI Innovation",
-      description: "Next-gen AI solutions with enterprise scalability",
-      stats: "25+ AI Models"
-    },
-    {
-      icon: Shield,
-      title: "Security First",
-      description: "Bank-grade encryption and data protection",
-      stats: "Zero Breaches"
-    },
-    {
-      icon: Users,
-      title: "Client Success",
-      description: "Instant support and dedicated assistance 24/7",
-      stats: "100% Satisfaction Rate"
-    }
-  ];
-
-  const offerings = [
-    {
-      icon: Code2,
-      value: "Free",
-      title: "Initial Setup"
-    },
-    {
-      icon: Cpu,
-      value: "Included",
-      title: "Deployment"
-    },
-    {
-      icon: Zap,
-      value: "24/7",
-      title: "Support"
-    },
-    {
-      icon: Users,
-      value: "Lifetime",
-      title: "Updates"
-    }
-  ];
-
-  return (
-    <section className="relative py-32 overflow-hidden">
-
-
-      <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Enhanced Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-20"
-        >
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <div className="h-px w-12 bg-gradient-to-r from-transparent via-theme-border-accent/20 to-transparent" />
-            <span className="text-theme-text-accent font-medium tracking-wider text-sm uppercase">Elite Development Team</span>
-            <div className="h-px w-12 bg-gradient-to-r from-transparent via-theme-border-accent/20 to-transparent" />
-          </div>
-          <h2 className="text-5xl font-bold mb-4">
-            <span className="bg-gradient-to-r from-theme-text-primary via-theme-text-accent to-theme-text-primary bg-clip-text text-transparent">
-              Crafting Digital Excellence
-            </span>
-          </h2>
-        </motion.div>
-
-        {/* Enhanced Expertise Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-24">
-          {expertiseAreas.map((area, index) => (
-            <div
-              key={index}
-              className="relative group rounded-2xl p-0.5 bg-gradient-to-br from-blue-400/30 via-blue-200/10 to-blue-500/30 shadow-lg hover:shadow-2xl transition-all duration-500"
-            >
-              <div className="relative p-6 rounded-2xl bg-theme-bg-surface/80 backdrop-blur-xl">
-                <div className="inline-flex items-center justify-center w-14 h-14 rounded-lg bg-gradient-to-br from-blue-400/20 to-transparent shadow-lg mb-4">
-                  <area.icon className="w-7 h-7 text-blue-500 group-hover:text-blue-600 transition-colors duration-300" />
-                </div>
-                <h3 className="text-xl font-bold text-blue-700 group-hover:text-blue-500 transition-colors duration-300 text-center">{area.title}</h3>
-                <p className="text-theme-text-secondary text-sm leading-relaxed text-center">{area.description}</p>
-                <div className="pt-4 border-t border-blue-200/30 mt-4">
-                  <div className="text-blue-500 text-sm font-semibold group-hover:text-blue-700 transition-colors duration-300 text-center">{area.stats}</div>
-                </div>
-              </div>
-              <div className="absolute -inset-1 rounded-2xl bg-gradient-to-br from-blue-400/20 via-transparent to-blue-500/20 blur-xl opacity-30 group-hover:opacity-70 transition-opacity duration-500 pointer-events-none" />
-            </div>
-          ))}
-        </div>
-
-        {/* Enhanced Offerings */}
-        <div className="relative">
-          {/* Decorative Line */}
-          <div className="absolute top-1/2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-theme-border-accent/20 to-transparent" />
-
-          <div className="relative grid grid-cols-2 md:grid-cols-4 gap-8">
-            {offerings.map((offering, index) => (
-              <div
-                key={index}
-                className="relative group rounded-2xl p-0.5 bg-gradient-to-br from-blue-400/30 via-blue-200/10 to-blue-500/30 shadow-lg hover:shadow-2xl transition-all duration-500"
-              >
-                <div className="relative flex flex-col items-center justify-center rounded-2xl bg-theme-bg-surface/80 backdrop-blur-xl p-6">
-                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-br from-blue-400/20 to-transparent mb-4 shadow-md">
-                    <offering.icon className="w-8 h-8 text-blue-500 group-hover:text-blue-600 transition-colors duration-300" />
-                  </div>
-                  <h4 className="text-2xl font-bold text-blue-700 mb-2 group-hover:text-blue-500 transition-colors duration-300 text-center">{offering.value}</h4>
-                  <p className="text-theme-text-secondary text-sm font-medium text-center">{offering.title}</p>
-                </div>
-                <div className="absolute -inset-1 rounded-2xl bg-gradient-to-br from-blue-400/20 via-transparent to-blue-500/20 blur-xl opacity-30 group-hover:opacity-70 transition-opacity duration-500 pointer-events-none" />
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
-
-const About: React.FC = () => {
-  // About page SEO metadata
-  const seoTitle = 'About Us';
-  const seoDescription = 'Learn about TopEdge AI’s mission, values, and the expert team driving business transformation with intelligent automation solutions.';
-  const { scrollYProgress } = useScroll();
-
+export default function About() {
   return (
     <>
-
       <SEO
-        title={seoTitle}
-        description={seoDescription}
-        keywords="About TopEdge AI, automation team, AI mission, business automation, AI experts, voice AI, company values, TopEdge leadership"
+        title="About | TopEdge — WhatsApp growth for Shopify India"
+        description="Why we built TopEdge: one workspace for Meta templates, automations, AI, and human handoff on WhatsApp."
         type="website"
       />
-      {/* BreadcrumbList Schema.org JSON-LD */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'BreadcrumbList',
-            'itemListElement': [
-              {
-                '@type': 'ListItem',
-                'position': 1,
-                'name': 'Home',
-                'item': 'https://topedge.ai/'
-              },
-              {
-                '@type': 'ListItem',
-                'position': 2,
-                'name': 'About',
-                'item': 'https://topedge.ai/about'
-              }
-            ]
-          })
-        }}
-      />
-      <main className="bg-theme-bg-primary min-h-screen relative">
-        {/* Progress Bar */}
-        <motion.div
-          className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-theme-glow-primary to-theme-glow-secondary transform origin-left z-50"
-          style={{ scaleX: scrollYProgress }}
-        />
+      <MarketingPage>
+        <PageHero
+          eyebrow="About TopEdge"
+          title="WhatsApp growth OS for Shopify India"
+          subtitle="We connect Shopify data, Meta-approved templates, visual automations, and AI — so D2C teams sell and support on the channel customers already use."
+        >
+          <PrimaryButton to="/signup">Start free</PrimaryButton>
+        </PageHero>
 
+        <Section>
+          <Stagger className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {stats.map((s) => (
+              <StaggerItem key={s.label}>
+                <MarketingCard className="text-center !p-6">
+                  <p className="text-2xl tracking-tight text-[#7C3AED]">{s.value}</p>
+                  <p className="mt-2 text-sm text-slate-500">{s.label}</p>
+                </MarketingCard>
+              </StaggerItem>
+            ))}
+          </Stagger>
+        </Section>
 
+        <Section subtle>
+          <SectionHeading
+            eyebrow="What we believe"
+            title="Commerce conversations should drive revenue"
+            subtitle="TopEdge is the operating layer between your store, Meta, and WhatsApp — not another generic chatbot."
+            center
+          />
+          <Stagger className="grid gap-6 md:grid-cols-3">
+            {values.map((v) => (
+              <StaggerItem key={v.title}>
+                <MarketingCard className="h-full !p-7">
+                  <h3 className="text-lg text-[#0c1222]">{v.title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-slate-500">{v.desc}</p>
+                </MarketingCard>
+              </StaggerItem>
+            ))}
+          </Stagger>
+        </Section>
 
-        {/* Developer Showcase - Adjusted spacing for mobile */}
-        <div className="animate-on-scroll fade-up sm:py-0 py-0 -mt-8 sm:mt-0">
-          <DeveloperShowcase />
-        </div>
-
-        {/* CTA Section - Adjusted spacing for mobile */}
-        <div className="animate-on-scroll fade-up sm:py-0 py-0 -mt-8 sm:mt-0">
-          <AboutCTA />
-        </div>
-
-        {/* Team Section - Commented out as in original */}
-        {/* <div className="animate-on-scroll blur-in">
-        <AboutTeam />
-      </div> */}
-      </main>
+        <Section>
+          <div className="mx-auto max-w-3xl text-center">
+            <Eyebrow className="text-center">Join us</Eyebrow>
+            <h2 className="text-2xl tracking-tight md:text-3xl">Ready to see it on your store?</h2>
+            <p className="mt-4 text-slate-500">
+              Connect Shopify, approve templates, and publish your first flow — or talk to us about fully managed setup.
+            </p>
+            <div className="mt-8 flex flex-wrap justify-center gap-4">
+              <PrimaryButton to="/signup">Create free account</PrimaryButton>
+              <Link
+                to="/contact"
+                className="inline-flex h-11 items-center rounded-full border border-violet-200 px-6 text-sm text-slate-700 hover:border-violet-300 hover:text-[#7C3AED]"
+              >
+                Contact sales
+              </Link>
+            </div>
+          </div>
+        </Section>
+      </MarketingPage>
     </>
   );
-};
-
-export default About;
+}

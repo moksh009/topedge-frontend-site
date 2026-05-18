@@ -7,9 +7,12 @@ import { ThemeProvider } from './contexts/ThemeContext';
 import { AuthProvider } from './contexts/AuthContext';
 import { CommunityCacheProvider } from './contexts/CommunityCacheContext';
 import Navbar from './components/navigation/Navbar';
+import MarketingNavbar from './marketing/components/MarketingNavbar';
 import CommunityNavbar from './components/community/layout/CommunityNavbar';
 import FloatingVoiceChat from './components/FloatingVoiceChat';
 import Footer from './components/Footer';
+import MarketingFooter from './marketing/components/MarketingFooter';
+import { isMarketingRoute } from './marketing/routes';
 import MetaPixel from './components/MetaPixel';
 import Home from './pages/Home';
 import AICaller from './pages/AICaller';
@@ -18,10 +21,15 @@ const About = React.lazy(() => import('./pages/About'));
 const Services = React.lazy(() => import('./pages/Services'));
 const Contact = React.lazy(() => import('./pages/Contact'));
 const Booking = React.lazy(() => import('./pages/Booking'));
-const Pricing = React.lazy(() => import('./pages/Pricing'));
+const Pricing = React.lazy(() => import('./marketing/pages/PricingPage'));
+const FeaturesPage = React.lazy(() => import('./marketing/pages/FeaturesPage'));
+const FeatureDetailPage = React.lazy(() => import('./marketing/pages/FeatureDetailPage'));
+const IntegrationsPage = React.lazy(() => import('./marketing/pages/IntegrationsPage'));
+const CustomersPage = React.lazy(() => import('./marketing/pages/CustomersPage'));
+const SignupRedirect = React.lazy(() => import('./marketing/pages/SignupRedirect'));
 const Blog = React.lazy(() => import('./pages/Blog'));
 const BlogPost = React.lazy(() => import('./pages/BlogPost'));
-const ROI = React.lazy(() => import('./pages/ROI'));
+const RoiPage = React.lazy(() => import('./marketing/pages/RoiPage'));
 const PrivacyPolicy = React.lazy(() => import('./pages/PrivacyPolicy'));
 const Ecommerce = React.lazy(() => import('./pages/Ecommerce'));
 const MaintenanceInquiries = React.lazy(() => import('./components/admin/MaintenanceInquiries').then(module => ({ default: module.MaintenanceInquiries })));
@@ -68,19 +76,27 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   const isEcommerce = location.pathname === '/ecommerce';
   const isCommunityRoute = location.pathname.startsWith('/community');
   const isAuthPage = location.pathname === '/community/login' || location.pathname === '/community/signup';
-  const isHomePage = location.pathname === '/';
+  const marketing = isMarketingRoute(location.pathname);
 
   // Dynamic Metadata based on route
   const pageTitle = isCommunityRoute
-    ? "Community | TopEdge AI"
-    : "TopEdge AI - Advanced AI Voice Agents & Chatbots";
+    ? 'Community | TopEdge'
+    : marketing
+      ? 'TopEdge | WhatsApp growth OS for Shopify India'
+      : 'TopEdge AI';
 
   const pageDescription = isCommunityRoute
-    ? "Join the TopEdge AI Community! Connect with builders, share automation workflows, access exclusive resources, and collaborate on the future of AI agents."
-    : "Transform your customer service with TopEdge AI's advanced voice agents and chatbots. 24/7 availability, reduced costs, and improved customer satisfaction.";
+    ? 'Join the TopEdge community — automation workflows, resources, and builders.'
+    : marketing
+      ? 'Connect Shopify to WhatsApp. Approve Meta templates, automate cart recovery, and manage one inbox — built for Indian D2C.'
+      : 'TopEdge AI — customer engagement and automation.';
 
   return (
-    <div className={`min-h-screen transition-colors duration-200 relative ${isEcommerce ? 'bg-black overflow-hidden' : 'bg-background text-text [zoom:0.9]'}`}>
+    <div
+      className={`min-h-screen transition-colors duration-200 relative ${
+        isEcommerce ? 'bg-black overflow-hidden' : marketing ? 'bg-white text-[#0c1222]' : 'bg-background text-text [zoom:0.9]'
+      }`}
+    >
       <Helmet>
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription} />
@@ -106,7 +122,11 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Helmet>
 
-      {!isCommunityRoute && location.pathname !== '/ecommerce' && <Navbar />}
+      {!isCommunityRoute && location.pathname !== '/ecommerce' && (
+        <motion.div key={marketing ? 'marketing-nav' : 'legacy-nav'}>
+          {marketing ? <MarketingNavbar /> : <Navbar />}
+        </motion.div>
+      )}
       {isCommunityRoute && !isAuthPage && <CommunityNavbar />}
 
       {isCommunityRoute ? (
@@ -121,8 +141,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         </main>
       )}
 
-      {!isCommunityRoute && location.pathname !== '/ecommerce' && <Footer />}
-      {!isCommunityRoute && location.pathname !== '/ecommerce' && <FloatingVoiceChat />}
+      {!isCommunityRoute && location.pathname !== '/ecommerce' && (marketing ? <MarketingFooter /> : <Footer />)}
+      {!isCommunityRoute && location.pathname !== '/ecommerce' && !marketing && <FloatingVoiceChat />}
       {isCommunityRoute && !isAuthPage && <Footer />}
     </div>
   );
@@ -210,7 +230,12 @@ const AnimatedRoutes = () => {
           <Route path="/contact" element={<Contact />} />
           <Route path="/booking" element={<Booking />} />
           <Route path="/pricing" element={<Pricing />} />
-          <Route path="/roi" element={<ROI />} />
+          <Route path="/features" element={<FeaturesPage />} />
+          <Route path="/features/:slug" element={<FeatureDetailPage />} />
+          <Route path="/integrations" element={<IntegrationsPage />} />
+          <Route path="/customers" element={<CustomersPage />} />
+          <Route path="/signup" element={<SignupRedirect />} />
+          <Route path="/roi" element={<RoiPage />} />
           <Route path="/ai-caller" element={<AICaller />} />
           <Route path="/ai-chatbot" element={<AIChatbot />} />
           <Route path="/blog" element={<Blog />} />
