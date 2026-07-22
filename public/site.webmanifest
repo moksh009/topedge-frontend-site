@@ -1,13 +1,13 @@
 {
   "short_name": "TopEdge",
-  "name": "TopEdge AI",
-  "description": "AI Callers & Chatbots for 24/7 Business Automation. proven ROI improvements Trusted by businesses.",
+  "name": "TopEdge — WhatsApp growth OS for Shopify India",
+  "description": "Connect Shopify to WhatsApp. Cart recovery, Meta templates, and unified inbox for Indian D2C.",
   "icons": [
-    { "src": "/web-app-manifest-192x192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
-    { "src": "/web-app-manifest-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+    { "src": "/icons/icon-192x192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/icons/icon-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
   ],
   "start_url": "/",
   "display": "standalone",
-  "theme_color": "#6366f1",
+  "theme_color": "#7C3AED",
   "background_color": "#ffffff"
 }

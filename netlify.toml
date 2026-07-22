@@ -9,6 +9,81 @@
   force = true
 
 [[redirects]]
+  from = "/features/order-messages"
+  to = "/features/journeys"
+  status = 301
+
+[[redirects]]
+  from = "/features/order-automations"
+  to = "/features/journeys"
+  status = 301
+
+[[redirects]]
+  from = "/features/inbox"
+  to = "/features/live-chat"
+  status = 301
+
+[[redirects]]
+  from = "/features/store-engine"
+  to = "/features/shopify"
+  status = 301
+
+[[redirects]]
+  from = "/features/audience"
+  to = "/features/audience-crm"
+  status = 301
+
+[[redirects]]
+  from = "/features/cart-recovery"
+  to = "/features/journeys"
+  status = 301
+
+[[redirects]]
+  from = "/features/journey"
+  to = "/features/journeys"
+  status = 301
+
+[[redirects]]
+  from = "/services"
+  to = "/features"
+  status = 301
+
+[[redirects]]
+  from = "/booking"
+  to = "/contact"
+  status = 301
+
+[[redirects]]
+  from = "/ai-caller"
+  to = "/features/ai-brain"
+  status = 301
+
+[[redirects]]
+  from = "/ai-chatbot"
+  to = "/features/live-chat"
+  status = 301
+
+[[redirects]]
+  from = "/roi"
+  to = "/pricing#roi-calculator"
+  status = 301
+
+[[redirects]]
+  from = "/features/rules"
+  to = "/features/chat-rules"
+  status = 301
+
+[[redirects]]
+  from = "/blog/:file.jpg"
+  to = "/blog-media/:file.jpg"
+  status = 301
+
+[[redirects]]
+  from = "/blog/:file.webp"
+  to = "/blog-media/:file.webp"
+  status = 301
+
+[[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" fill="none" role="img" aria-label="Go To Internet">
+  <circle cx="18" cy="18" r="15" stroke="#0c1222" stroke-width="2"/>
+  <ellipse cx="18" cy="18" rx="7" ry="15" stroke="#0c1222" stroke-width="2"/>
+  <path d="M3.5 18h29M5 12.5h26M5 23.5h26" stroke="#0c1222" stroke-width="1.6" stroke-linecap="round"/>
+</svg>

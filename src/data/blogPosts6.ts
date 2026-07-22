@@ -10,7 +10,7 @@ export const blogPosts6: BlogPost[] = [
     readTime: '16 min read',
     category: 'AI Automation',
     author: 'TopEdge AI',
-    image: '/blog/ai-automation-business-2025.jpg',
+    image: '/blog-media/ai-automation-business-2025.jpg',
     imageAlt: 'AI automation transforming business operations',
     keywords: [
       'AI automation', 'business operations', 'workflow automation', 'AI implementation', 'business efficiency', 'customer service automation', 'AI ROI', 'digital transformation', '2025 technology trends', 'TopEdge AI'
@@ -224,7 +224,7 @@ export const blogPosts6: BlogPost[] = [
     readTime: '15 min read',
     category: 'Healthcare AI',
     author: 'TopEdge AI',
-    image: '/blog/ai-medical-receptionist-2025.jpg',
+    image: '/blog-media/ai-medical-receptionist-2025.jpg',
     imageAlt: 'AI medical receptionist handling patient calls',
     keywords: [
       'AI voice agents', 'medical practice automation', 'healthcare receptionist', 'patient scheduling AI', 'medical practice ROI', 'healthcare automation', 'AI receptionist cost', 'medical call handling', 'appointment scheduling automation', 'TopEdge AI healthcare'
@@ -420,7 +420,7 @@ export const blogPosts6: BlogPost[] = [
     readTime: '8 min read',
     category: 'AI Voice Agents',
     author: 'TopEdge AI',
-    image: '/blog/ai-voice-agents-2025.jpg',
+    image: '/blog-media/ai-voice-agents-2025.jpg',
     imageAlt: 'AI voice agent assisting a customer in 2025',
     keywords: ['AI voice agents', 'customer experience', 'AI-powered support', 'conversational AI', 'business automation', 'TopEdge AI'],
     content: `
@@ -449,7 +449,7 @@ export const blogPosts6: BlogPost[] = [
     readTime: '10 min read',
     category: 'AI SEO',
     author: 'TopEdge AI',
-    image: '/blog/ai-powered-seo-2025.jpg',
+    image: '/blog-media/ai-powered-seo-2025.jpg',
     imageAlt: 'AI-powered SEO dashboard and analytics',
     keywords: ['AI SEO', 'AI-powered SEO', 'SEO automation', 'Google SGE', 'AI Overviews', 'LLMs', 'TopEdge AI'],
     content: `
@@ -479,7 +479,7 @@ export const blogPosts6: BlogPost[] = [
     readTime: '7 min read',
     category: 'Business Automation',
     author: 'TopEdge AI',
-    image: '/blog/business-automation-roi-2025.jpg',
+    image: '/blog-media/business-automation-roi-2025.jpg',
     imageAlt: 'Business automation success chart',
     keywords: ['business automation', 'ROI', 'AI automation', 'case study', 'TopEdge AI', 'automation success'],
     content: `
@@ -508,7 +508,7 @@ export const blogPosts6: BlogPost[] = [
     readTime: '9 min read',
     category: 'AI Search',
     author: 'TopEdge AI',
-    image: '/blog/llms-eating-search-2025.jpg',
+    image: '/blog-media/llms-eating-search-2025.jpg',
     imageAlt: 'LLMs replacing traditional search',
     keywords: ['LLMs', 'search trends 2025', 'AI search', 'ChatGPT', 'Perplexity', 'Claude', 'SEO', 'TopEdge AI'],
     content: `

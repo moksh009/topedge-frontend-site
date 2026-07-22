@@ -20,7 +20,7 @@ export const blogPosts5 = [
         <li>Seamless integration with CRM and business tools</li>
         <li>Proven track record in delivering ROI</li>
       </ul>
-      <p>Read more about <a href="/blog/topedge-ai-in-healthcare-45-fewer-missed-appointments">TopEdge AI in Healthcare</a> and <a href="/blog/2024-roi-analysis-ai-callers-vs-traditional-call-centers">AI ROI case studies</a>.</p>
+      <p>Read more about <a href="/blog-media/topedge-ai-in-healthcare-45-fewer-missed-appointments">TopEdge AI in Healthcare</a> and <a href="/blog-media/2024-roi-analysis-ai-callers-vs-traditional-call-centers">AI ROI case studies</a>.</p>
       <h3>Ready to transform your business?</h3>
       <a href="/services" class="text-blue-600 underline font-semibold">Book a TopEdge AI Demo</a>
     `
@@ -42,7 +42,7 @@ export const blogPosts5 = [
         <li>Lower support costs by 80%</li>
         <li>Boost lead conversion rates by 40%</li>
       </ul>
-      <p>Discover more about <a href="/services" title="TopEdge AI Services">TopEdge AI business automation</a> and <a href="/blog/the-future-of-ai-agents-revolutionizing-customer-service">AI agent trends</a>.</p>
+      <p>Discover more about <a href="/services" title="TopEdge AI Services">TopEdge AI business automation</a> and <a href="/blog-media/the-future-of-ai-agents-revolutionizing-customer-service">AI agent trends</a>.</p>
       <h3>Experience the TopEdge AI difference!</h3>
       <a href="/" class="text-blue-600 underline font-semibold">Visit TopEdge AI Home</a>
     `
@@ -64,7 +64,7 @@ export const blogPosts5 = [
         <li>Seamless handoff between AI and human agents</li>
         <li>Data-driven insights for continuous improvement</li>
       </ul>
-      <p>See more: <a href="/services" title="TopEdge AI Services">TopEdge AI Services</a> | <a href="/blog/topedge-ai-voice-agents-vs-human-agents-the-2024-performance-comparison">AI Voice Agent Comparison</a></p>
+      <p>See more: <a href="/services" title="TopEdge AI Services">TopEdge AI Services</a> | <a href="/blog-media/topedge-ai-voice-agents-vs-human-agents-the-2024-performance-comparison">AI Voice Agent Comparison</a></p>
       <h3>Ready for your own success story?</h3>
       <a href="/contact" class="text-blue-600 underline font-semibold">Contact TopEdge AI Experts</a>
     `
@@ -86,7 +86,7 @@ export const blogPosts5 = [
         <li>Reduce churn by 35%</li>
         <li>Deliver measurable ROI</li>
       </ul>
-      <p>Explore more: <a href="/services" title="TopEdge AI Services">TopEdge AI Services</a> | <a href="/blog/2024-roi-analysis-ai-callers-vs-traditional-call-centers">AI ROI Analysis</a></p>
+      <p>Explore more: <a href="/services" title="TopEdge AI Services">TopEdge AI Services</a> | <a href="/blog-media/2024-roi-analysis-ai-callers-vs-traditional-call-centers">AI ROI Analysis</a></p>
       <h3>Boost your customer satisfaction with TopEdge AI!</h3>
       <a href="/services" class="text-blue-600 underline font-semibold">See TopEdge AI Solutions</a>
     `
@@ -108,7 +108,7 @@ export const blogPosts5 = [
         <li>AI-powered analytics for smarter decisions</li>
         <li>Seamless integration with business platforms</li>
       </ul>
-      <p>Stay informed: <a href="/services" title="TopEdge AI Services">TopEdge AI Services</a> | <a href="/blog/the-future-of-ai-agents-revolutionizing-customer-service">Future of AI Agents</a></p>
+      <p>Stay informed: <a href="/services" title="TopEdge AI Services">TopEdge AI Services</a> | <a href="/blog-media/the-future-of-ai-agents-revolutionizing-customer-service">Future of AI Agents</a></p>
       <h3>Future-proof your business with TopEdge AI!</h3>
       <a href="/contact" class="text-blue-600 underline font-semibold">Talk to TopEdge AI Experts</a>
     `

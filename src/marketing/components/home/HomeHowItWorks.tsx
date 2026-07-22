@@ -1,49 +1,51 @@
 import { Link } from 'react-router-dom';
-import { howItWorksSteps } from '../../data/home';
-import { PrimaryButton } from '../ui';
+import { ArrowRight, CheckCircle2, GitBranch, Link2, Sparkles } from 'lucide-react';
+import { howItWorks } from '../../data/home';
+import { SectionHeading } from '../ui';
+import { WhatsAppMark } from '../foundation/BrandMarks';
 
-/** Minimal 4-step strip — no stagger animations */
+const stepIcons = [Link2, Sparkles, GitBranch, WhatsAppMark];
+
 export default function HomeHowItWorks() {
   return (
-    <section className="marketing-section-subtle py-20 md:py-28">
-      <div className="marketing-container">
-        <div className="mx-auto max-w-2xl text-center">
-          <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-[#7C3AED]/80">
-            How it works
-          </p>
-          <h2 className="mt-4 text-[1.875rem] leading-[1.1] tracking-[-0.035em] text-[#0c1222] md:text-[2.5rem]">
-            Live on WhatsApp in about fifteen minutes
-          </h2>
-          <p className="mt-4 text-slate-500">
-            Connect once. Store data, Meta templates, automations, and inbox share the same truth.
-          </p>
-        </div>
-
-        <div className="relative mt-14">
-          <div
-            className="marketing-step-line absolute left-[10%] right-[10%] top-5 hidden h-px md:block"
-            aria-hidden
-          />
-          <ol className="grid gap-10 md:grid-cols-4 md:gap-6">
-            {howItWorksSteps.map((s) => (
-              <li key={s.n} className="relative text-center md:text-left">
-                <span className="relative z-10 inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#7C3AED] text-[11px] font-semibold text-white">
-                  {s.n}
-                </span>
-                <h3 className="mt-5 text-[15px] font-semibold text-[#0c1222]">{s.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate-500">{s.desc}</p>
-              </li>
-            ))}
-          </ol>
+    <section className="mkt-wash home-story">
+      <div className="mx-auto max-w-[var(--mkt-max-wide)]">
+        <SectionHeading
+          title="Connect. Approve. Publish. Sell."
+          subtitle="Shopify data, Meta approvals, and operator control in four steps."
+          className="mb-14 max-w-3xl"
+        />
+        <div className="home-steps">
+          {howItWorks.map((step, i) => {
+            const Icon = stepIcons[i] ?? CheckCircle2;
+            return (
+              <div key={step.step} className="home-steps__item">
+                {i > 0 && <div className="home-steps__line" aria-hidden />}
+                <div className="home-steps__card">
+                  <span className="home-steps__icon">
+                    {Icon === WhatsAppMark ? (
+                      <WhatsAppMark className="h-5 w-5" />
+                    ) : (
+                      <Icon className="h-4 w-4" strokeWidth={1.75} />
+                    )}
+                  </span>
+                  <p className="mkt-kpi text-xs text-[#7C3AED]">{step.step}</p>
+                  <h3 className="mt-3 text-lg font-medium text-[#0c1222]">{step.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-slate-500">{step.desc}</p>
+                </div>
+              </div>
+            );
+          })}
         </div>
 
         <div className="mt-12 text-center">
-          <PrimaryButton to="/signup">Start free — setup in ~15 min</PrimaryButton>
-          <p className="mt-4">
-            <Link to="/integrations" className="text-sm font-medium text-[#7C3AED] hover:underline">
-              See integrations →
-            </Link>
-          </p>
+          <Link
+            to="/features"
+            className="inline-flex items-center gap-2 text-sm font-medium text-[#7C3AED] hover:text-[#6d28d9]"
+          >
+            Explore product
+            <ArrowRight className="h-4 w-4" />
+          </Link>
         </div>
       </div>
     </section>

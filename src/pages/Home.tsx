@@ -1,31 +1,41 @@
 import '../marketing/styles/home.css';
-import SEO from '../components/SEO';
+import '../marketing/styles/feature-scenes.css';
+import MarketingSEO from '../marketing/components/MarketingSEO';
+import { OG_IMAGES } from '../marketing/data/marketingSeo';
+import { faqs } from '../marketing/data/home';
 import MarketingPage from '../marketing/components/MarketingPage';
 import HomeHero from '../marketing/components/home/HomeHero';
-import HomeFeatureGallery from '../marketing/components/home/HomeFeatureGallery';
-import HomeTrust from '../marketing/components/home/HomeTrust';
-import HomeHowItWorks from '../marketing/components/home/HomeHowItWorks';
+import HomeStickyStories from '../marketing/components/home/HomeStickyStories';
+import HomeChaosZoom from '../marketing/components/home/HomeChaosZoom';
+import HomePricingStage from '../marketing/components/home/HomePricingStage';
 import HomeTestimonials from '../marketing/components/home/HomeTestimonials';
-import HomePricingPreview from '../marketing/components/home/HomePricingPreview';
+import HomeFaq from '../marketing/components/home/HomeFaq';
 import HomeClose from '../marketing/components/home/HomeClose';
 
-/** Minimal Instantly-style homepage — hero, feature gallery with graphics, proof, pricing, FAQ */
+/**
+ * Homepage: Instantly-style stages, crisp copy, no filler eyebrows/trust pills.
+ */
 export default function Home() {
   return (
     <>
-      <SEO
-        title="TopEdge | WhatsApp growth OS for Shopify India"
-        description="Connect Shopify to WhatsApp. Approve Meta templates, automate cart recovery & orders, run campaigns, and manage one inbox — built for Indian D2C."
-        type="website"
+      <MarketingSEO
+        title="TopEdge | WhatsApp for Shopify India"
+        description="Connect Shopify to WhatsApp. Recover carts, run Live Chat with order context, and automate journeys. Built for Indian D2C."
+        image={OG_IMAGES.home}
+        path="/"
+        noSuffix
+        faqSchema={faqs}
       />
 
       <MarketingPage className="home-page !bg-white">
-        <HomeHero />
-        <HomeFeatureGallery />
-        <HomeTrust />
-        <HomeHowItWorks />
+        <div className="home-hero-stage">
+          <HomeHero />
+        </div>
+        <HomeStickyStories />
+        <HomeChaosZoom />
+        <HomePricingStage />
         <HomeTestimonials />
-        <HomePricingPreview />
+        <HomeFaq />
         <HomeClose />
       </MarketingPage>
     </>

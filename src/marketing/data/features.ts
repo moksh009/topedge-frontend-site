@@ -1,352 +1,252 @@
-import {
-  Brain,
-  Workflow,
-  MessageSquare,
-  Megaphone,
-  Users,
-  ShoppingBag,
-  Package,
-  BarChart3,
-  GitBranch,
-  Inbox,
-  ShoppingCart,
-  type LucideIcon,
-} from 'lucide-react';
+import type { FeatureStoryId } from './home';
+import { featureStories } from './home';
 
-export type FeatureItem = {
+export type MarketingFeature = {
   slug: string;
+  scene: FeatureStoryId | 'hero';
+  label: string;
   title: string;
-  tagline: string;
-  icon: LucideIcon;
-  hub?: string;
+  body: string;
+  bullets: readonly string[];
+  outcomes: string[];
+  aliases?: string[];
 };
 
-export type FeatureDetail = {
-  slug: string;
-  title: string;
-  headline: string;
-  description: string;
-  problem: string;
-  solution: string;
-  capabilities: { title: string; desc: string }[];
-  steps: { title: string; desc: string }[];
-  related: string[];
-};
-
-export const featureDetails: Record<string, FeatureDetail> = {
-  'ai-brain': {
-    slug: 'ai-brain',
-    title: 'AI Brain',
-    headline: 'AI that knows your products, policies, and tone',
-    description: 'Train TopEdge on your catalog, PDFs, and brand voice. Every reply stays on-policy.',
-    problem: 'Generic chatbots guess. They hallucinate prices, ignore COD policies, and sound nothing like your brand.',
-    solution: 'Intelligence Hub connects intent detection, knowledge base, and persona settings so AI answers like your best agent.',
-    capabilities: [
-      { title: 'Intent Engine', desc: 'Route high-intent buyers to the right flow automatically.' },
-      { title: 'Knowledge Base', desc: 'Upload PDFs, URLs, and product data.' },
-      { title: 'AI Persona', desc: 'Set tone, language, and escalation rules.' },
-      { title: 'Training Inbox', desc: 'Correct replies — AI learns from your edits.' },
-      { title: 'Bot Quality', desc: 'See resolution rate and missed intents.' },
-      { title: 'Export reports', desc: 'PDF intelligence reports for stakeholders.' },
-    ],
-    steps: [
-      { title: 'Connect Shopify', desc: 'Sync catalog and policies automatically.' },
-      { title: 'Upload knowledge', desc: 'Add FAQs, return policy, and sizing guides.' },
-      { title: 'Go live in Live Chat', desc: 'AI suggests replies; agents approve or edit.' },
-    ],
-    related: ['live-chat', 'flow-builder', 'meta-manager'],
-  },
-  'flow-builder': {
-    slug: 'flow-builder',
-    title: 'AI Form → Flow Builder',
-    headline: 'Build WhatsApp automations in 10 minutes — zero technical knowledge',
-    description:
-      'Answer a short form in plain English. TopEdge AI generates cart recovery, COD confirm, order updates, and follow-ups — then you publish.',
-    problem:
-      'Founders waste weeks wiring Zapier, spreadsheets, and agencies. Most never launch COD confirm or cart recovery on WhatsApp.',
-    solution:
-      'AI Form → Flow Builder turns your intent into a live automation. No canvas expertise required — edit visually only if you want.',
-    capabilities: [
-      { title: 'AI Form intake', desc: 'Describe trigger, message, and timing — like talking to a teammate.' },
-      { title: 'Auto-generated canvas', desc: 'Full flow built for you: triggers, waits, templates, branches.' },
-      { title: '~10 min to publish', desc: 'Most Indian D2C brands go live the same day they sign up.' },
-      { title: 'Cart & COD flows', desc: 'Abandoned cart, COD confirmation, thank-you — pre-tuned for India.' },
-      { title: 'Visual fine-tuning', desc: 'Optional drag-and-drop edits for power users.' },
-      { title: 'Meta-safe sends', desc: 'Only approved templates reach customers.' },
-    ],
-    steps: [
-      { title: 'Fill the AI form', desc: 'What triggers it, what to say, when to follow up — in plain language.' },
-      { title: 'Review & tweak', desc: 'See the generated flow. Edit copy or nodes if needed.' },
-      { title: 'Publish', desc: 'One tap — your store runs on WhatsApp 24/7.' },
-    ],
-    related: ['meta-manager', 'shopify', 'live-chat'],
-  },
-  'live-chat': {
-    slug: 'live-chat',
-    title: 'Live Chat',
-    headline: 'WhatsApp sales and support in one premium inbox',
-    description: 'Order cards, AI suggested replies, and customer context — beside every thread.',
-    problem: 'Agents switch between Shopify admin and WhatsApp. They ask for order IDs customers already gave.',
-    solution: 'Unified inbox with Shopify order #TE-1042, LTV, mood, and one-click takeover.',
-    capabilities: [
-      { title: 'Unified threads', desc: 'WhatsApp (Instagram soon) in one view.' },
-      { title: 'Order cards in chat', desc: 'Product image, ₹ amount, COD/prepaid status.' },
-      { title: 'AI suggested replies', desc: 'Trained on catalog — agent approves or edits.' },
-      { title: 'Assign & snooze', desc: 'Route to the right teammate instantly.' },
-      { title: 'Real-time sync', desc: 'Socket updates — no refresh spam.' },
-      { title: 'Indian CX ready', desc: 'COD, sizing, and delivery questions handled in-thread.' },
-    ],
-    steps: [
-      { title: 'Connect WABA', desc: 'Link Meta WhatsApp Business API.' },
-      { title: 'Sync Shopify', desc: 'Orders and customers appear beside chats.' },
-      { title: 'Reply with AI', desc: 'Suggest, approve, or take over — your rules.' },
-    ],
-    related: ['ai-brain', 'flow-builder', 'shopify'],
-  },
-  'meta-manager': {
-    slug: 'meta-manager',
-    title: 'Meta Manager',
-    headline: 'Meta-approved templates, on your terms',
-    description: 'Library → AI copy → you approve → submit to Meta → use everywhere. Nothing auto-sends.',
-    problem: 'Getting WhatsApp templates approved is slow and confusing. Most tools hide what actually goes to Meta.',
-    solution: 'TopEdge mirrors the exact 3-step workflow in your dashboard: pick, create & send, use in store.',
-    capabilities: [
-      { title: 'Template library', desc: 'Prebuilt ecommerce templates for Indian D2C.' },
-      { title: 'AI Studio', desc: 'AI drafts copy — you edit before submission.' },
-      { title: 'One-tap to Meta', desc: 'Submit only when you are ready.' },
-      { title: 'Status tracking', desc: 'See reviewing, approved, or rejected at a glance.' },
-      { title: 'Use in flows', desc: 'Approved templates power campaigns and automations.' },
-      { title: 'WABA connections', desc: 'Catalog, Shopify, and technical setup in one place.' },
-    ],
-    steps: [
-      { title: 'Pick messages', desc: 'Browse the library and choose a template.' },
-      { title: 'Create & send to Meta', desc: 'AI writes copy; you approve; one tap to Meta.' },
-      { title: 'Use in your store', desc: 'Deploy in Flow Builder, campaigns, and order messages.' },
-    ],
-    related: ['flow-builder', 'campaigns', 'shopify'],
-  },
-  'campaigns': {
-    slug: 'campaigns',
-    title: 'Campaigns',
-    headline: 'Broadcasts that respect Meta rules',
-    description: 'Segments, schedules, and template-powered sends to your Shopify audience.',
-    problem: 'Blasting WhatsApp gets numbers banned. You need segments and approved templates.',
-    solution: 'Campaigns use your approved templates and CRM segments — schedule or send now.',
-    capabilities: [
-      { title: 'Segments', desc: 'Target by cart, order history, tags, or loyalty.' },
-      { title: 'Template sends', desc: 'Only Meta-approved message templates.' },
-      { title: 'Sequences', desc: 'Multi-step follow-ups after a broadcast.' },
-      { title: 'Schedule', desc: 'Send at the best time for Indian buyers.' },
-      { title: 'Analytics', desc: 'Delivery, read, and reply metrics.' },
-      { title: 'Compliance', desc: 'Opt-in aware; no sends without approved templates.' },
-    ],
-    steps: [
-      { title: 'Build segment', desc: 'Filter audience from Shopify sync.' },
-      { title: 'Choose template', desc: 'Pick an approved Meta template.' },
-      { title: 'Launch', desc: 'Schedule or send; track results in dashboard.' },
-    ],
-    related: ['meta-manager', 'audience-crm', 'analytics'],
-  },
-  'shopify': {
+/** Canonical public slugs (aligned with netlify.toml redirects) */
+export const MARKETING_FEATURES: MarketingFeature[] = [
+  {
     slug: 'shopify',
-    title: 'Shopify Engine',
-    headline: 'Shopify data powers every message',
-    description: 'Commerce Hub syncs products, orders, discounts, and customers into WhatsApp workflows.',
-    problem: 'WhatsApp and Shopify live in silos. Agents ask customers for order IDs they already have.',
-    solution: 'Store Engine deep-syncs catalog and orders so every automation and reply has full context.',
-    capabilities: [
-      { title: 'Order sync', desc: 'Real-time order status in Live Chat.' },
-      { title: 'Products & discounts', desc: 'Share catalog and offers in-thread.' },
-      { title: 'Abandoned cart', desc: 'Trigger recovery from Shopify events.' },
-      { title: 'COD / RTO insights', desc: 'Pipeline analytics for Indian economics.' },
-      { title: 'Demand forecast', desc: 'Plan inventory from conversation trends.' },
-      { title: 'Suppliers', desc: 'Manage vendor data alongside commerce.' },
+    scene: 'shopify',
+    label: 'Shopify connection',
+    title: 'Your store data, live in TopEdge',
+    body: 'OAuth-connect Shopify once. Products, carts, orders, and COD status sync into the workspace. Edit catalog and settings in the dashboard ,  marketing only tells the story.',
+    bullets: [
+      'One-click Shopify OAuth',
+      'Orders, carts & catalog sync',
+      'Edit everything at dash.topedgeai.com',
     ],
-    steps: [
-      { title: 'Connect store', desc: 'OAuth to Shopify in under 2 minutes.' },
-      { title: 'Map webhooks', desc: 'Cart, order, and customer events flow in.' },
-      { title: 'Automate', desc: 'Flows and order messages use live data.' },
+    outcomes: [
+      'See open carts and recent orders beside WhatsApp threads',
+      'Recovery journeys fire from real abandon events',
+      'Catalog-grounded AI replies use live SKUs and ₹ prices',
     ],
-    related: ['order-automations', 'flow-builder', 'analytics'],
+    aliases: ['store-engine'],
   },
-  'audience-crm': {
-    slug: 'audience-crm',
-    title: 'Audience CRM',
-    headline: 'Every shopper, cart, and loyal customer — in one CRM',
-    description: 'Segments, loyalty, reviews, abandoned carts, and warranty — powered by Shopify + WhatsApp events.',
-    problem: 'Customer data is scattered across Shopify, spreadsheets, and WhatsApp chats. Campaigns miss the right buyers.',
-    solution: 'Audience Hub unifies leads, loyalty tiers, review routing, and smart segments for campaigns.',
-    capabilities: [
-      { title: 'All Customers', desc: 'Full CRM list with tags, scores, and order history.' },
-      { title: 'Loyalty & Rewards', desc: 'Points per ₹ spent with expiry reminders on WhatsApp.' },
-      { title: 'Reviews & Reputation', desc: 'Happy customers → Google; unhappy → support, not public.' },
-      { title: 'Segments', desc: 'One-click audiences for broadcasts and flows.' },
-      { title: 'Abandoned Carts', desc: 'Recovery leads linked to cart automations.' },
-      { title: 'Warranty', desc: 'Claims and QR registration on packaging.' },
+  {
+    slug: 'journeys',
+    scene: 'journey',
+    label: 'Journey',
+    title: 'Visual journeys that sell and support on WhatsApp',
+    body: 'Drag triggers, waits, conditions, and Meta-approved sends on a canvas. Branch on COD, pause until templates are live, ship without code.',
+    bullets: [
+      'Trigger → wait → branch → send',
+      'COD & Shopify conditions',
+      'Nothing fires until Meta approves',
     ],
-    steps: [
-      { title: 'Sync Shopify', desc: 'Customers and orders build profiles automatically.' },
-      { title: 'Score & segment', desc: 'Waterfall rules tag VIPs, at-risk, and repeat buyers.' },
-      { title: 'Target campaigns', desc: 'Send approved templates to the right segment.' },
+    outcomes: [
+      '3-step cart recovery without custom code',
+      'Order update paths that respect Meta utility templates',
+      'Gates that block sends until templates are APPROVED',
     ],
-    related: ['campaigns', 'flow-builder', 'shopify'],
+    aliases: ['journey', 'order-automations', 'order-messages', 'cart-recovery'],
   },
-  'order-automations': {
-    slug: 'order-automations',
-    title: 'Order automations',
-    headline: 'Order placed, shipped, delivered — automatic WhatsApp updates',
-    description: 'Rule-based order triggers send approved Meta templates with delays you control.',
-    problem: 'Customers message “where is my order?” because proactive updates never went out on WhatsApp.',
-    solution: 'Order Messages & Rules map paid, shipped, and delivered events to templates — parallel to Flow Builder.',
-    capabilities: [
-      { title: 'Event rules', desc: 'Paid, shipped, delivered, or SKU-specific triggers.' },
-      { title: 'Template mapping', desc: 'Each status uses an approved Meta template.' },
-      { title: 'Delays', desc: 'Wait before send — e.g. review request +2 days after delivery.' },
-      { title: 'Order panel', desc: 'See which template fires for each Shopify status.' },
-      { title: 'COD aware', desc: 'Different copy for COD vs prepaid confirmations.' },
-      { title: 'Live Chat link', desc: 'Jump from any order to the customer thread.' },
+  {
+    slug: 'live-chat',
+    scene: 'inbox',
+    label: 'Live Chat',
+    title: 'Every thread beside the order it belongs to',
+    body: 'WhatsApp and Instagram in one inbox. Customer 360 shows order #, COD status, LTV, and cart history ,  agents never tab-switch to Shopify admin.',
+    bullets: [
+      'Assign, tag, and hand off to humans',
+      'AI replies pause on takeover',
+      'Full conversation history',
     ],
-    steps: [
-      { title: 'Connect Shopify', desc: 'Order webhooks flow into TopEdge in real time.' },
-      { title: 'Map templates', desc: 'Pick approved templates per order status.' },
-      { title: 'Enable rules', desc: 'Turn on paid → confirm, shipped → tracking, etc.' },
+    outcomes: [
+      'Reply with tracking without leaving the thread',
+      'Unified WA + IG list with channel filters',
+      'Human takeover pauses automation instantly',
     ],
-    related: ['meta-manager', 'shopify', 'live-chat'],
+    aliases: ['inbox'],
   },
-  analytics: {
+  {
+    slug: 'flow-builder',
+    scene: 'flow-builder',
+    label: 'Flow Builder',
+    title: 'Describe the bot ,  AI drafts the flow canvas',
+    body: 'Fill a short AI form (niche, tone, goals). TopEdge generates a WhatsApp flow you can edit node-by-node ,  menus, conditions, catalog sends, human handoff.',
+    bullets: [
+      'AI form → editable flow',
+      'Menus, conditions, handoff',
+      'Test before you publish',
+    ],
+    outcomes: [
+      'First conversational flow in minutes, not weeks',
+      'Catalog send nodes wired to Shopify products',
+      'Handoff into Live Chat when the shopper needs a human',
+    ],
+  },
+  {
+    slug: 'ai-brain',
+    scene: 'ai-brain',
+    label: 'AI Brain',
+    title: 'Replies grounded in your catalog ,  not generic chatbots',
+    body: 'Intents, store policies, and Shopify products feed the brain. Answers cite real SKUs and prices so support stays on-brand and accurate.',
+    bullets: [
+      'Catalog + policy knowledge',
+      'Intent routing you control',
+      'Human takeover anytime',
+    ],
+    outcomes: [
+      'Fewer “let me check and get back” loops',
+      'Intent sandbox before go-live',
+      'Brain pauses the moment an agent takes over',
+    ],
+  },
+  {
+    slug: 'campaigns',
+    scene: 'campaigns',
+    label: 'Campaigns',
+    title: 'Meta-safe broadcasts with honest ₹ costs',
+    body: 'Pick an audience, lock an approved marketing template, preview the bubble, then send. See category rates before you spend.',
+    bullets: [
+      'Segmented audiences',
+      'Approved templates only',
+      'Transparent Meta ₹ rates',
+    ],
+    outcomes: [
+      'Broadcasts that never sneak past Meta approval',
+      'Audience pulls from real lead scores and cart state',
+      'Cost clarity before you hit send',
+    ],
+  },
+  {
+    slug: 'instagram',
+    scene: 'instagram',
+    label: 'IG Automation',
+    title: 'Comment or story → DM, without leaving Instagram',
+    body: 'Auto-reply to comments and story mentions with a WhatsApp or IG DM. Capture interest while it’s hot ,  then continue in Live Chat.',
+    bullets: [
+      'Comment-to-DM rules',
+      'Story reply triggers',
+      'Hands off into Live Chat',
+    ],
+    outcomes: [
+      'Turn “price?” comments into conversations',
+      'Keep brand voice consistent on auto-DM',
+      'One inbox for IG + WhatsApp follow-ups',
+    ],
+  },
+  {
     slug: 'analytics',
-    title: 'Analytics',
-    headline: 'Track revenue impact, not just message counts',
-    description: 'Platform funnels, commerce metrics, and agent performance in Insights Hub.',
-    problem: 'WhatsApp tools show sends and reads — not recovered revenue or bot vs human resolution.',
-    solution: 'Insights Hub aggregates orders, campaigns, and inbox data into actionable commerce metrics.',
-    capabilities: [
-      { title: 'Platform Analytics', desc: 'Funnels, commerce KPIs, and exports.' },
-      { title: 'Agent Performance', desc: 'Team metrics for Live Chat resolution.' },
-      { title: 'Campaign ROI', desc: 'Delivery, read, reply tied to segments.' },
-      { title: 'Bot vs human', desc: 'See where automation hands off to agents.' },
-      { title: 'Cart recovery', desc: 'Measure ₹ recovered from abandoned cart flows.' },
-      { title: 'Export reports', desc: 'Share PDF summaries with stakeholders.' },
+    scene: 'analytics',
+    label: 'Analytics',
+    title: 'Sent → read → clicked → paid ,  the funnel that matters',
+    body: 'Track WhatsApp recovery performance with Meta-honest costs. Know which step converts and which template wastes spend.',
+    bullets: [
+      'Recovery funnel clarity',
+      'Template-level performance',
+      'Honest Meta cost view',
     ],
-    steps: [
-      { title: 'Connect store', desc: 'Shopify revenue syncs to dashboards.' },
-      { title: 'Run flows & campaigns', desc: 'Events populate analytics automatically.' },
-      { title: 'Optimize', desc: 'Double down on flows and segments that convert.' },
+    outcomes: [
+      'Recovery ₹ instead of vanity open rates alone',
+      'See which journey step actually converts',
+      'Plan spend with real Meta category rates',
     ],
-    related: ['campaigns', 'shopify', 'live-chat'],
   },
-  rules: {
-    slug: 'rules',
-    title: 'Rules',
-    headline: 'Route VIPs to your best agent automatically',
-    description: 'Routing Engine and Smart Message Rules — priority, round-robin, and keyword triggers.',
-    problem: 'Every chat lands on whoever is free. VIP buyers wait behind generic inquiries.',
-    solution: 'Automation Hub rules route by tag, keyword, or condition — with drag-reorder priority.',
-    capabilities: [
-      { title: 'Routing Engine', desc: 'Round-robin, specific agent, or escalation paths.' },
-      { title: 'Conditions', desc: 'VIP tag, keyword, or custom fields.' },
-      { title: 'Priority order', desc: 'Drag to reorder which rule wins.' },
-      { title: 'Smart message rules', desc: 'Keyword triggers outside full canvas flows.' },
-      { title: 'Fallback', desc: 'Default team when no rule matches.' },
-      { title: 'Socket alerts', desc: 'Agents notified on assignment instantly.' },
+  {
+    slug: 'meta-manager',
+    scene: 'meta-manager',
+    label: 'Meta Manager',
+    title: 'You approve every template before anything sends',
+    body: 'Create, sync, and track WhatsApp template status with Meta. Catalog and QR live here too ,  nothing broadcasts until approval lands.',
+    bullets: [
+      'Library + status sync',
+      'Catalog & QR tools',
+      'Merchant-owned approval',
     ],
-    steps: [
-      { title: 'Define conditions', desc: 'e.g. tag VIP or message contains “refund”.' },
-      { title: 'Set destination', desc: 'Agent, team, or round-robin pool.' },
-      { title: 'Test in Live Chat', desc: 'New chats route per your priority stack.' },
+    outcomes: [
+      'Clear Pending vs Approved states',
+      'QR and deep links for storefront capture',
+      'No silent sends on rejected templates',
     ],
-    related: ['live-chat', 'flow-builder', 'ai-brain'],
   },
-  'abandoned-cart': {
-    slug: 'abandoned-cart',
-    title: 'Abandoned Cart',
-    headline: 'Recover Shopify checkouts on WhatsApp — before they go cold',
-    description:
-      'Three approved-template nudges with product image, ₹ price, and one-tap checkout — tuned for COD and prepaid Indian buyers.',
-    problem:
-      'Email and SMS recovery underperform in India. Buyers live on WhatsApp — but most stores never message abandoned carts there.',
-    solution:
-      'TopEdge watches Shopify drop-offs and sends a proven 15 min → 2 hr → 24 hr rhythm using only templates you approved.',
-    capabilities: [
-      { title: 'Shopify trigger', desc: 'Fires when checkout is abandoned — real product & cart value.' },
-      { title: '3-message rhythm', desc: 'Default 15 min, 2 hr, 24 hr — fully editable per store.' },
-      { title: 'COD-aware copy', desc: 'Different tone for COD vs prepaid checkouts.' },
-      { title: 'Product cards', desc: 'Image, variant, and ₹ price in every nudge.' },
-      { title: 'Audience sync', desc: 'Recovery leads land in Audience CRM for retargeting.' },
-      { title: 'Meta-safe only', desc: 'Uses approved marketing templates — no policy risk.' },
+  {
+    slug: 'audience-crm',
+    scene: 'audience',
+    label: 'Audience',
+    title: 'Segments, scores, and cart leads in one CRM',
+    body: 'See who abandoned, who’s VIP, and who’s COD-risk. Build segments for campaigns and journeys from real Shopify + WhatsApp behavior.',
+    bullets: [
+      'Waterfall interest scores',
+      'Abandoned cart leads',
+      'Campaign-ready segments',
     ],
-    steps: [
-      { title: 'Connect Shopify', desc: 'Cart webhooks sync automatically.' },
-      { title: 'Pick approved template', desc: 'Choose or create cart-recovery template in Meta Manager.' },
-      { title: 'Publish flow', desc: 'AI Form or canvas — live in minutes.' },
+    outcomes: [
+      'Target warm leads without CSV gymnastics',
+      'Scores update from carts, orders, and chats',
+      'Segments feed Campaigns and Journeys',
     ],
-    related: ['flow-builder', 'meta-manager', 'audience-crm'],
+    aliases: ['audience'],
   },
-  sequences: {
-    slug: 'sequences',
-    title: 'Sequences',
-    headline: 'Multi-step follow-ups after every broadcast',
-    description:
-      'Chain approved WhatsApp messages — wait, branch on reply, and stop when they purchase — without rebuilding a full flow.',
-    problem: 'One-off broadcasts miss buyers who almost converted. Manual follow-ups do not scale.',
-    solution:
-      'Sequences attach to campaigns: message 1 → wait → message 2 if no reply → tag or exit on order.',
-    capabilities: [
-      { title: 'Post-broadcast steps', desc: 'Follow up days after the first send.' },
-      { title: 'Reply branches', desc: 'Different paths when they respond or stay silent.' },
-      { title: 'Template-only', desc: 'Each step uses an approved Meta template.' },
-      { title: 'Segment aware', desc: 'Built on Audience CRM segments from Shopify.' },
-      { title: 'Pause on purchase', desc: 'Stops when Shopify marks an order paid.' },
-      { title: 'Analytics', desc: 'See drop-off per step in Insights.' },
+  {
+    slug: 'chat-rules',
+    scene: 'inbox',
+    label: 'Chat rules',
+    title: 'Route the right conversations to the right people',
+    body: 'Smart rules for assignment, COD keywords, and escalation ,  so Live Chat stays calm when volume spikes.',
+    bullets: [
+      'Keyword and intent routing',
+      'Assign to ops or sales',
+      'Works with AI takeover pause',
     ],
-    steps: [
-      { title: 'Create campaign', desc: 'Pick segment and first approved template.' },
-      { title: 'Add sequence steps', desc: 'Delays, conditions, and follow-up templates.' },
-      { title: 'Launch & measure', desc: 'Track reads, replies, and revenue per step.' },
+    outcomes: [
+      'COD confirmations land with the right team',
+      'VIP shoppers skip the queue when you say so',
+      'Rules stay editable in the dashboard',
     ],
-    related: ['campaigns', 'audience-crm', 'analytics'],
+    aliases: ['rules'],
   },
-  orders: {
-    slug: 'orders',
-    title: 'Orders',
-    headline: 'Every Shopify order — synced and actionable on WhatsApp',
-    description:
-      'Real-time order list with COD/prepaid status, line items, and one-click jump to the customer’s WhatsApp thread.',
-    problem: 'Support hunts through Shopify admin while the customer waits on WhatsApp with no context.',
-    solution:
-      'Commerce Hub orders mirror Shopify — agents and automations share the same order truth.',
-    capabilities: [
-      { title: 'Live order sync', desc: 'Paid, fulfilled, cancelled — as Shopify updates.' },
-      { title: 'COD & prepaid', desc: 'Status visible in inbox and automations.' },
-      { title: 'Order → chat', desc: 'Open the WhatsApp thread from any order row.' },
-      { title: 'Line items & totals', desc: 'SKU, qty, discounts, and ₹ totals in one view.' },
-      { title: 'RTO signals', desc: 'Economics fields for Indian delivery reality.' },
-      { title: 'Automation source', desc: 'Powers order messages and Flow Builder triggers.' },
-    ],
-    steps: [
-      { title: 'Connect Shopify', desc: 'OAuth + order webhooks in Settings.' },
-      { title: 'Browse Commerce Hub', desc: 'Filter, search, and export order lists.' },
-      { title: 'Automate or reply', desc: 'Trigger templates or handle in Live Chat.' },
-    ],
-    related: ['shopify', 'order-automations', 'live-chat'],
-  },
-};
-
-export const featureGrid: FeatureItem[] = [
-  { slug: 'live-chat', title: 'Live Chat', tagline: 'Unified inbox for WhatsApp', icon: Inbox, hub: 'WhatsApp & AI' },
-  { slug: 'ai-brain', title: 'AI Brain', tagline: 'Intent, persona, knowledge base', icon: Brain, hub: 'WhatsApp & AI' },
-  { slug: 'flow-builder', title: 'AI Form → Flow Builder', tagline: 'Live flow in ~10 min, no code', icon: Workflow, hub: 'WhatsApp & AI' },
-  { slug: 'meta-manager', title: 'Meta Manager', tagline: 'Templates → Meta approval', icon: Megaphone, hub: 'WhatsApp & AI' },
-  { slug: 'campaigns', title: 'Campaigns', tagline: 'Broadcasts & sequences', icon: MessageSquare, hub: 'Growth' },
-  { slug: 'audience-crm', title: 'Audience CRM', tagline: 'Leads, segments, loyalty', icon: Users, hub: 'Growth' },
-  { slug: 'sequences', title: 'Sequences', tagline: 'Follow-up message flows', icon: GitBranch, hub: 'Growth' },
-  { slug: 'abandoned-cart', title: 'Abandoned Cart', tagline: 'Recover carts on WhatsApp', icon: ShoppingCart, hub: 'Growth' },
-  { slug: 'shopify', title: 'Shopify Engine', tagline: 'Commerce Hub workspace', icon: ShoppingBag, hub: 'Store' },
-  { slug: 'orders', title: 'Orders', tagline: 'Order sync & management', icon: Package, hub: 'Store' },
-  { slug: 'order-automations', title: 'Order automations', tagline: 'Transactional WhatsApp', icon: Package, hub: 'Store' },
-  { slug: 'analytics', title: 'Analytics', tagline: 'Revenue-oriented insights', icon: BarChart3, hub: 'Store' },
 ];
 
-export function getFeatureBySlug(slug: string) {
-  return featureGrid.find((f) => f.slug === slug);
+const aliasToSlug = new Map<string, string>();
+for (const f of MARKETING_FEATURES) {
+  aliasToSlug.set(f.slug, f.slug);
+  f.aliases?.forEach((a) => aliasToSlug.set(a, f.slug));
+}
+
+export function resolveFeatureSlug(raw: string): string | null {
+  return aliasToSlug.get(raw) ?? null;
+}
+
+export function getFeatureBySlug(raw: string): MarketingFeature | undefined {
+  const slug = resolveFeatureSlug(raw);
+  if (!slug) return undefined;
+  return MARKETING_FEATURES.find((f) => f.slug === slug);
+}
+
+/** Sync homepage story hrefs to canonical feature slugs */
+export function canonicalHrefForStory(storyId: string): string {
+  const map: Record<string, string> = {
+    shopify: '/features/shopify',
+    'cart-recovery': '/features/journeys',
+    inbox: '/features/live-chat',
+    journey: '/features/journeys',
+    'flow-builder': '/features/flow-builder',
+    'ai-brain': '/features/ai-brain',
+    campaigns: '/features/campaigns',
+    instagram: '/features/instagram',
+    dashboard: '/features',
+    analytics: '/features/analytics',
+    'meta-manager': '/features/meta-manager',
+    audience: '/features/audience-crm',
+  };
+  return map[storyId] ?? '/features';
+}
+
+/** Ensure home stories stay aligned when imported elsewhere */
+export function storiesWithCanonicalHrefs() {
+  return featureStories.map((s) => ({
+    ...s,
+    href: canonicalHrefForStory(s.id),
+  }));
 }

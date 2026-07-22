@@ -40,12 +40,18 @@ export default {
         },
       },
       fontFamily: {
-        'sans': ['Inter', 'system-ui', 'sans-serif'],
-        'display': ['Clash Display', 'Inter', 'sans-serif'],
-        'heading': ['Montserrat', 'Inter', 'sans-serif'],
+        sans: ['-apple-system', 'BlinkMacSystemFont', 'SF Pro Text', 'Inter', 'system-ui', 'sans-serif'],
+        display: ['-apple-system', 'BlinkMacSystemFont', 'SF Pro Display', 'Inter', 'system-ui', 'sans-serif'],
+        kpi: ['Inter Tight', 'Inter', 'sans-serif'],
+        heading: ['-apple-system', 'BlinkMacSystemFont', 'SF Pro Display', 'Inter', 'system-ui', 'sans-serif'],
       },
       colors: {
-        // Base colors
+        marketing: {
+          border: '#efeaf8',
+          violet: '#7C3AED',
+          'violet-hover': '#6d28d9',
+          ink: '#0c1222',
+        },
         primary: {
           light: '#4F46E5',
           DEFAULT: '#4F46E5',

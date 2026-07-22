@@ -1,200 +1,146 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Check } from 'lucide-react';
-import SEO from '../../components/SEO';
-import RoiCalculator from '../components/RoiCalculator';
-import MarketingCtaBand from '../components/MarketingCtaBand';
-import {
-  Section,
-  SectionHeading,
-  PrimaryButton,
-  MarketingCard,
-  FaqAccordion,
-  PageHero,
-  StatusBadge,
-} from '../components/ui';
-import {
-  diyPlans,
-  dfyPlans,
-  diyComparisonRows,
-  pricingFaqs,
-  formatInr,
-} from '../data/pricing';
-import { Reveal } from '../components/motion';
+import MarketingSEO from '../components/MarketingSEO';
 import MarketingPage from '../components/MarketingPage';
+import MarketingCtaBand from '../components/MarketingCtaBand';
+import { PageHero, Section, MarketingCard, PrimaryButton } from '../components/ui';
+import {
+  BILLING_PLANS,
+  META_MESSAGE_RATES,
+  PLAN_LINE_META,
+  plansForLine,
+  TRIAL_PLAN,
+} from '../data/planCatalog';
 
-export default function PricingPage() {
-  const [tab, setTab] = useState<'diy' | 'dfy'>('diy');
-  const [yearly, setYearly] = useState(false);
-  const plans = tab === 'diy' ? diyPlans : dfyPlans;
-
-  const price = (monthly: number) => {
-    if (monthly === 0) return 0;
-    return yearly ? Math.round(monthly * 0.8) : monthly;
-  };
+function PlanSection({ line }: { line: 'diy' | 'dfy' }) {
+  const meta = PLAN_LINE_META[line];
+  const plans = plansForLine(line);
 
   return (
+    <Section className="!py-10" id={line === 'diy' ? 'diy' : 'dfy'}>
+      <div className="mb-8 max-w-2xl">
+        <p className="mkt-eyebrow">{line === 'diy' ? 'Do it yourself' : 'Done for you'}</p>
+        <h2 className="mkt-display mt-3 text-3xl font-medium text-[#0c1222]">{meta.label}</h2>
+        <p className="mt-3 text-slate-500">{meta.subtitle}</p>
+      </div>
+      <div className="grid gap-6 lg:grid-cols-3">
+        {plans.map((plan) => (
+          <MarketingCard
+            key={plan.id}
+            className={`flex h-full flex-col !p-6 ${plan.popular ? 'border-[#c4b5fd] shadow-[0_20px_50px_-20px_rgba(124,58,237,0.25)]' : ''}`}
+          >
+            {plan.popular && (
+              <span className="mb-4 inline-flex w-fit rounded-full bg-[#f5f3ff] px-3 py-1 text-xs font-medium text-[#7C3AED]">
+                Most popular
+              </span>
+            )}
+            <p className="text-lg font-medium text-[#0c1222]">{plan.name}</p>
+            <p className="mt-3">
+              <span className="mkt-kpi text-3xl font-medium text-[#0c1222]">{plan.priceLabel}</span>
+              <span className="ml-1 text-sm text-slate-400">{plan.period}</span>
+            </p>
+            <p className="mt-3 text-sm leading-relaxed text-slate-500">{plan.description}</p>
+            <ul className="mt-6 flex-1 space-y-3 text-sm text-slate-600">
+              {plan.features.map((feature) => (
+                <li key={feature} className="flex gap-2">
+                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#7C3AED]" />
+                  {feature}
+                </li>
+              ))}
+            </ul>
+            <PrimaryButton
+              to={line === 'dfy' ? '/contact' : '/signup'}
+              className="mt-8 w-full justify-center"
+            >
+              {plan.cta}
+            </PrimaryButton>
+          </MarketingCard>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
+export default function PricingPage() {
+  return (
     <>
-      <SEO
-        title="Pricing | TopEdge — WhatsApp automation for Shopify India"
-        description="Transparent ₹ pricing. Start free, scale with cart recovery and campaigns. DIY or fully managed."
+      <MarketingSEO
+        title="Pricing | TopEdge ,  WhatsApp growth OS for Shopify India"
+        description="DIY and DFY pricing for Indian Shopify brands using WhatsApp for recovery, campaigns, inbox, and automation. Transparent Meta message rates."
+        path="/pricing"
       />
       <MarketingPage>
         <PageHero
           eyebrow="Pricing"
-          title="Plans that pay for themselves from recovered carts"
-          subtitle="Start on Freemium. Move to Growth when WhatsApp drives revenue. DFY if you want us to run Meta and flows for you."
-        >
-          <div className="inline-flex rounded-full border border-violet-200/80 bg-white p-1 shadow-sm">
-            <button
-              type="button"
-              onClick={() => setTab('diy')}
-              className={`marketing-pricing-tab ${tab === 'diy' ? 'marketing-pricing-tab--active' : 'marketing-pricing-tab--inactive'}`}
-            >
-              DIY — self serve
-            </button>
-            <button
-              type="button"
-              onClick={() => setTab('dfy')}
-              className={`marketing-pricing-tab ${tab === 'dfy' ? 'marketing-pricing-tab--active' : 'marketing-pricing-tab--inactive'}`}
-            >
-              DFY — we run it
-            </button>
-          </div>
+          title="Start free. Scale when WhatsApp pays for itself."
+          subtitle="Clear DIY and DFY plans, transparent Meta message rates, and a trial generous enough to validate real merchant workflows."
+        />
 
-          {tab === 'diy' && (
-            <div className="mt-6 flex items-center justify-center gap-3">
-              <span className={`text-sm ${!yearly ? 'font-medium text-[#0c1222]' : 'text-slate-400'}`}>Monthly</span>
-              <button
-                type="button"
-                onClick={() => setYearly((v) => !v)}
-                className={`relative h-7 w-12 rounded-full transition ${yearly ? 'bg-[#7C3AED]' : 'bg-violet-200'}`}
-                aria-label="Toggle yearly billing"
-              >
-                <span
-                  className={`absolute top-1 h-5 w-5 rounded-full bg-white shadow transition ${yearly ? 'left-6' : 'left-1'}`}
-                />
-              </button>
-              <span className={`text-sm ${yearly ? 'font-medium text-[#0c1222]' : 'text-slate-400'}`}>
-                Yearly <StatusBadge tone="emerald">−20%</StatusBadge>
+        <Section className="!pt-0" wash="soft">
+          <MarketingCard className="mx-auto max-w-3xl !p-6 text-center !bg-white/90">
+            <p className="text-sm text-slate-500">
+              Free trial includes{' '}
+              <span className="font-medium text-[#0c1222]">{TRIAL_PLAN.days} days</span>,{' '}
+              <span className="font-medium text-[#0c1222]">{TRIAL_PLAN.contacts} contacts</span>, and{' '}
+              <span className="font-medium text-[#0c1222]">
+                {TRIAL_PLAN.messages.toLocaleString('en-IN')} messages
               </span>
+              . No credit card required.
+            </p>
+          </MarketingCard>
+        </Section>
+
+        <PlanSection line="diy" />
+        <PlanSection line="dfy" />
+
+        <Section id="roi-calculator" wash="soft" className="!py-16">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="mkt-eyebrow">Quick ROI check</p>
+            <h2 className="mkt-display mt-3 text-3xl font-medium text-[#0c1222]">
+              If you recover just a few carts a week, WhatsApp pays for itself
+            </h2>
+            <p className="mt-4 text-slate-500 leading-relaxed">
+              Example: 40 abandoned carts/week · 10% recovery · ₹2,500 AOV → roughly{' '}
+              <span className="mkt-kpi font-medium text-[#7C3AED]">₹40,000/week</span> recovered
+              revenue ,  before counting campaigns and inbox efficiency. Meta utility messages stay
+              near ₹0.13; marketing near ₹0.88. Your plan fee is the software layer on top.
+            </p>
+            <div className="mt-8 grid gap-4 sm:grid-cols-3 text-left">
+              {[
+                { l: 'Trial', v: `${TRIAL_PLAN.days} days free` },
+                { l: 'DIY from', v: BILLING_PLANS.find((p) => p.line === 'diy')?.priceLabel ?? '₹799' },
+                { l: 'DFY', v: 'Talk to sales' },
+              ].map((x) => (
+                <MarketingCard key={x.l} className="!p-5">
+                  <p className="text-xs uppercase tracking-wide text-slate-400">{x.l}</p>
+                  <p className="mkt-kpi mt-1 text-lg font-medium text-[#0c1222]">{x.v}</p>
+                </MarketingCard>
+              ))}
             </div>
-          )}
-        </PageHero>
-
-        <section className="pb-16 md:pb-20">
-          <div className="marketing-container grid gap-6 md:grid-cols-3">
-            {plans.map((plan) => (
-              <MarketingCard
-                key={plan.id}
-                className={`marketing-premium-card relative flex flex-col ${
-                  plan.popular ? 'marketing-plan-popular' : ''
-                }`}
-              >
-                {plan.popular && (
-                  <span className="absolute -top-3 left-6 rounded-full bg-gradient-to-r from-[#7C3AED] to-[#6d28d9] px-3 py-1 text-[10px] font-medium uppercase tracking-wider text-white shadow-md">
-                    {tab === 'diy' ? 'Most chosen' : 'Recommended'}
-                  </span>
-                )}
-                <h3 className="text-lg font-medium text-[#0c1222]">{plan.name}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate-500">{plan.tagline}</p>
-                <p className="mt-6 text-4xl tracking-tight text-[#0c1222]">
-                  {formatInr(price(plan.priceMonthly))}
-                  <span className="text-sm font-normal text-slate-400">/mo</span>
-                </p>
-                {'priceWas' in plan && typeof plan.priceWas === 'number' && (
-                  <p className="text-xs text-slate-400 line-through">was {formatInr(plan.priceWas)}/mo</p>
-                )}
-                {'contacts' in plan && typeof plan.contacts === 'string' && (
-                  <p className="mt-1 text-xs text-slate-500">{plan.contacts} contacts</p>
-                )}
-                <ul className="mt-6 flex-1 space-y-2.5 border-t border-violet-100/80 pt-6">
-                  {plan.features.map((f) => (
-                    <li key={f} className="flex gap-2.5 text-sm text-slate-600">
-                      <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#7C3AED]" strokeWidth={2.5} />
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-                <div className="mt-8">
-                  <PrimaryButton to={tab === 'dfy' ? '/contact' : '/signup'} className="w-full justify-center">
-                    {plan.cta}
-                  </PrimaryButton>
-                </div>
-              </MarketingCard>
-            ))}
           </div>
-
-          <p className="mx-auto mt-8 max-w-xl px-4 text-center text-xs text-slate-400">
-            All plans include native WhatsApp Meta API · Early Bird on Growth & Scale ·{' '}
-            <Link to="/roi" className="font-medium text-[#7C3AED] hover:underline">
-              Estimate your ROI
-            </Link>
-          </p>
-        </section>
-
-        {tab === 'diy' && (
-          <Section subtle className="!py-16">
-            <SectionHeading
-              eyebrow="Compare"
-              title="What unlocks at each tier"
-              subtitle="Freemium proves the channel. Growth runs recovery and campaigns. Scale adds API and dedicated support."
-              center
-            />
-            <Reveal>
-              <div className="marketing-table-scroll overflow-hidden rounded-2xl border border-violet-200/60 bg-white shadow-sm">
-                <table className="w-full text-left text-sm">
-                  <thead>
-                    <tr className="border-b border-violet-100 bg-violet-50/50">
-                      <th className="px-5 py-4 font-medium text-slate-500">Feature</th>
-                      <th className="px-5 py-4 font-medium text-slate-600">Freemium</th>
-                      <th className="px-5 py-4 font-medium text-[#7C3AED]">Growth</th>
-                      <th className="px-5 py-4 font-medium text-slate-600">Scale</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-violet-50">
-                    {diyComparisonRows.map((row) => (
-                      <tr key={row.feature} className="transition-colors hover:bg-violet-50/30">
-                        <td className="px-5 py-3.5 font-medium text-[#0c1222]">{row.feature}</td>
-                        <td className="px-5 py-3.5 text-slate-500">{row.freemium}</td>
-                        <td className="px-5 py-3.5 font-medium text-slate-700">{row.growth}</td>
-                        <td className="px-5 py-3.5 text-slate-500">{row.scale}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </Reveal>
-          </Section>
-        )}
-
-        <Section>
-          <SectionHeading
-            eyebrow="ROI"
-            title="See if Growth pays for itself"
-            subtitle="Most brands on 400+ monthly orders recover the subscription from one cart flow."
-            center
-          />
-          <RoiCalculator compact />
         </Section>
 
         <Section subtle>
-          <SectionHeading title="Pricing questions" center />
-          <FaqAccordion items={pricingFaqs} />
+          <p className="mb-6 text-center mkt-eyebrow">Meta message rates (pass-through)</p>
+          <div className="grid gap-6 lg:grid-cols-3">
+            {META_MESSAGE_RATES.map((rate) => (
+              <MarketingCard key={rate.category} className="!p-6">
+                <p className="text-sm font-medium text-slate-500">{rate.category}</p>
+                <p className="mkt-kpi mt-2 text-2xl font-medium text-[#0c1222]">{rate.rate}</p>
+                <p className="mt-2 text-sm text-slate-500">{rate.note}</p>
+              </MarketingCard>
+            ))}
+          </div>
+          <p className="mt-5 text-center text-xs text-slate-400">
+            Rates are indicative Meta India categories ,  TopEdge does not mark up Meta fees.
+          </p>
         </Section>
 
         <MarketingCtaBand
-          variant="light"
-          title={tab === 'dfy' ? 'Elite brands get a dedicated growth pod' : 'Not sure which plan fits?'}
-          subtitle={
-            tab === 'dfy'
-              ? 'Bespoke flows, Meta ads coordination, and private AI training for high-volume Shopify Plus stores.'
-              : 'Book fifteen minutes — we will map your abandonment rate and recommend DIY vs DFY.'
-          }
-          primaryLabel="Talk to sales"
-          primaryTo="/contact"
-          secondaryLabel="Run ROI calculator"
-          secondaryTo="/roi"
+          title="Need help choosing the right plan?"
+          subtitle="Start on DIY if you want control. Choose DFY if you want templates, flows, and campaigns shipped for you."
+          primaryLabel="Start free"
+          primaryTo="/signup"
+          secondaryLabel="Contact sales"
+          secondaryTo="/contact"
         />
       </MarketingPage>
     </>

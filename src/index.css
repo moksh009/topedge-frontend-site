@@ -36,8 +36,8 @@
     --glow-accent: 175 82 222;
     /* Apple Purple */
 
-    /* Typography */
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    /* Typography — Apple-like system stack (no Outfit) */
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Inter", system-ui, sans-serif;
   }
 
   .dark {
@@ -71,7 +71,8 @@
 
   html,
   body {
-    @apply overflow-x-hidden w-full;
+    /* clip (not hidden) so position:sticky sections still pin to the viewport */
+    @apply overflow-x-clip w-full;
   }
 
   body {

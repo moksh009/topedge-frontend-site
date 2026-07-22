@@ -4,8 +4,6 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Toaster } from 'react-hot-toast';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider } from './contexts/ThemeContext';
-import { AuthProvider } from './contexts/AuthContext';
-import { CommunityCacheProvider } from './contexts/CommunityCacheContext';
 import Navbar from './components/navigation/Navbar';
 import MarketingNavbar from './marketing/components/MarketingNavbar';
 import CommunityNavbar from './components/community/layout/CommunityNavbar';
@@ -13,29 +11,47 @@ import FloatingVoiceChat from './components/FloatingVoiceChat';
 import Footer from './components/Footer';
 import MarketingFooter from './marketing/components/MarketingFooter';
 import { isMarketingRoute } from './marketing/routes';
+import MarketingPageLoader from './marketing/components/MarketingPageLoader';
 import MetaPixel from './components/MetaPixel';
 import Home from './pages/Home';
-import AICaller from './pages/AICaller';
-import AIChatbot from './pages/AIChatbot';
 const About = React.lazy(() => import('./pages/About'));
-const Services = React.lazy(() => import('./pages/Services'));
+const Services = React.lazy(() => import('./marketing/pages/ServicesRedirect'));
 const Contact = React.lazy(() => import('./pages/Contact'));
-const Booking = React.lazy(() => import('./pages/Booking'));
+const Booking = React.lazy(() => import('./marketing/pages/BookingRedirect'));
 const Pricing = React.lazy(() => import('./marketing/pages/PricingPage'));
 const FeaturesPage = React.lazy(() => import('./marketing/pages/FeaturesPage'));
 const FeatureDetailPage = React.lazy(() => import('./marketing/pages/FeatureDetailPage'));
 const IntegrationsPage = React.lazy(() => import('./marketing/pages/IntegrationsPage'));
 const CustomersPage = React.lazy(() => import('./marketing/pages/CustomersPage'));
+const SolutionPage = React.lazy(() => import('./marketing/pages/SolutionPage'));
+const AgencyPage = React.lazy(() => import('./marketing/pages/AgencyPage'));
+const SecurityPage = React.lazy(() => import('./marketing/pages/SecurityPage'));
 const SignupRedirect = React.lazy(() => import('./marketing/pages/SignupRedirect'));
+const LoginRedirect = React.lazy(() => import('./marketing/pages/LoginRedirect'));
+const DocsRedirect = React.lazy(() => import('./marketing/pages/DocsRedirect'));
 const Blog = React.lazy(() => import('./pages/Blog'));
 const BlogPost = React.lazy(() => import('./pages/BlogPost'));
 const RoiPage = React.lazy(() => import('./marketing/pages/RoiPage'));
+const TermsPage = React.lazy(() => import('./marketing/pages/TermsPage'));
+const CompareIndexPage = React.lazy(() => import('./marketing/pages/CompareIndexPage'));
+const ComparePage = React.lazy(() => import('./marketing/pages/ComparePage'));
+const NotFoundPage = React.lazy(() => import('./marketing/pages/NotFoundPage'));
+const DevShowcasePage = import.meta.env.DEV
+  ? React.lazy(() => import('./marketing/pages/DevShowcasePage'))
+  : null;
+const AiCallerRedirect = React.lazy(() =>
+  import('./marketing/pages/legacyRedirects').then((m) => ({ default: m.AiCallerRedirect }))
+);
+const AiChatbotRedirect = React.lazy(() =>
+  import('./marketing/pages/legacyRedirects').then((m) => ({ default: m.AiChatbotRedirect }))
+);
 const PrivacyPolicy = React.lazy(() => import('./pages/PrivacyPolicy'));
 const Ecommerce = React.lazy(() => import('./pages/Ecommerce'));
 const MaintenanceInquiries = React.lazy(() => import('./components/admin/MaintenanceInquiries').then(module => ({ default: module.MaintenanceInquiries })));
-import { ProtectedRoute } from './components/admin/ProtectedRoute';
-import Testimonials from './pages/Testimonials';
-import './i18n';
+const ProtectedRoute = React.lazy(() =>
+  import('./components/admin/ProtectedRoute').then((m) => ({ default: m.ProtectedRoute }))
+);
+const Testimonials = React.lazy(() => import('./pages/Testimonials'));
 
 // Community Pages
 const CommunityHome = React.lazy(() => import('./pages/community/home'));
@@ -56,17 +72,23 @@ const CreatorDashboard = React.lazy(() => import('./pages/community/CreatorDashb
 const RequestBoard = React.lazy(() => import('./pages/community/RequestBoard'));
 const ApproveAccess = React.lazy(() => import('./pages/community/ApproveAccess'));
 
-// ScrollToTop component to handle smooth scrolling
+// ScrollToTop — scroll to top on route change, or to hash target when present
 const ScrollToTop = () => {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
 
   useEffect(() => {
-    // Smooth scroll to top when route changes
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  }, [pathname]);
+    if (hash) {
+      const id = hash.replace('#', '');
+      const el = document.getElementById(id);
+      if (el) {
+        requestAnimationFrame(() => {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+        return;
+      }
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [pathname, hash]);
 
   return null;
 };
@@ -98,27 +120,26 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       }`}
     >
       <Helmet>
-        <title>{pageTitle}</title>
-        <meta name="description" content={pageDescription} />
-        <meta name="keywords" content="AI voice agents, chatbots, customer service automation, TopEdge AI, business automation, AI community, automation workflows" />
-
-        {/* Open Graph / Facebook */}
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://topedgeai.com/" />
-        <meta property="og:title" content={pageTitle} />
-        <meta property="og:description" content={pageDescription} />
-        <meta property="og:image" content="https://topedgeai.com/og-image.jpg" />
-
-        {/* Twitter */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content="https://topedgeai.com/" />
-        <meta name="twitter:title" content={pageTitle} />
-        <meta name="twitter:description" content={pageDescription} />
-        <meta name="twitter:image" content="https://topedgeai.com/og-image.jpg" />
-
-        {/* Additional SEO tags */}
-        <link rel="canonical" href="https://topedgeai.com" />
-        <meta name="robots" content="index, follow" />
+        {!marketing && (
+          <>
+            <title>{pageTitle}</title>
+            <meta name="description" content={pageDescription} />
+            <meta name="keywords" content="AI voice agents, chatbots, customer service automation, TopEdge AI, business automation, AI community, automation workflows" />
+            <meta property="og:type" content="website" />
+            <meta property="og:url" content="https://topedgeai.com/" />
+            <meta property="og:title" content={pageTitle} />
+            <meta property="og:description" content={pageDescription} />
+            <meta property="og:image" content="https://topedgeai.com/og/og-default.svg" />
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:url" content="https://topedgeai.com/" />
+            <meta name="twitter:title" content={pageTitle} />
+            <meta name="twitter:description" content={pageDescription} />
+            <meta name="twitter:image" content="https://topedgeai.com/og/og-default.svg" />
+            <link rel="canonical" href="https://topedgeai.com" />
+            <meta name="robots" content="index, follow" />
+          </>
+        )}
+        <meta name="theme-color" content="#7C3AED" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Helmet>
 
@@ -135,10 +156,10 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           {children}
         </>
       ) : (
-        <main className="flex-grow">
+        <div className="flex-grow" role="main">
           <Toaster />
           {children}
-        </main>
+        </div>
       )}
 
       {!isCommunityRoute && location.pathname !== '/ecommerce' && (marketing ? <MarketingFooter /> : <Footer />)}
@@ -186,25 +207,49 @@ class AppErrorBoundary extends React.Component<{ children: React.ReactNode }, { 
   }
 }
 
+/** Lazy-load Firebase/auth only for community & admin routes */
+const LazyAuthShell = React.lazy(() =>
+  Promise.all([import('./contexts/AuthContext'), import('./contexts/CommunityCacheContext')]).then(
+    ([auth, cache]) => ({
+      default: ({ children }: { children: React.ReactNode }) => (
+        <auth.AuthProvider>
+          <cache.CommunityCacheProvider>{children}</cache.CommunityCacheProvider>
+        </auth.AuthProvider>
+      ),
+    })
+  )
+);
+
+/** Skip Firebase/auth bundle on marketing routes — faster first paint for GTM pages */
+function RouteProviders({ children }: { children: React.ReactNode }) {
+  const { pathname } = useLocation();
+  if (isMarketingRoute(pathname)) {
+    return <>{children}</>;
+  }
+  return (
+    <React.Suspense fallback={<MarketingPageLoader />}>
+      <LazyAuthShell>{children}</LazyAuthShell>
+    </React.Suspense>
+  );
+}
+
 const App: React.FC = () => {
   return (
     <HelmetProvider>
       <ThemeProvider>
-        <AuthProvider>
-          <CommunityCacheProvider>
-            <AppErrorBoundary>
-              <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
-                <ScrollToTop />
-                <MetaPixel />
-                <Layout>
-                  <React.Suspense fallback={<div className="min-h-screen flex items-center justify-center text-lg">Loading...</div>}>
-                    <AnimatedRoutes />
-                  </React.Suspense>
-                </Layout>
-              </Router>
-            </AppErrorBoundary>
-          </CommunityCacheProvider>
-        </AuthProvider>
+        <AppErrorBoundary>
+          <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+            <RouteProviders>
+              <ScrollToTop />
+              <MetaPixel />
+              <Layout>
+                <React.Suspense fallback={<MarketingPageLoader />}>
+                  <AnimatedRoutes />
+                </React.Suspense>
+              </Layout>
+            </RouteProviders>
+          </Router>
+        </AppErrorBoundary>
       </ThemeProvider>
     </HelmetProvider>
   );
@@ -232,16 +277,25 @@ const AnimatedRoutes = () => {
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/features" element={<FeaturesPage />} />
           <Route path="/features/:slug" element={<FeatureDetailPage />} />
+          {DevShowcasePage && <Route path="/dev/showcase" element={<DevShowcasePage />} />}
           <Route path="/integrations" element={<IntegrationsPage />} />
           <Route path="/customers" element={<CustomersPage />} />
+          <Route path="/solutions/:vertical" element={<SolutionPage />} />
+          <Route path="/agency" element={<AgencyPage />} />
+          <Route path="/security" element={<SecurityPage />} />
           <Route path="/signup" element={<SignupRedirect />} />
+          <Route path="/login" element={<LoginRedirect />} />
+          <Route path="/docs" element={<DocsRedirect />} />
           <Route path="/roi" element={<RoiPage />} />
-          <Route path="/ai-caller" element={<AICaller />} />
-          <Route path="/ai-chatbot" element={<AIChatbot />} />
+          <Route path="/ai-caller" element={<AiCallerRedirect />} />
+          <Route path="/ai-chatbot" element={<AiChatbotRedirect />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/ecommerce" element={<Ecommerce />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms" element={<TermsPage />} />
+          <Route path="/compare" element={<CompareIndexPage />} />
+          <Route path="/compare/:competitor" element={<ComparePage />} />
           <Route path="/admin/login" element={<CommunityLogin />} />
           <Route
             path="/admin/maintenance-inquiries"
@@ -278,6 +332,7 @@ const AnimatedRoutes = () => {
             }
           />
           <Route path="/community/requests" element={<RequestBoard />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </motion.div>
     </AnimatePresence>

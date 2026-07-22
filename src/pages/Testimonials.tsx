@@ -1,27 +1,33 @@
-import React from 'react';
-import TestimonialsHero from '../components/sections/testimonials/TestimonialsHero';
-import TestimonialsGrid from '../components/sections/testimonials/TestimonialsGrid';
-import { CTASection } from '../components/sections/CTASection';
-import SEO from '../components/SEO';
+import MarketingSEO from '../marketing/components/MarketingSEO';
+import MarketingPage from '../marketing/components/MarketingPage';
+import MarketingCtaBand from '../marketing/components/MarketingCtaBand';
+import { PageHero } from '../marketing/components/ui';
+import HomeTestimonials from '../marketing/components/home/HomeTestimonials';
 
-const Testimonials = () => {
+export default function Testimonials() {
   return (
-    <div className="min-h-screen bg-[#FAFAFC]">
-      <SEO
-        title="Testimonials | TopEdge AI"
-        description="See what our clients say about our AI voice and chatbot solutions. Real results, real impact."
+    <>
+      <MarketingSEO
+        title="Testimonials | TopEdge — WhatsApp for Shopify India"
+        description="What Indian D2C brands say about TopEdge — cart recovery, Live Chat, and Meta template workflows."
+        path="/testimonials"
       />
-
-      {/* Hero Section */}
-      <TestimonialsHero />
-
-      {/* Grid Section */}
-      <TestimonialsGrid />
-
-      {/* CTA Section */}
-      <CTASection variant="light" />
-    </div>
+      <MarketingPage>
+        <PageHero
+          eyebrow="Social proof"
+          title="Teams on Shopify India trust TopEdge"
+          subtitle="Recovery, speed, and control — from D2C brands running WhatsApp on live store data. Illustrative outcomes from merchant conversations."
+        />
+        <HomeTestimonials hideHeader />
+        <MarketingCtaBand
+          title="See what TopEdge can do on your store"
+          subtitle="Connect Shopify, approve templates, and publish your first flow — free for 14 days."
+          primaryLabel="Start free"
+          primaryTo="/signup"
+          secondaryLabel="View case studies"
+          secondaryTo="/customers"
+        />
+      </MarketingPage>
+    </>
   );
-};
-
-export default Testimonials;
+}

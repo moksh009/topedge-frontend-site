@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
 import './marketing/styles/marketing.css'
-import { Toaster } from 'react-hot-toast'
 
 // Initialize theme
 const initializeTheme = () => {
@@ -27,7 +26,6 @@ initializeTheme()
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <Toaster position="top-center" />
     <App />
   </React.StrictMode>,
 )

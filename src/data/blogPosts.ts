@@ -10,7 +10,7 @@ export const blogPosts: BlogPost[] = [
     readTime: "12 min read",
     category: "AI Chatbots & Callers",
     author: "TopEdge AI",
-    image: "/blog/ai-chatbots-social-2025.jpg",
+    image: "/blog-media/ai-chatbots-social-2025.jpg",
     imageAlt: "AI callers and chatbots for business growth in 2025",
     keywords: ["AI callers", "chatbots", "business growth", "2025", "WhatsApp automation", "Instagram chatbot", "conversational AI", "TopEdge AI"],
     content: `<h2>The Ultimate Guide to AI Callers and Social Chatbots for Business Growth in 2025</h2>
@@ -31,7 +31,7 @@ export const blogPosts: BlogPost[] = [
     readTime: "8 min read",
     category: "AI Voice Agents",
     author: "TopEdge AI",
-    image: "/blog/ai-voice-agents-2025.jpg",
+    image: "/blog-media/ai-voice-agents-2025.jpg",
     imageAlt: "AI voice agents for customer experience in 2025",
     keywords: ["AI voice agents", "customer experience", "2025", "TopEdge AI", "AI support"],
     content: `<h2>AI Voice Agents: The Leading Customer Experience Trend for 2025</h2>
@@ -46,7 +46,7 @@ export const blogPosts: BlogPost[] = [
     readTime: "10 min read",
     category: "AI SEO",
     author: "TopEdge AI",
-    image: "/blog/ai-future.webp",
+    image: "/blog-media/ai-future.webp",
     imageAlt: "AI-powered SEO guide for 2025",
     keywords: ["AI SEO", "AI Overviews", "search traffic", "2025", "TopEdge AI", "SEO automation"],
     content: `<h2>The Ultimate Guide to AI-Powered SEO: Outrank Your Competition in 2025</h2>
@@ -61,7 +61,7 @@ export const blogPosts: BlogPost[] = [
     readTime: "7 min read",
     category: "Business Automation",
     author: "TopEdge AI",
-    image: "/blog/business-automation-roi-2025.jpg",
+    image: "/blog-media/business-automation-roi-2025.jpg",
     imageAlt: "Business automation ROI success stories 2025",
     keywords: ["business automation", "ROI", "2025", "TopEdge AI", "automation success"],
     content: `<h2>Maximizing Business ROI with Automation: Real Success Stories from TopEdge AI</h2>
@@ -76,7 +76,7 @@ export const blogPosts: BlogPost[] = [
     readTime: "9 min read",
     category: "AI Search",
     author: "TopEdge AI",
-    image: "/blog/llms-eating-search-2025.jpg",
+    image: "/blog-media/llms-eating-search-2025.jpg",
     imageAlt: "LLMs and AI search trends 2025",
     keywords: ["LLMs", "AI search", "SEO", "2025", "TopEdge AI", "search trends"],
     content: `<h2>LLMs Are Eating Search: How to Keep Your Brand Visible in the Age of AI</h2>
@@ -167,7 +167,7 @@ export const blogPosts: BlogPost[] = [
     readTime: "5 min",
     category: "AI Technology",
     author: "TopEdge AI",
-    image: "/blog/ai-customer-service.jpg",
+    image: "/blog-media/ai-customer-service.jpg",
     imageAlt: "AI agent assisting a customer in a modern digital environment for enhanced service",
     keywords: ["AI agents", "customer service", "automation", "business technology", "artificial intelligence", "AI customer support", "AI transformation"],
     content: `<p>Discover more at <a href='/' title='TopEdge AI Home'>TopEdge AI</a>, <a href='/blog' title='TopEdge AI Blog'>TopEdge AI Blog</a>, and <a href='/services' title='TopEdge AI Services'>TopEdge AI Services</a>.</p><p>Learn more about <a href='/' title='TopEdge AI Home'>TopEdge AI</a>, <a href='/blog' title='TopEdge AI Blog'>TopEdge AI Blog</a>, and <a href='/services' title='TopEdge AI Services'>TopEdge AI Services</a>.</p><h2>AI Agents: The Next Frontier in Customer Service</h2><p>Artificial intelligence is transforming the way businesses interact with customers. By deploying advanced <strong>AI agents</strong>, companies can provide 24/7 support, instant responses, and highly personalized experiences that delight customers and drive loyalty.</p><p>For more, visit <a href='/' title='TopEdge AI Home'>TopEdge AI</a>, <a href='/blog' title='TopEdge AI Blog'>TopEdge AI Blog</a>, or <a href='/services' title='TopEdge AI Services'>TopEdge AI Services</a>.</p>
@@ -196,7 +196,7 @@ export const blogPosts: BlogPost[] = [
     readTime: "7 min",
     category: "Development",
     author: "TopEdge AI",
-    image: "/blog/enterprise-chatbots.jpg",
+    image: "/blog-media/enterprise-chatbots.jpg",
     imageAlt: "Enterprise chatbot architecture diagram with AI and cloud integration",
     keywords: ["chatbots", "enterprise", "scalability", "development", "AI solutions", "enterprise chatbot", "chatbot best practices"],
     content: `<p>Discover more at <a href='/' title='TopEdge AI Home'>TopEdge AI</a>, <a href='/blog' title='TopEdge AI Blog'>TopEdge AI Blog</a>, and <a href='/services' title='TopEdge AI Services'>TopEdge AI Services</a>.</p>
@@ -227,7 +227,7 @@ export const blogPosts: BlogPost[] = [
     readTime: "6 min",
     category: "Case Studies",
     author: "TopEdge AI",
-    image: "/blog/ai-success-stories.jpg",
+    image: "/blog-media/ai-success-stories.jpg",
     imageAlt: "Business team celebrating AI integration success with digital dashboard",
     keywords: ["AI integration", "success stories", "case studies", "business impact", "digital transformation", "AI ROI", "AI for business"],
     content: `<p>For more, visit <a href='/' title='TopEdge AI Home'>TopEdge AI</a>, <a href='/blog' title='TopEdge AI Blog'>TopEdge AI Blog</a>, or <a href='/services' title='TopEdge AI Services'>TopEdge AI Services</a>.</p>

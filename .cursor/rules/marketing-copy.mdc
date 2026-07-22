@@ -1,0 +1,39 @@
+---
+description: Marketing copy rules for TopEdge site — no filler eyebrows, em dashes, or trust-pill spam
+globs: topedge-frontend-site-update-pricing/src/marketing/**/*.{tsx,ts,css,md}
+alwaysApply: false
+---
+
+# TopEdge marketing copy (non-negotiable)
+
+When writing or editing marketing pages, heroes, feature blocks, CTAs, or SEO titles:
+
+## Never use
+
+- Em dashes (`—`). Use a comma, period, or rewrite the sentence.
+- Filler eyebrows like `WhatsApp growth OS · Shopify India`, `CART RECOVERY` all-caps labels that restate the H1, or `Built for Indian D2C operators`.
+- Duplicate brand in the hero when the logo is already in the navbar (no second `TopEdge` wordmark under the logo).
+- Trust-pill rows under CTAs (`No credit card`, `You approve every template`, `Meta utility ~₹0.13/msg`, `Native OAuth sync`, `~15 minutes to live`, etc.). Put facts in body copy or pricing only when needed.
+- Sample / illustrative toast spam on the homepage unless the user asks.
+- Long stacked bullet lists in the first viewport of a homepage feature block (Instantly pattern: headline + one short sentence + CTA + visual).
+
+## Always do
+
+- Crisp, short sentences. Benefit first. No hype adjectives.
+- Wider subheads (generous `max-width`) so copy sits on fewer lines and less height.
+- Homepage: only the few stories that matter. Deep hubs live on `/features/*`.
+- Instantly-style feature blocks: centered title + short body + CTA, then a unique scene (not the same card layout for every section).
+- Scene UI may use middots (`·`) for compact product labels inside mocks. Marketing headlines and body copy should avoid middot slogan stacks.
+
+## Hero template
+
+```
+H1: one clear line (no em dash)
+Sub: 1–2 short sentences, max-width ~42rem
+CTAs: primary + optional secondary
+Visual: FeatureScene
+```
+
+## If unsure
+
+Cut the line. Prefer silence over filler.

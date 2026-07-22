@@ -11,7 +11,8 @@
     "build:static": "vite build && node build-static.js",
     "deploy": "npm run build:static && firebase deploy --only hosting",
     "lint": "eslint . --fix",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "capture-showcases": "node scripts/capture-showcases.mjs"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.17",
@@ -65,6 +66,7 @@
     "eslint": "^8.45.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
+    "playwright": "^1.49.1",
     "rollup-plugin-visualizer": "^5.14.0",
     "typescript": "^5.0.2",
     "typescript-eslint": "^8.53.0"

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import SEO from '../components/SEO';
+import MarketingSEO from '../marketing/components/MarketingSEO';
 import { PageHero, Section, SectionHeading, MarketingCard, PrimaryButton, Eyebrow } from '../marketing/components/ui';
 import { Stagger, StaggerItem } from '../marketing/components/motion';
 import MarketingPage from '../marketing/components/MarketingPage';
@@ -29,10 +29,10 @@ const stats = [
 export default function About() {
   return (
     <>
-      <SEO
+      <MarketingSEO
         title="About | TopEdge — WhatsApp growth for Shopify India"
         description="Why we built TopEdge: one workspace for Meta templates, automations, AI, and human handoff on WhatsApp."
-        type="website"
+        path="/about"
       />
       <MarketingPage>
         <PageHero
@@ -86,7 +86,7 @@ export default function About() {
               <PrimaryButton to="/signup">Create free account</PrimaryButton>
               <Link
                 to="/contact"
-                className="inline-flex h-11 items-center rounded-full border border-violet-200 px-6 text-sm text-slate-700 hover:border-violet-300 hover:text-[#7C3AED]"
+                className="inline-flex h-11 items-center rounded-full border border-marketing-border px-6 text-sm text-slate-700 hover:border-violet-300 hover:text-[#7C3AED]"
               >
                 Contact sales
               </Link>

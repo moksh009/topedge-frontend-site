@@ -1,6 +1,8 @@
+import { FormEvent, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Mail, MessageCircle, Clock } from 'lucide-react';
-import SEO from '../components/SEO';
-import { PageHero, Section, MarketingCard, PrimaryButton } from '../marketing/components/ui';
+import MarketingSEO from '../marketing/components/MarketingSEO';
+import { PageHero, Section, MarketingCard } from '../marketing/components/ui';
 import { Reveal } from '../marketing/components/motion';
 import MarketingPage from '../marketing/components/MarketingPage';
 
@@ -14,10 +16,11 @@ const channels = [
   },
   {
     icon: MessageCircle,
-    title: 'WhatsApp',
-    desc: 'Fastest for existing customers on Growth or Scale.',
-    action: 'Chat with us',
+    title: 'New to TopEdge?',
+    desc: 'Start free — connect Shopify and publish your first flow in ~15 minutes.',
+    action: 'Create free account',
     href: '/signup',
+    internal: true,
   },
   {
     icon: Clock,
@@ -29,12 +32,29 @@ const channels = [
 ];
 
 export default function Contact() {
+  const [sent, setSent] = useState(false);
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const fd = new FormData(e.currentTarget);
+    const name = String(fd.get('name') ?? '');
+    const email = String(fd.get('email') ?? '');
+    const store = String(fd.get('store') ?? '');
+    const message = String(fd.get('message') ?? '');
+    const subject = encodeURIComponent(`TopEdge inquiry — ${name || 'Shopify merchant'}`);
+    const body = encodeURIComponent(
+      `Name: ${name}\nEmail: ${email}\nShopify store: ${store}\n\nWhat to automate:\n${message}`
+    );
+    window.location.href = `mailto:hello@topedgeai.com?subject=${subject}&body=${body}`;
+    setSent(true);
+  };
+
   return (
     <>
-      <SEO
+      <MarketingSEO
         title="Contact | TopEdge — WhatsApp automation for Shopify"
         description="Talk to TopEdge about WhatsApp automations, Meta templates, or fully managed setup for your Shopify store."
-        type="website"
+        path="/contact"
       />
       <MarketingPage>
         <PageHero
@@ -47,9 +67,18 @@ export default function Contact() {
           <div className="grid gap-10 lg:grid-cols-5">
             <Reveal className="lg:col-span-3">
               <form
-                className="space-y-4 rounded-2xl border border-violet-200/60 bg-white p-6 shadow-sm md:p-8"
-                onSubmit={(e) => e.preventDefault()}
+                className="space-y-4 rounded-2xl border border-marketing-border bg-white p-6 shadow-sm md:p-8"
+                onSubmit={handleSubmit}
               >
+                {sent ? (
+                  <div className="rounded-xl border border-marketing-border bg-violet-50/50 p-5 text-sm text-slate-600">
+                    Opening your email client… If it did not open, write to{' '}
+                    <a href="mailto:hello@topedgeai.com" className="font-medium text-[#7C3AED] hover:underline">
+                      hello@topedgeai.com
+                    </a>
+                    .
+                  </div>
+                ) : null}
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div>
                     <label htmlFor="name" className="mb-1.5 block text-xs font-medium text-slate-600">
@@ -57,7 +86,9 @@ export default function Contact() {
                     </label>
                     <input
                       id="name"
-                      className="w-full rounded-xl border border-violet-200/80 px-4 py-3 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-100"
+                      name="name"
+                      required
+                      className="w-full rounded-xl border border-marketing-border px-4 py-3 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-100"
                       placeholder="Your name"
                     />
                   </div>
@@ -67,8 +98,10 @@ export default function Contact() {
                     </label>
                     <input
                       id="email"
+                      name="email"
                       type="email"
-                      className="w-full rounded-xl border border-violet-200/80 px-4 py-3 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-100"
+                      required
+                      className="w-full rounded-xl border border-marketing-border px-4 py-3 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-100"
                       placeholder="you@brand.com"
                     />
                   </div>
@@ -79,7 +112,8 @@ export default function Contact() {
                   </label>
                   <input
                     id="store"
-                    className="w-full rounded-xl border border-violet-200/80 px-4 py-3 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-100"
+                    name="store"
+                    className="w-full rounded-xl border border-marketing-border px-4 py-3 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-100"
                     placeholder="yourbrand.myshopify.com"
                   />
                 </div>
@@ -89,8 +123,10 @@ export default function Contact() {
                   </label>
                   <textarea
                     id="message"
+                    name="message"
+                    required
                     rows={5}
-                    className="w-full rounded-xl border border-violet-200/80 px-4 py-3 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-100"
+                    className="w-full rounded-xl border border-marketing-border px-4 py-3 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-100"
                     placeholder="e.g. abandoned cart on COD, order updates, campaign to repeat buyers…"
                   />
                 </div>
@@ -113,16 +149,28 @@ export default function Contact() {
                   return (
                     <MarketingCard key={c.title} className="!p-5">
                       <div className="flex gap-4">
-                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-violet-50 text-[#7C3AED]">
+                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-marketing-border bg-violet-50/80 text-[#7C3AED]">
                           <Icon className="h-5 w-5" />
                         </span>
                         <div>
                           <h3 className="font-medium text-[#0c1222]">{c.title}</h3>
                           <p className="mt-1 text-sm text-slate-500">{c.desc}</p>
                           {c.href ? (
-                            <a href={c.href} className="mt-2 inline-block text-sm font-medium text-[#7C3AED] hover:underline">
-                              {c.action}
-                            </a>
+                            'internal' in c && c.internal ? (
+                              <Link
+                                to={c.href}
+                                className="mt-2 inline-block text-sm font-medium text-[#7C3AED] hover:underline"
+                              >
+                                {c.action}
+                              </Link>
+                            ) : (
+                              <a
+                                href={c.href}
+                                className="mt-2 inline-block text-sm font-medium text-[#7C3AED] hover:underline"
+                              >
+                                {c.action}
+                              </a>
+                            )
                           ) : (
                             <p className="mt-2 text-sm font-medium text-slate-700">{c.action}</p>
                           )}

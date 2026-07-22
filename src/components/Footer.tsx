@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import '../i18n';
 import { motion } from 'framer-motion';
 import { 
   Instagram, Youtube, Twitter, Mail, MapPin, 
