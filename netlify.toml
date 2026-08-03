@@ -32,6 +32,24 @@
   to = "/privacy"
   status = 301
 
+# Static Terms of Service for crawlers (full HTML, no SPA shell)
+[[redirects]]
+  from = "/terms"
+  to = "/terms.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/terms/"
+  to = "/terms.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/terms-of-service"
+  to = "/terms"
+  status = 301
+
 [[redirects]]
   from = "/community/*"
   to = "/community.html"

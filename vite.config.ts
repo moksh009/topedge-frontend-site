@@ -3,35 +3,42 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 import fs from 'fs';
 
-/** Serve static privacy.html at /privacy (mirrors Netlify force rewrite for Meta crawlers). */
-function privacyStaticHtml(): Plugin {
-  const sendPrivacy = (
+/** Serve static legal HTML at /privacy and /terms (mirrors Netlify force rewrites). */
+function legalStaticHtml(): Plugin {
+  const sendLegal = (
     req: { url?: string },
     res: { setHeader: (k: string, v: string) => void; end: (b: string | Buffer) => void },
     next: () => void,
   ) => {
     const url = req.url?.split('?')[0] ?? '';
-    if (url !== '/privacy' && url !== '/privacy/') return next();
-    const file = path.resolve(__dirname, 'public/privacy.html');
+    const map: Record<string, string> = {
+      '/privacy': 'privacy.html',
+      '/privacy/': 'privacy.html',
+      '/terms': 'terms.html',
+      '/terms/': 'terms.html',
+    };
+    const fileName = map[url];
+    if (!fileName) return next();
+    const file = path.resolve(__dirname, 'public', fileName);
     if (!fs.existsSync(file)) return next();
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
     res.end(fs.readFileSync(file));
   };
 
   return {
-    name: 'privacy-static-html',
+    name: 'legal-static-html',
     configureServer(server) {
-      server.middlewares.use(sendPrivacy);
+      server.middlewares.use(sendLegal);
     },
     configurePreviewServer(server) {
-      server.middlewares.use(sendPrivacy);
+      server.middlewares.use(sendLegal);
     },
   };
 }
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-  const plugins = [react(), privacyStaticHtml()];
+  const plugins = [react(), legalStaticHtml()];
 
   // Only add visualizer in development mode
   if (mode === 'development') {

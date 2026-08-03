@@ -100,7 +100,10 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   const isAuthPage = location.pathname === '/community/login' || location.pathname === '/community/signup';
   const marketing = isMarketingRoute(location.pathname);
   const isLegalRoute =
-    location.pathname === '/privacy' || location.pathname === '/privacy-policy';
+    location.pathname === '/privacy' ||
+    location.pathname === '/privacy-policy' ||
+    location.pathname === '/terms' ||
+    location.pathname === '/terms-of-service';
 
   // Dynamic Metadata based on route
   const pageTitle = isCommunityRoute
@@ -297,6 +300,7 @@ const AnimatedRoutes = () => {
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<TermsPage />} />
+          <Route path="/terms-of-service" element={<TermsPage />} />
           <Route path="/compare" element={<CompareIndexPage />} />
           <Route path="/compare/:competitor" element={<ComparePage />} />
           <Route path="/admin/login" element={<CommunityLogin />} />

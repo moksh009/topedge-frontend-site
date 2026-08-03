@@ -14,6 +14,7 @@ const MARKETING_PREFIXES = [
   '/docs',
   '/roi',
   '/terms',
+  '/terms-of-service',
   '/compare',
   '/blog',
   '/privacy',
