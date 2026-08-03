@@ -99,6 +99,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   const isCommunityRoute = location.pathname.startsWith('/community');
   const isAuthPage = location.pathname === '/community/login' || location.pathname === '/community/signup';
   const marketing = isMarketingRoute(location.pathname);
+  const isLegalRoute =
+    location.pathname === '/privacy' || location.pathname === '/privacy-policy';
 
   // Dynamic Metadata based on route
   const pageTitle = isCommunityRoute
@@ -143,7 +145,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Helmet>
 
-      {!isCommunityRoute && location.pathname !== '/ecommerce' && (
+      {!isCommunityRoute && location.pathname !== '/ecommerce' && !isLegalRoute && (
         <motion.div key={marketing ? 'marketing-nav' : 'legacy-nav'}>
           {marketing ? <MarketingNavbar /> : <Navbar />}
         </motion.div>
@@ -162,8 +164,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         </div>
       )}
 
-      {!isCommunityRoute && location.pathname !== '/ecommerce' && (marketing ? <MarketingFooter /> : <Footer />)}
-      {!isCommunityRoute && location.pathname !== '/ecommerce' && !marketing && <FloatingVoiceChat />}
+      {!isCommunityRoute && location.pathname !== '/ecommerce' && !isLegalRoute && (marketing ? <MarketingFooter /> : <Footer />)}
+      {!isCommunityRoute && location.pathname !== '/ecommerce' && !marketing && !isLegalRoute && <FloatingVoiceChat />}
       {isCommunityRoute && !isAuthPage && <Footer />}
     </div>
   );
@@ -292,6 +294,7 @@ const AnimatedRoutes = () => {
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/ecommerce" element={<Ecommerce />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/compare" element={<CompareIndexPage />} />

@@ -2,6 +2,36 @@
   command = "npm run build:netlify"
   publish = "dist"
 
+# Apex preferred: www → non-www (Meta App Settings use https://topedgeai.com/privacy)
+[[redirects]]
+  from = "https://www.topedgeai.com/*"
+  to = "https://topedgeai.com/:splat"
+  status = 301
+  force = true
+
+# Static Privacy Policy for Meta crawlers (full HTML, no SPA shell)
+[[redirects]]
+  from = "/privacy"
+  to = "/privacy.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/privacy/"
+  to = "/privacy.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/privacy-policy"
+  to = "/privacy"
+  status = 301
+
+[[redirects]]
+  from = "/privacy-policy/"
+  to = "/privacy"
+  status = 301
+
 [[redirects]]
   from = "/community/*"
   to = "/community.html"

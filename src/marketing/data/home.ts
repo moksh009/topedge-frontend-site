@@ -184,7 +184,7 @@ export const howItWorks = [
 export const testimonials = [
   {
     quote:
-      'We moved cart recovery from email-only to a 3-message WA sequence. Recovery rate went from 4% to 11% in the first month ,  and we finally see which template actually converts.',
+      'We moved cart recovery from email-only to a 3-message WA sequence. Recovery rate went from 4% to 11% in the first month, and we finally see which template actually converts.',
     name: 'Priya M.',
     role: 'Founder',
     company: 'D2C skincare, Mumbai',
@@ -192,7 +192,7 @@ export const testimonials = [
   },
   {
     quote:
-      'Support used to mean three tabs ,  Shopify, WhatsApp Web, and a spreadsheet. Now one inbox shows order # and COD status beside every thread.',
+      'Support used to mean three tabs: Shopify, WhatsApp Web, and a spreadsheet. Now one inbox shows order # and COD status beside every thread.',
     name: 'Arjun K.',
     role: 'Head of Ops',
     company: 'Fashion brand, Bengaluru',

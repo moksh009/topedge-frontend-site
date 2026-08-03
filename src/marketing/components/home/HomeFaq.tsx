@@ -1,47 +1,61 @@
-import { useState } from 'react';
+import { useId, useState } from 'react';
+import { Minus, Plus } from 'lucide-react';
 import { faqs } from '../../data/home';
-import { SectionHeading } from '../ui';
-import { cn } from '@/lib/utils';
 
 export default function HomeFaq() {
   const [open, setOpen] = useState<number | null>(0);
+  const baseId = useId();
 
   return (
-    <section className="home-story">
-      <div className="mx-auto max-w-3xl">
-        <SectionHeading
-          eyebrow="FAQ"
-          title="Straight answers before you connect"
-          subtitle="No fluff ,  the questions D2C founders actually ask."
-          center
-          className="mb-12"
-        />
-        <div className="divide-y divide-[#efeaf8] rounded-2xl border border-[#efeaf8] bg-white overflow-hidden">
+    <section className="home-faq" aria-label="Frequently asked questions">
+      <div className="home-faq__inner">
+        <header className="home-faq__head">
+          <p className="home-faq__eyebrow">FAQ</p>
+          <h2 className="home-faq__title">Straight answers before you connect</h2>
+          <p className="home-faq__sub">
+            No fluff. The questions D2C founders actually ask.
+          </p>
+        </header>
+
+        <div className="home-faq__panel">
           {faqs.map((faq, i) => {
             const isOpen = open === i;
+            const panelId = `${baseId}-panel-${i}`;
+            const buttonId = `${baseId}-btn-${i}`;
+
             return (
-              <div key={faq.question}>
-                <button
-                  type="button"
-                  className="flex w-full items-center justify-between gap-4 px-5 py-5 text-left md:px-6"
-                  onClick={() => setOpen(isOpen ? null : i)}
-                  aria-expanded={isOpen}
-                >
-                  <span className="text-[0.95rem] font-medium text-[#0c1222]">{faq.question}</span>
-                  <span
-                    className={cn(
-                      'flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#f5f3ff] text-[#7C3AED] transition-transform',
-                      isOpen && 'rotate-45'
-                    )}
+              <div
+                key={faq.question}
+                className={`home-faq__item${isOpen ? ' is-open' : ''}`}
+              >
+                <h3 className="home-faq__q">
+                  <button
+                    id={buttonId}
+                    type="button"
+                    className="home-faq__trigger"
+                    aria-expanded={isOpen}
+                    aria-controls={panelId}
+                    onClick={() => setOpen(isOpen ? null : i)}
                   >
-                    +
-                  </span>
-                </button>
-                {isOpen && (
-                  <p className="px-5 pb-5 text-sm leading-relaxed text-slate-500 md:px-6">
-                    {faq.answer}
-                  </p>
-                )}
+                    <span>{faq.question}</span>
+                    <span className="home-faq__icon" aria-hidden>
+                      {isOpen ? (
+                        <Minus className="h-3.5 w-3.5" strokeWidth={2.5} />
+                      ) : (
+                        <Plus className="h-3.5 w-3.5" strokeWidth={2.5} />
+                      )}
+                    </span>
+                  </button>
+                </h3>
+                <div
+                  id={panelId}
+                  role="region"
+                  aria-labelledby={buttonId}
+                  className="home-faq__a"
+                  hidden={!isOpen}
+                >
+                  <p>{faq.answer}</p>
+                </div>
               </div>
             );
           })}

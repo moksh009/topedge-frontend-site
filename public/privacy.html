@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Privacy Policy | TopEdge AI</title>
+  <meta name="description" content="TopEdge AI Privacy Policy — how TopEdge Ai collects, uses, and protects data for Shopify and Meta / WhatsApp integrations. Includes Meta Platform Data and data deletion." />
+  <link rel="canonical" href="https://topedgeai.com/privacy" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://topedgeai.com/privacy" />
+  <meta property="og:title" content="Privacy Policy | TopEdge AI" />
+  <meta property="og:description" content="Privacy Policy for TopEdge AI (TopEdge Ai). Meta Platform Data, account deletion, GSTIN, and contact details." />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#7C3AED" />
+  <style>
+/* Public Privacy / Terms — compact premium legal chrome (TopEdge violet) */
+
+.legal-page {
+  --legal-accent: #7c3aed;
+  --legal-accent-soft: #f5f3ff;
+  --legal-border: #efeaf8;
+  --legal-border-strong: #e8ecf4;
+  --legal-text: #475569;
+  --legal-heading: #0f172a;
+  --legal-muted: #94a3b8;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  background: #fafafa;
+  color: var(--legal-heading);
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.legal-page ::selection {
+  background: #ede9fe;
+  color: #4c1d95;
+}
+
+/* ── Header ─────────────────────────────────────────────────────────────── */
+.legal-page__bar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--legal-border-strong);
+  padding-left: max(1rem, env(safe-area-inset-left, 0px));
+  padding-right: max(1rem, env(safe-area-inset-right, 0px));
+}
+
+.legal-page__bar-inner {
+  width: 100%;
+  max-width: 64rem;
+  margin: 0 auto;
+  min-height: 3.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.legal-page__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  min-width: 0;
+  text-decoration: none;
+  color: inherit;
+}
+
+.legal-page__brand-mark {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.5rem;
+  background: linear-gradient(145deg, #8b5cf6 0%, #7c3aed 55%, #6d28d9 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  flex-shrink: 0;
+  box-shadow: 0 1px 2px rgba(124, 58, 237, 0.25);
+}
+
+.legal-page__brand-title {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--legal-heading);
+}
+
+.legal-page__brand-sub {
+  margin: 0.1rem 0 0;
+  font-size: 0.625rem;
+  font-weight: 500;
+  color: var(--legal-muted);
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
+.legal-page__nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.legal-page__nav-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0.35rem 0.65rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #64748b;
+  border-radius: 9999px;
+  text-decoration: none;
+  transition: color 0.12s, background 0.12s;
+}
+
+.legal-page__nav-link:hover {
+  color: var(--legal-heading);
+  background: #f1f5f9;
+}
+
+.legal-page__nav-cta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #fff;
+  background: #0f172a;
+  border-radius: 9999px;
+  text-decoration: none;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.legal-page__nav-cta:hover {
+  background: var(--legal-accent);
+}
+
+.legal-page__nav-cta:active {
+  transform: scale(0.98);
+}
+
+/* ── Main ───────────────────────────────────────────────────────────────── */
+.legal-page__main {
+  width: 100%;
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 1.5rem max(1rem, env(safe-area-inset-left, 0px)) 3rem max(1rem, env(safe-area-inset-right, 0px));
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .legal-page__main {
+    flex-direction: row;
+    gap: 1.75rem;
+    padding-top: 2rem;
+    padding-bottom: 3.5rem;
+  }
+}
+
+.legal-page__toc {
+  display: none;
+  width: 13.5rem;
+  flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+  .legal-page__toc {
+    display: block;
+  }
+}
+
+.legal-page__toc-sticky {
+  position: sticky;
+  top: 4rem;
+}
+
+.legal-page__toc-label {
+  margin: 0 0 0.5rem;
+  padding: 0 0.5rem;
+  font-size: 0.625rem;
+  font-weight: 600;
+  color: var(--legal-muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.legal-page__toc-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.5rem;
+  margin: 0 0 0.1rem;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.3;
+  color: #64748b;
+  text-decoration: none;
+  transition: color 0.12s, background 0.12s;
+}
+
+.legal-page__toc-link:hover {
+  color: var(--legal-accent);
+  background: var(--legal-accent-soft);
+}
+
+.legal-page__toc-link svg {
+  flex-shrink: 0;
+  color: #cbd5e1;
+}
+
+.legal-page__toc-link:hover svg {
+  color: var(--legal-accent);
+}
+
+.legal-page__article {
+  flex: 1;
+  min-width: 0;
+  background: #fff;
+  border: 1px solid var(--legal-border-strong);
+  border-radius: 0.875rem;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
+  padding: 1.25rem 1.15rem 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .legal-page__article {
+    padding: 1.5rem 1.75rem 1.75rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .legal-page__article {
+    padding: 1.75rem 2rem 2rem;
+  }
+}
+
+.legal-page__doc-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0 0 0.75rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 9999px;
+  background: var(--legal-accent-soft);
+  border: 1px solid #ede9fe;
+  color: #6d28d9;
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.legal-page__doc-title {
+  margin: 0 0 0.25rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  color: var(--legal-heading);
+}
+
+@media (min-width: 768px) {
+  .legal-page__doc-title {
+    font-size: 1.75rem;
+  }
+}
+
+.legal-page__doc-meta {
+  margin: 0 0 1rem;
+  font-size: 0.75rem;
+  color: var(--legal-muted);
+}
+
+.legal-page__intro {
+  margin: 0 0 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--legal-text);
+}
+
+.legal-page__intro a {
+  color: #6d28d9;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.legal-page__intro-note {
+  margin: 0 0 1.25rem;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--legal-muted);
+}
+
+.legal-page__intro-note a {
+  color: #6d28d9;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.legal-page__sections {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.legal-page__section {
+  scroll-margin-top: 4.5rem;
+}
+
+.legal-page__section-head {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0 0 0.65rem;
+}
+
+.legal-page__section-icon {
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 0.5rem;
+  background: var(--legal-accent-soft);
+  border: 1px solid #ede9fe;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6d28d9;
+  flex-shrink: 0;
+}
+
+.legal-page__section-title {
+  margin: 0;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--legal-heading);
+  line-height: 1.3;
+}
+
+.legal-page__body {
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: var(--legal-text);
+}
+
+.legal-page__body p {
+  margin: 0 0 0.65rem;
+}
+
+.legal-page__body p:last-child {
+  margin-bottom: 0;
+}
+
+.legal-page__body ul {
+  margin: 0 0 0.65rem;
+  padding-left: 1.1rem;
+  list-style: disc;
+}
+
+.legal-page__body li {
+  margin: 0 0 0.35rem;
+}
+
+.legal-page__body li:last-child {
+  margin-bottom: 0;
+}
+
+.legal-page__body strong {
+  color: var(--legal-heading);
+  font-weight: 600;
+}
+
+.legal-page__body a {
+  color: #6d28d9;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.legal-page__body h4 {
+  margin: 0.85rem 0 0.4rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--legal-heading);
+}
+
+.legal-page__notice {
+  margin-top: 0.75rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 0.625rem;
+  border: 1px solid #ede9fe;
+  background: #faf8ff;
+  font-size: 0.75rem;
+  line-height: 1.45;
+  color: #5b21b6;
+}
+
+.legal-page__notice--warn {
+  border-color: #fde68a;
+  background: #fffbeb;
+  color: #92400e;
+}
+
+.legal-page__ack {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #f1f5f9;
+  text-align: center;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--legal-muted);
+}
+
+.legal-page__ack a {
+  color: #6d28d9;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ── Contact card ───────────────────────────────────────────────────────── */
+.legal-contact-card {
+  margin: 0;
+  padding: 0.85rem 0.9rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--legal-border);
+  background: linear-gradient(180deg, #faf8ff 0%, #ffffff 70%);
+  font-size: 0.8125rem;
+  color: var(--legal-text);
+}
+
+.legal-contact-card__brand {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--legal-heading);
+  letter-spacing: -0.015em;
+}
+
+.legal-contact-card__legal {
+  margin: 0.15rem 0 0;
+  font-size: 0.6875rem;
+  color: var(--legal-muted);
+}
+
+.legal-contact-card__rows {
+  margin-top: 0.7rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.legal-contact-card__row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.legal-contact-card__row svg {
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+  color: var(--legal-accent);
+}
+
+.legal-contact-card__row p {
+  margin: 0;
+  line-height: 1.4;
+}
+
+.legal-contact-card__row a {
+  color: #6d28d9;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.legal-contact-card__gst {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.75rem;
+  color: var(--legal-heading);
+}
+
+/* ── Footer ─────────────────────────────────────────────────────────────── */
+.legal-page__footer {
+  background: #fff;
+  border-top: 1px solid var(--legal-border-strong);
+  padding: 1.25rem max(1rem, env(safe-area-inset-left, 0px)) 1.5rem max(1rem, env(safe-area-inset-right, 0px));
+}
+
+.legal-page__footer-inner {
+  width: 100%;
+  max-width: 64rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.legal-page__footer-links {
+  margin: 0 0 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--legal-muted);
+}
+
+.legal-page__footer-links a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.legal-page__footer-links a:hover {
+  color: var(--legal-heading);
+}
+
+.legal-page__footer-sep {
+  margin: 0 0.45rem;
+  color: #cbd5e1;
+}
+
+.legal-page__footer-copy {
+  margin: 0;
+  font-size: 0.6875rem;
+  color: #a1a1aa;
+}
+
+body { margin: 0; }
+.legal-page__toc { display: none !important; }
+@media (min-width: 768px) {
+  .legal-page__toc { display: block !important; }
+}
+.legal-page__toc-link svg, .legal-page__section-icon svg, .legal-page__brand-mark svg, .legal-page__doc-badge svg, .legal-contact-card__row svg { display: none; }
+  </style>
+</head>
+<body>
+  <div class="legal-page">
+    <header class="legal-page__bar">
+      <div class="legal-page__bar-inner">
+        <a href="https://topedgeai.com/" class="legal-page__brand">
+          <div class="legal-page__brand-mark" aria-hidden></div>
+          <div>
+            <p class="legal-page__brand-title">TopEdge AI</p>
+            <p class="legal-page__brand-sub">Legal</p>
+          </div>
+        </a>
+        <nav class="legal-page__nav" aria-label="Legal navigation">
+          <a href="/terms" class="legal-page__nav-link">Terms</a>
+          <a href="https://dash.topedgeai.com/login" class="legal-page__nav-link">Log in</a>
+          <a href="https://dash.topedgeai.com/signup" class="legal-page__nav-cta">Get started</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="legal-page__main">
+      <aside class="legal-page__toc" aria-label="Contents">
+        <div class="legal-page__toc-sticky">
+          <p class="legal-page__toc-label">Contents</p>
+          <a href="#information-collection" class="legal-page__toc-link"><span>1. Information we collect</span></a>
+          <a href="#how-we-use" class="legal-page__toc-link"><span>2. How we use your information</span></a>
+          <a href="#information-sharing" class="legal-page__toc-link"><span>3. Sharing and disclosure</span></a>
+          <a href="#data-security" class="legal-page__toc-link"><span>4. Security &amp; retention</span></a>
+          <a href="#user-rights" class="legal-page__toc-link"><span>5. Your data rights</span></a>
+          <a href="#meta-platform-data" class="legal-page__toc-link"><span>6. Meta platform data</span></a>
+          <a href="#shopify-service-availability" class="legal-page__toc-link"><span>7. Shopify &amp; service availability</span></a>
+          <a href="#data-deletion" class="legal-page__toc-link"><span>8. Account deletion</span></a>
+          <a href="#contact" class="legal-page__toc-link"><span>9. Contact us</span></a>
+        </div>
+      </aside>
+
+      <article class="legal-page__article">
+        <div class="legal-page__doc-badge">Official document · v2026-08-02</div>
+        <h1 class="legal-page__doc-title">Privacy Policy</h1>
+        <p class="legal-page__doc-meta">Last updated: 2 August 2026</p>
+
+        <div class="legal-page__intro">
+          TopEdge AI (legal name <strong>TopEdge Ai</strong>, a partnership registered in India) explains how we collect, use, disclose, and protect information.
+          This applies to our dashboard (<a href="https://dash.topedgeai.com">https://dash.topedgeai.com</a>), APIs, and integrations (Shopify, Meta / WhatsApp).
+          Use of the Service is also governed by our <a href="/terms">Terms of Service</a>.
+        </div>
+        <div class="legal-page__intro-note">
+          Governed by the laws of India. Privacy requests: <a href="mailto:team@topedgeai.com">team@topedgeai.com</a>.
+          Exclusive jurisdiction: the competent courts at Ahmedabad, Gujarat, India, subject to mandatory consumer protections where applicable.
+        </div>
+
+        <div class="legal-page__sections">
+          <section id="information-collection" class="legal-page__section">
+            <div class="legal-page__section-head"><h2 class="legal-page__section-title">1. Information we collect</h2></div>
+            <div class="legal-page__body">
+              <p>We collect information that identifies, relates to, describes, or could reasonably be linked with a particular consumer or device ("Personal Information"), including:</p>
+              <ul>
+                <li><strong>Account data:</strong> Name, email, phone, business name, and password when you register.</li>
+                <li><strong>Integration data:</strong> When you connect Shopify, Meta (WhatsApp / Ads), or related services — access tokens, store config, orders, catalogs, checkout events, messaging history, and (when you connect Meta Ads) hashed Custom Audience uploads needed for automations you enable. Instagram messaging may appear in product UI but is not active in the current public release unless enabled for your workspace.</li>
+                <li><strong>Storefront &amp; pixel data:</strong> Page views, product views, cart and checkout events from our web pixel, theme script, and checkout extensions for cart recovery and insights.</li>
+                <li><strong>End-customer data:</strong> Shopper names, phones, emails, orders, and message content — solely to run automations you configure.</li>
+                <li><strong>Usage data:</strong> IP, browser, OS, and pages visited on our platform.</li>
+                <li><strong>Communication data:</strong> Support requests and chat logs you send to us or generate through AI chatbots.</li>
+              </ul>
+            </div>
+          </section>
+
+          <section id="how-we-use" class="legal-page__section">
+            <div class="legal-page__section-head"><h2 class="legal-page__section-title">2. How we use your information</h2></div>
+            <div class="legal-page__body">
+              <p>We use collected information to:</p>
+              <ul>
+                <li><strong>Deliver the Service:</strong> Operate messaging, automations, and dashboard features.</li>
+                <li><strong>Sync integrations:</strong> Connect commerce data (e.g. Shopify orders) with WhatsApp for cart recovery and order updates.</li>
+                <li><strong>Improve the product:</strong> Analyze usage trends to improve features.</li>
+                <li><strong>Secure the platform:</strong> Detect fraud, abuse, and technical issues.</li>
+                <li><strong>Communicate:</strong> Send technical notices, security alerts, and admin messages.</li>
+              </ul>
+            </div>
+          </section>
+
+          <section id="information-sharing" class="legal-page__section">
+            <div class="legal-page__section-head"><h2 class="legal-page__section-title">3. Sharing and disclosure</h2></div>
+            <div class="legal-page__body">
+              <p>We do not sell your Personal Information. We may share information when:</p>
+              <ul>
+                <li><strong>Service providers:</strong> Hosting, databases, email, and AI API vendors who process data on our behalf.</li>
+                <li><strong>Platform integrations:</strong> Meta / Shopify — only as required by actions you configure.</li>
+                <li><strong>Legal requirements:</strong> When required by law or to respond to lawful requests from authorities.</li>
+              </ul>
+            </div>
+          </section>
+
+          <section id="data-security" class="legal-page__section">
+            <div class="legal-page__section-head"><h2 class="legal-page__section-title">4. Security &amp; retention</h2></div>
+            <div class="legal-page__body">
+              <p>We use commercially reasonable physical, managerial, and technical safeguards. Sensitive credentials (OAuth tokens, API keys) are encrypted at rest (AES-256-CBC).</p>
+              <p>No system is 100% secure. We retain Personal Information while your account is active or as needed to provide services, meet legal obligations, resolve disputes, and enforce agreements.</p>
+              <p>After account deletion, we erase Personal Information tied to your account within 30 days, except where law requires longer retention.</p>
+            </div>
+          </section>
+
+          <section id="user-rights" class="legal-page__section">
+            <div class="legal-page__section-head"><h2 class="legal-page__section-title">5. Your data rights</h2></div>
+            <div class="legal-page__body">
+              <p>Depending on your location, you may have rights to:</p>
+              <ul>
+                <li><strong>Access</strong> a copy of personal data we hold about you.</li>
+                <li><strong>Erasure</strong> — request deletion, subject to legal exceptions (Shopify compliance webhooks are honored — see Section 7).</li>
+                <li><strong>Rectification</strong> of inaccurate or incomplete data.</li>
+                <li><strong>Restrict processing</strong> in certain cases.</li>
+              </ul>
+              <p>Contact us using Section 9 to exercise these rights.</p>
+            </div>
+          </section>
+
+          <section id="meta-platform-data" class="legal-page__section">
+            <div class="legal-page__section-head"><h2 class="legal-page__section-title">6. Meta platform data</h2></div>
+            <div class="legal-page__body">
+              <p>TopEdge AI integrates with Meta (Facebook, Instagram, WhatsApp) for messaging automation. This section covers data received from Meta ("Platform Data").</p>
+              <h4>What we access</h4>
+              <ul>
+                <li><strong>Public profile:</strong> Name, picture, user ID — authentication and personalization.</li>
+                <li><strong>Email:</strong> From Facebook Login for account and communication.</li>
+                <li><strong>Pages &amp; Instagram Business:</strong> For messaging features when connected.</li>
+                <li><strong>Ads data:</strong> If you connect an Ad Account — performance metrics for analytics (we do not manage ads without your action).</li>
+                <li><strong>Messaging:</strong> WhatsApp (and Instagram DMs when enabled) to power bots and agent handoff.</li>
+              </ul>
+              <h4>How we use it</h4>
+              <ul>
+                <li>Authenticate users and personalize the dashboard.</li>
+                <li>Send and receive messages on your behalf.</li>
+                <li>Show performance and attribution analytics.</li>
+                <li>Improve the product via aggregated, de-identified analytics.</li>
+              </ul>
+              <h4>What we do not do</h4>
+              <ul>
+                <li>We do <strong>not sell</strong> Meta Platform Data.</li>
+                <li>We do <strong>not</strong> use it to discriminate or for surveillance.</li>
+                <li>We do <strong>not</strong> share it except as in Section 3 and Meta's Platform Terms.</li>
+                <li>We do <strong>not</strong> use it for unrelated purposes.</li>
+              </ul>
+              <h4>WhatsApp consent &amp; opt-out</h4>
+              <p>Merchants must obtain consent before marketing WhatsApp messages. We support checkout consent, opt-in tools, and enrollment flows you configure.</p>
+              <ul>
+                <li>Customers opt out by replying <strong>STOP</strong> (or equivalent keywords).</li>
+                <li>Opt-out stops campaigns and cart-recovery for that contact.</li>
+                <li>Agents can mark opted-out from Live Chat.</li>
+                <li>Utility messages (e.g. order updates) may still send where WhatsApp policy and law allow.</li>
+              </ul>
+              <p>Instagram messaging may appear in roadmap UI but is <strong>not active in the current public release</strong> unless explicitly enabled. Meta Ads connect and Custom Audience push are available when you opt in under Settings.</p>
+              <h4>Deletion</h4>
+              <ul>
+                <li><strong>Settings → Workspace → Delete workspace</strong> at <a href="https://dash.topedgeai.com/settings?tab=workspace&amp;section=delete">https://dash.topedgeai.com/settings?tab=workspace&amp;section=delete</a>.</li>
+                <li>Remove the app in Facebook Apps and Websites — callback <strong>https://api.topedgeai.com/api/meta/data-deletion</strong> returns a confirmation URL.</li>
+                <li>Email <strong>team@topedgeai.com</strong> from your registered address.</li>
+              </ul>
+              <p>Valid deletion requests are processed within 30 days unless law requires longer retention.</p>
+            </div>
+          </section>
+
+          <section id="shopify-service-availability" class="legal-page__section">
+            <div class="legal-page__section-head"><h2 class="legal-page__section-title">7. Shopify &amp; service availability</h2></div>
+            <div class="legal-page__body">
+              <p>If you connect Shopify, we process order, product, checkout, and customer data as described here to run automations. You remain responsible for your Shopify relationship and your end customers.</p>
+              <h4>Shopify App Store</h4>
+              <p>Our app is <strong>free to install</strong> on the Shopify App Store — no Shopify app billing and no paywall on the connector. Optional TopEdge platform plans on <strong>dash.topedgeai.com</strong> are separate and not required for the Shopify integration.</p>
+              <h4>Processors &amp; merchant obligations</h4>
+              <p>For customer data we process on your behalf, you are typically the <strong>controller</strong> and we act as a <strong>processor</strong>. You must comply with privacy law, notices, consents, and data-subject requests.</p>
+              <p>We honor Shopify compliance webhooks at <strong>https://api.topedgeai.com/api/shopify/compliance</strong>:</p>
+              <ul>
+                <li><strong>customers/data_request</strong> — log and provide available data on verified request.</li>
+                <li><strong>customers/redact</strong> — erase personal data for that customer in your workspace.</li>
+                <li><strong>shop/redact</strong> — after uninstall, disconnect credentials and purge store-linked data.</li>
+              </ul>
+              <p>Reference: <a href="https://shopify.dev/docs/apps/build/compliance/privacy-law-compliance" rel="noopener noreferrer" target="_blank">Shopify privacy law compliance</a>.</p>
+              <div class="legal-page__notice legal-page__notice--warn">
+                <strong>No guarantee of continuous delivery.</strong> Hosting, APIs, Meta/Shopify/WhatsApp, webhooks, and networks can delay or prevent message delivery. We do not warrant timed sends or any revenue outcome. See our <a href="/terms">Terms of Service</a>.
+              </div>
+            </div>
+          </section>
+
+          <section id="data-deletion" class="legal-page__section">
+            <div class="legal-page__section-head"><h2 class="legal-page__section-title">8. Account deletion</h2></div>
+            <div class="legal-page__body">
+              <p>You may delete your account at any time. We permanently erase:</p>
+              <ul>
+                <li>User account and credentials</li>
+                <li>Business configuration and integration tokens</li>
+                <li>Conversations and message history</li>
+                <li>Leads, customers, orders, campaigns, segments, analytics</li>
+              </ul>
+              <h4>How to delete</h4>
+              <ul>
+                <li><strong>Dashboard:</strong> Settings → Workspace → Delete workspace (<a href="https://dash.topedgeai.com/settings?tab=workspace&amp;section=delete">open</a>).</li>
+                <li><strong>Email:</strong> Write to <strong>team@topedgeai.com</strong> from your registered address (within 7 business days).</li>
+                <li><strong>Meta:</strong> Remove the app in Facebook settings; status at <a href="https://dash.topedgeai.com/deletion-status">https://dash.topedgeai.com/deletion-status</a>.</li>
+                <li><strong>Shopify:</strong> Uninstall triggers <strong>shop/redact</strong> after Shopify's retention period.</li>
+              </ul>
+              <div class="legal-page__notice legal-page__notice--warn">
+                <strong>Important:</strong> Deletion is irreversible. Export anything you need first. Cancel paid subscriptions before deleting to avoid charges.
+              </div>
+            </div>
+          </section>
+
+          <section id="contact" class="legal-page__section">
+            <div class="legal-page__section-head"><h2 class="legal-page__section-title">9. Contact us</h2></div>
+            <div class="legal-page__body">
+              <p>Questions or data-subject requests for <strong>TopEdge AI</strong> (TopEdge Ai):</p>
+              <div class="legal-contact-card">
+                <p class="legal-contact-card__brand">TopEdge AI</p>
+                <p class="legal-contact-card__legal">Legal name: TopEdge Ai · Partnership</p>
+                <div class="legal-contact-card__rows">
+                  <div class="legal-contact-card__row"><div>
+                    <p>Block-A, 606, Prahladnagar Trade Center</p>
+                    <p>Ahmedabad, Gujarat 380051</p>
+                    <p>India</p>
+                  </div></div>
+                  <div class="legal-contact-card__row"><p>GSTIN: <span class="legal-contact-card__gst">24ABAFT1041M1ZD</span></p></div>
+                  <div class="legal-contact-card__row"><p><a href="mailto:team@topedgeai.com">team@topedgeai.com</a></p></div>
+                  <div class="legal-contact-card__row"><p><a href="tel:+919313045439">+91 93130 45439</a></p></div>
+                  <div class="legal-contact-card__row"><p><a href="https://dash.topedgeai.com">dash.topedgeai.com</a></p></div>
+                </div>
+              </div>
+              <p style="margin-top:0.65rem;font-size:0.75rem;color:#94a3b8">
+                Email from your registered address when requesting access, correction, or deletion. Document version: 2026-08-02.
+              </p>
+            </div>
+          </section>
+        </div>
+
+        <div class="legal-page__ack">
+          By creating an account or using TopEdge AI, you acknowledge this Privacy Policy and our <a href="/terms">Terms of Service</a>.
+        </div>
+      </article>
+    </main>
+
+    <footer class="legal-page__footer">
+      <div class="legal-page__footer-inner">
+        <p class="legal-page__footer-links">
+          <a href="/terms">Terms of Service</a>
+          <span class="legal-page__footer-sep">·</span>
+          <a href="/privacy">Privacy Policy</a>
+        </p>
+        <p class="legal-page__footer-copy">© 2026 TopEdge Ai. All rights reserved.</p>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

@@ -16,6 +16,7 @@ const MARKETING_PREFIXES = [
   '/terms',
   '/compare',
   '/blog',
+  '/privacy',
   '/privacy-policy',
   '/testimonials',
   '/services',

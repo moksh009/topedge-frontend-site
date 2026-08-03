@@ -53,7 +53,7 @@ const communityQuickLinks: LinkItem[] = [
 ];
 
 const legals = [
-  { label: "Privacy Policy", path: "/privacy-policy" },
+  { label: "Privacy Policy", path: "/privacy" },
   { label: "Terms of Service", path: "/terms" },
 ];
 

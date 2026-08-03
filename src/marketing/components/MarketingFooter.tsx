@@ -21,7 +21,7 @@ const footerLinks = {
     { label: 'Contact', href: '/contact' },
   ],
   Legal: [
-    { label: 'Privacy', href: '/privacy-policy' },
+    { label: 'Privacy', href: '/privacy' },
     { label: 'Terms', href: '/terms' },
     { label: 'Security', href: '/security' },
   ],
@@ -58,11 +58,20 @@ export default function MarketingFooter() {
 
         <div className="mt-12 flex flex-col items-start justify-between gap-4 border-t border-[#efeaf8] pt-8 sm:flex-row sm:items-center">
           <p className="text-xs text-slate-400">
-            © {new Date().getFullYear()} TopEdge AI. Built for Indian D2C on Shopify.
+            © {new Date().getFullYear()} TopEdge Ai. All rights reserved.
           </p>
-          <a href={DASH_SIGNUP} className="text-sm font-medium text-[#7C3AED] hover:text-[#6d28d9]">
-            Start free →
-          </a>
+          <div className="flex flex-wrap items-center gap-3 text-xs text-slate-400">
+            <Link to="/terms" className="hover:text-[#7C3AED]">
+              Terms of Service
+            </Link>
+            <span aria-hidden>·</span>
+            <Link to="/privacy" className="hover:text-[#7C3AED]">
+              Privacy Policy
+            </Link>
+            <a href={DASH_SIGNUP} className="font-medium text-[#7C3AED] hover:text-[#6d28d9]">
+              Start free →
+            </a>
+          </div>
         </div>
       </div>
     </footer>
