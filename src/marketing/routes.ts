@@ -36,6 +36,5 @@ export function isMarketingRoute(pathname: string): boolean {
   );
 }
 
-export const DASH_SIGNUP = 'https://dash.topedgeai.com/signup';
-export const DASH_LOGIN = 'https://dash.topedgeai.com/login';
+export { DASH_SIGNUP, DASH_LOGIN, DASH_ORIGIN } from './lib/billingCatalog';
 export const DASH_DOCS = 'https://dash.topedgeai.com/docs';

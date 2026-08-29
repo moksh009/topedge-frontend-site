@@ -1,147 +1,149 @@
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import '../styles/pricing.css';
 import MarketingSEO from '../components/MarketingSEO';
 import MarketingPage from '../components/MarketingPage';
-import MarketingCtaBand from '../components/MarketingCtaBand';
-import { PageHero, Section, MarketingCard, PrimaryButton } from '../components/ui';
+import CycleToggle from '../components/pricing/CycleToggle';
+import PlanGrid from '../components/pricing/PlanGrid';
+import FeatureMatrix from '../components/pricing/FeatureMatrix';
+import IncludedFeatures from '../components/pricing/IncludedFeatures';
+import RoiCalculator from '../components/pricing/RoiCalculator';
+import PricingFaq from '../components/pricing/PricingFaq';
 import {
-  BILLING_PLANS,
+  BillingCatalog,
+  BillingCycle,
+  FALLBACK_CATALOG,
+  GST_FOOTNOTE,
   META_MESSAGE_RATES,
-  PLAN_LINE_META,
-  plansForLine,
-  TRIAL_PLAN,
-} from '../data/planCatalog';
-
-function PlanSection({ line }: { line: 'diy' | 'dfy' }) {
-  const meta = PLAN_LINE_META[line];
-  const plans = plansForLine(line);
-
-  return (
-    <Section className="!py-10" id={line === 'diy' ? 'diy' : 'dfy'}>
-      <div className="mb-8 max-w-2xl">
-        <p className="mkt-eyebrow">{line === 'diy' ? 'Do it yourself' : 'Done for you'}</p>
-        <h2 className="mkt-display mt-3 text-3xl font-medium text-[#0c1222]">{meta.label}</h2>
-        <p className="mt-3 text-slate-500">{meta.subtitle}</p>
-      </div>
-      <div className="grid gap-6 lg:grid-cols-3">
-        {plans.map((plan) => (
-          <MarketingCard
-            key={plan.id}
-            className={`flex h-full flex-col !p-6 ${plan.popular ? 'border-[#c4b5fd] shadow-[0_20px_50px_-20px_rgba(124,58,237,0.25)]' : ''}`}
-          >
-            {plan.popular && (
-              <span className="mb-4 inline-flex w-fit rounded-full bg-[#f5f3ff] px-3 py-1 text-xs font-medium text-[#7C3AED]">
-                Most popular
-              </span>
-            )}
-            <p className="text-lg font-medium text-[#0c1222]">{plan.name}</p>
-            <p className="mt-3">
-              <span className="mkt-kpi text-3xl font-medium text-[#0c1222]">{plan.priceLabel}</span>
-              <span className="ml-1 text-sm text-slate-400">{plan.period}</span>
-            </p>
-            <p className="mt-3 text-sm leading-relaxed text-slate-500">{plan.description}</p>
-            <ul className="mt-6 flex-1 space-y-3 text-sm text-slate-600">
-              {plan.features.map((feature) => (
-                <li key={feature} className="flex gap-2">
-                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#7C3AED]" />
-                  {feature}
-                </li>
-              ))}
-            </ul>
-            <PrimaryButton
-              to={line === 'dfy' ? '/contact' : '/signup'}
-              className="mt-8 w-full justify-center"
-            >
-              {plan.cta}
-            </PrimaryButton>
-          </MarketingCard>
-        ))}
-      </div>
-    </Section>
-  );
-}
+  SALES_MAILTO,
+  TRIAL,
+  fetchBillingCatalog,
+} from '../lib/billingCatalog';
 
 export default function PricingPage() {
+  const [catalog, setCatalog] = useState<BillingCatalog>(FALLBACK_CATALOG);
+  const [cycle, setCycle] = useState<BillingCycle>('yearly');
+
+  useEffect(() => {
+    let alive = true;
+    fetchBillingCatalog().then((live) => {
+      if (!alive) return;
+      setCatalog(live);
+      setCycle(live.defaultCycle || 'yearly');
+    });
+    return () => {
+      alive = false;
+    };
+  }, []);
+
   return (
     <>
       <MarketingSEO
-        title="Pricing | TopEdge ,  WhatsApp growth OS for Shopify India"
-        description="DIY and DFY pricing for Indian Shopify brands using WhatsApp for recovery, campaigns, inbox, and automation. Transparent Meta message rates."
+        title="Pricing | TopEdge AI"
+        description="Start free for 14 days. Launch, Growth, and Scale plans for WhatsApp + Shopify. Prices exclusive of 18% GST."
         path="/pricing"
+        noSuffix
       />
       <MarketingPage>
-        <PageHero
-          eyebrow="Pricing"
-          title="Start free. Scale when WhatsApp pays for itself."
-          subtitle="Clear DIY and DFY plans, transparent Meta message rates, and a trial generous enough to validate real merchant workflows."
-        />
-
-        <Section className="!pt-0" wash="soft">
-          <MarketingCard className="mx-auto max-w-3xl !p-6 text-center !bg-white/90">
-            <p className="text-sm text-slate-500">
-              Free trial includes{' '}
-              <span className="font-medium text-[#0c1222]">{TRIAL_PLAN.days} days</span>,{' '}
-              <span className="font-medium text-[#0c1222]">{TRIAL_PLAN.contacts} contacts</span>, and{' '}
-              <span className="font-medium text-[#0c1222]">
-                {TRIAL_PLAN.messages.toLocaleString('en-IN')} messages
-              </span>
-              . No credit card required.
+        <div className="mkt-pricing">
+          <header className="mkt-pricing__hero">
+            <p className="mkt-pricing__eyebrow">Pricing</p>
+            <h1 className="mkt-pricing__title">
+              Start free for 14 days. Pay when WhatsApp is making money.
+            </h1>
+            <p className="mkt-pricing__sub">
+              You’ll pick Launch, Growth, or Scale after signup. Checkout stays in the dashboard.
+              This page never opens Razorpay.
             </p>
-          </MarketingCard>
-        </Section>
-
-        <PlanSection line="diy" />
-        <PlanSection line="dfy" />
-
-        <Section id="roi-calculator" wash="soft" className="!py-16">
-          <div className="mx-auto max-w-3xl text-center">
-            <p className="mkt-eyebrow">Quick ROI check</p>
-            <h2 className="mkt-display mt-3 text-3xl font-medium text-[#0c1222]">
-              If you recover just a few carts a week, WhatsApp pays for itself
-            </h2>
-            <p className="mt-4 text-slate-500 leading-relaxed">
-              Example: 40 abandoned carts/week · 10% recovery · ₹2,500 AOV → roughly{' '}
-              <span className="mkt-kpi font-medium text-[#7C3AED]">₹40,000/week</span> recovered
-              revenue ,  before counting campaigns and inbox efficiency. Meta utility messages stay
-              near ₹0.13; marketing near ₹0.88. Your plan fee is the software layer on top.
-            </p>
-            <div className="mt-8 grid gap-4 sm:grid-cols-3 text-left">
-              {[
-                { l: 'Trial', v: `${TRIAL_PLAN.days} days free` },
-                { l: 'DIY from', v: BILLING_PLANS.find((p) => p.line === 'diy')?.priceLabel ?? '₹799' },
-                { l: 'DFY', v: 'Talk to sales' },
-              ].map((x) => (
-                <MarketingCard key={x.l} className="!p-5">
-                  <p className="text-xs uppercase tracking-wide text-slate-400">{x.l}</p>
-                  <p className="mkt-kpi mt-1 text-lg font-medium text-[#0c1222]">{x.v}</p>
-                </MarketingCard>
-              ))}
+            <div className="mkt-pricing__actions">
+              <Link className="mkt-pricing__cta mkt-pricing__cta--solid" to="/signup">
+                Start free
+              </Link>
+              <a className="mkt-pricing__cta mkt-pricing__cta--ghost" href="#plans">
+                See plans
+              </a>
             </div>
-          </div>
-        </Section>
+            <p className="mkt-pricing__note">
+              Trial: {TRIAL.days} days · {TRIAL.orders} orders · {TRIAL.sends} campaign + email
+              sends.
+            </p>
+          </header>
 
-        <Section subtle>
-          <p className="mb-6 text-center mkt-eyebrow">Meta message rates (pass-through)</p>
-          <div className="grid gap-6 lg:grid-cols-3">
-            {META_MESSAGE_RATES.map((rate) => (
-              <MarketingCard key={rate.category} className="!p-6">
-                <p className="text-sm font-medium text-slate-500">{rate.category}</p>
-                <p className="mkt-kpi mt-2 text-2xl font-medium text-[#0c1222]">{rate.rate}</p>
-                <p className="mt-2 text-sm text-slate-500">{rate.note}</p>
-              </MarketingCard>
-            ))}
-          </div>
-          <p className="mt-5 text-center text-xs text-slate-400">
-            Rates are indicative Meta India categories ,  TopEdge does not mark up Meta fees.
-          </p>
-        </Section>
+          <div className="mkt-pricing__inner" id="plans">
+            <CycleToggle value={cycle} onChange={setCycle} />
+            <PlanGrid plans={catalog.plans} cycle={cycle} />
+            <p className="mkt-gst">{GST_FOOTNOTE} Prices are taxable / exclusive.</p>
+            {catalog.source === 'fallback' ? (
+              <p className="mkt-fallback">Prices as of Aug 2026. Live catalog unavailable.</p>
+            ) : null}
 
-        <MarketingCtaBand
-          title="Need help choosing the right plan?"
-          subtitle="Start on DIY if you want control. Choose DFY if you want templates, flows, and campaigns shipped for you."
-          primaryLabel="Start free"
-          primaryTo="/signup"
-          secondaryLabel="Contact sales"
-          secondaryTo="/contact"
-        />
+            <IncludedFeatures items={catalog.universalFeatures} />
+
+            <section className="mkt-pricing__block">
+              <h2 className="mkt-pricing__h2">Compare what changes</h2>
+              <p className="mkt-pricing__lead">
+                Shared hubs — Live Chat, CRM, Flow Builder, campaigns, pixel — sit on every plan.
+              </p>
+              <FeatureMatrix plans={catalog.plans} />
+            </section>
+
+            <section className="mkt-pricing__block">
+              <h2 className="mkt-pricing__h2">Meta rates</h2>
+              <p className="mkt-pricing__lead">
+                Pass-through India rates (Jul 2025). Never billed per conversation.
+              </p>
+              <div className="mkt-rates">
+                {META_MESSAGE_RATES.map((rate) => (
+                  <article key={rate.category} className="mkt-rate">
+                    <p className="mkt-rate__cat">{rate.category}</p>
+                    <p className="mkt-rate__val">{rate.rate}</p>
+                    <p className="mkt-rate__note">{rate.note}</p>
+                  </article>
+                ))}
+              </div>
+            </section>
+
+            <section className="mkt-pricing__block" id="roi-calculator">
+              <h2 className="mkt-pricing__h2">Recovery math</h2>
+              <p className="mkt-pricing__lead">
+                Orders × AOV × abandon % × recovery lift. Dashboard shows zeros until you connect.
+              </p>
+              <RoiCalculator />
+            </section>
+
+            <section className="mkt-pricing__block">
+              <h2 className="mkt-pricing__h2">Questions founders ask</h2>
+              <PricingFaq />
+            </section>
+
+            <section className="mkt-pricing__block">
+              <div className="mkt-dfy">
+                <div>
+                  <h3>Need a named Growth Manager?</h3>
+                  <p>
+                    Done-for-you is optional. Templates, flows, and campaigns shipped with you. It
+                    is not a fourth DIY tier.
+                  </p>
+                </div>
+                <a className="mkt-pricing__cta mkt-pricing__cta--solid" href={SALES_MAILTO}>
+                  Talk to sales
+                </a>
+              </div>
+            </section>
+          </div>
+
+          <div className="mkt-pricing__dock">
+            <Link
+              className="mkt-pricing__cta mkt-pricing__cta--solid"
+              to="/signup"
+            >
+              Start free
+            </Link>
+            <a className="mkt-pricing__cta mkt-pricing__cta--ghost" href="#plans">
+              See plans
+            </a>
+          </div>
+        </div>
       </MarketingPage>
     </>
   );

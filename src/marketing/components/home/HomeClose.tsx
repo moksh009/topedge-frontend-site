@@ -6,7 +6,6 @@ export default function HomeClose() {
       title="Make WhatsApp part of your Shopify store"
       subtitle="Connect Shopify, approve templates, and ship your first recovery workflow."
       primaryLabel="Start free"
-      primaryTo="/signup"
       secondaryLabel="See pricing"
       secondaryTo="/pricing"
     />

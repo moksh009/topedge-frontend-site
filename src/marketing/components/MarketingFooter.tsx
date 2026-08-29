@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { DASH_SIGNUP } from '../routes';
 
 const footerLinks = {
   Product: [
@@ -68,9 +67,9 @@ export default function MarketingFooter() {
             <Link to="/privacy" className="hover:text-[#7C3AED]">
               Privacy Policy
             </Link>
-            <a href={DASH_SIGNUP} className="font-medium text-[#7C3AED] hover:text-[#6d28d9]">
+            <Link to="/signup" className="font-medium text-[#7C3AED] hover:text-[#6d28d9]">
               Start free →
-            </a>
+            </Link>
           </div>
         </div>
       </div>

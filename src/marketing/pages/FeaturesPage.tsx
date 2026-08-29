@@ -83,7 +83,6 @@ export default function FeaturesPage() {
           title="See it live on your store"
           subtitle="Start free ,  connect Shopify and WhatsApp in about fifteen minutes."
           primaryLabel="Start free"
-          primaryTo="/signup"
           secondaryLabel="See pricing"
           secondaryTo="/pricing"
         />

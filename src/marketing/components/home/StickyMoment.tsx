@@ -29,9 +29,8 @@ export default function StickyMoment({
       {id === 'cart-recovery' ? <CartMoment /> : null}
       {id === 'journey' ? <JourneyMoment /> : null}
       {id === 'inbox' ? <InboxMoment /> : null}
-      {id === 'ai-brain' ? <AiBrainMoment /> : null}
-      {id === 'flow-builder' ? <FlowBuilderMoment /> : null}
-      {id === 'connect' ? <ConnectMoment /> : null}
+      {id === 'ai-brain' ? <AudienceMoment /> : null}
+      {id === 'connect' ? <AlertsMoment /> : null}
     </div>
   );
 }
@@ -39,6 +38,7 @@ export default function StickyMoment({
 function CartMoment() {
   return (
     <div className="sticky-moment__stage sticky-moment__stage--rose">
+      <div className="sticky-moment__bg-mesh" aria-hidden />
       <div className="sticky-moment__cart">
         <div className="sticky-moment__piece sticky-moment__card sticky-moment__chip is-tilt-a">
           <ShopifyMark className="h-5 w-5" />
@@ -101,6 +101,7 @@ function CartMoment() {
 function JourneyMoment() {
   return (
     <div className="sticky-moment__stage sticky-moment__stage--indigo">
+      <div className="sticky-moment__bg-mesh" aria-hidden />
       <div className="sticky-moment__journey">
         <div className="sticky-moment__piece sticky-moment__card sticky-moment__node sticky-moment__node--start is-tilt-a">
           <ShopifyMark className="h-5 w-5" />
@@ -157,6 +158,7 @@ function JourneyMoment() {
 function InboxMoment() {
   return (
     <div className="sticky-moment__stage sticky-moment__stage--mint">
+      <div className="sticky-moment__bg-mesh" aria-hidden />
       <div className="sticky-moment__inbox">
         <aside className="sticky-moment__piece sticky-moment__card sticky-moment__contacts is-tilt-a">
           <header>
@@ -251,63 +253,93 @@ function InboxMoment() {
   );
 }
 
-function AiBrainMoment() {
+function AudienceMoment() {
   return (
     <div className="sticky-moment__stage sticky-moment__stage--orchid">
+      <div className="sticky-moment__bg-mesh" aria-hidden />
       <div className="sticky-moment__ai">
-        <div className="sticky-moment__piece sticky-moment__card sticky-moment__ai-ask is-tilt-a">
-          <span className="sticky-moment__ai-badge">Customer</span>
-          <p>Do you have Vitamin C serum in 30ml? COD to Pune?</p>
-        </div>
-
-        <div className="sticky-moment__piece sticky-moment__card sticky-moment__ai-brain is-tilt-b">
-          <header>
-            <span className="sticky-moment__ai-icon">
-              <Sparkles className="h-4 w-4" strokeWidth={1.75} />
+        {/* Card 1: The Audience Rule Engine */}
+        <div className="sticky-moment__piece sticky-moment__card is-tilt-a" style={{ padding: '0.95rem' }}>
+          <header style={{ paddingBottom: '0.6rem', borderBottom: '1px solid #f1f5f9', display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+            <span className="sticky-moment__ai-icon" style={{ background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', width: '2rem', height: '2rem', borderRadius: '10px' }}>
+              <Package className="h-4 w-4" />
             </span>
-            <div>
-              <strong>AI Brain</strong>
-              <p>Catalog + policy grounded</p>
+            <div style={{ flex: 1 }}>
+              <strong style={{ display: 'block', fontSize: '0.85rem', color: '#0c1222' }}>VIP Segment</strong>
+              <p style={{ margin: 0, fontSize: '0.65rem', color: '#64748b', marginTop: '0.1rem' }}>Top 5% · LTV &gt; ₹15,000</p>
             </div>
-            <em>Routing</em>
+            <em style={{ color: '#059669', background: '#ecfdf5', fontSize: '0.6rem', padding: '0.25rem 0.5rem', borderRadius: '99px', fontWeight: 600, fontStyle: 'normal' }}>ACTIVE</em>
           </header>
-          <ul>
-            <li className="is-intent">
-              <span>Intent</span>
-              <strong>Product + COD</strong>
-            </li>
-            <li className="is-match">
-              <span>Match</span>
-              <strong>{SAMPLE_PRODUCT.name}</strong>
-            </li>
-            <li className="is-policy">
-              <span>Policy</span>
-              <strong>COD · Pune ok</strong>
-            </li>
-          </ul>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', marginTop: '0.75rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.7rem', padding: '0.45rem 0.65rem', background: '#f8fafc', borderRadius: '8px' }}>
+              <span style={{ color: '#64748b' }}>Orders</span>
+              <strong style={{ color: '#334155' }}>&gt; 5 completed</strong>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.7rem', padding: '0.45rem 0.65rem', background: '#f8fafc', borderRadius: '8px' }}>
+              <span style={{ color: '#64748b' }}>RTO Risk</span>
+              <strong style={{ color: '#334155' }}>Low</strong>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.7rem', padding: '0.45rem 0.65rem', background: '#f5f3ff', borderRadius: '8px' }}>
+              <span style={{ color: '#7c3aed' }}>Action</span>
+              <strong style={{ color: '#6d28d9' }}>Send early access</strong>
+            </div>
+          </div>
         </div>
 
-        <div className="sticky-moment__piece sticky-moment__card sticky-moment__ai-reply is-tilt-c">
-          <div className="sticky-moment__phone-bar">
+        {/* Card 2: The Broadcast Preview */}
+        <div className="sticky-moment__piece sticky-moment__card is-tilt-b" style={{ padding: '0.95rem' }}>
+          <div className="sticky-moment__phone-bar" style={{ display: 'flex', alignItems: 'center', gap: '0.55rem', paddingBottom: '0.65rem', borderBottom: '1px solid #f1f5f9' }}>
             <WhatsAppMark className="h-4 w-4" />
-            <span>Reply draft</span>
-            <b className="is-ready">
-              <i />
-              Ready
+            <strong style={{ fontSize: '0.8rem', color: '#0c1222' }}>Broadcast Ready</strong>
+            <b className="is-ready" style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.65rem', color: '#059669' }}>
+              <i style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#10b981', boxShadow: '0 0 0 2px rgba(16,185,129,0.2)' }} />
+              2,450 users
             </b>
           </div>
-          <div className="sticky-moment__bubble sticky-moment__bubble--orchid">
-            Yes, 30ml is in stock. COD to Pune is available. Want me to hold one?
-            <div className="sticky-moment__product sticky-moment__product--stock">
-              <ProductThumb className="sticky-moment__thumb" />
-              <div>
-                <p>{SAMPLE_PRODUCT.name}</p>
-                <strong>
-                  <em>{SAMPLE_PRODUCT.price}</em>
-                  <span>In stock</span>
-                </strong>
-              </div>
+          <div className="sticky-moment__bubble sticky-moment__bubble--orchid" style={{ marginTop: '0.85rem', padding: '0.85rem', borderRadius: '16px 16px 16px 6px' }}>
+            <p style={{ margin: 0, fontSize: '0.75rem', lineHeight: 1.5 }}>Hey Priya! Our new Summer Collection drops tomorrow, but our VIPs get early access today. Use code <b>VIP20</b>. 🎉</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function AlertsMoment() {
+  return (
+    <div className="sticky-moment__stage sticky-moment__stage--stack">
+      <div className="sticky-moment__bg-mesh" aria-hidden />
+      <div className="sticky-moment__flow" style={{ width: '100%' }}>
+        <div className="sticky-moment__piece sticky-moment__card is-tilt-a" style={{ padding: '1rem', width: '100%', maxWidth: '22rem', margin: '0 auto' }}>
+          <header style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', borderBottom: '1px solid #f1f5f9', paddingBottom: '0.65rem' }}>
+            <ShopifyMark className="h-5 w-5" />
+            <div style={{ flex: 1 }}>
+              <strong style={{ display: 'block', fontSize: '0.85rem', color: '#0c1222' }}>Order #1042</strong>
+              <p style={{ margin: 0, fontSize: '0.65rem', color: '#64748b', marginTop: '0.1rem' }}>Arriving Today</p>
             </div>
+            <em style={{ color: '#4338ca', background: '#e0e7ff', fontSize: '0.6rem', padding: '0.25rem 0.5rem', borderRadius: '99px', fontWeight: 600, fontStyle: 'normal' }}>PREPAID</em>
+          </header>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0', marginTop: '0.85rem' }}>
+            {[
+              { t: 'Order Confirmed', d: 'Sent on WhatsApp', status: 'Sent', color: '#10b981' },
+              { t: 'Shipped (Delhivery)', d: 'Tracking link sent', status: 'Sent', color: '#10b981' },
+              { t: 'Out for delivery', d: 'Today at 9:00 AM', status: 'Sending...', color: '#d97706' },
+            ].map((step, i, arr) => (
+              <div key={step.t} style={{ display: 'flex', gap: '0.75rem', position: 'relative', paddingBottom: i === arr.length - 1 ? '0' : '1.15rem' }}>
+                {i !== arr.length - 1 && (
+                  <div style={{ position: 'absolute', left: '11px', top: '22px', bottom: '0', width: '2px', background: '#f1f5f9' }} />
+                )}
+                <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: step.color === '#10b981' ? '#ecfdf5' : '#fef3c7', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, zIndex: 1 }}>
+                  <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: step.color }} />
+                </div>
+                <div style={{ flex: 1, paddingTop: '0.15rem' }}>
+                  <strong style={{ display: 'block', fontSize: '0.75rem', color: '#334155' }}>{step.t}</strong>
+                  <p style={{ margin: 0, fontSize: '0.65rem', color: '#94a3b8', marginTop: '0.15rem' }}>{step.d}</p>
+                </div>
+                <em style={{ fontSize: '0.6rem', fontWeight: 600, color: step.color, fontStyle: 'normal', paddingTop: '0.15rem' }}>{step.status}</em>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -318,76 +350,55 @@ function AiBrainMoment() {
 function FlowBuilderMoment() {
   return (
     <div className="sticky-moment__stage sticky-moment__stage--champagne">
+      <div className="sticky-moment__bg-mesh" aria-hidden />
       <div className="sticky-moment__flow">
         <div className="sticky-moment__piece sticky-moment__card sticky-moment__flow-form is-tilt-a">
           <header>
-            <span className="sticky-moment__ai-icon sticky-moment__ai-icon--violet">
-              <Sparkles className="h-4 w-4" strokeWidth={1.75} />
-            </span>
-            <div>
-              <strong>AI form</strong>
-              <p>Describe your store</p>
-            </div>
+            <Sparkles className="h-4 w-4" strokeWidth={1.75} />
+            <strong>AI form</strong>
           </header>
           <div className="sticky-moment__flow-fields">
-            <div className="is-niche">
-              <span>Niche</span>
-              <strong>Skincare D2C</strong>
-            </div>
-            <div className="is-goal">
+            <div className="sticky-moment__flow-field">
               <span>Goal</span>
-              <strong>Recover COD carts</strong>
+              <p>Gather feedback for recent purchases</p>
             </div>
-            <div className="is-tone">
-              <span>Tone</span>
-              <strong>Warm · Hindi-English</strong>
+            <div className="sticky-moment__flow-field">
+              <span>Offer</span>
+              <p>15% off next order if they reply</p>
             </div>
           </div>
         </div>
 
-        <span className="sticky-moment__piece sticky-moment__flow-arrow is-tilt-b" aria-hidden>
-          →
-        </span>
-
-        <div className="sticky-moment__piece sticky-moment__card sticky-moment__flow-canvas is-tilt-c">
+        <div className="sticky-moment__piece sticky-moment__card sticky-moment__flow-canvas is-tilt-b">
           <header>
-            <strong>Flow Builder</strong>
-            <em>Editable</em>
+            <WhatsAppMark className="h-4 w-4" />
+            <strong>Feedback Flow</strong>
           </header>
-          <ol>
-            <li className="is-on is-trigger">
-              <span>1</span>
-              <div>
-                <strong>Trigger</strong>
-                <p>Cart abandoned</p>
-              </div>
-            </li>
-            <li className="is-branch">
-              <span>2</span>
-              <div>
-                <strong>Ask COD</strong>
-                <p>Yes / No branch</p>
-              </div>
-            </li>
-            <li className="is-send">
-              <span>3</span>
-              <div>
-                <strong>Send WhatsApp</strong>
-                <p>Template ready</p>
-              </div>
-            </li>
-          </ol>
-          <div className="sticky-moment__flow-pub">Publish flow</div>
+          <div className="sticky-moment__flow-nodes">
+            <div className="sticky-moment__flow-node">
+              <span>Message</span>
+              <p>How did you like it?</p>
+            </div>
+            <div className="sticky-moment__flow-node is-condition">
+              <span>Condition</span>
+              <p>Wait 24h for reply</p>
+            </div>
+            <div className="sticky-moment__flow-node is-success">
+              <span>Message</span>
+              <p>Here is your 15% code!</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   );
-}
 
+}
 function ConnectMoment() {
   const tilts = ['is-tilt-a', 'is-tilt-b', 'is-tilt-c'] as const;
   return (
     <div className="sticky-moment__stage sticky-moment__stage--stack">
+      <div className="sticky-moment__bg-mesh" aria-hidden />
       <div className="sticky-moment__stack">
         {homeIntegrations.slice(0, 3).map((tool, i) => (
           <div

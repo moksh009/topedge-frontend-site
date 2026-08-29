@@ -5,15 +5,19 @@ export default function MarketingCtaBand({
   subtitle,
   primaryLabel = 'Start free',
   primaryTo = '/signup',
+  primaryHref,
   secondaryLabel,
   secondaryTo,
+  secondaryHref,
 }: {
   title: string;
   subtitle?: string;
   primaryLabel?: string;
   primaryTo?: string;
+  primaryHref?: string;
   secondaryLabel?: string;
   secondaryTo?: string;
+  secondaryHref?: string;
 }) {
   return (
     <section className="mkt-wash-cta px-5 py-24 md:px-8 md:py-32">
@@ -25,10 +29,18 @@ export default function MarketingCtaBand({
           <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-slate-500">{subtitle}</p>
         )}
         <div className="mt-10 flex flex-wrap justify-center gap-3">
-          <PrimaryButton to={primaryTo}>{primaryLabel}</PrimaryButton>
-          {secondaryLabel && secondaryTo && (
-            <GhostButton to={secondaryTo}>{secondaryLabel}</GhostButton>
+          {primaryHref ? (
+            <PrimaryButton href={primaryHref}>{primaryLabel}</PrimaryButton>
+          ) : (
+            <PrimaryButton to={primaryTo}>{primaryLabel}</PrimaryButton>
           )}
+          {secondaryLabel && (secondaryHref || secondaryTo) ? (
+            secondaryHref ? (
+              <GhostButton href={secondaryHref}>{secondaryLabel}</GhostButton>
+            ) : (
+              <GhostButton to={secondaryTo}>{secondaryLabel}</GhostButton>
+            )
+          ) : null}
         </div>
       </div>
     </section>

@@ -76,7 +76,6 @@ export default function SolutionPage() {
           title="See TopEdge on your catalog"
           subtitle="Start free ,  connect Shopify and WhatsApp in about fifteen minutes."
           primaryLabel="Start free"
-          primaryTo="/signup"
           secondaryLabel="See pricing"
           secondaryTo="/pricing"
         />

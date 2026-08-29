@@ -40,7 +40,6 @@ export default function CustomersPage() {
           title="Run the same playbook on your store"
           subtitle="Start free ,  connect Shopify and WhatsApp, approve templates, publish your first journey."
           primaryLabel="Start free"
-          primaryTo="/signup"
           secondaryLabel="See pricing"
           secondaryTo="/pricing"
         />

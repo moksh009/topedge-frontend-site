@@ -97,7 +97,6 @@ export default function FeatureDetailPage() {
           title={`Put ${feature.label} to work on your store`}
           subtitle="Connect Shopify, approve templates, and go live ,  usually in about fifteen minutes plus Meta review."
           primaryLabel="Start free"
-          primaryTo="/signup"
           secondaryLabel="Talk to us"
           secondaryTo="/contact"
         />

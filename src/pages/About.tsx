@@ -40,7 +40,7 @@ export default function About() {
           title="WhatsApp growth OS for Shopify India"
           subtitle="We connect Shopify data, Meta-approved templates, visual automations, and AI — so D2C teams sell and support on the channel customers already use."
         >
-          <PrimaryButton to="/signup">Start free</PrimaryButton>
+              <PrimaryButton to="/signup">Start free</PrimaryButton>
         </PageHero>
 
         <Section>

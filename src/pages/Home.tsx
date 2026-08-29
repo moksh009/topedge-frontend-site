@@ -7,7 +7,7 @@ import MarketingPage from '../marketing/components/MarketingPage';
 import HomeHero from '../marketing/components/home/HomeHero';
 import HomeStickyStories from '../marketing/components/home/HomeStickyStories';
 import HomeChaosZoom from '../marketing/components/home/HomeChaosZoom';
-import HomePricingStage from '../marketing/components/home/HomePricingStage';
+import HomePricingTeaser from '../marketing/components/home/HomePricingTeaser';
 import HomeTestimonials from '../marketing/components/home/HomeTestimonials';
 import HomeFaq from '../marketing/components/home/HomeFaq';
 import HomeClose from '../marketing/components/home/HomeClose';
@@ -33,7 +33,7 @@ export default function Home() {
         </div>
         <HomeStickyStories />
         <HomeChaosZoom />
-        <HomePricingStage />
+        <HomePricingTeaser />
         <HomeTestimonials />
         <HomeFaq />
         <HomeClose />

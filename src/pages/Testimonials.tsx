@@ -23,7 +23,6 @@ export default function Testimonials() {
           title="See what TopEdge can do on your store"
           subtitle="Connect Shopify, approve templates, and publish your first flow — free for 14 days."
           primaryLabel="Start free"
-          primaryTo="/signup"
           secondaryLabel="View case studies"
           secondaryTo="/customers"
         />

@@ -260,6 +260,8 @@ export default function HomeHero() {
           onPointerMove={onPointerMove}
         >
           <div className="home-hero__board-spot" aria-hidden />
+          <div className="home-hero__grain" aria-hidden />
+          <div className="home-hero__mesh" aria-hidden />
 
           <div className="home-hero__top">
             <h1 className="home-hero__title">

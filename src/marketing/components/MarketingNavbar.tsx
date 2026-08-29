@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ChevronDown, Menu, X, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { DASH_SIGNUP, DASH_LOGIN } from '../routes';
 
 const productLinks = [
   { label: 'Shopify / Store', desc: 'OAuth sync · edit in dashboard', href: '/features/shopify' },
@@ -119,9 +118,9 @@ export default function MarketingNavbar() {
         </nav>
 
         <div className="hidden items-center gap-2 lg:flex">
-          <a href={DASH_LOGIN} className="rounded-full px-3 py-2 text-sm font-medium text-slate-600 hover:text-[#0c1222]">
-            Log in
-          </a>
+            <Link to="/login" className="rounded-full px-3 py-2 text-sm font-medium text-slate-600 hover:text-[#0c1222]">
+              Log in
+            </Link>
           <Link to="/signup" className="mkt-btn-primary !h-10 !px-4 !text-sm">
             Start free
           </Link>
@@ -158,12 +157,12 @@ export default function MarketingNavbar() {
             )}
           </div>
           <div className="mt-4 flex flex-col gap-2">
-            <a href={DASH_LOGIN} className="rounded-full border border-[#efeaf8] px-4 py-2.5 text-center text-sm font-medium text-slate-700">
+            <Link to="/login" className="rounded-full border border-[#efeaf8] px-4 py-2.5 text-center text-sm font-medium text-slate-700">
               Log in
-            </a>
-            <a href={DASH_SIGNUP} className="mkt-btn-primary justify-center">
+            </Link>
+            <Link to="/signup" className="mkt-btn-primary justify-center">
               Start free
-            </a>
+            </Link>
           </div>
         </div>
       )}

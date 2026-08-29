@@ -32,7 +32,7 @@ export const faqs = [
   {
     question: 'Is there a free trial?',
     answer:
-      'Start free with a 14-day trial, 250 contacts, and 6,000 messages. Upgrade when WhatsApp pays for itself.',
+      'Start free with a 14-day trial, 20 orders, and 200 campaign + email sends. You’ll pick Launch, Growth, or Scale after signup.',
   },
 ];
 
@@ -40,37 +40,37 @@ export const faqs = [
 export const homeStories = [
   {
     id: 'cart-recovery' as const,
-    title: 'Recover carts on WhatsApp',
-    body: 'Shopify abandon starts a 3-message sequence. Timed nudges with COD copy and Meta templates.',
+    title: 'WhatsApp Abandoned Cart Recovery',
+    body: 'Stop losing sales at the finish line. Automatically trigger perfectly timed WhatsApp nudges when a shopper leaves items in their cart.',
+    href: '/features/journeys',
+    cta: 'Start free',
+  },
+  {
+    id: 'journey' as const,
+    title: 'Drag-and-Drop Journey Builder',
+    body: 'Map out the perfect post-purchase experience on a visual canvas. Build custom automation flows based on customer behavior or purchase history.',
     href: '/features/journeys',
     cta: 'Start free',
   },
   {
     id: 'inbox' as const,
-    title: 'Support beside the order',
-    body: 'Pick a thread, reply on WhatsApp, and see the Shopify order (COD, status, LTV) beside it.',
+    title: 'Shared Team Inbox for WhatsApp & IG',
+    body: 'Stop juggling phones. Consolidate support into one dashboard. Your team can manage, assign, and reply to messages from a single shared inbox.',
     href: '/features/live-chat',
     cta: 'Start free',
   },
   {
     id: 'ai-brain' as const,
-    title: 'AI that knows your catalog',
-    body: 'Replies grounded in Shopify products and store policy. Intent routing before an agent steps in.',
-    href: '/features/ai-brain',
+    title: 'Audience Segmentation & Lead Scoring',
+    body: 'Not all customers are equal. Automatically score leads and segment your audience based on engagement for highly personalized broadcasts.',
+    href: '/features/audience-crm',
     cta: 'Start free',
   },
   {
-    id: 'journey' as const,
-    title: 'Automate the journey',
-    body: 'Shopify abandon starts a canvas: wait, branch on COD, then send WhatsApp or skip.',
-    href: '/features/journeys',
-    cta: 'Start free',
-  },
-  {
-    id: 'flow-builder' as const,
-    title: 'AI form to Flow Builder',
-    body: 'Fill niche and goals once. Get an editable WhatsApp flow, pick a trigger, publish.',
-    href: '/features/flow-builder',
+    id: 'connect' as const,
+    title: 'Automated Order & Shipping Alerts',
+    body: 'Eliminate WISMO support tickets. Proactively send automated order confirmations, shipping updates, and tracking links directly to WhatsApp.',
+    href: '/features/shopify',
     cta: 'Start free',
   },
 ];

@@ -46,7 +46,6 @@ export default function IntegrationsPage() {
           title="Connect your store in about fifteen minutes"
           subtitle="Start free ,  Shopify OAuth and WhatsApp credentials are guided in onboarding."
           primaryLabel="Start free"
-          primaryTo="/signup"
           secondaryLabel="See features"
           secondaryTo="/features"
         />

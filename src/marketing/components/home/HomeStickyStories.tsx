@@ -16,38 +16,32 @@ const STICKY_SEQUENCE: {
 }[] = [
   {
     id: 'cart-recovery',
-    title: 'Recover carts on WhatsApp',
-    body: 'Shopify abandon starts a 3-message sequence. Timed nudges with COD copy and Meta templates.',
+    title: 'WhatsApp Abandoned Cart Recovery',
+    body: 'Stop losing sales at the finish line. Automatically trigger perfectly timed WhatsApp nudges when a shopper leaves items in their cart.',
     cta: 'Start free',
   },
   {
     id: 'journey',
-    title: 'Automate the journey',
-    body: 'Shopify abandon starts a canvas: wait, branch on COD, then send WhatsApp or skip.',
+    title: 'Drag-and-Drop Journey Builder',
+    body: 'Map out the perfect post-purchase experience on a visual canvas. Build custom automation flows based on customer behavior or purchase history.',
     cta: 'Start free',
   },
   {
     id: 'inbox',
-    title: 'Support beside the order',
-    body: 'Pick a thread, reply on WhatsApp, and see the Shopify order (COD, status, LTV) beside it.',
+    title: 'Shared Team Inbox for WhatsApp & IG',
+    body: 'Stop juggling phones. Consolidate support into one dashboard. Your team can manage, assign, and reply to messages from a single shared inbox.',
     cta: 'Start free',
   },
   {
     id: 'ai-brain',
-    title: 'AI that knows your catalog',
-    body: 'Replies grounded in Shopify products and store policy. Intent routing before an agent steps in.',
-    cta: 'Start free',
-  },
-  {
-    id: 'flow-builder',
-    title: 'AI form to Flow Builder',
-    body: 'Fill niche and goals once. Get an editable WhatsApp flow, pick a trigger, publish.',
+    title: 'Audience Segmentation & Lead Scoring',
+    body: 'Not all customers are equal. Automatically score leads and segment your audience based on engagement for highly personalized broadcasts.',
     cta: 'Start free',
   },
   {
     id: 'connect',
-    title: 'Connect your stack',
-    body: 'Shopify, Meta, and Instagram. Edit live data in your dashboard.',
+    title: 'Automated Order & Shipping Alerts',
+    body: 'Eliminate WISMO support tickets. Proactively send automated order confirmations, shipping updates, and tracking links directly to WhatsApp.',
     cta: 'Start free',
   },
 ];

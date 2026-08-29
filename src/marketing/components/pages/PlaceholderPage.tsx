@@ -30,7 +30,6 @@ export default function PlaceholderPage({
           title="Start with the homepage and pricing"
           subtitle="The navigation is now wired for the full marketing site. Next we can deepen each feature page with real product mocks."
           primaryLabel="Start free"
-          primaryTo="/signup"
           secondaryLabel="See pricing"
           secondaryTo="/pricing"
         />
