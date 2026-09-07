@@ -6,12 +6,6 @@ import MarketingPage from '../marketing/components/MarketingPage';
 import { Section } from '../marketing/components/ui';
 import { SITE_URL } from '../marketing/data/marketingSeo';
 import { blogPosts } from '../data/blogPosts';
-import { blogPosts2 } from '../data/blogPosts2';
-import { blogPosts3 } from '../data/blogPosts3';
-import { blogPosts4 } from '../data/blogPosts4';
-import { blogPosts5 } from '../data/blogPosts5';
-import { blogPosts6 } from '../data/blogPosts6';
-import blogPosts7 from '../data/blogPosts7';
 import { filterMarketingBlogPosts, isMarketingBlogPost } from '../marketing/data/blog';
 
 type BlogPostType = {
@@ -23,20 +17,10 @@ type BlogPostType = {
   category: string;
   author?: string;
   image: string;
-  content: string;
+  content?: string;
 };
 
-const allBlogPosts = filterMarketingBlogPosts(
-  [
-    ...blogPosts,
-    ...blogPosts2,
-    ...blogPosts3,
-    ...blogPosts4,
-    ...blogPosts5,
-    ...blogPosts6,
-    ...(Array.isArray(blogPosts7) ? blogPosts7 : [blogPosts7]),
-  ] as BlogPostType[]
-);
+const allBlogPosts = filterMarketingBlogPosts([...blogPosts] as BlogPostType[]);
 
 export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
@@ -54,8 +38,11 @@ export default function BlogPost() {
       <MarketingSEO
         title={`${post.title} | TopEdge Blog`}
         description={post.description}
+        keywords={post.keywords?.join(', ')}
         image={post.image.startsWith('http') ? post.image : `${SITE_URL}${post.image}`}
         path={`/blog/${post.slug}`}
+        type="article"
+        noSuffix
       />
       <Helmet>
         <script type="application/ld+json">
@@ -66,8 +53,8 @@ export default function BlogPost() {
             description: post.description,
             image: post.image,
             datePublished: new Date(post.date).toISOString(),
-            author: { '@type': 'Organization', name: 'TopEdge AI' },
-            publisher: { '@type': 'Organization', name: 'TopEdge AI', url: SITE_URL },
+            author: { '@type': 'Organization', name: 'TopEdge' },
+            publisher: { '@type': 'Organization', name: 'TopEdge', url: SITE_URL },
             mainEntityOfPage: canonical,
           })}
         </script>

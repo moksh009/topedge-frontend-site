@@ -1,38 +1,38 @@
 export const faqs = [
   {
-    question: 'How long does setup take?',
+    question: 'What is WhatsApp automation for Shopify?',
     answer:
-      'Most merchants connect Shopify and WhatsApp in about 15 minutes. Meta template approval usually takes 24 to 48 hours. Nothing sends until you approve each template.',
+      'TopEdge connects your Shopify store to Meta WhatsApp Cloud API so you can run abandoned cart recovery, COD confirmations, order updates, and campaigns from one ecommerce automation workspace.',
   },
   {
-    question: 'Do I need a developer?',
+    question: 'How does abandoned cart recovery on WhatsApp work?',
     answer:
-      'No. Connect Shopify via OAuth, add WhatsApp credentials, generate flows from an AI form, and publish journeys without code.',
+      'When a shopper leaves items in cart, Journey triggers Meta-approved WhatsApp nudges with product context. Most merchants go live after template approval — typically 24 to 48 hours.',
   },
   {
-    question: 'What about COD and Indian shipping?',
+    question: 'How long does Shopify WhatsApp setup take?',
     answer:
-      'Journeys include COD status, rupee totals, and RTO-aware copy. Cart recovery is tuned for Indian checkout patterns.',
+      'Most brands connect Shopify and WhatsApp in about 15 minutes. Nothing sends until you approve each Meta template.',
   },
   {
-    question: 'How does Meta billing work?',
+    question: 'Do I need a developer for ecommerce automation?',
     answer:
-      'Meta charges per message category. TopEdge shows transparent rates on pricing and passes through Meta costs with no markup.',
+      'No. Connect Shopify via OAuth, add WhatsApp credentials, generate flows from an AI form, and publish cart recovery journeys without code.',
   },
   {
-    question: 'Can my team reply manually?',
+    question: 'Can TopEdge handle COD confirmation on WhatsApp?',
     answer:
-      'Yes. Live Chat unifies WhatsApp and Instagram with full Shopify order context. Agents take over any thread and pause AI instantly.',
+      'Yes. Journeys branch on COD status, rupee totals, and RTO-aware copy — built for Indian D2C checkout patterns.',
   },
   {
-    question: 'Where do I change store data?',
+    question: 'How does Meta WhatsApp billing work?',
     answer:
-      'Shopify is the source of truth. TopEdge syncs products, carts, and orders. Edit catalog and settings in the dashboard.',
+      'Meta charges per message category. TopEdge shows transparent rates and passes through Cloud API costs with no markup.',
   },
   {
-    question: 'Is there a free trial?',
+    question: 'Is there a free trial for WhatsApp automation?',
     answer:
-      'Start free with a 14-day trial, 20 orders, and 200 campaign + email sends. You’ll pick Launch, Growth, or Scale after signup.',
+      'Start free with a 14-day trial, 20 orders, and 200 campaign + email sends. Pick Launch, Growth, or Scale after signup.',
   },
 ];
 

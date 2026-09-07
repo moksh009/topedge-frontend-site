@@ -1,7 +1,7 @@
 {
   "short_name": "TopEdge",
-  "name": "TopEdge — WhatsApp growth OS for Shopify India",
-  "description": "Connect Shopify to WhatsApp. Cart recovery, Meta templates, and unified inbox for Indian D2C.",
+  "name": "TopEdge — WhatsApp automation for Shopify India",
+  "description": "WhatsApp automation, cart recovery, and ecommerce journeys for Shopify D2C brands in India.",
   "icons": [
     { "src": "/icons/icon-192x192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
     { "src": "/icons/icon-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }

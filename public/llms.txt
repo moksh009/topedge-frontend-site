@@ -1,47 +1,43 @@
-# TopEdge AI - AI Caller and Chatbot Platform
-# Version: 1.0
-# Last Updated: 2024-02-20
+# TopEdge — WhatsApp automation for Shopify ecommerce (India)
+# https://topedgeai.com
+# Last updated: 2026-09-07
 
-# Site Description
-TopEdge AI is a leading provider of AI-powered caller and chatbot solutions for businesses. Our platform helps automate customer service, generate leads, and provide 24/7 support through intelligent voice and chat interfaces.
+> TopEdge is a WhatsApp automation and cart recovery platform for Shopify D2C brands in India. Connect Shopify + Meta WhatsApp Cloud API to run abandoned cart recovery, COD confirmations, shared inbox, journeys, and Meta-safe campaigns.
 
-# Main Features
-- AI Caller: Automated voice calls for lead generation and customer support
-- Smart Chatbot: 24/7 customer service automation
-- Business Automation: Streamline operations with AI
-- Lead Generation: Convert visitors into qualified leads
-- Multi-channel Support: Voice, chat, and messaging integration
+## Product
+- WhatsApp automation for Shopify
+- Abandoned cart recovery on WhatsApp
+- Ecommerce automation (journeys, COD, order updates)
+- Shopify WhatsApp integration (OAuth sync)
+- Shared WhatsApp + Instagram inbox with order context
+- Meta WhatsApp template manager (Cloud API)
+- Agency multi-brand WhatsApp ops
 
-# Primary Keywords
-ai-caller
-ai-chatbot
-business-automation
-virtual-assistant
-ai-customer-service
-chatbot-agency
-ai-agency
-lead-generation
-24-7-support
-voice-bot
+## Primary keywords
+whatsapp-automation
+shopify-automation
+ecommerce-automation
+cart-recovery
+abandoned-cart-recovery
+whatsapp-for-shopify
+shopify-whatsapp-integration
+cod-confirmation-whatsapp
+whatsapp-marketing-india
+d2c-whatsapp-automation
 
-# Content Categories
-/features - Product features and capabilities
-/pricing - Pricing plans and packages
-/blog - Industry insights and updates
-/about - Company information
-/contact - Get in touch
+## Key URLs
+- / — WhatsApp automation & cart recovery for Shopify India
+- /features — Product hubs
+- /features/journeys — Cart recovery journeys
+- /features/shopify — Shopify connection
+- /features/live-chat — Shared inbox
+- /pricing — Plans & free trial
+- /blog — Playbooks
+- /agency — Agencies
+- /solutions/cod — COD / RTO
+- /contact — Sales & DFY
 
-# Preferred Crawling Schedule
-Crawl-delay: 1
-Update-frequency: daily
-
-# Content Guidelines
-- Focus on AI technology and business automation
-- Highlight customer success stories
-- Provide detailed product information
-- Share industry insights and trends
-
-# Contact Information
+## Contact
 Website: https://topedgeai.com
 Email: contact@topedgeai.com
-Support: support@topedgeai.com 
+Dashboard: https://dash.topedgeai.com

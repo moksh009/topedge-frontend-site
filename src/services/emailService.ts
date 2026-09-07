@@ -1,21 +1,5 @@
 import axios, { AxiosError } from 'axios';
 
-export interface BookingDetails {
-  name: string;
-  email: string;
-  phone: string;
-  companyName?: string;
-  monthlyInquiry?: string;
-  channel?: string;
-  model?: string;
-  date: string;
-  time: string;
-  isoDate?: string;
-  isoEndDate?: string;
-  selectedTimezone?: string;
-  additionalInfo?: string;
-}
-
 export interface ContactDetails {
   name: string;
   email: string;
@@ -25,15 +9,7 @@ export interface ContactDetails {
   message: string;
 }
 
-export interface MaintenanceDetails {
-  name: string;
-  email: string;
-  phone: string;
-  plan: string;
-  emailTemplate?: string;
-}
-
-export type EmailType = 'user' | 'admin' | 'booking';
+export type EmailType = 'user' | 'admin';
 
 export class EmailService {
   private baseURL: string;
@@ -185,15 +161,6 @@ export class EmailService {
     }
   }
 
-  public async sendBookingEmails(bookingDetails: BookingDetails): Promise<void> {
-    try {
-      await this.sendEmail('booking', '/api/book-session', bookingDetails);
-    } catch (error) {
-      console.error('Error in sendBookingEmails:', error);
-      throw error;
-    }
-  }
-
   public async sendContactEmails(details: ContactDetails): Promise<void> {
     try {
       console.log('Sending contact form emails with details:', details);
@@ -236,22 +203,6 @@ export class EmailService {
 
   public async sendAccessApprovedCreatorEmail(details: { creatorName: string; creatorEmail: string; buyerEmail: string; resourceTitle: string; }): Promise<void> {
     await this.sendEmail('admin', '/api/access-approved-creator-email', details);
-  }
-
-  public async sendMaintenanceUserEmail(details: MaintenanceDetails): Promise<void> {
-    try {
-      await this.sendEmail('user', '/api/send-maintenance-user-email', details);
-    } catch (error) {
-      throw new Error('Failed to send maintenance user email');
-    }
-  }
-
-  public async sendMaintenanceAdminEmail(details: MaintenanceDetails): Promise<void> {
-    try {
-      await this.sendEmail('admin', '/api/send-maintenance-admin-email', details);
-    } catch (error) {
-      throw new Error('Failed to send maintenance admin email');
-    }
   }
 
   public async sendWelcomeEmail(email: string, name: string): Promise<void> {

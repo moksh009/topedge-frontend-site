@@ -1,4 +1,5 @@
 import MarketingSEO from '../marketing/components/MarketingSEO';
+import { PAGE_SEO } from '../marketing/data/pageSeo';
 import MarketingPage from '../marketing/components/MarketingPage';
 import MarketingCtaBand from '../marketing/components/MarketingCtaBand';
 import { PageHero } from '../marketing/components/ui';
@@ -8,9 +9,11 @@ export default function Testimonials() {
   return (
     <>
       <MarketingSEO
-        title="Testimonials | TopEdge — WhatsApp for Shopify India"
-        description="What Indian D2C brands say about TopEdge — cart recovery, Live Chat, and Meta template workflows."
-        path="/testimonials"
+        title={PAGE_SEO.testimonials.title}
+        description={PAGE_SEO.testimonials.description}
+        keywords={PAGE_SEO.testimonials.keywords}
+        path={PAGE_SEO.testimonials.path}
+        noSuffix
       />
       <MarketingPage>
         <PageHero

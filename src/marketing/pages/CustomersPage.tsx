@@ -1,4 +1,5 @@
 import MarketingSEO from '../components/MarketingSEO';
+import { PAGE_SEO } from '../data/pageSeo';
 import MarketingPage from '../components/MarketingPage';
 import MarketingCtaBand from '../components/MarketingCtaBand';
 import HomeTestimonials from '../components/home/HomeTestimonials';
@@ -14,9 +15,11 @@ export default function CustomersPage() {
   return (
     <>
       <MarketingSEO
-        title="Customers | TopEdge"
-        description="How Indian Shopify brands use TopEdge for WhatsApp cart recovery, inbox, and Meta-safe campaigns."
-        path="/customers"
+        title={PAGE_SEO.customers.title}
+        description={PAGE_SEO.customers.description}
+        keywords={PAGE_SEO.customers.keywords}
+        path={PAGE_SEO.customers.path}
+        noSuffix
       />
       <MarketingPage>
         <PageHero

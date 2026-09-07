@@ -3,6 +3,12 @@ import '../marketing/styles/feature-scenes.css';
 import MarketingSEO from '../marketing/components/MarketingSEO';
 import { OG_IMAGES } from '../marketing/data/marketingSeo';
 import { faqs } from '../marketing/data/home';
+import {
+  organizationJsonLd,
+  PAGE_SEO,
+  softwareApplicationJsonLd,
+  websiteJsonLd,
+} from '../marketing/data/pageSeo';
 import MarketingPage from '../marketing/components/MarketingPage';
 import HomeHero from '../marketing/components/home/HomeHero';
 import HomeStickyStories from '../marketing/components/home/HomeStickyStories';
@@ -16,15 +22,19 @@ import HomeClose from '../marketing/components/home/HomeClose';
  * Homepage: Instantly-style stages, crisp copy, no filler eyebrows/trust pills.
  */
 export default function Home() {
+  const seo = PAGE_SEO.home;
+
   return (
     <>
       <MarketingSEO
-        title="TopEdge | WhatsApp for Shopify India"
-        description="Connect Shopify to WhatsApp. Recover carts, run Live Chat with order context, and automate journeys. Built for Indian D2C."
+        title={seo.title}
+        description={seo.description}
+        keywords={seo.keywords}
         image={OG_IMAGES.home}
-        path="/"
+        path={seo.path}
         noSuffix
         faqSchema={faqs}
+        jsonLd={[organizationJsonLd(), softwareApplicationJsonLd(), websiteJsonLd()]}
       />
 
       <MarketingPage className="home-page !bg-white">

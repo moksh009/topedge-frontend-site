@@ -2,6 +2,7 @@ import { FormEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, MessageCircle, Clock } from 'lucide-react';
 import MarketingSEO from '../marketing/components/MarketingSEO';
+import { PAGE_SEO } from '../marketing/data/pageSeo';
 import { PageHero, Section, MarketingCard } from '../marketing/components/ui';
 import { Reveal } from '../marketing/components/motion';
 import MarketingPage from '../marketing/components/MarketingPage';
@@ -52,9 +53,11 @@ export default function Contact() {
   return (
     <>
       <MarketingSEO
-        title="Contact | TopEdge — WhatsApp automation for Shopify"
-        description="Talk to TopEdge about WhatsApp automations, Meta templates, or fully managed setup for your Shopify store."
-        path="/contact"
+        title={PAGE_SEO.contact.title}
+        description={PAGE_SEO.contact.description}
+        keywords={PAGE_SEO.contact.keywords}
+        path={PAGE_SEO.contact.path}
+        noSuffix
       />
       <MarketingPage>
         <PageHero

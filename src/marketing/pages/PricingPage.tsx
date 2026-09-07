@@ -2,13 +2,14 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/pricing.css';
 import MarketingSEO from '../components/MarketingSEO';
+import { PAGE_SEO } from '../data/pageSeo';
 import MarketingPage from '../components/MarketingPage';
 import CycleToggle from '../components/pricing/CycleToggle';
 import PlanGrid from '../components/pricing/PlanGrid';
 import FeatureMatrix from '../components/pricing/FeatureMatrix';
 import IncludedFeatures from '../components/pricing/IncludedFeatures';
 import RoiCalculator from '../components/pricing/RoiCalculator';
-import PricingFaq from '../components/pricing/PricingFaq';
+import PricingFaq, { PRICING_FAQS } from '../components/pricing/PricingFaq';
 import {
   BillingCatalog,
   BillingCycle,
@@ -36,13 +37,17 @@ export default function PricingPage() {
     };
   }, []);
 
+  const seo = PAGE_SEO.pricing;
+  const faqSchema = PRICING_FAQS.map((f) => ({ question: f.q, answer: f.a }));
+
   return (
     <>
       <MarketingSEO
-        title="Pricing | TopEdge AI"
-        description="Start free for 14 days. Launch, Growth, and Scale plans for WhatsApp + Shopify. Prices exclusive of 18% GST."
-        path="/pricing"
-        noSuffix
+        title={seo.title}
+        description={seo.description}
+        keywords={seo.keywords}
+        path={seo.path}
+        faqSchema={faqSchema}
       />
       <MarketingPage>
         <div className="mkt-pricing">

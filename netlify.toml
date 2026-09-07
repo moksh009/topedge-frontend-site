@@ -102,6 +102,11 @@
   status = 301
 
 [[redirects]]
+  from = "/ecommerce"
+  to = "/"
+  status = 301
+
+[[redirects]]
   from = "/ai-caller"
   to = "/features/ai-brain"
   status = 301

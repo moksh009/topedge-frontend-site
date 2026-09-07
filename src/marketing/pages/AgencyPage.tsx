@@ -1,4 +1,5 @@
 import MarketingSEO from '../components/MarketingSEO';
+import { PAGE_SEO } from '../data/pageSeo';
 import MarketingPage from '../components/MarketingPage';
 import MarketingCtaBand from '../components/MarketingCtaBand';
 import { PageHero, Section, MarketingCard } from '../components/ui';
@@ -7,9 +8,11 @@ export default function AgencyPage() {
   return (
     <>
       <MarketingSEO
-        title="Agencies | TopEdge"
-        description="Run WhatsApp growth for multiple Shopify India brands ,  journeys, inbox, and Meta-safe campaigns."
-        path="/agency"
+        title={PAGE_SEO.agency.title}
+        description={PAGE_SEO.agency.description}
+        keywords={PAGE_SEO.agency.keywords}
+        path={PAGE_SEO.agency.path}
+        noSuffix
       />
       <MarketingPage>
         <PageHero

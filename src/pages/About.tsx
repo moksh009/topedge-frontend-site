@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import MarketingSEO from '../marketing/components/MarketingSEO';
+import { PAGE_SEO } from '../marketing/data/pageSeo';
 import { PageHero, Section, SectionHeading, MarketingCard, PrimaryButton, Eyebrow } from '../marketing/components/ui';
 import { Stagger, StaggerItem } from '../marketing/components/motion';
 import MarketingPage from '../marketing/components/MarketingPage';
@@ -30,9 +31,11 @@ export default function About() {
   return (
     <>
       <MarketingSEO
-        title="About | TopEdge — WhatsApp growth for Shopify India"
-        description="Why we built TopEdge: one workspace for Meta templates, automations, AI, and human handoff on WhatsApp."
-        path="/about"
+        title={PAGE_SEO.about.title}
+        description={PAGE_SEO.about.description}
+        keywords={PAGE_SEO.about.keywords}
+        path={PAGE_SEO.about.path}
+        noSuffix
       />
       <MarketingPage>
         <PageHero

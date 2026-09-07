@@ -1,18 +1,18 @@
-const FAQS = [
+export const PRICING_FAQS = [
   {
-    q: 'How does GST work?',
+    q: 'How does GST work on WhatsApp automation plans?',
     a: 'Plan prices on this page are exclusive of tax. +18% GST. SAC 998314. GST invoices are included on every plan.',
   },
   {
-    q: 'What is included in the trial?',
+    q: 'What is included in the Shopify WhatsApp free trial?',
     a: '14 days, 20 orders, and 200 successful campaign + email sends. Journey Branch and COD → prepaid follow Launch limits. No credit card on the marketing site. You’ll pick Launch, Growth, or Scale after signup.',
   },
   {
-    q: 'Are WhatsApp / Meta fees included?',
-    a: 'No. Meta Cloud API fees are pass-through (marketing ~₹0.88 / msg, utility ~₹0.125, service free). We never bill per conversation.',
+    q: 'Are WhatsApp / Meta Cloud API fees included?',
+    a: 'No. Meta Cloud API fees are pass-through (marketing ~₹0.88 / msg, utility ~₹0.125, service free). We never bill per conversation — ideal for cart recovery volume.',
   },
   {
-    q: 'Can I cancel?',
+    q: 'Can I cancel ecommerce automation anytime?',
     a: 'Yes. Cancel in the dashboard at period end. You keep access until the cycle finishes. Manage billing after signup at dash.topedgeai.com/settings?tab=billing.',
   },
   {
@@ -24,7 +24,7 @@ const FAQS = [
 export default function PricingFaq() {
   return (
     <div className="mkt-pfq">
-      {FAQS.map((item) => (
+      {PRICING_FAQS.map((item) => (
         <details key={item.q} className="mkt-pfq__item">
           <summary>{item.q}</summary>
           <p>{item.a}</p>

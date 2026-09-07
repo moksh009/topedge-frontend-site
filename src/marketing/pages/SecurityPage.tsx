@@ -1,4 +1,5 @@
 import MarketingSEO from '../components/MarketingSEO';
+import { PAGE_SEO } from '../data/pageSeo';
 import MarketingPage from '../components/MarketingPage';
 import MarketingCtaBand from '../components/MarketingCtaBand';
 import { PageHero, Section, MarketingCard } from '../components/ui';
@@ -26,9 +27,11 @@ export default function SecurityPage() {
   return (
     <>
       <MarketingSEO
-        title="Security | TopEdge"
-        description="How TopEdge handles Shopify sync, Meta template approvals, and tenant workspace isolation for Indian merchants."
-        path="/security"
+        title={PAGE_SEO.security.title}
+        description={PAGE_SEO.security.description}
+        keywords={PAGE_SEO.security.keywords}
+        path={PAGE_SEO.security.path}
+        noSuffix
       />
       <MarketingPage>
         <PageHero

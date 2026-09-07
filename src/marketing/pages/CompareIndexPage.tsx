@@ -1,4 +1,5 @@
 import MarketingSEO from '../components/MarketingSEO';
+import { PAGE_SEO } from '../data/pageSeo';
 import MarketingPage from '../components/MarketingPage';
 import MarketingCtaBand from '../components/MarketingCtaBand';
 import { PageHero, Section, MarketingCard } from '../components/ui';
@@ -23,9 +24,11 @@ export default function CompareIndexPage() {
   return (
     <>
       <MarketingSEO
-        title="Compare | TopEdge"
-        description="How TopEdge differs from WhatsApp Web, generic chatbots, and email-only recovery for Indian Shopify brands."
-        path="/compare"
+        title={PAGE_SEO.compare.title}
+        description={PAGE_SEO.compare.description}
+        keywords={PAGE_SEO.compare.keywords}
+        path={PAGE_SEO.compare.path}
+        noSuffix
       />
       <MarketingPage>
         <PageHero

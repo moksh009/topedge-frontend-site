@@ -1,30 +1,39 @@
-# https://www.robotstxt.org/robotstxt.html
+# https://topedgeai.com/robots.txt
 User-agent: *
 Allow: /
 
-# Sitemaps
-Sitemap: https://topedgeai.com/sitemap.xml
-
-# Prevent crawling of admin or private areas
 Disallow: /admin/
 Disallow: /private/
 Disallow: /api/
+Disallow: /community/admin/
+Disallow: /dev/
 
-# Allow crawling of assets
-Allow: /images/
-Allow: /static/
-Allow: /assets/
-
-# Optimize crawl rate
-Crawl-delay: 1
-
-# Important directories to crawl
 Allow: /blog/
 Allow: /features/
 Allow: /pricing/
+Allow: /solutions/
 Allow: /about/
 Allow: /contact/
+Allow: /agency/
+Allow: /integrations/
 
-# Prevent duplicate content
-Disallow: /*?*
-Disallow: /*? 
+Sitemap: https://topedgeai.com/sitemap.xml
+
+# AI / answer-engine crawlers
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /

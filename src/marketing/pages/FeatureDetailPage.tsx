@@ -6,6 +6,7 @@ import MarketingCtaBand from '../components/MarketingCtaBand';
 import FeatureScene from '../components/foundation/FeatureScene';
 import { PageHero, Section, MarketingCard, PrimaryButton, GhostButton } from '../components/ui';
 import { getFeatureBySlug, MARKETING_FEATURES, resolveFeatureSlug } from '../data/features';
+import { FEATURE_SEO } from '../data/pageSeo';
 import '../styles/feature-scenes.css';
 
 export default function FeatureDetailPage() {
@@ -22,13 +23,16 @@ export default function FeatureDetailPage() {
   }
 
   const others = MARKETING_FEATURES.filter((f) => f.slug !== feature.slug).slice(0, 3);
+  const featureSeo = FEATURE_SEO[feature.slug];
 
   return (
     <>
       <MarketingSEO
-        title={`${feature.label} | TopEdge`}
-        description={feature.body}
+        title={featureSeo?.title ?? `${feature.label} | TopEdge`}
+        description={featureSeo?.description ?? feature.body}
+        keywords={featureSeo?.keywords}
         path={`/features/${feature.slug}`}
+        noSuffix={Boolean(featureSeo)}
       />
       <MarketingPage>
         <PageHero eyebrow={feature.label} title={feature.title} subtitle={feature.body} />

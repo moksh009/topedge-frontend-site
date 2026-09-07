@@ -1,22 +1,25 @@
-# Allow AI search and agent use
+# Root copy — deployed robots live in public/robots.txt
+# Canonical site: https://topedgeai.com
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /private/
+Disallow: /api/
+
+Sitemap: https://topedgeai.com/sitemap.xml
+
 User-agent: OAI-SearchBot
-User-agent: ChatGPT-User  
-User-agent: PerplexityBot
-User-agent: FirecrawlAgent
-User-agent: AndiBot
-User-agent: ExaBot
-User-agent: PhindBot
-User-agent: YouBot
 Allow: /
 
-# Allow traditional search indexing
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
 User-agent: Googlebot
+Allow: /
+
 User-agent: Bingbot
 Allow: /
-
-# Disallow access to admin areas for all bots
-User-agent: *
-Disallow: /admin/
-Disallow: /internal/
-
-Sitemap: https://www.topedge.ai/sitemap.xml 

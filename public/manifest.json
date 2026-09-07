@@ -1,11 +1,11 @@
 {
-  "name": "TopEdge AI",
+  "name": "TopEdge",
   "short_name": "TopEdge",
-  "description": "AI Callers & Chatbots for 24/7 Business Automation",
+  "description": "WhatsApp automation and cart recovery for Shopify ecommerce brands in India",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#6366f1",
+  "theme_color": "#7C3AED",
   "icons": [
     {
       "src": "/favicon-96x96.png",

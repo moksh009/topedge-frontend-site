@@ -1,83 +1,60 @@
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import MarketingSEO from '../components/MarketingSEO';
 import MarketingPage from '../components/MarketingPage';
 import MarketingCtaBand from '../components/MarketingCtaBand';
 import FeatureScene from '../components/foundation/FeatureScene';
 import { PageHero, Section, MarketingCard } from '../components/ui';
+import { SOLUTION_SEO } from '../data/pageSeo';
 import '../styles/feature-scenes.css';
 
-const SOLUTIONS: Record<
-  string,
-  { title: string; body: string; bullets: string[]; scene: 'journey' | 'inbox' | 'campaigns' }
-> = {
-  fashion: {
-    title: 'Fashion & apparel on WhatsApp',
-    body: 'Size exchanges, COD confirmations, and cart recovery ,  with Shopify order context in every thread.',
-    bullets: [
-      'Cart recovery with size/variant aware copy',
-      'Live Chat beside order # and COD status',
-      'Campaigns for drop weekends ,  Meta-approved only',
-    ],
-    scene: 'inbox',
-  },
-  beauty: {
-    title: 'Beauty & skincare that converts on chat',
-    body: 'Catalog-grounded answers, serum cart recovery, and journeys that respect Indian COD habits.',
-    bullets: [
-      'AI Brain cites live SKUs and ₹ prices',
-      '3-message recovery with product cards',
-      'IG comment → DM for “price please?”',
-    ],
-    scene: 'journey',
-  },
-  cod: {
-    title: 'COD-first brands, without the chaos',
-    body: 'Confirm COD, reduce RTO risk, and keep recovery honest ,  utility templates, clear status, operator takeover.',
-    bullets: [
-      'COD conditions inside Journey canvas',
-      'Inbox shows COD pending beside the thread',
-      'Transparent Meta utility rates on pricing',
-    ],
-    scene: 'campaigns',
-  },
+const FALLBACK = {
+  title: 'WhatsApp Automation for Indian Shopify D2C',
+  description:
+    'Ecommerce automation on WhatsApp for Shopify India — cart recovery, Live Chat, COD flows, and Meta-safe campaigns.',
+  keywords: 'Shopify WhatsApp automation India, ecommerce automation D2C, cart recovery WhatsApp',
+  body: 'WhatsApp growth OS for recovery, inbox, and Meta-safe campaigns on Shopify.',
+  bullets: ['Shopify sync', 'Journey canvas', 'Live Chat with Customer 360'],
+  scene: 'journey' as const,
 };
 
 export default function SolutionPage() {
-  const { slug = 'fashion' } = useParams();
-  const solution = SOLUTIONS[slug] ?? {
-    title: 'Built for Indian Shopify D2C',
-    body: 'WhatsApp growth OS for recovery, inbox, and Meta-safe campaigns.',
-    bullets: ['Shopify sync', 'Journey canvas', 'Live Chat with Customer 360'],
-    scene: 'journey' as const,
-  };
+  const { vertical: slug = 'fashion' } = useParams();
+  const solution = SOLUTION_SEO[slug] ?? FALLBACK;
 
   return (
     <>
       <MarketingSEO
-        title={`${solution.title} | TopEdge`}
-        description={solution.body}
+        title={solution.title}
+        description={solution.description}
+        keywords={solution.keywords}
         path={`/solutions/${slug}`}
+        noSuffix
       />
       <MarketingPage>
-        <PageHero eyebrow="Solutions" title={solution.title} subtitle={solution.body} />
+        <PageHero eyebrow="Solutions" title={solution.title.replace(/ \| .*$/, '')} subtitle={solution.body} />
+
         <Section className="!pt-0">
-          <div className="mx-auto max-w-4xl">
+          <div className="mx-auto mb-10 max-w-4xl">
             <FeatureScene variant={solution.scene} />
           </div>
-          <div className="mx-auto mt-10 grid max-w-3xl gap-4">
+          <div className="grid gap-5 md:grid-cols-3">
             {solution.bullets.map((b) => (
-              <MarketingCard key={b} className="!p-5">
-                <p className="text-sm text-slate-600">{b}</p>
+              <MarketingCard key={b}>
+                <p className="text-sm leading-relaxed text-slate-600">{b}</p>
               </MarketingCard>
             ))}
           </div>
+          <p className="mt-8 text-center text-sm text-slate-500">
+            Looking for agencies?{' '}
+            <Link to="/agency" className="font-medium text-[#7C3AED] hover:underline">
+              See agency WhatsApp automation
+            </Link>
+          </p>
         </Section>
+
         <MarketingCtaBand
           title="See TopEdge on your catalog"
-          subtitle="Start free ,  connect Shopify and WhatsApp in about fifteen minutes."
-          primaryLabel="Start free"
-          secondaryLabel="See pricing"
-          secondaryTo="/pricing"
+          subtitle="Start free — connect Shopify and WhatsApp in about fifteen minutes."
         />
       </MarketingPage>
     </>

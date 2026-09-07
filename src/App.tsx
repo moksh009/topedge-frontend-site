@@ -7,7 +7,6 @@ import { ThemeProvider } from './contexts/ThemeContext';
 import Navbar from './components/navigation/Navbar';
 import MarketingNavbar from './marketing/components/MarketingNavbar';
 import CommunityNavbar from './components/community/layout/CommunityNavbar';
-import FloatingVoiceChat from './components/FloatingVoiceChat';
 import Footer from './components/Footer';
 import MarketingFooter from './marketing/components/MarketingFooter';
 import { isMarketingRoute } from './marketing/routes';
@@ -46,8 +45,6 @@ const AiChatbotRedirect = React.lazy(() =>
   import('./marketing/pages/legacyRedirects').then((m) => ({ default: m.AiChatbotRedirect }))
 );
 const PrivacyPolicy = React.lazy(() => import('./pages/PrivacyPolicy'));
-const Ecommerce = React.lazy(() => import('./pages/Ecommerce'));
-const MaintenanceInquiries = React.lazy(() => import('./components/admin/MaintenanceInquiries').then(module => ({ default: module.MaintenanceInquiries })));
 const ProtectedRoute = React.lazy(() =>
   import('./components/admin/ProtectedRoute').then((m) => ({ default: m.ProtectedRoute }))
 );
@@ -95,7 +92,6 @@ const ScrollToTop = () => {
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
-  const isEcommerce = location.pathname === '/ecommerce';
   const isCommunityRoute = location.pathname.startsWith('/community');
   const isAuthPage = location.pathname === '/community/login' || location.pathname === '/community/signup';
   const marketing = isMarketingRoute(location.pathname);
@@ -109,19 +105,19 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   const pageTitle = isCommunityRoute
     ? 'Community | TopEdge'
     : marketing
-      ? 'TopEdge | WhatsApp growth OS for Shopify India'
-      : 'TopEdge AI';
+      ? 'TopEdge | WhatsApp Automation & Cart Recovery for Shopify India'
+      : 'TopEdge';
 
   const pageDescription = isCommunityRoute
     ? 'Join the TopEdge community — automation workflows, resources, and builders.'
     : marketing
-      ? 'Connect Shopify to WhatsApp. Approve Meta templates, automate cart recovery, and manage one inbox — built for Indian D2C.'
-      : 'TopEdge AI — customer engagement and automation.';
+      ? 'WhatsApp automation for Shopify: abandoned cart recovery, COD confirmations, Live Chat, and ecommerce journeys for Indian D2C.'
+      : 'TopEdge — WhatsApp growth for Shopify and builders.';
 
   return (
     <div
       className={`min-h-screen transition-colors duration-200 relative ${
-        isEcommerce ? 'bg-black overflow-hidden' : marketing ? 'bg-white text-[#0c1222]' : 'bg-background text-text [zoom:0.9]'
+        marketing ? 'bg-white text-[#0c1222]' : 'bg-background text-text [zoom:0.9]'
       }`}
     >
       <Helmet>
@@ -129,7 +125,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           <>
             <title>{pageTitle}</title>
             <meta name="description" content={pageDescription} />
-            <meta name="keywords" content="AI voice agents, chatbots, customer service automation, TopEdge AI, business automation, AI community, automation workflows" />
+            <meta name="keywords" content="TopEdge, WhatsApp Shopify, community, automation workflows, Indian D2C" />
             <meta property="og:type" content="website" />
             <meta property="og:url" content="https://topedgeai.com/" />
             <meta property="og:title" content={pageTitle} />
@@ -148,7 +144,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Helmet>
 
-      {!isCommunityRoute && location.pathname !== '/ecommerce' && !isLegalRoute && (
+      {!isCommunityRoute && !isLegalRoute && (
         <motion.div key={marketing ? 'marketing-nav' : 'legacy-nav'}>
           {marketing ? <MarketingNavbar /> : <Navbar />}
         </motion.div>
@@ -167,8 +163,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         </div>
       )}
 
-      {!isCommunityRoute && location.pathname !== '/ecommerce' && !isLegalRoute && (marketing ? <MarketingFooter /> : <Footer />)}
-      {!isCommunityRoute && location.pathname !== '/ecommerce' && !marketing && !isLegalRoute && <FloatingVoiceChat />}
+      {!isCommunityRoute && !isLegalRoute && (marketing ? <MarketingFooter /> : <Footer />)}
       {isCommunityRoute && !isAuthPage && <Footer />}
     </div>
   );
@@ -296,7 +291,6 @@ const AnimatedRoutes = () => {
           <Route path="/ai-chatbot" element={<AiChatbotRedirect />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
-          <Route path="/ecommerce" element={<Ecommerce />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<TermsPage />} />
@@ -304,14 +298,6 @@ const AnimatedRoutes = () => {
           <Route path="/compare" element={<CompareIndexPage />} />
           <Route path="/compare/:competitor" element={<ComparePage />} />
           <Route path="/admin/login" element={<CommunityLogin />} />
-          <Route
-            path="/admin/maintenance-inquiries"
-            element={
-              <ProtectedRoute requireAdmin>
-                <MaintenanceInquiries />
-              </ProtectedRoute>
-            }
-          />
 
           {/* Community Routes */}
           <Route path="/community" element={<CommunityHome />} />

@@ -24,7 +24,7 @@ const MARKETING_PREFIXES = [
   '/booking',
 ];
 
-const NON_MARKETING = ['/community', '/ecommerce', '/admin', '/ai-caller', '/ai-chatbot'];
+const NON_MARKETING = ['/community', '/admin', '/ai-caller', '/ai-chatbot'];
 
 export function isMarketingRoute(pathname: string): boolean {
   if (NON_MARKETING.some((p) => pathname === p || pathname.startsWith(`${p}/`))) {

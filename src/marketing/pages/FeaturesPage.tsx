@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import MarketingSEO from '../components/MarketingSEO';
+import { PAGE_SEO } from '../data/pageSeo';
 import MarketingPage from '../components/MarketingPage';
 import MarketingCtaBand from '../components/MarketingCtaBand';
 import FeatureScene from '../components/foundation/FeatureScene';
@@ -8,12 +9,14 @@ import { MARKETING_FEATURES } from '../data/features';
 import '../styles/feature-scenes.css';
 
 export default function FeaturesPage() {
+  const seo = PAGE_SEO.features;
   return (
     <>
       <MarketingSEO
-        title="Features | TopEdge WhatsApp growth OS"
-        description="Shopify connection, Journey canvas, Live Chat, Flow Builder, AI Brain, Campaigns, IG Automation, Analytics, Meta Manager, and Audience ,  every hub shown with real product UI."
-        path="/features"
+        title={seo.title}
+        description={seo.description}
+        keywords={seo.keywords}
+        path={seo.path}
       />
       <MarketingPage>
         <PageHero

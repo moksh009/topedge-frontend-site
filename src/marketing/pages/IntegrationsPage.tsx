@@ -1,4 +1,5 @@
 import MarketingSEO from '../components/MarketingSEO';
+import { PAGE_SEO } from '../data/pageSeo';
 import MarketingPage from '../components/MarketingPage';
 import MarketingCtaBand from '../components/MarketingCtaBand';
 import { PageHero, Section, MarketingCard } from '../components/ui';
@@ -22,9 +23,11 @@ export default function IntegrationsPage() {
   return (
     <>
       <MarketingSEO
-        title="Integrations | TopEdge"
-        description="Shopify OAuth, Meta WhatsApp templates, and Instagram automations ,  connected for Indian D2C operators."
-        path="/integrations"
+        title={PAGE_SEO.integrations.title}
+        description={PAGE_SEO.integrations.description}
+        keywords={PAGE_SEO.integrations.keywords}
+        path={PAGE_SEO.integrations.path}
+        noSuffix
       />
       <MarketingPage>
         <PageHero
