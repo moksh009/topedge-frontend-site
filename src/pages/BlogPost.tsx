@@ -1,26 +1,26 @@
 import { useParams, Link, Navigate } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import MarketingSEO from '../marketing/components/MarketingSEO';
 import MarketingPage from '../marketing/components/MarketingPage';
-import { Section } from '../marketing/components/ui';
 import { SITE_URL } from '../marketing/data/marketingSeo';
 import { blogPosts } from '../data/blogPosts';
 import { filterMarketingBlogPosts, isMarketingBlogPost } from '../marketing/data/blog';
+import type { BlogPost as BlogPostModel } from '../types/blog';
+import { DASH_SIGNUP } from '../marketing/routes';
+import '../marketing/styles/blog.css';
 
-type BlogPostType = {
-  title: string;
-  description: string;
-  slug: string;
-  date: string;
-  readTime: string;
-  category: string;
-  author?: string;
-  image: string;
-  content?: string;
-};
+const allBlogPosts = filterMarketingBlogPosts([...blogPosts] as BlogPostModel[]);
 
-const allBlogPosts = filterMarketingBlogPosts([...blogPosts] as BlogPostType[]);
+function formatDate(date: string) {
+  const parsed = new Date(date);
+  if (Number.isNaN(parsed.getTime())) return date;
+  return parsed.toLocaleDateString('en-IN', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  });
+}
 
 export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
@@ -31,7 +31,10 @@ export default function BlogPost() {
   }
 
   const canonical = `${SITE_URL}/blog/${post.slug}`;
-  const related = allBlogPosts.filter((p) => p.slug !== post.slug && isMarketingBlogPost(p)).slice(0, 3);
+  const related = allBlogPosts
+    .filter((p) => p.slug !== post.slug && isMarketingBlogPost(p))
+    .slice(0, 3);
+  const imageAbs = post.image.startsWith('http') ? post.image : `${SITE_URL}${post.image}`;
 
   return (
     <>
@@ -39,7 +42,7 @@ export default function BlogPost() {
         title={`${post.title} | TopEdge Blog`}
         description={post.description}
         keywords={post.keywords?.join(', ')}
-        image={post.image.startsWith('http') ? post.image : `${SITE_URL}${post.image}`}
+        image={imageAbs}
         path={`/blog/${post.slug}`}
         type="article"
         noSuffix
@@ -51,67 +54,88 @@ export default function BlogPost() {
             '@type': 'BlogPosting',
             headline: post.title,
             description: post.description,
-            image: post.image,
+            image: imageAbs,
             datePublished: new Date(post.date).toISOString(),
             author: { '@type': 'Organization', name: 'TopEdge' },
-            publisher: { '@type': 'Organization', name: 'TopEdge', url: SITE_URL },
-            mainEntityOfPage: canonical,
+            publisher: {
+              '@type': 'Organization',
+              name: 'TopEdge',
+              url: SITE_URL,
+              logo: { '@type': 'ImageObject', url: `${SITE_URL}/og-image.png` },
+            },
+            mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
+            keywords: post.keywords?.join(', '),
           })}
         </script>
       </Helmet>
 
-      <MarketingPage>
-        <article className="border-b border-[#efeaf8] bg-white pt-[calc(var(--marketing-nav-h)+2rem)] pb-10 md:pt-[calc(var(--marketing-nav-h)+3rem)]">
-          <div className="marketing-container max-w-3xl">
-            <Link
-              to="/blog"
-              className="mb-8 inline-flex items-center gap-2 text-sm font-medium text-[#7C3AED] hover:underline"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              All articles
-            </Link>
-            <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-[#7C3AED]/80">{post.category}</p>
-            <h1 className="mt-3 font-sans font-medium text-[1.875rem] leading-[1.12] tracking-[-0.022em] text-[#0f172a] md:text-[2.5rem]">
-              {post.title}
-            </h1>
-            <p className="mt-4 text-sm text-slate-500">
-              {post.date} · {post.readTime}
-              {post.author ? ` · ${post.author}` : ''}
-            </p>
-          </div>
-        </article>
-
-        <Section className="!pt-8">
-          <div className="marketing-container max-w-3xl">
-            <div className="mb-10 overflow-hidden rounded-2xl border border-[#efeaf8]">
-              <img src={post.image} alt="" className="w-full object-cover" loading="lazy" />
+      <MarketingPage className="mkt-blog-article !bg-transparent">
+        <header className="mkt-blog-hero">
+          <div className="marketing-container">
+            <div className="mkt-blog-hero__inner">
+              <Link to="/blog" className="mkt-blog-back">
+                <ArrowLeft className="h-4 w-4" aria-hidden />
+                All playbooks
+              </Link>
+              <span className="mkt-blog-pill">{post.category}</span>
+              <h1 className="mkt-blog-title">{post.title}</h1>
+              <p className="mkt-blog-lede">{post.description}</p>
+              <div className="mkt-blog-meta">
+                <span>{post.author || 'TopEdge'}</span>
+                <span className="mkt-blog-meta__dot" aria-hidden />
+                <time dateTime={post.date}>{formatDate(post.date)}</time>
+                <span className="mkt-blog-meta__dot" aria-hidden />
+                <span>{post.readTime} read</span>
+              </div>
             </div>
+          </div>
+        </header>
+
+        <div className="marketing-container">
+          <div className="mkt-blog-body-wrap">
             <div
-              className="prose prose-slate max-w-none prose-headings:font-sans prose-headings:font-medium prose-headings:tracking-tight prose-a:text-[#7C3AED] prose-img:rounded-xl prose-img:border prose-img:border-[#efeaf8]"
+              className="mkt-blog-prose"
               dangerouslySetInnerHTML={{ __html: post.content || '' }}
             />
+
+            <aside className="mkt-blog-cta" aria-label="Get started">
+              <p className="mkt-blog-cta__title">Run this on your Shopify store</p>
+              <p className="mkt-blog-cta__sub">
+                Connect Shopify and WhatsApp, approve Meta templates, and publish cart recovery
+                journeys — free for 14 days.
+              </p>
+              <div className="mkt-blog-cta__actions">
+                <a href={DASH_SIGNUP} className="mkt-btn-primary">
+                  Start free
+                  <ArrowRight className="h-4 w-4" aria-hidden />
+                </a>
+                <Link to="/features/journeys" className="mkt-btn-ghost">
+                  See cart recovery
+                </Link>
+              </div>
+            </aside>
           </div>
-        </Section>
+        </div>
 
         {related.length > 0 && (
-          <Section subtle>
-            <div className="marketing-container max-w-3xl">
-              <h2 className="font-sans font-medium text-xl tracking-tight text-[#0f172a]">Related articles</h2>
-              <ul className="mt-6 space-y-4">
+          <section className="mkt-blog-related" aria-labelledby="related-heading">
+            <div className="marketing-container" style={{ maxWidth: '68rem' }}>
+              <h2 id="related-heading" className="mkt-blog-related__title">
+                Related playbooks
+              </h2>
+              <div className="mkt-blog-related__grid">
                 {related.map((r) => (
-                  <li key={r.slug}>
-                    <Link
-                      to={`/blog/${r.slug}`}
-                      className="block rounded-xl border border-[#efeaf8] bg-white p-5 transition hover:border-marketing-border hover:shadow-sm"
-                    >
-                      <p className="font-medium text-[#0f172a] hover:text-[#7C3AED]">{r.title}</p>
-                      <p className="mt-1 text-sm text-slate-500">{r.date}</p>
-                    </Link>
-                  </li>
+                  <Link key={r.slug} to={`/blog/${r.slug}`} className="mkt-blog-related__card">
+                    <span className="mkt-blog-related__card-cat">{r.category}</span>
+                    <span className="mkt-blog-related__card-title">{r.title}</span>
+                    <span className="mkt-blog-related__card-meta">
+                      {formatDate(r.date)} · {r.readTime}
+                    </span>
+                  </Link>
                 ))}
-              </ul>
+              </div>
             </div>
-          </Section>
+          </section>
         )}
       </MarketingPage>
     </>

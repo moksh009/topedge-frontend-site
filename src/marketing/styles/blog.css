@@ -1,0 +1,317 @@
+/* Blog article & index — spacing tuned for long-form playbooks */
+
+.mkt-blog-article {
+  background:
+    radial-gradient(ellipse 70% 45% at 50% -5%, rgba(124, 58, 237, 0.1), transparent 55%),
+    linear-gradient(180deg, #faf9ff 0%, #ffffff 28%, #ffffff 100%);
+}
+
+.mkt-blog-hero {
+  padding-top: calc(var(--marketing-nav-h) + 2.5rem);
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid var(--mkt-border);
+}
+
+@media (min-width: 768px) {
+  .mkt-blog-hero {
+    padding-top: calc(var(--marketing-nav-h) + 3.5rem);
+    padding-bottom: 3.25rem;
+  }
+}
+
+.mkt-blog-hero__inner {
+  max-width: 42rem;
+  margin: 0 auto;
+}
+
+.mkt-blog-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--mkt-violet);
+  transition: opacity 0.15s ease;
+}
+
+.mkt-blog-back:hover {
+  opacity: 0.8;
+}
+
+.mkt-blog-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.7rem;
+  border-radius: 9999px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mkt-violet);
+  background: var(--mkt-violet-light);
+  border: 1px solid rgba(124, 58, 237, 0.12);
+}
+
+.mkt-blog-title {
+  margin-top: 1rem;
+  font-family: var(--mkt-font);
+  font-size: clamp(1.75rem, 4vw, 2.625rem);
+  font-weight: 560;
+  line-height: 1.15;
+  letter-spacing: -0.028em;
+  color: var(--mkt-ink);
+}
+
+.mkt-blog-lede {
+  margin-top: 1.25rem;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: #475569;
+}
+
+.mkt-blog-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  margin-top: 1.5rem;
+  font-size: 0.8125rem;
+  color: #94a3b8;
+}
+
+.mkt-blog-meta__dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #cbd5e1;
+}
+
+.mkt-blog-body-wrap {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 2.75rem 0 1rem;
+}
+
+@media (min-width: 768px) {
+  .mkt-blog-body-wrap {
+    padding: 3.5rem 0 1.5rem;
+  }
+}
+
+/* Long-form prose — explicit so it looks right even without Tailwind prose defaults */
+.mkt-blog-prose {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: #334155;
+}
+
+.mkt-blog-prose > *:first-child {
+  margin-top: 0;
+}
+
+.mkt-blog-prose p {
+  margin: 0 0 1.35rem;
+}
+
+.mkt-blog-prose h2 {
+  margin: 2.75rem 0 1rem;
+  font-family: var(--mkt-font);
+  font-size: 1.375rem;
+  font-weight: 560;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  color: var(--mkt-ink);
+}
+
+.mkt-blog-prose h3 {
+  margin: 2rem 0 0.75rem;
+  font-family: var(--mkt-font);
+  font-size: 1.125rem;
+  font-weight: 560;
+  letter-spacing: -0.015em;
+  color: var(--mkt-ink);
+}
+
+.mkt-blog-prose ul,
+.mkt-blog-prose ol {
+  margin: 0 0 1.5rem;
+  padding-left: 1.35rem;
+}
+
+.mkt-blog-prose li {
+  margin: 0.45rem 0;
+  padding-left: 0.35rem;
+}
+
+.mkt-blog-prose li::marker {
+  color: var(--mkt-violet);
+}
+
+.mkt-blog-prose ol {
+  list-style: decimal;
+}
+
+.mkt-blog-prose ul {
+  list-style: disc;
+}
+
+.mkt-blog-prose strong {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.mkt-blog-prose a {
+  color: var(--mkt-violet);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+
+.mkt-blog-prose a:hover {
+  color: var(--mkt-violet-hover);
+}
+
+.mkt-blog-prose blockquote {
+  margin: 1.75rem 0;
+  padding: 1rem 1.25rem;
+  border-left: 3px solid var(--mkt-violet);
+  border-radius: 0 12px 12px 0;
+  background: var(--mkt-violet-light);
+  color: #475569;
+  font-style: normal;
+}
+
+.mkt-blog-cta {
+  margin: 3rem 0 0;
+  padding: 1.75rem 1.5rem;
+  border: 1px solid var(--mkt-border);
+  border-radius: 20px;
+  background:
+    linear-gradient(135deg, rgba(124, 58, 237, 0.06), rgba(255, 255, 255, 0.9)),
+    #fff;
+}
+
+@media (min-width: 640px) {
+  .mkt-blog-cta {
+    padding: 2rem 2.25rem;
+  }
+}
+
+.mkt-blog-cta__title {
+  font-family: var(--mkt-font);
+  font-size: 1.125rem;
+  font-weight: 560;
+  letter-spacing: -0.02em;
+  color: var(--mkt-ink);
+}
+
+.mkt-blog-cta__sub {
+  margin-top: 0.5rem;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: #64748b;
+}
+
+.mkt-blog-cta__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.mkt-blog-related {
+  padding: 3rem 0 4.5rem;
+  background: #f8f7fc;
+  border-top: 1px solid var(--mkt-border);
+}
+
+.mkt-blog-related__title {
+  font-family: var(--mkt-font);
+  font-size: 1.25rem;
+  font-weight: 560;
+  letter-spacing: -0.02em;
+  color: var(--mkt-ink);
+}
+
+.mkt-blog-related__grid {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .mkt-blog-related__grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+}
+
+.mkt-blog-related__card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 1.25rem 1.35rem;
+  border: 1px solid var(--mkt-border);
+  border-radius: 16px;
+  background: #fff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.mkt-blog-related__card:hover {
+  border-color: #ddd6fe;
+  box-shadow: 0 10px 28px -18px rgba(15, 23, 42, 0.25);
+  transform: translateY(-1px);
+}
+
+.mkt-blog-related__card-cat {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mkt-violet);
+}
+
+.mkt-blog-related__card-title {
+  margin-top: 0.5rem;
+  font-size: 0.9375rem;
+  font-weight: 550;
+  line-height: 1.4;
+  letter-spacing: -0.015em;
+  color: var(--mkt-ink);
+}
+
+.mkt-blog-related__card:hover .mkt-blog-related__card-title {
+  color: var(--mkt-violet);
+}
+
+.mkt-blog-related__card-meta {
+  margin-top: auto;
+  padding-top: 1rem;
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+/* Index cards — visual cover without relying on OG SVG */
+.mkt-blog-cover {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(124, 58, 237, 0.28), transparent 45%),
+    radial-gradient(circle at 85% 70%, rgba(109, 40, 217, 0.18), transparent 40%),
+    linear-gradient(145deg, #0c1222 0%, #1e1b4b 55%, #312e81 100%);
+}
+
+.mkt-blog-cover__label {
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+  right: 1rem;
+  font-size: 0.75rem;
+  font-weight: 550;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.88);
+}
