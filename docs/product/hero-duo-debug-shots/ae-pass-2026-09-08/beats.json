@@ -1,0 +1,335 @@
+[
+  {
+    "beat": 0,
+    "classes": "is-cam-wide is-scene-chat is-chapter",
+    "scale": "1",
+    "tx": "0%",
+    "ty": "0%",
+    "ox": "50%",
+    "oy": "48%"
+  },
+  {
+    "beat": 1,
+    "classes": "is-cam-wide is-scene-chat",
+    "scale": "1",
+    "tx": "0%",
+    "ty": "0%",
+    "ox": "50%",
+    "oy": "48%"
+  },
+  {
+    "beat": 2,
+    "classes": "is-cam-wide is-scene-chat",
+    "scale": "1",
+    "tx": "0%",
+    "ty": "0%",
+    "ox": "50%",
+    "oy": "48%"
+  },
+  {
+    "beat": 3,
+    "classes": "is-cam-wide is-scene-chat",
+    "scale": "1",
+    "tx": "0%",
+    "ty": "0%",
+    "ox": "50%",
+    "oy": "48%"
+  },
+  {
+    "beat": 4,
+    "classes": "is-cam-chat is-scene-chat",
+    "scale": "1.08",
+    "tx": "-3%",
+    "ty": "0%",
+    "ox": "50%",
+    "oy": "48%"
+  },
+  {
+    "beat": 5,
+    "classes": "is-cam-wide is-scene-journey is-chapter",
+    "scale": "1",
+    "tx": "0%",
+    "ty": "0%",
+    "ox": "50%",
+    "oy": "48%"
+  },
+  {
+    "beat": 6,
+    "classes": "is-cam-node-entry is-scene-journey",
+    "scale": "1.16",
+    "tx": "11%",
+    "ty": "6%",
+    "ox": "50%",
+    "oy": "48%"
+  },
+  {
+    "beat": 7,
+    "classes": "is-cam-drag is-scene-journey",
+    "scale": "1.16",
+    "tx": "0%",
+    "ty": "7%",
+    "ox": "50%",
+    "oy": "48%"
+  },
+  {
+    "beat": 8,
+    "classes": "is-cam-node-mid is-scene-journey",
+    "scale": "1.16",
+    "tx": "0%",
+    "ty": "7%",
+    "ox": "50%",
+    "oy": "48%"
+  },
+  {
+    "beat": 9,
+    "classes": "is-cam-node-end is-scene-journey",
+    "scale": "1.16",
+    "tx": "-11%",
+    "ty": "6%",
+    "ox": "50%",
+    "oy": "48%"
+  },
+  {
+    "beat": 10,
+    "classes": "is-cam-publish is-scene-journey",
+    "scale": "1.18",
+    "tx": "-4%",
+    "ty": "8%",
+    "ox": "50%",
+    "oy": "48%"
+  },
+  {
+    "beat": 11,
+    "classes": "is-cam-publish is-scene-journey",
+    "scale": "1.18",
+    "tx": "-4%",
+    "ty": "8%",
+    "ox": "50%",
+    "oy": "48%"
+  },
+  {
+    "beat": 12,
+    "classes": "is-cam-order is-scene-journey",
+    "scale": "1.16",
+    "tx": "0%",
+    "ty": "5%",
+    "ox": "50%",
+    "oy": "48%"
+  },
+  {
+    "beat": 13,
+    "classes": "is-cam-wide is-scene-journey",
+    "scale": "1",
+    "tx": "0%",
+    "ty": "0%",
+    "ox": "50%",
+    "oy": "48%"
+  },
+  {
+    "beat": 14,
+    "classes": "is-cam-wide is-scene-journey",
+    "scale": "1",
+    "tx": "0%",
+    "ty": "0%",
+    "ox": "50%",
+    "oy": "48%"
+  },
+  {
+    "beat": 15,
+    "classes": "is-cam-wide is-scene-journey",
+    "scale": "1",
+    "tx": "0%",
+    "ty": "0%",
+    "ox": "50%",
+    "oy": "48%"
+  },
+  {
+    "beat": 16,
+    "classes": "is-cam-wide is-scene-journey",
+    "scale": "1",
+    "tx": "0%",
+    "ty": "0%",
+    "ox": "50%",
+    "oy": "48%"
+  },
+  {
+    "beat": 17,
+    "classes": "is-cam-paid is-scene-journey",
+    "scale": "1.16",
+    "tx": "0%",
+    "ty": "3%",
+    "ox": "50%",
+    "oy": "48%"
+  },
+  {
+    "beat": 18,
+    "classes": "is-cam-wide is-scene-analytics is-chapter",
+    "scale": "1",
+    "tx": "0%",
+    "ty": "0%",
+    "ox": "50%",
+    "oy": "48%"
+  },
+  {
+    "beat": 19,
+    "classes": "is-cam-an-kpi is-scene-analytics",
+    "scale": "1.16",
+    "tx": "0%",
+    "ty": "10%",
+    "ox": "50%",
+    "oy": "48%"
+  },
+  {
+    "beat": 20,
+    "classes": "is-cam-an-bot is-scene-analytics",
+    "scale": "1.16",
+    "tx": "0%",
+    "ty": "-8%",
+    "ox": "50%",
+    "oy": "48%"
+  },
+  {
+    "beat": 21,
+    "classes": "is-cam-wide is-scene-address is-chapter",
+    "scale": "1",
+    "tx": "0%",
+    "ty": "0%",
+    "ox": "50%",
+    "oy": "48%"
+  },
+  {
+    "beat": 22,
+    "classes": "is-cam-support is-scene-address",
+    "scale": "1.14",
+    "tx": "-5%",
+    "ty": "2%",
+    "ox": "50%",
+    "oy": "48%"
+  },
+  {
+    "beat": 23,
+    "classes": "is-cam-support is-scene-address",
+    "scale": "1.14",
+    "tx": "-5%",
+    "ty": "2%",
+    "ox": "50%",
+    "oy": "48%"
+  },
+  {
+    "beat": 24,
+    "classes": "is-cam-support is-scene-address",
+    "scale": "1.14",
+    "tx": "-5%",
+    "ty": "2%",
+    "ox": "50%",
+    "oy": "48%"
+  },
+  {
+    "beat": 25,
+    "classes": "is-cam-wide is-scene-address",
+    "scale": "1",
+    "tx": "0%",
+    "ty": "0%",
+    "ox": "50%",
+    "oy": "48%"
+  },
+  {
+    "beat": 26,
+    "classes": "is-cam-wide is-scene-address",
+    "scale": "1",
+    "tx": "0%",
+    "ty": "0%",
+    "ox": "50%",
+    "oy": "48%"
+  },
+  {
+    "beat": 27,
+    "classes": "is-cam-wide is-scene-delivered is-chapter",
+    "scale": "1",
+    "tx": "0%",
+    "ty": "0%",
+    "ox": "50%",
+    "oy": "48%"
+  },
+  {
+    "beat": 28,
+    "classes": "is-cam-drag is-scene-delivered",
+    "scale": "1.16",
+    "tx": "0%",
+    "ty": "7%",
+    "ox": "50%",
+    "oy": "48%"
+  },
+  {
+    "beat": 29,
+    "classes": "is-cam-node-mid is-scene-delivered",
+    "scale": "1.16",
+    "tx": "0%",
+    "ty": "7%",
+    "ox": "50%",
+    "oy": "48%"
+  },
+  {
+    "beat": 30,
+    "classes": "is-cam-node-end is-scene-delivered",
+    "scale": "1.16",
+    "tx": "-11%",
+    "ty": "6%",
+    "ox": "50%",
+    "oy": "48%"
+  },
+  {
+    "beat": 31,
+    "classes": "is-cam-publish is-scene-delivered",
+    "scale": "1.18",
+    "tx": "-4%",
+    "ty": "8%",
+    "ox": "50%",
+    "oy": "48%"
+  },
+  {
+    "beat": 32,
+    "classes": "is-cam-publish is-scene-delivered",
+    "scale": "1.18",
+    "tx": "-4%",
+    "ty": "8%",
+    "ox": "50%",
+    "oy": "48%"
+  },
+  {
+    "beat": 33,
+    "classes": "is-cam-order is-scene-delivered",
+    "scale": "1.16",
+    "tx": "0%",
+    "ty": "5%",
+    "ox": "50%",
+    "oy": "48%"
+  },
+  {
+    "beat": 34,
+    "classes": "is-cam-wide is-scene-delivered",
+    "scale": "1",
+    "tx": "0%",
+    "ty": "0%",
+    "ox": "50%",
+    "oy": "48%"
+  },
+  {
+    "beat": 35,
+    "classes": "is-cam-paid is-scene-delivered",
+    "scale": "1.16",
+    "tx": "0%",
+    "ty": "3%",
+    "ox": "50%",
+    "oy": "48%"
+  },
+  {
+    "beat": 36,
+    "classes": "is-cam-wide is-scene-delivered",
+    "scale": "1",
+    "tx": "0%",
+    "ty": "0%",
+    "ox": "50%",
+    "oy": "48%"
+  }
+]

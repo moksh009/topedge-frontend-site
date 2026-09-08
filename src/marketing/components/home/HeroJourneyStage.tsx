@@ -2,26 +2,29 @@ import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 're
 import {
   ArrowLeftRight,
   Check,
+  Eye,
   HelpCircle,
   Flag,
   GripVertical,
-  LayoutGrid,
+  IndianRupee,
   MapPin,
   Menu,
+  MessageCircle,
+  MousePointerClick,
   PackageCheck,
   Plus,
   Search,
+  Send,
   ShoppingBag,
-  Truck,
   Zap,
 } from 'lucide-react';
-import { InstagramMark, WhatsAppMark } from '../foundation/BrandMarks';
+import { WhatsAppMark } from '../foundation/BrandMarks';
 
 const PRODUCT_IMG = '/marketing/products/vitamin-c-serum.jpg';
 
 /**
  * Continuous film (option A):
- * Live Chat → COD→prepaid → Analytics tick-up → Address change →
+ * Live Chat → COD→prepaid → Capture→retarget→broadcast → Address change →
  * Order delivered WhatsApp template → loop.
  */
 type Scene = 'chat' | 'journey' | 'analytics' | 'address' | 'delivered';
@@ -34,17 +37,15 @@ type Beat = {
 };
 
 const TIMELINE: Beat[] = [
-  // —— Live Chat support ——
-  // First beat of each act is long enough for the chapter card to finish
+  // —— Live Chat —— chapter wide → soft chat focus
   { ms: 2600, scene: 'chat', cam: 'is-cam-wide' },
   { ms: 950, scene: 'chat', cam: 'is-cam-wide' },
   { ms: 1050, scene: 'chat', cam: 'is-cam-wide' },
   { ms: 1050, scene: 'chat', cam: 'is-cam-wide' },
   { ms: 1500, scene: 'chat', cam: 'is-cam-chat' },
-  // —— COD → prepaid journey ——
-  // zoom once → pan Entry → drag → mid → End (same zoom level) → publish → pull wide
+  // —— COD → prepaid —— chapter wide → story 1.16 pan chain → publish pan → phone wide → paid
   { ms: 2700, scene: 'journey', cam: 'is-cam-wide' },
-  { ms: 1550, scene: 'journey', cam: 'is-cam-node-entry' },
+  { ms: 2000, scene: 'journey', cam: 'is-cam-node-entry' },
   { ms: 1900, scene: 'journey', cam: 'is-cam-drag' },
   { ms: 1500, scene: 'journey', cam: 'is-cam-node-mid' },
   { ms: 1450, scene: 'journey', cam: 'is-cam-node-end' },
@@ -56,21 +57,21 @@ const TIMELINE: Beat[] = [
   { ms: 1250, scene: 'journey', cam: 'is-cam-wide' },
   { ms: 1200, scene: 'journey', cam: 'is-cam-wide' },
   { ms: 1550, scene: 'journey', cam: 'is-cam-paid' },
-  // —— Analytics — zoom once, pan KPI → charts → funnel (no zoom-out) ——
-  { ms: 2800, scene: 'analytics', cam: 'is-cam-an-kpi' },
-  { ms: 2300, scene: 'analytics', cam: 'is-cam-an-mid' },
-  { ms: 2100, scene: 'analytics', cam: 'is-cam-an-bot' },
-  // —— Address change support ——
+  // —— Pixel → data → broadcast (product-UI faithful) ——
+  { ms: 4000, scene: 'analytics', cam: 'is-cam-wide' },
+  { ms: 3600, scene: 'analytics', cam: 'is-cam-an-mid' },
+  { ms: 4200, scene: 'analytics', cam: 'is-cam-an-bot' },
+  // —— Address —— chapter wide → soft continuous thread focus → settle
   { ms: 2600, scene: 'address', cam: 'is-cam-wide' },
-  { ms: 1200, scene: 'address', cam: 'is-cam-wide' },
+  { ms: 1200, scene: 'address', cam: 'is-cam-support' },
   { ms: 1400, scene: 'address', cam: 'is-cam-support' },
-  { ms: 1350, scene: 'address', cam: 'is-cam-wide' },
+  { ms: 1350, scene: 'address', cam: 'is-cam-support' },
   { ms: 1550, scene: 'address', cam: 'is-cam-wide' },
   { ms: 1700, scene: 'address', cam: 'is-cam-wide' },
-  // —— Order delivered journey ——
-  // Entry → drag → mid → End → publish → send WA → success (mirrors COD grammar)
-  { ms: 3800, scene: 'delivered', cam: 'is-cam-node-entry' },
-  { ms: 2200, scene: 'delivered', cam: 'is-cam-drag' },
+  // —— Delivered —— chapter WIDE → drag (from entry side) → mid → end → publish → send → success
+  { ms: 2800, scene: 'delivered', cam: 'is-cam-wide' },
+  // Peek phone tilt ~1.6s, then drag (~2s)
+  { ms: 3600, scene: 'delivered', cam: 'is-cam-drag' },
   { ms: 1700, scene: 'delivered', cam: 'is-cam-node-mid' },
   { ms: 1500, scene: 'delivered', cam: 'is-cam-node-end' },
   { ms: 1400, scene: 'delivered', cam: 'is-cam-publish', hold: true },
@@ -86,7 +87,7 @@ const LAST = TIMELINE.length - 1;
 const ACT_FOR_SCENE: Record<Scene, string> = {
   chat: 'Act 1 · Live Chat',
   journey: 'Act 2 · COD→prepaid',
-  analytics: 'Act 3 · Analytics',
+  analytics: 'Act 3 · Pixel → Broadcast',
   address: 'Act 4 · Address',
   delivered: 'Act 5 · Delivered',
 };
@@ -104,8 +105,8 @@ const SCENE_CARD: Record<Scene, { eyebrow: string; title: string; sub: string }>
   },
   analytics: {
     eyebrow: 'Act 3',
-    title: 'Platform Analytics',
-    sub: 'Revenue attributed to WhatsApp',
+    title: 'Pixel → Broadcast',
+    sub: 'Connect · see visits · send campaign · watch sales',
   },
   address: {
     eyebrow: 'Act 4 · Live Chat',
@@ -125,13 +126,8 @@ function isSceneStart(beat: number): boolean {
 }
 
 function cursorScheduled(beat: number): string {
-  if (beat === 7) return 'drag (Steps→canvas)';
-  if (beat === 10) return 'publish aim';
-  if (beat === 11) return 'publish click';
-  if (beat === 15) return 'pay tap (phone)';
-  if (beat === 28) return 'drag delivered note';
-  if (beat === 31) return 'publish aim (delivered)';
-  if (beat === 32) return 'publish click (delivered)';
+  if (beat >= 7 && beat <= 16) return 'film (drag→end→pub→pay)';
+  if (beat >= 28 && beat <= 35) return 'film (drag→end→pub→review)';
   return 'none';
 }
 
@@ -153,6 +149,24 @@ function useHeroDebugFlag() {
   return debug;
 }
 
+function useArmAfter(active: boolean, delayMs: number, token: number) {
+  const [armed, setArmed] = useState(false);
+  useEffect(() => {
+    if (!active) {
+      setArmed(false);
+      return;
+    }
+    if (delayMs <= 0) {
+      setArmed(true);
+      return;
+    }
+    setArmed(false);
+    const t = window.setTimeout(() => setArmed(true), delayMs);
+    return () => window.clearTimeout(t);
+  }, [active, delayMs, token]);
+  return armed;
+}
+
 function useSmoothCam(beat: number, _freeze = false) {
   // Hold each timeline cam for the full beat — no mid-beat zoom-out.
   // Zoom-out only when the next beat is explicitly `is-cam-wide`.
@@ -164,6 +178,14 @@ export default function HeroJourneyStage() {
   const [beat, setBeat] = useState(0);
   const [loop, setLoop] = useState(0);
   const cam = useSmoothCam(beat, debug);
+
+  // Delivered drag beat: tilt phone first (~1.6s), then start drag
+  const DELIVERED_PEEK_MS = 1600;
+  const dragBeatActive = beat === 7 || beat === 28;
+  const dragArmed = useArmAfter(dragBeatActive, beat === 28 ? DELIVERED_PEEK_MS : 0, loop);
+  const dragLive = beat === 7 || (beat === 28 && dragArmed);
+  // COD: tilt on entry (beat 6) before drag; stay tilted through drag. Delivered: tilt whole beat 28.
+  const phoneTilt = beat === 6 || beat === 7 || beat === 28;
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -251,7 +273,7 @@ export default function HeroJourneyStage() {
       ) : null}
 
       <div
-        className={`hero-duo__stage ${cam} is-scene-${scene}${chapter ? ' is-chapter' : ''}${debug ? ' is-debug-cam' : ''}`}
+        className={`hero-duo__stage ${cam} is-scene-${scene}${chapter ? ' is-chapter' : ''}${phoneTilt ? ' is-phone-tilt' : ''}${dragLive ? ' is-drag-live' : ''}${debug ? ' is-debug-cam' : ''}`}
       >
         <div className="hero-duo__pair">
         <div className="hero-duo__desktop">
@@ -261,7 +283,7 @@ export default function HeroJourneyStage() {
                 <ChatDesktop beat={beat} loop={loop} mode="cod" />
               </SceneView>
               <SceneView show={scene === 'journey'}>
-                <JourneyDesktop beat={beat} loop={loop} mode="cod" />
+                <JourneyDesktop beat={beat} loop={loop} mode="cod" dragLive={dragLive} />
               </SceneView>
               <SceneView show={scene === 'analytics'}>
                 <AnalyticsDesktop beat={beat} loop={loop} />
@@ -270,7 +292,7 @@ export default function HeroJourneyStage() {
                 <ChatDesktop beat={beat} loop={loop} mode="address" />
               </SceneView>
               <SceneView show={scene === 'delivered'}>
-                <JourneyDesktop beat={beat} loop={loop} mode="delivered" />
+                <JourneyDesktop beat={beat} loop={loop} mode="delivered" dragLive={dragLive} />
               </SceneView>
             </div>
 
@@ -304,18 +326,13 @@ export default function HeroJourneyStage() {
                 <PaymentModal key={`del-ok-${loop}`} surface="desktop" kind="delivered" />
               </>
             ) : null}
-
-            {(scene === 'journey' && beat >= 10 && beat <= 11) ||
-            (scene === 'delivered' && beat >= 31 && beat <= 32) ? (
-              <PublishCursor key={`cur-pub-${loop}`} beat={beat} loop={loop} />
-            ) : null}
           </div>
         </div>
 
         <PhonePanel beat={beat} loop={loop} scene={scene} />
 
-        {/* Drag flight above phone so the node path stays visible */}
-        {scene === 'journey' && beat === 7 ? (
+        {/* Drag ghost only after peek — phone tilts first so the move is readable */}
+        {scene === 'journey' && dragLive && beat === 7 ? (
           <PhysicalDragFlight
             key={`drag-cod-${loop}`}
             sourceKey="cod-prepaid"
@@ -324,7 +341,7 @@ export default function HeroJourneyStage() {
             icon={<ArrowLeftRight className="h-3 w-3" />}
           />
         ) : null}
-        {scene === 'delivered' && beat === 28 ? (
+        {scene === 'delivered' && dragLive && beat === 28 ? (
           <PhysicalDragFlight
             key={`drag-del-${loop}`}
             sourceKey="order-delivered"
@@ -333,6 +350,21 @@ export default function HeroJourneyStage() {
             icon={<PackageCheck className="h-3 w-3" />}
           />
         ) : null}
+
+        <HeroFilmCursor
+          key={
+            beat >= 6 && beat <= 16
+              ? `film-cod-${loop}`
+              : beat >= 18 && beat <= 20
+                ? `film-an-${loop}`
+                : beat >= 28 && beat <= 35
+                  ? `film-del-${loop}`
+                  : `film-${loop}`
+          }
+          beat={beat}
+          loop={loop}
+          dragLive={dragLive}
+        />
 
         {/* Chapter card overlays both devices (desktop + phone) */}
         {chapter ? <SceneIntertitle key={`it-${scene}-${loop}`} scene={scene} /> : null}
@@ -359,109 +391,379 @@ function SceneIntertitle({ scene }: { scene: Scene }) {
   );
 }
 
-function CursorArrow({ className, clicking }: { className: string; clicking?: boolean }) {
+function CursorArrowSvg() {
+  /* Larger macOS-style pointer — tip at top-left */
   return (
-    <div className={`${className}${clicking ? ' is-click' : ''}`} aria-hidden>
-      <svg width="18" height="22" viewBox="0 0 18 22" fill="none">
-        <path
-          d="M1.2 1.1v16.4l4.2-3.6 3.2 7.2 2.7-1.2-3.2-7.1h5.5L1.2 1.1Z"
-          fill="#111"
-          stroke="#fff"
-          strokeWidth="1.35"
-          strokeLinejoin="round"
-        />
-      </svg>
-      {clicking ? <span className="hero-duo__click-ring" /> : null}
-    </div>
+    <svg width="30" height="34" viewBox="0 0 26 30" fill="none" aria-hidden>
+      <path
+        d="M3.2 2.4v22.2l5.6-4.85 4.35 9.75 3.55-1.55-4.3-9.65H22.2L3.2 2.4Z"
+        fill="#0a0a0a"
+        stroke="#fff"
+        strokeWidth="2.15"
+        strokeLinejoin="round"
+        strokeLinecap="round"
+      />
+    </svg>
   );
 }
 
-/** Pin cursor tip to Publish and aim the lens origin at the button. */
-function PublishCursor({ beat, loop }: { beat: number; loop: number }) {
+type FilmCursorMode =
+  | 'hidden'
+  | 'peek-steps'
+  | 'drag'
+  | 'hold-mid'
+  | 'hold-end'
+  | 'publish'
+  | 'publish-click'
+  | 'phone-approach'
+  | 'phone-cta'
+  | 'phone-click'
+  | 'fade'
+  | 'an-connect'
+  | 'an-connect-click'
+  | 'an-create'
+  | 'an-create-click'
+  | 'an-send'
+  | 'an-send-click';
+
+function filmCursorMode(beat: number, dragLive: boolean): FilmCursorMode {
+  // COD: phone tilts + cursor rests on Steps (beat 6), then drag
+  if (beat === 6) return 'peek-steps';
+  if (beat === 7) return dragLive ? 'drag' : 'peek-steps';
+  if (beat === 8) return 'hold-mid';
+  if (beat === 9) return 'hold-end';
+  if (beat === 10) return 'publish';
+  if (beat === 11) return 'publish-click';
+  if (beat === 12) return 'phone-approach';
+  if (beat === 13 || beat === 14) return 'phone-cta';
+  if (beat === 15) return 'phone-click';
+  if (beat === 16) return 'fade';
+  // Act 3: connect pixel → create campaign → send
+  if (beat === 18) return 'an-connect';
+  if (beat === 19) return 'an-create';
+  if (beat === 20) return 'an-send';
+  // Delivered: peek Steps while phone tilts, then drag
+  if (beat === 28) return dragLive ? 'drag' : 'peek-steps';
+  if (beat === 29) return 'hold-mid';
+  if (beat === 30) return 'hold-end';
+  if (beat === 31) return 'publish';
+  if (beat === 32) return 'publish-click';
+  if (beat === 33) return 'phone-approach';
+  if (beat === 34) return 'phone-cta';
+  if (beat === 35) return 'phone-click';
+  return 'hidden';
+}
+
+function filmCursorDuration(mode: FilmCursorMode): number {
+  if (mode === 'peek-steps') return 700;
+  if (mode === 'drag') return 1750;
+  if (mode === 'hold-mid') return 650;
+  if (mode === 'hold-end') return 900;
+  if (mode === 'publish') return 1200;
+  if (mode === 'publish-click') return 480;
+  if (mode === 'phone-approach') return 1400;
+  if (mode === 'phone-cta') return 1100;
+  if (mode === 'phone-click') return 520;
+  if (mode === 'fade') return 480;
+  if (mode === 'an-connect' || mode === 'an-create' || mode === 'an-send') return 1100;
+  if (mode === 'an-connect-click' || mode === 'an-create-click' || mode === 'an-send-click') return 420;
+  return 800;
+}
+
+function easeInOutCubic(t: number) {
+  return t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2;
+}
+
+/**
+ * Persistent macOS film cursor with deliberate waypoints.
+ * Never aims at random chat bubbles — only Steps/nodes/Publish/phone CTA.
+ */
+function HeroFilmCursor({
+  beat,
+  loop,
+  dragLive,
+}: {
+  beat: number;
+  loop: number;
+  dragLive: boolean;
+}) {
   const ref = useRef<HTMLDivElement>(null);
-  const aiming = beat === 10 || beat === 31;
-  const clicking = beat === 11 || beat === 32;
+  const posRef = useRef({ x: 0, y: 0, ready: false });
+  const animRef = useRef<{
+    fromX: number;
+    fromY: number;
+    toX: number;
+    toY: number;
+    start: number;
+    dur: number;
+  } | null>(null);
 
-  // Lock zoom origin onto Publish once per beat (untransformed measure)
-  useLayoutEffect(() => {
-    const viewport = document.querySelector('.hero-duo__viewport') as HTMLElement | null;
-    const stage = document.querySelector('.hero-duo__stage') as HTMLElement | null;
-    const lens = document.querySelector('.hero-duo__lens') as HTMLElement | null;
-    const btn = document.querySelector(
-      '.hero-duo__view.is-show .hero-duo__publish',
-    ) as HTMLElement | null;
-    if (!viewport || !stage || !lens || !btn) return;
+  const modeRaw = filmCursorMode(beat, dragLive);
+  const anDelay = beat === 18 ? 2600 : beat === 19 || beat === 20 ? 350 : 0;
+  const anReady = useArmAfter(beat >= 18 && beat <= 20, anDelay, loop);
+  const mode =
+    beat >= 18 && beat <= 20 && !anReady
+      ? 'hidden'
+      : modeRaw;
+  const active = mode !== 'hidden';
+  const [clickPulse, setClickPulse] = useState(false);
+  const clicking =
+    mode === 'publish-click' ||
+    mode === 'phone-click' ||
+    mode === 'an-connect-click' ||
+    mode === 'an-create-click' ||
+    mode === 'an-send-click' ||
+    clickPulse;
+  const fading = mode === 'fade';
+  const dropKey = beat >= 28 ? 'order-delivered' : 'cod-prepaid';
+  const delivered = beat >= 28;
 
-    const prevTransform = lens.style.transform;
-    const prevTransition = lens.style.transition;
-    lens.style.transition = 'none';
-    lens.style.transform = 'none';
-    const vr = viewport.getBoundingClientRect();
-    const br = btn.getBoundingClientRect();
-    lens.style.transform = prevTransform;
-    void lens.offsetWidth;
-    lens.style.transition = prevTransition;
+  useEffect(() => {
+    if (mode !== 'an-connect' && mode !== 'an-create' && mode !== 'an-send') {
+      setClickPulse(false);
+      return;
+    }
+    setClickPulse(false);
+    const t = window.setTimeout(() => {
+      setClickPulse(true);
+      window.setTimeout(() => setClickPulse(false), 380);
+    }, filmCursorDuration(mode) + 80);
+    return () => window.clearTimeout(t);
+  }, [mode, beat, loop]);
 
-    const ox = ((br.left + br.width * 0.55 - vr.left) / Math.max(1, vr.width)) * 100;
-    const oy = ((br.top + br.height * 0.45 - vr.top) / Math.max(1, vr.height)) * 100;
-    stage.style.setProperty('--cam-ox', `${Math.max(70, Math.min(94, ox)).toFixed(1)}%`);
-    stage.style.setProperty('--cam-oy', `${Math.max(4, Math.min(22, oy)).toFixed(1)}%`);
+  const resolveTarget = useRef(() => ({ x: 0, y: 0 }));
+  resolveTarget.current = () => {
+    const pair = document.querySelector('.hero-duo__pair') as HTMLElement | null;
+    if (!pair) return { x: posRef.current.x, y: posRef.current.y };
+    const pr = pair.getBoundingClientRect();
+    const root = document.querySelector('.hero-duo__view.is-show');
 
-    return () => {
-      stage.style.removeProperty('--cam-ox');
-      stage.style.removeProperty('--cam-oy');
+    const at = (el: Element | null, ox: number, oy: number) => {
+      if (!el) return null;
+      const r = (el as HTMLElement).getBoundingClientRect();
+      return {
+        x: r.left - pr.left + r.width * ox,
+        y: r.top - pr.top + r.height * oy,
+      };
     };
-  }, [beat, loop]);
 
-  // Cursor follows the live (zoomed) Publish button
+    if (mode === 'peek-steps') {
+      const source = root?.querySelector(`[data-drag-source="${dropKey}"]`);
+      return at(source ?? null, 0.35, 0.45) ?? { x: posRef.current.x, y: posRef.current.y };
+    }
+    if (mode === 'drag') {
+      const drop = root?.querySelector(`[data-drag-drop="${dropKey}"]`);
+      return at(drop ?? null, 0.48, 0.42) ?? { x: posRef.current.x, y: posRef.current.y };
+    }
+    if (mode === 'hold-mid') {
+      const mid =
+        root?.querySelector('.hero-duo__card--action.is-on') ||
+        root?.querySelector(`[data-drag-drop="${dropKey}"]`);
+      return at(mid ?? null, 0.58, 0.48) ?? { x: posRef.current.x, y: posRef.current.y };
+    }
+    if (mode === 'hold-end') {
+      const end =
+        root?.querySelector('.hero-duo__card--end.is-on') ||
+        root?.querySelector('.hero-duo__card--end');
+      return at(end ?? null, 0.45, 0.42) ?? { x: posRef.current.x, y: posRef.current.y };
+    }
+    if (mode === 'publish' || mode === 'publish-click') {
+      const btn = root?.querySelector('.hero-duo__publish');
+      return at(btn ?? null, 0.55, 0.68) ?? { x: posRef.current.x, y: posRef.current.y };
+    }
+    if (mode === 'phone-approach') {
+      // Lower phone screen — where Pay/Review CTA will land (not mid-chat bubbles)
+      const phone = document.querySelector('.hero-duo__iphone');
+      return at(phone, 0.52, 0.62) ?? { x: posRef.current.x, y: posRef.current.y };
+    }
+    if (mode === 'phone-cta' || mode === 'phone-click' || mode === 'fade') {
+      const sel = delivered
+        ? '.hero-duo__phone [data-review-target="1"]'
+        : '.hero-duo__phone [data-pay-target="1"]';
+      const btn = document.querySelector(sel);
+      const p = at(btn, 0.55, 0.52);
+      if (p) return p;
+      // Soft fallback: lower phone screen (where CTA mounts), never random bubbles
+      const phone = document.querySelector('.hero-duo__iphone');
+      return at(phone, 0.52, 0.62) ?? { x: posRef.current.x, y: posRef.current.y };
+    }
+    if (
+      mode === 'an-connect' ||
+      mode === 'an-connect-click' ||
+      mode === 'an-create' ||
+      mode === 'an-create-click' ||
+      mode === 'an-send' ||
+      mode === 'an-send-click'
+    ) {
+      const key =
+        mode.startsWith('an-connect')
+          ? 'pixel-connect'
+          : mode.startsWith('an-create')
+            ? 'create-campaign'
+            : 'send-campaign';
+      const btn = root?.querySelector(`[data-an-target="${key}"]`);
+      return at(btn ?? null, 0.55, 0.55) ?? { x: posRef.current.x, y: posRef.current.y };
+    }
+    return { x: posRef.current.x, y: posRef.current.y };
+  };
+
+  const paint = (x: number, y: number, scale = 1) => {
+    const el = ref.current;
+    if (!el) return;
+    el.style.transform = `translate3d(${x}px, ${y}px, 0) scale(${scale})`;
+  };
+
   useLayoutEffect(() => {
-    const cursor = ref.current;
-    const viewport = document.querySelector('.hero-duo__viewport') as HTMLElement | null;
-    if (!cursor || !viewport) return;
+    if (!active) {
+      posRef.current.ready = false;
+      animRef.current = null;
+      return;
+    }
 
+    const pair = document.querySelector('.hero-duo__pair') as HTMLElement | null;
+    const root = document.querySelector('.hero-duo__view.is-show');
+    if (!pair) return;
+
+    const pr = pair.getBoundingClientRect();
+    let fromX = posRef.current.x;
+    let fromY = posRef.current.y;
+    let to = resolveTarget.current();
+
+    if (mode === 'drag') {
+      const source = root?.querySelector(`[data-drag-source="${dropKey}"]`) as HTMLElement | null;
+      if (source) {
+        const sr = source.getBoundingClientRect();
+        fromX = sr.left - pr.left + sr.width * 0.18 + 26;
+        fromY = sr.top - pr.top + sr.height * 0.22 + 4;
+      }
+      const drop = root?.querySelector(`[data-drag-drop="${dropKey}"]`) as HTMLElement | null;
+      if (drop) {
+        const dr = drop.getBoundingClientRect();
+        to = {
+          x: dr.left - pr.left + dr.width * 0.48,
+          y: dr.top - pr.top + dr.height * 0.42,
+        };
+      }
+      posRef.current = { x: fromX, y: fromY, ready: true };
+      paint(fromX, fromY, 1);
+    } else if (!posRef.current.ready) {
+      posRef.current = { x: to.x, y: to.y, ready: true };
+      paint(to.x, to.y, 1);
+      return;
+    } else {
+      fromX = posRef.current.x;
+      fromY = posRef.current.y;
+      // Re-measure CTA after a beat so late-mounted Pay button is hit
+      to = resolveTarget.current();
+    }
+
+    const dist = Math.hypot(to.x - fromX, to.y - fromY);
+    let dur = filmCursorDuration(mode);
+    if (dist < 14) dur = Math.min(dur, 260);
+    else if (mode === 'publish-click' || mode === 'phone-click') dur = Math.min(dur, 480);
+
+    animRef.current = {
+      fromX,
+      fromY,
+      toX: to.x,
+      toY: to.y,
+      start: performance.now(),
+      dur,
+    };
+  }, [beat, loop, mode, active, dropKey]);
+
+  useEffect(() => {
+    if (!active) return;
     let raf = 0;
     let alive = true;
-    const place = () => {
+
+    const tick = (now: number) => {
       if (!alive) return;
-      const btn = document.querySelector(
-        '.hero-duo__view.is-show .hero-duo__publish',
-      ) as HTMLElement | null;
-      if (btn) {
-        const vr = viewport.getBoundingClientRect();
-        const br = btn.getBoundingClientRect();
-        cursor.style.left = `${br.left - vr.left + br.width * 0.55 - 2}px`;
-        cursor.style.top = `${br.top - vr.top + br.height * 0.75 - 2}px`;
+      const anim = animRef.current;
+      if (anim) {
+        const t = Math.min(1, (now - anim.start) / anim.dur);
+        const e = easeInOutCubic(t);
+        const x = anim.fromX + (anim.toX - anim.fromX) * e;
+        const y = anim.fromY + (anim.toY - anim.fromY) * e;
+        posRef.current = { x, y, ready: true };
+        const scale = clicking && t > 0.6 ? 0.84 : 1;
+        paint(x, y, scale);
+        if (t >= 1) {
+          animRef.current = null;
+          // Soft re-aim for live targets (Publish under zoom / Pay after template mounts)
+          if (
+            mode === 'publish' ||
+            mode === 'publish-click' ||
+            mode === 'phone-cta' ||
+            mode === 'phone-click' ||
+            mode === 'hold-mid' ||
+            mode === 'hold-end'
+          ) {
+            const live = resolveTarget.current();
+            const dx = live.x - posRef.current.x;
+            const dy = live.y - posRef.current.y;
+            if (Math.hypot(dx, dy) > 8) {
+              animRef.current = {
+                fromX: posRef.current.x,
+                fromY: posRef.current.y,
+                toX: live.x,
+                toY: live.y,
+                start: now,
+                dur: 380,
+              };
+            }
+          }
+        }
+      } else if (clicking) {
+        paint(posRef.current.x, posRef.current.y, 0.86);
+      } else if (fading) {
+        paint(posRef.current.x, posRef.current.y, 1);
       }
-      raf = requestAnimationFrame(place);
+      raf = requestAnimationFrame(tick);
     };
-    place();
+
+    raf = requestAnimationFrame(tick);
     return () => {
       alive = false;
       cancelAnimationFrame(raf);
     };
-  }, [beat, loop]);
+  }, [active, clicking, fading, mode, beat, loop]);
+
+  // When Pay/Review CTA mounts mid-beat, retarget once
+  useEffect(() => {
+    if (mode !== 'phone-cta' && mode !== 'phone-click') return;
+    const id = window.setTimeout(() => {
+      const live = resolveTarget.current();
+      const dx = live.x - posRef.current.x;
+      const dy = live.y - posRef.current.y;
+      if (Math.hypot(dx, dy) < 10) return;
+      animRef.current = {
+        fromX: posRef.current.x,
+        fromY: posRef.current.y,
+        toX: live.x,
+        toY: live.y,
+        start: performance.now(),
+        dur: 700,
+      };
+    }, 180);
+    return () => window.clearTimeout(id);
+  }, [mode, beat, loop]);
+
+  if (!active) return null;
 
   return (
     <div
       ref={ref}
-      className={`hero-duo__cursor hero-duo__cursor--publish${aiming ? ' is-aim' : ' is-done'}${clicking ? ' is-click' : ''}`}
+      className={`hero-duo__cursor hero-duo__cursor--film${clicking ? ' is-click' : ''}${fading ? ' is-fade' : ''}`}
       aria-hidden
     >
-      <svg width="18" height="22" viewBox="0 0 18 22" fill="none">
-        <path
-          d="M1.2 1.1v16.4l4.2-3.6 3.2 7.2 2.7-1.2-3.2-7.1h5.5L1.2 1.1Z"
-          fill="#111"
-          stroke="#fff"
-          strokeWidth="1.35"
-          strokeLinejoin="round"
-        />
-      </svg>
-      {clicking ? <span className="hero-duo__click-ring" /> : null}
+      <CursorArrowSvg />
+      {clicking ? <span className="hero-duo__click-ring" key={`ring-${beat}-${loop}`} /> : null}
     </div>
   );
 }
 
-/** Measure Steps-row → drop-zone and fly ghost+cursor along that vector. */
+/** Measure Steps-row → drop-zone and fly the ghost along that vector (cursor is HeroFilmCursor). */
 function PhysicalDragFlight({
   sourceKey,
   dropKey,
@@ -474,7 +776,6 @@ function PhysicalDragFlight({
   icon: ReactNode;
 }) {
   const ghostRef = useRef<HTMLDivElement>(null);
-  const cursorRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
     const pair = document.querySelector('.hero-duo__pair') as HTMLElement | null;
@@ -482,8 +783,7 @@ function PhysicalDragFlight({
     const source = root?.querySelector(`[data-drag-source="${sourceKey}"]`) as HTMLElement | null;
     const drop = root?.querySelector(`[data-drag-drop="${dropKey}"]`) as HTMLElement | null;
     const ghost = ghostRef.current;
-    const cursor = cursorRef.current;
-    if (!pair || !source || !drop || !ghost || !cursor) return;
+    if (!pair || !source || !drop || !ghost) return;
 
     const place = () => {
       const pr = pair.getBoundingClientRect();
@@ -501,11 +801,6 @@ function PhysicalDragFlight({
       ghost.style.top = `${fromY}px`;
       ghost.style.setProperty('--drag-dx', `${dx}px`);
       ghost.style.setProperty('--drag-dy', `${dy}px`);
-
-      cursor.style.left = `${fromX + 36}px`;
-      cursor.style.top = `${fromY + 10}px`;
-      cursor.style.setProperty('--drag-dx', `${dx}px`);
-      cursor.style.setProperty('--drag-dy', `${dy}px`);
     };
 
     place();
@@ -523,23 +818,10 @@ function PhysicalDragFlight({
   }, [sourceKey, dropKey]);
 
   return (
-    <>
-      <div ref={ghostRef} className="hero-duo__drag-ghost is-flight" aria-hidden>
-        {icon}
-        {label}
-      </div>
-      <div ref={cursorRef} className="hero-duo__cursor hero-duo__cursor--drag is-flight" aria-hidden>
-        <svg width="18" height="22" viewBox="0 0 18 22" fill="none">
-          <path
-            d="M1.2 1.1v16.4l4.2-3.6 3.2 7.2 2.7-1.2-3.2-7.1h5.5L1.2 1.1Z"
-            fill="#111"
-            stroke="#fff"
-            strokeWidth="1.35"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </div>
-    </>
+    <div ref={ghostRef} className="hero-duo__drag-ghost is-flight" aria-hidden>
+      {icon}
+      {label}
+    </div>
   );
 }
 
@@ -612,53 +894,6 @@ function PaymentModal({
   );
 }
 
-/** Beat 15: pin cursor tip to the live Pay CTA on the phone. */
-function PayCursor({ loop }: { loop: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-
-  useLayoutEffect(() => {
-    const cursor = ref.current;
-    const phone = document.querySelector('.hero-duo__iphone') as HTMLElement | null;
-    if (!cursor || !phone) return;
-
-    let raf = 0;
-    let alive = true;
-    const place = () => {
-      if (!alive) return;
-      const btn = phone.querySelector('[data-pay-target="1"], .hero-duo__bubble-cta.is-tap') as HTMLElement | null;
-      if (btn) {
-        const pr = phone.getBoundingClientRect();
-        const br = btn.getBoundingClientRect();
-        cursor.style.left = `${br.left - pr.left + br.width * 0.55}px`;
-        cursor.style.top = `${br.top - pr.top + br.height * 0.55}px`;
-        cursor.style.right = 'auto';
-        cursor.style.bottom = 'auto';
-      }
-      raf = requestAnimationFrame(place);
-    };
-    place();
-    return () => {
-      alive = false;
-      cancelAnimationFrame(raf);
-    };
-  }, [loop]);
-
-  return (
-    <div ref={ref} className="hero-duo__cursor hero-duo__cursor--pay is-aim is-click" aria-hidden>
-      <svg width="18" height="22" viewBox="0 0 18 22" fill="none">
-        <path
-          d="M1.2 1.1v16.4l4.2-3.6 3.2 7.2 2.7-1.2-3.2-7.1h5.5L1.2 1.1Z"
-          fill="#111"
-          stroke="#fff"
-          strokeWidth="1.35"
-          strokeLinejoin="round"
-        />
-      </svg>
-      <span className="hero-duo__click-ring" />
-    </div>
-  );
-}
-
 function TypingDots({ side }: { side: 'in' | 'bot' | 'user' | 'store' }) {
   return (
     <div className={`hero-duo__typing hero-duo__typing--${side}`} aria-hidden>
@@ -705,18 +940,6 @@ function ChatDesktop({
             <Menu className="h-3 w-3" strokeWidth={2} />
             <Search className="h-3 w-3" strokeWidth={2} />
           </div>
-        </div>
-
-        <div className="hero-duo__inbox-channels" aria-hidden>
-          <span className="is-on">
-            <LayoutGrid className="h-3 w-3" strokeWidth={2.25} />
-          </span>
-          <span>
-            <WhatsAppMark className="h-3 w-3" />
-          </span>
-          <span>
-            <InstagramMark className="h-3 w-3" />
-          </span>
         </div>
 
         <div className="hero-duo__inbox-list">
@@ -924,15 +1147,17 @@ function JourneyDesktop({
   beat,
   loop,
   mode,
+  dragLive,
 }: {
   beat: number;
   loop: number;
   mode: 'cod' | 'delivered';
+  dragLive: boolean;
 }) {
   const delivered = mode === 'delivered';
 
   const entryOn = delivered ? beat >= 27 : beat >= 6;
-  const dragging = delivered ? beat === 28 : beat === 7;
+  const dragging = dragLive && (delivered ? beat === 28 : beat === 7);
   const dropped = delivered ? beat >= 29 : beat >= 8;
   const endsOn = delivered ? beat >= 30 : beat >= 9;
   const aimingPublish = delivered ? beat === 31 : beat === 10;
@@ -944,7 +1169,7 @@ function JourneyDesktop({
   const done = delivered ? beat >= 36 : beat >= 17;
   const liveRun = delivered ? beat >= 33 && beat < 35 : orderLive && !outcomeHot;
 
-  const title = delivered ? 'Order delivered' : 'COD → prepaid conversion';
+  const title = delivered ? 'Order delivered' : 'COD → prepaid';
   const dropKey = delivered ? 'order-delivered' : 'cod-prepaid';
   const sourceKey = dropKey;
   const linkA = `jl-a-${mode}-${loop}`;
@@ -976,18 +1201,6 @@ function JourneyDesktop({
             {published ? 'Published' : 'Publish'}
           </span>
         </div>
-      </div>
-
-      <div className="hero-duo__journey-rail" aria-hidden>
-        <span className={!delivered ? 'is-on' : undefined}>
-          <Zap className="h-2.5 w-2.5" /> Order placed
-        </span>
-        <span>
-          <Truck className="h-2.5 w-2.5" /> Address change
-        </span>
-        <span className={delivered ? 'is-on' : undefined}>
-          <PackageCheck className="h-2.5 w-2.5" /> Delivered
-        </span>
       </div>
 
       <div className="hero-duo__journey-body">
@@ -1157,218 +1370,334 @@ function lerp(a: number, b: number, t: number) {
 }
 
 function AnalyticsDesktop({ beat, loop }: { beat: number; loop: number }) {
-  // Beat 18: KPI band · 19: mid charts + tick-up · 20: funnel/WA — camera pans, same zoom
-  const showKpis = beat >= 18;
-  const showMid = beat >= 19;
-  const showBot = beat >= 20;
-  const counting = beat === 19;
-  const settled = beat >= 20;
-  const t = useTickProgress(counting, 1500);
+  // 18: connect pixel → success → live visits
+  // 19: product visit data → Create campaign
+  // 20: audience/message → send → sales lift
+  const connected = useArmAfter(beat === 18, 2900, loop) || beat > 18;
+  const liveOn = connected && beat === 18;
+  const liveT = useTickProgress(liveOn, 2200);
+  const visits = liveOn ? Math.round(lerp(12, 48, liveT)) : beat >= 19 ? 48 : 12;
+  const views = liveOn ? Math.round(lerp(80, 412, liveT)) : beat >= 19 ? 412 : 80;
 
-  const salesK = counting ? lerp(30.5, 32.3, t) : settled || beat > 19 ? 32.3 : 30.5;
-  const orders = counting ? Math.round(lerp(41, 42, t)) : settled || beat > 19 ? 42 : 41;
-  const prepaid = counting ? Math.round(lerp(18, 56, t)) : settled || beat > 19 ? 56 : 18;
-  const cod = 100 - prepaid;
-  const units = counting ? Math.round(lerp(43, 44, t)) : settled || beat > 19 ? 44 : 43;
-  const waAttr = settled ? 1799 : 0;
-  const popped = settled;
+  const createAim = beat === 19;
+  const campSent = useArmAfter(beat === 20, 1500, loop);
+  const campLift = useArmAfter(beat === 20, 2600, loop);
+  const liftT = useTickProgress(campLift, 1700);
+  const revenue = campLift ? Math.round(lerp(0, 68200, liftT)) : 0;
+  const orders = campLift ? Math.round(lerp(0, 38, liftT)) : 0;
+  const delivered = campSent ? 1986 : 0;
+  const sentN = campSent ? 2142 : 0;
 
-  return (
-    <div className={`hero-duo__an hero-duo__an--dash${showKpis ? ' is-live' : ''}`} key={`an-${loop}`}>
-      <div className="hero-duo__an-head hero-duo__an-card" style={{ ['--an-d' as string]: '0ms' }}>
-        <div>
-          <strong>Platform Analytics</strong>
-        </div>
-        <div className="hero-duo__an-tools">
-          <em>Updated just now</em>
-          <span>Last 30 Days</span>
-        </div>
-      </div>
-      <div className="hero-duo__an-tabs hero-duo__an-card" style={{ ['--an-d' as string]: '70ms' }}>
-        <span className="is-on">Store & Revenue</span>
-        <span>Messaging & Engagement</span>
-      </div>
+  const EVENTS = [
+    { t: 0.15, title: 'Viewed product', detail: 'Vitamin C Serum · Priya' },
+    { t: 0.4, title: 'Scrolled 62%', detail: 'PDP depth · +91…4821' },
+    { t: 0.65, title: 'Add to cart', detail: '₹1,899 · cart open' },
+    { t: 0.85, title: 'Known visitor', detail: 'Matched WhatsApp opt-in' },
+  ];
 
-      <div className={`hero-duo__an-kpis${showKpis ? ' is-show' : ''}`}>
-        {[
-          { label: 'Gross sales', value: `₹${salesK.toFixed(1)}k`, trend: '+812% · 30d', up: true, pop: popped },
-          { label: 'Orders', value: String(orders), trend: '+1267% · 30d', up: true, pop: popped },
-          { label: 'Avg order value', value: '₹743', trend: '−33% · 30d', up: false, pop: false },
-          { label: 'Units sold', value: String(units), trend: '+760% · 30d', up: true, pop: popped },
-          { label: 'Sessions', value: '26', trend: '6 visitors', up: true, pop: false },
-          { label: 'Visit → order', value: '69.23%', trend: '7.7% bounce', up: true, pop: false },
-        ].map((k, i) => (
-          <div
-            key={k.label}
-            className={`hero-duo__an-card hero-duo__an-kpi${k.pop ? ' is-pop' : ''}`}
-            style={{ ['--an-d' as string]: `${140 + i * 70}ms` }}
-          >
-            <em>{k.label}</em>
-            <strong>{k.value}</strong>
-            <b className={k.up ? 'is-up' : 'is-down'}>{k.trend}</b>
+  if (beat === 18) {
+    return (
+      <div className="hero-duo__an hero-duo__an--px is-live" key={`px-${loop}`}>
+        <div className="hero-duo__px-head">
+          <div>
+            <strong>Website pixel</strong>
+            <em>Track storefront visits · match WhatsApp numbers</em>
           </div>
-        ))}
-      </div>
+          <span className={`hero-duo__px-status${connected ? ' is-ok' : ''}`}>
+            {connected ? 'Connected' : 'Not connected'}
+          </span>
+        </div>
 
-      <div className={`hero-duo__an-mid${showMid ? ' is-show' : ''}`}>
-        <div className="hero-duo__an-card hero-duo__an-chart" style={{ ['--an-d' as string]: '80ms' }}>
-          <div className="hero-duo__an-chart-head">
-            <strong>Revenue and orders</strong>
-            <div className="hero-duo__an-legend">
-              <span>
-                <i className="is-rev" /> Revenue
-              </span>
-              <span>
-                <i className="is-ord" /> Orders
-              </span>
+        {!connected ? (
+          <div className="hero-duo__px-setup hero-duo__an-card is-show" style={{ ['--an-d' as string]: '80ms' }}>
+            <div className="hero-duo__px-setup-ico">
+              <MousePointerClick className="h-5 w-5" />
+            </div>
+            <strong>Connect website pixel</strong>
+            <p>One click installs TopEdge pixel on Shopify. See who views products, scrolls, and adds to cart — then message them on WhatsApp.</p>
+            <button type="button" className="hero-duo__px-connect is-aim" data-an-target="pixel-connect">
+              Connect website pixel
+            </button>
+            <span className="hero-duo__px-hint">Works with glowskin.co · Shopify</span>
+          </div>
+        ) : (
+          <div className="hero-duo__px-live">
+            <div className="hero-duo__px-success hero-duo__an-card is-show" style={{ ['--an-d' as string]: '0ms' }}>
+              <Check className="h-3.5 w-3.5" />
+              <div>
+                <strong>Pixel connected</strong>
+                <em>glowskin.co · live events streaming</em>
+              </div>
+            </div>
+            <div className="hero-duo__px-kpis">
+              <div className="hero-duo__px-kpi">
+                <em>Live visitors</em>
+                <strong>{visits}</strong>
+              </div>
+              <div className="hero-duo__px-kpi">
+                <em>Product views</em>
+                <strong>{views}</strong>
+              </div>
+              <div className="hero-duo__px-kpi">
+                <em>Known numbers</em>
+                <strong>2,142</strong>
+              </div>
+            </div>
+            <div className="hero-duo__px-feed">
+              <strong>Live activity</strong>
+              {EVENTS.map((e) => (
+                <div key={e.title} className={`hero-duo__px-event${liveT >= e.t ? ' is-show' : ''}`}>
+                  <i />
+                  <div>
+                    <b>{e.title}</b>
+                    <em>{e.detail}</em>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
-          <svg viewBox="0 0 240 78" className="hero-duo__an-svg" aria-hidden>
-            <defs>
-              <linearGradient id={`heroAnFill-${loop}`} x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#7c3aed" stopOpacity="0.32" />
-                <stop offset="100%" stopColor="#7c3aed" stopOpacity="0" />
-              </linearGradient>
-            </defs>
-            <path
-              className="hero-duo__an-fill"
-              d="M0 58 C28 55, 48 50, 68 42 S108 28, 128 30 S168 16, 190 20 L240 10 L240 78 L0 78 Z"
-              fill={`url(#heroAnFill-${loop})`}
-            />
-            <path
-              className="hero-duo__an-line is-rev"
-              d="M0 58 C28 55, 48 50, 68 42 S108 28, 128 30 S168 16, 190 20 L240 10"
-              fill="none"
-              stroke="#7c3aed"
-              strokeWidth="2.2"
-              strokeLinecap="round"
-            />
-            <path
-              className="hero-duo__an-line is-ord"
-              d="M0 64 C36 62, 76 54, 116 48 S176 40, 240 34"
-              fill="none"
-              stroke="#10b981"
-              strokeWidth="1.7"
-              strokeLinecap="round"
-            />
-            {popped ? <circle cx="228" cy="12" r="4" fill="#7c3aed" className="hero-duo__an-dot" /> : null}
-          </svg>
-          <div className="hero-duo__an-xaxis" aria-hidden>
-            <span>Aug 11</span>
-            <span>Aug 25</span>
-            <span>Sep 08</span>
+        )}
+      </div>
+    );
+  }
+
+  if (beat === 19) {
+    return (
+      <div className="hero-duo__an hero-duo__an--px is-live" key={`ins-${loop}`}>
+        <div className="hero-duo__px-head">
+          <div>
+            <strong>Product insights</strong>
+            <em>Who visited · what they viewed · ready to message</em>
+          </div>
+          <button type="button" className={`hero-duo__px-create${createAim ? ' is-aim' : ''}`} data-an-target="create-campaign">
+            <Plus className="h-3 w-3" />
+            Create campaign
+          </button>
+        </div>
+
+        <div className="hero-duo__px-kpis hero-duo__px-kpis--row">
+          {[
+            { label: 'Sessions', value: '48', sub: 'Last 24h' },
+            { label: 'Serum views', value: '412', sub: 'Vitamin C' },
+            { label: 'ATC', value: '61', sub: '₹1,899 cart' },
+            { label: 'WA matched', value: '29', sub: 'Opt-in numbers' },
+          ].map((k, i) => (
+            <div key={k.label} className="hero-duo__px-kpi hero-duo__an-card is-show" style={{ ['--an-d' as string]: `${60 + i * 70}ms` }}>
+              <em>{k.label}</em>
+              <strong>{k.value}</strong>
+              <b>{k.sub}</b>
+            </div>
+          ))}
+        </div>
+
+        <div className="hero-duo__px-table hero-duo__an-card is-show" style={{ ['--an-d' as string]: '280ms' }}>
+          <div className="hero-duo__px-table-head">
+            <span>Product</span>
+            <span>Views</span>
+            <span>ATC</span>
+            <span>WA</span>
+          </div>
+          <div className="hero-duo__px-table-row is-hot">
+            <span>
+              <img src={PRODUCT_IMG} alt="" />
+              Vitamin C Serum
+            </span>
+            <span>412</span>
+            <span>61</span>
+            <span className="is-wa">29</span>
+          </div>
+          <div className="hero-duo__px-table-row">
+            <span>Night Cream</span>
+            <span>210</span>
+            <span>18</span>
+            <span>8</span>
+          </div>
+          <div className="hero-duo__px-table-row">
+            <span>SPF 50</span>
+            <span>156</span>
+            <span>11</span>
+            <span>5</span>
           </div>
         </div>
 
-        <div
-          className="hero-duo__an-card hero-duo__an-donut"
-          style={{ ['--an-d' as string]: '220ms', ['--mix-pre' as string]: prepaid }}
-        >
-          <strong>Payment mix</strong>
-          <em>COD vs prepaid</em>
-          <div className="hero-duo__an-ring-wrap">
-            <div className="hero-duo__an-ring" aria-hidden />
-            <span>
-              {orders}
-              <i>ORDERS</i>
-            </span>
+        <div className="hero-duo__px-banner hero-duo__an-card is-show" style={{ ['--an-d' as string]: '400ms' }}>
+          <Zap className="h-3.5 w-3.5" />
+          <div>
+            <strong>29 shoppers viewed Serum with WhatsApp opt-in</strong>
+            <em>Select them in Audience and send a restock / offer broadcast</em>
           </div>
-          <p>
-            <i className="is-cod" /> COD {cod}% · <i className="is-pre" /> Prepaid {prepaid}%
-          </p>
-        </div>
-
-        <div className="hero-duo__an-card hero-duo__an-donut hero-duo__an-donut--buyers" style={{ ['--an-d' as string]: '340ms' }}>
-          <strong>New vs returning</strong>
-          <em>Buyers</em>
-          <div className="hero-duo__an-ring-wrap">
-            <div className="hero-duo__an-ring hero-duo__an-ring--buyers" aria-hidden />
-            <span>
-              5<i>BUYERS</i>
-            </span>
-          </div>
-          <p>
-            <i className="is-new" /> New 80% · <i className="is-ret" /> Returning 20%
-          </p>
+          <span className="hero-duo__px-banner-cta" data-an-target="create-campaign">
+            Create campaign →
+          </span>
         </div>
       </div>
+    );
+  }
 
-      <div className={`hero-duo__an-bot${showBot ? ' is-show' : ''}`}>
-        <div className="hero-duo__an-card hero-duo__an-funnel" style={{ ['--an-d' as string]: '90ms' }}>
-          <strong>Conversion rate breakdown</strong>
-          <div className="hero-duo__an-funnel-row">
-            {[
-              { label: 'Sessions', pct: '100%' },
-              { label: 'Added to cart', pct: '61.54%' },
-              { label: 'Reached checkout', pct: '53.85%' },
-              { label: 'Completed checkout', pct: '69.23%' },
-            ].map((s) => (
-              <div key={s.label}>
-                <em>{s.label}</em>
-                <b>{s.pct}</b>
-                <i style={{ width: s.pct === '100%' ? '100%' : s.pct }} />
+  // Beat 20 — Campaigns list → send → lift (matches product UI)
+  return (
+    <div className={`hero-duo__an hero-duo__an--camp is-live${campSent ? ' is-sent' : ''}${campLift ? ' is-lift' : ''}`} key={`camp-${loop}`}>
+      {!campSent ? (
+        <>
+          <div className="hero-duo__camp-top">
+            <div>
+              <strong>Campaigns & journeys</strong>
+            </div>
+            <button type="button" className="hero-duo__camp-create is-aim" data-an-target="send-campaign">
+              Create campaign
+            </button>
+          </div>
+
+          <div className="hero-duo__camp-kpis">
+            <div>
+              <em>
+                <Send className="h-3 w-3" /> Messages sent
+              </em>
+              <strong>2</strong>
+            </div>
+            <div>
+              <em>
+                <Eye className="h-3 w-3" /> Read rate
+              </em>
+              <strong>100%</strong>
+            </div>
+            <div>
+              <em>
+                <MessageCircle className="h-3 w-3" /> Reply rate
+              </em>
+              <strong>100%</strong>
+            </div>
+            <div>
+              <em>
+                <IndianRupee className="h-3 w-3" /> Attributed revenue
+              </em>
+              <strong>₹0</strong>
+            </div>
+          </div>
+
+          <div className="hero-duo__camp-wiz">
+            <div className="hero-duo__wiz">
+              <span className="is-on">1 Audience</span>
+              <span>2 Message</span>
+              <span>3 Review</span>
+            </div>
+            <div className="hero-duo__camp-wiz-body">
+              <aside>
+                <strong>Who receives it</strong>
+                <div className={`hero-duo__seg is-on`}>
+                  <i />
+                  <div>
+                    <b>Pixel · Serum viewers</b>
+                    <span>Opt-in matched · 29</span>
+                  </div>
+                  <em>29</em>
+                </div>
+                <div className="hero-duo__seg is-on">
+                  <i />
+                  <div>
+                    <b>Recharge audience</b>
+                    <span>Past buyers · restock</span>
+                  </div>
+                  <em>2,113</em>
+                </div>
+                <div className="hero-duo__seg">
+                  <i />
+                  <div>
+                    <b>All customers</b>
+                    <span>WhatsApp + Shopify</span>
+                  </div>
+                  <em>2,142</em>
+                </div>
+              </aside>
+              <div className="hero-duo__camp-contacts">
+                <div className="hero-duo__aud-list-head">
+                  <strong>
+                    Contacts <b>2,142</b>
+                  </strong>
+                  <span>Select all</span>
+                </div>
+                {[
+                  ['Priya M.', '+91…4821', 'WA Opt-in'],
+                  ['Arjun K.', '+91…2104', 'Pixel'],
+                  ['Neha S.', '+91…8831', 'Import'],
+                  ['Dev R.', '+91…4412', 'Recharge'],
+                ].map(([n, p, t]) => (
+                  <div key={n} className="hero-duo__aud-row is-on">
+                    <i />
+                    <span>
+                      <strong>{n}</strong>
+                      <em>{p}</em>
+                    </span>
+                    <span className="is-ok">{t}</span>
+                  </div>
+                ))}
+                <button type="button" className="hero-duo__camp-next is-aim" data-an-target="send-campaign">
+                  Choose template →
+                </button>
               </div>
-            ))}
+            </div>
           </div>
-          <div className="hero-duo__an-funnel-meta">
-            <span>
-              Visitors<em>6</em>
-            </span>
-            <span>
-              Avg session<em>1m 12s</em>
-            </span>
-            <span>
-              Pages / session<em>3.4</em>
-            </span>
+        </>
+      ) : (
+        <>
+          <div className="hero-duo__camp-top">
+            <div>
+              <strong>Serum restock</strong>
+              <em className="hero-duo__camp-done">Completed · just now</em>
+            </div>
+            <span className="hero-duo__camp-badge">COMPLETED</span>
           </div>
-          <div className="hero-duo__an-devices">
-            <span className="hero-duo__an-dev">
-              Desktop <b>88%</b>
-              <i style={{ width: '88%' }} />
-            </span>
-            <span className="hero-duo__an-dev">
-              Mobile <b>12%</b>
-              <i style={{ width: '12%' }} />
-            </span>
-          </div>
-        </div>
 
-        <div className={`hero-duo__an-card hero-duo__an-wa${popped ? ' is-won' : ''}`} style={{ ['--an-d' as string]: '240ms' }}>
-          <div className="hero-duo__an-wa-head">
-            <strong>Store × WhatsApp</strong>
-            <em>WhatsApp share {popped ? '6%' : '0%'}</em>
+          <div className="hero-duo__camp-kpis hero-duo__camp-kpis--live">
+            <div>
+              <em>Sent</em>
+              <strong>{sentN.toLocaleString('en-IN')}</strong>
+            </div>
+            <div>
+              <em>Delivered</em>
+              <strong>{delivered.toLocaleString('en-IN')}</strong>
+            </div>
+            <div>
+              <em>Read</em>
+              <strong>78%</strong>
+            </div>
+            <div className={campLift ? 'is-hot' : ''}>
+              <em>Attributed revenue</em>
+              <strong>₹{revenue.toLocaleString('en-IN')}</strong>
+            </div>
           </div>
-          <div className="hero-duo__an-wa-barlab">
-            <span>
-              Returning <b>₹2,760</b>
-            </span>
-            <span>
-              New <b>₹{(27701 + waAttr).toLocaleString('en-IN')}</b>
-            </span>
+
+          <div className="hero-duo__camp-detail">
+            <div className="hero-duo__camp-progress">
+              <i style={{ width: campLift ? '82%' : '55%' }} />
+              <span>
+                {delivered.toLocaleString('en-IN')} of {sentN.toLocaleString('en-IN')} delivered · {orders} orders
+              </span>
+            </div>
+            <div className="hero-duo__camp-buyers">
+              <strong>People buying now</strong>
+              {[
+                { name: 'Priya M.', amt: '₹1,899', on: liftT > 0.2 },
+                { name: 'Arjun K.', amt: '₹1,899', on: liftT > 0.45 },
+                { name: 'Neha S.', amt: '₹2,198', on: liftT > 0.7 },
+              ].map((b) => (
+                <div key={b.name} className={`hero-duo__camp-buy${b.on ? ' is-show' : ''}`}>
+                  <ShoppingBag className="h-3 w-3" />
+                  <b>{b.name}</b>
+                  <em>ordered</em>
+                  <span>{b.amt}</span>
+                </div>
+              ))}
+            </div>
+            {campLift ? (
+              <span className="hero-duo__paid-badge">
+                <IndianRupee className="h-3 w-3" />
+                Broadcast lift · ₹{revenue.toLocaleString('en-IN')} · +{orders} orders
+              </span>
+            ) : null}
           </div>
-          <div className="hero-duo__an-wa-bar" aria-hidden>
-            <i className="is-ret" style={{ width: '9%' }} />
-            <i className="is-new" style={{ width: '91%' }} />
-          </div>
-          <div className="hero-duo__an-wa-slots">
-            <span>
-              Campaigns<em>₹0</em>
-            </span>
-            <span className={popped ? 'is-hot' : ''}>
-              Journeys<em>₹{waAttr.toLocaleString('en-IN')}</em>
-            </span>
-            <span>
-              Cart recovery<em>₹0</em>
-            </span>
-          </div>
-          {popped ? (
-            <span className="hero-duo__paid-badge">
-              <ShoppingBag className="h-3 w-3" />
-              COD → prepaid win · ₹{waAttr.toLocaleString('en-IN')}
-            </span>
-          ) : null}
-        </div>
-      </div>
+        </>
+      )}
     </div>
   );
 }
@@ -1382,22 +1711,44 @@ function PhonePanel({
   loop: number;
   scene: Scene;
 }) {
-  // Cumulative thread through Address: prepaid/paid history scrolls up as
-  // address messages append (same continuous chat feel as Act 1).
-  const inCodChat = beat <= 4;
-  const inJourneyBuild = beat >= 5 && beat < 12;
-  const showEnrolled = beat >= 12 && beat < 27;
-  const showPrepaid = beat >= 14 && beat < 27;
-  const tappingPay = beat === 15;
-  const phonePaid = beat >= 16 && beat < 27;
-  const showPayOverlay = beat >= 16 && beat <= 17;
-  const showPayInThread = beat >= 18 && beat < 27;
+  // Cumulative thread: prior bubbles stick; journey build shows progression.
+  const showHi = beat >= 1;
+  const showStoreHi = beat >= 2;
+  const showWhere = beat >= 3;
+  const showPacked = beat >= 4;
 
-  const inAddr = scene === 'address';
+  const inJourneyBuild = beat >= 5 && beat < 12;
+  const journeyBuildLabel =
+    beat <= 6
+      ? 'Building journey · COD → prepaid'
+      : beat === 7
+        ? 'Adding Wait for payment…'
+        : beat === 8
+          ? 'Connecting Mid → End…'
+          : 'Publishing journey…';
+
+  const showEnrolled = beat >= 12;
+  const showPrepaid = beat >= 13;
+  const tappingPay = beat === 15;
+  const phonePaid = beat >= 16;
+  const showPayOverlay = beat >= 16 && beat <= 17;
+  const showPayInThread = beat >= 18;
+  const showRetargetTpl = false;
+  const showBroadcastTpl = beat === 20;
+
   const addrLocal = beat - 21;
-  const showAddrConfirm = beat >= 25 && beat <= 26;
+  const showAddrAsk = beat >= 22;
+  const showAddrReply = beat >= 23;
+  const showAddrNew = beat >= 24;
+  const showAddrConfirm = beat >= 25;
 
   const inDeliveredBuild = beat >= 27 && beat < 34;
+  const deliveredBuildLabel =
+    beat <= 28
+      ? 'Building journey · Order delivered'
+      : beat === 29
+        ? 'Adding review request…'
+        : 'Publishing journey…';
   const showDeliveredPill = beat >= 34;
   const showDelivered = beat >= 34;
   const deliveredOpen = beat >= 35;
@@ -1416,7 +1767,7 @@ function PhonePanel({
       });
     });
     return () => window.cancelAnimationFrame(id);
-  }, [beat, scene, loop, showAddrConfirm, showDelivered, showPrepaid, phonePaid]);
+  }, [beat, scene, loop, showAddrConfirm, showDelivered, showPrepaid, phonePaid, showRetargetTpl, showBroadcastTpl]);
 
   return (
     <div className="hero-duo__phone is-active">
@@ -1436,15 +1787,15 @@ function PhonePanel({
         <div className="hero-duo__wa-wall" key={`phone-${loop}`} ref={wallRef}>
           <span className="hero-duo__wa-day">Today</span>
 
-          {inCodChat && beat === 0 ? <TypingDots side="user" /> : null}
-          {inCodChat && beat >= 1 ? (
+          {beat === 0 ? <TypingDots side="user" /> : null}
+          {showHi ? (
             <div className="hero-duo__bubble hero-duo__bubble--user hero-duo__fade">
               <p>hi</p>
               <time>9:41</time>
             </div>
           ) : null}
-          {inCodChat && beat === 1 ? <TypingDots side="store" /> : null}
-          {inCodChat && beat >= 2 ? (
+          {beat === 1 ? <TypingDots side="store" /> : null}
+          {showStoreHi ? (
             <div className="hero-duo__bubble hero-duo__bubble--store hero-duo__fade">
               <p>Hi Moksh! How can we help with your order today?</p>
               <time>
@@ -1452,15 +1803,15 @@ function PhonePanel({
               </time>
             </div>
           ) : null}
-          {inCodChat && beat === 2 ? <TypingDots side="user" /> : null}
-          {inCodChat && beat >= 3 ? (
+          {beat === 2 ? <TypingDots side="user" /> : null}
+          {showWhere ? (
             <div className="hero-duo__bubble hero-duo__bubble--user hero-duo__fade">
               <p>Where is my COD order?</p>
               <time>9:41</time>
             </div>
           ) : null}
-          {inCodChat && beat === 3 ? <TypingDots side="store" /> : null}
-          {inCodChat && beat >= 4 ? (
+          {beat === 3 ? <TypingDots side="store" /> : null}
+          {showPacked ? (
             <div className="hero-duo__bubble hero-duo__bubble--store hero-duo__fade">
               <p>#TE-1042 is packed. Want same-day if you pay online?</p>
               <time>
@@ -1470,8 +1821,8 @@ function PhonePanel({
           ) : null}
 
           {inJourneyBuild ? (
-            <div className="hero-duo__bubble hero-duo__bubble--system hero-duo__fade">
-              Building journey · COD → prepaid
+            <div className="hero-duo__bubble hero-duo__bubble--system hero-duo__fade" key={`jb-${beat}`}>
+              {journeyBuildLabel}
             </div>
           ) : null}
           {showEnrolled ? (
@@ -1512,15 +1863,55 @@ function PhonePanel({
             </div>
           ) : null}
 
-          {inAddr && addrLocal === 0 ? <TypingDots side="user" /> : null}
-          {inAddr && addrLocal >= 1 ? (
+          {showRetargetTpl ? (
+            <div className="hero-duo__bubble hero-duo__bubble--store hero-duo__bubble--tpl hero-duo__fade">
+              <div className="hero-duo__tpl-media">
+                <img src={PRODUCT_IMG} alt="" />
+              </div>
+              <div className="hero-duo__tpl-body">
+                <strong className="hero-duo__tpl-title">Still thinking it over?</strong>
+                <span className="hero-duo__tpl-sub">Cart open · Vitamin C Serum</span>
+                <p>
+                  Priya, your serum is waiting — finish checkout with <b>₹100 off</b>.
+                </p>
+                <div className="hero-duo__bubble-cta">Complete order →</div>
+                <time>
+                  9:58 <span className="hero-duo__ticks">✓✓</span>
+                </time>
+              </div>
+            </div>
+          ) : null}
+
+          {showBroadcastTpl ? (
+            <>
+              <div className="hero-duo__bubble hero-duo__bubble--system hero-duo__fade">
+                Broadcast · Serum restock · delivered
+              </div>
+              <div className="hero-duo__bubble hero-duo__bubble--store hero-duo__bubble--tpl hero-duo__fade">
+                <div className="hero-duo__tpl-body hero-duo__tpl-body--solo">
+                  <strong className="hero-duo__tpl-title">Back in stock</strong>
+                  <span className="hero-duo__tpl-sub">Glow Skin Co · campaign</span>
+                  <p>
+                    Vitamin C Serum is restocked. Early access for opt-in members — <b>shop now</b>.
+                  </p>
+                  <div className="hero-duo__bubble-cta">Shop restock →</div>
+                  <time>
+                    10:12 <span className="hero-duo__ticks">✓✓</span>
+                  </time>
+                </div>
+              </div>
+            </>
+          ) : null}
+
+          {scene === 'address' && addrLocal === 0 ? <TypingDots side="user" /> : null}
+          {showAddrAsk ? (
             <div className="hero-duo__bubble hero-duo__bubble--user hero-duo__fade">
               <p>Can I change the delivery address for #TE-1042?</p>
               <time>10:02</time>
             </div>
           ) : null}
-          {inAddr && addrLocal === 1 ? <TypingDots side="store" /> : null}
-          {inAddr && addrLocal >= 2 ? (
+          {scene === 'address' && addrLocal === 1 ? <TypingDots side="store" /> : null}
+          {showAddrReply ? (
             <div className="hero-duo__bubble hero-duo__bubble--store hero-duo__fade">
               <p>Sure — send the new address and we’ll update Shopify before dispatch.</p>
               <time>
@@ -1528,8 +1919,8 @@ function PhonePanel({
               </time>
             </div>
           ) : null}
-          {inAddr && addrLocal === 2 ? <TypingDots side="user" /> : null}
-          {inAddr && addrLocal >= 3 ? (
+          {scene === 'address' && addrLocal === 2 ? <TypingDots side="user" /> : null}
+          {showAddrNew ? (
             <div className="hero-duo__bubble hero-duo__bubble--user hero-duo__fade">
               <p>14th Floor, Bandra West, Mumbai 400050</p>
               <time>10:03</time>
@@ -1553,8 +1944,8 @@ function PhonePanel({
           ) : null}
 
           {inDeliveredBuild ? (
-            <div className="hero-duo__bubble hero-duo__bubble--system hero-duo__fade">
-              Building journey · Order delivered
+            <div className="hero-duo__bubble hero-duo__bubble--system hero-duo__fade" key={`db-${beat}`}>
+              {deliveredBuildLabel}
             </div>
           ) : null}
 
@@ -1579,7 +1970,10 @@ function PhonePanel({
                 <p>
                   Your order arrived. Love it? Leave a quick review — or reorder in one tap.
                 </p>
-                <div className={`hero-duo__bubble-cta${deliveredOpen ? ' is-paid' : ''}`}>
+                <div
+                  className={`hero-duo__bubble-cta${deliveredOpen ? ' is-paid' : ''}`}
+                  data-review-target="1"
+                >
                   {deliveredOpen ? 'Opened ✓' : 'Leave a review →'}
                 </div>
                 <time>
@@ -1598,8 +1992,6 @@ function PhonePanel({
             <PaymentModal key={`pt-${loop}`} surface="phone" kind="pay" />
           </>
         ) : null}
-
-        {tappingPay ? <PayCursor key={`cur-pay-${loop}`} loop={loop} /> : null}
 
         <div className="hero-duo__wa-input" aria-hidden>
           <span>+</span>

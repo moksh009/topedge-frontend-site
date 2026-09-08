@@ -2,6 +2,11 @@
   command = "npm run build:netlify"
   publish = "dist"
 
+# Keep Playwright browsers inside the project so Netlify can cache them across builds
+# (avoids re-downloading ~260MB Chromium every deploy).
+[build.environment]
+  PLAYWRIGHT_BROWSERS_PATH = "0"
+
 # Apex preferred: www → non-www (Meta App Settings use https://topedgeai.com/privacy)
 [[redirects]]
   from = "https://www.topedgeai.com/*"

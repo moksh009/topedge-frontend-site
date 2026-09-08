@@ -1,0 +1,1080 @@
+[
+  {
+    "b": 0,
+    "classes": [
+      "is-cam-wide",
+      "is-scene-chat",
+      "is-chapter",
+      "is-debug-cam"
+    ],
+    "cam": "is-cam-wide",
+    "scene": "is-scene-chat",
+    "scale": "1",
+    "tx": "0%",
+    "ty": "0%",
+    "ox": "50%",
+    "oy": "48%",
+    "phoneRight": "-218.4px",
+    "phoneTop": "49.6px",
+    "phoneBottom": "-54.4px",
+    "hasIntertitle": true,
+    "hasToast": false,
+    "hasModal": false,
+    "hasDrag": false,
+    "hasPubCursor": false,
+    "debug": [
+      "Beat 0/36Act 1 · Live Chat",
+      "scene: chatcam: is-cam-wide",
+      "duration: 2600mshold: false",
+      "cursor: noneloop#: 0"
+    ]
+  },
+  {
+    "b": 1,
+    "classes": [
+      "is-cam-wide",
+      "is-scene-chat",
+      "is-debug-cam"
+    ],
+    "cam": "is-cam-wide",
+    "scene": "is-scene-chat",
+    "scale": "1",
+    "tx": "0%",
+    "ty": "0%",
+    "ox": "50%",
+    "oy": "48%",
+    "phoneRight": "-218.4px",
+    "phoneTop": "49.6px",
+    "phoneBottom": "-54.4px",
+    "hasIntertitle": false,
+    "hasToast": false,
+    "hasModal": false,
+    "hasDrag": false,
+    "hasPubCursor": false,
+    "debug": [
+      "Beat 1/36Act 1 · Live Chat",
+      "scene: chatcam: is-cam-wide",
+      "duration: 950mshold: false",
+      "cursor: noneloop#: 0"
+    ]
+  },
+  {
+    "b": 2,
+    "classes": [
+      "is-cam-wide",
+      "is-scene-chat",
+      "is-debug-cam"
+    ],
+    "cam": "is-cam-wide",
+    "scene": "is-scene-chat",
+    "scale": "1",
+    "tx": "0%",
+    "ty": "0%",
+    "ox": "50%",
+    "oy": "48%",
+    "phoneRight": "-218.4px",
+    "phoneTop": "49.6px",
+    "phoneBottom": "-54.4px",
+    "hasIntertitle": false,
+    "hasToast": false,
+    "hasModal": false,
+    "hasDrag": false,
+    "hasPubCursor": false,
+    "debug": [
+      "Beat 2/36Act 1 · Live Chat",
+      "scene: chatcam: is-cam-wide",
+      "duration: 1050mshold: false",
+      "cursor: noneloop#: 0"
+    ]
+  },
+  {
+    "b": 3,
+    "classes": [
+      "is-cam-wide",
+      "is-scene-chat",
+      "is-debug-cam"
+    ],
+    "cam": "is-cam-wide",
+    "scene": "is-scene-chat",
+    "scale": "1",
+    "tx": "0%",
+    "ty": "0%",
+    "ox": "50%",
+    "oy": "48%",
+    "phoneRight": "-218.4px",
+    "phoneTop": "49.6px",
+    "phoneBottom": "-54.4px",
+    "hasIntertitle": false,
+    "hasToast": false,
+    "hasModal": false,
+    "hasDrag": false,
+    "hasPubCursor": false,
+    "debug": [
+      "Beat 3/36Act 1 · Live Chat",
+      "scene: chatcam: is-cam-wide",
+      "duration: 1050mshold: false",
+      "cursor: noneloop#: 0"
+    ]
+  },
+  {
+    "b": 4,
+    "classes": [
+      "is-cam-chat",
+      "is-scene-chat",
+      "is-debug-cam"
+    ],
+    "cam": "is-cam-chat",
+    "scene": "is-scene-chat",
+    "scale": "1.08",
+    "tx": "-3%",
+    "ty": "0%",
+    "ox": "50%",
+    "oy": "48%",
+    "phoneRight": "-218.4px",
+    "phoneTop": "49.6px",
+    "phoneBottom": "-54.4px",
+    "hasIntertitle": false,
+    "hasToast": false,
+    "hasModal": false,
+    "hasDrag": false,
+    "hasPubCursor": false,
+    "debug": [
+      "Beat 4/36Act 1 · Live Chat",
+      "scene: chatcam: is-cam-chat",
+      "duration: 1500mshold: false",
+      "cursor: noneloop#: 0"
+    ]
+  },
+  {
+    "b": 5,
+    "classes": [
+      "is-cam-wide",
+      "is-scene-journey",
+      "is-chapter",
+      "is-debug-cam"
+    ],
+    "cam": "is-cam-wide",
+    "scene": "is-scene-journey",
+    "scale": "1",
+    "tx": "0%",
+    "ty": "0%",
+    "ox": "50%",
+    "oy": "48%",
+    "phoneRight": "-218.4px",
+    "phoneTop": "49.6px",
+    "phoneBottom": "-54.4px",
+    "hasIntertitle": true,
+    "hasToast": false,
+    "hasModal": false,
+    "hasDrag": false,
+    "hasPubCursor": false,
+    "debug": [
+      "Beat 5/36Act 2 · COD→prepaid",
+      "scene: journeycam: is-cam-wide",
+      "duration: 2700mshold: false",
+      "cursor: noneloop#: 0"
+    ]
+  },
+  {
+    "b": 6,
+    "classes": [
+      "is-cam-node-entry",
+      "is-scene-journey",
+      "is-debug-cam"
+    ],
+    "cam": "is-cam-node-entry",
+    "scene": "is-scene-journey",
+    "scale": "1.16",
+    "tx": "12%",
+    "ty": "8%",
+    "ox": "50%",
+    "oy": "48%",
+    "phoneRight": "-218.4px",
+    "phoneTop": "49.6px",
+    "phoneBottom": "-54.4px",
+    "hasIntertitle": false,
+    "hasToast": false,
+    "hasModal": false,
+    "hasDrag": false,
+    "hasPubCursor": false,
+    "debug": [
+      "Beat 6/36Act 2 · COD→prepaid",
+      "scene: journeycam: is-cam-node-entry",
+      "duration: 1550mshold: false",
+      "cursor: noneloop#: 0"
+    ]
+  },
+  {
+    "b": 7,
+    "classes": [
+      "is-cam-drag",
+      "is-scene-journey",
+      "is-debug-cam"
+    ],
+    "cam": "is-cam-drag",
+    "scene": "is-scene-journey",
+    "scale": "1.16",
+    "tx": "0%",
+    "ty": "9%",
+    "ox": "50%",
+    "oy": "48%",
+    "phoneRight": "-218.4px",
+    "phoneTop": "49.6px",
+    "phoneBottom": "-54.4px",
+    "hasIntertitle": false,
+    "hasToast": false,
+    "hasModal": false,
+    "hasDrag": true,
+    "hasPubCursor": false,
+    "debug": [
+      "Beat 7/36Act 2 · COD→prepaid",
+      "scene: journeycam: is-cam-drag",
+      "duration: 1900mshold: false",
+      "cursor: drag (Steps→canvas)loop#: 0"
+    ]
+  },
+  {
+    "b": 8,
+    "classes": [
+      "is-cam-node-mid",
+      "is-scene-journey",
+      "is-debug-cam"
+    ],
+    "cam": "is-cam-node-mid",
+    "scene": "is-scene-journey",
+    "scale": "1.16",
+    "tx": "0%",
+    "ty": "9%",
+    "ox": "50%",
+    "oy": "48%",
+    "phoneRight": "-218.4px",
+    "phoneTop": "49.6px",
+    "phoneBottom": "-54.4px",
+    "hasIntertitle": false,
+    "hasToast": false,
+    "hasModal": false,
+    "hasDrag": false,
+    "hasPubCursor": false,
+    "debug": [
+      "Beat 8/36Act 2 · COD→prepaid",
+      "scene: journeycam: is-cam-node-mid",
+      "duration: 1500mshold: false",
+      "cursor: noneloop#: 0"
+    ]
+  },
+  {
+    "b": 9,
+    "classes": [
+      "is-cam-node-end",
+      "is-scene-journey",
+      "is-debug-cam"
+    ],
+    "cam": "is-cam-node-end",
+    "scene": "is-scene-journey",
+    "scale": "1.16",
+    "tx": "-16%",
+    "ty": "8%",
+    "ox": "50%",
+    "oy": "48%",
+    "phoneRight": "-218.4px",
+    "phoneTop": "49.6px",
+    "phoneBottom": "-54.4px",
+    "hasIntertitle": false,
+    "hasToast": false,
+    "hasModal": false,
+    "hasDrag": false,
+    "hasPubCursor": false,
+    "debug": [
+      "Beat 9/36Act 2 · COD→prepaid",
+      "scene: journeycam: is-cam-node-end",
+      "duration: 1450mshold: false",
+      "cursor: noneloop#: 0"
+    ]
+  },
+  {
+    "b": 10,
+    "classes": [
+      "is-cam-publish",
+      "is-scene-journey",
+      "is-debug-cam"
+    ],
+    "cam": "is-cam-publish",
+    "scene": "is-scene-journey",
+    "scale": "1.34",
+    "tx": "0%",
+    "ty": "0%",
+    "ox": "92.5%",
+    "oy": "4.7%",
+    "phoneRight": "-218.4px",
+    "phoneTop": "49.6px",
+    "phoneBottom": "-54.4px",
+    "hasIntertitle": false,
+    "hasToast": false,
+    "hasModal": false,
+    "hasDrag": false,
+    "hasPubCursor": true,
+    "debug": [
+      "Beat 10/36Act 2 · COD→prepaid",
+      "scene: journeycam: is-cam-publish",
+      "duration: 1400mshold: true",
+      "cursor: publish aimloop#: 0"
+    ]
+  },
+  {
+    "b": 11,
+    "classes": [
+      "is-cam-publish",
+      "is-scene-journey",
+      "is-debug-cam"
+    ],
+    "cam": "is-cam-publish",
+    "scene": "is-scene-journey",
+    "scale": "1.34",
+    "tx": "0%",
+    "ty": "0%",
+    "ox": "91.6%",
+    "oy": "4.7%",
+    "phoneRight": "-218.4px",
+    "phoneTop": "49.6px",
+    "phoneBottom": "-54.4px",
+    "hasIntertitle": false,
+    "hasToast": false,
+    "hasModal": false,
+    "hasDrag": false,
+    "hasPubCursor": true,
+    "debug": [
+      "Beat 11/36Act 2 · COD→prepaid",
+      "scene: journeycam: is-cam-publish",
+      "duration: 1200mshold: false",
+      "cursor: publish clickloop#: 0"
+    ]
+  },
+  {
+    "b": 12,
+    "classes": [
+      "is-cam-order",
+      "is-scene-journey",
+      "is-debug-cam"
+    ],
+    "cam": "is-cam-order",
+    "scene": "is-scene-journey",
+    "scale": "1.12",
+    "tx": "0%",
+    "ty": "4%",
+    "ox": "50%",
+    "oy": "48%",
+    "phoneRight": "-218.4px",
+    "phoneTop": "49.6px",
+    "phoneBottom": "-54.4px",
+    "hasIntertitle": false,
+    "hasToast": true,
+    "hasModal": false,
+    "hasDrag": false,
+    "hasPubCursor": false,
+    "debug": [
+      "Beat 12/36Act 2 · COD→prepaid",
+      "scene: journeycam: is-cam-order",
+      "duration: 1350mshold: false",
+      "cursor: noneloop#: 0"
+    ]
+  },
+  {
+    "b": 13,
+    "classes": [
+      "is-cam-wide",
+      "is-scene-journey",
+      "is-debug-cam"
+    ],
+    "cam": "is-cam-wide",
+    "scene": "is-scene-journey",
+    "scale": "1",
+    "tx": "0%",
+    "ty": "0%",
+    "ox": "50%",
+    "oy": "48%",
+    "phoneRight": "-218.4px",
+    "phoneTop": "49.6px",
+    "phoneBottom": "-54.4px",
+    "hasIntertitle": false,
+    "hasToast": true,
+    "hasModal": false,
+    "hasDrag": false,
+    "hasPubCursor": false,
+    "debug": [
+      "Beat 13/36Act 2 · COD→prepaid",
+      "scene: journeycam: is-cam-wide",
+      "duration: 1200mshold: false",
+      "cursor: noneloop#: 0"
+    ]
+  },
+  {
+    "b": 14,
+    "classes": [
+      "is-cam-wide",
+      "is-scene-journey",
+      "is-debug-cam"
+    ],
+    "cam": "is-cam-wide",
+    "scene": "is-scene-journey",
+    "scale": "1",
+    "tx": "0%",
+    "ty": "0%",
+    "ox": "50%",
+    "oy": "48%",
+    "phoneRight": "-218.4px",
+    "phoneTop": "49.6px",
+    "phoneBottom": "-54.4px",
+    "hasIntertitle": false,
+    "hasToast": false,
+    "hasModal": false,
+    "hasDrag": false,
+    "hasPubCursor": false,
+    "debug": [
+      "Beat 14/36Act 2 · COD→prepaid",
+      "scene: journeycam: is-cam-wide",
+      "duration: 1400mshold: false",
+      "cursor: noneloop#: 0"
+    ]
+  },
+  {
+    "b": 15,
+    "classes": [
+      "is-cam-wide",
+      "is-scene-journey",
+      "is-debug-cam"
+    ],
+    "cam": "is-cam-wide",
+    "scene": "is-scene-journey",
+    "scale": "1",
+    "tx": "0%",
+    "ty": "0%",
+    "ox": "50%",
+    "oy": "48%",
+    "phoneRight": "-218.4px",
+    "phoneTop": "49.6px",
+    "phoneBottom": "-54.4px",
+    "hasIntertitle": false,
+    "hasToast": false,
+    "hasModal": false,
+    "hasDrag": false,
+    "hasPubCursor": false,
+    "debug": [
+      "Beat 15/36Act 2 · COD→prepaid",
+      "scene: journeycam: is-cam-wide",
+      "duration: 1250mshold: false",
+      "cursor: pay tap (phone)loop#: 0"
+    ]
+  },
+  {
+    "b": 16,
+    "classes": [
+      "is-cam-wide",
+      "is-scene-journey",
+      "is-debug-cam"
+    ],
+    "cam": "is-cam-wide",
+    "scene": "is-scene-journey",
+    "scale": "1",
+    "tx": "0%",
+    "ty": "0%",
+    "ox": "50%",
+    "oy": "48%",
+    "phoneRight": "-218.4px",
+    "phoneTop": "49.6px",
+    "phoneBottom": "-54.4px",
+    "hasIntertitle": false,
+    "hasToast": false,
+    "hasModal": true,
+    "hasDrag": false,
+    "hasPubCursor": false,
+    "debug": [
+      "Beat 16/36Act 2 · COD→prepaid",
+      "scene: journeycam: is-cam-wide",
+      "duration: 1200mshold: false",
+      "cursor: noneloop#: 0"
+    ]
+  },
+  {
+    "b": 17,
+    "classes": [
+      "is-cam-paid",
+      "is-scene-journey",
+      "is-debug-cam"
+    ],
+    "cam": "is-cam-paid",
+    "scene": "is-scene-journey",
+    "scale": "1.14",
+    "tx": "0%",
+    "ty": "3%",
+    "ox": "50%",
+    "oy": "48%",
+    "phoneRight": "-218.4px",
+    "phoneTop": "49.6px",
+    "phoneBottom": "-54.4px",
+    "hasIntertitle": false,
+    "hasToast": false,
+    "hasModal": true,
+    "hasDrag": false,
+    "hasPubCursor": false,
+    "debug": [
+      "Beat 17/36Act 2 · COD→prepaid",
+      "scene: journeycam: is-cam-paid",
+      "duration: 1550mshold: false",
+      "cursor: noneloop#: 0"
+    ]
+  },
+  {
+    "b": 18,
+    "classes": [
+      "is-cam-an-kpi",
+      "is-scene-analytics",
+      "is-chapter",
+      "is-debug-cam"
+    ],
+    "cam": "is-cam-an-kpi",
+    "scene": "is-scene-analytics",
+    "scale": "1.2",
+    "tx": "0%",
+    "ty": "12%",
+    "ox": "50%",
+    "oy": "48%",
+    "phoneRight": "-218.4px",
+    "phoneTop": "49.6px",
+    "phoneBottom": "-54.4px",
+    "hasIntertitle": true,
+    "hasToast": false,
+    "hasModal": false,
+    "hasDrag": false,
+    "hasPubCursor": false,
+    "debug": [
+      "Beat 18/36Act 3 · Analytics",
+      "scene: analyticscam: is-cam-an-kpi",
+      "duration: 2800mshold: false",
+      "cursor: noneloop#: 0"
+    ]
+  },
+  {
+    "b": 19,
+    "classes": [
+      "is-cam-an-mid",
+      "is-scene-analytics",
+      "is-debug-cam"
+    ],
+    "cam": "is-cam-an-mid",
+    "scene": "is-scene-analytics",
+    "scale": "1.2",
+    "tx": "-2%",
+    "ty": "2%",
+    "ox": "50%",
+    "oy": "48%",
+    "phoneRight": "-218.4px",
+    "phoneTop": "49.6px",
+    "phoneBottom": "-54.4px",
+    "hasIntertitle": false,
+    "hasToast": false,
+    "hasModal": false,
+    "hasDrag": false,
+    "hasPubCursor": false,
+    "debug": [
+      "Beat 19/36Act 3 · Analytics",
+      "scene: analyticscam: is-cam-an-mid",
+      "duration: 2300mshold: false",
+      "cursor: noneloop#: 0"
+    ]
+  },
+  {
+    "b": 20,
+    "classes": [
+      "is-cam-an-bot",
+      "is-scene-analytics",
+      "is-debug-cam"
+    ],
+    "cam": "is-cam-an-bot",
+    "scene": "is-scene-analytics",
+    "scale": "1.2",
+    "tx": "0%",
+    "ty": "-10%",
+    "ox": "50%",
+    "oy": "48%",
+    "phoneRight": "-218.4px",
+    "phoneTop": "49.6px",
+    "phoneBottom": "-54.4px",
+    "hasIntertitle": false,
+    "hasToast": false,
+    "hasModal": false,
+    "hasDrag": false,
+    "hasPubCursor": false,
+    "debug": [
+      "Beat 20/36Act 3 · Analytics",
+      "scene: analyticscam: is-cam-an-bot",
+      "duration: 2100mshold: false",
+      "cursor: noneloop#: 0"
+    ]
+  },
+  {
+    "b": 21,
+    "classes": [
+      "is-cam-wide",
+      "is-scene-address",
+      "is-chapter",
+      "is-debug-cam"
+    ],
+    "cam": "is-cam-wide",
+    "scene": "is-scene-address",
+    "scale": "1",
+    "tx": "0%",
+    "ty": "0%",
+    "ox": "50%",
+    "oy": "48%",
+    "phoneRight": "-218.4px",
+    "phoneTop": "49.6px",
+    "phoneBottom": "-54.4px",
+    "hasIntertitle": true,
+    "hasToast": false,
+    "hasModal": false,
+    "hasDrag": false,
+    "hasPubCursor": false,
+    "debug": [
+      "Beat 21/36Act 4 · Address",
+      "scene: addresscam: is-cam-wide",
+      "duration: 2600mshold: false",
+      "cursor: noneloop#: 0"
+    ]
+  },
+  {
+    "b": 22,
+    "classes": [
+      "is-cam-wide",
+      "is-scene-address",
+      "is-debug-cam"
+    ],
+    "cam": "is-cam-wide",
+    "scene": "is-scene-address",
+    "scale": "1",
+    "tx": "0%",
+    "ty": "0%",
+    "ox": "50%",
+    "oy": "48%",
+    "phoneRight": "-218.4px",
+    "phoneTop": "49.6px",
+    "phoneBottom": "-54.4px",
+    "hasIntertitle": false,
+    "hasToast": false,
+    "hasModal": false,
+    "hasDrag": false,
+    "hasPubCursor": false,
+    "debug": [
+      "Beat 22/36Act 4 · Address",
+      "scene: addresscam: is-cam-wide",
+      "duration: 1200mshold: false",
+      "cursor: noneloop#: 0"
+    ]
+  },
+  {
+    "b": 23,
+    "classes": [
+      "is-cam-support",
+      "is-scene-address",
+      "is-debug-cam"
+    ],
+    "cam": "is-cam-support",
+    "scene": "is-scene-address",
+    "scale": "1.1",
+    "tx": "-4%",
+    "ty": "0%",
+    "ox": "50%",
+    "oy": "48%",
+    "phoneRight": "-218.4px",
+    "phoneTop": "49.6px",
+    "phoneBottom": "-54.4px",
+    "hasIntertitle": false,
+    "hasToast": false,
+    "hasModal": false,
+    "hasDrag": false,
+    "hasPubCursor": false,
+    "debug": [
+      "Beat 23/36Act 4 · Address",
+      "scene: addresscam: is-cam-support",
+      "duration: 1400mshold: false",
+      "cursor: noneloop#: 0"
+    ]
+  },
+  {
+    "b": 24,
+    "classes": [
+      "is-cam-wide",
+      "is-scene-address",
+      "is-debug-cam"
+    ],
+    "cam": "is-cam-wide",
+    "scene": "is-scene-address",
+    "scale": "1",
+    "tx": "0%",
+    "ty": "0%",
+    "ox": "50%",
+    "oy": "48%",
+    "phoneRight": "-218.4px",
+    "phoneTop": "49.6px",
+    "phoneBottom": "-54.4px",
+    "hasIntertitle": false,
+    "hasToast": false,
+    "hasModal": false,
+    "hasDrag": false,
+    "hasPubCursor": false,
+    "debug": [
+      "Beat 24/36Act 4 · Address",
+      "scene: addresscam: is-cam-wide",
+      "duration: 1350mshold: false",
+      "cursor: noneloop#: 0"
+    ]
+  },
+  {
+    "b": 25,
+    "classes": [
+      "is-cam-wide",
+      "is-scene-address",
+      "is-debug-cam"
+    ],
+    "cam": "is-cam-wide",
+    "scene": "is-scene-address",
+    "scale": "1",
+    "tx": "0%",
+    "ty": "0%",
+    "ox": "50%",
+    "oy": "48%",
+    "phoneRight": "-218.4px",
+    "phoneTop": "49.6px",
+    "phoneBottom": "-54.4px",
+    "hasIntertitle": false,
+    "hasToast": false,
+    "hasModal": false,
+    "hasDrag": false,
+    "hasPubCursor": false,
+    "debug": [
+      "Beat 25/36Act 4 · Address",
+      "scene: addresscam: is-cam-wide",
+      "duration: 1550mshold: false",
+      "cursor: noneloop#: 0"
+    ]
+  },
+  {
+    "b": 26,
+    "classes": [
+      "is-cam-wide",
+      "is-scene-address",
+      "is-debug-cam"
+    ],
+    "cam": "is-cam-wide",
+    "scene": "is-scene-address",
+    "scale": "1",
+    "tx": "0%",
+    "ty": "0%",
+    "ox": "50%",
+    "oy": "48%",
+    "phoneRight": "-218.4px",
+    "phoneTop": "49.6px",
+    "phoneBottom": "-54.4px",
+    "hasIntertitle": false,
+    "hasToast": true,
+    "hasModal": false,
+    "hasDrag": false,
+    "hasPubCursor": false,
+    "debug": [
+      "Beat 26/36Act 4 · Address",
+      "scene: addresscam: is-cam-wide",
+      "duration: 1700mshold: false",
+      "cursor: noneloop#: 0"
+    ]
+  },
+  {
+    "b": 27,
+    "classes": [
+      "is-cam-node-entry",
+      "is-scene-delivered",
+      "is-chapter",
+      "is-debug-cam"
+    ],
+    "cam": "is-cam-node-entry",
+    "scene": "is-scene-delivered",
+    "scale": "1.16",
+    "tx": "12%",
+    "ty": "8%",
+    "ox": "50%",
+    "oy": "48%",
+    "phoneRight": "-218.4px",
+    "phoneTop": "49.6px",
+    "phoneBottom": "-54.4px",
+    "hasIntertitle": true,
+    "hasToast": false,
+    "hasModal": false,
+    "hasDrag": false,
+    "hasPubCursor": false,
+    "debug": [
+      "Beat 27/36Act 5 · Delivered",
+      "scene: deliveredcam: is-cam-node-entry",
+      "duration: 3800mshold: false",
+      "cursor: noneloop#: 0"
+    ]
+  },
+  {
+    "b": 28,
+    "classes": [
+      "is-cam-drag",
+      "is-scene-delivered",
+      "is-debug-cam"
+    ],
+    "cam": "is-cam-drag",
+    "scene": "is-scene-delivered",
+    "scale": "1.16",
+    "tx": "0%",
+    "ty": "9%",
+    "ox": "50%",
+    "oy": "48%",
+    "phoneRight": "-218.4px",
+    "phoneTop": "49.6px",
+    "phoneBottom": "-54.4px",
+    "hasIntertitle": false,
+    "hasToast": false,
+    "hasModal": false,
+    "hasDrag": true,
+    "hasPubCursor": false,
+    "debug": [
+      "Beat 28/36Act 5 · Delivered",
+      "scene: deliveredcam: is-cam-drag",
+      "duration: 2200mshold: false",
+      "cursor: drag delivered noteloop#: 0"
+    ]
+  },
+  {
+    "b": 29,
+    "classes": [
+      "is-cam-node-mid",
+      "is-scene-delivered",
+      "is-debug-cam"
+    ],
+    "cam": "is-cam-node-mid",
+    "scene": "is-scene-delivered",
+    "scale": "1.16",
+    "tx": "0%",
+    "ty": "9%",
+    "ox": "50%",
+    "oy": "48%",
+    "phoneRight": "-218.4px",
+    "phoneTop": "49.6px",
+    "phoneBottom": "-54.4px",
+    "hasIntertitle": false,
+    "hasToast": false,
+    "hasModal": false,
+    "hasDrag": false,
+    "hasPubCursor": false,
+    "debug": [
+      "Beat 29/36Act 5 · Delivered",
+      "scene: deliveredcam: is-cam-node-mid",
+      "duration: 1700mshold: false",
+      "cursor: noneloop#: 0"
+    ]
+  },
+  {
+    "b": 30,
+    "classes": [
+      "is-cam-node-end",
+      "is-scene-delivered",
+      "is-debug-cam"
+    ],
+    "cam": "is-cam-node-end",
+    "scene": "is-scene-delivered",
+    "scale": "1.16",
+    "tx": "-16%",
+    "ty": "8%",
+    "ox": "50%",
+    "oy": "48%",
+    "phoneRight": "-218.4px",
+    "phoneTop": "49.6px",
+    "phoneBottom": "-54.4px",
+    "hasIntertitle": false,
+    "hasToast": false,
+    "hasModal": false,
+    "hasDrag": false,
+    "hasPubCursor": false,
+    "debug": [
+      "Beat 30/36Act 5 · Delivered",
+      "scene: deliveredcam: is-cam-node-end",
+      "duration: 1500mshold: false",
+      "cursor: noneloop#: 0"
+    ]
+  },
+  {
+    "b": 31,
+    "classes": [
+      "is-cam-publish",
+      "is-scene-delivered",
+      "is-debug-cam"
+    ],
+    "cam": "is-cam-publish",
+    "scene": "is-scene-delivered",
+    "scale": "1.34",
+    "tx": "0%",
+    "ty": "0%",
+    "ox": "93.4%",
+    "oy": "4.0%",
+    "phoneRight": "-218.4px",
+    "phoneTop": "49.6px",
+    "phoneBottom": "-54.4px",
+    "hasIntertitle": false,
+    "hasToast": false,
+    "hasModal": false,
+    "hasDrag": false,
+    "hasPubCursor": true,
+    "debug": [
+      "Beat 31/36Act 5 · Delivered",
+      "scene: deliveredcam: is-cam-publish",
+      "duration: 1400mshold: true",
+      "cursor: publish aim (delivered)loop#: 0"
+    ]
+  },
+  {
+    "b": 32,
+    "classes": [
+      "is-cam-publish",
+      "is-scene-delivered",
+      "is-debug-cam"
+    ],
+    "cam": "is-cam-publish",
+    "scene": "is-scene-delivered",
+    "scale": "1.34",
+    "tx": "0%",
+    "ty": "0%",
+    "ox": "91.9%",
+    "oy": "4.2%",
+    "phoneRight": "-218.4px",
+    "phoneTop": "49.6px",
+    "phoneBottom": "-54.4px",
+    "hasIntertitle": false,
+    "hasToast": false,
+    "hasModal": false,
+    "hasDrag": false,
+    "hasPubCursor": true,
+    "debug": [
+      "Beat 32/36Act 5 · Delivered",
+      "scene: deliveredcam: is-cam-publish",
+      "duration: 1200mshold: false",
+      "cursor: publish click (delivered)loop#: 0"
+    ]
+  },
+  {
+    "b": 33,
+    "classes": [
+      "is-cam-order",
+      "is-scene-delivered",
+      "is-debug-cam"
+    ],
+    "cam": "is-cam-order",
+    "scene": "is-scene-delivered",
+    "scale": "1.12",
+    "tx": "0%",
+    "ty": "4%",
+    "ox": "50%",
+    "oy": "48%",
+    "phoneRight": "-218.4px",
+    "phoneTop": "49.6px",
+    "phoneBottom": "-54.4px",
+    "hasIntertitle": false,
+    "hasToast": true,
+    "hasModal": false,
+    "hasDrag": false,
+    "hasPubCursor": false,
+    "debug": [
+      "Beat 33/36Act 5 · Delivered",
+      "scene: deliveredcam: is-cam-order",
+      "duration: 1500mshold: false",
+      "cursor: noneloop#: 0"
+    ]
+  },
+  {
+    "b": 34,
+    "classes": [
+      "is-cam-wide",
+      "is-scene-delivered",
+      "is-debug-cam"
+    ],
+    "cam": "is-cam-wide",
+    "scene": "is-scene-delivered",
+    "scale": "1",
+    "tx": "0%",
+    "ty": "0%",
+    "ox": "50%",
+    "oy": "48%",
+    "phoneRight": "-218.4px",
+    "phoneTop": "49.6px",
+    "phoneBottom": "-54.4px",
+    "hasIntertitle": false,
+    "hasToast": false,
+    "hasModal": false,
+    "hasDrag": false,
+    "hasPubCursor": false,
+    "debug": [
+      "Beat 34/36Act 5 · Delivered",
+      "scene: deliveredcam: is-cam-wide",
+      "duration: 1600mshold: false",
+      "cursor: noneloop#: 0"
+    ]
+  },
+  {
+    "b": 35,
+    "classes": [
+      "is-cam-paid",
+      "is-scene-delivered",
+      "is-debug-cam"
+    ],
+    "cam": "is-cam-paid",
+    "scene": "is-scene-delivered",
+    "scale": "1.14",
+    "tx": "0%",
+    "ty": "3%",
+    "ox": "50%",
+    "oy": "48%",
+    "phoneRight": "-218.4px",
+    "phoneTop": "49.6px",
+    "phoneBottom": "-54.4px",
+    "hasIntertitle": false,
+    "hasToast": false,
+    "hasModal": true,
+    "hasDrag": false,
+    "hasPubCursor": false,
+    "debug": [
+      "Beat 35/36Act 5 · Delivered",
+      "scene: deliveredcam: is-cam-paid",
+      "duration: 1800mshold: false",
+      "cursor: noneloop#: 0"
+    ]
+  },
+  {
+    "b": 36,
+    "classes": [
+      "is-cam-wide",
+      "is-scene-delivered",
+      "is-debug-cam"
+    ],
+    "cam": "is-cam-wide",
+    "scene": "is-scene-delivered",
+    "scale": "1",
+    "tx": "0%",
+    "ty": "0%",
+    "ox": "50%",
+    "oy": "48%",
+    "phoneRight": "-218.4px",
+    "phoneTop": "49.6px",
+    "phoneBottom": "-54.4px",
+    "hasIntertitle": false,
+    "hasToast": false,
+    "hasModal": false,
+    "hasDrag": false,
+    "hasPubCursor": false,
+    "debug": [
+      "Beat 36/36Act 5 · Delivered",
+      "scene: deliveredcam: is-cam-wide",
+      "duration: 1500mshold: false",
+      "cursor: noneloop#: 0"
+    ]
+  }
+]

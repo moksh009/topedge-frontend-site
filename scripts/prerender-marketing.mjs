@@ -1,6 +1,9 @@
 /**
  * Post-build Playwright prerender for marketing routes.
  * Writes crawlable HTML (with Helmet meta + JSON-LD) into dist/.
+ *
+ * Important: must fully tear down the preview server + browser and exit,
+ * otherwise Netlify waits until the build time limit (hang after "Prerender done").
  */
 import { spawn } from 'node:child_process';
 import fs from 'node:fs';
@@ -14,6 +17,7 @@ const root = path.resolve(__dirname, '..');
 const dist = path.join(root, 'dist');
 const PORT = Number(process.env.PRERENDER_PORT || 4179);
 const BASE = `http://127.0.0.1:${PORT}`;
+const viteBin = path.join(root, 'node_modules', 'vite', 'bin', 'vite.js');
 
 function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
@@ -45,6 +49,7 @@ function installChromium() {
       cwd: root,
       stdio: 'inherit',
       env: process.env,
+      shell: process.platform === 'win32',
     });
     child.on('error', reject);
     child.on('exit', (code) => {
@@ -67,21 +72,54 @@ async function launchBrowser() {
   }
 }
 
+function killProcessTree(child) {
+  if (!child?.pid) return;
+  try {
+    if (process.platform === 'win32') {
+      spawn('taskkill', ['/pid', String(child.pid), '/T', '/F'], { stdio: 'ignore' });
+    } else {
+      // Kill the whole process group (spawned with detached: true + unref-safe group).
+      try {
+        process.kill(-child.pid, 'SIGTERM');
+      } catch {
+        /* group may already be gone */
+      }
+      try {
+        process.kill(-child.pid, 'SIGKILL');
+      } catch {
+        /* ignore */
+      }
+      try {
+        child.kill('SIGKILL');
+      } catch {
+        /* ignore */
+      }
+    }
+  } catch {
+    /* ignore */
+  }
+}
+
 async function main() {
   if (!fs.existsSync(path.join(dist, 'index.html'))) {
     throw new Error('dist/index.html missing — run vite build first');
+  }
+  if (!fs.existsSync(viteBin)) {
+    throw new Error(`vite binary missing at ${viteBin}`);
   }
 
   const paths = getMarketingPrerenderPaths();
   console.log(`\n🔎 Prerendering ${paths.length} marketing URLs on :${PORT}…`);
 
+  // Spawn vite directly (not via npx) in its own process group so we can kill it cleanly.
   const preview = spawn(
-    'npx',
-    ['vite', 'preview', '--host', '127.0.0.1', '--port', String(PORT), '--strictPort'],
+    process.execPath,
+    [viteBin, 'preview', '--host', '127.0.0.1', '--port', String(PORT), '--strictPort'],
     {
       cwd: root,
       stdio: ['ignore', 'pipe', 'pipe'],
       env: { ...process.env, BROWSER: 'none' },
+      detached: process.platform !== 'win32',
     }
   );
 
@@ -92,6 +130,8 @@ async function main() {
   preview.stderr.on('data', (d) => {
     previewLog += d.toString();
   });
+
+  let exitCode = 0;
 
   try {
     await waitForServer(BASE);
@@ -104,10 +144,11 @@ async function main() {
     for (const route of paths) {
       const url = `${BASE}${route === '/' ? '/' : route}`;
       try {
-        await page.goto(url, { waitUntil: 'networkidle', timeout: 60000 });
-        await page.waitForSelector('h1', { timeout: 30000 });
+        // `load` is enough for Helmet/meta; `networkidle` can hang on analytics/websockets.
+        await page.goto(url, { waitUntil: 'load', timeout: 45000 });
+        await page.waitForSelector('h1', { timeout: 20000 });
         // Let Helmet flush title/meta/JSON-LD
-        await sleep(150);
+        await sleep(100);
         const html = await page.content();
 
         const out = outPathFor(route);
@@ -127,20 +168,21 @@ async function main() {
     await browser.close();
     console.log(`\n✅ Prerender done: ${ok} ok, ${fail} failed`);
     if (fail > 0 && ok === 0) {
-      process.exitCode = 1;
+      exitCode = 1;
     }
+  } catch (err) {
+    exitCode = 1;
+    throw err;
   } finally {
-    preview.kill('SIGTERM');
-    await sleep(300);
-    try {
-      preview.kill('SIGKILL');
-    } catch {
-      /* ignore */
-    }
+    killProcessTree(preview);
+    await sleep(200);
     if (previewLog && process.env.PRERENDER_DEBUG) {
       console.log(previewLog.slice(-2000));
     }
   }
+
+  // Force exit — open handles from preview/playwright must not stall Netlify builds.
+  process.exit(exitCode);
 }
 
 main().catch((err) => {

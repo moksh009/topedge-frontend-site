@@ -1,0 +1,122 @@
+[
+  {
+    "beat": 5,
+    "classes": "is-cam-wide is-scene-journey is-chapter",
+    "scale": "1",
+    "tx": "0%",
+    "ty": "0%",
+    "ox": "50%",
+    "oy": "48%",
+    "file": "/Users/patelmoksh/Downloads/topedge netlify final/topedge-frontend-site-update-pricing/docs/product/hero-duo-debug-shots/ae-pass-2026-09-08/duo-05.png"
+  },
+  {
+    "beat": 7,
+    "classes": "is-cam-drag is-scene-journey",
+    "scale": "1.16",
+    "tx": "0%",
+    "ty": "7%",
+    "ox": "50%",
+    "oy": "48%",
+    "file": "/Users/patelmoksh/Downloads/topedge netlify final/topedge-frontend-site-update-pricing/docs/product/hero-duo-debug-shots/ae-pass-2026-09-08/duo-07.png"
+  },
+  {
+    "beat": 8,
+    "classes": "is-cam-node-mid is-scene-journey",
+    "scale": "1.16",
+    "tx": "0%",
+    "ty": "7%",
+    "ox": "50%",
+    "oy": "48%",
+    "file": "/Users/patelmoksh/Downloads/topedge netlify final/topedge-frontend-site-update-pricing/docs/product/hero-duo-debug-shots/ae-pass-2026-09-08/duo-08.png"
+  },
+  {
+    "beat": 10,
+    "classes": "is-cam-publish is-scene-journey",
+    "scale": "1.22",
+    "tx": "-7%",
+    "ty": "11%",
+    "ox": "50%",
+    "oy": "48%",
+    "file": "/Users/patelmoksh/Downloads/topedge netlify final/topedge-frontend-site-update-pricing/docs/product/hero-duo-debug-shots/ae-pass-2026-09-08/duo-10.png"
+  },
+  {
+    "beat": 11,
+    "classes": "is-cam-publish is-scene-journey",
+    "scale": "1.22",
+    "tx": "-7%",
+    "ty": "11%",
+    "ox": "50%",
+    "oy": "48%",
+    "file": "/Users/patelmoksh/Downloads/topedge netlify final/topedge-frontend-site-update-pricing/docs/product/hero-duo-debug-shots/ae-pass-2026-09-08/duo-11.png"
+  },
+  {
+    "beat": 18,
+    "classes": "is-cam-wide is-scene-analytics is-chapter",
+    "scale": "1",
+    "tx": "0%",
+    "ty": "0%",
+    "ox": "50%",
+    "oy": "48%",
+    "file": "/Users/patelmoksh/Downloads/topedge netlify final/topedge-frontend-site-update-pricing/docs/product/hero-duo-debug-shots/ae-pass-2026-09-08/duo-18.png"
+  },
+  {
+    "beat": 19,
+    "classes": "is-cam-an-kpi is-scene-analytics",
+    "scale": "1.16",
+    "tx": "0%",
+    "ty": "10%",
+    "ox": "50%",
+    "oy": "48%",
+    "file": "/Users/patelmoksh/Downloads/topedge netlify final/topedge-frontend-site-update-pricing/docs/product/hero-duo-debug-shots/ae-pass-2026-09-08/duo-19.png"
+  },
+  {
+    "beat": 20,
+    "classes": "is-cam-an-bot is-scene-analytics",
+    "scale": "1.16",
+    "tx": "0%",
+    "ty": "-8%",
+    "ox": "50%",
+    "oy": "48%",
+    "file": "/Users/patelmoksh/Downloads/topedge netlify final/topedge-frontend-site-update-pricing/docs/product/hero-duo-debug-shots/ae-pass-2026-09-08/duo-20.png"
+  },
+  {
+    "beat": 26,
+    "classes": "is-cam-wide is-scene-address",
+    "scale": "1",
+    "tx": "0%",
+    "ty": "0%",
+    "ox": "50%",
+    "oy": "48%",
+    "file": "/Users/patelmoksh/Downloads/topedge netlify final/topedge-frontend-site-update-pricing/docs/product/hero-duo-debug-shots/ae-pass-2026-09-08/duo-26.png"
+  },
+  {
+    "beat": 27,
+    "classes": "is-cam-wide is-scene-delivered is-chapter",
+    "scale": "1",
+    "tx": "0%",
+    "ty": "0%",
+    "ox": "50%",
+    "oy": "48%",
+    "file": "/Users/patelmoksh/Downloads/topedge netlify final/topedge-frontend-site-update-pricing/docs/product/hero-duo-debug-shots/ae-pass-2026-09-08/duo-27.png"
+  },
+  {
+    "beat": 28,
+    "classes": "is-cam-drag is-scene-delivered",
+    "scale": "1.16",
+    "tx": "0%",
+    "ty": "7%",
+    "ox": "50%",
+    "oy": "48%",
+    "file": "/Users/patelmoksh/Downloads/topedge netlify final/topedge-frontend-site-update-pricing/docs/product/hero-duo-debug-shots/ae-pass-2026-09-08/duo-28.png"
+  },
+  {
+    "beat": 31,
+    "classes": "is-cam-publish is-scene-delivered",
+    "scale": "1.22",
+    "tx": "-7%",
+    "ty": "11%",
+    "ox": "50%",
+    "oy": "48%",
+    "file": "/Users/patelmoksh/Downloads/topedge netlify final/topedge-frontend-site-update-pricing/docs/product/hero-duo-debug-shots/ae-pass-2026-09-08/duo-31.png"
+  }
+]
