@@ -9,7 +9,6 @@ import MarketingNavbar from './marketing/components/MarketingNavbar';
 import CommunityNavbar from './components/community/layout/CommunityNavbar';
 import Footer from './components/Footer';
 import MarketingFooter from './marketing/components/MarketingFooter';
-import MarketingScrollBlur from './marketing/components/effects/MarketingScrollBlur';
 import MarketingSmoothScroll, {
   SmoothScrollToTop,
 } from './marketing/components/effects/MarketingSmoothScroll';
@@ -38,6 +37,7 @@ const RoiPage = React.lazy(() => import('./marketing/pages/RoiPage'));
 const TermsPage = React.lazy(() => import('./marketing/pages/TermsPage'));
 const CompareIndexPage = React.lazy(() => import('./marketing/pages/CompareIndexPage'));
 const ComparePage = React.lazy(() => import('./marketing/pages/ComparePage'));
+const SeoTopicPage = React.lazy(() => import('./marketing/pages/SeoTopicPage'));
 const NotFoundPage = React.lazy(() => import('./marketing/pages/NotFoundPage'));
 const DevShowcasePage = import.meta.env.DEV
   ? React.lazy(() => import('./marketing/pages/DevShowcasePage'))
@@ -133,9 +133,6 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         </motion.div>
       )}
       {isCommunityRoute && !isAuthPage && <CommunityNavbar />}
-
-      {/* Soft viewport-edge blur while scrolling marketing pages */}
-      {marketing && <MarketingScrollBlur />}
 
       {isCommunityRoute ? (
         <>
@@ -285,6 +282,18 @@ const AnimatedRoutes = () => {
           <Route path="/terms-of-service" element={<TermsPage />} />
           <Route path="/compare" element={<CompareIndexPage />} />
           <Route path="/compare/:competitor" element={<ComparePage />} />
+          <Route
+            path="/whatsapp-cart-recovery"
+            element={<SeoTopicPage slug="whatsapp-cart-recovery" />}
+          />
+          <Route
+            path="/cod-confirmation-whatsapp"
+            element={<SeoTopicPage slug="cod-confirmation-whatsapp" />}
+          />
+          <Route
+            path="/shopify-whatsapp-integration"
+            element={<SeoTopicPage slug="shopify-whatsapp-integration" />}
+          />
           <Route path="/admin/login" element={<CommunityLogin />} />
 
           {/* Community Routes */}

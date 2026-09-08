@@ -8,14 +8,11 @@
   width: 100%;
   margin: 0 auto;
   aspect-ratio: 16 / 9;
-  border-radius: 22px;
+  border-radius: 20px;
   overflow: hidden;
-  background: #0b1020;
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.22) inset,
-    0 0 0 1px rgba(15, 23, 42, 0.07),
-    0 28px 56px -24px rgba(15, 23, 42, 0.42),
-    0 52px 100px -48px rgba(124, 58, 237, 0.22);
+  background: transparent;
+  border: 0;
+  box-shadow: none;
 }
 
 .mkt-demo-video__el {
@@ -24,7 +21,7 @@
   height: 100%;
   object-fit: cover;
   object-position: center top;
-  background: #0b1020;
+  background: transparent;
 }
 
 @media (max-width: 900px) {

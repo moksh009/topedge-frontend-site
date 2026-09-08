@@ -4,18 +4,22 @@ const footerLinks = {
   Product: [
     { label: 'Features', href: '/features' },
     { label: 'Pricing', href: '/pricing' },
+    { label: 'Cart recovery', href: '/whatsapp-cart-recovery' },
+    { label: 'Shopify integration', href: '/shopify-whatsapp-integration' },
     { label: 'Integrations', href: '/integrations' },
     { label: 'Security', href: '/security' },
   ],
   Solutions: [
     { label: 'Fashion & apparel', href: '/solutions/fashion' },
     { label: 'Beauty', href: '/solutions/beauty' },
-    { label: 'COD-first brands', href: '/solutions/cod' },
+    { label: 'Food & beverage', href: '/solutions/food' },
+    { label: 'COD-first brands', href: '/cod-confirmation-whatsapp' },
     { label: 'Agencies', href: '/agency' },
   ],
   Company: [
     { label: 'About', href: '/about' },
     { label: 'Customers', href: '/customers' },
+    { label: 'Compare', href: '/compare' },
     { label: 'Blog', href: '/blog' },
     { label: 'Contact', href: '/contact' },
   ],

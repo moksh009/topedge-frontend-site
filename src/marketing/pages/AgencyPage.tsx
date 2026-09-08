@@ -1,8 +1,14 @@
+import { Link } from 'react-router-dom';
 import MarketingSEO from '../components/MarketingSEO';
-import { PAGE_SEO } from '../data/pageSeo';
+import {
+  PAGE_SEO,
+  organizationJsonLd,
+  breadcrumbJsonLd,
+  webPageJsonLd,
+} from '../data/pageSeo';
 import MarketingPage from '../components/MarketingPage';
 import MarketingCtaBand from '../components/MarketingCtaBand';
-import { PageHero, Section, MarketingCard } from '../components/ui';
+import { PageHero, Section, SectionHeading, MarketingCard } from '../components/ui';
 
 export default function AgencyPage() {
   return (
@@ -13,14 +19,30 @@ export default function AgencyPage() {
         keywords={PAGE_SEO.agency.keywords}
         path={PAGE_SEO.agency.path}
         noSuffix
+        jsonLd={[
+          organizationJsonLd(),
+          webPageJsonLd({
+            name: 'Agencies',
+            description: PAGE_SEO.agency.description,
+            path: PAGE_SEO.agency.path,
+          }),
+          breadcrumbJsonLd([
+            { name: 'Home', path: '/' },
+            { name: 'Agencies', path: '/agency' },
+          ]),
+        ]}
       />
       <MarketingPage>
         <PageHero
           eyebrow="Agencies"
           title="Operate WhatsApp for the brands you manage"
-          subtitle="Standardize cart recovery, template hygiene, and inbox ops across clients ,  without rebuilding from scratch each time."
+          subtitle="Standardize cart recovery, template hygiene, and inbox ops across clients — without rebuilding from scratch each time."
         />
         <Section className="!pt-0">
+          <SectionHeading
+            title="Agency WhatsApp automation on Shopify"
+            subtitle="Productize DFY recovery and Meta-safe campaigns for every client store."
+          />
           <div className="grid gap-5 md:grid-cols-3">
             {[
               {
@@ -33,23 +55,33 @@ export default function AgencyPage() {
               },
               {
                 t: 'Honest reporting',
-                d: 'Recovery ₹ and Meta costs clients can understand ,  not vanity dashboards.',
+                d: 'Recovery ₹ and Meta costs clients can understand — not vanity dashboards.',
               },
             ].map((c) => (
               <MarketingCard key={c.t} className="!p-6">
-                <p className="font-medium text-[#0c1222]">{c.t}</p>
+                <h2 className="font-medium text-[#0c1222]">{c.t}</h2>
                 <p className="mt-3 text-sm leading-relaxed text-slate-500">{c.d}</p>
               </MarketingCard>
             ))}
           </div>
+          <p className="mx-auto mt-8 max-w-2xl text-center text-sm text-slate-500">
+            Read the{' '}
+            <Link to="/blog/agencies-whatsapp-automation-multi-brand-shopify" className="font-medium text-[#7C3AED]">
+              multi-brand agency playbook
+            </Link>{' '}
+            or start from{' '}
+            <Link to="/whatsapp-cart-recovery" className="font-medium text-[#7C3AED]">
+              cart recovery
+            </Link>
+            .
+          </p>
         </Section>
         <MarketingCtaBand
-          title="Talk agency / DFY"
-          subtitle="Tell us how many brands you run ,  we’ll map DIY vs DFY."
-          primaryLabel="Contact sales"
-          primaryTo="/contact"
-          secondaryLabel="See pricing"
-          secondaryTo="/pricing"
+          title="Pitch TopEdge on your next retainer"
+          subtitle="Start free on a client store — or talk DFY setup with our team."
+          primaryLabel="Start free"
+          secondaryLabel="Contact DFY"
+          secondaryTo="/contact"
         />
       </MarketingPage>
     </>

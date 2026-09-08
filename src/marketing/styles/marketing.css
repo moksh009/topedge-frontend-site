@@ -13,7 +13,7 @@
   --mkt-radius-control: 12px;
   --mkt-max-text: 1120px;
   --mkt-max-wide: 1280px;
-  --marketing-nav-h: 72px;
+  --marketing-nav-h: 88px;
   --mkt-font: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Inter', system-ui, sans-serif;
 }
 
@@ -48,6 +48,8 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  width: auto;
+  max-width: max-content;
   height: 2.875rem;
   padding: 0 1.5rem;
   border-radius: 9999px;
@@ -69,6 +71,8 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  width: auto;
+  max-width: max-content;
   height: 2.875rem;
   padding: 0 1.5rem;
   border-radius: 9999px;
@@ -150,5 +154,51 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* Marketing nav — floating capsule (not full-bleed bar) */
+.mkt-nav {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.mkt-nav__capsule {
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    backdrop-filter 0.3s ease,
+    border-radius 0.3s ease;
+}
+
+.mkt-nav__capsule--ghost {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 9999px;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.mkt-nav__capsule--solid {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(239, 234, 248, 0.95);
+  border-radius: 9999px;
+  box-shadow:
+    0 10px 40px -16px rgba(76, 29, 149, 0.35),
+    0 2px 8px -4px rgba(15, 23, 42, 0.08);
+  backdrop-filter: blur(18px) saturate(1.2);
+  -webkit-backdrop-filter: blur(18px) saturate(1.2);
+}
+
+.mkt-nav__capsule--open {
+  border-radius: 24px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mkt-nav__capsule {
+    transition: none;
   }
 }

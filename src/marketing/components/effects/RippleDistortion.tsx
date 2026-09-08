@@ -214,8 +214,8 @@ const RippleDistortion = ({
       powerPreference: 'high-performance',
     } as ConstructorParameters<typeof Renderer>[0]);
     const gl = renderer.gl;
-    // Match hero violet mid-tone so clear flash isn't black/wrong
-    gl.clearColor(0.91, 0.87, 1, 1);
+    // Match dark mesh so load flash isn't washed out
+    gl.clearColor(0.1, 0.04, 0.18, 1);
     const canvas = gl.canvas as HTMLCanvasElement;
     canvas.style.width = '100%';
     canvas.style.height = '100%';
@@ -323,9 +323,13 @@ const RippleDistortion = ({
     let height = 1;
 
     const resize = () => {
-      width = Math.max(1, mount.clientWidth);
-      height = Math.max(1, mount.clientHeight);
+      const rect = mount.getBoundingClientRect();
+      // Ceil + 1px padding kills subpixel black gutters on the right/bottom
+      width = Math.max(1, Math.ceil(rect.width) + 1);
+      height = Math.max(1, Math.ceil(rect.height) + 1);
       renderer.setSize(width, height);
+      canvas.style.width = '100%';
+      canvas.style.height = '100%';
       compositeUniforms.uResolution.value = [width, height];
 
       const scale = QUALITY_SCALE[quality] || QUALITY_SCALE.medium;

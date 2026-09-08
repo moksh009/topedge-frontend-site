@@ -1,6 +1,11 @@
 import { Link } from 'react-router-dom';
 import MarketingSEO from '../marketing/components/MarketingSEO';
-import { PAGE_SEO } from '../marketing/data/pageSeo';
+import {
+  PAGE_SEO,
+  organizationJsonLd,
+  breadcrumbJsonLd,
+  webPageJsonLd,
+} from '../marketing/data/pageSeo';
 import { PageHero, Section, SectionHeading, MarketingCard, PrimaryButton, Eyebrow } from '../marketing/components/ui';
 import { Stagger, StaggerItem } from '../marketing/components/motion';
 import MarketingPage from '../marketing/components/MarketingPage';
@@ -36,6 +41,18 @@ export default function About() {
         keywords={PAGE_SEO.about.keywords}
         path={PAGE_SEO.about.path}
         noSuffix
+        jsonLd={[
+          organizationJsonLd(),
+          webPageJsonLd({
+            name: 'About TopEdge',
+            description: PAGE_SEO.about.description,
+            path: PAGE_SEO.about.path,
+          }),
+          breadcrumbJsonLd([
+            { name: 'Home', path: '/' },
+            { name: 'About', path: '/about' },
+          ]),
+        ]}
       />
       <MarketingPage>
         <PageHero

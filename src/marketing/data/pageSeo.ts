@@ -26,7 +26,7 @@ export type PageSeoEntry = {
 
 export const PAGE_SEO = {
   home: {
-    title: 'TopEdge | WhatsApp Automation & Cart Recovery for Shopify India',
+    title: 'WhatsApp Automation for Shopify India | TopEdge',
     description:
       'WhatsApp automation for Shopify: abandoned cart recovery, COD confirmations, Live Chat with order context, and ecommerce journeys. Built for Indian D2C brands.',
     keywords:
@@ -35,7 +35,7 @@ export const PAGE_SEO = {
     noSuffix: true,
   },
   pricing: {
-    title: 'WhatsApp Automation Pricing for Shopify | Plans & Free Trial',
+    title: 'WhatsApp Automation Pricing | Shopify Plans',
     description:
       'Transparent pricing for Shopify WhatsApp automation — cart recovery, journeys, Live Chat, and Meta Cloud API pass-through. 14-day free trial. GST invoices included.',
     keywords:
@@ -43,7 +43,7 @@ export const PAGE_SEO = {
     path: '/pricing',
   },
   features: {
-    title: 'Shopify WhatsApp Automation Features | Cart Recovery, Inbox & Journeys',
+    title: 'Shopify WhatsApp Features | Cart & Inbox',
     description:
       'Explore TopEdge features: Shopify sync, abandoned cart recovery journeys, Live Chat, Flow Builder, AI Brain, campaigns, Instagram automation, and Meta template manager.',
     keywords:
@@ -332,5 +332,35 @@ export function websiteJsonLd() {
       target: `${SITE_URL}/blog?q={search_term_string}`,
       'query-input': 'required name=search_term_string',
     },
+  };
+}
+
+export function webPageJsonLd(opts: { name: string; description: string; path: string }) {
+  const url = `${SITE_URL}${opts.path === '/' ? '' : opts.path}`;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: opts.name,
+    description: opts.description,
+    url,
+    isPartOf: { '@type': 'WebSite', name: 'TopEdge', url: SITE_URL },
+    about: {
+      '@type': 'SoftwareApplication',
+      name: 'TopEdge',
+      applicationCategory: 'BusinessApplication',
+    },
+  };
+}
+
+export function breadcrumbJsonLd(items: { name: string; path: string }[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: item.name,
+      item: `${SITE_URL}${item.path === '/' ? '' : item.path}`,
+    })),
   };
 }

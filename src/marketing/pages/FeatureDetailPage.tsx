@@ -4,7 +4,12 @@ import MarketingCtaBand from '../components/MarketingCtaBand';
 import ProductDemoVideo from '../components/home/ProductDemoVideo';
 import { PageHero, Section, MarketingCard, PrimaryButton, GhostButton } from '../components/ui';
 import { getFeatureBySlug, MARKETING_FEATURES, resolveFeatureSlug } from '../data/features';
-import { FEATURE_SEO } from '../data/pageSeo';
+import {
+  FEATURE_SEO,
+  organizationJsonLd,
+  breadcrumbJsonLd,
+  webPageJsonLd,
+} from '../data/pageSeo';
 import { demoVideoFor } from '../data/productDemoVideos';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
@@ -34,6 +39,19 @@ export default function FeatureDetailPage() {
         keywords={featureSeo?.keywords}
         path={`/features/${feature.slug}`}
         noSuffix={Boolean(featureSeo)}
+        jsonLd={[
+          organizationJsonLd(),
+          webPageJsonLd({
+            name: feature.title,
+            description: featureSeo?.description ?? feature.body,
+            path: `/features/${feature.slug}`,
+          }),
+          breadcrumbJsonLd([
+            { name: 'Home', path: '/' },
+            { name: 'Features', path: '/features' },
+            { name: feature.label, path: `/features/${feature.slug}` },
+          ]),
+        ]}
       />
       <MarketingPage>
         <PageHero eyebrow={feature.label} title={feature.title} subtitle={feature.body} />
@@ -47,7 +65,9 @@ export default function FeatureDetailPage() {
         <Section className="!py-16">
           <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
             <div>
-              <p className="mkt-eyebrow">What you get</p>
+              <h2 className="mkt-eyebrow !normal-case !tracking-normal text-xl font-medium text-[#0c1222]">
+                What you get
+              </h2>
               <ul className="mt-6 space-y-4">
                 {feature.bullets.map((b) => (
                   <li key={b} className="flex gap-3 text-[0.95rem] text-slate-600">
@@ -63,9 +83,22 @@ export default function FeatureDetailPage() {
                 </PrimaryButton>
                 <GhostButton to="/pricing">See pricing</GhostButton>
               </div>
+              <p className="mt-6 text-sm text-slate-500">
+                Also see{' '}
+                <Link to="/shopify-whatsapp-integration" className="font-medium text-[#7C3AED]">
+                  Shopify WhatsApp integration
+                </Link>{' '}
+                and{' '}
+                <Link to="/whatsapp-cart-recovery" className="font-medium text-[#7C3AED]">
+                  cart recovery
+                </Link>
+                .
+              </p>
             </div>
             <div className="space-y-4">
-              <p className="mkt-eyebrow">Outcomes</p>
+              <h2 className="mkt-eyebrow !normal-case !tracking-normal text-xl font-medium text-[#0c1222]">
+                Outcomes
+              </h2>
               {feature.outcomes.map((o) => (
                 <MarketingCard key={o} className="!p-5">
                   <p className="text-sm leading-relaxed text-slate-600">{o}</p>
@@ -80,7 +113,9 @@ export default function FeatureDetailPage() {
         </Section>
 
         <Section wash="soft" className="!py-16">
-          <p className="mkt-eyebrow mb-6">More of the workspace</p>
+          <h2 className="mkt-eyebrow mb-6 !normal-case !tracking-normal text-xl font-medium text-[#0c1222]">
+            More of the workspace
+          </h2>
           <div className="grid gap-4 md:grid-cols-3">
             {others.map((f) => (
               <Link

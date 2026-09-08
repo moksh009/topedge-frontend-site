@@ -242,4 +242,137 @@ export const blogPosts: BlogPost[] = [
 <p><a href="/signup">Start free</a> · <a href="/features/shopify">Shopify connection</a></p>
 `,
   },
+  {
+    id: 9,
+    title: 'Best WhatsApp Automation Tools for Shopify India (2026)',
+    description:
+      'How to evaluate WhatsApp automation tools for Shopify India — cart recovery, COD, Meta Cloud API, inbox, and pricing signals that matter.',
+    slug: 'best-whatsapp-automation-tools-shopify-india',
+    date: '2026-09-08',
+    readTime: '9 min',
+    category: 'Comparisons',
+    author: 'TopEdge',
+    image: '/og/og-default.svg',
+    imageAlt: 'WhatsApp automation tools for Shopify India',
+    keywords: [
+      'best WhatsApp automation tools',
+      'WhatsApp Shopify India',
+      'WATI alternative',
+      'Interakt alternative',
+      'ecommerce automation',
+    ],
+    content: `
+<p><strong>Best WhatsApp automation tools for Shopify India</strong> share five traits: native Shopify sync, Meta Cloud API templates, abandoned cart recovery, COD confirmation, and a shared inbox with order context. Everything else is nice-to-have.</p>
+<h2>What “best” means for Indian D2C</h2>
+<p>Indian Shopify brands care about RTO, COD, ₹ pricing, and Meta template approvals — not generic chatbot demos. Rank tools by whether carts and orders drive journeys automatically.</p>
+<h2>Evaluation checklist</h2>
+<ol>
+<li><strong>Shopify OAuth depth</strong> — carts, orders, COD flags, catalog.</li>
+<li><strong>Template gating</strong> — no sends until APPROVED.</li>
+<li><strong>Cart recovery sequence</strong> — 2–3 messages with checkout links.</li>
+<li><strong>COD confirmation</strong> — confirm / reschedule / cancel before ship.</li>
+<li><strong>Inbox + AI handoff</strong> — humans see order # beside the thread.</li>
+<li><strong>Transparent Meta rates</strong> — pass-through pricing you can forecast.</li>
+</ol>
+<h2>How TopEdge fits</h2>
+<p>TopEdge is built as a WhatsApp growth OS for Shopify India: journeys, Live Chat, Meta manager, and recovery math in one workspace. Compare named alternatives on our <a href="/compare">compare hub</a> — including <a href="/compare/wati">vs WATI</a>, <a href="/compare/interakt">vs Interakt</a>, and <a href="/compare/bitespeed">vs Bitespeed</a>.</p>
+<p><a href="/whatsapp-cart-recovery">Cart recovery lander</a> · <a href="/pricing">Pricing</a></p>
+`,
+  },
+  {
+    id: 10,
+    title: 'How to Reduce RTO with WhatsApp COD Confirmation',
+    description:
+      'Step-by-step: reduce RTO on Shopify with WhatsApp COD confirmation — timing, utility templates, reply paths, and operator takeover.',
+    slug: 'how-to-reduce-rto-with-whatsapp-cod-confirmation',
+    date: '2026-09-08',
+    readTime: '8 min',
+    category: 'COD',
+    author: 'TopEdge',
+    image: '/og/og-default.svg',
+    keywords: [
+      'reduce RTO',
+      'COD confirmation WhatsApp',
+      'Shopify RTO',
+      'Cash on Delivery confirmation',
+    ],
+    content: `
+<p><strong>How do you reduce RTO with WhatsApp COD confirmation?</strong> Confirm buyer intent on WhatsApp before you pack Cash on Delivery orders. Show order # and ₹ amount from Shopify, offer YES / reschedule / cancel, and escalate silence or confusion to Live Chat.</p>
+<h2>Why RTO spikes on COD</h2>
+<p>COD lifts conversion at checkout and shifts risk to fulfillment. Fake orders, changed minds, and unreachable buyers show up as return-to-origin. Confirmation is cheaper than shipping twice.</p>
+<h2>A practical COD confirmation flow</h2>
+<ol>
+<li>Trigger after order creation (utility template where eligible).</li>
+<li>Include items, total, and delivery window.</li>
+<li>Branch: confirmed → fulfill; reschedule → update; cancel → stop; no reply → reminder then call policy.</li>
+<li>Pause automation when an agent replies.</li>
+</ol>
+<h2>Measure what finance cares about</h2>
+<p>Track confirmation rate, ship rate, and RTO % before/after — not just message opens.</p>
+<p><a href="/cod-confirmation-whatsapp">COD confirmation product page</a> · <a href="/solutions/cod">COD solution</a> · <a href="/features/journeys">Journeys</a></p>
+`,
+  },
+  {
+    id: 11,
+    title: 'What Is Ecommerce Automation on Shopify WhatsApp?',
+    description:
+      'Plain definition of ecommerce automation on Shopify WhatsApp — carts, COD, order updates, campaigns — and what to automate first in India.',
+    slug: 'what-is-ecommerce-automation-shopify-whatsapp',
+    date: '2026-09-08',
+    readTime: '7 min',
+    category: 'Basics',
+    author: 'TopEdge',
+    image: '/og/og-default.svg',
+    keywords: [
+      'ecommerce automation',
+      'Shopify WhatsApp automation',
+      'what is WhatsApp automation',
+      'D2C automation India',
+    ],
+    content: `
+<p><strong>Ecommerce automation on Shopify WhatsApp</strong> means connecting store events — abandoned carts, orders, COD status, shipments — to Meta-approved WhatsApp messages and a team inbox, so growth and support run without copy-pasting from Shopify admin.</p>
+<h2>Core automations</h2>
+<ul>
+<li>Abandoned cart recovery</li>
+<li>COD confirmation</li>
+<li>Order and shipping updates</li>
+<li>Campaigns / drops (after template hygiene)</li>
+<li>AI answers with catalog truth + human handoff</li>
+</ul>
+<h2>What it is not</h2>
+<p>It is not blasting unverified marketing templates or running a chatbot that invents prices. Meta quality ratings and Shopify accuracy matter.</p>
+<p><a href="/shopify-whatsapp-integration">Integration overview</a> · <a href="/blog/shopify-whatsapp-automation-what-to-automate-first">What to automate first</a></p>
+`,
+  },
+  {
+    id: 12,
+    title: 'AI WhatsApp Chatbot for Shopify India: Catalog-Grounded Answers',
+    description:
+      'What a good AI WhatsApp chatbot for Shopify looks like in India — live SKUs, ₹ prices, COD FAQs, and clean handoff to humans.',
+    slug: 'ai-whatsapp-chatbot-for-shopify-india',
+    date: '2026-09-08',
+    readTime: '7 min',
+    category: 'AI',
+    author: 'TopEdge',
+    image: '/og/og-default.svg',
+    keywords: [
+      'AI WhatsApp chatbot Shopify',
+      'ecommerce AI chatbot India',
+      'catalog WhatsApp AI',
+      'WhatsApp automation AI',
+    ],
+    content: `
+<p>An <strong>AI WhatsApp chatbot for Shopify India</strong> should answer from live catalog data — SKUs, sizes, ₹ prices — then hand off to humans when intent is purchase risk, COD doubt, or complaint. Hallucinated inventory destroys trust faster than slow replies.</p>
+<h2>Must-have behaviors</h2>
+<ol>
+<li>Ground answers in Shopify catalog and order APIs.</li>
+<li>Pause AI when an agent joins the thread.</li>
+<li>Route COD and refund topics carefully.</li>
+<li>Keep Meta policies and opt-outs respected.</li>
+</ol>
+<h2>Where TopEdge AI Brain fits</h2>
+<p>AI Brain sits beside Live Chat and journeys so automation and humans share the same Customer 360.</p>
+<p><a href="/features/ai-brain">AI Brain feature</a> · <a href="/features/live-chat">Live Chat</a> · <a href="/features/flow-builder">Flow builder</a></p>
+`,
+  },
 ];

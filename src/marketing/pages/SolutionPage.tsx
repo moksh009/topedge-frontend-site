@@ -3,8 +3,13 @@ import MarketingSEO from '../components/MarketingSEO';
 import MarketingPage from '../components/MarketingPage';
 import MarketingCtaBand from '../components/MarketingCtaBand';
 import ProductDemoVideo from '../components/home/ProductDemoVideo';
-import { PageHero, Section, MarketingCard } from '../components/ui';
-import { SOLUTION_SEO } from '../data/pageSeo';
+import { PageHero, Section, SectionHeading, MarketingCard } from '../components/ui';
+import {
+  SOLUTION_SEO,
+  organizationJsonLd,
+  breadcrumbJsonLd,
+  webPageJsonLd,
+} from '../data/pageSeo';
 import { demoVideoFor } from '../data/productDemoVideos';
 
 const FALLBACK = {
@@ -30,6 +35,19 @@ export default function SolutionPage() {
         keywords={solution.keywords}
         path={`/solutions/${slug}`}
         noSuffix
+        jsonLd={[
+          organizationJsonLd(),
+          webPageJsonLd({
+            name: solution.title.replace(/ \| .*$/, ''),
+            description: solution.description,
+            path: `/solutions/${slug}`,
+          }),
+          breadcrumbJsonLd([
+            { name: 'Home', path: '/' },
+            { name: 'Solutions', path: '/features' },
+            { name: slug, path: `/solutions/${slug}` },
+          ]),
+        ]}
       />
       <MarketingPage>
         <PageHero eyebrow="Solutions" title={solution.title.replace(/ \| .*$/, '')} subtitle={solution.body} />
@@ -38,17 +56,26 @@ export default function SolutionPage() {
           <div className="mx-auto mb-10 w-full max-w-5xl">
             <ProductDemoVideo src={videoSrc} label={`${slug} solution demo`} />
           </div>
+          <SectionHeading title="What this vertical runs on WhatsApp" />
           <div className="grid gap-5 md:grid-cols-3">
             {solution.bullets.map((b) => (
               <MarketingCard key={b}>
-                <p className="text-sm leading-relaxed text-slate-600">{b}</p>
+                <h2 className="text-sm font-medium leading-relaxed text-slate-700">{b}</h2>
               </MarketingCard>
             ))}
           </div>
           <p className="mt-8 text-center text-sm text-slate-500">
-            Looking for agencies?{' '}
+            Related:{' '}
+            <Link to="/whatsapp-cart-recovery" className="font-medium text-[#7C3AED] hover:underline">
+              Cart recovery
+            </Link>
+            {' · '}
+            <Link to="/cod-confirmation-whatsapp" className="font-medium text-[#7C3AED] hover:underline">
+              COD confirmation
+            </Link>
+            {' · '}
             <Link to="/agency" className="font-medium text-[#7C3AED] hover:underline">
-              See agency WhatsApp automation
+              Agencies
             </Link>
           </p>
         </Section>

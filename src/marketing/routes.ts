@@ -22,6 +22,9 @@ const MARKETING_PREFIXES = [
   '/testimonials',
   '/services',
   '/booking',
+  '/whatsapp-cart-recovery',
+  '/cod-confirmation-whatsapp',
+  '/shopify-whatsapp-integration',
 ];
 
 const NON_MARKETING = ['/community', '/admin', '/ai-caller', '/ai-chatbot'];

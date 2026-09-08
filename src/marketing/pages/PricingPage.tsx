@@ -2,7 +2,13 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/pricing.css';
 import MarketingSEO from '../components/MarketingSEO';
-import { PAGE_SEO } from '../data/pageSeo';
+import {
+  PAGE_SEO,
+  organizationJsonLd,
+  softwareApplicationJsonLd,
+  breadcrumbJsonLd,
+  webPageJsonLd,
+} from '../data/pageSeo';
 import MarketingPage from '../components/MarketingPage';
 import CycleToggle from '../components/pricing/CycleToggle';
 import PlanGrid from '../components/pricing/PlanGrid';
@@ -47,7 +53,21 @@ export default function PricingPage() {
         description={seo.description}
         keywords={seo.keywords}
         path={seo.path}
+        noSuffix
         faqSchema={faqSchema}
+        jsonLd={[
+          organizationJsonLd(),
+          softwareApplicationJsonLd(),
+          webPageJsonLd({
+            name: 'Pricing',
+            description: seo.description,
+            path: seo.path,
+          }),
+          breadcrumbJsonLd([
+            { name: 'Home', path: '/' },
+            { name: 'Pricing', path: '/pricing' },
+          ]),
+        ]}
       />
       <MarketingPage>
         <div className="mkt-pricing">

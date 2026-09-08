@@ -3,64 +3,69 @@ import type { StickyMomentId } from '../../data/productDemoVideos';
 import { PRODUCT_DEMO_VIDEOS } from '../../data/productDemoVideos';
 import ProductDemoVideo from './ProductDemoVideo';
 import { PrimaryButton } from '../ui';
-import { homeStories } from '../../data/home';
 
-/**
- * Product moments: centered copy + full-width demo video below.
- */
-const STICKY_SEQUENCE: {
+type Story = {
   id: StickyMomentId;
-  title: string;
+  /** First part of the title (neutral) */
+  titleLead: string;
+  /** Last phrase — rendered in brand purple */
+  titleAccent: string;
   body: string;
   cta: string;
-}[] = [
+};
+
+/**
+ * Product moments: centered copy + rounded demo video (no cards / no edge blur).
+ */
+const STORIES: Story[] = [
   {
     id: 'cart-recovery',
-    title: 'WhatsApp Abandoned Cart Recovery',
-    body: 'Stop losing sales at the finish line. Automatically trigger perfectly timed WhatsApp nudges when a shopper leaves items in their cart.',
+    titleLead: 'WhatsApp Abandoned',
+    titleAccent: 'Cart Recovery',
+    body: 'Recover checkouts with timed WhatsApp nudges the moment a shopper leaves items behind.',
     cta: 'Start free',
   },
   {
     id: 'journey',
-    title: 'Drag-and-Drop Journey Builder',
-    body: 'Map out the perfect post-purchase experience on a visual canvas. Build custom automation flows based on customer behavior or purchase history.',
+    titleLead: 'Drag-and-Drop',
+    titleAccent: 'Journey Builder',
+    body: 'Map post-purchase flows on a visual canvas—wait, branch, and message from one place.',
     cta: 'Start free',
   },
   {
     id: 'inbox',
-    title: 'Shared Team Inbox for WhatsApp & IG',
-    body: 'Stop juggling phones. Consolidate support into one dashboard. Your team can manage, assign, and reply to messages from a single shared inbox.',
+    titleLead: 'Shared Team Inbox for',
+    titleAccent: 'WhatsApp & IG',
+    body: 'One inbox for WhatsApp and Instagram. Assign chats, reply with order context, stay aligned.',
     cta: 'Start free',
   },
   {
     id: 'ai-brain',
-    title: 'Audience Segmentation & Lead Scoring',
-    body: 'Not all customers are equal. Automatically score leads and segment your audience based on engagement for highly personalized broadcasts.',
+    titleLead: 'Audience Segmentation &',
+    titleAccent: 'Lead Scoring',
+    body: 'Score and segment shoppers by engagement so every broadcast reaches the right people.',
     cta: 'Start free',
   },
   {
     id: 'connect',
-    title: 'Automated Order & Shipping Alerts',
-    body: 'Eliminate WISMO support tickets. Proactively send automated order confirmations, shipping updates, and tracking links directly to WhatsApp.',
+    titleLead: 'Automated Order &',
+    titleAccent: 'Shipping Alerts',
+    body: 'Send confirmations, tracking, and shipping updates on WhatsApp—cut WISMO tickets.',
     cta: 'Start free',
   },
 ];
-
-const stickyStories = STICKY_SEQUENCE.map((item) => {
-  const fromData = homeStories.find((s) => s.id === item.id);
-  return fromData
-    ? { id: item.id, title: fromData.title, body: fromData.body, cta: fromData.cta }
-    : item;
-});
 
 export default function HomeStickyStories() {
   return (
     <section className="home-sticky home-sticky--static" aria-label="Product moments">
       <div className="home-sticky__static">
-        {stickyStories.map((story) => (
-          <article key={story.id} className="home-sticky__static-card">
+        {STORIES.map((story) => (
+          <article key={story.id} className="home-sticky__static-block">
             <div className="home-sticky__static-copy">
-              <h2 className="home-sticky__title">{story.title}</h2>
+              <h2 className="home-sticky__title">
+                {story.titleLead}{' '}
+                <span className="home-sticky__title-accent">{story.titleAccent}</span>
+              </h2>
               <p className="home-sticky__body">{story.body}</p>
               <PrimaryButton to="/signup" className="home-sticky__cta">
                 {story.cta}
@@ -70,7 +75,7 @@ export default function HomeStickyStories() {
             <div className="home-sticky__static-scene">
               <ProductDemoVideo
                 src={PRODUCT_DEMO_VIDEOS[story.id]}
-                label={`${story.title} product demo`}
+                label={`${story.titleLead} ${story.titleAccent} product demo`}
               />
             </div>
           </article>
@@ -80,4 +85,4 @@ export default function HomeStickyStories() {
   );
 }
 
-export const stickyStoryIds = STICKY_SEQUENCE.map((s) => s.id);
+export const stickyStoryIds = STORIES.map((s) => s.id);

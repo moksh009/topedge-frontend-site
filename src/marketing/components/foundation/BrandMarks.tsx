@@ -35,3 +35,18 @@ export function ShopifyMark({ className = 'h-4 w-4' }: MarkProps) {
     />
   );
 }
+
+/** Official Instagram glyph */
+export function InstagramMark({ className = 'h-4 w-4' }: MarkProps) {
+  return (
+    <img
+      src="/platforms/instagram.svg"
+      alt=""
+      className={className}
+      width={16}
+      height={16}
+      draggable={false}
+      aria-hidden
+    />
+  );
+}

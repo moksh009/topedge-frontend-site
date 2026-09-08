@@ -1,5 +1,10 @@
 import MarketingSEO from '../marketing/components/MarketingSEO';
-import { PAGE_SEO } from '../marketing/data/pageSeo';
+import {
+  PAGE_SEO,
+  organizationJsonLd,
+  breadcrumbJsonLd,
+  webPageJsonLd,
+} from '../marketing/data/pageSeo';
 import MarketingPage from '../marketing/components/MarketingPage';
 import { PageHero, Section } from '../marketing/components/ui';
 import { blogPosts } from '../data/blogPosts';
@@ -31,6 +36,18 @@ export default function Blog() {
         keywords={PAGE_SEO.blog.keywords}
         path={PAGE_SEO.blog.path}
         noSuffix
+        jsonLd={[
+          organizationJsonLd(),
+          webPageJsonLd({
+            name: 'Blog',
+            description: PAGE_SEO.blog.description,
+            path: PAGE_SEO.blog.path,
+          }),
+          breadcrumbJsonLd([
+            { name: 'Home', path: '/' },
+            { name: 'Blog', path: '/blog' },
+          ]),
+        ]}
       />
       <MarketingPage>
         <PageHero

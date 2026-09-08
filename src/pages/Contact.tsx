@@ -2,8 +2,13 @@ import { FormEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, MessageCircle, Clock } from 'lucide-react';
 import MarketingSEO from '../marketing/components/MarketingSEO';
-import { PAGE_SEO } from '../marketing/data/pageSeo';
-import { PageHero, Section, MarketingCard } from '../marketing/components/ui';
+import {
+  PAGE_SEO,
+  organizationJsonLd,
+  breadcrumbJsonLd,
+  webPageJsonLd,
+} from '../marketing/data/pageSeo';
+import { PageHero, Section, SectionHeading, MarketingCard } from '../marketing/components/ui';
 import { Reveal } from '../marketing/components/motion';
 import MarketingPage from '../marketing/components/MarketingPage';
 
@@ -58,6 +63,18 @@ export default function Contact() {
         keywords={PAGE_SEO.contact.keywords}
         path={PAGE_SEO.contact.path}
         noSuffix
+        jsonLd={[
+          organizationJsonLd(),
+          webPageJsonLd({
+            name: 'Contact TopEdge',
+            description: PAGE_SEO.contact.description,
+            path: PAGE_SEO.contact.path,
+          }),
+          breadcrumbJsonLd([
+            { name: 'Home', path: '/' },
+            { name: 'Contact', path: '/contact' },
+          ]),
+        ]}
       />
       <MarketingPage>
         <PageHero
@@ -66,7 +83,32 @@ export default function Contact() {
           subtitle="Cart recovery, COD confirm, campaigns, or full WhatsApp ops — we will map a practical rollout for your store."
         />
 
+        <Section className="!pt-0 !pb-4">
+          <div className="mx-auto max-w-3xl text-base leading-relaxed text-slate-600">
+            <p>
+              TopEdge helps Indian Shopify brands run{' '}
+              <Link to="/whatsapp-cart-recovery" className="font-medium text-[#7C3AED]">
+                WhatsApp cart recovery
+              </Link>
+              ,{' '}
+              <Link to="/cod-confirmation-whatsapp" className="font-medium text-[#7C3AED]">
+                COD confirmation
+              </Link>
+              , and shared inbox support with Meta Cloud API. Prefer self-serve?{' '}
+              <Link to="/signup" className="font-medium text-[#7C3AED]">
+                Start free
+              </Link>{' '}
+              or review{' '}
+              <Link to="/pricing" className="font-medium text-[#7C3AED]">
+                pricing
+              </Link>
+              .
+            </p>
+          </div>
+        </Section>
+
         <Section>
+          <SectionHeading title="Send a message" subtitle="We reply during IST business hours." />
           <div className="grid gap-10 lg:grid-cols-5">
             <Reveal className="lg:col-span-3">
               <form
@@ -146,6 +188,7 @@ export default function Contact() {
             </Reveal>
 
             <Reveal delay={0.08} className="lg:col-span-2">
+              <h2 className="mb-4 text-lg font-medium text-[#0c1222]">Other ways to reach us</h2>
               <div className="space-y-4">
                 {channels.map((c) => {
                   const Icon = c.icon;

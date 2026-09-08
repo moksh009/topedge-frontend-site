@@ -1,5 +1,10 @@
 import MarketingSEO from '../components/MarketingSEO';
-import { PAGE_SEO } from '../data/pageSeo';
+import {
+  PAGE_SEO,
+  organizationJsonLd,
+  breadcrumbJsonLd,
+  webPageJsonLd,
+} from '../data/pageSeo';
 import MarketingPage from '../components/MarketingPage';
 import MarketingCtaBand from '../components/MarketingCtaBand';
 import ProductDemoVideo from '../components/home/ProductDemoVideo';
@@ -17,6 +22,15 @@ export default function FeaturesPage() {
         description={seo.description}
         keywords={seo.keywords}
         path={seo.path}
+        noSuffix
+        jsonLd={[
+          organizationJsonLd(),
+          webPageJsonLd({ name: 'Features', description: seo.description, path: seo.path }),
+          breadcrumbJsonLd([
+            { name: 'Home', path: '/' },
+            { name: 'Features', path: '/features' },
+          ]),
+        ]}
       />
       <MarketingPage>
         <PageHero
