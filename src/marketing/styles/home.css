@@ -18,24 +18,23 @@ html:has(.home-page) body::-webkit-scrollbar,
 }
 
 /*
- * Hero stays pinned while the sticky stories section scrolls up and covers it.
- * Stage is ~200svh: first viewport = hero, second = cover scroll room.
+ * Hero — normal document flow (no pin / nested page scroll).
  */
 .home-hero-stage {
   position: relative;
   z-index: 1;
-  height: 200svh;
-  /* Neutralize global * { transform } so sticky children can pin */
+  height: auto;
   transform: none;
 }
 
 .home-hero {
-  position: sticky;
-  top: 0;
+  position: relative;
+  top: auto;
   z-index: 1;
   padding: 4rem 0 0;
-  overflow: hidden;
-  height: 100svh;
+  overflow: visible;
+  height: auto;
+  min-height: 0;
   box-sizing: border-box;
   transform: none;
 }
@@ -57,7 +56,7 @@ html:has(.home-page) body::-webkit-scrollbar,
   flex-direction: column;
   width: 100%;
   max-width: none;
-  height: 100%;
+  height: auto;
   min-height: 0;
   margin: 0;
 }
@@ -66,16 +65,15 @@ html:has(.home-page) body::-webkit-scrollbar,
   --hero-mx: 72%;
   --hero-my: 34%;
   position: relative;
-  overflow-y: auto;
-  overflow-x: hidden;
-  scrollbar-width: none !important;
-  -ms-overflow-style: none !important;
+  overflow: hidden;
+  scrollbar-width: auto;
+  -ms-overflow-style: auto;
   display: flex;
   flex-direction: column;
-  flex: 1 1 auto;
+  flex: 0 1 auto;
   width: 100%;
   min-height: 0;
-  height: 100%;
+  height: auto;
   border-radius: 0 0 28px 28px;
   padding: 5.25rem 1.25rem 2.25rem;
   text-align: center;
@@ -92,6 +90,25 @@ html:has(.home-page) body::-webkit-scrollbar,
   box-shadow:
     0 28px 60px -28px rgba(76, 29, 149, 0.4),
     0 0 0 1px rgba(124, 58, 237, 0.08) inset;
+}
+
+/* Keep ask menu unclipped when open; ripple still clips itself */
+.home-hero__board.is-menu-open {
+  overflow: visible;
+}
+
+.home-hero__ripple {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  overflow: hidden;
+}
+
+.home-hero__ripple .ripple-distortion {
+  width: 100%;
+  height: 100%;
 }
 
 .home-hero__board::-webkit-scrollbar {
@@ -116,7 +133,7 @@ html:has(.home-page) body::-webkit-scrollbar,
 }
 
 .home-hero__grain {
-  opacity: 0.35;
+  opacity: 0.18;
   background-image: radial-gradient(rgba(124, 58, 237, 0.4) 0.8px, transparent 1px);
   background-size: 16px 16px;
 }
@@ -133,25 +150,9 @@ html:has(.home-page) body::-webkit-scrollbar,
   display: none;
 }
 
-/* Single small soft glow — follows cursor */
+/* Cursor glow removed — ripple distortion replaces it */
 .home-hero__board-spot {
-  pointer-events: none;
-  position: absolute;
-  z-index: 0;
-  width: 220px;
-  height: 220px;
-  left: var(--hero-mx);
-  top: var(--hero-my);
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(255, 255, 255, 0.45) 0%,
-    rgba(255, 255, 255, 0.12) 42%,
-    transparent 70%
-  );
-  opacity: 0.75;
-  will-change: left, top;
+  display: none;
 }
 
 .home-hero__board-spot::before,
@@ -1253,11 +1254,13 @@ html:has(.home-page) body::-webkit-scrollbar,
 @media (max-width: 767px) {
   .home-hero {
     padding: 3.75rem 0 0;
+    min-height: 0;
+    overflow: visible;
   }
 
   .home-hero__board {
     min-height: 0;
-    height: 100%;
+    height: auto;
     padding:
       4rem
       max(1rem, env(safe-area-inset-right))
@@ -1462,7 +1465,7 @@ html:has(.home-page) body::-webkit-scrollbar,
       max(0.85rem, env(safe-area-inset-left));
     border-radius: 0 0 18px 18px;
     min-height: 0;
-    height: 100%;
+    height: auto;
   }
 
   .home-hero__title {
@@ -1536,7 +1539,7 @@ html:has(.home-page) body::-webkit-scrollbar,
 @media (max-height: 700px) and (max-width: 900px) {
   .home-hero__board {
     min-height: 0;
-    height: 100%;
+    height: auto;
     padding-top: 2.25rem;
     padding-bottom: 1rem;
   }
@@ -1969,21 +1972,19 @@ html:has(.home-page) body::-webkit-scrollbar,
   }
 }
 
-/* Sticky scroll product moments (hero → showcase handoff) */
+/* Product moments — normal stacked sections (no sticky scrub track) */
 .home-sticky {
   position: relative;
-  z-index: 20;
-  /* Pull up over the second half of .home-hero-stage so this covers the pinned hero */
-  margin-top: -100svh;
-  height: 600vh;
-  /* Neutralize global * { transform } which breaks position:sticky */
+  z-index: 2;
+  margin-top: 0;
+  height: auto;
   transform: none;
 }
 
 .home-sticky__pin {
-  position: sticky;
-  top: 0;
-  height: 100svh;
+  position: relative;
+  top: auto;
+  height: auto;
   display: flex;
   align-items: stretch;
   overflow: visible;
@@ -3667,15 +3668,37 @@ html:has(.home-page) body::-webkit-scrollbar,
   }
 }
 
-/* Reduced-motion: static stacked cards */
+/* Reduced-motion / static stacked cards */
 .home-sticky--static {
   height: auto;
   margin-top: 0;
-  border-radius: 28px 28px 0 0;
-  background:
-    radial-gradient(120% 80% at 85% 10%, rgba(124, 58, 237, 0.12), transparent 55%),
-    linear-gradient(180deg, #faf8ff 0%, #f3efff 50%, #fff 100%);
-  box-shadow: 0 -12px 40px -24px rgba(76, 29, 149, 0.3);
+  border-radius: 0;
+  background: #ffffff;
+  box-shadow: none;
+}
+
+/* Static: show scene cards without scroll-triggered float loops */
+.home-sticky--static .sticky-moment.is-active .sticky-moment__piece {
+  opacity: 1;
+  animation: none !important;
+  filter: none;
+}
+
+.home-sticky--static .sticky-moment.is-active .sticky-moment__piece.is-tilt-a {
+  transform: translate3d(-14px, -10px, 0) scale(1) rotate(-2.75deg);
+}
+
+.home-sticky--static .sticky-moment.is-active .sticky-moment__piece.is-tilt-b {
+  transform: translate3d(10px, 6px, 0) scale(1) rotate(2.25deg);
+}
+
+.home-sticky--static .sticky-moment.is-active .sticky-moment__piece.is-tilt-c {
+  transform: translate3d(6px, -6px, 0) scale(1) rotate(1.5deg);
+}
+
+.home-sticky--static .sticky-moment.is-active .sticky-moment__wire {
+  opacity: 1;
+  animation: none !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -3689,7 +3712,7 @@ html:has(.home-page) body::-webkit-scrollbar,
   }
 
   .home-hero__board {
-    min-height: calc(100svh - 4rem);
+    min-height: 0;
     height: auto;
   }
 }
@@ -3697,30 +3720,97 @@ html:has(.home-page) body::-webkit-scrollbar,
 .home-sticky__static {
   max-width: 1120px;
   margin: 0 auto;
-  padding: 4rem 1.25rem 3rem;
+  padding: 5.5rem clamp(1.15rem, 3vw, 2rem) 6rem;
   display: flex;
   flex-direction: column;
-  gap: 3.5rem;
+  gap: 7.5rem;
 }
 
 .home-sticky__static-card {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
-  gap: 2rem 2.5rem;
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  gap: 2.25rem;
+  width: 100%;
+}
+
+.home-sticky__static-card.is-flip .home-sticky__static-copy,
+.home-sticky__static-card.is-flip .home-sticky__static-scene {
+  order: initial;
 }
 
 .home-sticky__static-copy {
-  max-width: 28rem;
+  max-width: 38rem;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.home-sticky--static .home-sticky__title {
+  max-width: 22ch;
+  margin: 0 auto;
+  text-align: center;
+  font-size: clamp(1.75rem, 3.4vw, 2.5rem);
+}
+
+.home-sticky--static .home-sticky__line {
+  display: none;
+}
+
+.home-sticky--static .home-sticky__body {
+  max-width: 34rem;
+  margin: 1.05rem auto 0;
+  text-align: center;
+  display: block;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  -webkit-line-clamp: unset;
+  line-clamp: unset;
+  -webkit-box-orient: unset;
+  overflow: visible;
+}
+
+.home-sticky--static .home-sticky__cta {
+  margin-top: 1.55rem;
+  align-self: center;
 }
 
 .home-sticky__static-scene {
+  width: 100%;
+  max-width: 1120px;
   min-width: 0;
+  min-height: 0;
+  display: block;
 }
 
 @media (max-width: 900px) {
   .home-sticky {
-    height: 640vh;
+    height: auto;
+  }
+
+  .home-sticky__static {
+    gap: 5.25rem;
+    padding: 4rem 1.15rem 4.5rem;
+  }
+
+  .home-sticky__static-card,
+  .home-sticky__static-card.is-flip {
+    display: flex;
+    flex-direction: column;
+    grid-template-columns: none;
+    gap: 1.65rem;
+  }
+
+  .home-sticky__static-card.is-flip .home-sticky__static-copy,
+  .home-sticky__static-card.is-flip .home-sticky__static-scene {
+    order: initial;
+  }
+
+  .home-sticky__static-scene {
+    min-height: 0;
   }
 
   .home-sticky__pin {
@@ -3888,6 +3978,22 @@ html:has(.home-page) body::-webkit-scrollbar,
     -webkit-box-orient: vertical;
     line-clamp: 3;
     overflow: hidden;
+  }
+
+  .home-sticky--static .home-sticky__title {
+    font-size: clamp(1.35rem, 5.5vw, 1.75rem);
+  }
+
+  .home-sticky--static .home-sticky__body {
+    display: block;
+    max-width: 34rem;
+    margin: 1rem auto 0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    -webkit-line-clamp: unset;
+    line-clamp: unset;
+    -webkit-box-orient: unset;
+    overflow: visible;
   }
 
   .home-sticky__actions {
@@ -4264,7 +4370,7 @@ html:has(.home-page) body::-webkit-scrollbar,
 
 @media (max-width: 640px) {
   .home-sticky {
-    height: 660vh;
+    height: auto;
   }
 
   .home-sticky__pin,
@@ -4281,6 +4387,27 @@ html:has(.home-page) body::-webkit-scrollbar,
   .home-sticky__body {
     -webkit-line-clamp: 2;
     line-clamp: 2;
+  }
+
+  .home-sticky--static .home-sticky__title {
+    font-size: clamp(1.45rem, 6vw, 1.85rem);
+    max-width: none;
+  }
+
+  .home-sticky--static .home-sticky__body {
+    display: block;
+    max-width: 34rem;
+    font-size: 0.975rem;
+    line-height: 1.6;
+    -webkit-line-clamp: unset;
+    line-clamp: unset;
+    overflow: visible;
+  }
+
+  .home-sticky--static .home-sticky__cta {
+    min-height: 2.75rem;
+    padding-inline: 1.35rem;
+    font-size: 0.9rem;
   }
 
   .sticky-moment__stage {
@@ -4344,11 +4471,11 @@ html:has(.home-page) body::-webkit-scrollbar,
 
 @media (max-height: 700px) and (max-width: 900px) {
   .home-hero-stage {
-    height: 185svh;
+    height: auto;
   }
 
   .home-sticky {
-    margin-top: -85svh;
+    margin-top: 0;
   }
 }
 
@@ -4621,10 +4748,14 @@ html:has(.home-page) body::-webkit-scrollbar,
   }
 }
 
-/* ——— ROI lab (embedded in chaos bridge) ——— */
+/* ——— ROI lab (standalone homepage section) ——— */
 .home-roi {
   position: relative;
-  z-index: 14;
+  z-index: 3;
+  padding: 3.5rem 1.25rem 4rem;
+  background:
+    radial-gradient(70% 50% at 50% 0%, rgba(124, 58, 237, 0.07), transparent 60%),
+    linear-gradient(180deg, #ffffff 0%, #f8fafc 45%, #ffffff 100%);
 }
 
 .home-roi--embedded {

@@ -1,5 +1,4 @@
 import '../marketing/styles/home.css';
-import '../marketing/styles/feature-scenes.css';
 import MarketingSEO from '../marketing/components/MarketingSEO';
 import { OG_IMAGES } from '../marketing/data/marketingSeo';
 import { faqs } from '../marketing/data/home';
@@ -15,11 +14,10 @@ import HomeStickyStories from '../marketing/components/home/HomeStickyStories';
 import HomeChaosZoom from '../marketing/components/home/HomeChaosZoom';
 import HomePricingTeaser from '../marketing/components/home/HomePricingTeaser';
 import HomeTestimonials from '../marketing/components/home/HomeTestimonials';
-import HomeFaq from '../marketing/components/home/HomeFaq';
 import HomeClose from '../marketing/components/home/HomeClose';
 
 /**
- * Homepage: Instantly-style stages, crisp copy, no filler eyebrows/trust pills.
+ * Homepage: normal scrollable sections (sticky overlap / chaos zoom removed).
  */
 export default function Home() {
   const seo = PAGE_SEO.home;
@@ -45,7 +43,6 @@ export default function Home() {
         <HomeChaosZoom />
         <HomePricingTeaser />
         <HomeTestimonials />
-        <HomeFaq />
         <HomeClose />
       </MarketingPage>
     </>

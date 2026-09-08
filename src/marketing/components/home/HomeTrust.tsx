@@ -39,16 +39,10 @@ export default function HomeTrust({ onStage = false }: { onStage?: boolean }) {
               className="home-trust-logos__item"
               href={logo.href === '#' ? undefined : logo.href}
               target={logo.href === '#' ? undefined : '_blank'}
-              rel={logo.href === '#' ? undefined : 'noreferrer'}
+              rel={logo.href === '#' ? undefined : 'noopener noreferrer'}
               aria-label={logo.name}
-              tabIndex={-1}
             >
-              <img
-                src={`${logo.src}?v=6`}
-                alt=""
-                loading="lazy"
-                decoding="async"
-              />
+              <img src={logo.src} alt="" />
             </a>
           ))}
         </div>

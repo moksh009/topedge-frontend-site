@@ -1,13 +1,13 @@
-import { Link, Navigate, useParams } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
 import MarketingSEO from '../components/MarketingSEO';
 import MarketingPage from '../components/MarketingPage';
 import MarketingCtaBand from '../components/MarketingCtaBand';
-import FeatureScene from '../components/foundation/FeatureScene';
+import ProductDemoVideo from '../components/home/ProductDemoVideo';
 import { PageHero, Section, MarketingCard, PrimaryButton, GhostButton } from '../components/ui';
 import { getFeatureBySlug, MARKETING_FEATURES, resolveFeatureSlug } from '../data/features';
 import { FEATURE_SEO } from '../data/pageSeo';
-import '../styles/feature-scenes.css';
+import { demoVideoFor } from '../data/productDemoVideos';
+import { Link, Navigate, useParams } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 
 export default function FeatureDetailPage() {
   const { slug = '' } = useParams();
@@ -24,6 +24,7 @@ export default function FeatureDetailPage() {
 
   const others = MARKETING_FEATURES.filter((f) => f.slug !== feature.slug).slice(0, 3);
   const featureSeo = FEATURE_SEO[feature.slug];
+  const videoSrc = demoVideoFor(feature.slug) || demoVideoFor(feature.scene);
 
   return (
     <>
@@ -38,8 +39,8 @@ export default function FeatureDetailPage() {
         <PageHero eyebrow={feature.label} title={feature.title} subtitle={feature.body} />
 
         <Section className="!pt-0 !pb-8">
-          <div className="mx-auto max-w-4xl">
-            <FeatureScene variant={feature.scene} />
+          <div className="mx-auto w-full max-w-5xl px-1">
+            <ProductDemoVideo src={videoSrc} label={`${feature.label} product demo`} />
           </div>
         </Section>
 

@@ -1,0 +1,40 @@
+.mkt-demo-video {
+  width: 100%;
+  display: block;
+}
+
+.mkt-demo-video__frame {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+  aspect-ratio: 16 / 9;
+  border-radius: 22px;
+  overflow: hidden;
+  background: #0b1020;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.22) inset,
+    0 0 0 1px rgba(15, 23, 42, 0.07),
+    0 28px 56px -24px rgba(15, 23, 42, 0.42),
+    0 52px 100px -48px rgba(124, 58, 237, 0.22);
+}
+
+.mkt-demo-video__el {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  background: #0b1020;
+}
+
+@media (max-width: 900px) {
+  .mkt-demo-video__frame {
+    border-radius: 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  .mkt-demo-video__frame {
+    border-radius: 14px;
+  }
+}

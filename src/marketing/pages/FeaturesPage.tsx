@@ -1,12 +1,12 @@
-import { Link } from 'react-router-dom';
 import MarketingSEO from '../components/MarketingSEO';
 import { PAGE_SEO } from '../data/pageSeo';
 import MarketingPage from '../components/MarketingPage';
 import MarketingCtaBand from '../components/MarketingCtaBand';
-import FeatureScene from '../components/foundation/FeatureScene';
+import ProductDemoVideo from '../components/home/ProductDemoVideo';
 import { PageHero, Section, SectionHeading, MarketingCard } from '../components/ui';
 import { MARKETING_FEATURES } from '../data/features';
-import '../styles/feature-scenes.css';
+import { demoVideoFor } from '../data/productDemoVideos';
+import { Link } from 'react-router-dom';
 
 export default function FeaturesPage() {
   const seo = PAGE_SEO.features;
@@ -49,12 +49,12 @@ export default function FeaturesPage() {
         <Section wash="soft" className="!py-20">
           <SectionHeading
             eyebrow="How it feels"
-            title="Premium product scenes ,  not screenshots"
-            subtitle="Each feature page opens with an Instantly-style composition: floating UI that teaches the job in one glance."
+            title="See TopEdge in motion"
+            subtitle="Product demos for the hubs your team opens every day — cart recovery, journeys, inbox, and more."
             className="mb-10"
           />
-          <div className="mx-auto max-w-3xl">
-            <FeatureScene variant="hero" />
+          <div className="mx-auto w-full max-w-5xl">
+            <ProductDemoVideo src={demoVideoFor('hero')} label="TopEdge product demo" />
           </div>
         </Section>
 

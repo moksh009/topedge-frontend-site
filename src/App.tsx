@@ -9,6 +9,10 @@ import MarketingNavbar from './marketing/components/MarketingNavbar';
 import CommunityNavbar from './components/community/layout/CommunityNavbar';
 import Footer from './components/Footer';
 import MarketingFooter from './marketing/components/MarketingFooter';
+import MarketingScrollBlur from './marketing/components/effects/MarketingScrollBlur';
+import MarketingSmoothScroll, {
+  SmoothScrollToTop,
+} from './marketing/components/effects/MarketingSmoothScroll';
 import { isMarketingRoute } from './marketing/routes';
 import MarketingPageLoader from './marketing/components/MarketingPageLoader';
 import MetaPixel from './components/MetaPixel';
@@ -68,27 +72,6 @@ const Discord = React.lazy(() => import('./pages/community/Discord'));
 const CreatorDashboard = React.lazy(() => import('./pages/community/CreatorDashboard'));
 const RequestBoard = React.lazy(() => import('./pages/community/RequestBoard'));
 const ApproveAccess = React.lazy(() => import('./pages/community/ApproveAccess'));
-
-// ScrollToTop — scroll to top on route change, or to hash target when present
-const ScrollToTop = () => {
-  const { pathname, hash } = useLocation();
-
-  useEffect(() => {
-    if (hash) {
-      const id = hash.replace('#', '');
-      const el = document.getElementById(id);
-      if (el) {
-        requestAnimationFrame(() => {
-          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        });
-        return;
-      }
-    }
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [pathname, hash]);
-
-  return null;
-};
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
@@ -150,6 +133,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         </motion.div>
       )}
       {isCommunityRoute && !isAuthPage && <CommunityNavbar />}
+
+      {/* Soft viewport-edge blur while scrolling marketing pages */}
+      {marketing && <MarketingScrollBlur />}
 
       {isCommunityRoute ? (
         <>
@@ -240,13 +226,15 @@ const App: React.FC = () => {
         <AppErrorBoundary>
           <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
             <RouteProviders>
-              <ScrollToTop />
-              <MetaPixel />
-              <Layout>
-                <React.Suspense fallback={<MarketingPageLoader />}>
-                  <AnimatedRoutes />
-                </React.Suspense>
-              </Layout>
+              <MarketingSmoothScroll>
+                <SmoothScrollToTop />
+                <MetaPixel />
+                <Layout>
+                  <React.Suspense fallback={<MarketingPageLoader />}>
+                    <AnimatedRoutes />
+                  </React.Suspense>
+                </Layout>
+              </MarketingSmoothScroll>
             </RouteProviders>
           </Router>
         </AppErrorBoundary>
@@ -262,10 +250,10 @@ const AnimatedRoutes = () => {
     <AnimatePresence mode="wait">
       <motion.div
         key={location.pathname}
-        initial={{ opacity: 0, y: 15 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -15 }}
-        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.2, ease: 'easeOut' }}
       >
         <Routes location={location}>
           <Route path="/" element={<Home />} />

@@ -2,10 +2,10 @@ import { useParams, Link } from 'react-router-dom';
 import MarketingSEO from '../components/MarketingSEO';
 import MarketingPage from '../components/MarketingPage';
 import MarketingCtaBand from '../components/MarketingCtaBand';
-import FeatureScene from '../components/foundation/FeatureScene';
+import ProductDemoVideo from '../components/home/ProductDemoVideo';
 import { PageHero, Section, MarketingCard } from '../components/ui';
 import { SOLUTION_SEO } from '../data/pageSeo';
-import '../styles/feature-scenes.css';
+import { demoVideoFor } from '../data/productDemoVideos';
 
 const FALLBACK = {
   title: 'WhatsApp Automation for Indian Shopify D2C',
@@ -20,6 +20,7 @@ const FALLBACK = {
 export default function SolutionPage() {
   const { vertical: slug = 'fashion' } = useParams();
   const solution = SOLUTION_SEO[slug] ?? FALLBACK;
+  const videoSrc = demoVideoFor(slug) || demoVideoFor(solution.scene);
 
   return (
     <>
@@ -34,8 +35,8 @@ export default function SolutionPage() {
         <PageHero eyebrow="Solutions" title={solution.title.replace(/ \| .*$/, '')} subtitle={solution.body} />
 
         <Section className="!pt-0">
-          <div className="mx-auto mb-10 max-w-4xl">
-            <FeatureScene variant={solution.scene} />
+          <div className="mx-auto mb-10 w-full max-w-5xl">
+            <ProductDemoVideo src={videoSrc} label={`${slug} solution demo`} />
           </div>
           <div className="grid gap-5 md:grid-cols-3">
             {solution.bullets.map((b) => (

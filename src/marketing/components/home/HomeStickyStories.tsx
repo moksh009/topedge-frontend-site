@@ -1,12 +1,12 @@
-import { useEffect, useRef, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
-import StickyMoment, { type StickyMomentId } from './StickyMoment';
+import type { StickyMomentId } from '../../data/productDemoVideos';
+import { PRODUCT_DEMO_VIDEOS } from '../../data/productDemoVideos';
+import ProductDemoVideo from './ProductDemoVideo';
 import { PrimaryButton } from '../ui';
 import { homeStories } from '../../data/home';
 
 /**
- * Best-first sticky sequence:
- * 1–2 revenue automation, 3–4 support + AI, 5 build flows, 6 connect stack.
+ * Product moments: centered copy + full-width demo video below.
  */
 const STICKY_SEQUENCE: {
   id: StickyMomentId;
@@ -46,7 +46,6 @@ const STICKY_SEQUENCE: {
   },
 ];
 
-/** Keep homeStories copy in sync when ids overlap */
 const stickyStories = STICKY_SEQUENCE.map((item) => {
   const fromData = homeStories.find((s) => s.id === item.id);
   return fromData
@@ -54,127 +53,28 @@ const stickyStories = STICKY_SEQUENCE.map((item) => {
     : item;
 });
 
-function prefersReducedMotion() {
-  return (
-    typeof window !== 'undefined' &&
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  );
-}
-
-/**
- * Yoda/Prismic-style sticky scroll: tall track, sticky viewport, panels swap on progress.
- */
 export default function HomeStickyStories() {
-  const trackRef = useRef<HTMLDivElement>(null);
-  const [active, setActive] = useState(0);
-  const [reduced, setReduced] = useState(false);
-  const rafRef = useRef(0);
-
-  useEffect(() => {
-    setReduced(prefersReducedMotion());
-  }, []);
-
-  useEffect(() => {
-    if (reduced) return;
-
-    const update = () => {
-      const el = trackRef.current;
-      if (!el) return;
-      const rect = el.getBoundingClientRect();
-      const trackH = el.offsetHeight;
-      const viewH = window.innerHeight;
-      const scrollable = Math.max(1, trackH - viewH);
-      const progress = Math.min(1, Math.max(0, -rect.top / scrollable));
-      const next = Math.min(
-        stickyStories.length - 1,
-        Math.floor(progress * stickyStories.length),
-      );
-      setActive((prev) => (prev === next ? prev : next));
-    };
-
-    const onScroll = () => {
-      if (rafRef.current) return;
-      rafRef.current = window.requestAnimationFrame(() => {
-        rafRef.current = 0;
-        update();
-      });
-    };
-
-    update();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onScroll);
-      if (rafRef.current) window.cancelAnimationFrame(rafRef.current);
-    };
-  }, [reduced]);
-
-  if (reduced) {
-    return (
-      <section className="home-sticky home-sticky--static" aria-label="Product moments">
-        <div className="home-sticky__static">
-          {stickyStories.map((story) => (
-            <article key={story.id} className="home-sticky__static-card">
-              <div className="home-sticky__static-copy">
-                <h2 className="home-sticky__title">{story.title}</h2>
-                <div className="home-sticky__line" aria-hidden />
-                <p className="home-sticky__body">{story.body}</p>
-                <PrimaryButton to="/signup" className="home-sticky__cta">
-                  {story.cta}
-                  <ArrowRight className="h-4 w-4" />
-                </PrimaryButton>
-              </div>
-              <div className="home-sticky__static-scene">
-                <StickyMoment id={story.id} active />
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-    );
-  }
-
   return (
-    <section
-      ref={trackRef}
-      className="home-sticky"
-      aria-label="Product moments"
-    >
-      <div className="home-sticky__pin">
-        <div className="home-sticky__frame">
-          <div className="home-sticky__left">
-            <div className="home-sticky__copy-stack">
-              {stickyStories.map((story, i) => (
-                <div
-                  key={story.id}
-                  className={`home-sticky__panel${i === active ? ' is-active' : ''}`}
-                >
-                  <h2 className="home-sticky__title">{story.title}</h2>
-                  <div className="home-sticky__line" aria-hidden />
-                  <p className="home-sticky__body">{story.body}</p>
-                  <div className="home-sticky__actions">
-                    <PrimaryButton to="/signup" className="home-sticky__cta">
-                      {story.cta}
-                      <ArrowRight className="h-4 w-4" />
-                    </PrimaryButton>
-                  </div>
-                </div>
-              ))}
+    <section className="home-sticky home-sticky--static" aria-label="Product moments">
+      <div className="home-sticky__static">
+        {stickyStories.map((story) => (
+          <article key={story.id} className="home-sticky__static-card">
+            <div className="home-sticky__static-copy">
+              <h2 className="home-sticky__title">{story.title}</h2>
+              <p className="home-sticky__body">{story.body}</p>
+              <PrimaryButton to="/signup" className="home-sticky__cta">
+                {story.cta}
+                <ArrowRight className="h-4 w-4" />
+              </PrimaryButton>
             </div>
-          </div>
-
-          <div className="home-sticky__right">
-            {stickyStories.map((story, i) => (
-              <div
-                key={story.id}
-                className={`home-sticky__scene${i === active ? ' is-active' : ''}`}
-              >
-                <StickyMoment id={story.id} active={i === active} />
-              </div>
-            ))}
-          </div>
-        </div>
+            <div className="home-sticky__static-scene">
+              <ProductDemoVideo
+                src={PRODUCT_DEMO_VIDEOS[story.id]}
+                label={`${story.title} product demo`}
+              />
+            </div>
+          </article>
+        ))}
       </div>
     </section>
   );

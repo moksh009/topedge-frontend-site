@@ -4,7 +4,6 @@ import {
   useRef,
   useState,
   type MouseEvent as ReactMouseEvent,
-  type PointerEvent,
 } from 'react';
 import {
   ArrowRight,
@@ -13,6 +12,7 @@ import {
 } from 'lucide-react';
 import { GhostButton, PrimaryButton } from '../ui';
 import { ShopifyMark, WhatsAppMark } from '../foundation/BrandMarks';
+import HeroRippleBackground from '../effects/HeroRippleBackground';
 import HomeTrust from './HomeTrust';
 
 type HeroActionId = 'recover' | 'reply' | 'journey' | 'support' | 'install';
@@ -80,9 +80,6 @@ function prefersReducedMotion() {
 export default function HomeHero() {
   const boardRef = useRef<HTMLDivElement>(null);
   const askRef = useRef<HTMLDivElement>(null);
-  const targetSpot = useRef({ x: 72, y: 34 });
-  const currentSpot = useRef({ x: 72, y: 34 });
-  const rafRef = useRef(0);
   const [phase, setPhase] = useState<FlowPhase>('idle');
   const [action, setAction] = useState<HeroAction>(ACTIONS[0]);
   const [typed, setTyped] = useState('');
@@ -94,36 +91,11 @@ export default function HomeHero() {
     timers.current = [];
   }, []);
 
-  const paintSpot = useCallback(() => {
-    const el = boardRef.current;
-    if (!el) return;
-    el.style.setProperty('--hero-mx', `${currentSpot.current.x}%`);
-    el.style.setProperty('--hero-my', `${currentSpot.current.y}%`);
-  }, []);
-
-  const tickSpot = useCallback(() => {
-    const c = currentSpot.current;
-    const t = targetSpot.current;
-    c.x += (t.x - c.x) * 0.18;
-    c.y += (t.y - c.y) * 0.18;
-    paintSpot();
-    if (Math.abs(t.x - c.x) > 0.1 || Math.abs(t.y - c.y) > 0.1) {
-      rafRef.current = window.requestAnimationFrame(tickSpot);
-    } else {
-      c.x = t.x;
-      c.y = t.y;
-      paintSpot();
-      rafRef.current = 0;
-    }
-  }, [paintSpot]);
-
   useEffect(() => {
-    paintSpot();
     return () => {
       clearTimers();
-      if (rafRef.current) window.cancelAnimationFrame(rafRef.current);
     };
-  }, [clearTimers, paintSpot]);
+  }, [clearTimers]);
 
   useEffect(() => {
     if (phase !== 'menu') return;
@@ -142,19 +114,6 @@ export default function HomeHero() {
       document.removeEventListener('keydown', onKey);
     };
   }, [phase]);
-
-  const onPointerMove = (e: PointerEvent<HTMLDivElement>) => {
-    const el = boardRef.current;
-    if (!el) return;
-    const r = el.getBoundingClientRect();
-    targetSpot.current = {
-      x: ((e.clientX - r.left) / r.width) * 100,
-      y: ((e.clientY - r.top) / r.height) * 100,
-    };
-    if (!rafRef.current) {
-      rafRef.current = window.requestAnimationFrame(tickSpot);
-    }
-  };
 
   const runFlow = useCallback(
     (next: HeroAction) => {
@@ -257,11 +216,8 @@ export default function HomeHero() {
         <div
           ref={boardRef}
           className={boardClass}
-          onPointerMove={onPointerMove}
         >
-          <div className="home-hero__board-spot" aria-hidden />
-          <div className="home-hero__grain" aria-hidden />
-          <div className="home-hero__mesh" aria-hidden />
+          <HeroRippleBackground />
 
           <div className="home-hero__top">
             <h1 className="home-hero__title">
