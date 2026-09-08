@@ -38,6 +38,35 @@ function outPathFor(route) {
   return path.join(dist, clean, 'index.html');
 }
 
+function installChromium() {
+  return new Promise((resolve, reject) => {
+    console.log('📥 Playwright Chromium missing — installing…');
+    const child = spawn('npx', ['playwright', 'install', 'chromium'], {
+      cwd: root,
+      stdio: 'inherit',
+      env: process.env,
+    });
+    child.on('error', reject);
+    child.on('exit', (code) => {
+      if (code === 0) resolve();
+      else reject(new Error(`playwright install chromium failed (exit ${code})`));
+    });
+  });
+}
+
+async function launchBrowser() {
+  try {
+    return await chromium.launch({ headless: true });
+  } catch (err) {
+    const msg = String(err?.message || err);
+    if (!/Executable doesn't exist|browserType\.launch|Failed to launch/i.test(msg)) {
+      throw err;
+    }
+    await installChromium();
+    return chromium.launch({ headless: true });
+  }
+}
+
 async function main() {
   if (!fs.existsSync(path.join(dist, 'index.html'))) {
     throw new Error('dist/index.html missing — run vite build first');
@@ -66,7 +95,7 @@ async function main() {
 
   try {
     await waitForServer(BASE);
-    const browser = await chromium.launch({ headless: true });
+    const browser = await launchBrowser();
     const page = await browser.newPage();
 
     let ok = 0;

@@ -6,9 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "build:firebase": "vite build && node build-static.js && node scripts/prerender-marketing.mjs",
-    "build:netlify": "node scripts/generate-sitemap.mjs && vite build && node build-static.js && node scripts/prerender-marketing.mjs",
-    "build:static": "vite build && node build-static.js && node scripts/prerender-marketing.mjs",
+    "build:firebase": "vite build && node build-static.js && npx playwright install chromium && node scripts/prerender-marketing.mjs",
+    "build:netlify": "node scripts/generate-sitemap.mjs && vite build && node build-static.js && npx playwright install chromium && node scripts/prerender-marketing.mjs",
+    "build:static": "vite build && node build-static.js && npx playwright install chromium && node scripts/prerender-marketing.mjs",
     "prerender": "node scripts/prerender-marketing.mjs",
     "sitemap": "node scripts/generate-sitemap.mjs",
     "deploy": "npm run build:static && firebase deploy --only hosting",
