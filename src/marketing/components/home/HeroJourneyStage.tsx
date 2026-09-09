@@ -43,24 +43,24 @@ const TIMELINE: Beat[] = [
   { ms: 1050, scene: 'chat', cam: 'is-cam-wide' },
   { ms: 1050, scene: 'chat', cam: 'is-cam-wide' },
   { ms: 1500, scene: 'chat', cam: 'is-cam-chat' },
-  // —— COD → prepaid —— chapter wide → story 1.16 pan chain → publish pan → phone wide → paid
+  // —— COD → prepaid —— chapter → Steps peek → drag → mid lands → End pops → publish
   { ms: 2700, scene: 'journey', cam: 'is-cam-wide' },
-  { ms: 2000, scene: 'journey', cam: 'is-cam-node-entry' },
-  { ms: 1900, scene: 'journey', cam: 'is-cam-drag' },
-  { ms: 1500, scene: 'journey', cam: 'is-cam-node-mid' },
-  { ms: 1450, scene: 'journey', cam: 'is-cam-node-end' },
-  { ms: 1400, scene: 'journey', cam: 'is-cam-publish', hold: true },
+  { ms: 1500, scene: 'journey', cam: 'is-cam-drag' },
+  { ms: 2200, scene: 'journey', cam: 'is-cam-drag' },
+  { ms: 1700, scene: 'journey', cam: 'is-cam-node-mid' },
+  { ms: 1700, scene: 'journey', cam: 'is-cam-node-end' },
+  { ms: 1500, scene: 'journey', cam: 'is-cam-publish', hold: true },
   { ms: 1200, scene: 'journey', cam: 'is-cam-publish' },
-  { ms: 1350, scene: 'journey', cam: 'is-cam-order' },
+  { ms: 1400, scene: 'journey', cam: 'is-cam-order' },
   { ms: 1200, scene: 'journey', cam: 'is-cam-wide' },
   { ms: 1400, scene: 'journey', cam: 'is-cam-wide' },
   { ms: 1250, scene: 'journey', cam: 'is-cam-wide' },
   { ms: 1200, scene: 'journey', cam: 'is-cam-wide' },
   { ms: 1550, scene: 'journey', cam: 'is-cam-paid' },
-  // —— Pixel → data → broadcast (product-UI faithful) ——
-  { ms: 4000, scene: 'analytics', cam: 'is-cam-wide' },
-  { ms: 3600, scene: 'analytics', cam: 'is-cam-an-mid' },
-  { ms: 4200, scene: 'analytics', cam: 'is-cam-an-bot' },
+  // —— Pixel → Broadcast —— slower dwells, softer zoom (readable margins)
+  { ms: 5200, scene: 'analytics', cam: 'is-cam-an-enter' },
+  { ms: 5000, scene: 'analytics', cam: 'is-cam-an-mid' },
+  { ms: 5600, scene: 'analytics', cam: 'is-cam-an-bot' },
   // —— Address —— chapter wide → soft continuous thread focus → settle
   { ms: 2600, scene: 'address', cam: 'is-cam-wide' },
   { ms: 1200, scene: 'address', cam: 'is-cam-support' },
@@ -68,13 +68,12 @@ const TIMELINE: Beat[] = [
   { ms: 1350, scene: 'address', cam: 'is-cam-support' },
   { ms: 1550, scene: 'address', cam: 'is-cam-wide' },
   { ms: 1700, scene: 'address', cam: 'is-cam-wide' },
-  // —— Delivered —— chapter WIDE → drag (from entry side) → mid → end → publish → send → success
+  // —— Delivered —— chapter → peek → drag → mid → End pops → publish
   { ms: 2800, scene: 'delivered', cam: 'is-cam-wide' },
-  // Peek phone tilt ~1.6s, then drag (~2s)
-  { ms: 3600, scene: 'delivered', cam: 'is-cam-drag' },
-  { ms: 1700, scene: 'delivered', cam: 'is-cam-node-mid' },
-  { ms: 1500, scene: 'delivered', cam: 'is-cam-node-end' },
-  { ms: 1400, scene: 'delivered', cam: 'is-cam-publish', hold: true },
+  { ms: 3800, scene: 'delivered', cam: 'is-cam-drag' },
+  { ms: 1800, scene: 'delivered', cam: 'is-cam-node-mid' },
+  { ms: 1700, scene: 'delivered', cam: 'is-cam-node-end' },
+  { ms: 1500, scene: 'delivered', cam: 'is-cam-publish', hold: true },
   { ms: 1200, scene: 'delivered', cam: 'is-cam-publish' },
   { ms: 1500, scene: 'delivered', cam: 'is-cam-order' },
   { ms: 1600, scene: 'delivered', cam: 'is-cam-wide' },
@@ -179,13 +178,14 @@ export default function HeroJourneyStage() {
   const [loop, setLoop] = useState(0);
   const cam = useSmoothCam(beat, debug);
 
-  // Delivered drag beat: tilt phone first (~1.6s), then start drag
+  // Delivered: tilt + Steps peek ~1.6s, then drag. COD: peek is beat 6; drag arms immediately on 7.
   const DELIVERED_PEEK_MS = 1600;
   const dragBeatActive = beat === 7 || beat === 28;
   const dragArmed = useArmAfter(dragBeatActive, beat === 28 ? DELIVERED_PEEK_MS : 0, loop);
-  const dragLive = beat === 7 || (beat === 28 && dragArmed);
-  // COD: tilt on entry (beat 6) before drag; stay tilted through drag. Delivered: tilt whole beat 28.
+  const dragLive = (beat === 7 || beat === 28) && dragArmed;
+  // COD: tilt on peek (6) + drag (7). Delivered: tilt whole beat 28.
   const phoneTilt = beat === 6 || beat === 7 || beat === 28;
+  const dragPeek = (beat === 6 || (beat === 28 && !dragArmed));
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -273,7 +273,7 @@ export default function HeroJourneyStage() {
       ) : null}
 
       <div
-        className={`hero-duo__stage ${cam} is-scene-${scene}${chapter ? ' is-chapter' : ''}${phoneTilt ? ' is-phone-tilt' : ''}${dragLive ? ' is-drag-live' : ''}${debug ? ' is-debug-cam' : ''}`}
+        className={`hero-duo__stage ${cam} is-scene-${scene}${chapter ? ' is-chapter' : ''}${phoneTilt ? ' is-phone-tilt' : ''}${dragLive ? ' is-drag-live' : ''}${dragPeek ? ' is-drag-peek' : ''}${debug ? ' is-debug-cam' : ''}`}
       >
         <div className="hero-duo__pair">
         <div className="hero-duo__desktop">
@@ -331,23 +331,24 @@ export default function HeroJourneyStage() {
 
         <PhonePanel beat={beat} loop={loop} scene={scene} />
 
-        {/* Drag ghost only after peek — phone tilts first so the move is readable */}
-        {scene === 'journey' && dragLive && beat === 7 ? (
+        {scene === 'journey' && (beat === 6 || beat === 7) ? (
           <PhysicalDragFlight
             key={`drag-cod-${loop}`}
             sourceKey="cod-prepaid"
             dropKey="cod-prepaid"
             label="COD → prepaid"
             icon={<ArrowLeftRight className="h-3 w-3" />}
+            flying={dragLive && beat === 7}
           />
         ) : null}
-        {scene === 'delivered' && dragLive && beat === 28 ? (
+        {scene === 'delivered' && beat === 28 ? (
           <PhysicalDragFlight
             key={`drag-del-${loop}`}
             sourceKey="order-delivered"
             dropKey="order-delivered"
             label="Delivered note"
             icon={<PackageCheck className="h-3 w-3" />}
+            flying={dragLive}
           />
         ) : null}
 
@@ -499,7 +500,7 @@ function HeroFilmCursor({
   } | null>(null);
 
   const modeRaw = filmCursorMode(beat, dragLive);
-  const anDelay = beat === 18 ? 2600 : beat === 19 || beat === 20 ? 350 : 0;
+  const anDelay = beat === 18 ? 1800 : beat === 19 || beat === 20 ? 500 : 0;
   const anReady = useArmAfter(beat >= 18 && beat <= 20, anDelay, loop);
   const mode =
     beat >= 18 && beat <= 20 && !anReady
@@ -507,27 +508,33 @@ function HeroFilmCursor({
       : modeRaw;
   const active = mode !== 'hidden';
   const [clickPulse, setClickPulse] = useState(false);
-  const clicking =
-    mode === 'publish-click' ||
-    mode === 'phone-click' ||
-    mode === 'an-connect-click' ||
-    mode === 'an-create-click' ||
-    mode === 'an-send-click' ||
-    clickPulse;
+  const clickModes = new Set([
+    'publish-click',
+    'phone-click',
+    'an-connect',
+    'an-create',
+    'an-send',
+    'an-connect-click',
+    'an-create-click',
+    'an-send-click',
+  ]);
+  const clicking = clickPulse;
   const fading = mode === 'fade';
   const dropKey = beat >= 28 ? 'order-delivered' : 'cod-prepaid';
   const delivered = beat >= 28;
 
+  // Believable click: brief press after arrival — never hold CSS click for the whole beat
   useEffect(() => {
-    if (mode !== 'an-connect' && mode !== 'an-create' && mode !== 'an-send') {
+    if (!clickModes.has(mode)) {
       setClickPulse(false);
       return;
     }
     setClickPulse(false);
+    const arrive = mode.endsWith('-click') ? 80 : filmCursorDuration(mode) + 60;
     const t = window.setTimeout(() => {
       setClickPulse(true);
-      window.setTimeout(() => setClickPulse(false), 380);
-    }, filmCursorDuration(mode) + 80);
+      window.setTimeout(() => setClickPulse(false), 400);
+    }, arrive);
     return () => window.clearTimeout(t);
   }, [mode, beat, loop]);
 
@@ -572,7 +579,10 @@ function HeroFilmCursor({
       return at(btn ?? null, 0.55, 0.68) ?? { x: posRef.current.x, y: posRef.current.y };
     }
     if (mode === 'phone-approach') {
-      // Lower phone screen — where Pay/Review CTA will land (not mid-chat bubbles)
+      // After Publish: ease to the enrollment toast first (never snap to origin)
+      const toast = document.querySelector('.hero-duo__toast');
+      const atToast = at(toast, 0.55, 0.5);
+      if (atToast) return atToast;
       const phone = document.querySelector('.hero-duo__iphone');
       return at(phone, 0.52, 0.62) ?? { x: posRef.current.x, y: posRef.current.y };
     }
@@ -754,26 +764,30 @@ function HeroFilmCursor({
   return (
     <div
       ref={ref}
-      className={`hero-duo__cursor hero-duo__cursor--film${clicking ? ' is-click' : ''}${fading ? ' is-fade' : ''}`}
+      className={`hero-duo__cursor hero-duo__cursor--film${fading ? ' is-fade' : ''}`}
       aria-hidden
     >
-      <CursorArrowSvg />
-      {clicking ? <span className="hero-duo__click-ring" key={`ring-${beat}-${loop}`} /> : null}
+      <span className={`hero-duo__cursor-hand${clicking ? ' is-click' : ''}`}>
+        <CursorArrowSvg />
+        {clicking ? <span className="hero-duo__click-ring" key={`ring-${beat}-${loop}`} /> : null}
+      </span>
     </div>
   );
 }
 
-/** Measure Steps-row → drop-zone and fly the ghost along that vector (cursor is HeroFilmCursor). */
+/** Measure Steps-row → drop-zone; rests on source during peek, flies when `flying`. */
 function PhysicalDragFlight({
   sourceKey,
   dropKey,
   label,
   icon,
+  flying,
 }: {
   sourceKey: string;
   dropKey: string;
   label: string;
   icon: ReactNode;
+  flying: boolean;
 }) {
   const ghostRef = useRef<HTMLDivElement>(null);
 
@@ -794,31 +808,30 @@ function PhysicalDragFlight({
       const fromY = sr.top - pr.top + sr.height * 0.2;
       const toX = dr.left - pr.left + dr.width * 0.28;
       const toY = dr.top - pr.top + dr.height * 0.35;
-      const dx = toX - fromX;
-      const dy = toY - fromY;
 
       ghost.style.left = `${fromX}px`;
       ghost.style.top = `${fromY}px`;
-      ghost.style.setProperty('--drag-dx', `${dx}px`);
-      ghost.style.setProperty('--drag-dy', `${dy}px`);
+      ghost.style.setProperty('--drag-dx', `${toX - fromX}px`);
+      ghost.style.setProperty('--drag-dy', `${toY - fromY}px`);
     };
 
     place();
-    const t1 = window.setTimeout(place, 80);
-    const t2 = window.setTimeout(place, 220);
-    const t3 = window.setTimeout(place, 480);
+    // One post-layout remeasure only — avoid mid-flight path jitter
+    const t1 = window.setTimeout(place, 60);
 
-    drop.classList.add('is-await');
+    if (flying) drop.classList.add('is-await');
     return () => {
       window.clearTimeout(t1);
-      window.clearTimeout(t2);
-      window.clearTimeout(t3);
       drop.classList.remove('is-await');
     };
-  }, [sourceKey, dropKey]);
+  }, [sourceKey, dropKey, flying]);
 
   return (
-    <div ref={ghostRef} className="hero-duo__drag-ghost is-flight" aria-hidden>
+    <div
+      ref={ghostRef}
+      className={`hero-duo__drag-ghost${flying ? ' is-flight' : ' is-grab'}`}
+      aria-hidden
+    >
       {icon}
       {label}
     </div>
@@ -1105,14 +1118,24 @@ function JourneyLink({
   id,
   on,
   flow,
+  bend = 'flat',
 }: {
   id: string;
   on?: boolean;
   flow?: boolean;
+  bend?: 'down' | 'up' | 'flat';
 }) {
+  const d =
+    bend === 'down'
+      ? 'M4 10 C18 10, 32 24, 48 26'
+      : bend === 'up'
+        ? 'M4 26 C18 26, 32 14, 48 12'
+        : 'M4 18 C18 18, 34 18, 48 18';
+  const cy = bend === 'down' ? 10 : bend === 'up' ? 26 : 18;
+
   return (
     <svg
-      className={`hero-duo__link${on ? ' is-on' : ''}${flow ? ' is-flow' : ''}`}
+      className={`hero-duo__link hero-duo__link--${bend}${on ? ' is-on' : ''}${flow ? ' is-flow' : ''}`}
       viewBox="0 0 56 36"
       aria-hidden
     >
@@ -1131,14 +1154,14 @@ function JourneyLink({
       </defs>
       <path
         className="hero-duo__link-path"
-        d="M4 18 C18 18, 34 18, 48 18"
+        d={d}
         fill="none"
         stroke="currentColor"
         strokeWidth="1.8"
         strokeLinecap="round"
         markerEnd={`url(#${id})`}
       />
-      <circle className="hero-duo__link-dot" cx="4" cy="18" r="2.2" fill="currentColor" />
+      <circle className="hero-duo__link-dot" cx="4" cy={cy} r="2.2" fill="currentColor" />
     </svg>
   );
 }
@@ -1204,7 +1227,7 @@ function JourneyDesktop({
       </div>
 
       <div className="hero-duo__journey-body">
-        <div className="hero-duo__flow">
+        <div className={`hero-duo__flow${endsOn ? ' is-complete' : dropped ? ' is-mid' : ' is-build'}`}>
           <div
             className={`hero-duo__card hero-duo__card--entry${entryOn ? ' is-on' : ''}${sending ? ' is-fire' : ''}`}
           >
@@ -1223,7 +1246,7 @@ function JourneyDesktop({
             <i className="hero-duo__port hero-duo__port--out" aria-hidden />
           </div>
 
-          <JourneyLink id={linkA} on={dropped} flow={sending} />
+          <JourneyLink id={linkA} on={dropped || dragging} flow={sending} bend="down" />
 
           <div
             className={`hero-duo__card hero-duo__card--action${dropped ? ' is-on' : ' is-drop'}${sending ? ' is-fire' : ''}${dragging ? ' is-await-drop' : ''}`}
@@ -1268,6 +1291,7 @@ function JourneyDesktop({
                 </div>
                 <span className="hero-duo__live-dot">Live path</span>
                 <i className="hero-duo__port hero-duo__port--in" aria-hidden />
+                {endsOn ? <i className="hero-duo__port hero-duo__port--out" aria-hidden /> : null}
               </>
             ) : (
               <div className={`hero-duo__dropzone${dragging ? ' is-await' : ''}`}>
@@ -1277,37 +1301,42 @@ function JourneyDesktop({
             )}
           </div>
 
-          <JourneyLink id={linkB} on={endsOn} flow={outcomeHot} />
-
-          <div
-            className={`hero-duo__card hero-duo__card--end${endsOn ? ' is-on' : ''}${done || outcomeHot ? ' is-fire' : ''}`}
-          >
-            <div className="hero-duo__card-head is-end">
-              <span className="hero-duo__card-ico is-end" aria-hidden>
-                <Flag />
-              </span>
-              <strong>End Journey</strong>
-              <span className="hero-duo__chip hero-duo__chip--end">END</span>
-            </div>
-            <div className="hero-duo__card-body">
-              <p>
-                {done || outcomeHot
-                  ? delivered
-                    ? 'Customer notified · complete'
-                    : 'Payment received · complete'
-                  : 'No further messages. Journey ends here.'}
-              </p>
-              {done || outcomeHot ? (
-                <span className="hero-duo__paid-badge">
-                  <Check className="h-3 w-3" />
-                  {delivered ? 'Review asked' : '+₹1,799'}
-                </span>
-              ) : endsOn ? (
-                <span className="hero-duo__live-dot is-muted">Live path</span>
-              ) : null}
-            </div>
-            <i className="hero-duo__port hero-duo__port--in" aria-hidden />
-          </div>
+          {/* End Journey only pops after mid node lands — never pre-shown dimmed */}
+          {endsOn ? (
+            <>
+              <JourneyLink id={linkB} on={endsOn} flow={outcomeHot} bend="up" />
+              <div
+                className={`hero-duo__card hero-duo__card--end is-on is-pop${done || outcomeHot ? ' is-fire' : ''}`}
+                key={`end-${mode}-${loop}`}
+              >
+                <div className="hero-duo__card-head is-end">
+                  <span className="hero-duo__card-ico is-end" aria-hidden>
+                    <Flag />
+                  </span>
+                  <strong>End Journey</strong>
+                  <span className="hero-duo__chip hero-duo__chip--end">END</span>
+                </div>
+                <div className="hero-duo__card-body">
+                  <p>
+                    {done || outcomeHot
+                      ? delivered
+                        ? 'Customer notified · complete'
+                        : 'Payment received · complete'
+                      : 'No further messages. Journey ends here.'}
+                  </p>
+                  {done || outcomeHot ? (
+                    <span className="hero-duo__paid-badge">
+                      <Check className="h-3 w-3" />
+                      {delivered ? 'Review asked' : '+₹1,799'}
+                    </span>
+                  ) : (
+                    <span className="hero-duo__live-dot is-muted">Live path</span>
+                  )}
+                </div>
+                <i className="hero-duo__port hero-duo__port--in" aria-hidden />
+              </div>
+            </>
+          ) : null}
         </div>
 
         <aside className="hero-duo__steps" aria-hidden>
@@ -1373,7 +1402,7 @@ function AnalyticsDesktop({ beat, loop }: { beat: number; loop: number }) {
   // 18: connect pixel → success → live visits
   // 19: product visit data → Create campaign
   // 20: audience/message → send → sales lift
-  const connected = useArmAfter(beat === 18, 2900, loop) || beat > 18;
+  const connected = useArmAfter(beat === 18, 2100, loop) || beat > 18;
   const liveOn = connected && beat === 18;
   const liveT = useTickProgress(liveOn, 2200);
   const visits = liveOn ? Math.round(lerp(12, 48, liveT)) : beat >= 19 ? 48 : 12;

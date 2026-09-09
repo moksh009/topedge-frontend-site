@@ -856,20 +856,20 @@ html:has(.home-page) body::-webkit-scrollbar,
 
 /* Node focus — ONE story scale; pan Entry → Mid → End */
 .hero-duo__stage.is-cam-node-entry {
-  --cam-scale: 1.16;
-  --cam-tx: 11%;
-  --cam-ty: 6%;
+  --cam-scale: 1.12;
+  --cam-tx: 8%;
+  --cam-ty: 4%;
 }
 .hero-duo__stage.is-cam-node-mid {
-  --cam-scale: 1.16;
-  --cam-tx: 0%;
-  --cam-ty: 7%;
+  --cam-scale: 1.12;
+  --cam-tx: -1%;
+  --cam-ty: 5%;
 }
 .hero-duo__stage.is-cam-node-end {
-  /* Frame End left of phone sidecar — readable, not buried */
-  --cam-scale: 1.16;
-  --cam-tx: -11%;
-  --cam-ty: 6%;
+  /* Keep End clear of Steps rail */
+  --cam-scale: 1.12;
+  --cam-tx: -8%;
+  --cam-ty: 5%;
 }
 
 .hero-duo__stage.is-cam-chat {
@@ -879,10 +879,9 @@ html:has(.home-page) body::-webkit-scrollbar,
 }
 
 .hero-duo__stage.is-cam-drag {
-  /* Hold after drag-follow animation lands on mid */
-  --cam-scale: 1.16;
-  --cam-tx: 0%;
-  --cam-ty: 7%;
+  --cam-scale: 1.12;
+  --cam-tx: -2%;
+  --cam-ty: 4%;
 }
 
 .hero-duo__stage.is-cam-canvas {
@@ -927,22 +926,28 @@ html:has(.home-page) body::-webkit-scrollbar,
   --cam-ty: 2%;
 }
 
-/* Analytics / growth — soft read-down */
+/* Analytics — soft crop with margins (not edge-to-edge); readable dwell */
 .hero-duo__stage.is-cam-analytics,
-.hero-duo__stage.is-cam-an-kpi {
-  --cam-scale: 1.08;
+.hero-duo__stage.is-cam-an-kpi,
+.hero-duo__stage.is-cam-an-enter {
+  --cam-scale: 1.06;
+  --cam-tx: 0%;
+  --cam-ty: 1%;
+}
+.hero-duo__stage.is-cam-an-mid {
+  --cam-scale: 1.07;
   --cam-tx: 0%;
   --cam-ty: 2%;
 }
-.hero-duo__stage.is-cam-an-mid {
-  --cam-scale: 1.1;
-  --cam-tx: 0%;
-  --cam-ty: 3%;
-}
 .hero-duo__stage.is-cam-an-bot {
-  --cam-scale: 1.1;
+  --cam-scale: 1.07;
   --cam-tx: 0%;
-  --cam-ty: -2%;
+  --cam-ty: -1%;
+}
+/* Shorter chapter card on Act 3 so pixel/campaign get reading time */
+.hero-duo__stage.is-scene-analytics .hero-duo__intertitle,
+.hero-duo__stage.is-scene-analytics .hero-duo__intertitle-card {
+  animation-duration: 1.7s;
 }
 
 .hero-duo__chrome {
@@ -1024,29 +1029,22 @@ html:has(.home-page) body::-webkit-scrollbar,
   transform-origin: var(--cam-ox, 50%) var(--cam-oy, 48%);
   transform: translate3d(var(--cam-tx), var(--cam-ty), 0) scale(var(--cam-scale));
   transition:
-    transform 1.2s cubic-bezier(0.33, 0.12, 0.22, 1),
-    transform-origin 1.2s cubic-bezier(0.33, 0.12, 0.22, 1);
+    transform 1.35s cubic-bezier(0.33, 0.12, 0.22, 1),
+    transform-origin 1.35s cubic-bezier(0.33, 0.12, 0.22, 1);
   will-change: transform;
   backface-visibility: hidden;
 }
 
-/* Drag live only: pan camera along the ghost — not during phone-tilt peek */
-.hero-duo__stage.is-cam-drag.is-drag-live .hero-duo__lens {
-  transition: none;
-  animation: hero-duo-cam-drag-follow 1.85s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-/* Delivered peek: hold on Steps while phone tilts, before ghost moves */
+/* Drag cam: smooth CSS transition peek → drop (no keyframe restart / right-gap flash) */
 .hero-duo__stage.is-cam-drag.is-phone-tilt:not(.is-drag-live) .hero-duo__lens {
   animation: none;
-  transition: transform 0.85s cubic-bezier(0.33, 0.12, 0.22, 1);
-  transform: translate3d(-14%, 4%, 0) scale(1.16);
+  transition: transform 0.9s cubic-bezier(0.33, 0.12, 0.22, 1);
+  transform: translate3d(-7%, 3%, 0) scale(1.12);
 }
-@keyframes hero-duo-cam-drag-follow {
-  /* Negative tx reveals right-edge Steps; then ease toward drop (not centered Steps) */
-  0%   { transform: translate3d(-16%, 3%, 0) scale(1.16); }
-  22%  { transform: translate3d(-14%, 4%, 0) scale(1.16); }
-  55%  { transform: translate3d(-6%, 6%, 0) scale(1.16); }
-  100% { transform: translate3d(0%, 7%, 0) scale(1.16); }
+.hero-duo__stage.is-cam-drag.is-drag-live .hero-duo__lens {
+  animation: none;
+  transition: transform 1.65s cubic-bezier(0.33, 0.12, 0.22, 1);
+  transform: translate3d(-2%, 4%, 0) scale(1.12);
 }
 
 /* Phone tilts first (1–2s), holds through drag, then eases back — not simultaneous with drag */
@@ -1058,9 +1056,9 @@ html:has(.home-page) body::-webkit-scrollbar,
   position: absolute;
   inset: 0;
   transition:
-    opacity 1.05s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 1.05s cubic-bezier(0.22, 1, 0.36, 1),
-    filter 1.05s ease;
+    opacity 0.85s cubic-bezier(0.33, 0.12, 0.22, 1),
+    transform 0.85s cubic-bezier(0.33, 0.12, 0.22, 1),
+    filter 0.85s ease;
 }
 .hero-duo__view.is-show {
   opacity: 1;
@@ -1565,11 +1563,11 @@ html:has(.home-page) body::-webkit-scrollbar,
 .hero-duo__flow {
   flex: 1;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.2rem;
-  /* Room for Steps rail flush on the right edge */
-  padding: 1.1rem 5.4rem 1.15rem 0.55rem;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 0.15rem;
+  /* Extra right padding so nodes never kiss the Steps rail */
+  padding: 0.85rem 7.5rem 0.95rem 0.85rem;
   overflow: hidden;
   background-image: radial-gradient(#d4dcec 1.05px, transparent 1.05px);
   background-size: 12px 12px;
@@ -1579,6 +1577,37 @@ html:has(.home-page) body::-webkit-scrollbar,
   height: 100%;
   box-sizing: border-box;
 }
+.hero-duo__flow.is-build {
+  justify-content: flex-start;
+}
+.hero-duo__card--entry {
+  align-self: flex-start;
+  margin-top: 0.45rem;
+}
+.hero-duo__card--action,
+.hero-duo__card.is-drop {
+  align-self: center;
+  margin-top: 1.35rem;
+}
+.hero-duo__card--end {
+  align-self: flex-end;
+  margin-bottom: 0.55rem;
+  margin-right: 0.65rem;
+}
+.hero-duo__flow.is-complete .hero-duo__card--action {
+  width: 8.35rem;
+  max-width: 8.35rem;
+}
+.hero-duo__card--end.is-pop {
+  animation: hero-duo-end-pop 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes hero-duo-end-pop {
+  0%   { opacity: 0; transform: translateY(14px) scale(0.88); }
+  60%  { opacity: 1; transform: translateY(-3px) scale(1.04); }
+  100% { opacity: 1; transform: none; }
+}
+.hero-duo__link--down { align-self: center; margin-top: 0.35rem; }
+.hero-duo__link--up { align-self: flex-end; margin-bottom: 1.6rem; }
 
 .hero-duo__card {
   position: relative;
@@ -1600,13 +1629,11 @@ html:has(.home-page) body::-webkit-scrollbar,
 .hero-duo__card--end {
   width: 7.5rem;
   max-width: 7.5rem;
-  align-self: center;
 }
 .hero-duo__card--action,
 .hero-duo__card.is-drop {
   width: 9.1rem;
   max-width: 9.1rem;
-  align-self: center;
 }
 .hero-duo__card.is-on {
   opacity: 1;
@@ -1948,8 +1975,18 @@ html:has(.home-page) body::-webkit-scrollbar,
   --drag-dx: 0px;
   --drag-dy: 0px;
 }
+.hero-duo__drag-ghost.is-grab {
+  opacity: 1;
+  transform: scale(1.05);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.22), 0 16px 32px -14px rgba(124, 58, 237, 0.45);
+  transition: transform 0.35s cubic-bezier(0.33, 0.12, 0.22, 1), box-shadow 0.35s ease;
+}
 .hero-duo__drag-ghost.is-flight {
-  animation: hero-duo-drag-flight 1.7s 0.12s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: hero-duo-drag-flight 1.75s cubic-bezier(0.33, 0.12, 0.22, 1) both;
+}
+.hero-duo__dropzone.is-await,
+.hero-duo__card.is-await-drop {
+  animation: hero-duo-drop-pulse 0.7s cubic-bezier(0.33, 0.12, 0.22, 1) 1;
 }
 
 /* Cursor */
@@ -2002,7 +2039,7 @@ html:has(.home-page) body::-webkit-scrollbar,
   --drag-dy: 0px;
 }
 .hero-duo__cursor--drag.is-flight {
-  animation: hero-duo-drag-flight 1.7s 0.12s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: hero-duo-drag-flight 1.75s cubic-bezier(0.33, 0.12, 0.22, 1) both;
 }
 .hero-duo__cursor--pay {
   left: 0;
@@ -2012,7 +2049,17 @@ html:has(.home-page) body::-webkit-scrollbar,
   z-index: 30;
   animation: hero-duo-cursor-pay 1.05s cubic-bezier(0.25, 0.1, 0.25, 1) both;
 }
-.hero-duo__cursor.is-click { animation: hero-duo-cursor-click 0.42s cubic-bezier(0.25, 0.1, 0.25, 1); }
+/* Click scale on INNER hand only — outer shell keeps JS translate3d (fixes Publish teleport) */
+.hero-duo__cursor-hand {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-origin: 28% 18%;
+  will-change: transform;
+}
+.hero-duo__cursor-hand.is-click {
+  animation: hero-duo-cursor-click 0.42s cubic-bezier(0.33, 0.12, 0.22, 1);
+}
 .hero-duo__click-ring {
   position: absolute; left: 0; top: 0; width: 16px; height: 16px; border-radius: 9999px;
   border: 2px solid rgba(124, 58, 237, 0.65);
@@ -3366,13 +3413,14 @@ html:has(.home-page) body::-webkit-scrollbar,
   }
 }
 @keyframes hero-duo-drag-flight {
+  /* Visible from grab — no mid-transit fade-in */
   0% {
-    opacity: 0;
-    transform: translate(0, 0) scale(0.94) rotate(2deg);
-  }
-  12% {
     opacity: 1;
-    transform: translate(0, 0) scale(0.98) rotate(1deg);
+    transform: translate(0, 0) scale(1.06) rotate(2deg);
+  }
+  14% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1.04) rotate(1.5deg);
   }
   100% {
     opacity: 1;
@@ -3471,9 +3519,9 @@ html:has(.home-page) body::-webkit-scrollbar,
     --hero-ui-scale: 0.68;
   }
   .hero-duo__stage {
-    height: 330px;
-    min-height: 330px;
-    padding: 0.1rem 3.6rem 0.1rem 0;
+    height: 520px;
+    min-height: 520px;
+    padding: 0.35rem 0.35rem 0.45rem;
   }
   .hero-duo__pair { width: 100%; height: 100%; }
   .hero-duo__desktop { width: 100%; height: 100%; border-radius: 12px; }
@@ -3488,7 +3536,6 @@ html:has(.home-page) body::-webkit-scrollbar,
     flex: 1;
     min-height: 0;
   }
-  .hero-duo__steps { display: none; }
   .hero-duo__flow {
     flex: 1;
     min-height: 0;
@@ -3498,14 +3545,51 @@ html:has(.home-page) body::-webkit-scrollbar,
   .hero-duo__card { padding: 0.45rem 0.4rem 0.5rem; border-radius: 12px; }
   .hero-duo__card-top strong { font-size: 0.62rem; }
   .hero-duo__card p { font-size: 0.5rem; }
+  /* Phone-primary composition — don't kill tilt via !important; soften instead */
+  .hero-duo__pair {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: 0.45rem;
+  }
+  .hero-duo__desktop {
+    width: 100%;
+    height: auto;
+    flex: 1 1 auto;
+    min-height: 0;
+  }
   .hero-duo__phone {
-    width: clamp(138px, 34vw, 176px);
-    right: -3.35rem;
-    top: 0.45rem;
-    bottom: 0.05rem;
-    --hero-ui-scale: 0.78;
-    transform: none !important;
-    transition: none !important;
+    position: relative;
+    width: min(168px, 42vw);
+    right: auto;
+    top: auto;
+    bottom: auto;
+    height: 210px;
+    margin: 0 auto;
+    --hero-ui-scale: 0.72;
+    transform: none;
+    transition: transform 0.55s cubic-bezier(0.33, 0.12, 0.22, 1);
+  }
+  .hero-duo__stage.is-phone-tilt .hero-duo__phone {
+    transform: rotate(6deg) translate3d(0.25rem, 0.15rem, 0);
+  }
+  /* Soft cams on mobile — no whip pans */
+  .hero-duo__stage.is-cam-drag.is-drag-live .hero-duo__lens {
+    animation: none !important;
+    transition: transform 0.9s cubic-bezier(0.33, 0.12, 0.22, 1);
+    transform: translate3d(-4%, 2%, 0) scale(1.06);
+  }
+  .hero-duo__stage.is-cam-drag.is-phone-tilt:not(.is-drag-live) .hero-duo__lens {
+    transform: translate3d(-6%, 2%, 0) scale(1.06);
+  }
+  .hero-duo__steps {
+    display: flex;
+    max-height: 4.2rem;
+    overflow: hidden;
+  }
+  .hero-duo__drag-ghost {
+    font-size: 0.55rem;
+    padding: 0.3rem 0.45rem;
   }
   .hero-duo__stage.is-scene-journey .hero-duo__journey-actions,
   .hero-duo__stage.is-scene-delivered .hero-duo__journey-actions {
