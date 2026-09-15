@@ -1,0 +1,964 @@
+.roi-page {
+  position: relative;
+  background: #ffffff;
+  color: #0c1222;
+  overflow-x: clip;
+}
+
+.roi-page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(ellipse 50% 35% at 50% 0%, rgba(167, 139, 250, 0.1), transparent 70%),
+    linear-gradient(rgba(15, 23, 42, 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.022) 1px, transparent 1px);
+  background-size: auto, 72px 72px, 72px 72px;
+  background-position: center top, center, center;
+}
+
+.roi-brand {
+  display: inline;
+  padding: 0.08em 0.28em 0.12em;
+  border-radius: 0.45em;
+  background: #ede9fe;
+  color: #0c1222;
+  font-weight: 450;
+  white-space: nowrap;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.roi-brand span {
+  color: #6d28d9;
+  font-weight: 450;
+}
+
+.roi-page__hero {
+  position: relative;
+  z-index: 1;
+  padding: 7.25rem 1.25rem 1.5rem;
+  text-align: center;
+}
+
+.roi-page__eyebrow {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #8b5cf6;
+}
+
+.roi-page__title {
+  margin: 0.85rem auto 0;
+  max-width: 26rem;
+  font-size: clamp(1.55rem, 3.2vw, 2rem);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.28;
+  color: #0c1222;
+}
+
+.roi-page__body {
+  position: relative;
+  z-index: 1;
+  padding: 0.25rem clamp(0.85rem, 2vw, 1.5rem) 5.5rem;
+}
+
+/* ——— Wizard ——— */
+.roi-wiz {
+  position: relative;
+  width: min(100%, 98vw);
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+.roi-wiz__ambient {
+  pointer-events: none;
+  position: absolute;
+  top: -3rem;
+  left: 50%;
+  width: min(100%, 36rem);
+  height: 14rem;
+  margin-left: min(-18rem, -50%);
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.1) 0%, transparent 70%);
+  filter: blur(22px);
+}
+
+.roi-wiz__card {
+  position: relative;
+  padding: clamp(1.5rem, 3vw, 2.25rem) clamp(1.35rem, 3.5vw, 2.5rem);
+  border-radius: 1.65rem;
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 24px 48px -28px rgba(15, 23, 42, 0.18);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  overflow: visible;
+}
+
+.roi-wiz__card--ask {
+  width: min(100%, 1040px);
+  margin: 0 auto;
+}
+
+.roi-wiz__ask {
+  width: min(100%, 38rem);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.roi-wiz__card--violet {
+  border-color: rgba(196, 181, 253, 0.55);
+  background:
+    radial-gradient(ellipse 80% 55% at 0% 0%, rgba(237, 233, 254, 0.85), transparent 55%),
+    rgba(255, 255, 255, 0.94);
+}
+
+.roi-wiz__card--amber {
+  border-color: rgba(253, 230, 138, 0.65);
+  background:
+    radial-gradient(ellipse 80% 55% at 0% 0%, rgba(254, 243, 199, 0.75), transparent 55%),
+    rgba(255, 255, 255, 0.94);
+}
+
+.roi-wiz__card--rose {
+  border-color: rgba(251, 207, 232, 0.7);
+  background:
+    radial-gradient(ellipse 80% 55% at 0% 0%, rgba(252, 231, 243, 0.8), transparent 55%),
+    rgba(255, 255, 255, 0.94);
+}
+
+.roi-wiz__card--emerald {
+  border-color: rgba(167, 243, 208, 0.7);
+  background:
+    radial-gradient(ellipse 80% 55% at 0% 0%, rgba(209, 250, 229, 0.75), transparent 55%),
+    rgba(255, 255, 255, 0.94);
+}
+
+.roi-wiz__meta {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #94a3b8;
+}
+
+.roi-wiz__question {
+  margin: 0.85rem 0 0;
+  line-height: 1.2;
+}
+
+.roi-wiz__q-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.1em 0.18em;
+  row-gap: 0.22em;
+  font-size: clamp(1.7rem, 2.8vw, 2.45rem);
+  font-weight: 450;
+  letter-spacing: -0.035em;
+  color: #0c1222;
+}
+
+.roi-wiz__fold {
+  display: inline;
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+}
+
+.roi-wiz__fold.fold-text {
+  display: inline;
+}
+
+.roi-wiz__hl {
+  display: inline-flex;
+  align-items: baseline;
+  padding: 0.06em 0.28em 0.1em;
+  border-radius: 0.4em;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.roi-wiz__hl--violet {
+  background: #ede9fe;
+  color: #5b21b6;
+}
+
+.roi-wiz__hl--amber {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.roi-wiz__hl--rose {
+  background: #fce7f3;
+  color: #be185d;
+}
+
+.roi-wiz__hl--emerald {
+  background: #d1fae5;
+  color: #047857;
+}
+
+.roi-wiz__help {
+  margin: 0.85rem auto 0;
+  max-width: 30rem;
+  font-size: 0.95rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #64748b;
+}
+
+.roi-wiz__ask .roi-dd,
+.roi-wiz__ask .roi-wiz__fine,
+.roi-wiz__ask .roi-wiz__nav {
+  text-align: left;
+}
+
+/* Custom dropdown */
+.roi-dd {
+  position: relative;
+  margin-top: 1.75rem;
+  z-index: 5;
+}
+
+.roi-dd__label {
+  display: block;
+  margin-bottom: 0.45rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #94a3b8;
+}
+
+.roi-dd__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  min-height: 3.35rem;
+  padding: 0.7rem 1.1rem;
+  border-radius: 1rem;
+  border: 1px solid #e4e0f0;
+  background: #fff;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.roi-dd__trigger:hover,
+.roi-dd__trigger.is-open {
+  border-color: #c4b5fd;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+}
+
+.roi-dd--amber .roi-dd__trigger:hover,
+.roi-dd--amber .roi-dd__trigger.is-open {
+  border-color: #fcd34d;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.12);
+}
+
+.roi-dd--rose .roi-dd__trigger:hover,
+.roi-dd--rose .roi-dd__trigger.is-open {
+  border-color: #f9a8d4;
+  box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1);
+}
+
+.roi-dd--emerald .roi-dd__trigger:hover,
+.roi-dd--emerald .roi-dd__trigger.is-open {
+  border-color: #6ee7b7;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.12);
+}
+
+.roi-dd__value {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.roi-dd__value strong {
+  font-size: 1.02rem;
+  font-weight: 500;
+  color: #0c1222;
+  letter-spacing: -0.02em;
+}
+
+.roi-dd__value em {
+  font-style: normal;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #94a3b8;
+}
+
+.roi-dd__chevron {
+  flex-shrink: 0;
+  width: 1.15rem;
+  height: 1.15rem;
+  color: #64748b;
+  transition: transform 0.18s ease;
+}
+
+.roi-dd__trigger.is-open .roi-dd__chevron {
+  transform: rotate(180deg);
+}
+
+.roi-dd__menu {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 0.4rem);
+  margin: 0;
+  padding: 0.4rem;
+  list-style: none;
+  border-radius: 1rem;
+  border: 1px solid #ebe4ff;
+  background: #fff;
+  box-shadow:
+    0 18px 40px -20px rgba(15, 23, 42, 0.28),
+    0 4px 12px -6px rgba(15, 23, 42, 0.08);
+  overflow: hidden;
+  z-index: 20;
+}
+
+.roi-dd__option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.75rem 0.85rem;
+  border: 0;
+  border-radius: 0.75rem;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  color: #0c1222;
+  transition: background 0.12s ease;
+}
+
+.roi-dd__option:hover {
+  background: #f8fafc;
+}
+
+.roi-dd__option.is-active {
+  background: #f5f3ff;
+}
+
+.roi-dd--amber .roi-dd__option.is-active {
+  background: #fffbeb;
+}
+
+.roi-dd--rose .roi-dd__option.is-active {
+  background: #fdf2f8;
+}
+
+.roi-dd--emerald .roi-dd__option.is-active {
+  background: #ecfdf5;
+}
+
+.roi-dd__option strong {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.roi-dd__option em {
+  display: block;
+  margin-top: 0.1rem;
+  font-style: normal;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #94a3b8;
+}
+
+.roi-dd__option.is-active {
+  color: #5b21b6;
+}
+
+.roi-dd--amber .roi-dd__option.is-active {
+  color: #b45309;
+}
+
+.roi-dd--rose .roi-dd__option.is-active {
+  color: #be185d;
+}
+
+.roi-dd--emerald .roi-dd__option.is-active {
+  color: #047857;
+}
+
+.roi-wiz__fine {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.25rem;
+  font-size: 0.84rem;
+  font-weight: 400;
+  color: #64748b;
+}
+
+.roi-wiz__input-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  min-height: 2.45rem;
+  padding: 0 0.85rem;
+  border: 1px solid #e8e4f5;
+  border-radius: 999px;
+  background: #fff;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.roi-wiz__input-wrap:focus-within {
+  border-color: #c4b5fd;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+}
+
+.roi-wiz__input-wrap i {
+  font-style: normal;
+  font-size: 0.84rem;
+  font-weight: 450;
+  color: #64748b;
+}
+
+.roi-wiz__input-wrap input {
+  width: 5.5rem;
+  border: 0;
+  outline: none;
+  background: transparent;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #0c1222;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  -moz-appearance: textfield;
+}
+
+.roi-wiz__input-wrap input::-webkit-outer-spin-button,
+.roi-wiz__input-wrap input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.roi-wiz__nav,
+.roi-wiz__result-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.roi-wiz__ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 2.35rem;
+  padding: 0 0.55rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #64748b;
+  font-size: 0.84rem;
+  font-weight: 450;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.roi-wiz__ghost:hover:not(:disabled) {
+  color: #0c1222;
+}
+
+.roi-wiz__ghost:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.roi-wiz__primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2.65rem;
+  padding: 0 1.25rem;
+  border: 0;
+  border-radius: 999px;
+  background: #7c3aed;
+  color: #fff;
+  font-size: 0.92rem;
+  font-weight: 450;
+  cursor: pointer;
+  box-shadow: 0 10px 24px -12px rgba(91, 33, 182, 0.55);
+  transition: background 0.18s ease;
+}
+
+.roi-wiz__primary:hover {
+  background: #6d28d9;
+}
+
+/* ——— Results ——— */
+.roi-wiz__result-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: 1.25rem;
+  align-items: stretch;
+  width: 100%;
+}
+
+.roi-wiz__result-main,
+.roi-wiz__chart-panel {
+  padding: clamp(1.35rem, 2.6vw, 2rem) clamp(1.25rem, 2.8vw, 2.1rem);
+  border-radius: 1.65rem;
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 24px 48px -28px rgba(15, 23, 42, 0.16);
+}
+
+.roi-wiz__result-side {
+  min-width: 0;
+}
+
+.roi-wiz__chart-panel {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background:
+    radial-gradient(ellipse 70% 50% at 100% 0%, rgba(237, 233, 254, 0.7), transparent 55%),
+    rgba(255, 255, 255, 0.96);
+}
+
+.roi-wiz__result-kicker {
+  margin: 0.55rem 0 0;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.45;
+  color: #475569;
+}
+
+.roi-wiz__value {
+  margin: 0.7rem 0 0;
+  font-size: clamp(2.4rem, 5vw, 3.35rem);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: #0c1222;
+  font-variant-numeric: tabular-nums;
+}
+
+.roi-wiz__value-sub {
+  margin: 0.55rem 0 0;
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: #64748b;
+}
+
+.roi-wiz__compare {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 0.75rem;
+  align-items: stretch;
+  margin-top: 1.5rem;
+  padding: 1.1rem 0;
+  border-top: 1px solid #f1f5f9;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.roi-wiz__compare-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.roi-wiz__compare-col span {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #94a3b8;
+}
+
+.roi-wiz__compare-col strong {
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  color: #94a3b8;
+  font-variant-numeric: tabular-nums;
+}
+
+.roi-wiz__compare-col.is-won strong {
+  color: #6d28d9;
+}
+
+.roi-wiz__compare-col em {
+  font-style: normal;
+  font-size: 0.78rem;
+  color: #94a3b8;
+}
+
+.roi-wiz__compare-divider {
+  width: 1px;
+  background: #eef2f7;
+}
+
+.roi-wiz__chart-head h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: #0c1222;
+}
+
+.roi-wiz__chart-head p {
+  margin: 0.3rem 0 0;
+  font-size: 0.82rem;
+  color: #94a3b8;
+}
+
+.roi-wiz__chart-bars {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 0.5rem;
+  align-items: end;
+  flex: 1;
+  min-height: 14rem;
+  margin-top: 1.35rem;
+  padding: 0.5rem 0.15rem 0;
+}
+
+.roi-wiz__chart-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.35rem;
+  height: 100%;
+  min-width: 0;
+}
+
+.roi-wiz__chart-amt {
+  font-size: 0.62rem;
+  font-weight: 500;
+  color: #64748b;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.roi-wiz__chart-bar {
+  width: 100%;
+  max-width: 2.4rem;
+  border-radius: 8px 8px 3px 3px;
+  background: linear-gradient(180deg, #c4b5fd 0%, #7c3aed 100%);
+  min-height: 0.5rem;
+  transition: height 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.roi-wiz__chart-label {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: #94a3b8;
+}
+
+.roi-wiz__chart-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid #f1f5f9;
+  font-size: 0.88rem;
+  color: #64748b;
+}
+
+.roi-wiz__chart-foot strong {
+  font-weight: 500;
+  color: #6d28d9;
+  font-variant-numeric: tabular-nums;
+}
+
+.roi-wiz__inputs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem 1rem;
+  margin: 1.35rem 0 0;
+  padding: 0;
+}
+
+.roi-wiz__inputs div {
+  min-width: 0;
+}
+
+.roi-wiz__inputs dt {
+  margin: 0;
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #94a3b8;
+}
+
+.roi-wiz__inputs dd {
+  margin: 0.2rem 0 0;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #0c1222;
+  font-variant-numeric: tabular-nums;
+}
+
+.roi-wiz__plan-card {
+  position: relative;
+  margin-top: 1.45rem;
+  padding: 1.2rem 1.25rem 1.25rem;
+  border-radius: 1.35rem;
+  border: 1px solid rgba(167, 139, 250, 0.45);
+  background:
+    radial-gradient(ellipse 90% 70% at 0% 0%, rgba(237, 233, 254, 0.95), transparent 55%),
+    linear-gradient(180deg, #ffffff 0%, #faf8ff 100%);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 18px 36px -26px rgba(91, 33, 182, 0.5);
+  overflow: hidden;
+}
+
+.roi-wiz__plan-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.9rem;
+  bottom: 0.9rem;
+  width: 3px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #a78bfa, #7c3aed);
+}
+
+.roi-wiz__plan-card--growth::before {
+  background: linear-gradient(180deg, #c4b5fd, #6d28d9);
+}
+
+.roi-wiz__plan-card--scale::before {
+  background: linear-gradient(180deg, #818cf8, #4f46e5);
+}
+
+.roi-wiz__plan-card--scale {
+  border-color: rgba(129, 140, 248, 0.5);
+  background:
+    radial-gradient(ellipse 90% 70% at 0% 0%, rgba(238, 242, 255, 0.95), transparent 55%),
+    linear-gradient(180deg, #ffffff 0%, #f8faff 100%);
+}
+
+.roi-wiz__plan-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  padding-left: 0.55rem;
+}
+
+.roi-wiz__plan-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 1.7rem;
+  padding: 0.2rem 0.65rem 0.2rem 0.45rem;
+  border-radius: 999px;
+  background: #7c3aed;
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.roi-wiz__plan-price-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.05rem;
+  line-height: 1.15;
+}
+
+.roi-wiz__plan-price-chip strong {
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #0c1222;
+  font-variant-numeric: tabular-nums;
+}
+
+.roi-wiz__plan-price-chip span {
+  font-size: 0.68rem;
+  font-weight: 450;
+  color: #94a3b8;
+}
+
+.roi-wiz__plan-card-main {
+  margin-top: 0.95rem;
+  padding-left: 0.55rem;
+}
+
+.roi-wiz__plan-name {
+  margin: 0;
+  font-size: clamp(1.55rem, 2.4vw, 1.85rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: #0c1222;
+}
+
+.roi-wiz__plan-pitch {
+  margin: 0.4rem 0 0;
+  max-width: 28rem;
+  font-size: 0.9rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #64748b;
+}
+
+.roi-wiz__plan-metric {
+  margin-top: 1.05rem;
+  margin-left: 0.55rem;
+  padding: 0.85rem 0.95rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(196, 181, 253, 0.45);
+}
+
+.roi-wiz__plan-metric-copy {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.roi-wiz__plan-metric-copy span {
+  font-size: 0.82rem;
+  font-weight: 450;
+  color: #64748b;
+}
+
+.roi-wiz__plan-metric-copy em {
+  font-style: normal;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #6d28d9;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.roi-wiz__plan-meter {
+  margin-top: 0.65rem;
+  height: 0.4rem;
+  border-radius: 999px;
+  background: #ede9fe;
+  overflow: hidden;
+}
+
+.roi-wiz__plan-meter > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #a78bfa, #7c3aed);
+}
+
+.roi-wiz__footnote {
+  margin: 1.1rem 0 0;
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1.45;
+  color: #94a3b8;
+}
+
+.roi-wiz__result-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1rem;
+  margin-top: 1.35rem;
+}
+
+.roi-wiz__cta {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 0.35rem;
+  font-weight: 450 !important;
+}
+
+.roi-wiz__text-link {
+  font-size: 0.88rem;
+  font-weight: 450;
+  color: #7c3aed;
+  text-decoration: none;
+}
+
+.roi-wiz__text-link:hover {
+  color: #6d28d9;
+}
+
+@media (max-width: 960px) {
+  .roi-wiz__result-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .roi-wiz__chart-bars {
+    min-height: 11.5rem;
+  }
+}
+
+@media (max-width: 720px) {
+  .roi-wiz {
+    width: min(100%, 94vw);
+  }
+
+  .roi-wiz__ask {
+    width: 100%;
+  }
+
+  .roi-wiz__q-line {
+    font-size: clamp(1.45rem, 6vw, 1.85rem);
+  }
+
+  .roi-page__hero {
+    padding-top: 6.5rem;
+  }
+
+  .roi-wiz__fine {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .roi-wiz__inputs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .roi-wiz__chart-amt {
+    font-size: 0.52rem;
+  }
+
+  .roi-wiz__result-foot {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roi-wiz__chart-bar {
+    transition: none;
+  }
+}

@@ -14,7 +14,6 @@ import CycleToggle from '../components/pricing/CycleToggle';
 import PlanGrid from '../components/pricing/PlanGrid';
 import FeatureMatrix from '../components/pricing/FeatureMatrix';
 import IncludedFeatures from '../components/pricing/IncludedFeatures';
-import RoiCalculator from '../components/pricing/RoiCalculator';
 import PricingFaq, { PRICING_FAQS } from '../components/pricing/PricingFaq';
 import {
   BillingCatalog,
@@ -131,9 +130,11 @@ export default function PricingPage() {
             <section className="mkt-pricing__block" id="roi-calculator">
               <h2 className="mkt-pricing__h2">Recovery math</h2>
               <p className="mkt-pricing__lead">
-                Orders × AOV × abandon % × recovery lift. Dashboard shows zeros until you connect.
+                Answer a few questions about your store to estimate recovered revenue.
               </p>
-              <RoiCalculator />
+              <Link className="mkt-pricing__cta" to="/roi">
+                Open ROI calculator
+              </Link>
             </section>
 
             <section className="mkt-pricing__block">

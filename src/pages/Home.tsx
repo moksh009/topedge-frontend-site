@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import '../marketing/styles/home.css';
 import '../marketing/styles/feature-films.css';
 import MarketingSEO from '../marketing/components/MarketingSEO';
@@ -13,7 +14,6 @@ import MarketingPage from '../marketing/components/MarketingPage';
 import HomeHero from '../marketing/components/home/HomeHero';
 import HomeStickyStories from '../marketing/components/home/HomeStickyStories';
 import HomeChaosZoom from '../marketing/components/home/HomeChaosZoom';
-import HomePricingTeaser from '../marketing/components/home/HomePricingTeaser';
 import HomeTestimonials from '../marketing/components/home/HomeTestimonials';
 import HomeClose from '../marketing/components/home/HomeClose';
 
@@ -22,6 +22,20 @@ import HomeClose from '../marketing/components/home/HomeClose';
  */
 export default function Home() {
   const seo = PAGE_SEO.home;
+
+  // Land at top once on mount — do not re-run when Lenis attaches (that felt like scroll fighting).
+  useEffect(() => {
+    if (typeof window === 'undefined') return undefined;
+    try {
+      window.history.scrollRestoration = 'manual';
+    } catch {
+      /* ignore */
+    }
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return undefined;
+  }, []);
 
   return (
     <>
@@ -42,7 +56,6 @@ export default function Home() {
         </div>
         <HomeStickyStories />
         <HomeChaosZoom />
-        <HomePricingTeaser />
         <HomeTestimonials />
         <HomeClose />
       </MarketingPage>

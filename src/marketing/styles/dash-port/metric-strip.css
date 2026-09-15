@@ -1,0 +1,51 @@
+/* Unified segmented KPI strip — child StatCards sit flush inside one shell */
+
+.metric-strip > * {
+  min-width: 0;
+  position: relative;
+}
+
+.metric-strip .app-stat-card-root {
+  height: 100%;
+}
+
+.metric-strip .app-stat-card-root > div {
+  height: 100%;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  padding: 1rem 1.15rem !important;
+}
+
+@media (min-width: 640px) {
+  .metric-strip .app-stat-card-root > div {
+    padding: 1.15rem 1.25rem !important;
+  }
+}
+
+.metric-strip .app-stat-card-root > div:hover,
+.metric-strip .app-stat-card-root > div:focus-within {
+  transform: none !important;
+  box-shadow: none !important;
+  border-color: transparent !important;
+}
+
+.metric-strip .app-stat-card-root.cursor-pointer > div:hover {
+  border-color: transparent !important;
+}
+
+.metric-strip--dense .app-stat-card-root > div {
+  padding: 0.85rem 1rem !important;
+}
+
+@media (min-width: 640px) {
+  .metric-strip--dense .app-stat-card-root > div {
+    padding: 0.85rem 1rem !important;
+  }
+}
+
+.metric-strip .c360-cell {
+  min-height: 3rem;
+  height: 100%;
+}

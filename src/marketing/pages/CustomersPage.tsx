@@ -17,30 +17,6 @@ const outcomes = [
   { metric: '36h', label: 'Template approval', detail: 'Clear Meta feedback → second submit live' },
 ];
 
-const stories = [
-  {
-    industry: 'Fashion',
-    quote: 'Cart recovery on COD orders changed our month.',
-    metric: '22% cart recovery',
-    name: 'Rahul K.',
-    role: 'Growth, D2C apparel',
-  },
-  {
-    industry: 'Beauty',
-    quote: 'Approved flows live in three days with full control.',
-    metric: '3 days to go live',
-    name: 'Meera S.',
-    role: 'Ops, Shopify Plus',
-  },
-  {
-    industry: 'Electronics',
-    quote: 'Support handles 4× more chats without new hires.',
-    metric: '4× faster response',
-    name: 'Ananya R.',
-    role: 'Founder',
-  },
-];
-
 export default function CustomersPage() {
   return (
     <>
@@ -86,25 +62,7 @@ export default function CustomersPage() {
         </Section>
 
         <Section wash="soft">
-          <SectionHeading title="What teams say" />
-          <div className="grid gap-6 md:grid-cols-3">
-            {stories.map((s) => (
-              <MarketingCard key={s.name} className="flex h-full flex-col !p-6">
-                <span className="text-[10px] font-medium uppercase tracking-wide text-[#7C3AED]">
-                  {s.industry}
-                </span>
-                <p className="mt-3 text-sm font-medium text-[#7C3AED]">{s.metric}</p>
-                <p className="mt-3 flex-1 text-sm leading-relaxed text-slate-600">
-                  &ldquo;{s.quote}&rdquo;
-                </p>
-                <div className="mt-4 border-t border-violet-100 pt-4">
-                  <p className="text-sm font-medium text-slate-900">{s.name}</p>
-                  <p className="text-xs text-slate-500">{s.role}</p>
-                </div>
-              </MarketingCard>
-            ))}
-          </div>
-          <p className="mx-auto mt-8 max-w-2xl text-center text-sm leading-relaxed text-slate-500">
+          <p className="mx-auto mb-2 max-w-2xl text-center text-sm leading-relaxed text-slate-500">
             Explore how{' '}
             <Link to="/whatsapp-cart-recovery" className="font-medium text-[#7C3AED]">
               WhatsApp cart recovery

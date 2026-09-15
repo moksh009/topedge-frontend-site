@@ -184,27 +184,42 @@ export const howItWorks = [
 export const testimonials = [
   {
     quote:
-      'We moved cart recovery from email-only to a 3-message WA sequence. Recovery rate went from 4% to 11% in the first month, and we finally see which template actually converts.',
-    name: 'Priya M.',
-    role: 'Founder',
-    company: 'D2C skincare, Mumbai',
+      'We moved cart recovery from email-only to a 3-message WhatsApp sequence. Recovery went from 4% to 11% in the first month — and we finally see which template actually converts.',
+    name: 'Priya Mehta',
+    role: 'Founder of Kaya Roots',
+    company: 'Kaya Roots',
+    brand: 'KAYA',
+    brandLogo: '/trust/delitech.png',
+    brandLogoAlt: 'Kaya Roots',
     metric: '+7pp recovery',
+    avatar: '/marketing/avatars/priya.jpg',
+    tone: 'violet' as const,
   },
   {
     quote:
       'Support used to mean three tabs: Shopify, WhatsApp Web, and a spreadsheet. Now one inbox shows order # and COD status beside every thread.',
-    name: 'Arjun K.',
-    role: 'Head of Ops',
-    company: 'Fashion brand, Bengaluru',
+    name: 'Arjun Kapoor',
+    role: 'Head of Ops at Thread & Co',
+    company: 'Thread & Co',
+    brand: 'THREAD',
+    brandLogo: '/trust/apex-source.png',
+    brandLogoAlt: 'Thread & Co',
     metric: '3 tabs → 1',
+    avatar: '/marketing/avatars/arjun.jpg',
+    tone: 'amber' as const,
   },
   {
     quote:
-      'The AI form built our first Flow Builder bot in minutes. We tweaked two nodes and were live before the weekend sale.',
-    name: 'Neha S.',
-    role: 'Growth lead',
-    company: 'Food & beverage, Delhi NCR',
+      'The AI form built our first Flow Builder bot in minutes. We tweaked two nodes and were live before the weekend sale — no agency sprint required.',
+    name: 'Neha Sharma',
+    role: 'Growth lead at Bean & Brew',
+    company: 'Bean & Brew',
+    brand: 'bean',
+    brandLogo: '/trust/codeclinic-white.png',
+    brandLogoAlt: 'Bean & Brew',
     metric: 'Minutes to first flow',
+    avatar: '/marketing/avatars/neha.jpg',
+    tone: 'emerald' as const,
   },
 ];
 

@@ -607,14 +607,66 @@
 .mkt-rate__note { margin-top: 0.4rem; font-size: 0.8125rem; color: #64748b; }
 
 .mkt-roi {
-  display: grid;
-  grid-template-columns: 0.95fr 1.05fr;
-  gap: 1.25rem;
-  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+  padding: 1.35rem;
   border: 1px solid #efeaf8;
   border-radius: 1.35rem;
   background: linear-gradient(180deg, #faf8ff 0%, #fff 55%);
 }
+
+.mkt-roi__presets {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+
+.mkt-roi__preset {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.1rem;
+  padding: 0.75rem 0.85rem;
+  border-radius: 12px;
+  border: 1px solid #e8e2f6;
+  background: #fff;
+  cursor: pointer;
+  text-align: left;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.mkt-roi__preset:hover {
+  border-color: #c4b5fd;
+}
+
+.mkt-roi__preset.is-active {
+  border-color: #7c3aed;
+  background: #f5f3ff;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.12);
+}
+
+.mkt-roi__preset span {
+  font-size: 0.875rem;
+  font-weight: 650;
+  color: #0c1222;
+}
+
+.mkt-roi__preset em {
+  font-style: normal;
+  font-size: 0.72rem;
+  color: #94a3b8;
+}
+
+.mkt-roi__grid {
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: 1.25rem;
+}
+
 .mkt-roi__kicker {
   margin: 0;
   font-size: 0.75rem;
@@ -623,39 +675,169 @@
   text-transform: uppercase;
   color: #7c3aed;
 }
+
 .mkt-roi__value {
   margin: 0.35rem 0 0;
   font-size: clamp(2rem, 4vw, 2.75rem);
   font-weight: 750;
   letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
 }
-.mkt-roi__week { margin: 0.4rem 0 0; color: #64748b; font-size: 0.875rem; }
-.mkt-roi dl {
+
+.mkt-roi__week {
+  margin: 0.4rem 0 0;
+  color: #64748b;
+  font-size: 0.875rem;
+}
+
+.mkt-roi__stats {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.75rem;
   margin: 1.1rem 0 0;
+  padding: 0;
 }
-.mkt-roi dt { font-size: 0.75rem; color: #94a3b8; }
-.mkt-roi dd { margin: 0.15rem 0 0; font-weight: 650; }
-.mkt-roi__controls { display: flex; flex-direction: column; gap: 0.85rem; }
-.mkt-roi__controls label span {
+
+.mkt-roi__stats dt {
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.mkt-roi__stats dd {
+  margin: 0.15rem 0 0;
+  font-weight: 650;
+  font-size: 0.875rem;
+  color: #0c1222;
+}
+
+.mkt-roi__controls {
   display: flex;
+  flex-direction: column;
+  gap: 0.95rem;
+}
+
+.mkt-roi__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.mkt-roi__field > span {
+  display: flex;
+  align-items: center;
   justify-content: space-between;
+  gap: 0.75rem;
   font-size: 0.8125rem;
   color: #475569;
 }
-.mkt-roi__controls input[type='range'] {
-  width: 100%;
-  margin-top: 0.4rem;
-  accent-color: #7c3aed;
+
+.mkt-roi__num {
+  width: 5.25rem;
+  min-height: 2rem;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 9px;
+  background: #fff;
+  font-size: 0.875rem;
+  font-weight: 650;
+  color: #0c1222;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  outline: none;
 }
-.mkt-roi__hint { margin: 0; font-size: 0.75rem; color: #94a3b8; }
+
+.mkt-roi__num:focus {
+  border-color: #a78bfa;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.12);
+}
+
+.mkt-roi__num--suffix {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  width: auto;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.mkt-roi__num--suffix input {
+  width: 3.4rem;
+  min-height: 2rem;
+  padding: 0.25rem 0.4rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 9px;
+  background: #fff;
+  font-size: 0.875rem;
+  font-weight: 650;
+  color: #0c1222;
+  text-align: right;
+  outline: none;
+}
+
+.mkt-roi__num--suffix input:focus {
+  border-color: #a78bfa;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.12);
+}
+
+.mkt-roi__num--suffix em {
+  font-style: normal;
+  font-size: 0.75rem;
+  font-weight: 650;
+  color: #64748b;
+}
+
+.mkt-roi__controls input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 999px;
+  outline: none;
+  background: linear-gradient(
+    90deg,
+    #7c3aed 0%,
+    #7c3aed var(--fill, 40%),
+    #efeaf8 var(--fill, 40%),
+    #efeaf8 100%
+  );
+}
+
+.mkt-roi__controls input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #7c3aed;
+  box-shadow: 0 4px 10px -4px rgba(124, 58, 237, 0.45);
+  cursor: pointer;
+}
+
+.mkt-roi__controls input[type='range']::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #7c3aed;
+  cursor: pointer;
+}
+
+.mkt-roi__hint {
+  margin: 0;
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
 .mkt-roi__cta {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
   align-self: flex-start;
+  margin-top: 1rem;
   min-height: 2.4rem;
   padding: 0 1.1rem;
   border-radius: 9999px;
@@ -735,7 +917,8 @@
   .mkt-plans,
   .mkt-included ul,
   .mkt-rates,
-  .mkt-roi,
+  .mkt-roi__grid,
+  .mkt-roi__presets,
   .mkt-teaser__cards {
     grid-template-columns: 1fr;
   }

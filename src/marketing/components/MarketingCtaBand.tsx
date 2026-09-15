@@ -1,6 +1,10 @@
+import type { ReactNode } from 'react';
+import { ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { PrimaryButton, GhostButton } from './ui';
 
 export default function MarketingCtaBand({
+  eyebrow,
   title,
   subtitle,
   primaryLabel = 'Start free',
@@ -10,7 +14,8 @@ export default function MarketingCtaBand({
   secondaryTo,
   secondaryHref,
 }: {
-  title: string;
+  eyebrow?: string;
+  title: ReactNode;
   subtitle?: string;
   primaryLabel?: string;
   primaryTo?: string;
@@ -20,28 +25,42 @@ export default function MarketingCtaBand({
   secondaryHref?: string;
 }) {
   return (
-    <section className="mkt-wash-cta px-5 py-24 md:px-8 md:py-32">
-      <div className="mx-auto max-w-2xl text-center">
-        <h2 className="mkt-display text-3xl font-medium tracking-tight text-[#0c1222] md:text-4xl md:leading-[1.15]">
-          {title}
-        </h2>
-        {subtitle && (
-          <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-slate-500">{subtitle}</p>
-        )}
-        <div className="mt-10 flex flex-wrap justify-center gap-3">
+    <section className="mkt-cta" aria-label="Get started">
+      <div className="mkt-cta__glow" aria-hidden />
+      <div className="mkt-cta__inner">
+        {eyebrow ? <p className="mkt-cta__eyebrow">{eyebrow}</p> : null}
+        <h2 className="mkt-cta__title">{title}</h2>
+        {subtitle ? <p className="mkt-cta__sub">{subtitle}</p> : null}
+        <div className="mkt-cta__actions">
           {primaryHref ? (
-            <PrimaryButton href={primaryHref}>{primaryLabel}</PrimaryButton>
+            <PrimaryButton href={primaryHref} className="mkt-cta__primary">
+              {primaryLabel}
+              <ArrowRight className="h-4 w-4" />
+            </PrimaryButton>
           ) : (
-            <PrimaryButton to={primaryTo}>{primaryLabel}</PrimaryButton>
+            <PrimaryButton to={primaryTo} className="mkt-cta__primary">
+              {primaryLabel}
+              <ArrowRight className="h-4 w-4" />
+            </PrimaryButton>
           )}
           {secondaryLabel && (secondaryHref || secondaryTo) ? (
             secondaryHref ? (
-              <GhostButton href={secondaryHref}>{secondaryLabel}</GhostButton>
+              <GhostButton href={secondaryHref} className="mkt-cta__secondary">
+                {secondaryLabel}
+              </GhostButton>
             ) : (
-              <GhostButton to={secondaryTo}>{secondaryLabel}</GhostButton>
+              <GhostButton to={secondaryTo!} className="mkt-cta__secondary">
+                {secondaryLabel}
+              </GhostButton>
             )
           ) : null}
         </div>
+        <p className="mkt-cta__note">
+          Free to start · Shopify + WhatsApp · No card required —{' '}
+          <Link to="/roi" className="mkt-cta__note-link">
+            estimate ROI
+          </Link>
+        </p>
       </div>
     </section>
   );

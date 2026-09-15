@@ -1,0 +1,600 @@
+/**
+ * Phase 4 — Live Chat responsive contract
+ * 3-pane desktop · 2-pane tablet · single-pane mobile
+ * Drawers, modals, popouts, alerts, composer, details panel.
+ */
+
+/* ── Root & stack ─────────────────────────────────────────────────────────── */
+
+.lc-root {
+  min-width: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  flex: 1;
+  display: flex;
+}
+
+.lc-chat-stack {
+  flex: 1;
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* ── Inbox list — fluid on wide screens ─────────────────────────────────────── */
+
+@media (min-width: 768px) {
+  .lc-list {
+    width: var(--lc-list-w, 320px) !important;
+    max-width: min(420px, 28vw);
+  }
+}
+
+@media (min-width: 1920px) {
+  .lc-list {
+    max-width: min(440px, 24vw);
+  }
+}
+
+/* ── Inbox header — touch targets (compact; icons capped in livechat.css) ── */
+
+.lc-inbox-toolbar-btn {
+  min-width: 2rem;
+  min-height: 2rem;
+}
+
+.lc-list-header--inbox {
+  padding-left: max(0.75rem, env(safe-area-inset-left, 0px));
+  padding-right: max(0.75rem, env(safe-area-inset-right, 0px));
+}
+
+/* ── Filter popout ─────────────────────────────────────────────────────────── */
+
+.lc-filter-popout {
+  max-height: min(70dvh, 420px);
+}
+
+@media (max-width: 767px) {
+  .lc-filter-popout {
+    position: fixed !important;
+    top: auto !important;
+    right: 0 !important;
+    left: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    max-width: 100%;
+    margin: 0 !important;
+    border-radius: 1.25rem 1.25rem 0 0;
+    max-height: min(78dvh, 520px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    z-index: 1100;
+  }
+
+  .lc-filter-popout .p-2 {
+    max-height: min(72dvh, 480px);
+  }
+}
+
+/* ── Mobile single-pane (list OR chat) ─────────────────────────────────────── */
+
+@media (max-width: 767px) {
+  .lc-list {
+    width: 100% !important;
+    max-width: 100%;
+    min-width: 0;
+    border-right: none;
+  }
+
+  .lc-list--hidden {
+    display: none;
+  }
+
+  .lc-chat--hidden {
+    display: none;
+  }
+
+  .lc-drag-handle {
+    display: none;
+  }
+
+  .lc-bubble {
+    max-width: 88%;
+  }
+
+  .lc-chat-floating-header {
+    --lc-header-float-x: 8px;
+    --lc-header-float-top: 10px;
+  }
+
+  .lc-chat-floating-composer {
+    padding: 0 6px max(10px, env(safe-area-inset-bottom, 0px));
+  }
+
+  .lc-chat-thread {
+    padding: 0 8px;
+  }
+
+  .lc-chat-thread__pad--top {
+    height: 76px;
+  }
+
+  .lc-reply {
+    padding-right: 56px;
+  }
+
+  .lc-reply--compact {
+    padding-right: 48px;
+  }
+
+  .lc-scroll-bottom {
+    right: 12px;
+    bottom: calc(var(--lc-composer-runtime-h, 136px) - 8px);
+  }
+}
+
+/* ── Chat header — back + compact actions ─────────────────────────────────── */
+
+.lc-header-back {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin-right: 2px;
+  border: none;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.65);
+  color: #334155;
+  cursor: pointer;
+  transition: background 0.12s ease, color 0.12s ease;
+}
+
+.lc-header-back:hover {
+  background: rgba(245, 243, 255, 0.95);
+  color: #6d28d9;
+}
+
+@media (max-width: 767px) {
+  .lc-header-back {
+    display: inline-flex;
+  }
+
+  .lc-chat-header__inner {
+    gap: 4px;
+    padding-left: 4px;
+  }
+
+  .lc-chat-header .lc-header-btn__label {
+    display: none;
+  }
+
+  .lc-chat-header .lc-header-btn {
+    width: 2.75rem;
+    min-width: 2.75rem;
+    height: 2.75rem;
+    padding: 0;
+  }
+
+  .lc-chat-header .lc-header-btn--assign {
+    width: auto;
+    min-width: 2.75rem;
+    max-width: 5.5rem;
+    padding: 0 8px;
+  }
+
+  .lc-chat-header .lc-header-btn__label--assign {
+    display: inline;
+    max-width: 4rem;
+    font-size: 10px;
+  }
+
+  .lc-chat-header__name {
+    font-size: 14px;
+    max-width: 9rem;
+  }
+
+  .lc-chat-header__subline {
+    font-size: 10px;
+  }
+
+  .lc-header-actions {
+    gap: 1px;
+    padding: 2px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .lc-chat-header--compact .lc-header-btn__label,
+  .lc-chat--details-open .lc-header-btn__label {
+    display: none;
+  }
+
+  .lc-chat-header--compact .lc-header-btn,
+  .lc-chat--details-open .lc-header-btn {
+    width: 2.5rem;
+    min-width: 2.5rem;
+    padding: 0;
+  }
+}
+
+/* ── Header dropdowns / menus → sheet on narrow ───────────────────────────── */
+
+@media (max-width: 767px) {
+  .lc-header-dropdown,
+  .lc-header-menu {
+    position: fixed !important;
+    top: auto !important;
+    left: max(0.75rem, env(safe-area-inset-left, 0px)) !important;
+    right: max(0.75rem, env(safe-area-inset-right, 0px)) !important;
+    bottom: max(0.75rem, env(safe-area-inset-bottom, 0px)) !important;
+    width: auto !important;
+    max-height: min(52dvh, 360px);
+    border-radius: 1rem;
+    z-index: 1200;
+  }
+
+  .lc-header-dropdown__list {
+    max-height: min(40dvh, 280px);
+  }
+}
+
+/* ── Intent / alert strip ──────────────────────────────────────────────────── */
+
+@media (max-width: 639px) {
+  .lc-intent-bar {
+    height: auto;
+    min-height: 36px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 8px 12px;
+  }
+}
+
+.lc-reply__session-hint {
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* ── Contact details — drawer below desktop ────────────────────────────────── */
+
+@media (max-width: 1023px) {
+  .lc-details {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: min(100%, 380px);
+    max-width: 100%;
+    z-index: 200;
+    box-shadow: -8px 0 32px rgba(15, 23, 42, 0.14);
+    transform: translateX(0);
+    transition: transform 0.25s ease;
+  }
+
+  .lc-details--hidden {
+    transform: translateX(100%);
+    pointer-events: none;
+  }
+
+  .lc-details-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.35);
+    z-index: 199;
+    backdrop-filter: blur(2px);
+  }
+
+  .lc-details-drawer-close {
+    display: inline-flex;
+  }
+}
+
+@media (min-width: 1024px) {
+  .lc-details {
+    width: clamp(300px, 24vw, 360px);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .lc-details-backdrop {
+    display: none !important;
+  }
+
+  .lc-details-drawer-close {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .lc-details {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .lc-details-hero {
+    padding-top: max(8px, env(safe-area-inset-top, 0px));
+  }
+
+  .lc-contact-footer {
+    padding-bottom: max(10px, env(safe-area-inset-bottom, 0px));
+  }
+}
+
+.lc-details-drawer-close {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 9999px;
+  background: #fff;
+  color: #64748b;
+  cursor: pointer;
+}
+
+.lc-details-drawer-close:hover {
+  color: #6d28d9;
+  border-color: #ddd6fe;
+  background: #f5f3ff;
+}
+
+@media (max-width: 479px) {
+  .lc-details-stats {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 639px) {
+  .lc-action-bar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lc-contact-footer {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .lc-contact-footer__btn {
+    min-height: 3rem;
+  }
+}
+
+/* ── Conversation rows ─────────────────────────────────────────────────────── */
+
+@media (max-width: 767px) {
+  .lc-row {
+    padding: 10px max(0.75rem, env(safe-area-inset-left, 0px))
+      10px max(0.75rem, env(safe-area-inset-right, 0px));
+    min-height: 4.25rem;
+  }
+
+  .lc-lead-name {
+    font-size: 14px;
+  }
+}
+
+/* ── Export progress (inbox footer) ────────────────────────────────────────── */
+
+.lc-export-progress {
+  padding: 12px max(0.75rem, env(safe-area-inset-left, 0px))
+    12px max(0.75rem, env(safe-area-inset-right, 0px));
+}
+
+.lc-export-progress__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.lc-export-progress__actions a,
+.lc-export-progress__actions button {
+  min-height: 2.75rem;
+  flex: 1 1 8rem;
+}
+
+/* ── Bulk selection bar ────────────────────────────────────────────────────── */
+
+.lc-bulk-bar {
+  position: fixed;
+  z-index: 1000;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.65rem 0.85rem;
+  padding-bottom: max(0.65rem, env(safe-area-inset-bottom, 0px));
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 1rem;
+  box-shadow: 0 12px 40px -12px rgba(15, 23, 42, 0.22);
+}
+
+@media (max-width: 639px) {
+  .lc-bulk-bar {
+    left: max(0.75rem, env(safe-area-inset-left, 0px));
+    right: max(0.75rem, env(safe-area-inset-right, 0px));
+    bottom: max(0.75rem, env(safe-area-inset-bottom, 0px));
+    transform: none;
+    width: auto;
+  }
+
+  .lc-bulk-bar .app-btn-pill-sm-primary,
+  .lc-bulk-bar button {
+    min-height: 2.75rem;
+  }
+}
+
+@media (min-width: 640px) {
+  .lc-bulk-bar {
+    left: 50%;
+    bottom: 1.5rem;
+    transform: translateX(-50%);
+    max-width: min(520px, calc(100% - 2rem));
+  }
+}
+
+/* ── Export modal format grid ──────────────────────────────────────────────── */
+
+.lc-export-format-grid {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+@media (max-width: 479px) {
+  .lc-export-format-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lc-export-format-grid button {
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 0.85rem 1rem;
+    gap: 0.85rem;
+  }
+}
+
+.lc-export-modal-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.lc-export-modal-footer button {
+  min-height: 2.75rem;
+  flex: 1 1 8rem;
+}
+
+/* ── Product send modal ────────────────────────────────────────────────────── */
+
+@media (max-width: 639px) {
+  .lc-product-send-modal {
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .lc-product-send-modal .modal-footer {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .lc-product-send-modal .modal-footer button {
+    width: 100%;
+    min-height: 2.75rem;
+  }
+}
+
+/* ── Clear-chat confirm (ChatHeader portal) ────────────────────────────────── */
+
+.lc-clear-chat-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: max(0.75rem, env(safe-area-inset-top, 0px))
+    max(0.75rem, env(safe-area-inset-right, 0px))
+    max(0.75rem, env(safe-area-inset-bottom, 0px))
+    max(0.75rem, env(safe-area-inset-left, 0px));
+  background: rgba(15, 23, 42, 0.4);
+  box-sizing: border-box;
+}
+
+@media (max-width: 639px) {
+  .lc-clear-chat-modal {
+    align-items: flex-end;
+  }
+}
+
+.lc-clear-chat-modal__panel {
+  width: 100%;
+  max-width: 28rem;
+  padding: 1.25rem 1.25rem 1rem;
+  border-radius: 1.25rem;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  box-shadow: 0 24px 48px -16px rgba(15, 23, 42, 0.2);
+  box-sizing: border-box;
+}
+
+@media (max-width: 639px) {
+  .lc-clear-chat-modal__panel {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    max-width: 100%;
+  }
+}
+
+.lc-clear-chat-modal__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+.lc-clear-chat-modal__actions button {
+  min-height: 2.75rem;
+  flex: 1 1 7rem;
+}
+
+@media (max-width: 479px) {
+  .lc-clear-chat-modal__actions {
+    flex-direction: column-reverse;
+  }
+
+  .lc-clear-chat-modal__actions button {
+    width: 100%;
+    flex: none;
+  }
+}
+
+/* ── Edit contact slide-over (LiveChat portal) ─────────────────────────────── */
+
+.lc-edit-contact-drawer {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.lc-edit-contact-drawer__footer {
+  display: flex;
+  gap: 0.75rem;
+  padding-bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+}
+
+.lc-edit-contact-drawer__footer button {
+  min-height: 2.75rem;
+}
+
+@media (max-width: 479px) {
+  .lc-edit-contact-drawer__footer {
+    flex-direction: column-reverse;
+  }
+}
+
+/* ── Template / outreach drawers on mobile ─────────────────────────────────── */
+
+@media (max-width: 767px) {
+  .outreach-drawer {
+    width: 100% !important;
+    max-width: 100%;
+    flex-direction: column;
+  }
+
+  .outreach-drawer__config {
+    border-right: none !important;
+    border-bottom: 1px solid #e2e8f0;
+    max-height: 55dvh;
+  }
+
+  .outreach-drawer__preview {
+    flex: 1;
+    min-height: 0;
+  }
+}

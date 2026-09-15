@@ -122,11 +122,6 @@
   status = 301
 
 [[redirects]]
-  from = "/roi"
-  to = "/pricing#roi-calculator"
-  status = 301
-
-[[redirects]]
   from = "/features/rules"
   to = "/features/chat-rules"
   status = 301

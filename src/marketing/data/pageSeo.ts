@@ -42,6 +42,15 @@ export const PAGE_SEO = {
       'WhatsApp automation pricing, Shopify WhatsApp pricing, ecommerce automation cost India, cart recovery software pricing',
     path: '/pricing',
   },
+  roi: {
+    title: 'Cart Recovery ROI Calculator | WhatsApp for Shopify',
+    description:
+      'Estimate recovered revenue from WhatsApp abandoned cart recovery. Answer four questions — orders, AOV, abandon rate, and lift — then see payoff vs Launch.',
+    keywords:
+      'cart recovery ROI calculator, WhatsApp abandoned cart ROI, Shopify WhatsApp recovery estimate India',
+    path: '/roi',
+    noSuffix: true,
+  },
   features: {
     title: 'Shopify WhatsApp Features | Cart & Inbox',
     description:

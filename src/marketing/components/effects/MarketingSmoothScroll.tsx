@@ -1,8 +1,12 @@
 import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import { useLocation } from 'react-router-dom';
 import { ReactLenis, useLenis } from 'lenis/react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import 'lenis/dist/lenis.css';
 import { isMarketingRoute } from '../../routes';
+
+gsap.registerPlugin(ScrollTrigger);
 
 type SmoothScrollProps = {
   children: ReactNode;
@@ -13,6 +17,38 @@ function prefersReducedMotion() {
     typeof window !== 'undefined' &&
     window.matchMedia('(prefers-reduced-motion: reduce)').matches
   );
+}
+
+/**
+ * Keep GSAP ScrollTrigger in sync with Lenis (required for pin + scrub).
+ * Drives Lenis from the GSAP ticker so both share one RAF loop.
+ */
+function LenisGsapBridge() {
+  const lenis = useLenis();
+
+  useEffect(() => {
+    if (!lenis) return;
+
+    const onScroll = () => {
+      ScrollTrigger.update();
+    };
+    lenis.on('scroll', onScroll);
+
+    const tick = (time: number) => {
+      lenis.raf(time * 1000);
+    };
+    gsap.ticker.add(tick);
+    gsap.ticker.lagSmoothing(0);
+
+    ScrollTrigger.refresh();
+
+    return () => {
+      lenis.off('scroll', onScroll);
+      gsap.ticker.remove(tick);
+    };
+  }, [lenis]);
+
+  return null;
 }
 
 /**
@@ -35,12 +71,11 @@ export default function MarketingSmoothScroll({ children }: SmoothScrollProps) {
 
   const options = useMemo(
     () => ({
-      autoRaf: true,
-      // Slightly longer ease = that “premium site” glide
+      // GSAP ticker drives RAF via LenisGsapBridge
+      autoRaf: false,
       duration: 1.2,
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
-      // Keep iOS/Android native rubber-band feel
       syncTouch: false,
       touchMultiplier: 1.4,
       wheelMultiplier: 0.92,
@@ -58,6 +93,7 @@ export default function MarketingSmoothScroll({ children }: SmoothScrollProps) {
 
   return (
     <ReactLenis root options={options}>
+      <LenisGsapBridge />
       {children}
     </ReactLenis>
   );

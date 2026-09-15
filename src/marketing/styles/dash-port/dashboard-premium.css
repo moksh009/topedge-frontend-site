@@ -1,0 +1,602 @@
+/**
+ * Dashboard Premium Polish — topedge.ai
+ * Enhancement layer over the existing design system.
+ * Does not override base tokens; adds depth, refinement, and visual hierarchy.
+ */
+
+/* ─── Enhanced design tokens ─────────────────────────────────────────────── */
+:root {
+  /* Richer shadow system */
+  --shadow-card:       0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-card-hover: 0 4px 16px rgba(15, 23, 42, 0.08), 0 2px 6px rgba(15, 23, 42, 0.05);
+  --shadow-card-violet:0 1px 3px rgba(15, 23, 42, 0.05), 0 0 0 1px rgba(124, 58, 237, 0.06);
+  --shadow-float:      0 8px 32px rgba(15, 23, 42, 0.10), 0 2px 8px rgba(15, 23, 42, 0.06);
+  --shadow-capsule:    inset 0 1px 0 rgba(255,255,255,0.95), 0 1px 5px rgba(15, 23, 42, 0.05);
+
+  /* Gradient utilities */
+  --grad-violet-soft:  linear-gradient(135deg, #faf5ff 0%, #f5f3ff 50%, #ffffff 100%);
+  --grad-violet-hero:  linear-gradient(135deg, #7c3aed 0%, #4f46e5 60%, #4338ca 100%);
+  --grad-card-header:  linear-gradient(180deg, #faf5ff 0%, #ffffff 100%);
+  --grad-surface:      linear-gradient(180deg, #ffffff 0%, #fafbfc 100%);
+
+  /* Spacing refinements — synced with --app-workspace-px (hub-layout.css) */
+  --hub-page-px:       var(--app-workspace-px, 0.75rem);
+  --hub-content-gap:   1.5rem;
+}
+
+/* ─── Hub page chrome ────────────────────────────────────────────────────── */
+
+/* Page shells — plain white (no gradient tint) */
+.hub-premium-shell,
+.page-container,
+.sac-shell {
+  background: #ffffff;
+}
+
+/* Capsule tab bar — Product Insights SSOT (white track + white active pill + violet label) */
+.app-capsule-group {
+  padding: 2px;
+  background: #ffffff;
+  border: 1px solid #ece8f4;
+  border-radius: 9999px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+.app-capsule-group--violet {
+  background: #ffffff;
+  border-color: #ece8f4;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+.app-capsule-item {
+  min-height: 2rem;
+  padding-left: 0.9rem;
+  padding-right: 0.9rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #64748b;
+}
+
+/* Never let a tab label wrap to a second line — squish, scroll, or grow instead. */
+.app-capsule-item__label {
+  white-space: nowrap;
+}
+
+.app-capsule-glass-pill {
+  background: #ffffff;
+  border: 1px solid #e9e2ff;
+  box-shadow: 0 1px 2px rgba(124, 58, 237, 0.06);
+}
+
+.app-capsule-item-active {
+  color: #6d28d9;
+}
+
+.app-capsule-item:hover:not(.app-capsule-item-active) {
+  color: #334155;
+}
+
+/* More dropdown menu */
+.hub-tab-more-menu {
+  background: #fff;
+  border: 1px solid rgba(221, 214, 254, 0.8);
+  border-radius: 0.875rem;
+  box-shadow: var(--shadow-float);
+  padding: 0.35rem;
+  min-width: 11rem;
+}
+
+.hub-tab-more-menu__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.6rem;
+  font-size: 12px;
+  font-weight: var(--font-weight-ui, 500);
+  color: #475569;
+  text-align: left;
+  background: transparent;
+  transition: background 0.12s, color 0.12s;
+}
+
+.hub-tab-more-menu__item:hover {
+  background: rgba(245, 243, 255, 0.9);
+  color: #6d28d9;
+}
+
+.hub-tab-more-menu__item--active {
+  background: rgba(237, 233, 254, 0.8);
+  color: #6d28d9;
+}
+
+/* ─── Cards — premium surface treatment ─────────────────────────────────── */
+
+.hub-premium-card {
+  border-radius: 1rem;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  background: #ffffff;
+  box-shadow: var(--shadow-card);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.hub-premium-card:hover {
+  box-shadow: var(--shadow-card-hover);
+  border-color: rgba(196, 181, 253, 0.4);
+}
+
+.hub-premium-section {
+  border-radius: 1rem;
+  border: 1px solid rgba(237, 233, 254, 0.7);
+  background: var(--grad-card-header);
+  box-shadow: var(--shadow-card-violet);
+}
+
+/* ─── StatCard — premium refinements ────────────────────────────────────── */
+
+/* StatCard shell — keep in sync with MetricStrip / StatCard.jsx (rounded-xl) */
+.app-stat-card-root > .group.relative.h-full {
+  box-shadow: var(--shadow-card);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.app-stat-card-root > .group.relative.h-full:hover {
+  box-shadow: var(--shadow-card-hover);
+}
+
+/* Icon boxes: owned by .hub-icon-badge — do NOT force candy gradients here. */
+
+/* ─── Status strips ──────────────────────────────────────────────────────── */
+
+.hub-premium-status-item {
+  border-radius: 9999px;
+  border: 1px solid #e2e8f0;
+  background: linear-gradient(180deg, #ffffff 0%, #fafbfc 100%);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  transition: box-shadow 0.15s;
+}
+
+.hub-premium-status-item[data-tone='ok'] {
+  border-color: rgba(167, 243, 208, 0.8);
+  background: linear-gradient(180deg, #f0fdf4 0%, #ecfdf5 100%);
+}
+
+.hub-premium-status-item[data-tone='warn'] {
+  border-color: rgba(253, 230, 138, 0.8);
+  background: linear-gradient(180deg, #fffbeb 0%, #fef3c7 100%);
+}
+
+/* ─── Buttons — more refined states ─────────────────────────────────────── */
+
+.app-btn-pill-primary {
+  box-shadow:
+    0 2px 6px rgba(124, 58, 237, 0.28),
+    0 1px 2px rgba(124, 58, 237, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.app-btn-pill-primary:hover {
+  box-shadow:
+    0 4px 14px rgba(124, 58, 237, 0.32),
+    0 2px 4px rgba(124, 58, 237, 0.20),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transform: translateY(-0.5px);
+}
+
+.app-btn-pill-primary:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 1px 4px rgba(124, 58, 237, 0.2);
+}
+
+.hub-premium-btn--primary {
+  box-shadow:
+    0 2px 6px rgba(124, 58, 237, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.10);
+  transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.12s ease;
+}
+
+.hub-premium-btn--primary:hover {
+  background: #6d28d9;
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.30);
+  transform: translateY(-0.5px);
+}
+
+/* GatePopout primary button */
+.inline-flex.h-11.items-center.justify-center.rounded-2xl.border.border-violet-700\/25.bg-\[#7C3AED\] {
+  box-shadow:
+    0 2px 8px rgba(124, 58, 237, 0.30),
+    inset 0 1px 0 rgba(255, 255, 255, 0.10);
+  transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.12s ease;
+}
+
+/* ─── Page header area ───────────────────────────────────────────────────── */
+
+/* Slightly heavier weight for the violet highlight in titles */
+.text-\[#7C3AED\].font-semibold,
+span.text-\[#7C3AED\] {
+  font-weight: 700;
+}
+
+/* Eyebrow text (hub breadcrumbs) */
+.text-\[10px\].font-medium.text-slate-400.tracking-tight {
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* ─── Drawer & modal chrome ──────────────────────────────────────────────── */
+
+/* Hub confirm dialog — more refined */
+.fixed.inset-0.z-\[200050\].flex.items-end.justify-center,
+.fixed.inset-0.z-\[200050\].flex.items-center.justify-center {
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+
+/* ─── Table refinements ──────────────────────────────────────────────────── */
+
+/* Generic table hover rows (orders, templates, leads etc.) */
+table tbody tr {
+  transition: background 0.1s ease;
+}
+
+.hub-ops-crm-table.crm-contacts-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+table:not(.crm-contacts-table) tbody tr:hover {
+  background: rgba(248, 250, 252, 0.95);
+}
+
+/* ─── Toast (sonner) premium polish ─────────────────────────────────────── */
+
+[data-sonner-toast] {
+  border-radius: 0.875rem !important;
+  font-size: 13px !important;
+  box-shadow:
+    0 8px 24px rgba(15, 23, 42, 0.12),
+    0 2px 6px rgba(15, 23, 42, 0.06) !important;
+}
+
+/* ─── Sidebar polish ─────────────────────────────────────────────────────── */
+
+/* Active capsule styling lives in sidebar-nav.css (.app-sidebar-nav-item--active) */
+
+/* ─── Integration & setup cards ──────────────────────────────────────────── */
+
+/* MetaHubSetupBanner — amber info bar */
+.border-amber-200\/80 {
+  box-shadow: 0 1px 3px rgba(217, 119, 6, 0.06);
+}
+
+/* GatePopout card */
+.rounded-3xl.border.border-violet-200\/80 {
+  box-shadow:
+    0 1px 4px rgba(91, 33, 182, 0.06),
+    0 0 0 1px rgba(196, 181, 253, 0.2);
+}
+
+/* ─── Scrollbar — hidden app-wide (scroll still works) ───────────────────── */
+
+.custom-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+/* ─── Empty states — more polished ──────────────────────────────────────── */
+
+.sac-empty-state,
+.ar-split__empty {
+  background: linear-gradient(160deg, rgba(250, 249, 255, 0.8) 0%, #ffffff 100%);
+}
+
+/* ─── Settings cards ─────────────────────────────────────────────────────── */
+
+.st-card {
+  box-shadow: var(--shadow-card) !important;
+  transition: box-shadow 0.2s ease !important;
+}
+
+/* ─── Premium section dividers ───────────────────────────────────────────── */
+
+/* Subtle gradient rule between major sections */
+.hub-section-gap > * + * {
+  position: relative;
+}
+
+/* ─── Input focus rings — more polished ─────────────────────────────────── */
+
+input:focus-visible:not(.scw-chat-compose__input),
+select:focus-visible,
+textarea:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.22);
+  border-color: rgba(124, 58, 237, 0.35) !important;
+}
+
+/* ─── Badge & pill chips ─────────────────────────────────────────────────── */
+
+/* Generic status badge — sharper radius and slightly better contrast */
+.inline-flex.items-center.rounded-full.border.px-2 {
+  letter-spacing: 0.005em;
+}
+
+/* ─── Route chunk loader (Suspense / lazy pages) ─────────────────────────── */
+
+.app-route-loader {
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: min(320px, 48vh);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 1rem;
+  background: #ffffff;
+}
+
+.app-route-loader--hub-tab {
+  min-height: min(360px, 50vh);
+  padding: 3rem 1rem;
+}
+
+.app-loader-gif {
+  object-fit: contain;
+  flex-shrink: 0;
+  pointer-events: none;
+  user-select: none;
+}
+
+.app-initial-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+}
+
+/* —— Welcome modal (first-run) — premium, image-led —— */
+.welcome-modal-overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+}
+
+.welcome-modal-overlay__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.48);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.welcome-modal {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 24rem;
+  border-radius: 1.25rem;
+  border: 1px solid #efeaf8;
+  background: #ffffff;
+  box-shadow: 0 24px 48px rgba(15, 23, 42, 0.12);
+  overflow: hidden;
+}
+
+.welcome-modal__close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.94);
+  color: #64748b;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+  cursor: pointer;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.welcome-modal__close:hover {
+  color: #0f172a;
+  background: #ffffff;
+}
+
+.welcome-modal__hero {
+  position: relative;
+  padding: 1.5rem 1.5rem 0.85rem;
+  border-radius: 1.25rem 1.25rem 0 0;
+  overflow: hidden;
+  background: linear-gradient(180deg, #f5f3ff 0%, #ffffff 100%);
+}
+
+.welcome-modal__brand {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+}
+
+.welcome-modal__logo-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 0.875rem;
+  background: #ffffff;
+  border: 1px solid #efeaf8;
+  box-shadow: none;
+  overflow: hidden;
+}
+
+.welcome-modal__logo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.welcome-modal__product {
+  margin: 0;
+  font-family: var(--font-ui, Inter, sans-serif);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #7c3aed;
+}
+
+.welcome-modal__body {
+  padding: 0.35rem 1.35rem 1.35rem;
+}
+
+.welcome-modal__copy {
+  text-align: center;
+  margin-bottom: 0.65rem;
+}
+
+.welcome-modal__title {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-ui, Inter, sans-serif);
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  color: #0f172a;
+}
+
+.welcome-modal__subtitle {
+  margin: 0 auto;
+  max-width: 18.5rem;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: #64748b;
+  font-weight: 400;
+}
+
+.welcome-modal__visual {
+  --wm-visual-height: 280px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 0 1rem;
+  padding: 0;
+  width: 100%;
+}
+
+.welcome-modal__visual-frame {
+  position: relative;
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto;
+  line-height: 0;
+  overflow: hidden;
+  border-radius: 0;
+  background: transparent;
+}
+
+.welcome-modal__visual-img {
+  display: block;
+  position: relative;
+  z-index: 1;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: var(--wm-visual-height);
+  margin: 0;
+  object-fit: contain;
+  object-position: center center;
+  transform: none;
+  mix-blend-mode: normal;
+  user-select: none;
+  pointer-events: none;
+}
+
+.welcome-modal__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.welcome-modal__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  width: auto;
+  min-width: 9.5rem;
+  min-height: 2.5rem;
+  padding: 0 1.35rem;
+  border: none;
+  border-radius: 9999px;
+  font-family: var(--font-ui, Inter, sans-serif);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #ffffff;
+  background: #7c3aed;
+  box-shadow: none;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.12s ease;
+}
+
+.welcome-modal__cta:hover {
+  background: #6d28d9;
+  box-shadow: none;
+}
+
+.welcome-modal__cta:active {
+  transform: translateY(1px);
+}
+
+.welcome-modal__secondary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.welcome-modal__ghost {
+  min-height: 2rem;
+  padding: 0 0.9rem;
+  border: 1px solid #e8e4f0;
+  border-radius: 9999px;
+  background: #ffffff;
+  font-family: var(--font-ui, Inter, sans-serif);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #64748b;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.welcome-modal__ghost:hover {
+  background: #f8fafc;
+  border-color: #ddd6fe;
+  color: #334155;
+}
+
+@media (max-width: 480px) {
+  .welcome-modal__visual {
+    --wm-visual-height: 200px;
+  }
+}

@@ -1,0 +1,250 @@
+/**
+ * StatCard metric layout — title + plain icon, short desc + (i), value + trend.
+ * Digits stay large; alphabet VALUES only use the smaller --text size.
+ */
+
+.stat-card-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.stat-card-title-row {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.375rem;
+  width: max-content;
+  max-width: 100%;
+  min-width: 0;
+  align-self: flex-start;
+}
+
+.stat-card-title {
+  margin: 0;
+  min-width: 0;
+  /* Never grow — title Icon must sit adjacent, not Title …… Icon */
+  flex: 0 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--font-ui, 'Inter', system-ui, sans-serif);
+  font-size: 0.75rem !important;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: #0f172a;
+}
+
+.stat-card-title-icon {
+  flex-shrink: 0;
+  opacity: 1;
+}
+
+.stat-card-title-info {
+  flex-shrink: 0;
+}
+
+.stat-card-desc-row {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.25rem;
+  margin-top: 0.2rem;
+  width: max-content;
+  max-width: 100%;
+  min-width: 0;
+  align-self: flex-start;
+}
+
+.stat-card-desc {
+  margin: 0;
+  min-width: 0;
+  flex: 0 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--font-ui, 'Inter', system-ui, sans-serif);
+  font-size: 0.6875rem;
+  font-weight: 400;
+  line-height: 1.3;
+  color: #64748b;
+}
+
+.stat-card-desc-info {
+  flex-shrink: 0;
+}
+
+.stat-card-desc-info button,
+.stat-card-desc-row .kpi-info-trigger {
+  width: 0.875rem;
+  height: 0.875rem;
+  padding: 0;
+  color: #94a3b8;
+}
+
+.stat-card-desc-info svg,
+.stat-card-desc-row .kpi-info-trigger svg {
+  width: 0.75rem !important;
+  height: 0.75rem !important;
+}
+
+.stat-card-value-wrap {
+  min-width: 0;
+  max-width: 100%;
+  padding-top: 0.65rem;
+  overflow: hidden;
+}
+
+.stat-card-value-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+/* Default = digit / currency metrics — large, normal weight (not bold) */
+.stat-card-value {
+  margin: 0;
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--font-ui, 'Inter', system-ui, sans-serif);
+  font-size: 1.375rem;
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: #0f172a;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+
+.stat-card-value--compact {
+  font-size: 1.25rem;
+}
+
+.stat-card-value--embedded {
+  font-size: 1.125rem;
+}
+
+/* Alphabet / label VALUES only — slightly under digits, not tiny and not full digit size */
+.stat-card-value--text {
+  font-size: 1.125rem !important;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+}
+
+.metric-strip .stat-card-value--text {
+  font-size: 1.125rem !important;
+}
+
+.stat-card-trend {
+  display: inline-flex;
+  flex: 0 1 auto;
+  align-items: center;
+  align-self: center;
+  min-width: 0;
+  max-width: 7.5rem;
+  overflow: hidden;
+  border-radius: 9999px;
+  border-width: 1px;
+  border-style: solid;
+  padding: 1px 0.375rem;
+  font-size: 9px;
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+@media (min-width: 640px) {
+  .stat-card-trend {
+    max-width: 8.5rem;
+    font-size: 10px;
+  }
+}
+
+.stat-card-trend__text {
+  display: block;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.metric-strip .stat-card-title {
+  font-size: 0.75rem !important;
+  font-weight: 500;
+}
+
+.metric-strip .stat-card-value:not(.stat-card-value--text) {
+  font-size: 1.375rem;
+  font-weight: 400;
+}
+
+.metric-strip .stat-card-value-wrap {
+  padding-top: 0.75rem;
+}
+
+.app-stat-card-root {
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+/* Optional mint rim + circuit mesh — only when `CardSurfacePattern` is mounted. */
+.surface-pattern,
+.surface-pattern__wash,
+.surface-pattern__mesh {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.surface-pattern--teal {
+  --sp-wash-1: rgba(153, 221, 211, 0.2);
+  --sp-wash-1-mid: rgba(204, 241, 234, 0.06);
+  --sp-wash-2: rgba(153, 221, 211, 0.14);
+  --sp-wash-2-mid: rgba(204, 241, 234, 0.045);
+  --sp-mesh-opacity: 0.22;
+}
+
+.surface-pattern__wash {
+  background:
+    radial-gradient(ellipse 68% 58% at 100% 0%, var(--sp-wash-1) 0%, var(--sp-wash-1-mid) 44%, transparent 68%),
+    radial-gradient(ellipse 58% 52% at 0% 100%, var(--sp-wash-2) 0%, var(--sp-wash-2-mid) 42%, transparent 66%);
+}
+
+.surface-pattern__mesh {
+  opacity: var(--sp-mesh-opacity, 0.22);
+  background-size: 28px 28px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' fill='none'%3E%3Cg stroke='%230f766e' stroke-width='.85' stroke-opacity='.36'%3E%3Crect x='3' y='3' width='10' height='10' rx='1'/%3E%3Cpath d='M13 8h6'/%3E%3Crect x='19' y='3' width='10' height='10' rx='1'/%3E%3Cpath d='M8 13v6'/%3E%3Crect x='3' y='19' width='10' height='10' rx='1'/%3E%3Cpath d='M19 13v4h-4'/%3E%3Crect x='19' y='19' width='10' height='10' rx='1'/%3E%3C/g%3E%3C/svg%3E");
+  mask-image: radial-gradient(
+    ellipse 48% 52% at 30% 38%,
+    transparent 0%,
+    transparent 58%,
+    rgba(0, 0, 0, 0.16) 82%,
+    #000 100%
+  );
+  -webkit-mask-image: radial-gradient(
+    ellipse 48% 52% at 30% 38%,
+    transparent 0%,
+    transparent 58%,
+    rgba(0, 0, 0, 0.16) 82%,
+    #000 100%
+  );
+}
+
+.metric-strip > * {
+  min-width: 0;
+  overflow: hidden;
+}

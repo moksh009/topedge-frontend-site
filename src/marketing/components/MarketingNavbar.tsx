@@ -68,20 +68,17 @@ export default function MarketingNavbar() {
         )}
       >
         <div className="flex h-14 items-center justify-between gap-3 px-3 sm:px-4 md:h-[3.35rem] md:px-5">
-          <Link
-            to="/"
-            className="flex shrink-0 items-center gap-2 text-[0.95rem] font-normal tracking-tight text-[#0c1222] md:text-base"
-          >
+          <Link to="/" className="mkt-nav__brand">
             <img
               src="/brand-mark.png"
               alt=""
               width={28}
               height={28}
-              className="h-7 w-7 rounded-full object-cover"
+              className="mkt-nav__brand-mark"
               decoding="async"
             />
-            <span>
-              TopEdge <span className="text-[#7C3AED]">AI</span>
+            <span className="mkt-nav__brand-text">
+              TopEdge <span>AI</span>
             </span>
           </Link>
 
@@ -124,13 +121,13 @@ export default function MarketingNavbar() {
                 </div>
               )}
             </div>
-            {(['/pricing', '/customers', '/blog'] as const).map((href, i) => (
+            {(['/pricing', '/roi', '/customers', '/blog'] as const).map((href, i) => (
               <Link
                 key={href}
                 to={href}
                 className="rounded-full px-3 py-2 text-sm font-medium text-slate-600 hover:text-[#0c1222]"
               >
-                {['Pricing', 'Customers', 'Blog'][i]}
+                {['Pricing', 'ROI', 'Customers', 'Blog'][i]}
               </Link>
             ))}
           </nav>
@@ -176,6 +173,7 @@ export default function MarketingNavbar() {
               {[
                 ...resourceLinks,
                 { label: 'Pricing', desc: '', href: '/pricing' },
+                { label: 'ROI calculator', desc: '', href: '/roi' },
                 { label: 'Features', desc: '', href: '/features' },
               ].map((l) => (
                 <Link

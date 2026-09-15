@@ -1,0 +1,2370 @@
+/**
+ * Phase 3 — Home dashboard (EcommerceDashboard) responsive contract
+ * KPI grids, charts, panels, tables, queue popouts, header actions.
+ */
+
+.eco-dashboard {
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+  align-self: stretch;
+  box-sizing: border-box;
+  --dash-chart-h: 220px;
+}
+
+.eco-dashboard.page-container {
+  max-width: none;
+}
+
+/* Compact density — cards, KPIs, charts */
+.eco-dashboard .premium-chart-shell,
+.eco-dashboard .dashboard-panel {
+  position: relative;
+  isolation: isolate;
+  border-radius: 1rem;
+}
+
+.eco-dashboard .premium-chart-shell > *,
+.eco-dashboard .dashboard-panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+.eco-dashboard .premium-chart-shell {
+  padding: 0.75rem !important;
+}
+
+@media (min-width: 640px) {
+  .eco-dashboard .premium-chart-shell {
+    padding: 0.875rem !important;
+  }
+}
+
+.eco-dashboard .app-stat-card-root > .group {
+  border-radius: 1rem;
+  padding: 0.75rem !important;
+}
+
+.eco-dashboard .app-stat-card-root h3 {
+  font-size: 1.125rem;
+  line-height: 1.25;
+}
+
+@media (min-width: 640px) {
+  .eco-dashboard .app-stat-card-root h3 {
+    font-size: 1.25rem;
+  }
+}
+
+.eco-dashboard .app-stat-card-root .group[class*='min-h-'] {
+  min-height: 88px !important;
+}
+
+.eco-dashboard .dashboard-hero-title {
+  font-size: 1.0625rem;
+  line-height: 1.3;
+}
+
+@media (min-width: 640px) {
+  .eco-dashboard .dashboard-hero-title {
+    font-size: 1.1875rem;
+  }
+}
+
+.eco-dashboard .dashboard-panel__header {
+  padding: 0.75rem 0.875rem;
+}
+
+@media (min-width: 640px) {
+  .eco-dashboard .dashboard-panel__header {
+    padding: 0.75rem 1rem;
+  }
+}
+
+.eco-dashboard .dashboard-panel__header h3 {
+  font-size: 0.8125rem;
+}
+
+.eco-dashboard .dashboard-data-table th,
+.eco-dashboard .dashboard-data-table td {
+  padding: 0.5rem 0.75rem;
+}
+
+.eco-dashboard .dashboard-data-table th {
+  padding-top: 0.625rem;
+  padding-bottom: 0.625rem;
+}
+
+.eco-dashboard__tab-panel {
+  min-width: 0;
+  width: 100%;
+}
+
+/* ── Page header actions ─────────────────────────────────────────────────── */
+
+.eco-dashboard-header-actions {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .eco-dashboard-header-actions {
+    width: auto;
+    flex-wrap: nowrap;
+    gap: 0.75rem;
+  }
+}
+
+.eco-dashboard-header-actions .app-capsule-group {
+  max-width: 100%;
+}
+
+.eco-dashboard-tab-bar {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+/* ── KPI strips ──────────────────────────────────────────────────────────── */
+
+.dashboard-kpi-strip {
+  min-width: 0;
+  width: 100%;
+}
+
+.dashboard-kpi-strip > * {
+  min-width: 0;
+}
+
+/* Store KPI strip: one full-width MetricStrip shell; 2-col mobile → 4 equal cards desktop.
+   gap:0 so MetricStrip dividers read as one row (not four floating cards). */
+.dashboard-kpi-strip--store {
+  display: grid;
+  gap: 0;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (min-width: 1024px) {
+  .dashboard-kpi-strip--store {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.dashboard-kpi-strip--support {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (min-width: 768px) {
+  .dashboard-kpi-strip--support {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* ── Sales outlook (hybrid projection) ───────────────────────────────────── */
+
+.dash-proj-card {
+  background: #fff;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  border-radius: 1rem;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+.dash-proj-card__header {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.65rem 1rem;
+  padding: 0.85rem 1rem 0.35rem;
+}
+
+/* Title + subtitle — left column */
+.dash-proj-card__header-start {
+  min-width: 0;
+  flex: 1 1 18rem;
+  max-width: none;
+}
+
+.dash-proj-card__title-row {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.dash-proj-card__title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #0f172a;
+  white-space: nowrap;
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dash-proj-card__subtitle {
+  margin: 0.3rem 0 0;
+  font-size: 11px;
+  line-height: 1.35;
+  color: #64748b;
+  white-space: normal;
+  overflow: visible;
+  max-width: 100%;
+}
+
+.dash-proj-pill {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 11rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border-radius: 999px;
+  border: 1px solid #ede9fe;
+  background: #f5f3ff;
+  color: #6d28d9;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 0.15rem 0.55rem;
+  letter-spacing: 0.01em;
+}
+
+.dash-proj-config-btn--title {
+  flex: 0 0 auto;
+  width: auto;
+  min-width: 0;
+  height: auto;
+  min-height: 1.65rem;
+  padding: 0.2rem 0.6rem;
+  gap: 0.35rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  border: 1px solid #ddd6fe;
+  background: #faf5ff;
+  color: #6d28d9;
+  font-size: 11px;
+  font-weight: 600;
+  box-shadow: 0 1px 2px rgba(109, 40, 217, 0.05);
+}
+
+.dash-proj-config-btn--title:hover {
+  border-color: #c4b5fd;
+  background: #f3e8ff;
+  color: #5b21b6;
+  box-shadow: 0 2px 4px rgba(109, 40, 217, 0.12);
+}
+
+/* Controls — top right, wrap under themselves (not full-width below title) */
+.dash-proj-card__header-controls {
+  display: flex;
+  flex: 0 1 auto;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.35rem 0.4rem;
+  min-width: 0;
+  max-width: min(100%, 34rem);
+  margin-left: auto;
+}
+
+.dash-proj-card__header-year {
+  flex: 0 0 auto;
+  min-width: 0;
+}
+
+.dash-proj-card__header-end {
+  display: flex;
+  flex: 0 1 auto;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.35rem 0.4rem;
+  min-width: 0;
+}
+
+.dash-proj-card__header-controls .app-capsule-group--compact .app-capsule-item,
+.dash-proj-card__header-controls .app-capsule-group--compact .app-capsule-tab,
+.dash-proj-card__header-end .app-capsule-group--compact .app-capsule-item,
+.dash-proj-card__header-end .app-capsule-group--compact .app-capsule-tab {
+  padding: 0.18rem 0.42rem;
+  font-size: 10px;
+  white-space: nowrap;
+  min-height: 1.5rem;
+}
+
+.dash-proj-year-mode .app-capsule-tab,
+.dash-proj-year-mode button {
+  font-size: 10px;
+  white-space: nowrap;
+  padding: 0.18rem 0.42rem;
+}
+
+@media (max-width: 960px) {
+  .dash-proj-card__header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .dash-proj-card__header-start {
+    max-width: 100%;
+  }
+
+  .dash-proj-card__header-controls {
+    max-width: 100%;
+    margin-left: 0;
+    justify-content: flex-start;
+  }
+
+  .dash-proj-card__header-end {
+    justify-content: flex-start;
+  }
+}
+
+.dash-proj-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.15rem 1rem 0.35rem;
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.dash-proj-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.dash-proj-yearly-head__meta {
+  margin: 0;
+  font-size: 10px;
+  line-height: 1.4;
+  color: #94a3b8;
+  white-space: nowrap;
+}
+
+.dash-proj-legend__swatch {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 0.2rem;
+}
+
+.dash-proj-legend__swatch--actual {
+  background: #7c3aed;
+}
+
+.dash-proj-legend__swatch--projected {
+  background: transparent;
+  box-shadow: inset 0 0 0 1.5px rgba(124, 58, 237, 0.55);
+  background-image: repeating-linear-gradient(
+    90deg,
+    #7c3aed 0 3px,
+    transparent 3px 6px
+  );
+  background-size: 100% 2px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.dash-proj-bar-label {
+  pointer-events: none;
+}
+
+.dash-proj-chart-frame .recharts-bar-rectangle {
+  /* Keep bars planted on the baseline — avoid pill/candle float */
+  transition: none;
+}
+
+.dash-proj-chart-frame .recharts-cartesian-axis-line,
+.dash-proj-chart-frame .recharts-cartesian-axis-tick-line {
+  display: none !important;
+}
+
+.dash-proj-chart-frame .recharts-cartesian-grid line {
+  stroke: #e8edf5 !important;
+  stroke-width: 1px !important;
+  stroke-dasharray: none !important;
+}
+
+.dash-proj-tooltip {
+  background: rgba(15, 23, 42, 0.92);
+  color: #fff;
+  border-radius: 0.65rem;
+  padding: 0.55rem 0.7rem;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.18);
+  min-width: 7.5rem;
+}
+
+.dash-proj-tooltip__label {
+  font-size: 10px;
+  font-weight: 500;
+  color: #cbd5e1;
+  margin: 0;
+}
+
+.dash-proj-tooltip__value {
+  font-size: 13px;
+  font-weight: 650;
+  margin: 0.15rem 0 0;
+  letter-spacing: -0.01em;
+}
+
+.dash-proj-tooltip__meta {
+  font-size: 10px;
+  color: #a5b4fc;
+  margin: 0.2rem 0 0;
+}
+
+.dash-proj-fy-card {
+  border-radius: 0.75rem;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  background: linear-gradient(180deg, #fafafa 0%, #f8fafc 100%);
+  padding: 0.65rem 0.8rem;
+}
+
+.dash-proj-drawer {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(8px);
+  border: 1px solid #ede9fe;
+  box-shadow: 0 12px 40px rgba(91, 33, 182, 0.08);
+}
+
+.dash-proj-drawer__head,
+.dash-proj-drawer__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.7rem 0.9rem;
+}
+
+.dash-proj-drawer__head {
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.dash-proj-drawer__foot {
+  border-top: 1px solid #f1f5f9;
+  justify-content: flex-end;
+}
+
+.dash-proj-drawer__body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 0.85rem 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.dash-proj-config-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 2rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 0.65rem;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  color: #475569;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+}
+
+.dash-proj-config-btn:hover {
+  border-color: #c4b5fd;
+  color: #6d28d9;
+  background: #faf5ff;
+}
+
+/* Dashboard Store/Support — centered connect-first gate (chart body only) */
+.dash-connect-gate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  width: 100%;
+  min-height: 180px;
+  height: 100%;
+  padding: 1.25rem 1rem;
+  text-align: center;
+}
+
+.dash-connect-gate--compact {
+  min-height: 140px;
+  padding: 1rem 0.75rem;
+  gap: 0.45rem;
+}
+
+.dash-connect-gate__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.dash-connect-gate__brand-name {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.dash-connect-gate__title {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1e293b;
+  letter-spacing: -0.01em;
+}
+
+.dash-connect-gate__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  margin-top: 0.2rem;
+  min-height: 2.25rem;
+  padding: 0.45rem 1.15rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  transition: background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.dash-connect-gate__btn--shopify {
+  background: #95BF47;
+  border-color: #7eab3a;
+  color: #fff;
+  box-shadow: 0 1px 2px rgba(95, 143, 40, 0.25);
+}
+
+.dash-connect-gate__btn--shopify:hover {
+  background: #86b03c;
+  color: #fff;
+}
+
+.dash-connect-gate__btn--whatsapp {
+  background: #25D366;
+  border-color: #1ebe57;
+  color: #fff;
+  box-shadow: 0 1px 2px rgba(18, 140, 70, 0.25);
+}
+
+.dash-connect-gate__btn--whatsapp:hover {
+  background: #1fbf5a;
+  color: #fff;
+}
+
+.dash-proj-field {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  border-radius: 0.75rem;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  overflow: hidden;
+  box-shadow: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.dash-proj-field:focus-within {
+  border-color: #c4b5fd;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.12);
+}
+
+.dash-proj-field__lead {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.5rem;
+  color: #94a3b8;
+  border-right: 1px solid #e2e8f0;
+  pointer-events: none;
+}
+
+.dash-proj-field__lead--rupee {
+  color: #64748b;
+}
+
+.dash-proj-field__input {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  border: 0 !important;
+  border-radius: 0;
+  background: transparent;
+  padding: 0.55rem 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: #0f172a;
+  outline: none !important;
+  box-shadow: none !important;
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.dash-proj-field__input:focus,
+.dash-proj-field__input:focus-visible {
+  outline: none !important;
+  border: 0 !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.dash-proj-field__input::-webkit-outer-spin-button,
+.dash-proj-field__input::-webkit-inner-spin-button {
+  margin-left: 0.25rem;
+}
+
+.eco-dashboard-date-select {
+  min-width: 5.5rem;
+  max-width: 100%;
+}
+
+@media (max-width: 639px) {
+  .dashboard-kpi-strip > * {
+    min-height: 96px;
+  }
+
+  .dashboard-kpi-strip h3 {
+    font-size: 1.125rem;
+  }
+}
+
+/* ── Chart blocks ────────────────────────────────────────────────────────── */
+
+.eco-chart-block-header {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 640px) {
+  .eco-chart-block-header {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+}
+
+.eco-chart-legend-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.35rem;
+}
+
+@media (min-width: 640px) {
+  .eco-chart-legend-row {
+    justify-content: flex-end;
+  }
+}
+
+.dashboard-chart-canvas--fluid {
+  width: 100%;
+  min-height: 180px;
+  height: var(--dash-chart-h, 220px);
+}
+
+/* Plot fills leftover panel height — kills the dead white gap under charts */
+.dashboard-chart-canvas--fill {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  overflow: hidden;
+}
+
+.dashboard-chart-canvas--fill > .recharts-responsive-container {
+  position: absolute !important;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Store tab — recovered revenue hero typography */
+.topedge-recovered-hero {
+  font-family: var(--font-ui, Inter, system-ui, sans-serif);
+}
+
+.topedge-recovered-hero h3 {
+  letter-spacing: -0.01em;
+}
+
+.topedge-recovered-hero--empty {
+  min-height: 120px;
+}
+
+/* Store tab — paired chart + table grid */
+.dashboard-store-panels-grid {
+  display: grid;
+  gap: 0.625rem;
+  grid-template-columns: minmax(0, 1fr);
+  width: 100%;
+  min-width: 0;
+}
+
+.dashboard-store-panels-grid__cell {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-store-panels-grid__cell > .premium-chart-shell,
+.dashboard-store-panels-grid__cell > .eco-dashboard-chart,
+.dashboard-store-panels-grid__cell > .dashboard-panel {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+}
+
+/* Top products: never grow the page — scroll inside the panel */
+.eco-top-products,
+.dashboard-store-panels-grid__cell--table .eco-top-products {
+  max-height: 360px;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.eco-top-products__body--table,
+.dashboard-store-panels-grid__cell--table .eco-top-products__body--table {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.eco-top-products__scroll,
+.dashboard-store-panels-grid__cell--table .eco-top-products__scroll {
+  overflow-y: auto;
+}
+
+.dashboard-store-panel-card {
+  border-radius: 1rem;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+}
+
+.dashboard-store-panel-card .dashboard-panel__header {
+  padding: 0.75rem 1rem 0.625rem;
+}
+
+.dashboard-store-panel-card .dashboard-panel__body {
+  padding: 0;
+}
+
+@media (min-width: 768px) {
+  .dashboard-store-panels-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    /* Fixed row so Top products matches Total sales height; list scrolls inside */
+    grid-auto-rows: 360px;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+
+  .dashboard-store-panels-grid__cell {
+    min-height: 0;
+    height: 100%;
+    max-height: 360px;
+    overflow: hidden;
+  }
+
+  .dashboard-store-panels-grid__cell > .premium-chart-shell,
+  .dashboard-store-panels-grid__cell > .eco-dashboard-chart,
+  .dashboard-store-panels-grid__cell > .dashboard-panel {
+    min-height: 0;
+    height: 100%;
+    max-height: 100%;
+    overflow: hidden;
+  }
+
+  .dashboard-store-panels-grid__cell--table .eco-top-products {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    height: 100%;
+    max-height: 100%;
+    overflow: hidden;
+  }
+
+  .dashboard-store-panels-grid__cell--table .eco-top-products__body {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .dashboard-store-panels-grid__cell--table .eco-top-products__scroll {
+    flex: 1 1 auto;
+    min-height: 0;
+    max-height: none;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .dashboard-store-panels-grid__cell--table .dashboard-data-table-wrap {
+    max-height: none;
+  }
+}
+
+.dash-chart-toolbar__title {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.dash-chart-metric-tabs {
+  scrollbar-width: thin;
+}
+
+.dash-chart-metric-tabs .app-capsule-group {
+  flex-wrap: nowrap;
+}
+
+.dash-chart-period-menu {
+  min-width: 11.5rem;
+}
+
+@media (max-width: 639px) {
+  .dashboard-chart-canvas--fluid {
+    height: min(var(--dash-chart-h, 320px), 52vh);
+    min-height: 220px;
+  }
+
+  .premium-chart-shell {
+    padding: 0.875rem !important;
+  }
+}
+
+.eco-support-charts {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.625rem;
+  min-width: 0;
+  width: 100%;
+}
+
+/* Charts sit flush in the panel — light shell matches dashboard */
+.eco-support-charts .dashboard-chart-canvas,
+.eco-support-charts .dashboard-chart-canvas--fluid,
+.eco-support-charts .dashboard-chart-canvas--blue,
+.eco-support-charts .dashboard-chart-canvas--bare,
+.eco-support-charts .dashboard-chart-canvas--fill,
+.eco-support-charts .eco-support-chart-canvas {
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  overflow: visible;
+}
+
+.eco-support-charts .dashboard-panel__body {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 0.25rem 0.75rem 0.875rem !important;
+}
+
+.eco-support-charts .dashboard-chart-canvas--fluid {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .eco-support-charts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1920px) {
+  .eco-support-charts {
+    gap: 1.25rem;
+  }
+}
+
+/* ── Panels ──────────────────────────────────────────────────────────────── */
+
+.dashboard-panel__header--responsive {
+  flex-wrap: wrap;
+  align-items: flex-start;
+  padding: 1rem 1rem 0.875rem;
+}
+
+@media (min-width: 640px) {
+  .dashboard-panel__header--responsive {
+    flex-wrap: nowrap;
+    align-items: center;
+    padding: 1rem 1.25rem;
+  }
+}
+
+.dashboard-panel__header--responsive .dashboard-panel__header-action {
+  width: 100%;
+  margin-top: 0.25rem;
+}
+
+@media (min-width: 640px) {
+  .dashboard-panel__header--responsive .dashboard-panel__header-action {
+    width: auto;
+    margin-top: 0;
+  }
+}
+
+/*
+ * Shared month-header contract (Store + Support):
+ * [Title ……]  [‹ Month › centered]  […… legend/tabs]
+ * Equal 1fr side columns keep month dead-center and vertically aligned
+ * across stacked cards (Total sales ↔ Analytics, Conversations ↔ Messages).
+ */
+.eco-support-charts .dashboard-panel__header--with-month,
+.dashboard-panel__header.dashboard-panel__header--with-month {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 2rem !important;
+  flex-wrap: nowrap;
+  min-height: 0;
+}
+
+.dashboard-panel__header--with-month > .dashboard-panel__header-start {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 100%;
+  align-items: center;
+  padding-right: 0;
+}
+
+.dashboard-panel__header--with-month > .dashboard-panel__header-start > div {
+  min-width: 0;
+}
+
+.dashboard-panel__header--with-month > .dashboard-panel__header-start h3 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dashboard-panel__header--with-month > .dashboard-panel__header-start p {
+  margin-top: 0.15rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Support — prefer full subtitle; ellipsis only if left column is truly tight */
+.eco-support-charts .dashboard-panel__header--with-month > .dashboard-panel__header-start,
+.eco-support-charts .dashboard-panel__header--with-month > .dashboard-panel__header-start > div {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.eco-support-charts .dashboard-panel__header--with-month > .dashboard-panel__header-start p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dashboard-panel__header--with-month > .dashboard-panel__header-month {
+  flex: 0 0 auto;
+  margin-left: auto;
+  z-index: 0;
+  flex-shrink: 0;
+}
+
+.dashboard-panel__header--with-month > .dashboard-panel__header-action {
+  grid-column: 3;
+  width: 100%;
+  margin-top: 0;
+  justify-self: end;
+  min-width: 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.dashboard-panel__header--with-month > .dashboard-panel__header-action--spacer {
+  display: none !important;
+}
+
+@media (max-width: 639px) {
+  .eco-support-charts .dashboard-panel__header--with-month,
+  .dashboard-panel__header.dashboard-panel__header--with-month {
+    grid-template-columns: 1fr;
+    row-gap: 0.45rem;
+  }
+
+  .dashboard-panel__header--with-month > .dashboard-panel__header-start,
+  .dashboard-panel__header--with-month > .dashboard-panel__header-month,
+  .dashboard-panel__header--with-month > .dashboard-panel__header-action {
+    grid-column: 1;
+    width: 100%;
+    justify-self: stretch;
+  }
+
+  .dashboard-panel__header--with-month > .dashboard-panel__header-month {
+    display: flex;
+    justify-content: center;
+  }
+
+  .dashboard-panel__header--with-month > .dashboard-panel__header-action--spacer {
+    display: none;
+  }
+}
+
+/* ── Tables — horizontal scroll on narrow viewports ─────────────────────── */
+
+.eco-dashboard .dashboard-data-table-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+}
+
+.eco-dashboard .dashboard-data-table-wrap table {
+  width: 100%;
+}
+
+/* ── Human queue compact table (no header; fixed height ≈ 6 rows, then scroll) */
+
+.eco-queue-list {
+  height: 20.5rem; /* ~6 compact rows */
+  max-height: 20.5rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.eco-queue-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.eco-queue-table__row td {
+  padding: 0.55rem 1rem;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: middle;
+  font-size: 0.8125rem;
+  color: #334155;
+  height: 3.25rem;
+}
+
+.eco-queue-table__row:last-child td {
+  border-bottom: none;
+}
+
+.eco-queue-table__name {
+  width: 28%;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.eco-queue-table__phone {
+  width: 26%;
+  color: #475569;
+}
+
+.eco-queue-table__msg {
+  width: auto;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: #475569;
+}
+
+.eco-queue-table__actions {
+  width: 7.5rem;
+  text-align: right;
+}
+
+@media (max-width: 639px) {
+  .eco-queue-list {
+    height: 24rem;
+    max-height: 24rem;
+  }
+
+  .eco-queue-table,
+  .eco-queue-table tbody,
+  .eco-queue-table__row,
+  .eco-queue-table__row td {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .eco-queue-table__row {
+    padding: 0.65rem 1rem;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .eco-queue-table__row td {
+    padding: 0.12rem 0;
+    border-bottom: none;
+  }
+
+  .eco-queue-table__actions {
+    padding-top: 0.45rem !important;
+    text-align: left;
+  }
+
+  .eco-queue-table__actions .app-btn-pill-sm-primary {
+    width: 100%;
+  }
+}
+
+.eco-queue-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-width: 0;
+  border-bottom: 1px solid #f1f5f9;
+  padding: 0.75rem 1rem;
+}
+
+.eco-queue-row:last-child {
+  border-bottom: none;
+}
+
+@media (min-width: 640px) {
+  .eco-queue-row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.625rem 1rem;
+  }
+}
+
+.eco-queue-row--urgent {
+  border-left: 3px solid #f43f5e;
+  background: linear-gradient(90deg, rgba(255, 241, 242, 0.6) 0%, transparent 100%);
+}
+
+.eco-queue-row__main {
+  flex: 1;
+  min-width: 0;
+}
+
+.eco-queue-status {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  padding: 0.125rem 0.5rem;
+  font-size: 0.625rem;
+  font-weight: 600;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
+.eco-queue-status--urgent {
+  border: 1px solid #fecdd3;
+  background: #fff1f2;
+  color: #be123c;
+}
+
+.eco-queue-status--assigned {
+  border: 1px solid #ddd6fe;
+  background: #f5f3ff;
+  color: #6d28d9;
+}
+
+.eco-queue-status--waiting {
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  color: #64748b;
+}
+
+.eco-queue-row__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+@media (min-width: 640px) {
+  .eco-queue-row__actions {
+    width: auto;
+    flex-wrap: nowrap;
+  }
+}
+
+.eco-queue-assign-menu {
+  z-index: 40;
+}
+
+@media (max-width: 639px) {
+  .eco-queue-assign-menu {
+    position: fixed !important;
+    left: max(0.75rem, env(safe-area-inset-left, 0px)) !important;
+    right: max(0.75rem, env(safe-area-inset-right, 0px)) !important;
+    bottom: max(0.75rem, env(safe-area-inset-bottom, 0px)) !important;
+    top: auto !important;
+    width: auto !important;
+    min-width: 0 !important;
+    max-height: min(50vh, 360px);
+    overflow-y: auto;
+    border-radius: 1rem;
+    box-shadow: 0 20px 48px -12px rgba(15, 23, 42, 0.25);
+  }
+
+  .eco-queue-assign-menu button {
+    min-height: 2.75rem;
+  }
+}
+
+/* ── Activation goal hints — overlays setup progress (same slot) ────────── */
+
+.activation-goal-hints {
+  position: relative;
+  z-index: 4;
+  width: 100%;
+  min-width: 0;
+  flex-shrink: 0;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  border-bottom: 1px solid #ddd6fe;
+  background: linear-gradient(
+    90deg,
+    #ede9fe 0%,
+    #f5f3ff 42%,
+    #ffffff 100%
+  );
+  box-shadow: none;
+  box-sizing: border-box;
+}
+
+/* Cover the setup strip — dismiss hints → setup progress shows underneath */
+.app-banner-stack__setup:has(.onboarding-setup-banner) > .activation-goal-hints {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 4;
+  height: 100%;
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #ddd6fe;
+}
+
+.activation-goal-hints__inner {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 0.875rem;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding-top: 0.45rem;
+  padding-bottom: 0.45rem;
+  padding-left: max(var(--app-workspace-px, 0.75rem), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--app-workspace-px, 0.75rem), env(safe-area-inset-right, 0px));
+  box-sizing: border-box;
+}
+
+.activation-goal-hints__copy {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.75rem;
+}
+
+.activation-goal-hints__title {
+  margin: 0;
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+  color: #4c1d95;
+}
+
+.activation-goal-hints__chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.activation-goal-hints__chip {
+  display: inline-flex;
+  min-height: 1.75rem;
+  align-items: center;
+  gap: 2px;
+  padding: 0 0.65rem 0 0.75rem;
+  border-radius: 9999px;
+  border: 1px solid #ddd6fe;
+  background: #ffffff;
+  color: #5b21b6;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  transition: background 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+}
+
+.activation-goal-hints__chip:hover {
+  background: #f5f3ff;
+  border-color: #c4b5fd;
+  color: #4c1d95;
+}
+
+.activation-goal-hints__chip-icon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+.activation-goal-hints__dismiss {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0.5rem;
+  background: transparent;
+  color: #7c3aed;
+  cursor: pointer;
+  opacity: 0.65;
+  transition: opacity 0.12s ease, background 0.12s ease;
+}
+
+.activation-goal-hints__dismiss:hover {
+  opacity: 1;
+  background: rgba(124, 58, 237, 0.08);
+}
+
+/* ── Dashboard chart month pager ─────────────────────────────────────────── */
+
+.dash-chart-month-nav {
+  display: inline-grid;
+  grid-template-columns: 1.625rem minmax(7.75rem, max-content) 1.625rem;
+  align-items: center;
+  justify-items: center;
+  column-gap: 0.4rem;
+  max-width: 100%;
+  padding: 0.15rem 0.3rem;
+  border-radius: 999px;
+  border: 1px solid #ece8f4;
+  background: #faf9fc;
+}
+
+.dash-chart-month-nav__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.625rem;
+  height: 1.625rem;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #e9e4f5;
+  border-radius: 999px;
+  background: #fff;
+  color: #7c3aed;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+}
+
+.dash-chart-month-nav__btn:hover:not(:disabled) {
+  color: #6d28d9;
+  border-color: #ddd6fe;
+  background: #f5f3ff;
+}
+
+.dash-chart-month-nav__btn:disabled {
+  color: #c4b5fd;
+  border-color: #f1eef8;
+  background: #faf9fc;
+  cursor: default;
+  opacity: 1;
+}
+
+.dash-chart-month-nav__label {
+  display: block;
+  width: 100%;
+  min-width: 7.75rem;
+  margin: 0;
+  padding: 0 0.1rem;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 1.2;
+  color: #0f172a;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  user-select: none;
+}
+
+/*
+ * Store / Analytics month toolbars — same contract as Support:
+ * [Title]  [‹ Month › dead-center]  [Revenue/Orders · Sales/Orders/AOV]
+ * Equal side columns → months align across Total sales + Analytics.
+ */
+.eco-dashboard .dash-chart-toolbar.dash-chart-toolbar--with-month,
+.dash-chart-toolbar.dash-chart-toolbar--with-month {
+  position: relative;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  column-gap: 0.85rem;
+  row-gap: 0;
+  min-height: 2rem;
+  width: 100%;
+}
+
+.dash-chart-toolbar--with-month > .dash-chart-toolbar__title {
+  grid-column: 1;
+  position: relative;
+  z-index: 0;
+  max-width: 100%;
+  min-width: 0;
+  justify-self: start;
+  flex: unset;
+  overflow: hidden;
+}
+
+.dash-chart-toolbar--with-month > .dash-chart-toolbar__month,
+.dash-chart-toolbar--with-month > .dash-chart-month-nav {
+  grid-column: 2;
+  position: static;
+  left: auto;
+  top: auto;
+  transform: none;
+  z-index: 0;
+  justify-self: center;
+  flex-shrink: 0;
+  margin: 0;
+}
+
+.dash-chart-toolbar--with-month > .dash-chart-toolbar__end,
+.dash-chart-toolbar--with-month > .dash-chart-toolbar__tabs {
+  grid-column: 3;
+  position: relative;
+  z-index: 0;
+  max-width: 100%;
+  min-width: 0;
+  width: auto;
+  margin-left: 0;
+  justify-self: end;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.25rem;
+  overflow: hidden;
+}
+
+/* Keep metric capsules inside the right column (no clip under card edge) */
+.dash-chart-toolbar--with-month .app-capsule-group,
+.dash-chart-toolbar--with-month .app-capsule-group--compact {
+  max-width: 100%;
+  min-width: 0;
+  flex-shrink: 1;
+}
+
+.dash-chart-toolbar--with-month .app-capsule-group--compact .app-capsule-item {
+  padding: 0 0.4rem;
+  font-size: 0.6rem;
+}
+
+.dash-chart-month-nav-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 0.45rem 0 0.1rem;
+}
+
+@media (max-width: 639px) {
+  .eco-dashboard .dash-chart-toolbar.dash-chart-toolbar--with-month,
+  .dash-chart-toolbar.dash-chart-toolbar--with-month {
+    grid-template-columns: 1fr;
+    row-gap: 0.45rem;
+    min-height: 0;
+  }
+
+  .dash-chart-toolbar--with-month > .dash-chart-toolbar__title,
+  .dash-chart-toolbar--with-month > .dash-chart-toolbar__month,
+  .dash-chart-toolbar--with-month > .dash-chart-month-nav,
+  .dash-chart-toolbar--with-month > .dash-chart-toolbar__end,
+  .dash-chart-toolbar--with-month > .dash-chart-toolbar__tabs {
+    grid-column: 1;
+    max-width: 100%;
+    width: 100%;
+    justify-self: stretch;
+  }
+
+  .dash-chart-toolbar--with-month > .dash-chart-toolbar__month,
+  .dash-chart-toolbar--with-month > .dash-chart-month-nav {
+    justify-self: start;
+  }
+
+  .dash-chart-toolbar--with-month > .dash-chart-toolbar__end,
+  .dash-chart-toolbar--with-month > .dash-chart-toolbar__tabs {
+    overflow: visible;
+  }
+}
+
+.eco-dashboard .dash-chart-toolbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+@media (max-width: 639px) {
+  .eco-dashboard .dash-chart-toolbar {
+    flex-wrap: wrap;
+  }
+
+  .eco-dashboard .dash-chart-toolbar .eco-chart-legend-row {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .eco-dashboard .dash-chart-toolbar .app-capsule-group {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .eco-dashboard .dash-chart-metric-bar--quad .dash-chart-metric-cell__value {
+    font-size: 1.125rem;
+  }
+}
+
+.eco-dashboard .dashboard-icon-btn {
+  min-width: 2.25rem;
+  min-height: 2.25rem;
+  width: 2.25rem;
+  height: 2.25rem;
+}
+
+.eco-dashboard-chart {
+  min-width: 0;
+  width: 100%;
+  min-height: 0;
+}
+
+.eco-dashboard-chart--store {
+  border-radius: 0.875rem;
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+.eco-dashboard-chart--store .dashboard-chart-canvas--store {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+  border-radius: 0;
+}
+
+/* Soft strategy-style grid — keep H+V; never paint axis rails */
+.eco-dashboard-chart--store .recharts-cartesian-grid line {
+  stroke: #e8edf5 !important;
+  stroke-width: 1px !important;
+  stroke-dasharray: none !important;
+}
+
+.eco-dashboard-chart--store .recharts-cartesian-axis-line,
+.eco-dashboard-chart--store .recharts-cartesian-axis-tick-line {
+  display: none !important;
+}
+
+.eco-dashboard-chart--store .dashboard-chart-canvas--fill {
+  overflow: visible;
+  min-height: 180px;
+}
+
+.eco-dashboard-chart--store .recharts-wrapper,
+.eco-dashboard-chart--store .recharts-surface {
+  overflow: visible !important;
+  outline: none;
+}
+
+.eco-dashboard .dash-chart-metric-bar {
+  border-radius: 0.5rem;
+  border-color: #eef2f7;
+  background: #f8fafc;
+}
+
+.eco-dashboard .dash-chart-metric-cell {
+  padding: 0.4rem 0.75rem !important;
+}
+
+.eco-dashboard .dash-chart-metric-cell__value {
+  margin-top: 0.125rem;
+  font-size: 0.9375rem !important;
+}
+
+.eco-dashboard .dash-chart-toolbar.dash-chart-toolbar--compact {
+  gap: 0.5rem;
+}
+
+.dash-chart-toolbar--split {
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.dash-chart-toolbar__tabs {
+  margin-left: auto;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (min-width: 640px) {
+  .dash-chart-toolbar--split {
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+}
+
+.app-capsule-group--compact {
+  padding: 2px;
+  gap: 2px;
+  background: #ffffff;
+  border: 1px solid #ece8f4;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+.app-capsule-group--compact .app-capsule-item {
+  min-height: 1.625rem;
+  padding: 0 0.5rem;
+  font-size: 0.625rem;
+}
+
+.app-capsule-group--compact .app-capsule-item__label {
+  font-weight: 600;
+}
+
+.dash-chart-toolbar__title--plain {
+  align-items: flex-start;
+}
+
+.eco-chart-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.625rem;
+  font-weight: 500;
+  color: #64748b;
+}
+
+.eco-chart-legend-item__dot {
+  display: inline-block;
+  height: 0.375rem;
+  width: 0.75rem;
+  border-radius: 9999px;
+}
+
+.eco-chart-legend-item__dot--violet {
+  background: #7c3aed;
+}
+
+.eco-chart-legend-item__dot--emerald {
+  border: 1px dashed #10b981;
+  background: transparent;
+}
+
+.dashboard-panel__header--compact {
+  padding: 0.75rem 0.75rem 0.5rem;
+}
+
+.eco-top-products__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.eco-top-products__body--table {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/*
+ * Top products list — plain always-visible RIGHT scrollbar, free continuous scroll.
+ */
+.eco-top-products__scroll {
+  flex: 1;
+  min-height: 0;
+  max-height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+  scroll-behavior: auto;
+  scroll-snap-type: none;
+  scrollbar-gutter: stable;
+  padding: 0 0.25rem 0.65rem 0.75rem;
+  /* Firefox — simple gray bar */
+  scrollbar-width: thin !important;
+  scrollbar-color: #cbd5e1 #f8fafc !important;
+  -ms-overflow-style: auto !important;
+}
+
+.app-dashboard-root .eco-top-products__scroll::-webkit-scrollbar,
+.eco-top-products__scroll::-webkit-scrollbar {
+  display: block !important;
+  width: 6px !important;
+  height: 0 !important;
+  background: transparent !important;
+}
+
+.app-dashboard-root .eco-top-products__scroll::-webkit-scrollbar-button,
+.eco-top-products__scroll::-webkit-scrollbar-button {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.app-dashboard-root .eco-top-products__scroll::-webkit-scrollbar-track,
+.eco-top-products__scroll::-webkit-scrollbar-track {
+  display: block !important;
+  background: #f1f5f9 !important;
+  border-radius: 999px;
+  margin: 2px 0;
+}
+
+.app-dashboard-root .eco-top-products__scroll::-webkit-scrollbar-thumb,
+.eco-top-products__scroll::-webkit-scrollbar-thumb {
+  display: block !important;
+  background: #cbd5e1 !important;
+  border-radius: 999px;
+  min-height: 24px;
+  border: 1px solid #f1f5f9;
+}
+
+.app-dashboard-root .eco-top-products__scroll::-webkit-scrollbar-thumb:hover,
+.eco-top-products__scroll::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8 !important;
+}
+
+.app-dashboard-root .eco-top-products__scroll.custom-scrollbar,
+.eco-top-products__scroll.custom-scrollbar {
+  scrollbar-width: thin !important;
+  scrollbar-color: #cbd5e1 #f8fafc !important;
+  -ms-overflow-style: auto !important;
+}
+
+.app-dashboard-root .eco-top-products__scroll.custom-scrollbar::-webkit-scrollbar,
+.eco-top-products__scroll.custom-scrollbar::-webkit-scrollbar {
+  display: block !important;
+  width: 6px !important;
+}
+
+.eco-top-products__table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+}
+
+.eco-top-products__th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding: 0.4rem 0.45rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  color: #94a3b8;
+  background: #fff;
+  border-bottom: 1px solid #eef2f7;
+  white-space: nowrap;
+}
+
+.eco-top-products__th--name {
+  text-align: left;
+  width: 46%;
+}
+
+.eco-top-products__th--num {
+  text-align: right;
+  width: 18%;
+}
+
+.eco-top-products__tr:hover .eco-top-products__td {
+  background: #fafbfc;
+}
+
+.eco-top-products__td {
+  padding: 0.5rem 0.45rem;
+  font-size: 0.75rem;
+  color: #334155;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: middle;
+  background: #fff;
+}
+
+.eco-top-products__td--name {
+  text-align: left;
+}
+
+.eco-top-products__td--num {
+  text-align: right;
+  font-weight: 600;
+  color: #0f172a;
+  font-variant-numeric: tabular-nums;
+}
+
+.eco-top-products__name-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-width: 0;
+}
+
+.eco-top-products__thumb {
+  width: 2.15rem;
+  height: 2.15rem;
+  border-radius: 0.3rem;
+  object-fit: cover;
+  border: 0 !important;
+  outline: none;
+  box-shadow: none;
+  background: transparent;
+  flex-shrink: 0;
+}
+
+.eco-top-products__thumb--empty {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #94a3b8;
+  background: #f1f5f9;
+}
+
+.eco-top-products__thumb-skel {
+  width: 2.15rem;
+  height: 2.15rem;
+  border-radius: 0.3rem;
+  flex-shrink: 0;
+}
+
+.eco-top-products__pname {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.75rem;
+  font-weight: 550;
+  color: #1e293b;
+}
+
+.eco-top-products__row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.eco-top-products__main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.eco-top-products__bar-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.eco-top-products__track {
+  flex: 1;
+  min-width: 0;
+  height: 0.3125rem;
+  border-radius: 9999px;
+  background: #f1f5f9;
+  overflow: hidden;
+}
+
+.eco-top-products__fill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #7c3aed 0%, #c4b5fd 100%);
+}
+
+.eco-top-products__meta {
+  flex-shrink: 0;
+  font-size: 0.625rem;
+  font-weight: 500;
+  color: #94a3b8;
+}
+
+.dash-time-range-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 2.25rem;
+  padding: 0.3rem 0.75rem 0.3rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  color: #334155;
+  font-size: 0.75rem;
+  font-weight: 550;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  transition:
+    border-color 0.14s ease,
+    background 0.14s ease,
+    box-shadow 0.14s ease;
+}
+
+.dash-time-range-trigger:hover {
+  border-color: #ddd6fe;
+  background: #faf8ff;
+}
+
+.dash-time-range-trigger--active {
+  border-color: #c4b5fd;
+  background: #f5f3ff;
+  color: #5b21b6;
+}
+
+.dash-time-range-trigger__cal {
+  color: #7c3aed;
+}
+
+.dash-time-range-trigger__label {
+  font-weight: 650;
+  color: #475569;
+  white-space: nowrap;
+}
+
+.dash-time-range-trigger--active .dash-time-range-trigger__label {
+  color: #6d28d9;
+}
+
+.dash-time-range-trigger__rule {
+  width: 1px;
+  height: 0.9rem;
+  background: #e2e8f0;
+  flex-shrink: 0;
+}
+
+.dash-time-range-trigger--active .dash-time-range-trigger__rule {
+  background: #ddd6fe;
+}
+
+.dash-time-range-trigger__value {
+  font-weight: 600;
+  color: #0f172a;
+  white-space: nowrap;
+  max-width: 11rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dash-time-range-trigger--active .dash-time-range-trigger__value {
+  color: #4c1d95;
+}
+
+.dashboard-store-panels-grid--loading .premium-chart-shell,
+.dashboard-store-panels-grid--loading .dashboard-panel,
+.dashboard-store-panels-grid--loading .eco-dashboard-chart {
+  /* kept for optional future use — Store panels use skeleton replace instead */
+}
+
+.eco-dashboard-chart--polished {
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  border-radius: 1rem;
+  background: linear-gradient(180deg, #ffffff 0%, #fcfbff 100%);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+.eco-dashboard-chart--polished .eco-chart-legend-item {
+  font-size: 0.6875rem;
+  color: #64748b;
+}
+
+.eco-dashboard-chart--polished .eco-chart-legend-item__dot--violet {
+  background: #7c3aed;
+}
+
+.eco-dashboard-chart--polished .eco-chart-legend-item__dot--emerald {
+  background: #10b981;
+}
+
+.dash-chart-metric-bar--compact .dash-chart-metric-cell {
+  padding: 0.5rem 0.75rem;
+}
+
+.dash-chart-metric-bar--compact .dash-chart-metric-cell__value {
+  font-size: 0.9375rem;
+}
+
+.dash-chart-metric-bar--compact .dash-chart-metric-cell__label {
+  font-size: 0.625rem;
+}
+
+@media (max-width: 639px) {
+  .eco-dashboard-chart .dashboard-chart-canvas {
+    min-height: 240px;
+  }
+}
+
+/* Mobile primary CTA under date range */
+.eco-dashboard-mobile-cta {
+  display: inline-flex;
+  width: 100%;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .eco-dashboard-mobile-cta {
+    display: none;
+  }
+}
+
+/* ── Dashboard date range picker dropdown ─────────────────────────────────── */
+
+.dash-date-picker {
+  position: absolute;
+  right: 0;
+  z-index: 50;
+  margin-top: 0.5rem;
+  width: min(16.75rem, calc(100vw - 1.5rem));
+  overflow: hidden;
+  border-radius: 0.875rem;
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  background: #fff;
+  box-shadow:
+    0 4px 6px -1px rgba(15, 23, 42, 0.06),
+    0 12px 28px -4px rgba(124, 58, 237, 0.12);
+}
+
+@media (max-width: 639px) {
+  .dash-date-picker {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+  }
+}
+
+.dash-date-picker__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.625rem 0.75rem;
+  border-bottom: 1px solid #f1f5f9;
+  background: linear-gradient(180deg, #fafafa 0%, #fff 100%);
+}
+
+.dash-date-picker__header-label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #94a3b8;
+}
+
+.dash-date-picker__header-value {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #475569;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 9rem;
+}
+
+.dash-date-picker__presets {
+  padding: 0.375rem;
+}
+
+.dash-date-picker__preset {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.4375rem 0.625rem;
+  border-radius: 0.5rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #334155;
+  text-align: left;
+  transition: background-color 0.12s ease, color 0.12s ease;
+}
+
+.dash-date-picker__preset:hover {
+  background: #f8fafc;
+}
+
+.dash-date-picker__preset--active {
+  background: #f5f3ff;
+  color: #5b21b6;
+  font-weight: 600;
+}
+
+.dash-date-picker__footer {
+  padding: 0.375rem;
+  border-top: 1px solid #f1f5f9;
+}
+
+.dash-date-picker__custom-btn {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 0.4375rem;
+  padding: 0.4375rem 0.625rem;
+  border-radius: 0.5rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #475569;
+  transition: background-color 0.12s ease, color 0.12s ease;
+}
+
+.dash-date-picker__custom-btn:hover {
+  background: #f8fafc;
+  color: #334155;
+}
+
+.dash-date-picker__custom-btn--active {
+  background: #f5f3ff;
+  color: #6d28d9;
+}
+
+/* Custom calendar panel */
+.dash-date-picker__cal-header {
+  display: grid;
+  grid-template-columns: 2rem 1fr 2rem;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem 0.625rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.dash-date-picker__month-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.125rem;
+  min-width: 0;
+}
+
+.dash-date-picker__cal-header-spacer {
+  width: 2rem;
+}
+
+.dash-date-picker__month-label {
+  min-width: 6.5rem;
+  text-align: center;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #1e293b;
+  letter-spacing: -0.01em;
+}
+
+.dash-date-picker__nav-btn {
+  display: inline-flex;
+  height: 1.625rem;
+  width: 1.625rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.375rem;
+  color: #64748b;
+  transition: background-color 0.12s ease, color 0.12s ease;
+}
+
+.dash-date-picker__nav-btn:hover:not(:disabled) {
+  background: #f1f5f9;
+  color: #334155;
+}
+
+.dash-date-picker__nav-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.dash-date-picker__cal-body {
+  padding: 0.375rem 0.625rem 0.5rem;
+}
+
+.dash-date-picker__grid {
+  width: 100%;
+}
+
+.dash-date-picker__weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 0.125rem;
+}
+
+.dash-date-picker__weekday {
+  display: flex;
+  height: 1.375rem;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.625rem;
+  font-weight: 600;
+  color: #94a3b8;
+}
+
+.dash-date-picker__days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+}
+
+.dash-date-picker__day {
+  display: flex;
+  height: 1.625rem;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.3125rem;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: #334155;
+  transition: background-color 0.1s ease, color 0.1s ease;
+}
+
+.dash-date-picker__day:hover:not(:disabled):not(.dash-date-picker__day--selected) {
+  background: #f5f3ff;
+  color: #6d28d9;
+}
+
+.dash-date-picker__day--outside {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.dash-date-picker__day--disabled {
+  color: #cbd5e1;
+  cursor: not-allowed;
+}
+
+.dash-date-picker__day--selected {
+  background: #7c3aed;
+  color: #fff;
+  font-weight: 600;
+}
+
+.dash-date-picker__day--in-range {
+  background: #ede9fe;
+  color: #6d28d9;
+  border-radius: 0;
+}
+
+.dash-date-picker__day--in-range:first-of-type,
+.dash-date-picker__day--selected + .dash-date-picker__day--in-range {
+  border-top-left-radius: 0.3125rem;
+  border-bottom-left-radius: 0.3125rem;
+}
+
+.dash-date-picker__cal-footer {
+  padding: 0.5rem 0.625rem 0.625rem;
+  border-top: 1px solid #f1f5f9;
+  text-align: center;
+}
+
+.dash-date-picker__draft-label {
+  margin: 0 auto 0.5rem;
+  width: 100%;
+  text-align: center;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: #64748b;
+  line-height: 1.4;
+}
+
+.dash-date-picker__cal-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.375rem;
+}
+
+.dash-date-picker__action-secondary {
+  padding: 0.3125rem 0.625rem;
+  border-radius: 0.5rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: #64748b;
+  transition: background-color 0.12s ease, color 0.12s ease;
+}
+
+.dash-date-picker__action-secondary:hover {
+  background: #f1f5f9;
+  color: #334155;
+}
+
+.dash-date-picker__action-primary {
+  padding: 0.3125rem 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: #fff;
+  background: #7c3aed;
+  transition: background-color 0.12s ease;
+}
+
+.dash-date-picker__action-primary:hover:not(:disabled) {
+  background: #6d28d9;
+}
+
+.dash-date-picker__action-primary:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}

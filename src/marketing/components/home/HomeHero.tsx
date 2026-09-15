@@ -2,10 +2,10 @@ import { ArrowRight } from 'lucide-react';
 import { PrimaryButton } from '../ui';
 import HeroRippleBackground from '../effects/HeroRippleBackground';
 import HomeTrust from './HomeTrust';
-import HeroJourneyStage from './HeroJourneyStage';
+import DemoProductStage from './demo/DemoProductStage';
 
 /**
- * Homepage hero — left copy + CTA, right dual-device motion graphic, trust logos below.
+ * Homepage hero — centered headline + CTA, dashboard below, logos under stage.
  */
 export default function HomeHero() {
   return (
@@ -19,18 +19,20 @@ export default function HomeHero() {
           <div className="home-hero__layout">
             <div className="home-hero__copy">
               <h1 className="home-hero__title">
-                <span className="home-hero__title-line">Recover revenue with</span>
-                <span className="home-hero__title-brand">
-                  <img
-                    src="/brand-mark.png"
-                    alt=""
-                    width={28}
-                    height={28}
-                    className="home-hero__title-mark"
-                    decoding="async"
-                  />
-                  <span className="home-hero__title-name">
-                    TopEdge <span>AI</span>
+                <span className="home-hero__title-line">
+                  Recover revenue with{' '}
+                  <span className="home-hero__title-brand">
+                    <img
+                      src="/brand-mark.png"
+                      alt=""
+                      width={28}
+                      height={28}
+                      className="home-hero__title-mark"
+                      decoding="async"
+                    />
+                    <span className="home-hero__title-name">
+                      TopEdge <span>AI</span>
+                    </span>
                   </span>
                 </span>
               </h1>
@@ -47,7 +49,7 @@ export default function HomeHero() {
             </div>
 
             <div className="home-hero__visual">
-              <HeroJourneyStage />
+              <DemoProductStage />
             </div>
           </div>
 
