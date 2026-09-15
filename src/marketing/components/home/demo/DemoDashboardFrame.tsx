@@ -6,9 +6,16 @@ import '../../../styles/demo-product-stage.css';
 const DEMO_VIEWPORT_W = 1280;
 const DEMO_VIEWPORT_H = 800;
 
+/**
+ * Demo dashboard origin for the homepage iframe.
+ * Local: `npm run dev:demo` on the dashboard (port 5173).
+ * Production: separate Netlify demo deploy (never the real merchant dash).
+ */
 const DEMO_ORIGIN = (
   (import.meta.env.VITE_DASHBOARD_DEMO_URL as string | undefined)?.trim() ||
-    'http://localhost:5173/?embed=1'
+  (import.meta.env.PROD
+    ? 'https://topedge-dash-demo.netlify.app/?embed=1'
+    : 'http://localhost:5173/?embed=1')
 )
   .replace(/\?.*$/, '')
   .replace(/\/$/, '');
