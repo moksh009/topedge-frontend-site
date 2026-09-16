@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { motion, useReducedMotion } from 'framer-motion';
 import '../styles/pricing.css';
 import MarketingSEO from '../components/MarketingSEO';
 import {
@@ -15,20 +15,23 @@ import PlanGrid from '../components/pricing/PlanGrid';
 import FeatureMatrix from '../components/pricing/FeatureMatrix';
 import IncludedFeatures from '../components/pricing/IncludedFeatures';
 import PricingFaq, { PRICING_FAQS } from '../components/pricing/PricingFaq';
+import PricingSectionHead from '../components/pricing/PricingSectionHead';
+import PricingRoiStrip from '../components/pricing/PricingRoiStrip';
+import PricingSalesCta from '../components/pricing/PricingSalesCta';
 import {
   BillingCatalog,
   BillingCycle,
   FALLBACK_CATALOG,
   GST_FOOTNOTE,
-  META_MESSAGE_RATES,
-  SALES_MAILTO,
-  TRIAL,
   fetchBillingCatalog,
 } from '../lib/billingCatalog';
+
+const ease = [0.22, 1, 0.36, 1] as const;
 
 export default function PricingPage() {
   const [catalog, setCatalog] = useState<BillingCatalog>(FALLBACK_CATALOG);
   const [cycle, setCycle] = useState<BillingCycle>('yearly');
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
     let alive = true;
@@ -44,6 +47,15 @@ export default function PricingPage() {
 
   const seo = PAGE_SEO.pricing;
   const faqSchema = PRICING_FAQS.map((f) => ({ question: f.q, answer: f.a }));
+
+  const rise = (delay = 0) =>
+    reduceMotion
+      ? undefined
+      : {
+          initial: { opacity: 1, y: 14 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.55, delay, ease },
+        };
 
   return (
     <>
@@ -71,104 +83,59 @@ export default function PricingPage() {
       <MarketingPage>
         <div className="mkt-pricing">
           <header className="mkt-pricing__hero">
-            <p className="mkt-pricing__eyebrow">Pricing</p>
-            <h1 className="mkt-pricing__title">
-              Start free for 14 days. Pay when WhatsApp is making money.
-            </h1>
-            <p className="mkt-pricing__sub">
-              You’ll pick Launch, Growth, or Scale after signup. Checkout stays in the dashboard.
-              This page never opens Razorpay.
-            </p>
-            <div className="mkt-pricing__actions">
-              <Link className="mkt-pricing__cta mkt-pricing__cta--solid" to="/signup">
-                Start free
-              </Link>
-              <a className="mkt-pricing__cta mkt-pricing__cta--ghost" href="#plans">
-                See plans
-              </a>
-            </div>
-            <p className="mkt-pricing__note">
-              Trial: {TRIAL.days} days · {TRIAL.orders} orders · {TRIAL.sends} campaign + email
-              sends.
-            </p>
+            <motion.div {...rise(0)}>
+              <PricingSectionHead
+                as="h1"
+                title="Priced by orders,"
+                highlight="not guesswork."
+                sub={
+                  <>
+                    Three plans built around how many orders you actually process —{' '}
+                    <span className="mkt-psec__keep">100 to 1,500 a month.</span>
+                  </>
+                }
+              />
+            </motion.div>
           </header>
 
-          <div className="mkt-pricing__inner" id="plans">
+          <motion.div
+            className="mkt-pricing__inner"
+            id="plans"
+            {...(reduceMotion
+              ? {}
+              : {
+                  initial: { opacity: 1, y: 16 },
+                  animate: { opacity: 1, y: 0 },
+                  transition: { duration: 0.55, delay: 0.2, ease },
+                })}
+          >
             <CycleToggle value={cycle} onChange={setCycle} />
             <PlanGrid plans={catalog.plans} cycle={cycle} />
-            <p className="mkt-gst">{GST_FOOTNOTE} Prices are taxable / exclusive.</p>
-            {catalog.source === 'fallback' ? (
-              <p className="mkt-fallback">Prices as of Aug 2026. Live catalog unavailable.</p>
-            ) : null}
+            <div className="mkt-pricing__footnote">
+              <p className="mkt-gst">{GST_FOOTNOTE} Prices are exclusive of tax.</p>
+              {catalog.source === 'fallback' ? (
+                <p className="mkt-fallback">Prices as of Aug 2026 · live catalog unavailable</p>
+              ) : null}
+            </div>
 
             <IncludedFeatures items={catalog.universalFeatures} />
 
-            <section className="mkt-pricing__block">
-              <h2 className="mkt-pricing__h2">Compare what changes</h2>
-              <p className="mkt-pricing__lead">
-                Shared hubs — Live Chat, CRM, Flow Builder, campaigns, pixel — sit on every plan.
-              </p>
-              <FeatureMatrix plans={catalog.plans} />
-            </section>
+            <FeatureMatrix plans={catalog.plans} cycle={cycle} />
+
+            <PricingRoiStrip />
 
             <section className="mkt-pricing__block">
-              <h2 className="mkt-pricing__h2">Meta rates</h2>
-              <p className="mkt-pricing__lead">
-                Pass-through India rates (Jul 2025). Never billed per conversation.
-              </p>
-              <div className="mkt-rates">
-                {META_MESSAGE_RATES.map((rate) => (
-                  <article key={rate.category} className="mkt-rate">
-                    <p className="mkt-rate__cat">{rate.category}</p>
-                    <p className="mkt-rate__val">{rate.rate}</p>
-                    <p className="mkt-rate__note">{rate.note}</p>
-                  </article>
-                ))}
-              </div>
-            </section>
-
-            <section className="mkt-pricing__block" id="roi-calculator">
-              <h2 className="mkt-pricing__h2">Recovery math</h2>
-              <p className="mkt-pricing__lead">
-                Answer a few questions about your store to estimate recovered revenue.
-              </p>
-              <Link className="mkt-pricing__cta" to="/roi">
-                Open ROI calculator
-              </Link>
-            </section>
-
-            <section className="mkt-pricing__block">
-              <h2 className="mkt-pricing__h2">Questions founders ask</h2>
+              <PricingSectionHead
+                eyebrow="FAQ"
+                title="Common"
+                highlight="questions"
+                sub="Billing, trial, and checkout — answered in one place."
+              />
               <PricingFaq />
             </section>
 
-            <section className="mkt-pricing__block">
-              <div className="mkt-dfy">
-                <div>
-                  <h3>Need a named Growth Manager?</h3>
-                  <p>
-                    Done-for-you is optional. Templates, flows, and campaigns shipped with you. It
-                    is not a fourth DIY tier.
-                  </p>
-                </div>
-                <a className="mkt-pricing__cta mkt-pricing__cta--solid" href={SALES_MAILTO}>
-                  Talk to sales
-                </a>
-              </div>
-            </section>
-          </div>
-
-          <div className="mkt-pricing__dock">
-            <Link
-              className="mkt-pricing__cta mkt-pricing__cta--solid"
-              to="/signup"
-            >
-              Start free
-            </Link>
-            <a className="mkt-pricing__cta mkt-pricing__cta--ghost" href="#plans">
-              See plans
-            </a>
-          </div>
+            <PricingSalesCta />
+          </motion.div>
         </div>
       </MarketingPage>
     </>

@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import MarketingSEO from '../components/MarketingSEO';
 import {
   PAGE_SEO,
@@ -59,28 +58,6 @@ export default function CustomersPage() {
               </MarketingCard>
             ))}
           </div>
-        </Section>
-
-        <Section wash="soft">
-          <p className="mx-auto mb-2 max-w-2xl text-center text-sm leading-relaxed text-slate-500">
-            Explore how{' '}
-            <Link to="/whatsapp-cart-recovery" className="font-medium text-[#7C3AED]">
-              WhatsApp cart recovery
-            </Link>
-            ,{' '}
-            <Link to="/cod-confirmation-whatsapp" className="font-medium text-[#7C3AED]">
-              COD confirmation
-            </Link>
-            , and{' '}
-            <Link to="/features/live-chat" className="font-medium text-[#7C3AED]">
-              Live Chat
-            </Link>{' '}
-            fit together — or{' '}
-            <Link to="/roi" className="font-medium text-[#7C3AED]">
-              estimate ROI
-            </Link>
-            .
-          </p>
         </Section>
 
         <HomeTestimonials hideHeader={false} />

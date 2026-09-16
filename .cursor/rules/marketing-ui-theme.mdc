@@ -1,0 +1,74 @@
+---
+description: TopEdge marketing UI theme — typography, navbar, highlights. Read before editing marketing CSS/components.
+globs: topedge-frontend-site-update-pricing/src/marketing/**/*.{tsx,ts,css}
+alwaysApply: false
+---
+
+# TopEdge marketing UI theme
+
+Reference: homepage hero (`home.css`) + `PricingSectionHead` / `.mkt-psec__*`.
+
+## Typography
+
+### Page heroes (H1)
+- **Font weight: 400** — never 500+ on the main hero line
+- **Size:** `clamp(1.45rem, 2.8vw, 2.35rem)` — same as `.home-hero__title`
+- **Letter-spacing:** `-0.034em`
+- **Desktop:** one line — `white-space: nowrap` / `flex-wrap: nowrap` from `1024px` up
+- **Mobile:** allow wrap
+
+### Highlight capsule (`.mkt-psec__hl`, homepage `.home-hero__title-brand`)
+- **Background:** solid `#e4d4ff` — not gray muted text, not heavy purple gradient
+- **Text color:** `#0c1222` (ink), not `#5b21b6` on heroes
+- **Font weight:** 400 on heroes
+- **Padding:** `0.12em 0.28em 0.16em`, **radius:** `0.35em`
+
+### Section headings (H2 — FAQ, Compare, Included, etc.)
+- Use `PricingSectionHead` — do not hand-roll titles
+- **Eyebrow:** uppercase, `#7c3aed`, `0.72rem`, letter-spacing `0.08em`
+- **Title weight:** 400; highlight uses `.mkt-psec__hl`
+- **Sub:** `#64748b`, ~`0.9375rem`
+
+## Navbar (`.mkt-nav`)
+
+- **Logo text:** `font-weight: 650`, keep company logo image (`/logo.png`) — never text-only
+- **Nav links:** `font-weight: 600`, `font-size: 0.875rem`, color `#475569`
+- **Link padding:** compact — `0.2rem 0.62rem`; do not inflate Product capsule
+- **Active/hover:** purple→white gradient capsule `#ede9fe → #f5f3ff → #fff`, border `#ddd6fe`
+- **Desktop:** no hamburger; show links + actions from `1024px`
+
+## Color accents
+
+- Primary purple: `#7c3aed` / `#6d28d9`
+- Highlight block: `#e4d4ff`
+- Ink: `#0c1222`
+- Muted body: `#64748b`
+- Borders: `#eef0f4`
+
+## Do not
+
+- Remove logo from navbar
+- Use gray-only “muted” span for hero highlights instead of lilac capsule
+- Make nav links thin (`font-weight: 500` or lower)
+- Add hint text under cycle toggle (“Billed yearly…”) — Yearly tab only has inline **Save** chip
+- Use purple background on billing cycle toggle — track is `#f8fafc`, active pill is white
+- Use black CTAs on Growth — use **purple gradient** buttons
+- Break hero title into two lines on desktop when it fits in one
+
+## Components to reuse
+
+| Pattern | Component / class |
+|--------|-------------------|
+| Section title | `PricingSectionHead` |
+| Plan cards | `PlanGrid` + `.mkt-plan__shell` / `.mkt-plan__panel` |
+| Comparison table | `FeatureMatrix` |
+| FAQ | `PricingFaq` |
+| ROI strip | `PricingRoiStrip` |
+| Sales close | `PricingSalesCta` |
+
+## Before shipping marketing UI changes
+
+1. Hero title matches homepage weight/size/highlight
+2. Navbar links are **600** weight with logo visible
+3. Purple theme consistent (not teal/green except checkmarks in compare table)
+4. Hard refresh and check desktop **1024px+** and mobile

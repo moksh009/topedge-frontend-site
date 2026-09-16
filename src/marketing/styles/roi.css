@@ -64,7 +64,7 @@
 .roi-page__body {
   position: relative;
   z-index: 1;
-  padding: 0.25rem clamp(0.85rem, 2vw, 1.5rem) 5.5rem;
+  padding: 0.25rem clamp(0.85rem, 2vw, 1.5rem) 2rem;
 }
 
 /* ——— Wizard ——— */

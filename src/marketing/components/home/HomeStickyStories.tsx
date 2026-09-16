@@ -6,10 +6,14 @@ import {
   useTransform,
 } from 'framer-motion';
 import DemoDashboardFrame from './demo/DemoDashboardFrame';
+import DemoProductVideoFrame from './demo/DemoProductVideoFrame';
 
 type Story = {
   id: string;
-  path: string;
+  /** Dashboard iframe path — ignored when `videoSrc` is set */
+  path?: string;
+  /** Local MP4 in the desktop chrome instead of the live iframe */
+  videoSrc?: string;
   titleLead: string;
   titleAccent: string;
   body: string;
@@ -19,7 +23,7 @@ type Story = {
 const STORIES: Story[] = [
   {
     id: 'cart-recovery',
-    path: '/store-growth-hub/abandoned-carts',
+    videoSrc: '/abandoncart.mp4',
     titleLead: 'WhatsApp Abandoned',
     titleAccent: 'Cart Recovery',
     body: 'Recover checkouts with timed WhatsApp nudges the moment a shopper leaves items behind.',
@@ -27,7 +31,7 @@ const STORIES: Story[] = [
   },
   {
     id: 'journey-cod',
-    path: '/journey-builder/demo-cod-prepaid',
+    videoSrc: '/cod-to-prepaid-edited.mp4',
     titleLead: 'Drag-and-Drop',
     titleAccent: 'Journey Builder',
     body: 'Build COD → prepaid recovery on a visual canvas—wait, branch, and message from one place. Convert before it ships.',
@@ -68,8 +72,8 @@ const STORIES: Story[] = [
 ];
 
 /**
- * Short enter-window: copy rises from behind the UI while the section
- * scrolls into place — no long sticky “stuck” runway after the reveal.
+ * Copy rises from behind the product card; the card drifts top → bottom
+ * in sync so the reveal feels smooth (parallax pair).
  */
 function FeatureMoment({ story }: { story: Story }) {
   const reduceMotion = useReducedMotion();
@@ -78,29 +82,45 @@ function FeatureMoment({ story }: { story: Story }) {
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    // Reveal while the section is entering the viewport — then hold.
-    offset: ['start 0.95', 'start 0.42'],
+    // Start later (section already on screen) — finish when title is well framed.
+    offset: ['start 0.72', 'start 0.16'],
   });
 
+  // Text: stay tucked, then rise clear of the card.
   const copyY = useTransform(
     scrollYProgress,
-    [0, 0.45, 1],
-    flat ? [0, 0, 0] : [110, 36, 0]
+    [0, 0.3, 0.58, 0.82, 1],
+    flat ? [0, 0, 0, 0, 0] : [108, 88, 36, 8, 0]
   );
   const copyOpacity = useTransform(
     scrollYProgress,
-    [0, 0.3, 1],
-    flat ? [1, 1, 1] : [0, 0.8, 1]
+    [0, 0.28, 0.48, 0.72, 1],
+    flat ? [1, 1, 1, 1, 1] : [0, 0, 0.35, 0.9, 1]
   );
+  const copyScale = useTransform(
+    scrollYProgress,
+    [0, 0.5, 1],
+    flat ? [1, 1, 1] : [0.965, 0.985, 1]
+  );
+  const copyBlur = useTransform(
+    scrollYProgress,
+    [0, 0.35, 0.65, 1],
+    flat ? [0, 0, 0, 0] : [7, 4.5, 0.8, 0]
+  );
+  const copyFilter = useTransform(copyBlur, (b) =>
+    flat ? 'none' : `blur(${b}px)`
+  );
+
+  // Frame: sit high over the title, then ease top → bottom as copy emerges.
   const frameY = useTransform(
     scrollYProgress,
-    [0, 1],
-    flat ? [0, 0] : [40, 0]
+    [0, 0.25, 0.55, 0.85, 1],
+    flat ? [0, 0, 0, 0, 0] : [-36, -22, 2, 16, 22]
   );
   const frameScale = useTransform(
     scrollYProgress,
-    [0, 1],
-    flat ? [1, 1] : [0.965, 1]
+    [0, 0.45, 1],
+    flat ? [1, 1, 1] : [1.028, 1.01, 1]
   );
 
   return (
@@ -113,7 +133,12 @@ function FeatureMoment({ story }: { story: Story }) {
       <div className="home-sticky__stage">
         <motion.div
           className="home-sticky__static-copy home-sticky__copy-layer"
-          style={{ y: copyY, opacity: copyOpacity }}
+          style={{
+            y: copyY,
+            opacity: copyOpacity,
+            scale: copyScale,
+            filter: copyFilter,
+          }}
         >
           <h2 className="home-sticky__title">
             {story.titleLead}{' '}
@@ -131,13 +156,21 @@ function FeatureMoment({ story }: { story: Story }) {
             <span className="home-sticky__moment-glow__halo" />
             <span className="home-sticky__moment-glow__wash" />
           </div>
-          <DemoDashboardFrame
-            path={story.path}
-            title={`${story.titleLead} ${story.titleAccent} preview`}
-            caption={null}
-            lazy
-            lockPath
-          />
+          {story.videoSrc ? (
+            <DemoProductVideoFrame
+              src={story.videoSrc}
+              glow={story.glow}
+              title={`${story.titleLead} ${story.titleAccent} preview`}
+            />
+          ) : (
+            <DemoDashboardFrame
+              path={story.path || '/'}
+              title={`${story.titleLead} ${story.titleAccent} preview`}
+              caption={null}
+              lazy
+              lockPath
+            />
+          )}
         </motion.div>
       </div>
     </article>

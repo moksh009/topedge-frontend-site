@@ -70,8 +70,7 @@ const socials = [
 ];
 
 /**
- * Maximal sitemap footer (Footer-9 style) — light theme, TopEdge branding.
- * Recreated locally (React Bits Pro registry / license not configured).
+ * Minimal site footer — quiet sitemap + light newsletter, matches marketing UI.
  */
 export default function MarketingFooter() {
   const [email, setEmail] = useState('');
@@ -107,16 +106,10 @@ export default function MarketingFooter() {
 
           <aside className="mkt-foot__aside">
             <div className="mkt-foot__news">
-              <div className="mkt-foot__news-head">
-                <div className="mkt-foot__news-art" aria-hidden>
-                  <img src="/brand-mark.png" alt="" width={40} height={40} decoding="async" />
-                </div>
-                <p className="mkt-foot__news-eyebrow">Newsletter</p>
-              </div>
-              <h3 className="mkt-foot__news-title">Get recovery playbooks in your inbox</h3>
+              <p className="mkt-foot__news-eyebrow">Newsletter</p>
+              <h3 className="mkt-foot__news-title">Recovery playbooks in your inbox</h3>
               <p className="mkt-foot__news-sub">
-                WhatsApp cart recovery tips, Meta template notes, and Shopify ops — short and
-                useful.
+                Short WhatsApp + Shopify tips — no fluff.
               </p>
               {sent ? (
                 <p className="mkt-foot__news-ok" role="status">
@@ -148,7 +141,7 @@ export default function MarketingFooter() {
               )}
 
               <div className="mkt-foot__social">
-                <p className="mkt-foot__social-label">Follow us</p>
+                <p className="mkt-foot__social-label">Follow</p>
                 <ul className="mkt-foot__social-list">
                   {socials.map(({ label, href, Icon }) => (
                     <li key={label}>
@@ -159,7 +152,7 @@ export default function MarketingFooter() {
                         rel="noopener noreferrer"
                         aria-label={label}
                       >
-                        <Icon className="h-4 w-4" strokeWidth={1.75} />
+                        <Icon className="h-3.5 w-3.5" strokeWidth={1.75} />
                       </a>
                     </li>
                   ))}
@@ -167,6 +160,60 @@ export default function MarketingFooter() {
               </div>
             </div>
           </aside>
+        </div>
+
+        <div className="mkt-foot__trust" aria-label="Platform partnerships">
+          <p className="mkt-foot__trust-label">Trusted by platforms</p>
+          <ul className="mkt-foot__trust-list">
+            <li>
+              <a
+                className="mkt-foot__partner"
+                href="https://www.facebook.com/business/marketing-partners"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Meta Business Partner"
+              >
+                <img
+                  src="/badges/meta-business-partner.png?v=4"
+                  alt="Meta Business Partner"
+                  width={168}
+                  height={96}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </a>
+            </li>
+            <li>
+              <a
+                className="mkt-foot__partner"
+                href="https://apps.shopify.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Shopify Available on App Store"
+              >
+                <img
+                  src="/badges/shopify-app-store.png?v=4"
+                  alt="Shopify Available on App Store"
+                  width={168}
+                  height={96}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </a>
+            </li>
+            <li>
+              <span className="mkt-foot__partner" aria-label="WhatsApp Business Partner">
+                <img
+                  src="/badges/whatsapp-cloud-api.png?v=5"
+                  alt="WhatsApp Business Partner"
+                  width={168}
+                  height={96}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </span>
+            </li>
+          </ul>
         </div>
 
         <div className="mkt-foot__legal">
@@ -177,12 +224,6 @@ export default function MarketingFooter() {
             <Link to="/security">Security</Link>
           </div>
         </div>
-      </div>
-
-      <div className="mkt-foot__wordmark" aria-hidden>
-        <span className="mkt-foot__wordmark-text">
-          topedge <span>ai</span>
-        </span>
       </div>
     </footer>
   );

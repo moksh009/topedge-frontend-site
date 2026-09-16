@@ -8507,7 +8507,7 @@ html:has(.home-page) body::-webkit-scrollbar,
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2.75rem;
+  gap: 1.65rem;
   isolation: isolate;
 }
 
@@ -8523,8 +8523,10 @@ html:has(.home-page) body::-webkit-scrollbar,
   display: flex;
   flex-direction: column;
   align-items: center;
-  will-change: transform, opacity;
+  will-change: transform, opacity, filter;
   pointer-events: auto;
+  transform-origin: center bottom;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 
 .home-sticky__frame-layer {
@@ -8534,6 +8536,7 @@ html:has(.home-page) body::-webkit-scrollbar,
   will-change: transform;
   background: transparent;
   overflow: visible;
+  transform-origin: center top;
 }
 
 .home-sticky--moments-flow .home-sticky__moment {
@@ -8603,7 +8606,8 @@ html:has(.home-page) body::-webkit-scrollbar,
   position: relative;
   transform-origin: center top;
   will-change: transform, opacity;
-  perspective: 1400px;
+  /* Flat frame — no 3D perspective (keeps dashboard preview sharp / readable) */
+  perspective: none;
 }
 
 /* Quiet radial wash — no square plate */
@@ -8613,24 +8617,8 @@ html:has(.home-page) body::-webkit-scrollbar,
 }
 
 .home-sticky__moment-scene::after {
-  content: '';
-  pointer-events: none;
-  position: absolute;
-  z-index: 0;
-  left: 50%;
-  top: 52%;
-  width: min(108%, 980px);
-  height: min(92%, 620px);
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  background: radial-gradient(
-    ellipse at 50% 45%,
-    var(--moment-glow-a) 0%,
-    var(--moment-glow-b) 35%,
-    transparent 70%
-  );
-  filter: blur(42px);
-  opacity: 0.55;
+  content: none;
+  display: none;
 }
 
 .home-sticky__moment-glow {
@@ -8640,52 +8628,30 @@ html:has(.home-page) body::-webkit-scrollbar,
 .home-sticky__moment-scene .demo-product-wrap {
   position: relative;
   z-index: 1;
-  transform: perspective(1400px) rotateX(1.25deg) translateZ(0);
-  transform-style: preserve-3d;
-  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: none;
+  transform-style: flat;
+  transition: none;
 }
 
 .home-sticky__moment-scene:hover .demo-product-wrap {
-  transform: perspective(1400px) rotateX(0.35deg) translateY(-4px) translateZ(0);
+  transform: none;
 }
 
 .home-sticky__moment-scene .demo-product-stage {
   position: relative;
   border-radius: 16px;
   overflow: hidden;
-  background:
-    linear-gradient(
-      165deg,
-      var(--moment-glow-c) 0%,
-      rgba(255, 255, 255, 0.92) 42%,
-      #fff 100%
-    );
+  background: #fff;
   box-shadow:
-    0 0 0 1px rgba(15, 23, 42, 0.06),
-    0 1px 0 rgba(255, 255, 255, 0.75) inset,
-    0 2px 4px rgba(15, 23, 42, 0.04),
-    0 12px 24px -8px rgba(15, 23, 42, 0.12),
-    0 28px 56px -16px rgba(15, 23, 42, 0.18),
-    0 48px 80px -28px rgba(15, 23, 42, 0.14),
-    0 0 40px -12px var(--moment-glow-a);
+    0 0 0 1px rgba(15, 23, 42, 0.08),
+    0 8px 24px -10px rgba(15, 23, 42, 0.16),
+    0 20px 40px -18px rgba(15, 23, 42, 0.12);
 }
 
-/* Soft color tint veil over the frame chrome */
+/* No color veil — dashboard UI must stay crisp HD */
 .home-sticky__moment-scene .demo-product-stage::before {
-  content: '';
-  pointer-events: none;
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  border-radius: inherit;
-  background: linear-gradient(
-    160deg,
-    var(--moment-glow-a) 0%,
-    transparent 28%,
-    transparent 100%
-  );
-  opacity: 0.45;
-  mix-blend-mode: soft-light;
+  content: none;
+  display: none;
 }
 
 .home-sticky__moment-scene .demo-product-stage > * {
@@ -8693,25 +8659,10 @@ html:has(.home-page) body::-webkit-scrollbar,
   z-index: 1;
 }
 
-/* Soft contact shadow under the elevated frame */
+/* No floating contact blob under the frame */
 .home-sticky__moment-scene .demo-product-wrap::after {
-  content: '';
-  pointer-events: none;
-  position: absolute;
-  z-index: -1;
-  left: 6%;
-  right: 6%;
-  bottom: -18px;
-  height: 36px;
-  border-radius: 50%;
-  background: radial-gradient(
-    ellipse at 50% 50%,
-    rgba(15, 23, 42, 0.18) 0%,
-    rgba(15, 23, 42, 0.06) 45%,
-    transparent 72%
-  );
-  filter: blur(10px);
-  opacity: 0.85;
+  content: none;
+  display: none;
 }
 
 /* Reduced motion / static fallback — normal stack, no pin */
@@ -8767,6 +8718,10 @@ html:has(.home-page) body::-webkit-scrollbar,
 
 .home-sticky--moments .home-sticky__static-copy .home-sticky__body {
   margin-top: 0.7rem;
+  color: #475569;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  max-width: 34rem;
 }
 
 .home-sticky--moments .home-sticky__static-copy .home-sticky__cta {
@@ -8796,6 +8751,8 @@ html:has(.home-page) body::-webkit-scrollbar,
 
 .home-sticky--moments .home-sticky__static-copy .home-sticky__title {
   margin-top: 0.35rem;
+  color: #0c1222;
+  -webkit-font-smoothing: antialiased;
 }
 
 .home-sticky--static .home-sticky__line {

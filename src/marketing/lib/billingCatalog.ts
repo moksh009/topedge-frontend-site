@@ -92,9 +92,9 @@ export const TRIAL = {
 export const GST_FOOTNOTE = '+18% GST. SAC 998314.';
 
 export const META_MESSAGE_RATES = [
-  { category: 'Marketing', rate: '~₹0.88 / msg', note: 'Promotions and cart recovery. Pass-through, no markup.' },
-  { category: 'Utility', rate: '~₹0.125 / msg', note: 'Order updates and account alerts.' },
-  { category: 'Service', rate: 'Free', note: 'User-initiated replies in the 24h window.' },
+  { category: 'Marketing', rate: '~₹0.88', note: 'Promos & cart recovery' },
+  { category: 'Utility', rate: '~₹0.125', note: 'Order updates' },
+  { category: 'Service', rate: 'Free', note: '24h user replies' },
 ] as const;
 
 const UNIVERSAL: string[] = [
@@ -192,7 +192,7 @@ export const FALLBACK_CATALOG: BillingCatalog = {
         journeyBranch: true,
         journeyCodPrepaid: true,
         dispatchPriority: 'highest',
-        metaAdsAudiencePush: true,
+        metaAdsAudiencePush: false,
       },
       pricing: {
         monthly: cyclePricing('₹6,499', '₹6,499', '₹217', null, false),
@@ -231,9 +231,19 @@ export function planPricing(plan: CatalogPlan, cycle: BillingCycle): PlanPricing
 
 export function planBlurb(slug: string) {
   const s = String(slug || '').toLowerCase();
-  if (s === 'growth') return 'Recovery, journeys, and campaigns for growing D2C.';
-  if (s === 'scale') return 'Highest send priority plus Meta Ads audience push.';
-  return 'WhatsApp order updates for brands just going live.';
+  if (s === 'growth') return 'Designed for growing D2C brands scaling recovery.';
+  if (s === 'scale') return 'For high-volume stores needing max send priority.';
+  if (s === 'trial') return 'Try real WhatsApp volume before you pay.';
+  return 'Perfect for brands just going live on WhatsApp.';
+}
+
+export function planFeatureKicker(slug: string) {
+  const s = String(slug || '').toLowerCase();
+  if (s === 'trial') return 'Trial includes:';
+  if (s === 'launch') return 'Core limits:';
+  if (s === 'growth') return 'Everything in Launch, plus:';
+  if (s === 'scale') return 'Everything in Launch & Growth, plus:';
+  return 'Plan features:';
 }
 
 export function dispatchLabel(priority: string) {

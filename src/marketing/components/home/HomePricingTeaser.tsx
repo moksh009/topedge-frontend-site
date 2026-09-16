@@ -35,7 +35,7 @@ export default function HomePricingTeaser() {
       <div className="mkt-teaser__inner">
         <div className="mkt-teaser__head">
           <div>
-            <p className="mkt-pricing__eyebrow">Pricing</p>
+            <p className="mkt-psec__eyebrow">Pricing</p>
             <h2 className="mkt-teaser__title">Start free. Scale when WhatsApp pays for itself.</h2>
           </div>
           <Link to="/pricing" className="mkt-pricing__cta mkt-pricing__cta--ghost">

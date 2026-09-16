@@ -33,7 +33,7 @@ export default function RoiPage() {
           ]),
         ]}
       />
-      <MarketingPage className="roi-page">
+      <MarketingPage className="roi-page" fillHeight={false}>
         <header className="roi-page__hero">
           <p className="roi-page__eyebrow">Recovery math</p>
           <h1 className="roi-page__title">

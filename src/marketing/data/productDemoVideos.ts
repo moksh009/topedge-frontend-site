@@ -1,6 +1,5 @@
 /**
  * Per-section demo videos. Swap filenames later — same player everywhere.
- * Currently all point at `/mmjnm.mp4` (COD → prepaid demo) until dedicated clips are ready.
  */
 
 export type ProductDemoId =
@@ -31,10 +30,12 @@ export type StickyMomentId = Extract<
 >;
 
 const DEMO = '/mmjnm.mp4';
+const COD_TO_PREPAID = '/cod-to-prepaid-edited.mp4';
+const ABANDON_CART = '/abandoncart.mp4';
 
 export const PRODUCT_DEMO_VIDEOS: Record<ProductDemoId, string> = {
-  'cart-recovery': DEMO,
-  journey: DEMO,
+  'cart-recovery': ABANDON_CART,
+  journey: COD_TO_PREPAID,
   inbox: DEMO,
   'ai-brain': DEMO,
   'flow-builder': DEMO,
@@ -50,7 +51,7 @@ export const PRODUCT_DEMO_VIDEOS: Record<ProductDemoId, string> = {
   fashion: DEMO,
   beauty: DEMO,
   food: DEMO,
-  cod: DEMO,
+  cod: COD_TO_PREPAID,
   agencies: DEMO,
 };
 
