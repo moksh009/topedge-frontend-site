@@ -10,7 +10,7 @@ import {
   breadcrumbJsonLd,
   webPageJsonLd,
 } from '../data/pageSeo';
-import { demoVideoFor } from '../data/productDemoVideos';
+import { demoAssetFor } from '../data/productDemoVideos';
 
 const FALLBACK = {
   title: 'WhatsApp Automation for Indian Shopify D2C',
@@ -25,7 +25,7 @@ const FALLBACK = {
 export default function SolutionPage() {
   const { vertical: slug = 'fashion' } = useParams();
   const solution = SOLUTION_SEO[slug] ?? FALLBACK;
-  const videoSrc = demoVideoFor(slug) || demoVideoFor(solution.scene);
+  const demo = demoAssetFor(slug || solution.scene);
 
   return (
     <>
@@ -54,7 +54,11 @@ export default function SolutionPage() {
 
         <Section className="!pt-0">
           <div className="mx-auto mb-10 w-full max-w-5xl">
-            <ProductDemoVideo src={videoSrc} label={`${slug} solution demo`} />
+            <ProductDemoVideo
+              src={demo.src}
+              poster={demo.poster}
+              label={`${slug} solution demo`}
+            />
           </div>
           <SectionHeading title="What this vertical runs on WhatsApp" />
           <div className="grid gap-5 md:grid-cols-3">

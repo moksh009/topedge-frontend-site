@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import '../marketing/styles/home.css';
-import '../marketing/styles/feature-films.css';
 import MarketingSEO from '../marketing/components/MarketingSEO';
 import { OG_IMAGES } from '../marketing/data/marketingSeo';
 import { faqs } from '../marketing/data/home';

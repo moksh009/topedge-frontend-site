@@ -1,5 +1,9 @@
 /**
- * Per-section demo videos. Swap filenames later — same player everywhere.
+ * Product demo videos — quality-first H.264 (not GIF, not CRF 30@1280).
+ *
+ * Encode: ./scripts/compress-demo-video.sh input.mp4 name
+ *   → 1920 wide, lanczos, CRF 19, muted, faststart + sharp JPG poster
+ * Lazy-load still applies; map new files below.
  */
 
 export type ProductDemoId =
@@ -23,38 +27,51 @@ export type ProductDemoId =
   | 'cod'
   | 'agencies';
 
-/** @deprecated use ProductDemoId — kept as alias for home story ids */
-export type StickyMomentId = Extract<
-  ProductDemoId,
-  'cart-recovery' | 'journey' | 'inbox' | 'ai-brain' | 'flow-builder' | 'connect'
->;
-
-const DEMO = '/mmjnm.mp4';
-const COD_TO_PREPAID = '/cod-to-prepaid-edited.mp4';
-const ABANDON_CART = '/abandoncart.mp4';
-
-export const PRODUCT_DEMO_VIDEOS: Record<ProductDemoId, string> = {
-  'cart-recovery': ABANDON_CART,
-  journey: COD_TO_PREPAID,
-  inbox: DEMO,
-  'ai-brain': DEMO,
-  'flow-builder': DEMO,
-  connect: DEMO,
-  shopify: DEMO,
-  campaigns: DEMO,
-  instagram: DEMO,
-  analytics: DEMO,
-  'meta-manager': DEMO,
-  'audience-crm': DEMO,
-  'chat-rules': DEMO,
-  hero: DEMO,
-  fashion: DEMO,
-  beauty: DEMO,
-  food: DEMO,
-  cod: COD_TO_PREPAID,
-  agencies: DEMO,
+export type ProductDemoAsset = {
+  src: string;
+  poster: string;
 };
 
+const CART: ProductDemoAsset = {
+  src: '/marketing/demos/cart-recovery.mp4',
+  poster: '/marketing/demos/cart-recovery-poster.jpg',
+};
+
+const COD: ProductDemoAsset = {
+  src: '/marketing/demos/cod-prepaid.mp4',
+  poster: '/marketing/demos/cod-prepaid-poster.jpg',
+};
+
+/**
+ * Hero + cart recovery share the cart demo for now.
+ * Swap entries later when you add per-feature files.
+ */
+export const PRODUCT_DEMO_ASSETS: Record<ProductDemoId, ProductDemoAsset> = {
+  hero: CART,
+  'cart-recovery': CART,
+  journey: COD,
+  cod: COD,
+  inbox: CART,
+  'ai-brain': CART,
+  'flow-builder': CART,
+  connect: CART,
+  shopify: CART,
+  campaigns: CART,
+  instagram: CART,
+  analytics: CART,
+  'meta-manager': CART,
+  'audience-crm': CART,
+  'chat-rules': CART,
+  fashion: CART,
+  beauty: CART,
+  food: CART,
+  agencies: CART,
+};
+
+export function demoAssetFor(id: string): ProductDemoAsset {
+  return PRODUCT_DEMO_ASSETS[id as ProductDemoId] ?? CART;
+}
+
 export function demoVideoFor(id: string): string {
-  return PRODUCT_DEMO_VIDEOS[id as ProductDemoId] ?? DEMO;
+  return demoAssetFor(id).src;
 }

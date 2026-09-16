@@ -10,7 +10,7 @@ import {
   breadcrumbJsonLd,
   webPageJsonLd,
 } from '../data/pageSeo';
-import { demoVideoFor } from '../data/productDemoVideos';
+import { demoAssetFor } from '../data/productDemoVideos';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 
@@ -29,7 +29,7 @@ export default function FeatureDetailPage() {
 
   const others = MARKETING_FEATURES.filter((f) => f.slug !== feature.slug).slice(0, 3);
   const featureSeo = FEATURE_SEO[feature.slug];
-  const videoSrc = demoVideoFor(feature.slug) || demoVideoFor(feature.scene);
+  const demo = demoAssetFor(feature.slug || feature.scene);
 
   return (
     <>
@@ -58,7 +58,11 @@ export default function FeatureDetailPage() {
 
         <Section className="!pt-0 !pb-8">
           <div className="mx-auto w-full max-w-5xl px-1">
-            <ProductDemoVideo src={videoSrc} label={`${feature.label} product demo`} />
+            <ProductDemoVideo
+              src={demo.src}
+              poster={demo.poster}
+              label={`${feature.label} product demo`}
+            />
           </div>
         </Section>
 

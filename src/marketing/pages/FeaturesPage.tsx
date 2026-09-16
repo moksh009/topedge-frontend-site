@@ -10,7 +10,7 @@ import MarketingCtaBand from '../components/MarketingCtaBand';
 import ProductDemoVideo from '../components/home/ProductDemoVideo';
 import { PageHero, Section, SectionHeading, MarketingCard } from '../components/ui';
 import { MARKETING_FEATURES } from '../data/features';
-import { demoVideoFor } from '../data/productDemoVideos';
+import { demoAssetFor } from '../data/productDemoVideos';
 import { Link } from 'react-router-dom';
 
 export default function FeaturesPage() {
@@ -68,7 +68,11 @@ export default function FeaturesPage() {
             className="mb-10"
           />
           <div className="mx-auto w-full max-w-5xl">
-            <ProductDemoVideo src={demoVideoFor('hero')} label="TopEdge product demo" />
+            <ProductDemoVideo
+              src={demoAssetFor('hero').src}
+              poster={demoAssetFor('hero').poster}
+              label="TopEdge product demo"
+            />
           </div>
         </Section>
 

@@ -82,7 +82,11 @@ export default function MarketingSmoothScroll({ children }: SmoothScrollProps) {
       anchors: true,
       prevent: (node: HTMLElement) =>
         node.hasAttribute('data-lenis-prevent') ||
-        node.closest('[data-lenis-prevent]') != null,
+        node.hasAttribute('data-lenis-prevent-touch') ||
+        node.hasAttribute('data-lenis-prevent-wheel') ||
+        node.closest('[data-lenis-prevent]') != null ||
+        node.closest('[data-lenis-prevent-touch]') != null ||
+        node.closest('[data-lenis-prevent-wheel]') != null,
     }),
     []
   );

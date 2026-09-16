@@ -138,6 +138,7 @@ export default function MarketingNavbar() {
   const [productOpen, setProductOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const closeTimer = useRef<number | null>(null);
+  const lockY = useRef(0);
   const location = useLocation();
   const isHome = location.pathname === '/';
   const lenis = useLenis();
@@ -161,16 +162,22 @@ export default function MarketingNavbar() {
     };
   }, [lenis]);
 
+  /* Lock page scroll when mobile menu is open — keep the panel itself scrollable */
   useEffect(() => {
     if (!open) {
       lenis?.start();
       return;
     }
+
+    lockY.current = window.scrollY || document.documentElement.scrollTop || 0;
     lenis?.stop();
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
+    document.documentElement.classList.add('mkt-nav-locked');
+    document.body.style.top = `-${lockY.current}px`;
+
     return () => {
-      document.body.style.overflow = prev;
+      document.documentElement.classList.remove('mkt-nav-locked');
+      document.body.style.top = '';
+      window.scrollTo(0, lockY.current);
       lenis?.start();
     };
   }, [open, lenis]);
@@ -208,227 +215,244 @@ export default function MarketingNavbar() {
   };
 
   return (
-    <header className="mkt-nav pointer-events-none fixed inset-x-0 top-0 z-50 px-3 pt-3 md:px-5 md:pt-4">
-      <div
-        className={cn(
-          'pointer-events-auto relative mx-auto w-full max-w-[min(1120px,calc(100%-0.5rem))]',
-          capsule ? 'mkt-nav__capsule mkt-nav__capsule--solid' : 'mkt-nav__capsule mkt-nav__capsule--ghost',
-          open && 'mkt-nav__capsule--open',
-        )}
-      >
-        <div className="mkt-nav__bar">
-          <Link to="/" className="mkt-nav__brand">
-            <img
-              src="/logo.png"
-              alt=""
-              width={26}
-              height={26}
-              className="mkt-nav__brand-mark"
-              decoding="async"
-            />
-            <span className="mkt-nav__brand-text">TopEdge AI</span>
-          </Link>
+    <header className="mkt-nav pointer-events-none fixed inset-x-0 top-0 z-50">
+      <div className="mkt-nav__shell pointer-events-none">
+        <div
+          className={cn(
+            'pointer-events-auto relative mx-auto w-full',
+            capsule ? 'mkt-nav__capsule mkt-nav__capsule--solid' : 'mkt-nav__capsule mkt-nav__capsule--ghost',
+            open && 'mkt-nav__capsule--open',
+          )}
+        >
+          <div className="mkt-nav__bar">
+            <Link to="/" className="mkt-nav__brand" onClick={() => setOpen(false)}>
+              <img
+                src="/logo.png"
+                alt=""
+                width={28}
+                height={28}
+                className="mkt-nav__brand-mark"
+                decoding="async"
+              />
+              <span className="mkt-nav__brand-text">
+                TopEdge <span>AI</span>
+              </span>
+            </Link>
 
-          <nav className="mkt-nav__desktop" aria-label="Primary">
-            <div
-              className="mkt-nav__product"
-              onMouseEnter={openProduct}
-              onMouseLeave={scheduleCloseProduct}
-              onFocus={openProduct}
-              onBlur={(e) => {
-                if (!e.currentTarget.contains(e.relatedTarget as Node)) {
-                  setProductOpen(false);
-                }
-              }}
-            >
-              <button
-                type="button"
-                className={cn('mkt-nav__link mkt-nav__link--btn', productOpen && 'is-active')}
-                aria-expanded={productOpen}
-                aria-haspopup="true"
+            <nav className="mkt-nav__desktop" aria-label="Primary">
+              <div
+                className="mkt-nav__product"
+                onMouseEnter={openProduct}
+                onMouseLeave={scheduleCloseProduct}
+                onFocus={openProduct}
+                onBlur={(e) => {
+                  if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+                    setProductOpen(false);
+                  }
+                }}
               >
-                Product
-                <ChevronDown className={cn('mkt-nav__chev', productOpen && 'is-open')} aria-hidden />
-              </button>
+                <button
+                  type="button"
+                  className={cn('mkt-nav__link mkt-nav__link--btn', productOpen && 'is-active')}
+                  aria-expanded={productOpen}
+                  aria-haspopup="true"
+                >
+                  Product
+                  <ChevronDown className={cn('mkt-nav__chev', productOpen && 'is-open')} aria-hidden />
+                </button>
 
-              <AnimatePresence mode="sync">
-                {productOpen ? (
-                  <motion.div
-                    key="product-mega"
-                    className="mkt-nav__mega"
-                    initial={reduceMotion ? false : { opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={reduceMotion ? undefined : { opacity: 0 }}
-                    transition={{ duration: 0.2, ease: easeOut }}
-                    onMouseEnter={openProduct}
-                    onMouseLeave={scheduleCloseProduct}
-                  >
+                <AnimatePresence mode="sync">
+                  {productOpen ? (
                     <motion.div
-                      className="mkt-nav__mega-card"
-                      initial={reduceMotion ? false : { y: 8, scale: 0.985 }}
-                      animate={{ y: 0, scale: 1 }}
-                      exit={reduceMotion ? undefined : { y: 6, scale: 0.99 }}
-                      transition={{ duration: 0.28, ease: easeOut }}
+                      key="product-mega"
+                      className="mkt-nav__mega"
+                      initial={reduceMotion ? false : { opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={reduceMotion ? undefined : { opacity: 0 }}
+                      transition={{ duration: 0.2, ease: easeOut }}
+                      onMouseEnter={openProduct}
+                      onMouseLeave={scheduleCloseProduct}
                     >
-                      <div className="mkt-nav__mega-layout">
-                        <Link to="/features/shopify" className="mkt-nav__shopify">
-                          <div className="mkt-nav__shopify-top">
-                            <span className="mkt-nav__shopify-icon" aria-hidden>
-                              <ShopifyMark className="h-4 w-4" />
-                            </span>
-                            <div>
-                              <p className="mkt-nav__shopify-title">Shopify</p>
-                              <p className="mkt-nav__shopify-kicker">Store sync</p>
+                      <motion.div
+                        className="mkt-nav__mega-card"
+                        initial={reduceMotion ? false : { y: 8, scale: 0.985 }}
+                        animate={{ y: 0, scale: 1 }}
+                        exit={reduceMotion ? undefined : { y: 6, scale: 0.99 }}
+                        transition={{ duration: 0.28, ease: easeOut }}
+                      >
+                        <div className="mkt-nav__mega-layout">
+                          <Link to="/features/shopify" className="mkt-nav__shopify">
+                            <div className="mkt-nav__shopify-top">
+                              <span className="mkt-nav__shopify-icon" aria-hidden>
+                                <ShopifyMark className="h-4 w-4" />
+                              </span>
+                              <div>
+                                <p className="mkt-nav__shopify-title">Shopify</p>
+                                <p className="mkt-nav__shopify-kicker">Store sync</p>
+                              </div>
                             </div>
-                          </div>
-                          <ul className="mkt-nav__shopify-rows">
-                            <li>
-                              <span>OAuth</span>
-                              <strong>Products · carts · orders</strong>
-                            </li>
-                            <li>
-                              <span>Dashboard</span>
-                              <strong>Edit live catalog</strong>
-                            </li>
-                            <li>
-                              <span>COD</span>
-                              <strong>Feeds journeys & inbox</strong>
-                            </li>
-                          </ul>
-                        </Link>
+                            <ul className="mkt-nav__shopify-rows">
+                              <li>
+                                <span>OAuth</span>
+                                <strong>Products · carts · orders</strong>
+                              </li>
+                              <li>
+                                <span>Dashboard</span>
+                                <strong>Edit live catalog</strong>
+                              </li>
+                              <li>
+                                <span>COD</span>
+                                <strong>Feeds journeys & inbox</strong>
+                              </li>
+                            </ul>
+                          </Link>
 
-                        <div className="mkt-nav__mega-list">
-                          {productItems.map((item, i) => (
-                            <motion.div
-                              key={item.href}
-                              initial={reduceMotion ? false : { opacity: 0, y: 5 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              transition={{
-                                duration: 0.24,
-                                delay: reduceMotion ? 0 : 0.03 + i * 0.018,
-                                ease: easeOut,
-                              }}
-                            >
-                              <Link
-                                to={item.href}
-                                className={cn('mkt-nav__mega-item', `is-${item.tone}`)}
+                          <div className="mkt-nav__mega-list">
+                            {productItems.map((item, i) => (
+                              <motion.div
+                                key={item.href}
+                                initial={reduceMotion ? false : { opacity: 0, y: 5 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{
+                                  duration: 0.24,
+                                  delay: reduceMotion ? 0 : 0.03 + i * 0.018,
+                                  ease: easeOut,
+                                }}
                               >
-                                <span className="mkt-nav__mega-icon" aria-hidden>
-                                  <ProductMark item={item} />
-                                </span>
-                                <span className="mkt-nav__mega-copy">
-                                  <span className="mkt-nav__mega-label">{item.label}</span>
-                                  <span className="mkt-nav__mega-desc">{item.desc}</span>
-                                </span>
-                              </Link>
-                            </motion.div>
-                          ))}
+                                <Link
+                                  to={item.href}
+                                  className={cn('mkt-nav__mega-item', `is-${item.tone}`)}
+                                >
+                                  <span className="mkt-nav__mega-icon" aria-hidden>
+                                    <ProductMark item={item} />
+                                  </span>
+                                  <span className="mkt-nav__mega-copy">
+                                    <span className="mkt-nav__mega-label">{item.label}</span>
+                                    <span className="mkt-nav__mega-desc">{item.desc}</span>
+                                  </span>
+                                </Link>
+                              </motion.div>
+                            ))}
+                          </div>
                         </div>
-                      </div>
+                      </motion.div>
                     </motion.div>
-                  </motion.div>
-                ) : null}
-              </AnimatePresence>
+                  ) : null}
+                </AnimatePresence>
+              </div>
+
+              {primaryLinks.map((l) => (
+                <Link
+                  key={l.href}
+                  to={l.href}
+                  className={cn('mkt-nav__link', location.pathname === l.href && 'is-active')}
+                >
+                  {l.label}
+                </Link>
+              ))}
+            </nav>
+
+            <div className="mkt-nav__actions">
+              <Link to="/login" className="mkt-nav__link">
+                Log in
+              </Link>
+              <Link to="/signup" className="mkt-btn-primary mkt-nav__cta">
+                Start free
+              </Link>
             </div>
 
-            {primaryLinks.map((l) => (
-              <Link
-                key={l.href}
-                to={l.href}
-                className={cn('mkt-nav__link', location.pathname === l.href && 'is-active')}
-              >
-                {l.label}
-              </Link>
-            ))}
-          </nav>
-
-          <div className="mkt-nav__actions">
-            <Link to="/login" className="mkt-nav__link">
-              Log in
-            </Link>
-            <Link to="/signup" className="mkt-btn-primary mkt-nav__cta">
-              Start free
-            </Link>
+            <button
+              type="button"
+              className="mkt-nav__burger"
+              onClick={() => setOpen((v) => !v)}
+              aria-label={open ? 'Close menu' : 'Open menu'}
+              aria-expanded={open}
+              aria-controls="mkt-nav-mobile"
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.span
+                  key={open ? 'x' : 'menu'}
+                  initial={reduceMotion ? false : { opacity: 0, rotate: -40, scale: 0.8 }}
+                  animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                  exit={reduceMotion ? undefined : { opacity: 0, rotate: 40, scale: 0.8 }}
+                  transition={{ duration: 0.18 }}
+                  className="mkt-nav__burger-icon"
+                >
+                  {open ? <X strokeWidth={2.25} /> : <Menu strokeWidth={2.25} />}
+                </motion.span>
+              </AnimatePresence>
+            </button>
           </div>
 
-          <button
-            type="button"
-            className="mkt-nav__burger"
-            onClick={() => setOpen((v) => !v)}
-            aria-label={open ? 'Close menu' : 'Open menu'}
-            aria-expanded={open}
-          >
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.span
-                key={open ? 'x' : 'menu'}
-                initial={reduceMotion ? false : { opacity: 0, rotate: -40, scale: 0.8 }}
-                animate={{ opacity: 1, rotate: 0, scale: 1 }}
-                exit={reduceMotion ? undefined : { opacity: 0, rotate: 40, scale: 0.8 }}
-                transition={{ duration: 0.18 }}
-                className="grid place-items-center"
+          <AnimatePresence>
+            {open ? (
+              <motion.div
+                key="mobile-nav"
+                id="mkt-nav-mobile"
+                className="mkt-nav__mobile"
+                initial={reduceMotion ? false : { height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={reduceMotion ? undefined : { height: 0, opacity: 0 }}
+                transition={{ duration: 0.3, ease: easeOut }}
               >
-                {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-              </motion.span>
-            </AnimatePresence>
-          </button>
-        </div>
+                <div
+                  className="mkt-nav__mobile-scroll"
+                  data-lenis-prevent
+                  data-lenis-prevent-touch
+                >
+                  <p className="mkt-nav__mobile-label">Product</p>
+                  <Link to="/features/shopify" className="mkt-nav__mobile-shopify">
+                    <span className="mkt-nav__shopify-icon" aria-hidden>
+                      <ShopifyMark className="h-4 w-4" />
+                    </span>
+                    <span className="mkt-nav__mobile-shopify-copy">
+                      <strong>Shopify</strong>
+                      <span>OAuth · carts · orders · COD</span>
+                    </span>
+                  </Link>
+                  <div className="mkt-nav__mobile-products">
+                    {productItems.map((item) => (
+                      <Link key={item.href} to={item.href} className="mkt-nav__mobile-item">
+                        <span className={cn('mkt-nav__mega-icon', `is-${item.tone}`)} aria-hidden>
+                          <ProductMark item={item} />
+                        </span>
+                        <span className="mkt-nav__mega-copy">
+                          <span className="mkt-nav__mega-label">{item.label}</span>
+                          <span className="mkt-nav__mega-desc">{item.desc}</span>
+                        </span>
+                      </Link>
+                    ))}
+                  </div>
 
-        <AnimatePresence>
-          {open ? (
-            <motion.div
-              key="mobile-nav"
-              className="mkt-nav__mobile"
-              initial={reduceMotion ? false : { height: 0, opacity: 0 }}
-              animate={{ height: 'auto', opacity: 1 }}
-              exit={reduceMotion ? undefined : { height: 0, opacity: 0 }}
-              transition={{ duration: 0.32, ease: easeOut }}
-            >
-              <div className="mkt-nav__mobile-inner">
-                <p className="mkt-nav__mobile-label">Product</p>
-                <Link to="/features/shopify" className="mkt-nav__mobile-shopify">
-                  <span className="mkt-nav__shopify-icon" aria-hidden>
-                    <ShopifyMark className="h-4 w-4" />
-                  </span>
-                  <span>
-                    <strong>Shopify</strong>
-                    <span>OAuth · carts · orders · COD</span>
-                  </span>
-                </Link>
-                <div className="mkt-nav__mobile-products">
-                  {productItems.map((item) => (
-                    <Link key={item.href} to={item.href} className="mkt-nav__mobile-item">
-                      <span className={cn('mkt-nav__mega-icon', `is-${item.tone}`)} aria-hidden>
-                        <ProductMark item={item} />
-                      </span>
-                      <span>
-                        <span className="mkt-nav__mega-label">{item.label}</span>
-                        <span className="mkt-nav__mega-desc">{item.desc}</span>
-                      </span>
-                    </Link>
-                  ))}
-                </div>
-
-                <p className="mkt-nav__mobile-label">Explore</p>
-                <div className="mkt-nav__mobile-list">
-                  {primaryLinks.map((l) => (
-                    <Link key={l.href} to={l.href} className="mkt-nav__mobile-link">
-                      {l.label}
-                    </Link>
-                  ))}
+                  <p className="mkt-nav__mobile-label">Explore</p>
+                  <div className="mkt-nav__mobile-list">
+                    {primaryLinks.map((l) => (
+                      <Link
+                        key={l.href}
+                        to={l.href}
+                        className={cn(
+                          'mkt-nav__mobile-link',
+                          location.pathname === l.href && 'is-active',
+                        )}
+                      >
+                        {l.label}
+                      </Link>
+                    ))}
+                  </div>
                 </div>
 
                 <div className="mkt-nav__mobile-cta">
                   <Link to="/login" className="mkt-nav__mobile-login">
                     Log in
                   </Link>
-                  <Link to="/signup" className="mkt-btn-primary justify-center">
+                  <Link to="/signup" className="mkt-btn-primary mkt-nav__mobile-signup">
                     Start free
                   </Link>
                 </div>
-              </div>
-            </motion.div>
-          ) : null}
-        </AnimatePresence>
+              </motion.div>
+            ) : null}
+          </AnimatePresence>
+        </div>
       </div>
     </header>
   );

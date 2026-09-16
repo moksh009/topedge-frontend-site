@@ -5,15 +5,12 @@ import {
   useScroll,
   useTransform,
 } from 'framer-motion';
-import DemoDashboardFrame from './demo/DemoDashboardFrame';
 import DemoProductVideoFrame from './demo/DemoProductVideoFrame';
+import { demoAssetFor } from '../../data/productDemoVideos';
 
 type Story = {
   id: string;
-  /** Dashboard iframe path — ignored when `videoSrc` is set */
-  path?: string;
-  /** Local MP4 in the desktop chrome instead of the live iframe */
-  videoSrc?: string;
+  demoId: string;
   titleLead: string;
   titleAccent: string;
   body: string;
@@ -23,7 +20,7 @@ type Story = {
 const STORIES: Story[] = [
   {
     id: 'cart-recovery',
-    videoSrc: '/abandoncart.mp4',
+    demoId: 'cart-recovery',
     titleLead: 'WhatsApp Abandoned',
     titleAccent: 'Cart Recovery',
     body: 'Recover checkouts with timed WhatsApp nudges the moment a shopper leaves items behind.',
@@ -31,7 +28,7 @@ const STORIES: Story[] = [
   },
   {
     id: 'journey-cod',
-    videoSrc: '/cod-to-prepaid-edited.mp4',
+    demoId: 'journey',
     titleLead: 'Drag-and-Drop',
     titleAccent: 'Journey Builder',
     body: 'Build COD → prepaid recovery on a visual canvas—wait, branch, and message from one place. Convert before it ships.',
@@ -39,7 +36,7 @@ const STORIES: Story[] = [
   },
   {
     id: 'pixel-insights',
-    path: '/store-growth-hub/insights',
+    demoId: 'cart-recovery',
     titleLead: 'Connect pixel &',
     titleAccent: 'see every visit',
     body: 'One-click connect on Shopify, then watch live product views, scroll, and carts matched to WhatsApp numbers — ready to message.',
@@ -47,7 +44,7 @@ const STORIES: Story[] = [
   },
   {
     id: 'audience-broadcast',
-    path: '/marketing-hub/campaigns',
+    demoId: 'cart-recovery',
     titleLead: 'Create campaign &',
     titleAccent: 'watch sales lift',
     body: 'Pick pixel or recharge audiences, choose a template, send the broadcast, and see attributed revenue climb as people buy.',
@@ -55,7 +52,7 @@ const STORIES: Story[] = [
   },
   {
     id: 'stock-monitor',
-    path: '/store-growth-hub/stock',
+    demoId: 'cart-recovery',
     titleLead: 'Low-Stock',
     titleAccent: 'Supplier Alerts',
     body: 'When inventory nears empty, TopEdge drafts the restock message, lets you add a supplier, and sends exactly how many units you need.',
@@ -63,7 +60,7 @@ const STORIES: Story[] = [
   },
   {
     id: 'warranty',
-    path: '/warranty-hub',
+    demoId: 'cart-recovery',
     titleLead: 'Assign Product',
     titleAccent: 'Warranty',
     body: 'Attach warranty terms to products you sell—duration, coverage, and a WhatsApp claim path customers actually use.',
@@ -79,14 +76,13 @@ function FeatureMoment({ story }: { story: Story }) {
   const reduceMotion = useReducedMotion();
   const flat = Boolean(reduceMotion);
   const sectionRef = useRef<HTMLElement>(null);
+  const demo = demoAssetFor(story.demoId);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    // Start later (section already on screen) — finish when title is well framed.
     offset: ['start 0.72', 'start 0.16'],
   });
 
-  // Text: stay tucked, then rise clear of the card.
   const copyY = useTransform(
     scrollYProgress,
     [0, 0.3, 0.58, 0.82, 1],
@@ -111,17 +107,8 @@ function FeatureMoment({ story }: { story: Story }) {
     flat ? 'none' : `blur(${b}px)`
   );
 
-  // Frame: sit high over the title, then ease top → bottom as copy emerges.
-  const frameY = useTransform(
-    scrollYProgress,
-    [0, 0.25, 0.55, 0.85, 1],
-    flat ? [0, 0, 0, 0, 0] : [-36, -22, 2, 16, 22]
-  );
-  const frameScale = useTransform(
-    scrollYProgress,
-    [0, 0.45, 1],
-    flat ? [1, 1, 1] : [1.028, 1.01, 1]
-  );
+  /* Keep the video visually stable — old -36px lift fought Lenis and felt like a jump */
+  const frameY = useTransform(scrollYProgress, [0, 1], flat ? [0, 0] : [0, 10]);
 
   return (
     <article
@@ -149,28 +136,19 @@ function FeatureMoment({ story }: { story: Story }) {
 
         <motion.div
           className="home-sticky__static-scene home-sticky__static-scene--iframe home-sticky__moment-scene home-sticky__frame-layer"
-          style={{ y: frameY, scale: frameScale }}
+          style={{ y: frameY }}
         >
           <div className="home-sticky__moment-glow" aria-hidden>
             <span className="home-sticky__moment-glow__core" />
             <span className="home-sticky__moment-glow__halo" />
             <span className="home-sticky__moment-glow__wash" />
           </div>
-          {story.videoSrc ? (
-            <DemoProductVideoFrame
-              src={story.videoSrc}
-              glow={story.glow}
-              title={`${story.titleLead} ${story.titleAccent} preview`}
-            />
-          ) : (
-            <DemoDashboardFrame
-              path={story.path || '/'}
-              title={`${story.titleLead} ${story.titleAccent} preview`}
-              caption={null}
-              lazy
-              lockPath
-            />
-          )}
+          <DemoProductVideoFrame
+            src={demo.src}
+            poster={demo.poster}
+            glow={story.glow}
+            title={`${story.titleLead} ${story.titleAccent} preview`}
+          />
         </motion.div>
       </div>
     </article>
@@ -179,6 +157,7 @@ function FeatureMoment({ story }: { story: Story }) {
 
 /**
  * Product moments — scroll-linked rise from behind each UI frame (no sticky lock).
+ * Video demos only — no live dashboard iframe.
  */
 export default function HomeStickyStories() {
   const reduceMotion = useReducedMotion();

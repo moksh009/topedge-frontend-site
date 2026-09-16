@@ -1,16 +1,20 @@
-import DemoDashboardFrame from './DemoDashboardFrame';
+import DemoProductVideoFrame from './DemoProductVideoFrame';
+import { demoAssetFor } from '../../../data/productDemoVideos';
 
 /**
- * Homepage hero — real dashboard UI via demo-mode iframe.
+ * Homepage hero — cart recovery demo video (no device chrome / iframe).
  */
 export default function DemoProductStage() {
+  const demo = demoAssetFor('hero');
+
   return (
-    <DemoDashboardFrame
-      path="/"
-      title="TopEdge dashboard preview"
-      caption="Interactive preview — sample data"
-      lazy={false}
-      pinScroll
+    <DemoProductVideoFrame
+      src={demo.src}
+      poster={demo.poster}
+      title="TopEdge cart recovery demo"
+      priority
+      glow="violet"
+      className="demo-video-glow--hero"
     />
   );
 }

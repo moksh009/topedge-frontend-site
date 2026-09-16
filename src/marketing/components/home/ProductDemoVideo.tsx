@@ -1,24 +1,46 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import '../../styles/demo-video.css';
 
 type ProductDemoVideoProps = {
   src: string;
+  poster?: string;
   label: string;
   className?: string;
 };
 
 /**
- * Rounded product demo video — plays when in view, pauses when out.
- * Muted + playsInline so autoplay works in modern browsers.
+ * Rounded product demo video — poster first, loads when near viewport.
  */
-export default function ProductDemoVideo({ src, label, className = '' }: ProductDemoVideoProps) {
+export default function ProductDemoVideo({
+  src,
+  poster,
+  label,
+  className = '',
+}: ProductDemoVideoProps) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [activeSrc, setActiveSrc] = useState<string | undefined>();
+
+  useEffect(() => {
+    const wrap = wrapRef.current;
+    if (!wrap) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          setActiveSrc(src);
+          io.disconnect();
+        }
+      },
+      { rootMargin: '200px 0px', threshold: 0.01 }
+    );
+    io.observe(wrap);
+    return () => io.disconnect();
+  }, [src]);
 
   useEffect(() => {
     const wrap = wrapRef.current;
     const video = videoRef.current;
-    if (!wrap || !video) return;
+    if (!wrap || !video || !activeSrc) return;
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reduced) {
@@ -41,11 +63,8 @@ export default function ProductDemoVideo({ src, label, className = '' }: Product
     const observer = new IntersectionObserver(
       ([entry]) => {
         visible = Boolean(entry?.isIntersecting && entry.intersectionRatio >= 0.45);
-        if (visible) {
-          tryPlay();
-        } else {
-          video.pause();
-        }
+        if (visible) tryPlay();
+        else video.pause();
       },
       { threshold: [0, 0.45, 0.7], rootMargin: '0px 0px -8% 0px' }
     );
@@ -53,11 +72,8 @@ export default function ProductDemoVideo({ src, label, className = '' }: Product
     observer.observe(wrap);
 
     const onVisibility = () => {
-      if (document.hidden) {
-        video.pause();
-      } else if (visible) {
-        tryPlay();
-      }
+      if (document.hidden) video.pause();
+      else if (visible) tryPlay();
     };
     document.addEventListener('visibilitychange', onVisibility);
 
@@ -66,7 +82,7 @@ export default function ProductDemoVideo({ src, label, className = '' }: Product
       document.removeEventListener('visibilitychange', onVisibility);
       video.pause();
     };
-  }, [src]);
+  }, [activeSrc]);
 
   return (
     <div ref={wrapRef} className={`mkt-demo-video ${className}`.trim()}>
@@ -74,11 +90,12 @@ export default function ProductDemoVideo({ src, label, className = '' }: Product
         <video
           ref={videoRef}
           className="mkt-demo-video__el"
-          src={src}
+          src={activeSrc}
+          poster={poster}
           muted
           loop
           playsInline
-          preload="metadata"
+          preload="none"
           aria-label={label}
         />
       </div>
