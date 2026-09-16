@@ -12,7 +12,8 @@ import {
 import MarketingPage from '../marketing/components/MarketingPage';
 import HomeHero from '../marketing/components/home/HomeHero';
 import HomeStickyStories from '../marketing/components/home/HomeStickyStories';
-import HomeChaosZoom from '../marketing/components/home/HomeChaosZoom';
+import HomeCrmSurface from '../marketing/components/home/HomeCrmSurface';
+import HomeRoiPayoff from '../marketing/components/home/HomeRoiPayoff';
 import HomeTestimonials from '../marketing/components/home/HomeTestimonials';
 import HomeClose from '../marketing/components/home/HomeClose';
 
@@ -54,7 +55,8 @@ export default function Home() {
           <HomeHero />
         </div>
         <HomeStickyStories />
-        <HomeChaosZoom />
+        <HomeCrmSurface />
+        <HomeRoiPayoff />
         <HomeTestimonials />
         <HomeClose />
       </MarketingPage>

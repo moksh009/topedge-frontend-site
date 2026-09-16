@@ -2,7 +2,7 @@
  * Product demo videos — quality-first H.264 (not GIF, not CRF 30@1280).
  *
  * Encode: ./scripts/compress-demo-video.sh input.mp4 name
- *   → 1920 wide, lanczos, CRF 19, muted, faststart + sharp JPG poster
+ *   → 1920 wide, lanczos, CRF 18 @ 30fps, muted, faststart + sharp JPG poster
  * Lazy-load still applies; map new files below.
  */
 
@@ -25,6 +25,7 @@ export type ProductDemoId =
   | 'beauty'
   | 'food'
   | 'cod'
+  | 'optin'
   | 'agencies';
 
 export type ProductDemoAsset = {
@@ -42,18 +43,46 @@ const COD: ProductDemoAsset = {
   poster: '/marketing/demos/cod-prepaid-poster.jpg',
 };
 
+const FLOW: ProductDemoAsset = {
+  src: '/marketing/demos/flow-builder.mp4',
+  poster: '/marketing/demos/flow-builder-poster.jpg',
+};
+
+const OPTIN: ProductDemoAsset = {
+  src: '/marketing/demos/optin-popup.mp4',
+  poster: '/marketing/demos/optin-popup-poster.jpg',
+};
+
+/** Route / SEO slug aliases → catalog ids */
+const DEMO_ALIASES: Record<string, ProductDemoId> = {
+  journeys: 'journey',
+  journey: 'journey',
+  cod: 'cod',
+  'cod-prepaid': 'cod',
+  'cod-to-prepaid': 'cod',
+  'cod-confirmation-whatsapp': 'cod',
+  flow: 'flow-builder',
+  flows: 'flow-builder',
+  'flow-builder': 'flow-builder',
+  flowwww: 'flow-builder',
+  optin: 'optin',
+  'opt-in': 'optin',
+  'optin-popup': 'optin',
+};
+
 /**
- * Hero + cart recovery share the cart demo for now.
- * Swap entries later when you add per-feature files.
+ * Map each feature / scene id to the matching demo video.
+ * Hero + cart recovery share the cart demo.
  */
 export const PRODUCT_DEMO_ASSETS: Record<ProductDemoId, ProductDemoAsset> = {
   hero: CART,
   'cart-recovery': CART,
   journey: COD,
   cod: COD,
+  'flow-builder': FLOW,
+  optin: OPTIN,
   inbox: CART,
   'ai-brain': CART,
-  'flow-builder': CART,
   connect: CART,
   shopify: CART,
   campaigns: CART,
@@ -69,7 +98,8 @@ export const PRODUCT_DEMO_ASSETS: Record<ProductDemoId, ProductDemoAsset> = {
 };
 
 export function demoAssetFor(id: string): ProductDemoAsset {
-  return PRODUCT_DEMO_ASSETS[id as ProductDemoId] ?? CART;
+  const key = (DEMO_ALIASES[id] ?? id) as ProductDemoId;
+  return PRODUCT_DEMO_ASSETS[key] ?? CART;
 }
 
 export function demoVideoFor(id: string): string {

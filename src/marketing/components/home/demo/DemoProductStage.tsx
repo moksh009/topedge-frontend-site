@@ -12,8 +12,8 @@ export default function DemoProductStage() {
       src={demo.src}
       poster={demo.poster}
       title="TopEdge cart recovery demo"
-      priority
       glow="violet"
+      priority
       className="demo-video-glow--hero"
     />
   );

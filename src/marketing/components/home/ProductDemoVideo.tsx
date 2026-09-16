@@ -10,6 +10,7 @@ type ProductDemoVideoProps = {
 
 /**
  * Rounded product demo video — poster first, loads when near viewport.
+ * Restarts from 0 every time it enters view.
  */
 export default function ProductDemoVideo({
   src,
@@ -20,6 +21,7 @@ export default function ProductDemoVideo({
   const wrapRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [activeSrc, setActiveSrc] = useState<string | undefined>();
+  const wasVisible = useRef(false);
 
   useEffect(() => {
     const wrap = wrapRef.current;
@@ -48,10 +50,12 @@ export default function ProductDemoVideo({
       return;
     }
 
-    let visible = false;
-
-    const tryPlay = () => {
-      if (!visible || !video) return;
+    const playFromStart = () => {
+      try {
+        video.currentTime = 0;
+      } catch {
+        /* ignore */
+      }
       const play = video.play();
       if (play && typeof play.catch === 'function') {
         play.catch(() => {
@@ -62,18 +66,23 @@ export default function ProductDemoVideo({
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        visible = Boolean(entry?.isIntersecting && entry.intersectionRatio >= 0.45);
-        if (visible) tryPlay();
-        else video.pause();
+        const visible = Boolean(entry?.isIntersecting && entry.intersectionRatio >= 0.4);
+        if (visible && !wasVisible.current) playFromStart();
+        else if (!visible && wasVisible.current) video.pause();
+        wasVisible.current = visible;
       },
-      { threshold: [0, 0.45, 0.7], rootMargin: '0px 0px -8% 0px' }
+      { threshold: [0, 0.4, 0.7], rootMargin: '0px 0px -6% 0px' }
     );
 
     observer.observe(wrap);
 
     const onVisibility = () => {
-      if (document.hidden) video.pause();
-      else if (visible) tryPlay();
+      if (document.hidden) {
+        video.pause();
+        wasVisible.current = false;
+      } else if (wasVisible.current) {
+        playFromStart();
+      }
     };
     document.addEventListener('visibilitychange', onVisibility);
 
@@ -81,6 +90,7 @@ export default function ProductDemoVideo({
       observer.disconnect();
       document.removeEventListener('visibilitychange', onVisibility);
       video.pause();
+      wasVisible.current = false;
     };
   }, [activeSrc]);
 

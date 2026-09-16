@@ -19,6 +19,22 @@ function prefersReducedMotion() {
   );
 }
 
+function shouldUseNativeScroll() {
+  if (typeof window === 'undefined') return true;
+  if (prefersReducedMotion()) return true;
+  // Native scroll is smoother + cheaper on phones / low-end / save-data
+  if (window.matchMedia('(max-width: 900px)').matches) return true;
+  const cores = navigator.hardwareConcurrency || 4;
+  const mem = (navigator as Navigator & { deviceMemory?: number }).deviceMemory;
+  if (cores <= 4 || (typeof mem === 'number' && mem <= 4)) return true;
+  const connection = (navigator as Navigator & {
+    connection?: { saveData?: boolean; effectiveType?: string };
+  }).connection;
+  if (connection?.saveData) return true;
+  if (connection?.effectiveType === '2g' || connection?.effectiveType === 'slow-2g') return true;
+  return false;
+}
+
 /**
  * Keep GSAP ScrollTrigger in sync with Lenis (required for pin + scrub).
  * Drives Lenis from the GSAP ticker so both share one RAF loop.
@@ -52,33 +68,36 @@ function LenisGsapBridge() {
 }
 
 /**
- * Site-wide Lenis smooth scroll for marketing pages.
- * Desktop: eased inertial wheel/trackpad. Mobile: native touch (syncTouch off).
- * Disabled when prefers-reduced-motion is on.
+ * Marketing Lenis smooth scroll — desktop capable devices only.
+ * Mobile / low-end / reduced-motion → native scroll (faster, less jank).
  */
 export default function MarketingSmoothScroll({ children }: SmoothScrollProps) {
   const { pathname } = useLocation();
   const marketing = isMarketingRoute(pathname);
-  const [reduceMotion, setReduceMotion] = useState(false);
+  const [native, setNative] = useState(true);
 
   useEffect(() => {
-    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const sync = () => setReduceMotion(mq.matches);
+    const sync = () => setNative(shouldUseNativeScroll());
     sync();
-    mq.addEventListener('change', sync);
-    return () => mq.removeEventListener('change', sync);
+    const mqReduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const mqMobile = window.matchMedia('(max-width: 900px)');
+    mqReduce.addEventListener('change', sync);
+    mqMobile.addEventListener('change', sync);
+    return () => {
+      mqReduce.removeEventListener('change', sync);
+      mqMobile.removeEventListener('change', sync);
+    };
   }, []);
 
   const options = useMemo(
     () => ({
-      // GSAP ticker drives RAF via LenisGsapBridge
       autoRaf: false,
-      duration: 1.2,
+      duration: 1.05,
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
       syncTouch: false,
-      touchMultiplier: 1.4,
-      wheelMultiplier: 0.92,
+      touchMultiplier: 1.2,
+      wheelMultiplier: 0.9,
       anchors: true,
       prevent: (node: HTMLElement) =>
         node.hasAttribute('data-lenis-prevent') ||
@@ -91,7 +110,7 @@ export default function MarketingSmoothScroll({ children }: SmoothScrollProps) {
     []
   );
 
-  if (!marketing || reduceMotion || prefersReducedMotion()) {
+  if (!marketing || native) {
     return <>{children}</>;
   }
 

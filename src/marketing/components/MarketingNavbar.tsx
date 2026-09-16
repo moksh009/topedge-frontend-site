@@ -12,53 +12,59 @@ type ProductItem = {
   href: string;
   tone: 'wa' | 'violet' | 'amber' | 'sky';
   mark?: 'wa';
-  icon: 'cart' | 'journey' | 'chat' | 'flow' | 'brain' | 'campaign';
+  icon: 'cart' | 'journey' | 'flow' | 'campaign' | 'pixel' | 'optin' | 'crm';
 };
 
 const productItems: ProductItem[] = [
   {
-    label: 'Cart recovery',
-    desc: 'Timed WhatsApp nudges when shoppers leave',
+    label: 'Abandoned Cart',
+    desc: 'WhatsApp recovery when shoppers leave',
     href: '/whatsapp-cart-recovery',
     tone: 'wa',
     mark: 'wa',
     icon: 'cart',
   },
   {
-    label: 'Journey',
-    desc: 'Visual canvas · wait, branch, send',
+    label: 'COD → Prepaid',
+    desc: 'Convert COD checkouts before ship',
     href: '/features/journeys',
     tone: 'violet',
     icon: 'journey',
   },
   {
-    label: 'Live Chat',
-    desc: 'WA + IG inbox with order context',
-    href: '/features/live-chat',
-    tone: 'wa',
-    mark: 'wa',
-    icon: 'chat',
-  },
-  {
-    label: 'Flow Builder',
-    desc: 'AI form → editable WhatsApp flows',
+    label: 'Flow + Shopify Tools',
+    desc: 'Orders, address, cancel, support flows',
     href: '/features/flow-builder',
     tone: 'sky',
     icon: 'flow',
   },
   {
-    label: 'AI Brain',
-    desc: 'Catalog-grounded replies',
-    href: '/features/ai-brain',
-    tone: 'amber',
-    icon: 'brain',
-  },
-  {
-    label: 'Campaigns',
-    desc: 'Meta-safe broadcasts & drips',
+    label: 'Audience Campaigns',
+    desc: 'Segments → Meta-safe broadcasts',
     href: '/features/campaigns',
     tone: 'violet',
     icon: 'campaign',
+  },
+  {
+    label: 'Tracking Pixel',
+    desc: 'Live visits matched to WhatsApp',
+    href: '/features/analytics',
+    tone: 'amber',
+    icon: 'pixel',
+  },
+  {
+    label: 'Opt-in Popup',
+    desc: 'Capture numbers without theme hacks',
+    href: '/features/flow-builder',
+    tone: 'sky',
+    icon: 'optin',
+  },
+  {
+    label: 'Audience CRM',
+    desc: 'Identity, profiles, warranty & care',
+    href: '/features/audience-crm',
+    tone: 'violet',
+    icon: 'crm',
   },
 ];
 
@@ -95,12 +101,6 @@ function FeatureIcon({ name }: { name: ProductItem['icon'] }) {
           <circle cx="8.5" cy="3.5" r="1.15" fill="currentColor" />
         </svg>
       );
-    case 'chat':
-      return (
-        <svg {...common}>
-          <path d="M3.5 11.8V4.8A1.3 1.3 0 0 1 4.8 3.5h6.4A1.3 1.3 0 0 1 12.5 4.8v4.2A1.3 1.3 0 0 1 11.2 10.3H6.2L3.5 12.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      );
     case 'flow':
       return (
         <svg {...common}>
@@ -109,18 +109,35 @@ function FeatureIcon({ name }: { name: ProductItem['icon'] }) {
           <path d="M6.6 4.5h2.1A2.4 2.4 0 0 1 11.1 6.9V9.4" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" />
         </svg>
       );
-    case 'brain':
-      return (
-        <svg {...common}>
-          <path d="M8 13.2V8.6M8 8.6c-1.6-.1-2.9-1.4-2.9-3A2.7 2.7 0 0 1 8 2.9a2.7 2.7 0 0 1 2.9 2.7c0 1.6-1.3 2.9-2.9 3Z" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" strokeLinejoin="round" />
-          <path d="M5.1 9.4c-.7.4-1.2 1.2-1.2 2.1 0 1.3 1 2.2 2.2 2.2h3.8c1.2 0 2.2-.9 2.2-2.2 0-.9-.5-1.7-1.2-2.1" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" />
-        </svg>
-      );
     case 'campaign':
       return (
         <svg {...common}>
           <path d="M3.2 6.2v3.6c0 .5.4.9.9.9h1.4L9.2 13V3L5.5 5.3H4.1c-.5 0-.9.4-.9.9Z" stroke="currentColor" strokeWidth="1.35" strokeLinejoin="round" />
           <path d="M11.2 6.2a2.6 2.6 0 0 1 0 3.6M12.8 4.8a4.4 4.4 0 0 1 0 6.4" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" />
+        </svg>
+      );
+    case 'pixel':
+      return (
+        <svg {...common}>
+          <circle cx="8" cy="8" r="5.2" stroke="currentColor" strokeWidth="1.35" />
+          <circle cx="8" cy="8" r="1.6" fill="currentColor" />
+          <path d="M8 2.8v1.6M8 11.6v1.6M2.8 8h1.6M11.6 8h1.6" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" />
+        </svg>
+      );
+    case 'optin':
+      return (
+        <svg {...common}>
+          <rect x="3" y="2.8" width="10" height="10.4" rx="2" stroke="currentColor" strokeWidth="1.35" />
+          <path d="M5.4 7.2h5.2M5.4 9.6h3.4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+          <circle cx="11.1" cy="9.6" r="1.15" fill="currentColor" />
+        </svg>
+      );
+    case 'crm':
+      return (
+        <svg {...common}>
+          <circle cx="5.2" cy="5.4" r="1.7" stroke="currentColor" strokeWidth="1.3" />
+          <circle cx="10.8" cy="5.4" r="1.7" stroke="currentColor" strokeWidth="1.3" />
+          <path d="M2.8 12.2c.4-1.7 1.7-2.7 3.4-2.7s3 1 3.4 2.7M8.2 12.2c.3-1.2 1.1-2 2.3-2.3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
         </svg>
       );
     default:

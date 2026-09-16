@@ -20,7 +20,8 @@ type DemoProductVideoFrameProps = {
 };
 
 /**
- * Frameless product demo video — poster first, then muted looping MP4.
+ * Frameless product demo video — poster first, muted loop.
+ * Always restarts from 0 when it enters the viewport so users never land mid-clip.
  */
 export default function DemoProductVideoFrame({
   src,
@@ -34,6 +35,7 @@ export default function DemoProductVideoFrame({
   const videoRef = useRef<HTMLVideoElement>(null);
   const [activeSrc, setActiveSrc] = useState<string | undefined>(priority ? src : undefined);
   const [ready, setReady] = useState(false);
+  const wasVisible = useRef(false);
 
   useEffect(() => {
     const wrap = hostRef.current;
@@ -68,10 +70,12 @@ export default function DemoProductVideoFrame({
       return;
     }
 
-    let visible = false;
-
-    const tryPlay = () => {
-      if (!visible || !video) return;
+    const playFromStart = () => {
+      try {
+        video.currentTime = 0;
+      } catch {
+        /* ignore seek errors before metadata */
+      }
       const play = video.play();
       if (play && typeof play.catch === 'function') {
         play.catch(() => {
@@ -82,18 +86,31 @@ export default function DemoProductVideoFrame({
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        visible = Boolean(entry?.isIntersecting && (entry.intersectionRatio ?? 0) >= 0.28);
-        if (visible) tryPlay();
-        else video.pause();
+        const visible = Boolean(
+          entry?.isIntersecting && (entry.intersectionRatio ?? 0) >= 0.35
+        );
+
+        if (visible && !wasVisible.current) {
+          // Just entered view → always start from the beginning
+          playFromStart();
+        } else if (!visible && wasVisible.current) {
+          video.pause();
+        }
+
+        wasVisible.current = visible;
       },
-      { threshold: [0, 0.28, 0.55], rootMargin: '80px 0px' }
+      { threshold: [0, 0.35, 0.55], rootMargin: '40px 0px' }
     );
 
     observer.observe(wrap);
 
     const onVisibility = () => {
-      if (document.hidden) video.pause();
-      else if (visible) tryPlay();
+      if (document.hidden) {
+        video.pause();
+        wasVisible.current = false;
+      } else if (wasVisible.current) {
+        playFromStart();
+      }
     };
     document.addEventListener('visibilitychange', onVisibility);
 
@@ -101,6 +118,7 @@ export default function DemoProductVideoFrame({
       observer.disconnect();
       document.removeEventListener('visibilitychange', onVisibility);
       video.pause();
+      wasVisible.current = false;
     };
   }, [activeSrc]);
 

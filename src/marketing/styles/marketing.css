@@ -660,10 +660,11 @@
 }
 
 .mkt-nav__mega-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.1rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.1rem 0.2rem;
   padding: 0.15rem;
+  align-content: start;
 }
 
 .mkt-nav__mega-item {

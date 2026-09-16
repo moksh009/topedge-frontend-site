@@ -29,7 +29,7 @@ export default function FeatureDetailPage() {
 
   const others = MARKETING_FEATURES.filter((f) => f.slug !== feature.slug).slice(0, 3);
   const featureSeo = FEATURE_SEO[feature.slug];
-  const demo = demoAssetFor(feature.slug || feature.scene);
+  const demo = demoAssetFor(feature.scene || feature.slug);
 
   return (
     <>
