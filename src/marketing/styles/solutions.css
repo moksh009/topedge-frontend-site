@@ -190,15 +190,27 @@
   display: grid;
   place-items: center;
   min-height: 11.5rem;
-  padding: 1.25rem;
-  background: linear-gradient(165deg, #faf8ff 0%, #ffffff 70%);
+  padding: 1.1rem 1rem 0.85rem;
+  background: #ffffff;
   border-bottom: 1px solid #f3f0fa;
 }
 
 .mkt-sol__tile-art img {
-  width: min(100%, 9.5rem);
+  width: 100%;
+  max-width: 22rem;
   height: auto;
+  max-height: 11rem;
   object-fit: contain;
+}
+
+.mkt-sol__tile--wide .mkt-sol__tile-art img,
+.mkt-sol__tile--full .mkt-sol__tile-art img {
+  max-width: 34rem;
+  max-height: 11.5rem;
+}
+
+.mkt-sol__tile--row .mkt-sol__tile-art img {
+  max-width: 28rem;
 }
 
 .mkt-sol__tile-body {

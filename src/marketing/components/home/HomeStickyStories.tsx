@@ -1,5 +1,10 @@
 import DemoProductVideoFrame from './demo/DemoProductVideoFrame';
-import { FEATURE_VIDEOS, type DemoVideo } from '../../data/homeFeatureMedia';
+import DemoProductImageFrame from './demo/DemoProductImageFrame';
+import {
+  FEATURE_VIDEOS,
+  FEATURE_IMAGES,
+  type DemoVideo,
+} from '../../data/homeFeatureMedia';
 
 type Glow = 'violet' | 'emerald' | 'sky' | 'amber' | 'rose' | 'indigo';
 
@@ -9,8 +14,10 @@ type Story = {
   titleAccent: string;
   body: string;
   glow: Glow;
-  video: DemoVideo;
-};
+} & (
+  | { kind: 'video'; video: DemoVideo }
+  | { kind: 'image'; image: { src: string } }
+);
 
 const STORIES: Story[] = [
   {
@@ -19,6 +26,7 @@ const STORIES: Story[] = [
     titleAccent: 'Workflow',
     body: 'Recover checkouts with timed WhatsApp nudges the moment a shopper leaves items behind.',
     glow: 'emerald',
+    kind: 'video',
     video: FEATURE_VIDEOS.cart,
   },
   {
@@ -27,6 +35,7 @@ const STORIES: Story[] = [
     titleAccent: 'Conversion',
     body: 'Convert cash-on-delivery checkouts to prepaid on a visual canvas—wait, branch, and message before it ships.',
     glow: 'violet',
+    kind: 'video',
     video: FEATURE_VIDEOS.cod,
   },
   {
@@ -35,6 +44,7 @@ const STORIES: Story[] = [
     titleAccent: 'Shopify Tools',
     body: 'Build WhatsApp flows that fetch orders, update addresses, cancel shipments, and hand off to support—automation that already knows the cart and the SKU.',
     glow: 'sky',
+    kind: 'video',
     video: FEATURE_VIDEOS.shopifyTools,
   },
   {
@@ -43,6 +53,7 @@ const STORIES: Story[] = [
     titleAccent: 'Campaigns',
     body: 'Pick pixel or recharge audiences, lock a Meta-safe template, and watch attributed revenue climb.',
     glow: 'rose',
+    kind: 'video',
     video: FEATURE_VIDEOS.campaigns,
   },
   {
@@ -51,6 +62,7 @@ const STORIES: Story[] = [
     titleAccent: 'Tracking Pixel',
     body: 'Watch live product views, scroll, and carts matched to WhatsApp numbers — ready to message.',
     glow: 'amber',
+    kind: 'video',
     video: FEATURE_VIDEOS.pixel,
   },
   {
@@ -59,11 +71,23 @@ const STORIES: Story[] = [
     titleAccent: 'Popup Builder',
     body: 'Design exit-intent and discount popups that capture WhatsApp numbers without breaking your theme.',
     glow: 'indigo',
+    kind: 'video',
     video: FEATURE_VIDEOS.optin,
+  },
+  {
+    id: 'unified-identity',
+    titleLead: 'Unified Customer',
+    titleAccent: 'Identity',
+    body: 'Primary + secondary numbers and multiple emails collapse into one lead — so every chat and order stays on the same shopper.',
+    glow: 'violet',
+    kind: 'image',
+    image: FEATURE_IMAGES.unifiedIdentity,
   },
 ];
 
 function FeatureMoment({ story }: { story: Story }) {
+  const title = `${story.titleLead} ${story.titleAccent}`;
+
   return (
     <article
       className="home-sticky__moment"
@@ -85,19 +109,27 @@ function FeatureMoment({ story }: { story: Story }) {
             <span className="home-sticky__moment-glow__halo" />
             <span className="home-sticky__moment-glow__wash" />
           </div>
-          <DemoProductVideoFrame
-            src={story.video.src}
-            poster={story.video.poster}
-            glow={story.glow}
-            title={`${story.titleLead} ${story.titleAccent} preview`}
-          />
+          {story.kind === 'video' ? (
+            <DemoProductVideoFrame
+              src={story.video.src}
+              poster={story.video.poster}
+              glow={story.glow}
+              title={`${title} preview`}
+            />
+          ) : (
+            <DemoProductImageFrame
+              src={story.image.src}
+              alt={title}
+              glow={story.glow}
+            />
+          )}
         </div>
       </div>
     </article>
   );
 }
 
-/** Product feature moments — all video, restart from start when in view. */
+/** Product feature moments — video or still, restart from start when in view. */
 export default function HomeStickyStories() {
   return (
     <section

@@ -101,7 +101,7 @@ export default function SolutionPage() {
             {wide ? (
               <article className="mkt-sol__tile mkt-sol__tile--wide">
                 <div className="mkt-sol__tile-art" aria-hidden>
-                  <img src={wide.image} alt="" width={200} height={200} loading="lazy" decoding="async" />
+                  <img src={wide.image} alt="" width={1280} height={720} loading="lazy" decoding="async" />
                 </div>
                 <div className="mkt-sol__tile-body">
                   {wide.accent ? <span className="mkt-sol__tile-accent">{wide.accent}</span> : null}
@@ -113,7 +113,7 @@ export default function SolutionPage() {
             {side ? (
               <article className="mkt-sol__tile">
                 <div className="mkt-sol__tile-art" aria-hidden>
-                  <img src={side.image} alt="" width={200} height={200} loading="lazy" decoding="async" />
+                  <img src={side.image} alt="" width={1152} height={864} loading="lazy" decoding="async" />
                 </div>
                 <div className="mkt-sol__tile-body">
                   {side.accent ? <span className="mkt-sol__tile-accent">{side.accent}</span> : null}
@@ -127,7 +127,14 @@ export default function SolutionPage() {
                 key={b.title}
                 className={`mkt-sol__tile${bottom.length === 1 ? ' mkt-sol__tile--full' : ' mkt-sol__tile--row'}`}
               >                <div className="mkt-sol__tile-art" aria-hidden>
-                  <img src={b.image} alt="" width={200} height={200} loading="lazy" decoding="async" />
+                  <img
+                    src={b.image}
+                    alt=""
+                    width={bottom.length === 1 ? 1280 : 1152}
+                    height={bottom.length === 1 ? 720 : 864}
+                    loading="lazy"
+                    decoding="async"
+                  />
                 </div>
                 <div className="mkt-sol__tile-body">
                   {b.accent ? <span className="mkt-sol__tile-accent">{b.accent}</span> : null}

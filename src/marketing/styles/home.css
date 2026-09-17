@@ -5141,7 +5141,7 @@ html:has(.home-page) body::-webkit-scrollbar,
   font-weight: 400;
 }
 
-/* Top-right wider · bottom-left wider */
+/* Profiles full-width · bottom-left wider */
 .home-crm__bento {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -5155,7 +5155,7 @@ html:has(.home-page) body::-webkit-scrollbar,
   flex-direction: column;
   min-width: 0;
   height: 100%;
-  border-radius: 22px;
+  border-radius: 28px;
   border: 1px solid #e8e4f2;
   background: #ffffff;
   overflow: hidden;
@@ -5172,13 +5172,8 @@ html:has(.home-page) body::-webkit-scrollbar,
   transform: translateY(-1px);
 }
 
-.home-crm__tile--identity {
-  grid-column: 1 / span 5;
-  grid-row: 1;
-}
-
 .home-crm__tile--profiles {
-  grid-column: 6 / span 7;
+  grid-column: 1 / span 12;
   grid-row: 1;
 }
 
@@ -5195,33 +5190,42 @@ html:has(.home-page) body::-webkit-scrollbar,
 .home-crm__tile-visual {
   position: relative;
   flex: 1 1 auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 180px;
-  padding: 1.75rem 1.5rem 1rem;
-  background: #ffffff;
+  display: block;
+  min-height: 228px;
+  padding: 0;
+  overflow: hidden;
+  background: #f6f4fb;
 }
 
 .home-crm__tile-img {
   display: block;
-  width: min(100%, 280px);
-  height: auto;
-  max-height: 200px;
-  object-fit: contain;
-  object-position: center;
+  width: 100%;
+  height: 228px;
+  max-height: none;
+  object-fit: cover;
+  object-position: center 42%;
+  transform: scale(1.18);
+  transform-origin: center center;
+}
+
+.home-crm__tile--warranty .home-crm__tile-img {
+  height: 236px;
+  transform: scale(1.22);
+  object-position: center 38%;
 }
 
 .home-crm__tile--profiles .home-crm__tile-img,
 .home-crm__tile--segments .home-crm__tile-img {
-  max-height: 210px;
-  width: min(100%, 320px);
+  height: 228px;
+  transform: scale(1.16);
+  object-position: center 45%;
 }
 
 .home-crm__tile-body {
   flex: 0 0 auto;
-  padding: 0 1.4rem 1.45rem;
+  padding: 1rem 1.35rem 1.35rem;
   background: #ffffff;
+  border-top: 1px solid #f3f0fa;
 }
 
 .home-crm__tile-title {
@@ -5282,7 +5286,6 @@ html:has(.home-page) body::-webkit-scrollbar,
     grid-template-rows: none;
   }
 
-  .home-crm__tile--identity,
   .home-crm__tile--profiles,
   .home-crm__tile--segments,
   .home-crm__tile--warranty {
@@ -5302,15 +5305,20 @@ html:has(.home-page) body::-webkit-scrollbar,
   }
 
   .home-crm__tile {
-    border-radius: 18px;
+    border-radius: 22px;
   }
 
   .home-crm__tile-visual {
-    min-height: 180px;
-    padding: 1.35rem 1.15rem 0.75rem;
+    min-height: 190px;
+    padding: 0;
+  }
+
+  .home-crm__tile-img {
+    height: 190px;
+    transform: scale(1.2);
   }
 
   .home-crm__tile-body {
-    padding: 0 1.2rem 1.25rem;
+    padding: 0.9rem 1.2rem 1.2rem;
   }
 }

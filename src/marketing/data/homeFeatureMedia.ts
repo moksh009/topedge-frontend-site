@@ -37,22 +37,20 @@ export const FEATURE_VIDEOS = {
   optin: FLOW,
 } as const;
 
-export const CRM_BENTO = {
-  identity: {
-    id: 'identity',
-    titleLead: 'Unified Customer',
-    titleAccent: 'Identity',
-    body: 'Pixel, carts, and WhatsApp collapse into one shopper view — live in the TopEdge workspace.',
-    image: '/marketing/crm/clay-identity.png',
-    href: '/features/audience-crm',
-    cta: 'Open Audience CRM',
+/** Feature moments that use a still instead of video. */
+export const FEATURE_IMAGES = {
+  unifiedIdentity: {
+    src: '/marketing/features/unified-identity-lead.png',
   },
+} as const;
+
+export const CRM_BENTO = {
   profiles: {
     id: 'profiles',
     titleLead: 'Customer',
     titleAccent: 'profiles',
     body: 'Live carts, values, and recovery status — the same table your team works from every day.',
-    image: '/marketing/crm/clay-profiles.png',
+    image: '/marketing/crm/crm-profiles-zoom.png',
     href: '/features/audience-crm',
   },
   segments: {
@@ -60,7 +58,7 @@ export const CRM_BENTO = {
     titleLead: 'Smart',
     titleAccent: 'segments',
     body: 'Audience journeys with attributed revenue — enroll, broadcast, and measure in one list.',
-    image: '/marketing/crm/clay-segments.png',
+    image: '/marketing/crm/crm-segments-zoom.png',
     href: '/features/campaigns',
   },
   warranty: {
@@ -68,7 +66,7 @@ export const CRM_BENTO = {
     titleLead: 'Orders &',
     titleAccent: 'care',
     body: 'Orders, fulfillments, warranty, and supplier follow-ups without leaving WhatsApp.',
-    image: '/marketing/crm/clay-care.png',
+    image: '/marketing/crm/crm-care-zoom.png',
     href: '/features/audience-crm',
     cta: 'See care tools',
   },

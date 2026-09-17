@@ -11,6 +11,7 @@ function TileTitle({ lead, accent }: { lead: string; accent: string }) {
 }
 
 function BentoTile({ tile, className }: { tile: Tile; className: string }) {
+  const wide = tile.id === 'profiles' || tile.id === 'segments';
   return (
     <article className={`home-crm__tile ${className}`} data-tile={tile.id}>
       <div className="home-crm__tile-visual">
@@ -18,8 +19,8 @@ function BentoTile({ tile, className }: { tile: Tile; className: string }) {
           className="home-crm__tile-img"
           src={tile.image}
           alt=""
-          width={1280}
-          height={960}
+          width={wide ? 1280 : 1152}
+          height={wide ? 720 : 864}
           loading="eager"
           decoding="async"
         />
@@ -33,10 +34,10 @@ function BentoTile({ tile, className }: { tile: Tile; className: string }) {
 }
 
 /**
- * Asymmetric 2×2 bento — wider top-right + bottom-left, no CTA links.
+ * CRM bento — profiles full-width on top; segments + care below. No CTA links.
  */
 export default function HomeCrmSurface() {
-  const { identity, profiles, segments, warranty } = CRM_BENTO;
+  const { profiles, segments, warranty } = CRM_BENTO;
 
   return (
     <section className="home-crm" aria-labelledby="home-crm-title">
@@ -51,7 +52,6 @@ export default function HomeCrmSurface() {
         </header>
 
         <div className="home-crm__bento">
-          <BentoTile tile={identity} className="home-crm__tile--identity" />
           <BentoTile tile={profiles} className="home-crm__tile--profiles" />
           <BentoTile tile={segments} className="home-crm__tile--segments" />
           <BentoTile tile={warranty} className="home-crm__tile--warranty" />

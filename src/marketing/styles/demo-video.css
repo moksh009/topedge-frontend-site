@@ -210,6 +210,7 @@
   pointer-events: none;
 }
 
+/* Stills match video frame — 16:9 cover like demo videos. */
 .demo-video-glow__still {
   width: 100%;
   height: auto;
