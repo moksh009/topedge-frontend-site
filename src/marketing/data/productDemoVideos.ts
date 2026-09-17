@@ -26,6 +26,8 @@ export type ProductDemoId =
   | 'food'
   | 'cod'
   | 'optin'
+  | 'intent'
+  | 'segmentation'
   | 'agencies';
 
 export type ProductDemoAsset = {
@@ -39,18 +41,28 @@ const CART: ProductDemoAsset = {
 };
 
 const COD: ProductDemoAsset = {
-  src: '/marketing/demos/cod-prepaid.mp4',
+  src: '/marketing/demos/cod-prepaid11.mp4',
   poster: '/marketing/demos/cod-prepaid-poster.jpg',
 };
 
 const FLOW: ProductDemoAsset = {
-  src: '/marketing/demos/flow-builder.mp4',
+  src: '/marketing/demos/flowwww1.mp4',
   poster: '/marketing/demos/flow-builder-poster.jpg',
 };
 
 const OPTIN: ProductDemoAsset = {
-  src: '/marketing/demos/optin-popup.mp4',
+  src: '/marketing/demos/opt-in.mp4',
   poster: '/marketing/demos/optin-popup-poster.jpg',
+};
+
+const INTENT: ProductDemoAsset = {
+  src: '/marketing/demos/intentt.mp4',
+  poster: '/marketing/demos/intent-poster.jpg',
+};
+
+const SEGMENT: ProductDemoAsset = {
+  src: '/marketing/demos/segment.mp4',
+  poster: '/marketing/demos/segment-poster.jpg',
 };
 
 /** Route / SEO slug aliases → catalog ids */
@@ -68,6 +80,11 @@ const DEMO_ALIASES: Record<string, ProductDemoId> = {
   optin: 'optin',
   'opt-in': 'optin',
   'optin-popup': 'optin',
+  intent: 'intent',
+  'intent-detection': 'intent',
+  segment: 'segmentation',
+  segmentation: 'segmentation',
+  'audience-segmentation': 'segmentation',
 };
 
 /**
@@ -81,6 +98,8 @@ export const PRODUCT_DEMO_ASSETS: Record<ProductDemoId, ProductDemoAsset> = {
   cod: COD,
   'flow-builder': FLOW,
   optin: OPTIN,
+  intent: INTENT,
+  segmentation: SEGMENT,
   inbox: CART,
   'ai-brain': CART,
   connect: CART,

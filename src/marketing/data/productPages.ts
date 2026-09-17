@@ -65,12 +65,12 @@ const CART_VIDEO = {
 } as const;
 
 const COD_VIDEO = {
-  src: '/marketing/demos/cod-prepaid.mp4',
+  src: '/marketing/demos/cod-prepaid11.mp4',
   poster: '/marketing/demos/cod-prepaid-poster.jpg',
 } as const;
 
 const FLOW_VIDEO = {
-  src: '/marketing/demos/flow-builder.mp4',
+  src: '/marketing/demos/flowwww1.mp4',
   poster: '/marketing/demos/flow-builder-poster.jpg',
 } as const;
 
@@ -420,7 +420,7 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
         titleLead: 'Revenue',
         titleAccent: 'readout',
         body: 'See which campaign actually drove paid Shopify orders, not just delivery receipts.',
-        image: '/marketing/features/segmentation-lead.png',
+        image: '/marketing/demos/segment-poster.jpg',
         span: 'half',
       },
     ],

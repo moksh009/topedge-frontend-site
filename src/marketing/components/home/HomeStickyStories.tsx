@@ -20,6 +20,7 @@ type Story = {
 );
 
 const STORIES: Story[] = [
+  // Videos first
   {
     id: 'abandoned-cart',
     titleLead: 'Abandoned Cart',
@@ -48,13 +49,31 @@ const STORIES: Story[] = [
     video: FEATURE_VIDEOS.shopifyTools,
   },
   {
-    id: 'audience-campaigns',
-    titleLead: 'Custom Audience',
-    titleAccent: 'Campaigns',
-    body: 'Pick pixel or recharge audiences, lock a Meta-safe template, and watch attributed revenue climb.',
+    id: 'optin-popup',
+    titleLead: 'Website Opt-in',
+    titleAccent: 'Popup Builder',
+    body: 'Design exit-intent and discount popups that capture WhatsApp numbers without breaking your theme.',
+    glow: 'indigo',
+    kind: 'video',
+    video: FEATURE_VIDEOS.optin,
+  },
+  {
+    id: 'segmentation',
+    titleLead: 'Smart Audience',
+    titleAccent: 'Segmentation',
+    body: 'Build cohorts from carts, COD risk, and purchase history — then enroll journeys and measure attributed revenue in one list.',
     glow: 'rose',
-    kind: 'image',
-    image: FEATURE_IMAGES.campaigns,
+    kind: 'video',
+    video: FEATURE_VIDEOS.segmentation,
+  },
+  {
+    id: 'intent-detection',
+    titleLead: 'Real-time',
+    titleAccent: 'Intent Detection',
+    body: 'Read purchase, size, and COD signals in WhatsApp — then route the right journey before the shopper goes cold.',
+    glow: 'indigo',
+    kind: 'video',
+    video: FEATURE_VIDEOS.intent,
   },
   {
     id: 'website-pixel',
@@ -65,14 +84,15 @@ const STORIES: Story[] = [
     kind: 'video',
     video: FEATURE_VIDEOS.pixel,
   },
+  // Image features below
   {
-    id: 'optin-popup',
-    titleLead: 'Website Opt-in',
-    titleAccent: 'Popup Builder',
-    body: 'Design exit-intent and discount popups that capture WhatsApp numbers without breaking your theme.',
-    glow: 'indigo',
-    kind: 'video',
-    video: FEATURE_VIDEOS.optin,
+    id: 'audience-campaigns',
+    titleLead: 'Custom Audience',
+    titleAccent: 'Campaigns',
+    body: 'Pick pixel or recharge audiences, lock a Meta-safe template, and watch attributed revenue climb.',
+    glow: 'rose',
+    kind: 'image',
+    image: FEATURE_IMAGES.campaigns,
   },
   {
     id: 'unified-identity',
@@ -82,24 +102,6 @@ const STORIES: Story[] = [
     glow: 'violet',
     kind: 'image',
     image: FEATURE_IMAGES.unifiedIdentity,
-  },
-  {
-    id: 'segmentation',
-    titleLead: 'Smart Audience',
-    titleAccent: 'Segmentation',
-    body: 'Build cohorts from carts, COD risk, and purchase history — then enroll journeys and measure attributed revenue in one list.',
-    glow: 'rose',
-    kind: 'image',
-    image: FEATURE_IMAGES.segmentation,
-  },
-  {
-    id: 'intent-detection',
-    titleLead: 'Real-time',
-    titleAccent: 'Intent Detection',
-    body: 'Read purchase, size, and COD signals in WhatsApp — then route the right journey before the shopper goes cold.',
-    glow: 'indigo',
-    kind: 'image',
-    image: FEATURE_IMAGES.intentDetection,
   },
 ];
 

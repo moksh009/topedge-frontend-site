@@ -1,6 +1,5 @@
 /**
  * Homepage feature videos + CRM / identity stills.
- * Swap placeholder demos when real recordings land.
  */
 
 export type DemoVideo = {
@@ -14,27 +13,41 @@ const CART: DemoVideo = {
 };
 
 const COD: DemoVideo = {
-  src: '/marketing/demos/cod-prepaid.mp4',
+  src: '/marketing/demos/cod-prepaid11.mp4',
   poster: '/marketing/demos/cod-prepaid-poster.jpg',
 };
 
 const FLOW: DemoVideo = {
-  src: '/marketing/demos/flow-builder.mp4',
+  src: '/marketing/demos/flowwww1.mp4',
   poster: '/marketing/demos/flow-builder-poster.jpg',
 };
 
-/** Feature moments — all video. Placeholders noted where final assets are pending. */
+const INTENT: DemoVideo = {
+  src: '/marketing/demos/intentt.mp4',
+  poster: '/marketing/demos/intent-poster.jpg',
+};
+
+const OPTIN: DemoVideo = {
+  src: '/marketing/demos/opt-in.mp4',
+  poster: '/marketing/demos/optin-popup-poster.jpg',
+};
+
+const SEGMENT: DemoVideo = {
+  src: '/marketing/demos/segment.mp4',
+  poster: '/marketing/demos/segment-poster.jpg',
+};
+
+/** Feature moments — video demos. */
 export const FEATURE_VIDEOS = {
   cart: CART,
   cod: COD,
-  /** Placeholder until Shopify-tools recording ships */
   shopifyTools: FLOW,
-  /** Placeholder until campaigns recording ships */
   campaigns: CART,
   /** Placeholder until pixel recording ships */
-  pixel: FLOW,
-  /** Placeholder until opt-in recording ships */
-  optin: FLOW,
+  pixel: CART,
+  optin: OPTIN,
+  intent: INTENT,
+  segmentation: SEGMENT,
 } as const;
 
 /** Feature moments that use a still instead of video. */
@@ -44,12 +57,6 @@ export const FEATURE_IMAGES = {
   },
   unifiedIdentity: {
     src: '/leaadd.png?v=20260917c',
-  },
-  segmentation: {
-    src: '/marketing/features/segmentation-lead.png?v=20260917a',
-  },
-  intentDetection: {
-    src: '/marketing/features/intent-detection-lead.png?v=20260917a',
   },
 } as const;
 
