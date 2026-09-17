@@ -39,35 +39,40 @@ export const FEATURE_VIDEOS = {
 
 /** Feature moments that use a still instead of video. */
 export const FEATURE_IMAGES = {
+  campaigns: {
+    src: '/campaignn.png?v=20260917a',
+  },
   unifiedIdentity: {
-    src: '/marketing/features/unified-identity-lead.png',
+    src: '/leaadd.png?v=20260917c',
+  },
+  segmentation: {
+    src: '/marketing/features/segmentation-lead.png?v=20260917a',
+  },
+  intentDetection: {
+    src: '/marketing/features/intent-detection-lead.png?v=20260917a',
   },
 } as const;
 
 export const CRM_BENTO = {
+  orders: {
+    id: 'orders',
+    titleLead: 'Orders &',
+    titleAccent: 'care',
+    body: 'Shipments, warranty, and supplier follow-ups — without leaving WhatsApp.',
+    image: '/1.png?v=1',
+  },
   profiles: {
     id: 'profiles',
     titleLead: 'Customer',
     titleAccent: 'profiles',
-    body: 'Live carts, values, and recovery status — the same table your team works from every day.',
-    image: '/marketing/crm/crm-profiles-zoom.png',
-    href: '/features/audience-crm',
+    body: 'Live carts, values, and recovery status in one working table.',
+    image: '/2.png?v=1',
   },
-  segments: {
-    id: 'segments',
-    titleLead: 'Smart',
-    titleAccent: 'segments',
-    body: 'Audience journeys with attributed revenue — enroll, broadcast, and measure in one list.',
-    image: '/marketing/crm/crm-segments-zoom.png',
-    href: '/features/campaigns',
-  },
-  warranty: {
-    id: 'warranty',
-    titleLead: 'Orders &',
-    titleAccent: 'care',
-    body: 'Orders, fulfillments, warranty, and supplier follow-ups without leaving WhatsApp.',
-    image: '/marketing/crm/crm-care-zoom.png',
-    href: '/features/audience-crm',
-    cta: 'See care tools',
+  stock: {
+    id: 'stock',
+    titleLead: 'Live',
+    titleAccent: 'stock',
+    body: 'SKU availability and low-stock signals synced from Shopify.',
+    image: '/3.png?v=1',
   },
 } as const;

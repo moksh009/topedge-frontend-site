@@ -16,10 +16,10 @@
   border-radius: 16px;
   overflow: hidden;
   background: #fff;
-  border: 2.5px solid #c4b5fd;
+  border: 3px solid #7c3aed;
   box-shadow:
     0 8px 24px -14px rgba(15, 23, 42, 0.12),
-    0 0 0 1px rgba(124, 58, 237, 0.06);
+    0 0 0 1px rgba(124, 58, 237, 0.08);
 }
 
 .mkt-demo-video__el {
@@ -46,7 +46,7 @@
 
 /* ——— Glow video (hero + sticky moments) ——— */
 .demo-video-glow {
-  --video-border: #c4b5fd;
+  --video-border: #7c3aed;
   --video-glow: rgba(124, 58, 237, 0.16);
   --video-glow-soft: rgba(167, 139, 250, 0.12);
   --video-glow-strong: rgba(124, 58, 237, 0.42);
@@ -71,7 +71,7 @@
 }
 
 .demo-video-glow[data-glow='violet'] {
-  --video-border: #c4b5fd;
+  --video-border: #7c3aed;
   --video-glow: rgba(124, 58, 237, 0.18);
   --video-glow-soft: rgba(167, 139, 250, 0.12);
   --video-glow-strong: rgba(124, 58, 237, 0.48);
@@ -171,7 +171,7 @@
   border-radius: 14px;
   overflow: hidden;
   background: #fff;
-  border: 2.5px solid var(--video-border);
+  border: 3px solid var(--video-border);
   box-shadow:
     0 8px 22px -16px rgba(15, 23, 42, 0.12),
     0 18px 36px -28px var(--video-glow-mid);

@@ -53,8 +53,8 @@ const STORIES: Story[] = [
     titleAccent: 'Campaigns',
     body: 'Pick pixel or recharge audiences, lock a Meta-safe template, and watch attributed revenue climb.',
     glow: 'rose',
-    kind: 'video',
-    video: FEATURE_VIDEOS.campaigns,
+    kind: 'image',
+    image: FEATURE_IMAGES.campaigns,
   },
   {
     id: 'website-pixel',
@@ -82,6 +82,24 @@ const STORIES: Story[] = [
     glow: 'violet',
     kind: 'image',
     image: FEATURE_IMAGES.unifiedIdentity,
+  },
+  {
+    id: 'segmentation',
+    titleLead: 'Smart Audience',
+    titleAccent: 'Segmentation',
+    body: 'Build cohorts from carts, COD risk, and purchase history — then enroll journeys and measure attributed revenue in one list.',
+    glow: 'rose',
+    kind: 'image',
+    image: FEATURE_IMAGES.segmentation,
+  },
+  {
+    id: 'intent-detection',
+    titleLead: 'Real-time',
+    titleAccent: 'Intent Detection',
+    body: 'Read purchase, size, and COD signals in WhatsApp — then route the right journey before the shopper goes cold.',
+    glow: 'indigo',
+    kind: 'image',
+    image: FEATURE_IMAGES.intentDetection,
   },
 ];
 

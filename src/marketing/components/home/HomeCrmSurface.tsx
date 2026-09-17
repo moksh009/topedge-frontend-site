@@ -10,17 +10,16 @@ function TileTitle({ lead, accent }: { lead: string; accent: string }) {
   );
 }
 
-function BentoTile({ tile, className }: { tile: Tile; className: string }) {
-  const wide = tile.id === 'profiles' || tile.id === 'segments';
+function BentoTile({ tile }: { tile: Tile }) {
   return (
-    <article className={`home-crm__tile ${className}`} data-tile={tile.id}>
+    <article className={`home-crm__tile home-crm__tile--${tile.id}`} data-tile={tile.id}>
       <div className="home-crm__tile-visual">
         <img
           className="home-crm__tile-img"
           src={tile.image}
           alt=""
-          width={wide ? 1280 : 1152}
-          height={wide ? 720 : 864}
+          width={3200}
+          height={3200}
           loading="eager"
           decoding="async"
         />
@@ -33,11 +32,9 @@ function BentoTile({ tile, className }: { tile: Tile; className: string }) {
   );
 }
 
-/**
- * CRM bento — profiles full-width on top; segments + care below. No CTA links.
- */
+/** CRM bento — Orders · Profiles · Stock (Codex-style showcase tiles). */
 export default function HomeCrmSurface() {
-  const { profiles, segments, warranty } = CRM_BENTO;
+  const { orders, profiles, stock } = CRM_BENTO;
 
   return (
     <section className="home-crm" aria-labelledby="home-crm-title">
@@ -47,14 +44,14 @@ export default function HomeCrmSurface() {
             Identity & <span className="home-crm__title-accent">CRM</span>
           </h2>
           <p className="home-crm__sub">
-            One shopper across chats, orders, segments, and care — without leaving WhatsApp or Shopify.
+            Orders, profiles, and stock — the ops surface your team opens every day.
           </p>
         </header>
 
-        <div className="home-crm__bento">
-          <BentoTile tile={profiles} className="home-crm__tile--profiles" />
-          <BentoTile tile={segments} className="home-crm__tile--segments" />
-          <BentoTile tile={warranty} className="home-crm__tile--warranty" />
+        <div className="home-crm__bento home-crm__bento--three">
+          <BentoTile tile={orders} />
+          <BentoTile tile={profiles} />
+          <BentoTile tile={stock} />
         </div>
       </div>
     </section>

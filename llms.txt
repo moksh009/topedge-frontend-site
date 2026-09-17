@@ -46,6 +46,9 @@ interakt-alternative
 - /compare/bitespeed — TopEdge vs Bitespeed
 - /blog — Playbooks & GEO guides
 - /agency — Agencies
+- /solutions/fashion — Fashion & apparel
+- /solutions/beauty — Beauty & skincare
+- /solutions/electronics — Electronics & gadgets (warranty)
 - /solutions/cod — COD / RTO
 - /contact — Sales & DFY
 

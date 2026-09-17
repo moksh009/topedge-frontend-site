@@ -17,7 +17,7 @@ export const FEATURE_SLUGS = [
   'chat-rules',
 ];
 
-export const SOLUTION_SLUGS = ['fashion', 'beauty', 'food', 'cod', 'agencies'];
+export const SOLUTION_SLUGS = ['fashion', 'beauty', 'electronics', 'cod'];
 
 export const COMPARE_SLUGS = ['wati', 'interakt', 'bitespeed'];
 

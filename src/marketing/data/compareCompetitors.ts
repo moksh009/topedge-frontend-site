@@ -14,6 +14,13 @@ export type CompetitorPlan = {
   popular?: boolean;
 };
 
+export type CompareScoreRow = {
+  area: string;
+  topedge: string;
+  competitor: string;
+  edge: 'TopEdge' | 'Competitor' | 'Even' | 'Trade-off';
+};
+
 export type CompareCompetitor = {
   slug: string;
   name: string;
@@ -22,6 +29,8 @@ export type CompareCompetitor = {
   logo: string;
   logoAlt: string;
   accent: string;
+  /** Short tag under competitor name in hero */
+  brandTag?: string;
   title: string;
   description: string;
   keywords: string;
@@ -34,6 +43,14 @@ export type CompareCompetitor = {
   positioning: string;
   differentiators: { title: string; body: string }[];
   matrix: CompareRow[];
+  /** Footnote under capability board (unverified / dated claims) */
+  matrixNote?: string;
+  /** Research freshness stamp shown in UI + copy */
+  researchAsOf?: string;
+  /** Optional honest scorecard beyond Yes/No */
+  scorecard?: CompareScoreRow[];
+  /** Short trade-off callouts */
+  deepDives?: { title: string; body: string }[];
   competitorPlans: CompetitorPlan[];
   topedgePlansNote: string;
   pricingCaveat: string;
@@ -310,100 +327,245 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
     logo: '/marketing/compare/compare-logo-bitespeed.png',
     logoAlt: 'Bitespeed logo',
     accent: '#ea580c',
-    title: 'TopEdge vs Bitespeed (2026) | WhatsApp Cart Recovery for Shopify India',
+    brandTag: 'AI-agent omnichannel OS',
+    title: 'TopEdge vs Bitespeed (2026) | Shopify WhatsApp App with INR Pricing',
     description:
-      'Compare TopEdge vs Bitespeed for Shopify WhatsApp automation: abandoned cart recovery, COD to prepaid, broadcasts, inbox, and pricing. Pick the right ecommerce WhatsApp stack for Indian D2C.',
+      'TopEdge vs Bitespeed for Shopify India: cart recovery, COD, Meta-gated journeys, AI included vs $100 add-ons, and INR order-based pricing vs USD tiers. Research dated September 2026.',
     keywords:
-      'TopEdge vs Bitespeed, Bitespeed alternative, Bitespeed vs TopEdge Shopify, WhatsApp cart recovery India, COD WhatsApp automation, Bitespeed pricing, ecommerce WhatsApp OS',
+      'TopEdge vs Bitespeed, Bitespeed alternative Shopify, Bitespeed pricing India, Shopify WhatsApp app INR pricing, Bitespeed vs TopEdge, cheapest Shopify WhatsApp cart recovery app India, Bitespeed AI add-on',
     h1: 'TopEdge vs Bitespeed',
     subtitle:
-      'Bitespeed is an AI-native marketing/sales/support OS popular with Indian ecommerce — strong on WhatsApp recovery and omnichannel. TopEdge focuses on Shopify-native journeys, Meta template hygiene, and transparent INR pricing.',
+      'Bitespeed is a well-funded, AI-agent-led omnichannel platform — strong at WhatsApp, voice, email, and Instagram working together, with 6,000+ brands on it globally. TopEdge is built specifically for Shopify India D2C: order-based INR pricing, Meta-approval-gated sends, and one operator-simple workspace instead of a multi-channel OS.',
     answerFirst:
-      'Choose TopEdge when you want one Shopify-centric workspace for Meta-approved cart recovery, COD confirmation, and Live Chat with order context — at INR plan pricing tied to orders. Choose Bitespeed when you want a broader omnichannel ecommerce OS (WhatsApp + email/SMS/voice AI stacks) and are comfortable with higher USD plan floors.',
+      'Choose TopEdge when you want Shopify India recovery, COD, and inbox on flat INR pricing tied to order volume — no custom quote, no USD floor, AI included in the base plan. Choose Bitespeed when you want WhatsApp plus voice, email, SMS, and Instagram AI agents in one platform and are comfortable with a ~$250+/month USD base (AI chatbot and AI marketing agents are paid add-ons on top).',
     whoForTopEdge:
-      'Shopify India brands that want operator-simple recovery + COD + inbox without buying a full omnichannel marketing suite.',
+      'Shopify India brands that want operator-simple recovery, COD, and inbox — flat INR pricing tied to your order volume, no custom quote, no USD floor.',
     whoForCompetitor:
-      'Growth teams that want WhatsApp plus omnichannel (email/SMS/push/voice) and white-glove ecommerce marketing programs.',
+      'Global or multi-channel brands that want WhatsApp plus voice, email, SMS, and Instagram AI agents in one platform, and are comfortable with a $250+/month USD base (AI chatbot and AI marketing agents are paid add-ons on top of that).',
     positioning:
-      'Both serve Indian ecommerce on WhatsApp. Bitespeed skews omnichannel growth OS; TopEdge skews Shopify WhatsApp automation with clear Meta gates and recovery analytics.',
+      'Both serve ecommerce on WhatsApp. Bitespeed is an omnichannel growth OS (WhatsApp + email/SMS/voice/Instagram with AI-agent positioning). TopEdge is a Shopify-native WhatsApp workspace with Meta approval gates, INR order-based plans, and AI included — not a multi-channel OS.',
+    researchAsOf: 'September 2026',
     differentiators: [
       {
-        title: 'Honest Meta messaging',
-        body: 'Template statuses are first-class. Journeys wait for APPROVED before any customer send.',
+        title: 'Meta-gated journeys',
+        body: 'TopEdge journeys wait for Meta APPROVED template status before any customer send — enforced in the publish flow, not only in docs.',
       },
       {
         title: 'INR order-based plans',
-        body: 'Launch / Growth / Scale map to Shopify orders — easier budgeting than high USD omnichannel floors for mid-market D2C.',
+        body: 'Launch ₹1,999 · Growth ₹3,999 · Scale ₹6,499 map to Shopify order volume. No USD floor and no custom-quote tier for mid-market D2C.',
       },
       {
-        title: 'Operator UX',
-        body: 'Built for founders and support leads who live between Shopify admin and WhatsApp daily.',
+        title: 'AI included in base',
+        body: 'Intelligence hub intents and AI-assisted replies ship in the core product. Bitespeed’s AI chatbot and AI marketing agent are ~$100/mo add-ons each on top of the USD base plan (as of September 2026).',
       },
       {
-        title: 'Free trial with real volume',
-        body: 'Evaluate recovery and inbox on your catalog — not only a sales deck.',
+        title: 'Operator-simple Shopify UX',
+        body: 'Built for founders and support leads who live between Shopify admin and WhatsApp — not a full omnichannel marketing suite.',
+      },
+      {
+        title: 'Transparent, all-in pricing',
+        body: 'No custom quotes, no separate AI add-on fees, no USD conversion. What’s on the plans page is what you pay, in the currency you actually bill in.',
       },
     ],
-    matrix: SHARED_MATRIX_BASE.map((row) => {
-      const map: Record<string, CompareCell> = {
-        'Shopify-native sync (orders, carts, catalog)': 'yes',
-        'Abandoned cart recovery journeys': 'yes',
-        'COD confirmation / COD → prepaid flows': 'yes',
-        'Shared team inbox with order context': 'yes',
-        'Meta Cloud API templates + approval gates': 'partial',
-        'Audience segments & Meta-safe broadcasts': 'yes',
-        'Opt-in popup / number capture': 'yes',
-        'Website tracking pixel ↔ WhatsApp': 'partial',
-        'Transparent Meta rate pass-through': 'partial',
-        'India D2C / ₹-first pricing': 'partial',
-      };
-      return { ...row, competitor: map[row.label] ?? 'partial' };
-    }),
+    matrix: [
+      { label: 'Shopify-native sync (orders, carts, catalog)', topedge: 'yes', competitor: 'yes' },
+      { label: 'Abandoned cart recovery journeys', topedge: 'yes', competitor: 'yes' },
+      {
+        label: 'Browse-abandonment recovery',
+        topedge: 'no',
+        competitor: 'yes',
+      },
+      { label: 'COD confirmation / COD → prepaid flows', topedge: 'yes', competitor: 'yes' },
+      { label: 'Shared team inbox with order context', topedge: 'yes', competitor: 'yes' },
+      {
+        label: 'Meta Cloud API templates + approval gates',
+        topedge: 'yes',
+        competitor: 'Not verified publicly',
+      },
+      { label: 'Audience segments & Meta-safe broadcasts', topedge: 'yes', competitor: 'yes' },
+      { label: 'Opt-in popup / number capture', topedge: 'yes', competitor: 'yes' },
+      {
+        label: 'Website tracking pixel ↔ WhatsApp',
+        topedge: 'yes',
+        competitor: 'Not verified publicly',
+      },
+      {
+        label: 'Transparent Meta rate pass-through',
+        topedge: 'yes',
+        competitor: 'Not verified publicly',
+      },
+      { label: 'Warranty management hub', topedge: 'yes', competitor: 'no' },
+      { label: 'AI features included in base plan', topedge: 'yes', competitor: 'no' },
+      { label: 'Pricing currency', topedge: 'INR', competitor: 'USD only' },
+      {
+        label: 'Pricing model',
+        topedge: 'Flat · published · order-based',
+        competitor: 'Tiered · custom at higher tiers',
+      },
+      { label: 'India D2C / ₹-first pricing', topedge: 'yes', competitor: 'no' },
+    ],
+    matrixNote:
+      'As of September 2026. Rows marked “Not verified publicly” mean we could not independently confirm that capability from public Bitespeed docs or listings — we do not publish an unqualified Partial/Yes/No on those cells. Bitespeed Shopify App Store listing: “B: WhatsApp Chat, Abandon Cart,” ~4.6/5 across ~388 reviews, free to install. Verify live on bitespeed.co and the Shopify App Store.',
+    scorecard: [
+      {
+        area: 'Cart recovery',
+        topedge: 'Cart only, Shopify-native',
+        competitor: 'Cart + browse abandonment',
+        edge: 'Competitor',
+      },
+      {
+        area: 'COD → Prepaid',
+        topedge: 'Native, with order-linkage dedup',
+        competitor: 'Supported',
+        edge: 'Even',
+      },
+      {
+        area: 'Journey / flow builder',
+        topedge: 'Visual builder, plan-gated branching',
+        competitor: 'Automation flows + AI agents (add-on)',
+        edge: 'Trade-off',
+      },
+      {
+        area: 'Meta template compliance',
+        topedge: 'Publish blocked until APPROVED',
+        competitor: 'Not independently verified',
+        edge: 'TopEdge',
+      },
+      {
+        area: 'Live chat / inbox',
+        topedge: 'WhatsApp-only, order context',
+        competitor: 'Omnichannel (WA / email / social / voice)',
+        edge: 'Trade-off',
+      },
+      {
+        area: 'AI chatbots',
+        topedge: 'Included (Intelligence hub)',
+        competitor: '+$100/mo add-on',
+        edge: 'TopEdge',
+      },
+      {
+        area: 'Instagram automation',
+        topedge: 'Soon — not live',
+        competitor: 'Live (bots + comment automation)',
+        edge: 'Competitor',
+      },
+      {
+        area: 'Website pixel tracking',
+        topedge: 'Yes, Shopify-native',
+        competitor: 'Not independently verified',
+        edge: 'TopEdge',
+      },
+      {
+        area: 'Warranty management',
+        topedge: 'Native hub',
+        competitor: 'Not found in public feature set',
+        edge: 'TopEdge',
+      },
+      {
+        area: 'Channel breadth',
+        topedge: 'WhatsApp + Shopify-native',
+        competitor: 'WhatsApp + email + SMS + voice + Instagram',
+        edge: 'Trade-off',
+      },
+      {
+        area: 'Pricing currency / model',
+        topedge: 'Flat INR, order-based',
+        competitor: 'USD, tiered + custom',
+        edge: 'TopEdge',
+      },
+    ],
+    deepDives: [
+      {
+        title: 'AI included vs $100/mo add-ons',
+        body: 'As of September 2026, Bitespeed’s AI chatbot and AI marketing agent are ~$100/month add-ons each on top of the USD base plan — even though “AI-native” is central to their positioning. TopEdge includes Intelligence hub intents and AI-assisted replies in the core product. “AI included, not a $100/month add-on” is a short, factual differentiator.',
+      },
+      {
+        title: 'Meta approval gates (TopEdge fact)',
+        body: 'TopEdge journeys cannot go live sending a non-approved template — publish is gated on Meta APPROVED status. We state this as a fact about TopEdge’s implementation rather than an unverified claim that Bitespeed lacks the same control.',
+      },
+      {
+        title: 'Cart vs browse abandonment',
+        body: 'Bitespeed covers cart abandonment and browse abandonment. TopEdge ships Shopify-native cart recovery today. We do not claim parity on browse abandonment.',
+      },
+      {
+        title: 'Omnichannel vs WhatsApp focus',
+        body: 'Bitespeed’s unified inbox spans WhatsApp, email, Instagram/social, and voice. TopEdge is deliberately WhatsApp + Shopify-native. If support is already multi-channel, Bitespeed’s breadth is a real fit advantage; if volume is WhatsApp-first, TopEdge’s focus stays operator-simple.',
+      },
+      {
+        title: 'Warranty hub',
+        body: 'TopEdge includes a dedicated warranty claims hub. No equivalent warranty management feature was found in Bitespeed’s public materials as of September 2026.',
+      },
+    ],
     competitorPlans: [
       {
         name: 'WhatsApp Stack',
         price: 'from ~$250/mo',
-        note: '+ Meta conversations',
-        highlights: ['WhatsApp marketing', 'Chatbots', 'Support inbox', 'Onboarding'],
+        note: 'USD · entry tier · + Meta fees',
+        highlights: ['WhatsApp marketing', 'Segmentation', 'Support inbox', 'AI chatbot is +$100/mo'],
         popular: true,
       },
       {
         name: 'Omnichannel Starter',
         price: 'from ~$350/mo',
-        note: 'Email + SMS + WhatsApp + push',
-        highlights: ['Omnichannel marketing', 'Chatbots', 'IG automation', 'Free email credits'],
+        note: 'Adds email / SMS / push',
+        highlights: ['Omnichannel marketing', 'IG automation', 'Support inbox', 'AI add-ons extra'],
       },
       {
         name: 'Omnichannel Full Stack',
         price: 'from ~$500/mo',
-        note: 'Dedicated success + higher email',
-        highlights: ['Full omnichannel', 'Dedicated AM', 'Higher email volume', 'Scale programs'],
+        note: 'Dedicated AM · higher email credits',
+        highlights: [
+          '~100k free emails/mo',
+          'Dedicated Account Manager',
+          'Instagram bots',
+          'AI chatbot + marketing agent +$100/mo each',
+        ],
       },
     ],
     topedgePlansNote:
-      'TopEdge starts at ₹1,999/mo (Launch) for Shopify WhatsApp automation — compare scope before sticker price.',
+      'TopEdge Launch ₹1,999 · Growth ₹3,999 · Scale ₹6,499 — flat INR, published, tied to Shopify order volume. AI included; Meta conversation fees pass through separately.',
     pricingCaveat:
-      'Bitespeed public plan floors are often listed in USD and change by package; Shopify app may show “free to install” with usage/subscription after trial. Verify on bitespeed.co. Meta fees apply on both.',
+      'Bitespeed plans (as of September 2026): WhatsApp Stack from ~$250/mo · Omnichannel Starter from ~$350/mo · Omnichannel Full Stack from ~$500/mo — plus ~$100/mo each for AI chatbot and AI marketing agent add-ons. USD-billed; Meta conversation fees apply on top. Shopify App Store listing may show “Free to install.” Verify current pricing on bitespeed.co — plans and structure have changed multiple times through 2025–2026.',
     faqs: [
       {
         question: 'Who should choose TopEdge over Bitespeed?',
         answer:
-          'Shopify D2C teams that want cart recovery + COD + shared inbox in one Meta-safe product with transparent INR pricing — without committing to a full omnichannel marketing OS.',
+          'Shopify India D2C teams that want cart recovery, COD, and a shared inbox in one Meta-safe product with flat INR pricing tied to order volume — without committing to a full omnichannel marketing OS or USD plan floors.',
       },
       {
         question: 'Does Bitespeed do cart recovery and COD?',
         answer:
-          'Yes — Bitespeed is known for abandoned cart, COD conversion, broadcasts, and support inbox on WhatsApp. Compare journey controls, Meta template workflows, and total cost of ownership.',
+          'Yes. Bitespeed supports abandoned cart recovery (and browse abandonment), COD confirmation / COD-to-prepaid, broadcasts, and a support inbox. TopEdge focuses on Shopify-native cart recovery with Meta-gated journeys and order-aware Live Chat.',
       },
       {
-        question: 'Is Bitespeed more expensive than TopEdge?',
+        question: 'Is TopEdge cheaper than Bitespeed?',
         answer:
-          'Published omnichannel/WhatsApp stack floors are often higher in USD than TopEdge’s INR Launch/Growth/Scale cards. Always model Meta fees and the channels you actually need.',
+          'For many Shopify India mid-market brands, yes on platform fee alone: TopEdge publishes Launch ₹1,999, Growth ₹3,999, and Scale ₹6,499 (INR, order-based). Bitespeed’s published floors start around ~$250/mo USD for WhatsApp Stack, with AI chatbot and AI marketing agent at ~$100/mo each as add-ons (as of September 2026). Always model Meta conversation fees on both sides.',
+      },
+      {
+        question: 'Does Bitespeed charge extra for AI features?',
+        answer:
+          'Yes. As of September 2026, AI chatbot and AI marketing agent capabilities are ~$100/month add-ons on top of the base WhatsApp Stack, Omnichannel Starter, or Omnichannel Full Stack plans. TopEdge includes Intelligence hub AI in the base plan.',
+      },
+      {
+        question: 'Is Bitespeed pricing available in INR?',
+        answer:
+          'No published Bitespeed plan found in this research is INR-denominated — listed tiers are USD. TopEdge’s Launch, Growth, and Scale plans are priced and billed in INR.',
+      },
+      {
+        question: 'How many Shopify merchants use Bitespeed?',
+        answer:
+          'As of September 2026, Bitespeed’s Shopify App Store listing (“B: WhatsApp Chat, Abandon Cart”) shows about 4.6/5 across roughly 388 reviews. Cite the live Shopify listing for the latest count.',
       },
       {
         question: 'Can TopEdge replace an omnichannel stack?',
         answer:
-          'TopEdge focuses on WhatsApp + Shopify. If you need email/SMS/voice AI in one vendor, evaluate Bitespeed’s omnichannel tiers or pair TopEdge with your existing ESP.',
+          'TopEdge focuses on WhatsApp + Shopify. If you need email, SMS, voice AI, and Instagram agents in one vendor today, evaluate Bitespeed’s omnichannel tiers — or pair TopEdge with your existing ESP and keep WhatsApp recovery on TopEdge.',
+      },
+      {
+        question: 'Bitespeed alternative for Shopify India with INR pricing?',
+        answer:
+          'TopEdge is built as a Shopify-native, INR-priced WhatsApp growth OS for Indian D2C — cart recovery, COD workflows, Meta template gates, and order-aware inbox without a USD omnichannel floor.',
       },
     ],
     related: [
@@ -411,6 +573,7 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
       { label: 'Customers', href: '/customers' },
       { label: 'TopEdge pricing', href: '/pricing' },
       { label: 'vs Interakt', href: '/compare/interakt' },
+      { label: 'Cart recovery', href: '/whatsapp-cart-recovery' },
     ],
   },
 };

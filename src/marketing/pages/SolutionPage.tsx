@@ -2,11 +2,38 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 import MarketingSEO from '../components/MarketingSEO';
 import MarketingPage from '../components/MarketingPage';
 import MarketingCtaBand from '../components/MarketingCtaBand';
-import ProductDemoVideo from '../components/home/ProductDemoVideo';
-import { getSolutionVertical } from '../data/solutions';
-import { demoAssetFor } from '../data/productDemoVideos';
+import DemoProductImageFrame from '../components/home/demo/DemoProductImageFrame';
+import { PrimaryButton, GhostButton } from '../components/ui';
+import { getSolutionVertical, type SolutionBento } from '../data/solutions';
 import { organizationJsonLd, breadcrumbJsonLd, webPageJsonLd } from '../data/pageSeo';
+import '../styles/product-feature.css';
 import '../styles/solutions.css';
+
+function BentoTile({ tile }: { tile: SolutionBento }) {
+  const span = tile.span === 'half' ? 'half' : 'full';
+
+  return (
+    <article className={`mkt-pf__tile mkt-pf__tile--${span} mkt-sol__tile`}>
+      <div className="mkt-pf__tile-visual">
+        <img
+          className="mkt-pf__tile-img"
+          src={tile.image}
+          alt=""
+          width={span === 'full' ? 1280 : 1152}
+          height={span === 'full' ? 720 : 864}
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+      <div className="mkt-pf__tile-body">
+        <h3 className="mkt-pf__tile-title">
+          {tile.titleLead} <span className="mkt-pf__tile-accent">{tile.titleAccent}</span>
+        </h3>
+        <p className="mkt-pf__tile-copy">{tile.body}</p>
+      </div>
+    </article>
+  );
+}
 
 export default function SolutionPage() {
   const { vertical: slug = '' } = useParams();
@@ -17,10 +44,7 @@ export default function SolutionPage() {
   }
 
   const path = `/solutions/${solution.slug}`;
-  const demo = demoAssetFor(solution.demoId);
-  const [wide, ...rest] = solution.bentos;
-  const side = rest[0];
-  const bottom = rest.slice(1);
+  const fullTitle = `${solution.title} ${solution.titleAccent}`.replace(/\s+/g, ' ').trim();
 
   return (
     <>
@@ -33,7 +57,7 @@ export default function SolutionPage() {
         jsonLd={[
           organizationJsonLd(),
           webPageJsonLd({
-            name: `${solution.title} ${solution.titleAccent}`.trim(),
+            name: fullTitle,
             description: solution.seoDescription,
             path,
           }),
@@ -44,146 +68,80 @@ export default function SolutionPage() {
           ]),
         ]}
       />
-      <MarketingPage className="mkt-sol">
-        <header className="mkt-sol__hero">
-          <p className="mkt-sol__eyebrow">{solution.eyebrow}</p>
-          <h1 className="mkt-sol__title">
-            {solution.title}{' '}
-            <span className="mkt-sol__title-accent">{solution.titleAccent}</span>
+      <MarketingPage className="mkt-pf mkt-sol">
+        <header className="mkt-pf__hero mkt-sol__hero">
+          <p className="mkt-pf__eyebrow">{solution.eyebrow}</p>
+          <h1 className="mkt-pf__title">
+            {solution.title} <span className="mkt-pf__title-accent">{solution.titleAccent}</span>
           </h1>
-          <p className="mkt-sol__sub">{solution.subtitle}</p>
+          <p className="mkt-pf__sub">{solution.subtitle}</p>
+          <div className="mkt-sol__actions">
+            <PrimaryButton to="/signup">Start free</PrimaryButton>
+            <GhostButton to="/pricing">See pricing</GhostButton>
+          </div>
         </header>
 
-        {solution.showVideoFirst ? (
-          <section className="mkt-sol__section mkt-sol__section--tight" aria-label="Product demo">
-            <div className="mkt-sol__head">
-              <h2 className="mkt-sol__head-title">
-                See <span>COD → prepaid</span>
-              </h2>
-              <p className="mkt-sol__head-sub">
-                Confirm COD, nudge prepaid, and keep RTO risk out of the courier bag.
-              </p>
-            </div>
-            <div className="mkt-sol__video">
-              <ProductDemoVideo src={demo.src} poster={demo.poster} label={solution.demoLabel} />
-            </div>
-          </section>
-        ) : null}
+        <section className="mkt-pf__media mkt-sol__media" aria-label={`${solution.name} preview`}>
+          <DemoProductImageFrame
+            src={solution.heroImage}
+            alt={solution.heroAlt}
+            glow="violet"
+          />
+        </section>
 
-        <section className="mkt-sol__section" aria-labelledby="sol-outcomes">
-          <div className="mkt-sol__head">
-            <h2 id="sol-outcomes" className="mkt-sol__head-title">
-              What operators <span>care about</span>
+        <section className="mkt-pf__section" aria-labelledby="sol-how">
+          <div className="mkt-pf__head">
+            <h2 id="sol-how" className="mkt-pf__head-title">
+              {solution.bentoTitle} <span>{solution.bentoAccent}</span>
             </h2>
+            <p className="mkt-pf__head-sub">{solution.bentoSub}</p>
           </div>
-          <div className="mkt-sol__outcomes">
-            {solution.outcomes.map((o) => (
-              <article key={o.label} className="mkt-sol__outcome">
-                <p className="mkt-sol__outcome-metric">{o.metric}</p>
-                <p className="mkt-sol__outcome-label">{o.label}</p>
-                <p className="mkt-sol__outcome-detail">{o.detail}</p>
-              </article>
+          <div className="mkt-pf__bento">
+            {solution.bentos.map((tile) => (
+              <BentoTile key={`${tile.titleLead}-${tile.titleAccent}`} tile={tile} />
             ))}
           </div>
         </section>
 
-        <section className="mkt-sol__section" aria-labelledby="sol-how">
-          <div className="mkt-sol__head">
-            <h2 id="sol-how" className="mkt-sol__head-title">
-              How TopEdge <span>helps</span>
+        <section className="mkt-pf__section" aria-labelledby="sol-features">
+          <div className="mkt-pf__head">
+            <h2 id="sol-features" className="mkt-pf__head-title">
+              {solution.helpsTitle} <span>{solution.helpsAccent}</span>
             </h2>
-            <p className="mkt-sol__head-sub">
-              Feature-shaped workflows for {solution.name.toLowerCase()} on Shopify WhatsApp.
-            </p>
-          </div>
-
-          <div className="mkt-sol__bento">
-            {wide ? (
-              <article className="mkt-sol__tile mkt-sol__tile--wide">
-                <div className="mkt-sol__tile-art" aria-hidden>
-                  <img src={wide.image} alt="" width={1280} height={720} loading="lazy" decoding="async" />
-                </div>
-                <div className="mkt-sol__tile-body">
-                  {wide.accent ? <span className="mkt-sol__tile-accent">{wide.accent}</span> : null}
-                  <h3 className="mkt-sol__tile-title">{wide.title}</h3>
-                  <p className="mkt-sol__tile-text">{wide.body}</p>
-                </div>
-              </article>
-            ) : null}
-            {side ? (
-              <article className="mkt-sol__tile">
-                <div className="mkt-sol__tile-art" aria-hidden>
-                  <img src={side.image} alt="" width={1152} height={864} loading="lazy" decoding="async" />
-                </div>
-                <div className="mkt-sol__tile-body">
-                  {side.accent ? <span className="mkt-sol__tile-accent">{side.accent}</span> : null}
-                  <h3 className="mkt-sol__tile-title">{side.title}</h3>
-                  <p className="mkt-sol__tile-text">{side.body}</p>
-                </div>
-              </article>
-            ) : null}
-            {bottom.map((b) => (
-              <article
-                key={b.title}
-                className={`mkt-sol__tile${bottom.length === 1 ? ' mkt-sol__tile--full' : ' mkt-sol__tile--row'}`}
-              >                <div className="mkt-sol__tile-art" aria-hidden>
-                  <img
-                    src={b.image}
-                    alt=""
-                    width={bottom.length === 1 ? 1280 : 1152}
-                    height={bottom.length === 1 ? 720 : 864}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </div>
-                <div className="mkt-sol__tile-body">
-                  {b.accent ? <span className="mkt-sol__tile-accent">{b.accent}</span> : null}
-                  <h3 className="mkt-sol__tile-title">{b.title}</h3>
-                  <p className="mkt-sol__tile-text">{b.body}</p>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        {!solution.showVideoFirst ? (
-          <section className="mkt-sol__section" aria-label="Product demo">
-            <div className="mkt-sol__head">
-              <h2 className="mkt-sol__head-title">
-                See it <span>in motion</span>
-              </h2>
-            </div>
-            <div className="mkt-sol__video">
-              <ProductDemoVideo src={demo.src} poster={demo.poster} label={solution.demoLabel} />
-            </div>
-          </section>
-        ) : null}
-
-        <section className="mkt-sol__section" aria-labelledby="sol-features">
-          <div className="mkt-sol__head">
-            <h2 id="sol-features" className="mkt-sol__head-title">
-              Features that <span>fit this vertical</span>
-            </h2>
-            <p className="mkt-sol__head-sub">Specific TopEdge capabilities — not generic WhatsApp tips.</p>
+            <p className="mkt-pf__head-sub">{solution.helpsSub}</p>
           </div>
           <div className="mkt-sol__helps">
-            {solution.helps.map((h) => (
+            {solution.helps.map((h, i) => (
               <Link key={h.title} to={h.href} className="mkt-sol__help">
-                <p className="mkt-sol__help-feature">{h.feature}</p>
-                <h3 className="mkt-sol__help-title">{h.title}</h3>
-                <p className="mkt-sol__help-body">{h.body}</p>
+                <span className="mkt-sol__help-num" aria-hidden>
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <div className="mkt-sol__help-body">
+                  <p className="mkt-sol__help-feature">{h.feature}</p>
+                  <h3 className="mkt-sol__help-title">{h.title}</h3>
+                  <p className="mkt-sol__help-copy">{h.body}</p>
+                </div>
+                <span className="mkt-sol__help-arrow" aria-hidden>
+                  →
+                </span>
               </Link>
             ))}
           </div>
-          <p className="mkt-sol__related">
-            Also see{' '}
-            {solution.related.map((r, i) => (
-              <span key={r.href}>
-                {i > 0 ? ' · ' : null}
-                <Link to={r.href}>{r.label}</Link>
-              </span>
+        </section>
+
+        <section className="mkt-pf__section mkt-pf__section--last" aria-labelledby="sol-related">
+          <div className="mkt-pf__head">
+            <h2 id="sol-related" className="mkt-pf__head-title">
+              {solution.relatedTitle} <span>{solution.relatedAccent}</span>
+            </h2>
+          </div>
+          <div className="mkt-pf__related">
+            {solution.related.map((r) => (
+              <Link key={r.href} to={r.href} className="mkt-pf__related-link">
+                {r.label}
+              </Link>
             ))}
-          </p>
+          </div>
         </section>
 
         <MarketingCtaBand

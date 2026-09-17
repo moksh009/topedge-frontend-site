@@ -38,6 +38,11 @@
   color: var(--violet);
 }
 
+.mkt-cmp__asof {
+  color: var(--soft);
+  font-weight: 400;
+}
+
 .mkt-cmp__h1 {
   margin: 0;
   font-size: clamp(1.55rem, 3vw, 2.15rem);
@@ -363,9 +368,200 @@
 .mkt-cmp__status.is-text {
   min-width: auto;
   height: auto;
-  padding: 0.2rem 0.4rem;
-  color: var(--ink);
+  max-width: 9.5rem;
+  padding: 0.28rem 0.45rem;
+  border-radius: 8px;
+  color: #334155;
   background: #f8fafc;
+  border: 1px solid #eef0f4;
+  font-size: 0.65rem;
+  font-weight: 500;
+  line-height: 1.3;
+  text-align: center;
+  white-space: normal;
+}
+
+.mkt-cmp__board.is-wide .mkt-cmp__board-head,
+.mkt-cmp__board.is-wide .mkt-cmp__board-row {
+  grid-template-columns: minmax(0, 1.35fr) minmax(5.5rem, 1fr) minmax(5.5rem, 1fr);
+}
+
+@media (min-width: 720px) {
+  .mkt-cmp__board.is-wide .mkt-cmp__board-head,
+  .mkt-cmp__board.is-wide .mkt-cmp__board-row {
+    grid-template-columns: minmax(0, 1.5fr) minmax(7rem, 1fr) minmax(7rem, 1fr);
+  }
+}
+
+.mkt-cmp__fine--board {
+  max-width: 48rem;
+}
+
+/* Honest scorecard */
+.mkt-cmp__score {
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: #fff;
+  overflow: hidden;
+}
+
+.mkt-cmp__score-head {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .mkt-cmp__score-head {
+    display: grid;
+    grid-template-columns: 9.5rem minmax(0, 1fr) minmax(0, 1fr) 7.5rem;
+    gap: 0.75rem;
+    padding: 0.8rem 1.2rem;
+    background: #fafbfc;
+    border-bottom: 1px solid var(--line);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--soft);
+  }
+}
+
+.mkt-cmp__score-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mkt-cmp__score-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.45rem;
+  padding: 1rem 1.15rem;
+  border-bottom: 1px solid #f5f6f8;
+}
+
+.mkt-cmp__score-row:last-child {
+  border-bottom: none;
+}
+
+@media (min-width: 900px) {
+  .mkt-cmp__score-row {
+    grid-template-columns: 9.5rem minmax(0, 1fr) minmax(0, 1fr) 7.5rem;
+    gap: 0.75rem;
+    align-items: center;
+    padding: 0.95rem 1.2rem;
+  }
+}
+
+.mkt-cmp__score-area {
+  font-size: 0.84375rem;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+.mkt-cmp__score-cell {
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: #475569;
+}
+
+.mkt-cmp__score-cell.is-edge {
+  display: flex;
+  align-items: flex-start;
+}
+
+@media (min-width: 900px) {
+  .mkt-cmp__score-cell.is-edge {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 899px) {
+  .mkt-cmp__score-cell:not(.is-edge)::before {
+    display: block;
+    margin-bottom: 0.15rem;
+    font-size: 0.68rem;
+    font-weight: 500;
+    color: var(--soft);
+  }
+
+  .mkt-cmp__score-row .mkt-cmp__score-cell:nth-child(2)::before {
+    content: 'TopEdge';
+  }
+
+  .mkt-cmp__score-row .mkt-cmp__score-cell:nth-child(3)::before {
+    content: attr(data-comp-label);
+  }
+}
+
+.mkt-cmp__edge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.5rem;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.mkt-cmp__edge.is-te {
+  color: #6d28d9;
+  background: #f5f3ff;
+}
+
+.mkt-cmp__edge.is-comp {
+  color: #9a3412;
+  background: #fff7ed;
+}
+
+.mkt-cmp__edge.is-even {
+  color: #475569;
+  background: #f1f5f9;
+}
+
+.mkt-cmp__edge.is-trade {
+  color: #1d4ed8;
+  background: #eff6ff;
+}
+
+/* Deep dives */
+.mkt-cmp__deep {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.85rem;
+}
+
+@media (min-width: 768px) {
+  .mkt-cmp__deep {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+}
+
+.mkt-cmp__deep-card {
+  padding: 1.15rem 1.2rem 1.25rem;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: #fff;
+}
+
+.mkt-cmp__deep-card h3 {
+  margin: 0;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+
+.mkt-cmp__deep-card p {
+  margin: 0.45rem 0 0;
+  font-size: 0.84375rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+@media (min-width: 768px) {
+  .mkt-cmp__deep-card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
 }
 
 /* Pricing panels */
@@ -530,6 +726,21 @@
   .mkt-cmp__why {
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
+  }
+
+  .mkt-cmp__why.is-five {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .mkt-cmp__why.is-five .mkt-cmp__why-card:nth-child(1),
+  .mkt-cmp__why.is-five .mkt-cmp__why-card:nth-child(2) {
+    grid-column: span 3;
+  }
+
+  .mkt-cmp__why.is-five .mkt-cmp__why-card:nth-child(3),
+  .mkt-cmp__why.is-five .mkt-cmp__why-card:nth-child(4),
+  .mkt-cmp__why.is-five .mkt-cmp__why-card:nth-child(5) {
+    grid-column: span 2;
   }
 }
 

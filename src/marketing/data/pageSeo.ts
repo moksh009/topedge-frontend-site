@@ -43,11 +43,11 @@ export const PAGE_SEO = {
     path: '/pricing',
   },
   roi: {
-    title: 'Cart Recovery ROI Calculator | WhatsApp for Shopify',
+    title: 'WhatsApp ROI Calculator for Shopify | Cart, COD, Campaigns',
     description:
-      'Estimate recovered revenue from WhatsApp abandoned cart recovery. Answer four questions — orders, AOV, abandon rate, and lift — then see payoff vs Launch.',
+      'Estimate full-stack WhatsApp ROI for Shopify India: abandoned cart recovery, COD/RTO savings, audience campaigns net of Meta, and support deflection — then see plan payback.',
     keywords:
-      'cart recovery ROI calculator, WhatsApp abandoned cart ROI, Shopify WhatsApp recovery estimate India',
+      'WhatsApp ROI calculator Shopify, cart recovery ROI, COD RTO savings calculator, WhatsApp campaign ROI India',
     path: '/roi',
     noSuffix: true,
   },
@@ -94,9 +94,9 @@ export const PAGE_SEO = {
   compare: {
     title: 'TopEdge vs WATI, Interakt & Bitespeed | Shopify WhatsApp India',
     description:
-      'Compare TopEdge vs WATI, Interakt, and Bitespeed for Shopify WhatsApp automation in India — cart recovery, COD, inbox, plans, and Meta-safe messaging.',
+      'Compare TopEdge vs WATI, Interakt, and Bitespeed for Shopify WhatsApp automation in India — cart recovery, COD, INR pricing, AI included vs add-ons, and Meta-safe messaging.',
     keywords:
-      'TopEdge vs WATI, TopEdge vs Interakt, TopEdge vs Bitespeed, WATI alternative India, Interakt alternative Shopify, Bitespeed alternative, WhatsApp cart recovery Shopify comparison',
+      'TopEdge vs WATI, TopEdge vs Interakt, TopEdge vs Bitespeed, Bitespeed alternative Shopify, Bitespeed pricing India, Shopify WhatsApp app INR pricing, WATI alternative India, Interakt alternative Shopify, WhatsApp cart recovery Shopify comparison',
     path: '/compare',
   },
   blog: {
@@ -247,6 +247,20 @@ export const SOLUTION_SEO: Record<
       'Transparent Meta utility rates on pricing',
     ],
     scene: 'campaigns',
+  },
+  electronics: {
+    title: 'WhatsApp Automation for Electronics Shopify Brands | Warranty & Support',
+    description:
+      'TopEdge helps electronics & gadget brands on Shopify India assign warranties on WhatsApp, support with order + SKU context, and recover high-AOV abandoned carts — Meta-safe.',
+    keywords:
+      'electronics WhatsApp automation Shopify, warranty assign WhatsApp, gadget cart recovery India, DOA support WhatsApp',
+    body: 'Warranty assign, order-aware support, and high-AOV cart recovery on WhatsApp for electronics Shopify brands.',
+    bullets: [
+      'Warranty registration journeys after delivery',
+      'Live Chat beside order # and SKU for DOA/install',
+      'High-AOV cart recovery with honest variant pricing',
+    ],
+    scene: 'inbox',
   },
   agencies: {
     title: 'WhatsApp Ecommerce Automation for Agencies | Multi-Store Shopify',

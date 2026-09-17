@@ -11,6 +11,8 @@ import {
   webPageJsonLd,
 } from '../data/pageSeo';
 import { demoAssetFor } from '../data/productDemoVideos';
+import { getProductPageByFeatureSlug } from '../data/productPages';
+import ProductFeaturePage from './ProductFeaturePage';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 
@@ -25,6 +27,11 @@ export default function FeatureDetailPage() {
 
   if (slug !== canonical) {
     return <Navigate to={`/features/${canonical}`} replace />;
+  }
+
+  const productPage = getProductPageByFeatureSlug(canonical);
+  if (productPage) {
+    return <ProductFeaturePage pageId={productPage.id} />;
   }
 
   const others = MARKETING_FEATURES.filter((f) => f.slug !== feature.slug).slice(0, 3);

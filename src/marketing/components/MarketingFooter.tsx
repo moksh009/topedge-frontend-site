@@ -21,7 +21,7 @@ const columns: { title: string; links: FootLink[] }[] = [
       { label: 'Pricing', href: '/pricing' },
       { label: 'ROI calculator', href: '/roi', badge: 'New' },
       { label: 'Cart recovery', href: '/whatsapp-cart-recovery' },
-      { label: 'COD → Prepaid', href: '/features/journeys' },
+      { label: 'COD → Prepaid', href: '/cod-confirmation-whatsapp' },
       { label: 'Audience Campaigns', href: '/features/campaigns' },
       { label: 'Audience CRM', href: '/features/audience-crm' },
     ],
@@ -39,6 +39,7 @@ const columns: { title: string; links: FootLink[] }[] = [
     links: [
       { label: 'Fashion & apparel', href: '/solutions/fashion' },
       { label: 'Beauty & skincare', href: '/solutions/beauty' },
+      { label: 'Electronics & gadgets', href: '/solutions/electronics' },
       { label: 'COD-first brands', href: '/solutions/cod' },
     ],
   },

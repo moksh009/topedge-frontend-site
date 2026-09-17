@@ -38,6 +38,7 @@ const TermsPage = React.lazy(() => import('./marketing/pages/TermsPage'));
 const CompareIndexPage = React.lazy(() => import('./marketing/pages/CompareIndexPage'));
 const ComparePage = React.lazy(() => import('./marketing/pages/ComparePage'));
 const SeoTopicPage = React.lazy(() => import('./marketing/pages/SeoTopicPage'));
+const ProductFeaturePage = React.lazy(() => import('./marketing/pages/ProductFeaturePage'));
 const NotFoundPage = React.lazy(() => import('./marketing/pages/NotFoundPage'));
 const DevShowcasePage = import.meta.env.DEV
   ? React.lazy(() => import('./marketing/pages/DevShowcasePage'))
@@ -284,11 +285,11 @@ const AnimatedRoutes = () => {
           <Route path="/compare/:competitor" element={<ComparePage />} />
           <Route
             path="/whatsapp-cart-recovery"
-            element={<SeoTopicPage slug="whatsapp-cart-recovery" />}
+            element={<ProductFeaturePage pageId="cart-recovery" />}
           />
           <Route
             path="/cod-confirmation-whatsapp"
-            element={<SeoTopicPage slug="cod-confirmation-whatsapp" />}
+            element={<ProductFeaturePage pageId="cod-prepaid" />}
           />
           <Route
             path="/shopify-whatsapp-integration"
