@@ -1,29 +1,15 @@
+import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 import MarketingSEO from '../components/MarketingSEO';
 import { PAGE_SEO, organizationJsonLd, breadcrumbJsonLd, webPageJsonLd } from '../data/pageSeo';
 import MarketingPage from '../components/MarketingPage';
 import MarketingCtaBand from '../components/MarketingCtaBand';
-import { PageHero, Section, SectionHeading, MarketingCard } from '../components/ui';
-import { Link } from 'react-router-dom';
-import { COMPARE_COMPETITORS } from '../data/compareCompetitors';
-
-const compares = [
-  {
-    vs: 'WhatsApp Web alone',
-    body: 'No Shopify order context, no Meta template library, no recovery journeys — just chat tabs.',
-  },
-  {
-    vs: 'Generic chatbot builders',
-    body: 'TopEdge is India Shopify + Meta first: COD, ₹, utility rates, and template gates built in.',
-  },
-  {
-    vs: 'Email-only recovery',
-    body: 'Three WhatsApp nudges with approved templates beat another abandoned-cart email.',
-  },
-];
-
-const competitors = Object.values(COMPARE_COMPETITORS);
+import { allCompareCompetitors } from '../data/compareCompetitors';
+import '../styles/compare.css';
 
 export default function CompareIndexPage() {
+  const competitors = allCompareCompetitors();
+
   return (
     <>
       <MarketingSEO
@@ -45,61 +31,44 @@ export default function CompareIndexPage() {
           ]),
         ]}
       />
-      <MarketingPage>
-        <PageHero
-          eyebrow="Compare"
-          title="TopEdge vs WhatsApp Web, chatbots & popular BSPs"
-          subtitle="If you already live in WhatsApp and Shopify, TopEdge closes the gap between them — with cart recovery, COD, and Meta-safe campaigns."
-        />
-        <Section className="!pt-0">
-          <SectionHeading title="Quick contrasts" />
-          <div className="grid gap-5 md:grid-cols-3">
-            {compares.map((c) => (
-              <MarketingCard key={c.vs} className="!p-6">
-                <p className="text-sm text-slate-400">vs</p>
-                <h2 className="mt-1 text-lg font-medium text-[#0c1222]">{c.vs}</h2>
-                <p className="mt-3 text-sm leading-relaxed text-slate-500">{c.body}</p>
-              </MarketingCard>
-            ))}
-          </div>
-        </Section>
+      <MarketingPage className="mkt-cmp">
+        <header className="mkt-cmp__arena">
+          <p className="mkt-cmp__kicker">Product comparison</p>
+          <h1 className="mkt-cmp__h1">
+            TopEdge <span>vs</span> WhatsApp tools
+          </h1>
+          <p className="mkt-cmp__lede">
+            Side-by-side product pages for Shopify WhatsApp automation in India — plans, capabilities,
+            and who each tool fits.
+          </p>
+        </header>
 
-        <Section wash="soft">
-          <SectionHeading
-            title="Named comparisons"
-            subtitle="Deep dives for teams evaluating WhatsApp automation tools for Shopify India."
-          />
-          <div className="grid gap-5 md:grid-cols-3">
+        <section className="mkt-cmp__block" aria-label="Comparisons">
+          <div className="mkt-cmp-index__grid">
             {competitors.map((c) => (
-              <Link key={c.slug} to={`/compare/${c.slug}`} className="block">
-                <MarketingCard className="!p-6 h-full transition hover:border-[#c4b5fd]">
-                  <h2 className="text-lg font-medium text-[#0c1222]">TopEdge vs {c.name}</h2>
-                  <p className="mt-3 text-sm leading-relaxed text-slate-500">{c.subtitle}</p>
-                  <p className="mt-4 text-sm font-medium text-[#7C3AED]">Read comparison →</p>
-                </MarketingCard>
+              <Link key={c.slug} to={`/compare/${c.slug}`} className="mkt-cmp-index__card">
+                <div className="mkt-cmp-index__card-top">
+                  <img src="/logo.png" alt="" width={32} height={32} />
+                  <span className="mkt-cmp__split-vs" style={{ display: 'inline' }}>
+                    vs
+                  </span>
+                  <img src={c.logo} alt="" width={32} height={32} />
+                </div>
+                <h2>TopEdge vs {c.name}</h2>
+                <p>{c.whoForTopEdge}</p>
+                <span className="mkt-cmp-index__card-cta">
+                  Open comparison
+                  <ArrowRight className="h-3.5 w-3.5" aria-hidden />
+                </span>
               </Link>
             ))}
           </div>
-          <p className="mt-8 text-center text-sm text-slate-500">
-            Prefer a guided walkthrough?{' '}
-            <Link to="/contact" className="font-medium text-[#7C3AED]">
-              Talk to us
-            </Link>
-            {' · '}
-            <Link to="/whatsapp-cart-recovery" className="font-medium text-[#7C3AED]">
-              Cart recovery
-            </Link>
-            {' · '}
-            <Link to="/shopify-whatsapp-integration" className="font-medium text-[#7C3AED]">
-              Shopify integration
-            </Link>
-          </p>
-        </Section>
+        </section>
+
         <MarketingCtaBand
-          title="See the full product"
-          subtitle="Features, pricing, and a free trial that includes real message volume."
-          primaryLabel="Explore features"
-          primaryTo="/features"
+          title="Try TopEdge on your store"
+          subtitle="Start free — connect Shopify and WhatsApp, approve templates, publish recovery."
+          primaryLabel="Start free"
           secondaryLabel="See pricing"
           secondaryTo="/pricing"
         />

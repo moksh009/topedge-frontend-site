@@ -874,9 +874,7 @@
   border-radius: 1.35rem;
   border: 1px solid #eef0f4;
   background: #fff;
-  box-shadow:
-    0 14px 36px -24px rgba(15, 23, 42, 0.12),
-    0 4px 14px -8px rgba(15, 23, 42, 0.05);
+  box-shadow: 0 4px 14px -12px rgba(15, 23, 42, 0.08);
 }
 
 .mkt-included__grid {
@@ -1021,7 +1019,16 @@
 
 .mkt-compare__scroll {
   overflow-x: auto;
+  overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.mkt-compare__scroll::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
 }
 
 .mkt-compare__table {

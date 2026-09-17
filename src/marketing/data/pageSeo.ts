@@ -92,11 +92,11 @@ export const PAGE_SEO = {
     path: '/security',
   },
   compare: {
-    title: 'TopEdge vs WhatsApp Web & Generic Chatbots | Shopify Automation',
+    title: 'TopEdge vs WATI, Interakt & Bitespeed | Shopify WhatsApp India',
     description:
-      'Compare TopEdge to WhatsApp Web, generic chatbots, and email-only cart recovery. Built for Shopify India with Meta-safe WhatsApp ecommerce automation.',
+      'Compare TopEdge vs WATI, Interakt, and Bitespeed for Shopify WhatsApp automation in India — cart recovery, COD, inbox, plans, and Meta-safe messaging.',
     keywords:
-      'WATI alternative India, Interakt alternative, Bitespeed alternative, WhatsApp Shopify software comparison',
+      'TopEdge vs WATI, TopEdge vs Interakt, TopEdge vs Bitespeed, WATI alternative India, Interakt alternative Shopify, Bitespeed alternative, WhatsApp cart recovery Shopify comparison',
     path: '/compare',
   },
   blog: {
@@ -207,11 +207,12 @@ export const SOLUTION_SEO: Record<
   { title: string; description: string; keywords: string; body: string; bullets: string[]; scene: 'journey' | 'inbox' | 'campaigns' }
 > = {
   fashion: {
-    title: 'WhatsApp Automation for Fashion Shopify Stores | Cart & Size Recovery',
+    title: 'WhatsApp Automation for Fashion Shopify Stores | Cart, Size & COD',
     description:
-      'WhatsApp cart recovery, size/variant messaging, and COD confirmations for fashion & apparel brands on Shopify India.',
-    keywords: 'fashion WhatsApp automation, apparel cart recovery Shopify, size exchange WhatsApp',
-    body: 'Size exchanges, COD confirmations, and abandoned cart recovery on WhatsApp — with Shopify order context in every thread.',
+      'TopEdge helps fashion & apparel brands on Shopify India recover abandoned carts with size/variant context, confirm COD to cut RTO, and run Meta-safe drop campaigns on WhatsApp.',
+    keywords:
+      'fashion WhatsApp automation Shopify, apparel cart recovery India, size exchange WhatsApp, COD confirmation fashion D2C',
+    body: 'Size-aware cart recovery, COD confirmation, and order-aware support on WhatsApp for fashion Shopify brands.',
     bullets: [
       'Cart recovery with size/variant aware copy',
       'Live Chat beside order # and COD status',
@@ -220,37 +221,26 @@ export const SOLUTION_SEO: Record<
     scene: 'inbox',
   },
   beauty: {
-    title: 'WhatsApp Automation for Beauty & Skincare Shopify Brands',
+    title: 'WhatsApp Automation for Beauty & Skincare Shopify Brands | India',
     description:
-      'Catalog-grounded WhatsApp answers, serum cart recovery, and ecommerce journeys tuned for beauty D2C on Shopify India.',
-    keywords: 'beauty WhatsApp automation, skincare cart recovery, Shopify beauty chatbot',
-    body: 'Catalog-grounded answers, product cart recovery, and journeys that respect Indian COD habits for beauty & skincare.',
+      'TopEdge helps beauty and skincare Shopify brands recover abandoned carts, answer with live catalog SKUs, capture opt-ins, and confirm COD on WhatsApp — Meta-safe for India D2C.',
+    keywords:
+      'beauty WhatsApp automation Shopify, skincare cart recovery India, WhatsApp for beauty D2C, serum abandoned cart WhatsApp',
+    body: 'Product-card recovery, catalog-grounded answers, and clean WhatsApp opt-in for beauty D2C on Shopify.',
     bullets: [
-      'AI Brain cites live SKUs and ₹ prices',
+      'AI answers from live SKUs and ₹ prices',
       '3-message recovery with product cards',
-      'IG comment → DM for “price please?”',
+      'Opt-in popup without theme hacks',
     ],
     scene: 'journey',
-  },
-  food: {
-    title: 'WhatsApp Automation for Food & Beverage Shopify Brands',
-    description:
-      'Order updates, reorder campaigns, and WhatsApp ecommerce automation for food & beverage Shopify stores in India.',
-    keywords: 'food Shopify WhatsApp automation, F&B cart recovery, reorder WhatsApp campaigns',
-    body: 'Reorder nudges, delivery updates, and WhatsApp campaigns for food & beverage brands — synced to Shopify orders.',
-    bullets: [
-      'Order and delivery alerts on WhatsApp',
-      'Reorder journeys from purchase history',
-      'Campaigns for drops and festive menus',
-    ],
-    scene: 'campaigns',
   },
   cod: {
     title: 'COD Confirmation on WhatsApp | Reduce RTO for Shopify India',
     description:
-      'Confirm COD orders on WhatsApp, cut RTO risk, and run honest cart recovery — utility templates plus operator takeover for Shopify D2C.',
-    keywords: 'COD confirmation WhatsApp, reduce RTO Shopify, COD WhatsApp automation India',
-    body: 'Confirm COD, reduce RTO risk, and keep recovery honest — utility templates, clear status, operator takeover.',
+      'TopEdge helps COD-first Shopify brands confirm orders on WhatsApp, convert COD to prepaid, and cut RTO with Meta utility templates and operator takeover.',
+    keywords:
+      'COD confirmation WhatsApp, reduce RTO Shopify India, COD to prepaid WhatsApp, cash on delivery automation',
+    body: 'Confirm COD, nudge prepaid, and keep RTO risk out of the courier bag — with journeys and Live Chat.',
     bullets: [
       'COD conditions inside Journey canvas',
       'Inbox shows COD pending beside the thread',

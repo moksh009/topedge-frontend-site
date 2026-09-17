@@ -18,30 +18,28 @@ const columns: { title: string; links: FootLink[] }[] = [
   {
     title: 'Product',
     links: [
-      { label: 'Features', href: '/features' },
       { label: 'Pricing', href: '/pricing' },
       { label: 'ROI calculator', href: '/roi', badge: 'New' },
       { label: 'Cart recovery', href: '/whatsapp-cart-recovery' },
-      { label: 'Live Chat', href: '/features/live-chat' },
+      { label: 'COD → Prepaid', href: '/features/journeys' },
+      { label: 'Audience Campaigns', href: '/features/campaigns' },
+      { label: 'Audience CRM', href: '/features/audience-crm' },
     ],
   },
   {
-    title: 'Resources',
+    title: 'Compare',
     links: [
-      { label: 'Integrations', href: '/integrations' },
-      { label: 'Shopify + WhatsApp', href: '/shopify-whatsapp-integration' },
-      { label: 'Security', href: '/security' },
-      { label: 'Agency partners', href: '/agency' },
-      { label: 'Start free', href: '/signup' },
+      { label: 'TopEdge vs WATI', href: '/compare/wati' },
+      { label: 'TopEdge vs Interakt', href: '/compare/interakt' },
+      { label: 'TopEdge vs Bitespeed', href: '/compare/bitespeed' },
     ],
   },
   {
     title: 'Solutions',
     links: [
       { label: 'Fashion & apparel', href: '/solutions/fashion' },
-      { label: 'Beauty', href: '/solutions/beauty' },
-      { label: 'Food & beverage', href: '/solutions/food' },
-      { label: 'COD-first brands', href: '/cod-confirmation-whatsapp' },
+      { label: 'Beauty & skincare', href: '/solutions/beauty' },
+      { label: 'COD-first brands', href: '/solutions/cod' },
     ],
   },
 ];
@@ -221,7 +219,6 @@ export default function MarketingFooter() {
           <div className="mkt-foot__legal-links">
             <Link to="/privacy">Privacy</Link>
             <Link to="/terms">Terms</Link>
-            <Link to="/security">Security</Link>
           </div>
         </div>
       </div>

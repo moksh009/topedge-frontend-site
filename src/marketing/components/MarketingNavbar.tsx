@@ -4,67 +4,78 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { ChevronDown, Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useLenis } from 'lenis/react';
-import { ShopifyMark, WhatsAppMark } from './foundation/BrandMarks';
 
 type ProductItem = {
   label: string;
   desc: string;
   href: string;
   tone: 'wa' | 'violet' | 'amber' | 'sky';
-  mark?: 'wa';
-  icon: 'cart' | 'journey' | 'flow' | 'campaign' | 'pixel' | 'optin' | 'crm';
+  image: string;
 };
 
 const productItems: ProductItem[] = [
+  {
+    label: 'Shopify Store Sync',
+    desc: 'OAuth products, carts, orders & catalog',
+    href: '/features/shopify',
+    tone: 'wa',
+    image: '/marketing/nav/nav-clay-shopify.png',
+  },
   {
     label: 'Abandoned Cart',
     desc: 'WhatsApp recovery when shoppers leave',
     href: '/whatsapp-cart-recovery',
     tone: 'wa',
-    mark: 'wa',
-    icon: 'cart',
+    image: '/marketing/nav/nav-clay-cart.png',
+  },
+  {
+    label: 'Journey',
+    desc: 'Canvas journeys from triggers to WhatsApp',
+    href: '/features/journeys',
+    tone: 'violet',
+    image: '/marketing/nav/nav-clay-journey.png',
   },
   {
     label: 'COD → Prepaid',
     desc: 'Convert COD checkouts before ship',
     href: '/features/journeys',
     tone: 'violet',
-    icon: 'journey',
+    image: '/marketing/nav/nav-clay-cod.png',
   },
   {
     label: 'Flow + Shopify Tools',
     desc: 'Orders, address, cancel, support flows',
     href: '/features/flow-builder',
     tone: 'sky',
-    icon: 'flow',
+    image: '/marketing/nav/nav-clay-flow.png',
   },
   {
     label: 'Audience Campaigns',
     desc: 'Segments → Meta-safe broadcasts',
     href: '/features/campaigns',
     tone: 'violet',
-    icon: 'campaign',
+    image: '/marketing/nav/nav-clay-campaigns.png',
   },
   {
     label: 'Tracking Pixel',
     desc: 'Live visits matched to WhatsApp',
     href: '/features/analytics',
     tone: 'amber',
-    icon: 'pixel',
+    image: '/marketing/nav/nav-clay-pixel.png',
   },
   {
     label: 'Opt-in Popup',
     desc: 'Capture numbers without theme hacks',
     href: '/features/flow-builder',
     tone: 'sky',
-    icon: 'optin',
+    image: '/marketing/nav/nav-clay-optin.png',
   },
   {
     label: 'Audience CRM',
     desc: 'Identity, profiles, warranty & care',
     href: '/features/audience-crm',
     tone: 'violet',
-    icon: 'crm',
+    image: '/marketing/nav/nav-clay-crm.png',
   },
 ];
 
@@ -77,77 +88,18 @@ const primaryLinks = [
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
-function FeatureIcon({ name }: { name: ProductItem['icon'] }) {
-  const common = {
-    width: 16,
-    height: 16,
-    viewBox: '0 0 16 16',
-    fill: 'none',
-    'aria-hidden': true as const,
-  };
-  switch (name) {
-    case 'cart':
-      return (
-        <svg {...common}>
-          <path d="M2.5 3.5h1.2l.4 1.5m0 0L5.2 11h6.1l1.4-6H4.1Zm2.4 8.2a.7.7 0 1 0 0-1.4.7.7 0 0 0 0 1.4Zm5 0a.7.7 0 1 0 0-1.4.7.7 0 0 0 0 1.4Z" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      );
-    case 'journey':
-      return (
-        <svg {...common}>
-          <path d="M3 12.5V8.2a2 2 0 0 1 2-2h2.2a2 2 0 0 0 2-2V3.5M8.5 12.5h4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-          <circle cx="3" cy="13" r="1.15" fill="currentColor" />
-          <circle cx="13" cy="13" r="1.15" fill="currentColor" />
-          <circle cx="8.5" cy="3.5" r="1.15" fill="currentColor" />
-        </svg>
-      );
-    case 'flow':
-      return (
-        <svg {...common}>
-          <rect x="2.4" y="2.4" width="4.2" height="4.2" rx="1.1" stroke="currentColor" strokeWidth="1.35" />
-          <rect x="9.4" y="9.4" width="4.2" height="4.2" rx="1.1" stroke="currentColor" strokeWidth="1.35" />
-          <path d="M6.6 4.5h2.1A2.4 2.4 0 0 1 11.1 6.9V9.4" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" />
-        </svg>
-      );
-    case 'campaign':
-      return (
-        <svg {...common}>
-          <path d="M3.2 6.2v3.6c0 .5.4.9.9.9h1.4L9.2 13V3L5.5 5.3H4.1c-.5 0-.9.4-.9.9Z" stroke="currentColor" strokeWidth="1.35" strokeLinejoin="round" />
-          <path d="M11.2 6.2a2.6 2.6 0 0 1 0 3.6M12.8 4.8a4.4 4.4 0 0 1 0 6.4" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" />
-        </svg>
-      );
-    case 'pixel':
-      return (
-        <svg {...common}>
-          <circle cx="8" cy="8" r="5.2" stroke="currentColor" strokeWidth="1.35" />
-          <circle cx="8" cy="8" r="1.6" fill="currentColor" />
-          <path d="M8 2.8v1.6M8 11.6v1.6M2.8 8h1.6M11.6 8h1.6" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" />
-        </svg>
-      );
-    case 'optin':
-      return (
-        <svg {...common}>
-          <rect x="3" y="2.8" width="10" height="10.4" rx="2" stroke="currentColor" strokeWidth="1.35" />
-          <path d="M5.4 7.2h5.2M5.4 9.6h3.4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-          <circle cx="11.1" cy="9.6" r="1.15" fill="currentColor" />
-        </svg>
-      );
-    case 'crm':
-      return (
-        <svg {...common}>
-          <circle cx="5.2" cy="5.4" r="1.7" stroke="currentColor" strokeWidth="1.3" />
-          <circle cx="10.8" cy="5.4" r="1.7" stroke="currentColor" strokeWidth="1.3" />
-          <path d="M2.8 12.2c.4-1.7 1.7-2.7 3.4-2.7s3 1 3.4 2.7M8.2 12.2c.3-1.2 1.1-2 2.3-2.3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-        </svg>
-      );
-    default:
-      return null;
-  }
-}
-
-function ProductMark({ item }: { item: ProductItem }) {
-  if (item.mark === 'wa') return <WhatsAppMark className="h-3.5 w-3.5" />;
-  return <FeatureIcon name={item.icon} />;
+function ClayThumb({ src, alt = '' }: { src: string; alt?: string }) {
+  return (
+    <img
+      src={src}
+      alt={alt}
+      width={56}
+      height={56}
+      className="mkt-nav__clay-img"
+      decoding="async"
+      loading="lazy"
+    />
+  );
 }
 
 export default function MarketingNavbar() {
@@ -297,60 +249,32 @@ export default function MarketingNavbar() {
                         exit={reduceMotion ? undefined : { y: 6, scale: 0.99 }}
                         transition={{ duration: 0.28, ease: easeOut }}
                       >
-                        <div className="mkt-nav__mega-layout">
-                          <Link to="/features/shopify" className="mkt-nav__shopify">
-                            <div className="mkt-nav__shopify-top">
-                              <span className="mkt-nav__shopify-icon" aria-hidden>
-                                <ShopifyMark className="h-4 w-4" />
-                              </span>
-                              <div>
-                                <p className="mkt-nav__shopify-title">Shopify</p>
-                                <p className="mkt-nav__shopify-kicker">Store sync</p>
-                              </div>
-                            </div>
-                            <ul className="mkt-nav__shopify-rows">
-                              <li>
-                                <span>OAuth</span>
-                                <strong>Products · carts · orders</strong>
-                              </li>
-                              <li>
-                                <span>Dashboard</span>
-                                <strong>Edit live catalog</strong>
-                              </li>
-                              <li>
-                                <span>COD</span>
-                                <strong>Feeds journeys & inbox</strong>
-                              </li>
-                            </ul>
-                          </Link>
-
-                          <div className="mkt-nav__mega-list">
-                            {productItems.map((item, i) => (
-                              <motion.div
-                                key={item.href}
-                                initial={reduceMotion ? false : { opacity: 0, y: 5 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{
-                                  duration: 0.24,
-                                  delay: reduceMotion ? 0 : 0.03 + i * 0.018,
-                                  ease: easeOut,
-                                }}
+                        <div className="mkt-nav__mega-list">
+                          {productItems.map((item, i) => (
+                            <motion.div
+                              key={item.href + item.label}
+                              initial={reduceMotion ? false : { opacity: 0, y: 5 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{
+                                duration: 0.24,
+                                delay: reduceMotion ? 0 : 0.03 + i * 0.015,
+                                ease: easeOut,
+                              }}
+                            >
+                              <Link
+                                to={item.href}
+                                className={cn('mkt-nav__mega-item', `is-${item.tone}`)}
                               >
-                                <Link
-                                  to={item.href}
-                                  className={cn('mkt-nav__mega-item', `is-${item.tone}`)}
-                                >
-                                  <span className="mkt-nav__mega-icon" aria-hidden>
-                                    <ProductMark item={item} />
-                                  </span>
-                                  <span className="mkt-nav__mega-copy">
-                                    <span className="mkt-nav__mega-label">{item.label}</span>
-                                    <span className="mkt-nav__mega-desc">{item.desc}</span>
-                                  </span>
-                                </Link>
-                              </motion.div>
-                            ))}
-                          </div>
+                                <span className="mkt-nav__mega-thumb" aria-hidden>
+                                  <ClayThumb src={item.image} />
+                                </span>
+                                <span className="mkt-nav__mega-copy">
+                                  <span className="mkt-nav__mega-label">{item.label}</span>
+                                  <span className="mkt-nav__mega-desc">{item.desc}</span>
+                                </span>
+                              </Link>
+                            </motion.div>
+                          ))}
                         </div>
                       </motion.div>
                     </motion.div>
@@ -418,20 +342,11 @@ export default function MarketingNavbar() {
                   data-lenis-prevent-touch
                 >
                   <p className="mkt-nav__mobile-label">Product</p>
-                  <Link to="/features/shopify" className="mkt-nav__mobile-shopify">
-                    <span className="mkt-nav__shopify-icon" aria-hidden>
-                      <ShopifyMark className="h-4 w-4" />
-                    </span>
-                    <span className="mkt-nav__mobile-shopify-copy">
-                      <strong>Shopify</strong>
-                      <span>OAuth · carts · orders · COD</span>
-                    </span>
-                  </Link>
                   <div className="mkt-nav__mobile-products">
                     {productItems.map((item) => (
-                      <Link key={item.href} to={item.href} className="mkt-nav__mobile-item">
-                        <span className={cn('mkt-nav__mega-icon', `is-${item.tone}`)} aria-hidden>
-                          <ProductMark item={item} />
+                      <Link key={item.href + item.label} to={item.href} className="mkt-nav__mobile-item">
+                        <span className={cn('mkt-nav__mega-thumb', `is-${item.tone}`)} aria-hidden>
+                          <ClayThumb src={item.image} />
                         </span>
                         <span className="mkt-nav__mega-copy">
                           <span className="mkt-nav__mega-label">{item.label}</span>

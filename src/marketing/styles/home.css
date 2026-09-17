@@ -5078,10 +5078,6 @@ html:has(.home-page) body::-webkit-scrollbar,
   .home-sticky__body {
     font-size: 0.95rem;
   }
-
-  .mkt-nav__brand-text {
-    font-size: 0.92rem;
-  }
 }
 
 /* Skip layout/paint work for offscreen sections (big win on low-end) */
