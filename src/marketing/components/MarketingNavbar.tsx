@@ -77,6 +77,41 @@ const productItems: ProductItem[] = [
     tone: 'violet',
     image: '/marketing/nav/nav-clay-crm.png',
   },
+  {
+    label: 'Warranty',
+    desc: 'Batches, portal OTP & claims',
+    href: '/features/warranty',
+    tone: 'wa',
+    image: '/marketing/nav/nav-clay-crm.png',
+  },
+  {
+    label: 'Intent detection',
+    desc: 'Route chats by what they mean',
+    href: '/features/intent-detection',
+    tone: 'sky',
+    image: '/marketing/nav/nav-clay-pixel.png',
+  },
+  {
+    label: 'Segments',
+    desc: 'Cart, COD & pixel cohorts',
+    href: '/features/segments',
+    tone: 'violet',
+    image: '/marketing/nav/nav-clay-campaigns.png',
+  },
+  {
+    label: 'BYOK AI',
+    desc: 'Your Gemini or OpenAI keys',
+    href: '/features/byok',
+    tone: 'amber',
+    image: '/marketing/nav/nav-clay-flow.png',
+  },
+  {
+    label: 'P&L Analytics',
+    desc: 'Recovery ₹ vs Meta costs',
+    href: '/features/profit-loss',
+    tone: 'amber',
+    image: '/marketing/nav/nav-clay-pixel.png',
+  },
 ];
 
 const solutionItems = [

@@ -3,8 +3,17 @@ export type SolutionBento = {
   titleAccent: string;
   body: string;
   image: string;
-  /** full = top row · half = bottom pair */
-  span?: 'full' | 'half';
+  /** default third = equal 3-col row */
+  span?: 'third' | 'full' | 'half';
+};
+
+export type SolutionShowcase = {
+  title: string;
+  titleAccent?: string;
+  body: string;
+  image: string;
+  imageLabel?: string;
+  reverse?: boolean;
 };
 
 export type SolutionHelp = {
@@ -30,6 +39,10 @@ export type SolutionVertical = {
   bentoAccent: string;
   bentoSub: string;
   bentos: SolutionBento[];
+  showcasesTitle: string;
+  showcasesAccent: string;
+  showcasesSub?: string;
+  showcases: SolutionShowcase[];
   helpsTitle: string;
   helpsAccent: string;
   helpsSub: string;
@@ -66,21 +79,47 @@ export const SOLUTION_VERTICALS: Record<string, SolutionVertical> = {
         titleAccent: 'cart recovery',
         body: 'When shoppers leave mid-size or variant, TopEdge sends approved WhatsApp recovery with the same SKU context — not a generic “you left something” blast.',
         image: '/marketing/solutions/sol-fashion-cart-saas.png',
-        span: 'full',
+        span: 'third',
       },
       {
         titleLead: 'Support with',
         titleAccent: 'order context',
         body: 'Exchanges, delayed couriers, and COD questions land in Live Chat next to the Shopify order — so agents do not tab-hunt.',
         image: '/marketing/solutions/sol-fashion-inbox-saas.png',
-        span: 'half',
+        span: 'third',
       },
       {
         titleLead: 'Drop weekends,',
         titleAccent: 'Meta-safe',
         body: 'Segment past buyers and lookers, then broadcast only with approved templates — so festival drops do not risk your number.',
         image: '/marketing/solutions/sol-fashion-campaign-saas.png',
-        span: 'half',
+        span: 'third',
+      },
+    ],
+    showcasesTitle: 'Inside',
+    showcasesAccent: 'fashion ops',
+    showcasesSub: 'Recovery, inbox, and drop campaigns — the screens apparel teams open every day.',
+    showcases: [
+      {
+        title: 'Size-aware',
+        titleAccent: 'recovery',
+        body: 'Abandoned carts keep size, colour, and ₹ honest to Shopify — so the WhatsApp nudge matches the outfit they almost bought.',
+        image: '/marketing/solutions/sol-fashion-cart-saas.png',
+        imageLabel: 'Fashion cart recovery with size and variant context',
+      },
+      {
+        title: 'Inbox beside',
+        titleAccent: 'the order',
+        body: 'Exchanges and “where is my order?” land next to Shopify order # — agents reply without leaving Live Chat.',
+        image: '/marketing/solutions/sol-fashion-inbox-saas.png',
+        imageLabel: 'Fashion Live Chat with Shopify order context',
+      },
+      {
+        title: 'Drop',
+        titleAccent: 'campaigns',
+        body: 'Segment past buyers, lock an Approved marketing template, and launch festival drops without template chaos.',
+        image: '/marketing/solutions/sol-fashion-campaign-saas.png',
+        imageLabel: 'Fashion drop campaign with Meta-approved templates',
       },
     ],
     helpsTitle: 'Features that',
@@ -97,7 +136,7 @@ export const SOLUTION_VERTICALS: Record<string, SolutionVertical> = {
         feature: 'COD → Prepaid',
         title: 'Confirm apparel COD before dispatch',
         body: 'Ask shoppers to confirm or flip to prepaid on WhatsApp — fewer fake COD orders on high-AOV fashion.',
-        href: '/features/journeys',
+        href: '/cod-confirmation-whatsapp',
       },
       {
         feature: 'Audience Campaigns',
@@ -149,21 +188,47 @@ export const SOLUTION_VERTICALS: Record<string, SolutionVertical> = {
         titleAccent: 'cart recovery',
         body: 'Bring shoppers back to the exact serum or kit they left — with WhatsApp product cards tied to Shopify, not a vague reminder.',
         image: '/marketing/solutions/sol-beauty-cart-saas.png',
-        span: 'full',
+        span: 'third',
       },
       {
         titleLead: 'Catalog-grounded',
         titleAccent: 'replies',
         body: 'When someone asks “is this for oily skin?” or price, answers stay anchored to live SKUs and ₹ — then hand off to a human cleanly.',
         image: '/marketing/solutions/sol-beauty-catalog-saas.png',
-        span: 'half',
+        span: 'third',
       },
       {
         titleLead: 'Opt-in without',
         titleAccent: 'theme fear',
         body: 'Capture WhatsApp numbers on PDP and exit intent with a popup that does not require risky theme surgery.',
         image: '/marketing/solutions/sol-beauty-optin-saas.png',
-        span: 'half',
+        span: 'third',
+      },
+    ],
+    showcasesTitle: 'Inside',
+    showcasesAccent: 'beauty ops',
+    showcasesSub: 'Recovery cards, catalog answers, and storefront opt-in — built for beauty SKUs.',
+    showcases: [
+      {
+        title: 'Serum cart',
+        titleAccent: 'recovery',
+        body: 'Product cards reopen the exact kit or serum left behind — Meta-approved templates with live Shopify pricing.',
+        image: '/marketing/solutions/sol-beauty-cart-saas.png',
+        imageLabel: 'Beauty abandoned cart with product cards',
+      },
+      {
+        title: 'Catalog-true',
+        titleAccent: 'answers',
+        body: 'Ingredient and “is this for oily skin?” questions stay grounded in live SKUs before AI or agents take over.',
+        image: '/marketing/solutions/sol-beauty-catalog-saas.png',
+        imageLabel: 'Catalog-grounded beauty replies on WhatsApp',
+      },
+      {
+        title: 'Opt-in',
+        titleAccent: 'on storefront',
+        body: 'Capture WhatsApp numbers on PDP and exit intent without risky theme surgery — then enroll into journeys safely.',
+        image: '/marketing/solutions/sol-beauty-optin-saas.png',
+        imageLabel: 'Beauty WhatsApp opt-in popup on storefront',
       },
     ],
     helpsTitle: 'Features that',
@@ -232,21 +297,47 @@ export const SOLUTION_VERTICALS: Record<string, SolutionVertical> = {
         titleAccent: 'on WhatsApp',
         body: 'Send a clear confirm / cancel step with approved utility messaging. Operators can jump in when the shopper hesitates.',
         image: '/marketing/solutions/sol-cod-confirm-saas.png',
-        span: 'full',
+        span: 'third',
       },
       {
         titleLead: 'COD → prepaid',
         titleAccent: 'journeys',
         body: 'When the order is still soft, nudge UPI or prepaid with a journey that respects Meta categories — convert intent before pick-up.',
         image: '/marketing/solutions/sol-cod-prepaid-saas.png',
-        span: 'half',
+        span: 'third',
       },
       {
         titleLead: 'Cut RTO',
         titleAccent: 'before it ships',
         body: 'Do not hand fake COD to the courier. TopEdge keeps confirmation status beside the Shopify order in Live Chat.',
         image: '/marketing/solutions/sol-cod-rto-saas.png',
-        span: 'half',
+        span: 'third',
+      },
+    ],
+    showcasesTitle: 'Inside',
+    showcasesAccent: 'COD protection',
+    showcasesSub: 'Confirm before ship, nudge prepaid, and keep RTO risk visible.',
+    showcases: [
+      {
+        title: 'Confirm',
+        titleAccent: 'before dispatch',
+        body: 'Utility templates ask confirm / cancel while the order is still soft — operators jump in from Live Chat when needed.',
+        image: '/marketing/solutions/sol-cod-confirm-saas.png',
+        imageLabel: 'COD confirmation journey on WhatsApp',
+      },
+      {
+        title: 'COD →',
+        titleAccent: 'prepaid nudge',
+        body: 'UPI and prepaid offers respect Meta categories — convert willing buyers before the courier is booked.',
+        image: '/marketing/solutions/sol-cod-prepaid-saas.png',
+        imageLabel: 'COD to prepaid conversion on WhatsApp',
+      },
+      {
+        title: 'RTO risk',
+        titleAccent: 'beside the order',
+        body: 'Confirmation status stays next to Shopify order # so fake COD never silently reaches the courier.',
+        image: '/marketing/solutions/sol-cod-rto-saas.png',
+        imageLabel: 'RTO protection with COD status in inbox',
       },
     ],
     helpsTitle: 'Features that',
@@ -257,7 +348,7 @@ export const SOLUTION_VERTICALS: Record<string, SolutionVertical> = {
         feature: 'COD → Prepaid',
         title: 'The journey Indian checkouts need',
         body: 'Branch on COD status inside Flow + journeys. Convert willing buyers to prepaid; cancel ghosts before pick-up.',
-        href: '/features/journeys',
+        href: '/cod-confirmation-whatsapp',
       },
       {
         feature: 'Abandoned Cart',
@@ -314,21 +405,47 @@ export const SOLUTION_VERTICALS: Record<string, SolutionVertical> = {
         titleAccent: 'on WhatsApp',
         body: 'After delivery, send an approved template to register serial or warranty. Confirm on-chat and write the note to CRM — no spreadsheet chase.',
         image: '/marketing/solutions/sol-electronics-warranty-saas.png',
-        span: 'full',
+        span: 'third',
       },
       {
         titleLead: 'Support with',
         titleAccent: 'product context',
         body: 'Install help, DOA, and courier delays land in Live Chat beside Shopify order # and SKU — agents reply with truth, not tabs.',
         image: '/marketing/solutions/sol-electronics-inbox-saas.png',
-        span: 'half',
+        span: 'third',
       },
       {
         titleLead: 'High-AOV',
         titleAccent: 'cart recovery',
         body: 'Phones, laptops, and accessories abandon often. Recover with the exact variant and price from Shopify — not a generic nudge.',
         image: '/marketing/solutions/sol-electronics-cart-saas.png',
-        span: 'half',
+        span: 'third',
+      },
+    ],
+    showcasesTitle: 'Inside',
+    showcasesAccent: 'electronics ops',
+    showcasesSub: 'Warranty register, DOA support, and high-ticket recovery — wired to Shopify.',
+    showcases: [
+      {
+        title: 'Warranty',
+        titleAccent: 'on WhatsApp',
+        body: 'Post-delivery templates register serial or warranty window — confirm on-chat and store it on the customer profile.',
+        image: '/marketing/solutions/sol-electronics-warranty-saas.png',
+        imageLabel: 'Electronics warranty assignment on WhatsApp',
+      },
+      {
+        title: 'DOA & install',
+        titleAccent: 'beside the order',
+        body: 'Agents see order #, SKU, and shipment status while chatting — faster resolution on high-ticket gadgets.',
+        image: '/marketing/solutions/sol-electronics-inbox-saas.png',
+        imageLabel: 'Electronics Live Chat with product context',
+      },
+      {
+        title: 'High-AOV',
+        titleAccent: 'recovery',
+        body: 'Recover phones and accessories with model, storage, and ₹ honest to the abandoned Shopify cart.',
+        image: '/marketing/solutions/sol-electronics-cart-saas.png',
+        imageLabel: 'High-AOV electronics cart recovery',
       },
     ],
     helpsTitle: 'Features that',
@@ -336,10 +453,10 @@ export const SOLUTION_VERTICALS: Record<string, SolutionVertical> = {
     helpsSub: 'Warranty notes, DOA support, and high-ticket recovery — wired to Shopify.',
     helps: [
       {
-        feature: 'Audience CRM',
+        feature: 'Warranty',
         title: 'Warranty notes stay on the profile',
         body: 'Serial, warranty window, and purchase history live beside WhatsApp identity — so renewals and care journeys stay personal.',
-        href: '/features/audience-crm',
+        href: '/features/warranty',
       },
       {
         feature: 'Live Chat',
@@ -365,6 +482,7 @@ export const SOLUTION_VERTICALS: Record<string, SolutionVertical> = {
     related: [
       { label: 'Fashion & apparel', href: '/solutions/fashion' },
       { label: 'COD-first brands', href: '/solutions/cod' },
+      { label: 'Warranty', href: '/features/warranty' },
       { label: 'Cart recovery', href: '/whatsapp-cart-recovery' },
       { label: 'Pricing', href: '/pricing' },
     ],
@@ -376,3 +494,19 @@ export const SOLUTION_VERTICALS: Record<string, SolutionVertical> = {
 export function getSolutionVertical(slug: string) {
   return SOLUTION_VERTICALS[slug] ?? null;
 }
+
+/** Used by SolutionTemplatePhones mock previews */
+export type SolutionWaTemplate = {
+  broadcastTitle: string;
+  recipients: string;
+  avatarLetter: string;
+  avatarTone: 'violet' | 'rose' | 'sky' | 'amber' | 'emerald';
+  image: string;
+  imageAlt: string;
+  headline: string;
+  subhead: string;
+  body: string;
+  linkLabel: string;
+  ctaLabel: string;
+  time: string;
+};

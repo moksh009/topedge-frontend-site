@@ -200,6 +200,36 @@ export const FEATURE_SEO: Record<string, { title: string; description: string; k
       'Route WhatsApp conversations for Shopify teams — rules for tags, assignments, and handoff so ecommerce support stays fast and organized.',
     keywords: 'WhatsApp chat rules, ecommerce inbox routing, WhatsApp assignment Shopify',
   },
+  warranty: {
+    title: 'WhatsApp Warranty for Shopify | Digital Warranty & Claims',
+    description:
+      'Assign product warranties on WhatsApp for Shopify brands — customer registration portal, OTP, claim workflow, and status updates tied to orders.',
+    keywords: 'WhatsApp warranty Shopify, digital warranty ecommerce India, warranty assignment WhatsApp',
+  },
+  'profit-loss': {
+    title: 'WhatsApp P&L Analytics for Shopify | Recovery ROI & Meta Costs',
+    description:
+      'Track WhatsApp profit and loss for Shopify ecommerce — cart recovery revenue, campaign Meta costs, and contribution margins in one analytics view.',
+    keywords: 'WhatsApp P&L analytics Shopify, cart recovery ROI, Meta cost ecommerce India',
+  },
+  byok: {
+    title: 'BYOK AI for WhatsApp Shopify | Bring Your Own Gemini or OpenAI Key',
+    description:
+      'Bring your own AI API keys to TopEdge — Gemini or OpenAI BYOK for Shopify WhatsApp automation with store knowledge RAG.',
+    keywords: 'BYOK AI WhatsApp Shopify, bring your own OpenAI key ecommerce, Gemini WhatsApp chatbot India',
+  },
+  'intent-detection': {
+    title: 'WhatsApp Intent Detection for Shopify | Chat Routing Without AI Waste',
+    description:
+      'Detect WhatsApp message intent and route Shopify ecommerce chatbots — algorithmic intent detection for better support.',
+    keywords: 'WhatsApp intent detection, chatbot intent routing Shopify, ecommerce chat intent India',
+  },
+  segments: {
+    title: 'WhatsApp Audience Segments for Shopify | Cart, COD & Pixel Cohorts',
+    description:
+      'Segment Shopify customers for WhatsApp — abandoned carts, COD buyers, VIPs, and pixel lookers — then broadcast with Meta-approved templates.',
+    keywords: 'WhatsApp segments Shopify, ecommerce audience segmentation India, pixel segments WhatsApp',
+  },
 };
 
 export const SOLUTION_SEO: Record<

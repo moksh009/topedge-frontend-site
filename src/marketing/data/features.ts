@@ -206,6 +206,95 @@ export const MARKETING_FEATURES: MarketingFeature[] = [
     ],
     aliases: ['rules'],
   },
+  {
+    slug: 'warranty',
+    scene: 'audience',
+    label: 'Warranty',
+    title: 'Digital warranty on WhatsApp — batches, portal, claims',
+    body: 'Link Shopify products to warranty batches, let customers register with WhatsApp OTP, and update claim status without spreadsheets.',
+    bullets: [
+      'Product batches + coverage rules',
+      'Customer portal with WhatsApp OTP',
+      'Claims Pending → Approved with WA updates',
+    ],
+    outcomes: [
+      'Serial and warranty window on the unified profile',
+      'Packaging QR opens pre-filled warranty chat',
+      'Claim status changes notify customers on WhatsApp',
+    ],
+  },
+  {
+    slug: 'profit-loss',
+    scene: 'analytics',
+    label: 'P&L Analytics',
+    title: 'WhatsApp spend vs real profit',
+    body: 'Recovery ₹, campaign Meta costs, and contribution margins — so growth sees what paid, not just what opened.',
+    bullets: [
+      'Recovery funnel with attributed ₹',
+      'Meta category cost clarity',
+      'Contribution after message fees',
+    ],
+    outcomes: [
+      'Cut journeys that spend without paid orders',
+      'Finance sees marketing vs utility rates honestly',
+      'Margins from Store engine meet WhatsApp costs',
+    ],
+    aliases: ['pnl', 'p-and-l', 'profit-and-loss', 'pl-analytics'],
+  },
+  {
+    slug: 'byok',
+    scene: 'ai-brain',
+    label: 'BYOK AI',
+    title: 'Bring your own Gemini or OpenAI keys',
+    body: 'Encrypted per-workspace API keys, store knowledge RAG, and optimised token usage — without an enterprise AI add-on tax.',
+    bullets: [
+      'Gemini or OpenAI BYOK',
+      'Store knowledge cited first',
+      '~₹0.2–₹0.3 / message token estimate',
+    ],
+    outcomes: [
+      'Your token bill, your spend ceiling',
+      'Keyword FAQs work even without a key',
+      'Live Chat takeover pauses AI instantly',
+    ],
+    aliases: ['byok-ai', 'bring-your-own-key'],
+  },
+  {
+    slug: 'intent-detection',
+    scene: 'ai-brain',
+    label: 'Intent detection',
+    title: 'Route chats by what they mean',
+    body: 'Algorithmic intent matches shipping, returns, COD, and handoff — steer flows without burning AI on every message.',
+    bullets: [
+      'Phrase matching you control',
+      'Route without AI spend',
+      'Test confidence before go-live',
+    ],
+    outcomes: [
+      'Shipping and returns land on the right flow',
+      'Handoff intents open the agent queue',
+      'Save AI tokens for hard catalog questions',
+    ],
+    aliases: ['intent', 'intents'],
+  },
+  {
+    slug: 'segments',
+    scene: 'audience',
+    label: 'Segments',
+    title: 'Audiences that earn a message',
+    body: 'Cohorts from carts, COD risk, purchase history, and pixel intent — campaign-ready without CSV merges.',
+    bullets: [
+      'Behaviour and cart cohorts',
+      'Pixel lookers when numbers match',
+      'One-click into Campaigns',
+    ],
+    outcomes: [
+      'Warm lists stay synced to live events',
+      'Broadcasts only hit people who showed intent',
+      'Attributed ₹ shows which segments paid',
+    ],
+    aliases: ['segmentation', 'audience-segments'],
+  },
 ];
 
 const aliasToSlug = new Map<string, string>();
@@ -239,6 +328,10 @@ export function canonicalHrefForStory(storyId: string): string {
     analytics: '/features/analytics',
     'meta-manager': '/features/meta-manager',
     audience: '/features/audience-crm',
+    intent: '/features/intent-detection',
+    'intent-detection': '/features/intent-detection',
+    segmentation: '/features/segments',
+    segment: '/features/segments',
   };
   return map[storyId] ?? '/features';
 }

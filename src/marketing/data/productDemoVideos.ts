@@ -85,6 +85,12 @@ const DEMO_ALIASES: Record<string, ProductDemoId> = {
   segment: 'segmentation',
   segmentation: 'segmentation',
   'audience-segmentation': 'segmentation',
+  segments: 'segmentation',
+  byok: 'ai-brain',
+  'byok-ai': 'ai-brain',
+  warranty: 'audience-crm',
+  'profit-loss': 'analytics',
+  pnl: 'analytics',
 };
 
 /**

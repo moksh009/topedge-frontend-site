@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import MarketingSEO from '../components/MarketingSEO';
 import MarketingPage from '../components/MarketingPage';
@@ -9,6 +10,7 @@ import {
   type ProductPage,
   type ProductPageId,
   type ProductBento,
+  type ProductShowcase,
 } from '../data/productPages';
 import { organizationJsonLd, breadcrumbJsonLd, webPageJsonLd } from '../data/pageSeo';
 import '../styles/product-feature.css';
@@ -17,21 +19,49 @@ type Props = {
   pageId: ProductPageId;
 };
 
+function ShotFrame({
+  src,
+  label,
+  wide,
+}: {
+  src: string;
+  label: string;
+  wide?: boolean;
+}) {
+  const [failed, setFailed] = useState(false);
+  const empty = failed || !src;
+
+  if (empty) {
+    return (
+      <div className={`mkt-pf__shot${wide ? ' is-wide' : ''} is-empty`} role="img" aria-label={label}>
+        <span className="mkt-pf__shot-label">{label}</span>
+        <span className="mkt-pf__shot-hint">Add dashboard screenshot</span>
+      </div>
+    );
+  }
+
+  return (
+    <div className={`mkt-pf__shot${wide ? ' is-wide' : ''}`}>
+      <img
+        className="mkt-pf__shot-img"
+        src={src}
+        alt={label}
+        loading="lazy"
+        decoding="async"
+        onError={() => setFailed(true)}
+      />
+    </div>
+  );
+}
+
 function BentoTile({ tile }: { tile: ProductBento }) {
-  const span = tile.span === 'half' ? 'half' : 'full';
+  const span = tile.span === 'half' ? 'half' : tile.span === 'full' ? 'full' : 'third';
+  const label = `${tile.titleLead} ${tile.titleAccent}`.trim();
 
   return (
     <article className={`mkt-pf__tile mkt-pf__tile--${span}`}>
       <div className="mkt-pf__tile-visual">
-        <img
-          className="mkt-pf__tile-img"
-          src={tile.image}
-          alt=""
-          width={span === 'full' ? 1280 : 1152}
-          height={span === 'full' ? 720 : 864}
-          loading="lazy"
-          decoding="async"
-        />
+        <ShotFrame src={tile.image} label={label} />
       </div>
       <div className="mkt-pf__tile-body">
         <h3 className="mkt-pf__tile-title">
@@ -44,8 +74,34 @@ function BentoTile({ tile }: { tile: ProductBento }) {
   );
 }
 
+function ShowcaseRow({ item, index }: { item: ProductShowcase; index: number }) {
+  const reverse = item.reverse ?? index % 2 === 1;
+  const label = item.imageLabel || `${item.title}${item.titleAccent ? ` ${item.titleAccent}` : ''}`;
+
+  return (
+    <article className={`mkt-pf__showcase${reverse ? ' is-reverse' : ''}`}>
+      <div className="mkt-pf__showcase-media">
+        <ShotFrame src={item.image} label={label} wide />
+      </div>
+      <div className="mkt-pf__showcase-copy">
+        <h3 className="mkt-pf__showcase-title">
+          {item.title}
+          {item.titleAccent ? (
+            <>
+              {' '}
+              <span className="mkt-pf__tile-accent">{item.titleAccent}</span>
+            </>
+          ) : null}
+        </h3>
+        <p className="mkt-pf__showcase-body">{item.body}</p>
+      </div>
+    </article>
+  );
+}
+
 function ProductFeatureView({ page }: { page: ProductPage }) {
   const fullTitle = `${page.title} ${page.titleAccent}`.replace(/\s+/g, ' ').trim();
+  const hasShowcases = Boolean(page.showcases?.length);
 
   return (
     <>
@@ -101,7 +157,7 @@ function ProductFeatureView({ page }: { page: ProductPage }) {
             <h2 id="mkt-pf-bento" className="mkt-pf__head-title">
               {page.bentoTitle} <span>{page.bentoAccent}</span>
             </h2>
-            <p className="mkt-pf__head-sub">{page.bentoSub}</p>
+            {page.bentoSub ? <p className="mkt-pf__head-sub">{page.bentoSub}</p> : null}
           </div>
           <div className="mkt-pf__bento">
             {page.bentos.map((tile) => (
@@ -109,6 +165,22 @@ function ProductFeatureView({ page }: { page: ProductPage }) {
             ))}
           </div>
         </section>
+
+        {hasShowcases ? (
+          <section className="mkt-pf__section" aria-labelledby="mkt-pf-show">
+            <div className="mkt-pf__head">
+              <h2 id="mkt-pf-show" className="mkt-pf__head-title">
+                {page.showcasesTitle} <span>{page.showcasesAccent}</span>
+              </h2>
+              {page.showcasesSub ? <p className="mkt-pf__head-sub">{page.showcasesSub}</p> : null}
+            </div>
+            <div className="mkt-pf__showcases">
+              {page.showcases!.map((item, i) => (
+                <ShowcaseRow key={`${item.title}-${i}`} item={item} index={i} />
+              ))}
+            </div>
+          </section>
+        ) : null}
 
         <section className="mkt-pf__section" aria-labelledby="mkt-pf-steps">
           <div className="mkt-pf__head">
@@ -158,7 +230,7 @@ function ProductFeatureView({ page }: { page: ProductPage }) {
   );
 }
 
-/** Shared enterprise product page — cart, COD, flow, campaigns, CRM. */
+/** Shared enterprise product page — cart, COD, flow, campaigns, CRM, and more. */
 export default function ProductFeaturePage({ pageId }: Props) {
   const page = getProductPage(pageId);
   return <ProductFeatureView page={page} />;
