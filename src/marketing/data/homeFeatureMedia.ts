@@ -43,8 +43,6 @@ export const FEATURE_VIDEOS = {
   cod: COD,
   shopifyTools: FLOW,
   campaigns: CART,
-  /** Placeholder until pixel recording ships */
-  pixel: CART,
   optin: OPTIN,
   intent: INTENT,
   segmentation: SEGMENT,
@@ -57,6 +55,9 @@ export const FEATURE_IMAGES = {
   },
   unifiedIdentity: {
     src: '/leaadd.png?v=20260917c',
+  },
+  pixel: {
+    src: '/marketing/features/pixel-tracking.png',
   },
 } as const;
 

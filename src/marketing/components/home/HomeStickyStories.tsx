@@ -20,16 +20,6 @@ type Story = {
 );
 
 const STORIES: Story[] = [
-  // Videos first
-  {
-    id: 'abandoned-cart',
-    titleLead: 'Abandoned Cart',
-    titleAccent: 'Workflow',
-    body: 'Recover checkouts with timed WhatsApp nudges the moment a shopper leaves items behind.',
-    glow: 'emerald',
-    kind: 'video',
-    video: FEATURE_VIDEOS.cart,
-  },
   {
     id: 'cod-prepaid',
     titleLead: 'COD → Prepaid',
@@ -58,15 +48,6 @@ const STORIES: Story[] = [
     video: FEATURE_VIDEOS.optin,
   },
   {
-    id: 'segmentation',
-    titleLead: 'Smart Audience',
-    titleAccent: 'Segmentation',
-    body: 'Build cohorts from carts, COD risk, and purchase history — then enroll journeys and measure attributed revenue in one list.',
-    glow: 'rose',
-    kind: 'video',
-    video: FEATURE_VIDEOS.segmentation,
-  },
-  {
     id: 'intent-detection',
     titleLead: 'Real-time',
     titleAccent: 'Intent Detection',
@@ -76,15 +57,32 @@ const STORIES: Story[] = [
     video: FEATURE_VIDEOS.intent,
   },
   {
+    id: 'segmentation',
+    titleLead: 'Smart Audience',
+    titleAccent: 'Segmentation',
+    body: 'Build cohorts from carts, COD risk, and purchase history — then enroll journeys and measure attributed revenue in one list.',
+    glow: 'rose',
+    kind: 'video',
+    video: FEATURE_VIDEOS.segmentation,
+  },
+  {
+    id: 'abandoned-cart',
+    titleLead: 'Abandoned Cart',
+    titleAccent: 'Workflow',
+    body: 'Recover checkouts with timed WhatsApp nudges the moment a shopper leaves items behind.',
+    glow: 'emerald',
+    kind: 'video',
+    video: FEATURE_VIDEOS.cart,
+  },
+  {
     id: 'website-pixel',
     titleLead: 'Website Detailed',
     titleAccent: 'Tracking Pixel',
     body: 'Watch live product views, scroll, and carts matched to WhatsApp numbers — ready to message.',
     glow: 'amber',
-    kind: 'video',
-    video: FEATURE_VIDEOS.pixel,
+    kind: 'image',
+    image: FEATURE_IMAGES.pixel,
   },
-  // Image features below
   {
     id: 'audience-campaigns',
     titleLead: 'Custom Audience',

@@ -106,10 +106,13 @@ export default function DemoProductVideoFrame({
 
     const onVisibility = () => {
       if (document.hidden) {
+        // Pause only — keep wasVisible so we can resume when the tab returns
         video.pause();
-        wasVisible.current = false;
-      } else if (wasVisible.current) {
-        playFromStart();
+        return;
+      }
+      if (wasVisible.current && video.paused) {
+        const play = video.play();
+        if (play && typeof play.catch === 'function') play.catch(() => {});
       }
     };
     document.addEventListener('visibilitychange', onVisibility);

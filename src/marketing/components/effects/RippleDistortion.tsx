@@ -208,18 +208,20 @@ const RippleDistortion = ({
     const waveCount = Math.max(8, Math.min(100, maxWaves));
 
     const renderer = new Renderer({
-      alpha: false,
+      alpha: true,
       antialias: false,
       dpr: Math.min(window.devicePixelRatio || 1, maxDpr),
       powerPreference: 'high-performance',
     } as ConstructorParameters<typeof Renderer>[0]);
     const gl = renderer.gl;
-    // Match dark mesh so load flash isn't washed out
-    gl.clearColor(0.1, 0.04, 0.18, 1);
+    // Transparent until mesh texture loads — CSS mesh stays visible (no black flash)
+    gl.clearColor(0, 0, 0, 0);
     const canvas = gl.canvas as HTMLCanvasElement;
     canvas.style.width = '100%';
     canvas.style.height = '100%';
     canvas.style.display = 'block';
+    canvas.style.opacity = '0';
+    canvas.style.transition = 'opacity 180ms ease';
     mount.appendChild(canvas);
 
     const imageTexture = new Texture(gl, {
@@ -233,6 +235,7 @@ const RippleDistortion = ({
     let disposed = false;
     let inView = true;
     let needsDraw = true;
+    let canvasRevealed = false;
     const image = new window.Image();
     image.crossOrigin = 'anonymous';
     image.decoding = 'async';
@@ -462,6 +465,11 @@ const RippleDistortion = ({
       renderer.render({ scene: waveMesh, target: displacementTarget, clear: true });
       renderer.render({ scene: compositeMesh });
       needsDraw = hasActive;
+
+      if (!canvasRevealed && imageTexture.image) {
+        canvasRevealed = true;
+        canvas.style.opacity = '1';
+      }
     };
     raf = requestAnimationFrame(loop);
 

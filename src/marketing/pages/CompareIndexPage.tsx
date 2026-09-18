@@ -10,12 +10,12 @@ import '../styles/compare.css';
 const FEATURED = [
   {
     href: '/compare/topedge-vs-wati-vs-aisensy',
-    title: 'TopEdge vs WATI vs AiSensy',
-    body: 'Full 3-way board — Meta markup, AI cost, intent routing, identity, COD → prepaid, warranty, and chatflow caps.',
+    title: 'TopEdge AI vs WATI vs AiSensy',
+    body: 'Markup, AI cost, identity, COD → prepaid, and chatflow caps — one board.',
     logos: [
       '/logo.png',
       '/marketing/compare/compare-logo-wati.png',
-      '/marketing/compare/compare-logo-aisensy.svg',
+      '/marketing/compare/compare-logo-aisensy.png',
     ],
     badge: '3-way',
   },
@@ -47,14 +47,24 @@ export default function CompareIndexPage() {
       />
       <MarketingPage className="mkt-cmp">
         <header className="mkt-cmp__arena">
-          <p className="mkt-cmp__kicker">Product comparison</p>
+          <p className="mkt-cmp__kicker">Comparison</p>
           <h1 className="mkt-cmp__h1">
-            TopEdge <span>vs</span> WhatsApp tools
+            <span className="mkt-cmp__h1-brand">
+              <img
+                src="/brand-mark.png"
+                alt=""
+                width={28}
+                height={28}
+                className="mkt-cmp__h1-mark"
+                decoding="async"
+              />
+              <span className="mkt-cmp__h1-name">
+                TopEdge <span>AI</span>
+              </span>
+            </span>
+            <span className="mkt-cmp__h1-vs">vs</span>
+            <span className="mkt-cmp__h1-rest">WhatsApp tools</span>
           </h1>
-          <p className="mkt-cmp__lede">
-            Side-by-side boards for Shopify WhatsApp automation in India — Meta markup, AI, identity,
-            COD → prepaid, and who each tool fits.
-          </p>
         </header>
 
         <section className="mkt-cmp__block" aria-label="Featured comparison">
@@ -73,7 +83,7 @@ export default function CompareIndexPage() {
                 <h2>{f.title}</h2>
                 <p>{f.body}</p>
                 <span className="mkt-cmp-index__card-cta">
-                  Open 3-way board
+                  Open board
                   <ArrowRight className="h-3.5 w-3.5" aria-hidden />
                 </span>
               </Link>
@@ -83,23 +93,22 @@ export default function CompareIndexPage() {
 
         <section className="mkt-cmp__block" aria-label="Comparisons">
           <div className="mkt-cmp__block-head">
-            <h2>Pairwise comparisons</h2>
-            <p>Pick a competitor for a deeper TopEdge face-off.</p>
+            <h2>
+              Pairwise <span className="mkt-cmp__hl">boards</span>
+            </h2>
           </div>
           <div className="mkt-cmp-index__grid">
             {competitors.map((c) => (
               <Link key={c.slug} to={`/compare/${c.slug}`} className="mkt-cmp-index__card">
                 <div className="mkt-cmp-index__card-top">
                   <img src="/logo.png" alt="" width={32} height={32} />
-                  <span className="mkt-cmp__split-vs" style={{ display: 'inline' }}>
-                    vs
-                  </span>
+                  <span className="mkt-cmp-index__vs">vs</span>
                   <img src={c.logo} alt="" width={32} height={32} />
                 </div>
-                <h2>TopEdge vs {c.name}</h2>
-                <p>{c.whoForTopEdge}</p>
+                <h2>TopEdge AI vs {c.name}</h2>
+                <p>{c.brandTag || 'WhatsApp platform'}</p>
                 <span className="mkt-cmp-index__card-cta">
-                  Open comparison
+                  Compare
                   <ArrowRight className="h-3.5 w-3.5" aria-hidden />
                 </span>
               </Link>
@@ -108,7 +117,7 @@ export default function CompareIndexPage() {
         </section>
 
         <MarketingCtaBand
-          title="Try TopEdge on your store"
+          title="Try TopEdge AI on your store"
           subtitle="Start free — connect Shopify and WhatsApp, approve templates, publish recovery."
           primaryLabel="Start free"
           secondaryLabel="See pricing"

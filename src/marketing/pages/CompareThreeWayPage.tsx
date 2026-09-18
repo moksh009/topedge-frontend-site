@@ -1,8 +1,10 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import MarketingSEO from '../components/MarketingSEO';
 import MarketingPage from '../components/MarketingPage';
 import MarketingCtaBand from '../components/MarketingCtaBand';
+import CompareStatus from '../components/compare/CompareStatus';
 import { COMPARE_FEATURE_MATRIX } from '../data/compareFeatureMatrix';
 import { breadcrumbJsonLd, organizationJsonLd, webPageJsonLd } from '../data/pageSeo';
 import '../styles/compare.css';
@@ -13,40 +15,12 @@ const TITLE = 'TopEdge vs WATI vs AiSensy (2026) | WhatsApp Ecommerce Comparison
 const DESCRIPTION =
   'Three-way comparison: TopEdge vs WATI vs AiSensy on WhatsApp template markup, AI costs, intent routing, unified identity, COD → prepaid, analytics, warranty, journeys, and chatflow limits.';
 
-const VENDORS = [
-  {
-    key: 'topedge' as const,
-    name: 'TopEdge',
-    tag: 'Shopify WhatsApp growth OS',
-    logo: '/logo.png',
-    href: '/signup',
-    cta: 'Start free',
-    external: false,
-    highlight: true,
-  },
-  {
-    key: 'wati' as const,
-    name: 'WATI',
-    tag: 'WhatsApp BSP',
-    logo: '/marketing/compare/compare-logo-wati.png',
-    href: 'https://www.wati.io',
-    cta: 'Their site',
-    external: true,
-    highlight: false,
-  },
-  {
-    key: 'aisensy' as const,
-    name: 'AiSensy',
-    tag: 'WhatsApp marketing platform',
-    logo: '/marketing/compare/compare-logo-aisensy.svg',
-    href: 'https://aisensy.com',
-    cta: 'Their site',
-    external: true,
-    highlight: false,
-  },
-];
+const LOGO_WATI = '/marketing/compare/compare-logo-wati.png';
+const LOGO_AISENSY = '/marketing/compare/compare-logo-aisensy.png';
 
 export default function CompareThreeWayPage() {
+  const [openRow, setOpenRow] = useState<string | null>(null);
+
   return (
     <>
       <MarketingSEO
@@ -67,68 +41,80 @@ export default function CompareThreeWayPage() {
       />
       <MarketingPage className="mkt-cmp">
         <header className="mkt-cmp__arena">
-          <p className="mkt-cmp__kicker">Product comparison · 3-way</p>
-          <h1 className="mkt-cmp__h1">
-            TopEdge <span>vs</span> WATI <span>vs</span> AiSensy
+          <p className="mkt-cmp__kicker">Comparison · 3-way</p>
+          <h1 className="mkt-cmp__h1 mkt-cmp__h1--trio">
+            <span className="mkt-cmp__h1-brand">
+              <img
+                src="/brand-mark.png"
+                alt=""
+                width={28}
+                height={28}
+                className="mkt-cmp__h1-mark"
+                decoding="async"
+              />
+              <span className="mkt-cmp__h1-name">
+                TopEdge <span>AI</span>
+              </span>
+            </span>
+            <span className="mkt-cmp__h1-vs">vs</span>
+            <span className="mkt-cmp__h1-peer">
+              <img src={LOGO_WATI} alt="" width={28} height={28} decoding="async" />
+              <span className="mkt-cmp__h1-peer-name">WATI</span>
+            </span>
+            <span className="mkt-cmp__h1-vs">vs</span>
+            <span className="mkt-cmp__h1-peer">
+              <img src={LOGO_AISENSY} alt="" width={28} height={28} decoding="async" />
+              <span className="mkt-cmp__h1-peer-name">AiSensy</span>
+            </span>
           </h1>
-          <p className="mkt-cmp__lede">
-            One board for Meta markup, AI economics, intent routing, unified identity, COD → prepaid,
-            analytics, warranty, journeys, and chatflow caps.
-          </p>
-
-          <div className="mkt-cmp__trio">
-            {VENDORS.map((v) => (
-              <div key={v.key} className={`mkt-cmp__brand${v.highlight ? ' is-te' : ''}`}>
-                <img src={v.logo} alt="" width={44} height={44} className="mkt-cmp__brand-mark" />
-                <div>
-                  <p className="mkt-cmp__brand-name">{v.name}</p>
-                  <p className="mkt-cmp__brand-tag">{v.tag}</p>
-                </div>
-                {v.external ? (
-                  <a href={v.href} target="_blank" rel="noopener noreferrer" className="mkt-cmp__brand-cta">
-                    {v.cta}
-                  </a>
-                ) : (
-                  <Link to={v.href} className="mkt-cmp__brand-cta is-solid">
-                    {v.cta}
-                    <ArrowRight className="h-3.5 w-3.5" aria-hidden />
-                  </Link>
-                )}
-              </div>
-            ))}
-          </div>
         </header>
 
-        <section className="mkt-cmp__block" aria-label="Quick verdict">
-          <div className="mkt-cmp__snap mkt-cmp__snap--trio">
-            <div className="mkt-cmp__snap-col is-te">
-              <p className="mkt-cmp__snap-label">Choose TopEdge when</p>
-              <p className="mkt-cmp__snap-body">
-                You want 0% Meta markup, BYOK AI, algorithmic intent routing, unified customer identity,
-                COD → prepaid, warranty, and unlimited chatflows — native for Shopify India.
+        <section className="mkt-cmp__block" aria-label="Who it's for">
+          <div className="mkt-cmp__pick mkt-cmp__pick--trio">
+            <article className="mkt-cmp__pick-col is-te">
+              <div className="mkt-cmp__pick-top">
+                <img src="/logo.png" alt="" width={22} height={22} />
+                <p className="mkt-cmp__pick-kicker">
+                  Best with <span className="mkt-cmp__hl">TopEdge AI</span>
+                </p>
+              </div>
+              <p className="mkt-cmp__pick-body">
+                You want 0% Meta markup, BYOK AI, unified identity, COD → prepaid, warranty, and
+                unlimited flows — native for Shopify India.
               </p>
-            </div>
-            <div className="mkt-cmp__snap-col">
-              <p className="mkt-cmp__snap-label">Choose WATI when</p>
-              <p className="mkt-cmp__snap-body">
-                You need a broad WhatsApp BSP with keyword / rule triggers and accept platform usage
-                charges plus monthly trigger caps.
+            </article>
+            <article className="mkt-cmp__pick-col">
+              <div className="mkt-cmp__pick-top">
+                <img src={LOGO_WATI} alt="" width={22} height={22} />
+                <p className="mkt-cmp__pick-kicker">
+                  Best with <span className="mkt-cmp__pick-peer">WATI</span>
+                </p>
+              </div>
+              <p className="mkt-cmp__pick-body">
+                You need a broad WhatsApp BSP with keyword automations and can live with usage charges
+                plus monthly trigger caps.
               </p>
-            </div>
-            <div className="mkt-cmp__snap-col">
-              <p className="mkt-cmp__snap-label">Choose AiSensy when</p>
-              <p className="mkt-cmp__snap-body">
-                You want WhatsApp marketing with credit / tier packaging and are fine with AI add-on fees
-                and a flow builder that unlocks on higher plans.
+            </article>
+            <article className="mkt-cmp__pick-col">
+              <div className="mkt-cmp__pick-top">
+                <img src={LOGO_AISENSY} alt="" width={22} height={22} />
+                <p className="mkt-cmp__pick-kicker">
+                  Best with <span className="mkt-cmp__pick-peer">AiSensy</span>
+                </p>
+              </div>
+              <p className="mkt-cmp__pick-body">
+                You want WhatsApp marketing with credit packaging and are fine gating AI / flows behind
+                higher tiers.
               </p>
-            </div>
+            </article>
           </div>
         </section>
 
         <section className="mkt-cmp__block" aria-labelledby="cmp-3way">
           <div className="mkt-cmp__block-head">
-            <h2 id="cmp-3way">Full capability board</h2>
-            <p>Thirteen features that decide total WhatsApp + ecommerce cost and ops depth.</p>
+            <h2 id="cmp-3way">
+              Capability <span className="mkt-cmp__hl">board</span>
+            </h2>
           </div>
 
           <div className="mkt-cmp__triple-wrap">
@@ -139,48 +125,66 @@ export default function CompareThreeWayPage() {
                 </span>
                 <span className="mkt-cmp__triple-col is-te" role="columnheader">
                   <img src="/logo.png" alt="" width={18} height={18} />
-                  TopEdge
+                  TopEdge AI
                 </span>
                 <span className="mkt-cmp__triple-col" role="columnheader">
-                  <img src="/marketing/compare/compare-logo-wati.png" alt="" width={18} height={18} />
+                  <img src={LOGO_WATI} alt="" width={18} height={18} />
                   WATI
                 </span>
                 <span className="mkt-cmp__triple-col" role="columnheader">
-                  <img src="/marketing/compare/compare-logo-aisensy.svg" alt="" width={18} height={18} />
+                  <img src={LOGO_AISENSY} alt="" width={18} height={18} />
                   AiSensy
                 </span>
               </div>
 
-              {COMPARE_FEATURE_MATRIX.map((row) => (
-                <div key={row.id} className="mkt-cmp__triple-row" role="row">
-                  <div className="mkt-cmp__triple-feat" role="rowheader">
-                    <span className="mkt-cmp__board-feat">{row.name}</span>
-                    {row.description ? <p className="mkt-cmp__board-desc">{row.description}</p> : null}
+              {COMPARE_FEATURE_MATRIX.map((row) => {
+                const isOpen = openRow === row.id;
+                return (
+                  <div
+                    key={row.id}
+                    className={`mkt-cmp__triple-row${isOpen ? ' is-open' : ''}`}
+                    role="row"
+                  >
+                    <div className="mkt-cmp__triple-main">
+                      <div className="mkt-cmp__triple-feat" role="rowheader">
+                        {row.description ? (
+                          <button
+                            type="button"
+                            className="mkt-cmp__board-toggle"
+                            aria-expanded={isOpen}
+                            onClick={() => setOpenRow(isOpen ? null : row.id)}
+                          >
+                            <ChevronRight className="mkt-cmp__board-chevron" aria-hidden />
+                            <span className="mkt-cmp__board-feat">{row.name}</span>
+                          </button>
+                        ) : (
+                          <span className="mkt-cmp__board-feat">{row.name}</span>
+                        )}
+                      </div>
+                      <div className="mkt-cmp__triple-cell is-te" role="cell" data-label="TopEdge AI">
+                        <CompareStatus value={row.topedge} />
+                      </div>
+                      <div className="mkt-cmp__triple-cell" role="cell" data-label="WATI">
+                        <CompareStatus value={row.wati} />
+                      </div>
+                      <div className="mkt-cmp__triple-cell" role="cell" data-label="AiSensy">
+                        <CompareStatus value={row.aisensy} />
+                      </div>
+                    </div>
+                    {row.description && isOpen ? (
+                      <p className="mkt-cmp__triple-desc">{row.description}</p>
+                    ) : null}
                   </div>
-                  <div className="mkt-cmp__triple-cell is-te" role="cell" data-label="TopEdge">
-                    {row.topedge}
-                  </div>
-                  <div className="mkt-cmp__triple-cell" role="cell" data-label="WATI">
-                    {row.wati}
-                  </div>
-                  <div className="mkt-cmp__triple-cell" role="cell" data-label="AiSensy">
-                    {row.aisensy}
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 
-          <p className="mkt-cmp__fine mkt-cmp__fine--board">
-            Claims reflect TopEdge product positioning vs publicly described WATI and AiSensy patterns.
-            Confirm live fees, credits, and plan limits on each vendor’s site before purchase.
-          </p>
-
           <nav className="mkt-cmp__more" aria-label="Pairwise comparisons">
-            <Link to="/compare/wati">TopEdge vs WATI</Link>
-            <Link to="/compare/aisensy">TopEdge vs AiSensy</Link>
+            <Link to="/compare/wati">TopEdge AI vs WATI</Link>
+            <Link to="/compare/aisensy">TopEdge AI vs AiSensy</Link>
             <Link to="/compare">All comparisons</Link>
-            <Link to="/pricing">TopEdge pricing</Link>
+            <Link to="/pricing">TopEdge AI pricing</Link>
           </nav>
         </section>
 

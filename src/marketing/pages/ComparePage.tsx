@@ -1,49 +1,35 @@
+import { useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
-import { Check, Minus, ArrowRight } from 'lucide-react';
+import { ArrowRight, ChevronRight } from 'lucide-react';
 import MarketingSEO from '../components/MarketingSEO';
 import MarketingPage from '../components/MarketingPage';
 import MarketingCtaBand from '../components/MarketingCtaBand';
+import CompareFaq from '../components/compare/CompareFaq';
+import CompareStatus from '../components/compare/CompareStatus';
 import {
   getCompareCompetitor,
   TOPEDGE_PLANS_SUMMARY,
-  type CompareCell,
   type CompareScoreRow,
 } from '../data/compareCompetitors';
+import { planDuelFeatures, type MatrixCompetitor } from '../data/compareFeatureMatrix';
 import { breadcrumbJsonLd, organizationJsonLd, webPageJsonLd } from '../data/pageSeo';
 import { SITE_URL } from '../data/marketingSeo';
 import '../styles/compare.css';
 
 type Props = { competitor?: string };
 
-function Status({ value }: { value: CompareCell }) {
-  if (value === 'yes') {
-    return (
-      <span className="mkt-cmp__status is-yes" title="Yes">
-        <Check strokeWidth={2.5} aria-hidden />
-        <span className="sr-only">Yes</span>
-      </span>
-    );
-  }
-  if (value === 'no') {
-    return (
-      <span className="mkt-cmp__status is-no" title="No">
-        <Minus strokeWidth={2.5} aria-hidden />
-        <span className="sr-only">No</span>
-      </span>
-    );
-  }
-  if (value === 'partial') {
-    return <span className="mkt-cmp__status is-partial">Partial</span>;
-  }
-  return (
-    <span className="mkt-cmp__status is-text" title={value}>
-      {value}
-    </span>
-  );
+function brandLabel(text: string) {
+  return text.replace(/\bTopEdge\b(?! AI)/g, 'TopEdge AI');
+}
+
+function pickBestPlan<T extends { popular?: boolean; name: string; price: string; note?: string; highlights: readonly string[] }>(
+  plans: readonly T[],
+): T {
+  return plans.find((p) => Boolean(p.popular)) ?? plans[1] ?? plans[0];
 }
 
 function ScoreEdge({ edge, competitorName }: { edge: CompareScoreRow['edge']; competitorName: string }) {
-  const label = edge === 'Competitor' ? competitorName : edge;
+  const label = edge === 'TopEdge' ? 'TopEdge AI' : edge === 'Competitor' ? competitorName : edge;
   const mod =
     edge === 'TopEdge' ? 'is-te' : edge === 'Competitor' ? 'is-comp' : edge === 'Even' ? 'is-even' : 'is-trade';
   return <span className={`mkt-cmp__edge ${mod}`}>{label}</span>;
@@ -73,6 +59,7 @@ export default function ComparePage({ competitor: competitorProp }: Props) {
   const { competitor: param } = useParams();
   const slug = competitorProp || param || '';
   const data = getCompareCompetitor(slug);
+  const [openRow, setOpenRow] = useState<string | null>(null);
 
   if (!data) {
     return <Navigate to="/compare" replace />;
@@ -87,6 +74,9 @@ export default function ComparePage({ competitor: competitorProp }: Props) {
       (typeof row.topedge === 'string' && !['yes', 'no', 'partial'].includes(row.topedge)) ||
       (typeof row.competitor === 'string' && !['yes', 'no', 'partial'].includes(row.competitor)),
   );
+  const teBest = pickBestPlan(TOPEDGE_PLANS_SUMMARY);
+  const compBest = pickBestPlan(data.competitorPlans);
+  const duelFeatures = planDuelFeatures(data.slug as MatrixCompetitor);
 
   return (
     <>
@@ -111,69 +101,63 @@ export default function ComparePage({ competitor: competitorProp }: Props) {
       <MarketingPage className="mkt-cmp">
         <header className="mkt-cmp__arena">
           <p className="mkt-cmp__kicker">
-            Product comparison
-            {data.researchAsOf ? <span className="mkt-cmp__asof"> · Researched {data.researchAsOf}</span> : null}
+            Comparison
+            {data.researchAsOf ? <span className="mkt-cmp__asof"> · {data.researchAsOf}</span> : null}
           </p>
           <h1 className="mkt-cmp__h1">
-            TopEdge <span>vs</span> {data.name}
+            <span className="mkt-cmp__h1-brand">
+              <img
+                src="/brand-mark.png"
+                alt=""
+                width={28}
+                height={28}
+                className="mkt-cmp__h1-mark"
+                decoding="async"
+              />
+              <span className="mkt-cmp__h1-name">
+                TopEdge <span>AI</span>
+              </span>
+            </span>
+            <span className="mkt-cmp__h1-vs">vs</span>
+            <span className="mkt-cmp__h1-peer">
+              <img src={data.logo} alt="" width={28} height={28} decoding="async" />
+              <span className="mkt-cmp__h1-peer-name">{data.name}</span>
+            </span>
           </h1>
-          <p className="mkt-cmp__lede">{data.subtitle}</p>
-
-          <div className="mkt-cmp__split">
-            <div className="mkt-cmp__brand is-te">
-              <img src="/logo.png" alt="" width={44} height={44} className="mkt-cmp__brand-mark" />
-              <div>
-                <p className="mkt-cmp__brand-name">TopEdge</p>
-                <p className="mkt-cmp__brand-tag">Shopify WhatsApp growth OS</p>
-              </div>
-              <Link to="/signup" className="mkt-cmp__brand-cta is-solid">
-                Start free
-                <ArrowRight className="h-3.5 w-3.5" aria-hidden />
-              </Link>
-            </div>
-            <div className="mkt-cmp__split-vs" aria-hidden>
-              vs
-            </div>
-            <div className="mkt-cmp__brand">
-              <img src={data.logo} alt="" width={44} height={44} className="mkt-cmp__brand-mark" />
-              <div>
-                <p className="mkt-cmp__brand-name">{data.name}</p>
-                <p className="mkt-cmp__brand-tag">{data.brandTag || 'WhatsApp platform'}</p>
-              </div>
-              <a
-                href={data.website}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mkt-cmp__brand-cta"
-              >
-                Their site
-              </a>
-            </div>
-          </div>
         </header>
 
-        <section className="mkt-cmp__block" aria-label="Snapshot">
-          <div className="mkt-cmp__snap">
-            <div className="mkt-cmp__snap-col is-te">
-              <p className="mkt-cmp__snap-label">Choose TopEdge when</p>
-              <p className="mkt-cmp__snap-body">{data.whoForTopEdge}</p>
-            </div>
-            <div className="mkt-cmp__snap-col">
-              <p className="mkt-cmp__snap-label">Choose {data.name} when</p>
-              <p className="mkt-cmp__snap-body">{data.whoForCompetitor}</p>
-            </div>
+        <section className="mkt-cmp__block" aria-label="Who it's for">
+          <div className="mkt-cmp__pick">
+            <article className="mkt-cmp__pick-col is-te">
+              <div className="mkt-cmp__pick-top">
+                <img src="/logo.png" alt="" width={22} height={22} />
+                <p className="mkt-cmp__pick-kicker">
+                  Best with <span className="mkt-cmp__hl">TopEdge AI</span>
+                </p>
+              </div>
+              <p className="mkt-cmp__pick-body">{data.whoForTopEdge}</p>
+            </article>
+            <article className="mkt-cmp__pick-col">
+              <div className="mkt-cmp__pick-top">
+                <img src={data.logo} alt="" width={22} height={22} />
+                <p className="mkt-cmp__pick-kicker">
+                  Best with <span className="mkt-cmp__pick-peer">{data.name}</span>
+                </p>
+              </div>
+              <p className="mkt-cmp__pick-body">{data.whoForCompetitor}</p>
+            </article>
           </div>
-          <p className="mkt-cmp__snap-note">{data.answerFirst}</p>
+          <details className="mkt-cmp__verdict">
+            <summary>Quick verdict</summary>
+            <p>{data.answerFirst}</p>
+          </details>
         </section>
 
         <section className="mkt-cmp__block" aria-labelledby="cmp-board">
           <div className="mkt-cmp__block-head">
-            <h2 id="cmp-board">Capability board</h2>
-            <p>
-              {boardWide
-                ? `Feature-by-feature: TopEdge vs ${data.name} on markup, AI, identity, COD, analytics, and chatflows.`
-                : 'Shopify WhatsApp ops that matter for Indian D2C — verified where possible.'}
-            </p>
+            <h2 id="cmp-board">
+              Capability <span className="mkt-cmp__hl">board</span>
+            </h2>
           </div>
 
           <div className={`mkt-cmp__board${boardWide ? ' is-wide' : ''}`}>
@@ -181,7 +165,7 @@ export default function ComparePage({ competitor: competitorProp }: Props) {
               <span className="mkt-cmp__board-cap">Capability</span>
               <span className="mkt-cmp__board-col is-te">
                 <img src="/logo.png" alt="" width={18} height={18} />
-                TopEdge
+                TopEdge AI
               </span>
               <span className="mkt-cmp__board-col">
                 <img src={data.logo} alt="" width={18} height={18} />
@@ -189,38 +173,55 @@ export default function ComparePage({ competitor: competitorProp }: Props) {
               </span>
             </div>
             <ul className="mkt-cmp__board-list">
-              {data.matrix.map((row) => (
-                <li key={row.label} className={`mkt-cmp__board-row${row.description ? ' is-rich' : ''}`}>
-                  <div className="mkt-cmp__board-label">
-                    <span className="mkt-cmp__board-feat">{row.label}</span>
-                    {row.description ? <p className="mkt-cmp__board-desc">{row.description}</p> : null}
-                  </div>
-                  <span className="mkt-cmp__board-cell">
-                    <Status value={row.topedge} />
-                  </span>
-                  <span className="mkt-cmp__board-cell">
-                    <Status value={row.competitor} />
-                  </span>
-                </li>
-              ))}
+              {data.matrix.map((row) => {
+                const key = row.label;
+                const isOpen = openRow === key;
+                return (
+                  <li key={key} className={`mkt-cmp__board-row${isOpen ? ' is-open' : ''}`}>
+                    <div className="mkt-cmp__board-main">
+                      <div className="mkt-cmp__board-label">
+                        {row.description ? (
+                          <button
+                            type="button"
+                            className="mkt-cmp__board-toggle"
+                            aria-expanded={isOpen}
+                            onClick={() => setOpenRow(isOpen ? null : key)}
+                          >
+                            <ChevronRight className="mkt-cmp__board-chevron" aria-hidden />
+                            <span className="mkt-cmp__board-feat">{row.label}</span>
+                          </button>
+                        ) : (
+                          <span className="mkt-cmp__board-feat">{row.label}</span>
+                        )}
+                      </div>
+                      <span className="mkt-cmp__board-cell">
+                        <CompareStatus value={row.topedge} />
+                      </span>
+                      <span className="mkt-cmp__board-cell">
+                        <CompareStatus value={row.competitor} />
+                      </span>
+                    </div>
+                    {row.description && isOpen ? (
+                      <p className="mkt-cmp__board-desc">{row.description}</p>
+                    ) : null}
+                  </li>
+                );
+              })}
             </ul>
           </div>
-          {data.matrixNote ? <p className="mkt-cmp__fine mkt-cmp__fine--board">{data.matrixNote}</p> : null}
         </section>
 
         {hasScorecard ? (
           <section className="mkt-cmp__block" aria-labelledby="cmp-score">
             <div className="mkt-cmp__block-head">
-              <h2 id="cmp-score">Honest scorecard</h2>
-              <p>
-                Beyond Yes/No — where each product actually differs
-                {data.researchAsOf ? ` (as of ${data.researchAsOf})` : ''}.
-              </p>
+              <h2 id="cmp-score">
+                Honest <span className="mkt-cmp__hl">scorecard</span>
+              </h2>
             </div>
             <div className="mkt-cmp__score" data-competitor={data.shortName}>
               <div className="mkt-cmp__score-head" aria-hidden>
                 <span>Area</span>
-                <span>TopEdge</span>
+                <span>TopEdge AI</span>
                 <span>{data.name}</span>
                 <span>Edge</span>
               </div>
@@ -245,15 +246,20 @@ export default function ComparePage({ competitor: competitorProp }: Props) {
         {hasDeepDives ? (
           <section className="mkt-cmp__block" aria-labelledby="cmp-deep">
             <div className="mkt-cmp__block-head">
-              <h2 id="cmp-deep">Where they actually differ</h2>
-              <p>Trade-offs stated plainly — including places {data.name} is broader today.</p>
+              <h2 id="cmp-deep">
+                Where they <span className="mkt-cmp__hl">differ</span>
+              </h2>
             </div>
             <div className="mkt-cmp__deep">
+              <div className="mkt-cmp__deep-head" aria-hidden>
+                <span>Topic</span>
+                <span>Detail</span>
+              </div>
               {data.deepDives!.map((d) => (
-                <article key={d.title} className="mkt-cmp__deep-card">
-                  <h3>{d.title}</h3>
-                  <p>{d.body}</p>
-                </article>
+                <div key={d.title} className="mkt-cmp__deep-row">
+                  <h3 className="mkt-cmp__deep-topic">{d.title}</h3>
+                  <p className="mkt-cmp__deep-body">{d.body}</p>
+                </div>
               ))}
             </div>
           </section>
@@ -261,92 +267,101 @@ export default function ComparePage({ competitor: competitorProp }: Props) {
 
         <section className="mkt-cmp__block" aria-labelledby="cmp-price">
           <div className="mkt-cmp__block-head">
-            <h2 id="cmp-price">Plans at a glance</h2>
-            <p>{data.topedgePlansNote}</p>
+            <h2 id="cmp-price">
+              Best plan <span className="mkt-cmp__hl">comparison</span>
+            </h2>
           </div>
 
-          <div className="mkt-cmp__price-grid">
-            <div className="mkt-cmp__price-panel is-te">
-              <div className="mkt-cmp__price-panel-top">
-                <img src="/logo.png" alt="" width={28} height={28} />
-                <div>
-                  <strong>TopEdge</strong>
-                  <span>INR · order volume · AI included</span>
-                </div>
+          <div className="mkt-cmp__duel">
+            <div className="mkt-cmp__duel-head">
+              <span className="mkt-cmp__duel-cap">Feature</span>
+              <div className="mkt-cmp__duel-brand is-te">
+                <span className="mkt-cmp__duel-brand-top">
+                  <img src="/logo.png" alt="" width={20} height={20} />
+                  <strong>TopEdge AI</strong>
+                </span>
+                <span className="mkt-cmp__duel-plan">{teBest.name}</span>
               </div>
-              <div className="mkt-cmp__price-tiers">
-                {TOPEDGE_PLANS_SUMMARY.map((p) => {
-                  const popular = 'popular' in p && Boolean(p.popular);
-                  return (
-                  <div key={p.name} className={`mkt-cmp__tier${popular ? ' is-hot' : ''}`}>
-                    <div className="mkt-cmp__tier-top">
-                      <span className="mkt-cmp__tier-name">{p.name}</span>
-                      {popular ? <span className="mkt-cmp__tier-hot">Popular</span> : null}
-                    </div>
-                    <p className="mkt-cmp__tier-price">{p.price}</p>
-                    <p className="mkt-cmp__tier-note">{p.note}</p>
-                    <ul>
-                      {p.highlights.slice(0, 3).map((h) => (
-                        <li key={h}>{h}</li>
-                      ))}
-                    </ul>
-                  </div>
-                  );
-                })}
+              <div className="mkt-cmp__duel-brand">
+                <span className="mkt-cmp__duel-brand-top">
+                  <img src={data.logo} alt="" width={20} height={20} />
+                  <strong>{data.name}</strong>
+                </span>
+                <span className="mkt-cmp__duel-plan">{compBest.name}</span>
               </div>
-              <Link to="/pricing" className="mkt-cmp__price-link">
-                Full TopEdge pricing
-                <ArrowRight className="h-3.5 w-3.5" aria-hidden />
-              </Link>
             </div>
 
-            <div className="mkt-cmp__price-panel">
-              <div className="mkt-cmp__price-panel-top">
-                <img src={data.logo} alt="" width={28} height={28} />
-                <div>
-                  <strong>{data.name}</strong>
-                  <span>
-                    {data.slug === 'bitespeed'
-                      ? 'USD · verify live · AI often add-on'
-                      : 'Listed · verify live'}
-                  </span>
-                </div>
-              </div>
-              <div className="mkt-cmp__price-tiers">
-                {data.competitorPlans.map((p) => (
-                  <div key={p.name} className={`mkt-cmp__tier${p.popular ? ' is-hot' : ''}`}>
-                    <div className="mkt-cmp__tier-top">
-                      <span className="mkt-cmp__tier-name">{p.name}</span>
-                      {p.popular ? <span className="mkt-cmp__tier-hot">Popular</span> : null}
-                    </div>
-                    <p className="mkt-cmp__tier-price">{p.price}</p>
-                    {p.note ? <p className="mkt-cmp__tier-note">{p.note}</p> : null}
-                    <ul>
-                      {p.highlights.slice(0, 4).map((h) => (
-                        <li key={h}>{h}</li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
+            <div className="mkt-cmp__duel-row">
+              <span className="mkt-cmp__duel-label">Plan fit</span>
+              <span className="mkt-cmp__duel-cell is-te">{teBest.note}</span>
+              <span className="mkt-cmp__duel-cell">{compBest.note || '—'}</span>
             </div>
+
+            {duelFeatures.map((row) => (
+              <div key={row.label} className="mkt-cmp__duel-row">
+                <span className="mkt-cmp__duel-label">{row.label}</span>
+                <span className="mkt-cmp__duel-cell is-te">
+                  <CompareStatus value={row.topedge} />
+                </span>
+                <span className="mkt-cmp__duel-cell">
+                  <CompareStatus value={row.competitor} />
+                </span>
+              </div>
+            ))}
+
+            <div className="mkt-cmp__duel-row is-price">
+              <span className="mkt-cmp__duel-label">Price</span>
+              <span className="mkt-cmp__duel-cell is-te">
+                <span>
+                  <span className="mkt-cmp__duel-starts">starts at</span>
+                  <span className="mkt-cmp__duel-price">{teBest.price}</span>
+                </span>
+              </span>
+              <span className="mkt-cmp__duel-cell">
+                <span>
+                  <span className="mkt-cmp__duel-starts">starts at</span>
+                  <span className="mkt-cmp__duel-price">{compBest.price}</span>
+                </span>
+              </span>
+            </div>
+          </div>
+
+          <div className="mkt-cmp__duel-foot">
+            <Link to="/signup" className="mkt-cmp__duel-cta is-solid">
+              Start free
+              <ArrowRight className="h-3.5 w-3.5" aria-hidden />
+            </Link>
+            <Link to="/pricing" className="mkt-cmp__duel-cta">
+              All TopEdge AI plans
+            </Link>
+            <a
+              href={data.website}
+              className="mkt-cmp__duel-cta"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {data.name} pricing
+            </a>
           </div>
           <p className="mkt-cmp__fine">{data.pricingCaveat}</p>
         </section>
 
         <section className="mkt-cmp__block" aria-labelledby="cmp-why">
           <div className="mkt-cmp__block-head">
-            <h2 id="cmp-why">Why teams pick TopEdge</h2>
-            <p>Differences you feel in daily Shopify WhatsApp work.</p>
+            <h2 id="cmp-why">
+              Why TopEdge <span className="mkt-cmp__hl">AI</span>
+            </h2>
           </div>
-          <div className={`mkt-cmp__why${data.differentiators.length >= 5 ? ' is-five' : ''}`}>
+          <div className="mkt-cmp__why">
             {data.differentiators.map((d, i) => (
-              <article key={d.title} className="mkt-cmp__why-card">
+              <article key={d.title} className="mkt-cmp__why-row">
                 <span className="mkt-cmp__why-num" aria-hidden>
                   {String(i + 1).padStart(2, '0')}
                 </span>
-                <h3>{d.title}</h3>
-                <p>{d.body}</p>
+                <div className="mkt-cmp__why-copy">
+                  <h3>{brandLabel(d.title)}</h3>
+                  <p>{brandLabel(d.body)}</p>
+                </div>
               </article>
             ))}
           </div>
@@ -354,28 +369,27 @@ export default function ComparePage({ competitor: competitorProp }: Props) {
 
         <section className="mkt-cmp__block mkt-cmp__block--faq" aria-labelledby="cmp-faq">
           <div className="mkt-cmp__block-head">
-            <h2 id="cmp-faq">TopEdge vs {data.name} — FAQ</h2>
-            <p>Plain answers for comparison and pricing queries.</p>
+            <h2 id="cmp-faq">
+              Common <span className="mkt-cmp__hl">questions</span>
+            </h2>
           </div>
-          <div className="mkt-cmp__qna">
-            {data.faqs.map((f) => (
-              <details key={f.question} className="mkt-cmp__q">
-                <summary>{f.question}</summary>
-                <p>{f.answer}</p>
-              </details>
-            ))}
-          </div>
+          <CompareFaq
+            items={data.faqs.map((f) => ({
+              question: brandLabel(f.question),
+              answer: brandLabel(f.answer),
+            }))}
+          />
           <nav className="mkt-cmp__more" aria-label="Related">
             {data.related.map((r) => (
               <Link key={r.href} to={r.href}>
-                {r.label}
+                {brandLabel(r.label)}
               </Link>
             ))}
           </nav>
         </section>
 
         <MarketingCtaBand
-          title="Try TopEdge on your store"
+          title="Try TopEdge AI on your store"
           subtitle="14-day free trial. Connect Shopify, approve templates, publish recovery."
           primaryLabel="Start free"
           secondaryLabel="See pricing"
