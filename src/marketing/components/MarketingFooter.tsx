@@ -30,6 +30,8 @@ const columns: { title: string; links: FootLink[] }[] = [
     title: 'Compare',
     links: [
       { label: 'TopEdge vs WATI', href: '/compare/wati' },
+      { label: 'TopEdge vs AiSensy', href: '/compare/aisensy' },
+      { label: 'TopEdge vs WATI vs AiSensy', href: '/compare/topedge-vs-wati-vs-aisensy' },
       { label: 'TopEdge vs Interakt', href: '/compare/interakt' },
       { label: 'TopEdge vs Bitespeed', href: '/compare/bitespeed' },
     ],

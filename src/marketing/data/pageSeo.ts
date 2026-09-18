@@ -92,11 +92,11 @@ export const PAGE_SEO = {
     path: '/security',
   },
   compare: {
-    title: 'TopEdge vs WATI, Interakt & Bitespeed | Shopify WhatsApp India',
+    title: 'TopEdge vs WATI, AiSensy, Interakt & Bitespeed | Shopify WhatsApp India',
     description:
-      'Compare TopEdge vs WATI, Interakt, and Bitespeed for Shopify WhatsApp automation in India — cart recovery, COD, INR pricing, AI included vs add-ons, and Meta-safe messaging.',
+      'Compare TopEdge vs WATI, AiSensy, Interakt, and Bitespeed for Shopify WhatsApp automation in India — Meta markup, AI cost, COD → prepaid, unified identity, INR pricing, and chatflow limits.',
     keywords:
-      'TopEdge vs WATI, TopEdge vs Interakt, TopEdge vs Bitespeed, Bitespeed alternative Shopify, Bitespeed pricing India, Shopify WhatsApp app INR pricing, WATI alternative India, Interakt alternative Shopify, WhatsApp cart recovery Shopify comparison',
+      'TopEdge vs WATI, TopEdge vs AiSensy, TopEdge vs WATI vs AiSensy, TopEdge vs Interakt, TopEdge vs Bitespeed, WhatsApp template markup, COD prepaid WhatsApp comparison, WATI alternative India, AiSensy alternative Shopify',
     path: '/compare',
   },
   blog: {

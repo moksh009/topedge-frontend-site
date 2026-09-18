@@ -7,6 +7,20 @@ import MarketingCtaBand from '../components/MarketingCtaBand';
 import { allCompareCompetitors } from '../data/compareCompetitors';
 import '../styles/compare.css';
 
+const FEATURED = [
+  {
+    href: '/compare/topedge-vs-wati-vs-aisensy',
+    title: 'TopEdge vs WATI vs AiSensy',
+    body: 'Full 3-way board — Meta markup, AI cost, intent routing, identity, COD → prepaid, warranty, and chatflow caps.',
+    logos: [
+      '/logo.png',
+      '/marketing/compare/compare-logo-wati.png',
+      '/marketing/compare/compare-logo-aisensy.svg',
+    ],
+    badge: '3-way',
+  },
+];
+
 export default function CompareIndexPage() {
   const competitors = allCompareCompetitors();
 
@@ -38,12 +52,40 @@ export default function CompareIndexPage() {
             TopEdge <span>vs</span> WhatsApp tools
           </h1>
           <p className="mkt-cmp__lede">
-            Side-by-side product pages for Shopify WhatsApp automation in India — plans, capabilities,
-            and who each tool fits.
+            Side-by-side boards for Shopify WhatsApp automation in India — Meta markup, AI, identity,
+            COD → prepaid, and who each tool fits.
           </p>
         </header>
 
+        <section className="mkt-cmp__block" aria-label="Featured comparison">
+          <div className="mkt-cmp-index__featured">
+            {FEATURED.map((f) => (
+              <Link key={f.href} to={f.href} className="mkt-cmp-index__card mkt-cmp-index__card--wide">
+                {f.badge ? <span className="mkt-cmp-index__badge">{f.badge}</span> : null}
+                <div className="mkt-cmp-index__card-top">
+                  {f.logos.map((src, i) => (
+                    <span key={src} className="mkt-cmp-index__logo-stack">
+                      {i > 0 ? <span className="mkt-cmp-index__vs">vs</span> : null}
+                      <img src={src} alt="" width={32} height={32} />
+                    </span>
+                  ))}
+                </div>
+                <h2>{f.title}</h2>
+                <p>{f.body}</p>
+                <span className="mkt-cmp-index__card-cta">
+                  Open 3-way board
+                  <ArrowRight className="h-3.5 w-3.5" aria-hidden />
+                </span>
+              </Link>
+            ))}
+          </div>
+        </section>
+
         <section className="mkt-cmp__block" aria-label="Comparisons">
+          <div className="mkt-cmp__block-head">
+            <h2>Pairwise comparisons</h2>
+            <p>Pick a competitor for a deeper TopEdge face-off.</p>
+          </div>
           <div className="mkt-cmp-index__grid">
             {competitors.map((c) => (
               <Link key={c.slug} to={`/compare/${c.slug}`} className="mkt-cmp-index__card">

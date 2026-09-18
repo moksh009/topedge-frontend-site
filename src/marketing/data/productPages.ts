@@ -65,13 +65,13 @@ const CART_VIDEO = {
 } as const;
 
 const COD_VIDEO = {
-  src: '/marketing/demos/cod-prepaid11.mp4',
-  poster: '/marketing/demos/cod-prepaid-poster.jpg',
+  src: '/marketing/demos/cod-prepaid11.mp4?v=20260918a',
+  poster: '/marketing/demos/cod-prepaid-poster.jpg?v=20260918a',
 } as const;
 
 const FLOW_VIDEO = {
-  src: '/marketing/demos/flowwww1.mp4',
-  poster: '/marketing/demos/flow-builder-poster.jpg',
+  src: '/marketing/demos/flowwww1.mp4?v=20260918a',
+  poster: '/marketing/demos/flow-builder-poster.jpg?v=20260918a',
 } as const;
 
 export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {

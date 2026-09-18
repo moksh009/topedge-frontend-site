@@ -19,7 +19,7 @@ export const FEATURE_SLUGS = [
 
 export const SOLUTION_SLUGS = ['fashion', 'beauty', 'electronics', 'cod'];
 
-export const COMPARE_SLUGS = ['wati', 'interakt', 'bitespeed'];
+export const COMPARE_SLUGS = ['wati', 'aisensy', 'interakt', 'bitespeed'];
 
 export const TOPIC_SLUGS = [
   'whatsapp-cart-recovery',
@@ -53,6 +53,7 @@ export function getMarketingPrerenderPaths() {
     '/agency',
     '/security',
     '/compare',
+    '/compare/topedge-vs-wati-vs-aisensy',
     '/about',
     '/contact',
     '/testimonials',

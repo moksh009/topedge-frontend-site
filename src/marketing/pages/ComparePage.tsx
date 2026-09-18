@@ -169,7 +169,11 @@ export default function ComparePage({ competitor: competitorProp }: Props) {
         <section className="mkt-cmp__block" aria-labelledby="cmp-board">
           <div className="mkt-cmp__block-head">
             <h2 id="cmp-board">Capability board</h2>
-            <p>Shopify WhatsApp ops that matter for Indian D2C — verified where possible.</p>
+            <p>
+              {boardWide
+                ? `Feature-by-feature: TopEdge vs ${data.name} on markup, AI, identity, COD, analytics, and chatflows.`
+                : 'Shopify WhatsApp ops that matter for Indian D2C — verified where possible.'}
+            </p>
           </div>
 
           <div className={`mkt-cmp__board${boardWide ? ' is-wide' : ''}`}>
@@ -186,8 +190,11 @@ export default function ComparePage({ competitor: competitorProp }: Props) {
             </div>
             <ul className="mkt-cmp__board-list">
               {data.matrix.map((row) => (
-                <li key={row.label} className="mkt-cmp__board-row">
-                  <span className="mkt-cmp__board-label">{row.label}</span>
+                <li key={row.label} className={`mkt-cmp__board-row${row.description ? ' is-rich' : ''}`}>
+                  <div className="mkt-cmp__board-label">
+                    <span className="mkt-cmp__board-feat">{row.label}</span>
+                    {row.description ? <p className="mkt-cmp__board-desc">{row.description}</p> : null}
+                  </div>
                   <span className="mkt-cmp__board-cell">
                     <Status value={row.topedge} />
                   </span>

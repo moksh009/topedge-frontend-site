@@ -1,7 +1,10 @@
+import { pairwiseMatrix } from './compareFeatureMatrix';
+
 export type CompareCell = 'yes' | 'no' | 'partial' | string;
 
 export type CompareRow = {
   label: string;
+  description?: string;
   topedge: CompareCell;
   competitor: CompareCell;
 };
@@ -103,55 +106,63 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
     logo: '/marketing/compare/compare-logo-wati.png',
     logoAlt: 'WATI logo',
     accent: '#0d9488',
-    title: 'TopEdge vs WATI (2026) | Shopify WhatsApp Automation for India',
+    brandTag: 'WhatsApp BSP',
+    title: 'TopEdge vs WATI (2026) | WhatsApp Ecommerce Growth OS',
     description:
-      'Compare TopEdge vs WATI for Shopify India: cart recovery, COD confirmation, shared inbox with order context, Meta templates, and plan pricing. See which WhatsApp automation platform fits D2C ecommerce.',
+      'Compare TopEdge vs WATI: 0% Meta template markup, BYOK AI, intent routing, unified customer identity, COD → prepaid, warranty, and unlimited chatflows for Shopify India brands.',
     keywords:
-      'TopEdge vs WATI, WATI alternative India, WATI vs TopEdge Shopify, WhatsApp cart recovery Shopify India, COD confirmation WhatsApp, WATI pricing India, best WhatsApp automation for Shopify D2C',
+      'TopEdge vs WATI, WATI alternative India, WhatsApp template markup, COD to prepaid WhatsApp, unified customer identity WhatsApp, intent routing chatbot, WATI vs TopEdge Shopify',
     h1: 'TopEdge vs WATI',
     subtitle:
-      'WATI is a full WhatsApp Business API BSP with inbox, campaigns, and chatbots. TopEdge is a Shopify-first WhatsApp growth OS for Indian ecommerce — cart recovery, COD, and order-aware support.',
+      'Side-by-side on what Indian D2C brands actually run daily — Meta markup, AI cost, intent routing, unified identity, COD → prepaid, analytics, warranty, and chatflow limits.',
     answerFirst:
-      'Choose TopEdge over WATI when your primary job is Shopify cart recovery, COD confirmation, and a shared inbox tied to live orders — not a general-purpose BSP for broadcasts and multi-channel chat. Choose WATI when you need a broad WhatsApp BSP (CTWA, multi-number, Instagram/FB inbox) and Shopify is only one of many channels.',
+      'Choose TopEdge when you want native Shopify ecommerce ops (0% Meta markup, BYOK AI, intent routing without LLM spend, unified identity, COD → prepaid, warranty) without platform usage markups on templates. Choose WATI when you need a broad WhatsApp BSP with keyword automations and are fine with plan-capped triggers plus usage charges above Meta rates.',
     whoForTopEdge:
-      'Shopify D2C brands in India that live in abandoned carts, COD RTO, and support tickets with order # context.',
+      'Shopify D2C brands that need 0% template markup, unified customer profiles, COD → prepaid funnels, and unlimited flow execution on every plan.',
     whoForCompetitor:
-      'Teams that want a general WhatsApp BSP — campaigns, CTWA, chatbots, and omnichannel inbox — with Shopify as an add-on.',
+      'Teams that want a general WhatsApp BSP with keyword/rule triggers and are comfortable with platform usage charges and monthly trigger caps.',
     positioning:
-      'WATI competes as a WhatsApp Business Solution Provider. TopEdge competes as ecommerce WhatsApp automation for Shopify India. Overlap exists on inbox and broadcasts; the gap is how deeply Shopify events drive journeys and recovery math.',
+      'WATI is a WhatsApp Business Solution Provider. TopEdge is a Shopify-first WhatsApp growth OS. The gap shows up in Meta billing transparency, native ecommerce identity, and how much setup COD / warranty / pixel work needs.',
     differentiators: [
       {
-        title: 'Shopify events drive journeys',
-        body: 'Abandoned carts, COD status, and order updates trigger TopEdge flows — not only contact lists and manual campaigns.',
+        title: '0% WhatsApp template markup',
+        body: 'TopEdge bills Meta rates direct. WATI applies platform usage charges above Meta base rates.',
       },
       {
-        title: 'Recovery ₹ you can show finance',
-        body: 'Track sent → paid recovery alongside transparent Meta pass-through rates on TopEdge pricing.',
+        title: 'BYOK AI + RAG, not a higher tier lock',
+        body: 'TopEdge AI is Bring Your Own Key with a built-in RAG pipeline (~₹0.2–₹0.3 / message). WATI AI typically needs Astra / higher-tier plans.',
       },
       {
-        title: 'Template gates before send',
-        body: 'Journeys wait for Meta APPROVED templates — built for teams burned by accidental draft sends.',
+        title: 'Algorithmic intent routing (no AI tax)',
+        body: 'TopEdge routes chatbot flows from detected intent without LLM calls. WATI relies on rule / keyword triggers.',
       },
       {
-        title: 'Order-aware Live Chat',
-        body: 'Agents see Shopify order context beside the thread so WISMO and COD chats resolve faster.',
+        title: 'Unified identity & auto lead dedupe',
+        body: 'Orders, phones, and emails merge into one profile with native deduplication — not single-number contacts managed by hand.',
+      },
+      {
+        title: 'Unlimited chatflow execution',
+        body: 'Advanced node builder and unlimited flow runs on all TopEdge plans vs WATI monthly trigger caps.',
       },
     ],
-    matrix: SHARED_MATRIX_BASE.map((row) => {
-      const map: Record<string, CompareCell> = {
-        'Shopify-native sync (orders, carts, catalog)': 'partial',
-        'Abandoned cart recovery journeys': 'partial',
-        'COD confirmation / COD → prepaid flows': 'partial',
-        'Shared team inbox with order context': 'partial',
-        'Meta Cloud API templates + approval gates': 'yes',
-        'Audience segments & Meta-safe broadcasts': 'yes',
-        'Opt-in popup / number capture': 'partial',
-        'Website tracking pixel ↔ WhatsApp': 'no',
-        'Transparent Meta rate pass-through': 'yes',
-        'India D2C / ₹-first pricing': 'yes',
-      };
-      return { ...row, competitor: map[row.label] ?? 'partial' };
-    }),
+    matrix: pairwiseMatrix('wati'),
+    matrixNote:
+      'Capability claims reflect TopEdge product positioning vs publicly described WATI platform patterns. Confirm live plan limits and fees on wati.io before purchase.',
+    researchAsOf: 'Sep 2026',
+    deepDives: [
+      {
+        title: 'Meta billing transparency',
+        body: 'TopEdge keeps template markup at 0% with direct Meta billing. WATI layers platform usage charges on top of Meta — fine for some teams, expensive at volume.',
+      },
+      {
+        title: 'Ecommerce depth vs BSP breadth',
+        body: 'COD → prepaid, store pixel, warranty batches, and order modification locks ship native on TopEdge. On WATI those usually need developer APIs, webhooks, or an external CRM.',
+      },
+      {
+        title: 'Where WATI is still broader',
+        body: 'If your priority is a general BSP (multi-use-case inbox, CTWA-led acquisition, non-Shopify channels), WATI’s wider BSP surface can fit better than a Shopify-first growth OS.',
+      },
+    ],
     competitorPlans: [
       {
         name: 'Pay-as-you-go',
@@ -162,48 +173,168 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
       {
         name: 'Growth',
         price: '~₹2,499/mo',
-        note: 'Plus Meta message charges',
-        highlights: ['Multi-user inbox', 'Campaigns', 'Shopify commerce add-on', 'Basic automation'],
+        note: 'Plus Meta + platform usage charges',
+        highlights: ['Multi-user inbox', 'Campaigns', 'Shopify commerce add-on', 'Trigger-capped automation'],
         popular: true,
       },
       {
         name: 'Pro / Business',
         price: '~₹5,999–₹16,999/mo',
-        note: 'Higher automation & AI tiers',
-        highlights: ['Advanced automation', 'AI agents', 'More integrations', 'Priority support'],
+        note: 'Higher automation & AI (Astra) tiers',
+        highlights: ['Advanced automation', 'AI on higher tiers', 'More integrations', 'Priority support'],
       },
     ],
     topedgePlansNote:
-      'TopEdge Launch / Growth / Scale are priced for Shopify order volume — Meta template fees pass through separately.',
+      'TopEdge Launch / Growth / Scale include AI tooling, unlimited flow execution, and 0% template markup — Meta fees pass through separately.',
     pricingCaveat:
-      'Competitor plan prices change often and may differ by region, billing cycle, and add-ons. Verify on wati.io. Meta WhatsApp fees apply on both platforms.',
+      'Competitor plan prices change often and may differ by region, billing cycle, and add-ons. Verify on wati.io. Meta WhatsApp fees apply on both platforms; WATI may add platform usage charges above Meta base rates.',
     faqs: [
       {
-        question: 'Is TopEdge a WATI alternative for Shopify brands?',
+        question: 'Does TopEdge mark up WhatsApp template messages vs WATI?',
         answer:
-          'Yes for Shopify-first Indian D2C teams that need cart recovery, COD workflows, and order-aware WhatsApp support. If you need a general BSP with CTWA and multi-channel social inbox first, WATI may fit better.',
+          'TopEdge applies 0% markup with billing direct on Meta. WATI applies platform usage charges above Meta base rates — compare total cost at your send volume.',
       },
       {
-        question: 'Does WATI support Shopify abandoned cart?',
+        question: 'Is AI included or locked behind a WATI tier?',
         answer:
-          'WATI offers Shopify/commerce tooling on higher plans (often with a Shopify connection fee). TopEdge treats cart recovery and COD as core journeys on every plan tier.',
+          'TopEdge supports BYOK plus a built-in RAG pipeline with estimated token cost around ₹0.2–₹0.3 per message. WATI AI typically requires Astra or a higher-tier plan.',
       },
       {
-        question: 'Who pays Meta WhatsApp charges?',
+        question: 'Can TopEdge replace WATI for COD → prepaid?',
         answer:
-          'On both TopEdge and WATI, Meta message/template fees are typically billed separately from the platform subscription. TopEdge shows transparent pass-through rates on pricing.',
+          'Yes for Shopify-native checkout (and partners like GoKwik). WATI generally needs manual developer API setup to map the same funnel.',
       },
       {
-        question: 'Can I migrate from WATI to TopEdge?',
+        question: 'Are chatbot flow executions limited?',
         answer:
-          'Most teams reconnect Shopify + Meta Cloud API, re-approve key templates, and republish recovery journeys. Contact TopEdge for a guided cutover.',
+          'TopEdge ships unlimited flow execution on all plans. WATI caps execution by monthly plan trigger limits.',
       },
     ],
     related: [
       { label: 'All comparisons', href: '/compare' },
-      { label: 'Cart recovery', href: '/whatsapp-cart-recovery' },
+      { label: 'vs AiSensy', href: '/compare/aisensy' },
+      { label: '3-way board', href: '/compare/topedge-vs-wati-vs-aisensy' },
       { label: 'TopEdge pricing', href: '/pricing' },
-      { label: 'vs Interakt', href: '/compare/interakt' },
+    ],
+  },
+
+  aisensy: {
+    slug: 'aisensy',
+    name: 'AiSensy',
+    shortName: 'AiSensy',
+    website: 'https://aisensy.com',
+    logo: '/marketing/compare/compare-logo-aisensy.svg',
+    logoAlt: 'AiSensy logo',
+    accent: '#0f766e',
+    brandTag: 'WhatsApp marketing platform',
+    title: 'TopEdge vs AiSensy (2026) | WhatsApp Ecommerce for Shopify India',
+    description:
+      'Compare TopEdge vs AiSensy on Meta template markup, AI add-on fees, intent routing, unified identity, COD → prepaid, warranty, journey builder, and chatflow plan limits.',
+    keywords:
+      'TopEdge vs AiSensy, AiSensy alternative India, AiSensy vs TopEdge, WhatsApp template markup, COD prepaid WhatsApp, unified customer profile WhatsApp, AiSensy pricing India',
+    h1: 'TopEdge vs AiSensy',
+    subtitle:
+      'A clear feature board for Indian ecommerce teams choosing between TopEdge’s native growth OS and AiSensy’s WhatsApp marketing stack with credit / tier limits.',
+    answerFirst:
+      'Choose TopEdge when you need native ecommerce depth — 0% Meta markup, BYOK AI, algorithmic intent routing, unified identity, COD → prepaid, warranty, and unlimited flows. Choose AiSensy when you want a WhatsApp marketing platform and are comfortable with keyword triggers, AI add-on fees, and credit / higher-tier limits for flows.',
+    whoForTopEdge:
+      'Shopify brands that want one native stack for identity, COD → prepaid, analytics, warranty, and unlimited chatflows without Meta template markups.',
+    whoForCompetitor:
+      'Teams happy with rule-based WhatsApp marketing, per-message AI add-ons, and flow builders that unlock on higher tiers or credits.',
+    positioning:
+      'AiSensy competes as a WhatsApp marketing / automation platform. TopEdge competes as a Shopify-native WhatsApp growth OS. Overlap exists on templates and flows; the gap is Meta billing, ecommerce identity, and how much custom API / CRM work advanced features need.',
+    differentiators: [
+      {
+        title: '0% Meta markup vs platform usage charges',
+        body: 'TopEdge bills Meta direct. AiSensy applies platform usage charges above Meta base rates.',
+      },
+      {
+        title: 'BYOK AI vs per-message AI add-on',
+        body: 'TopEdge’s RAG-optimised BYOK path keeps AI cost predictable (~₹0.2–₹0.3 / message). AiSensy typically meters AI as an add-on.',
+      },
+      {
+        title: 'Native identity, pixel, warranty',
+        body: 'Unified profiles, 1-click store pixel, and warranty batches ship built-in — not single-number contacts plus external CRM glue.',
+      },
+      {
+        title: 'COD → prepaid without custom mapping',
+        body: 'Shopify-native checkout (GoKwik compatible) vs API setup to map payment links into WhatsApp templates.',
+      },
+      {
+        title: 'Flow builder unlocked + unlimited runs',
+        body: 'Advanced node builder on all TopEdge plans with unlimited execution — AiSensy often gates the builder and caps runs by credits / tiers.',
+      },
+    ],
+    matrix: pairwiseMatrix('aisensy'),
+    matrixNote:
+      'Capability claims reflect TopEdge product positioning vs publicly described AiSensy platform patterns. Confirm live plan limits, credits, and fees on aisensy.com before purchase.',
+    researchAsOf: 'Sep 2026',
+    deepDives: [
+      {
+        title: 'Template + AI economics',
+        body: 'At volume, Meta markup and AI add-on fees dominate total WhatsApp cost. TopEdge keeps template markup at 0% and AI on a BYOK / RAG path; AiSensy layers platform usage and per-message AI fees.',
+      },
+      {
+        title: 'Native ecommerce vs API assembly',
+        body: 'COD → prepaid, store pixel identity, warranty batches, and secure order modification are native on TopEdge. On AiSensy they typically need webhooks, payment-link mapping, or an external CRM.',
+      },
+      {
+        title: 'Where AiSensy can still fit',
+        body: 'If you mainly need WhatsApp broadcasts and keyword automations — and Shopify-native ops are secondary — AiSensy’s marketing-platform model may be enough.',
+      },
+    ],
+    competitorPlans: [
+      {
+        name: 'Starter / Basic',
+        price: 'Credit-based',
+        note: 'Verify live on aisensy.com',
+        highlights: ['WhatsApp templates', 'Basic automations', 'Keyword triggers', 'Credit / tier caps'],
+      },
+      {
+        name: 'Growth',
+        price: 'Subscription + credits',
+        note: 'Plus Meta + platform usage',
+        highlights: ['Campaigns', 'Team inbox', 'Standard analytics', 'AI often add-on'],
+        popular: true,
+      },
+      {
+        name: 'Advanced',
+        price: 'Higher tier / add-ons',
+        note: 'Flow builder & AI may unlock here',
+        highlights: ['Advanced automations', 'Flow builder add-on / higher tier', 'API integrations', 'Priority support'],
+      },
+    ],
+    topedgePlansNote:
+      'TopEdge Launch / Growth / Scale include the advanced flow builder, unlimited executions, and 0% template markup — Meta fees pass through separately.',
+    pricingCaveat:
+      'AiSensy pricing, credits, and add-ons change often. Verify on aisensy.com. Meta WhatsApp fees apply on both platforms; AiSensy may add platform usage charges and AI add-on fees above Meta base rates.',
+    faqs: [
+      {
+        question: 'Is TopEdge cheaper than AiSensy on WhatsApp templates?',
+        answer:
+          'TopEdge has 0% markup with Meta billing direct. AiSensy applies platform usage charges above Meta base rates — run your monthly send volume through both before deciding.',
+      },
+      {
+        question: 'How does AI pricing differ?',
+        answer:
+          'TopEdge supports BYOK with a built-in RAG pipeline (est. ₹0.2–₹0.3 per message). AiSensy commonly uses a per-message AI add-on fee structure.',
+      },
+      {
+        question: 'Do I get a chatbot flow builder on every plan?',
+        answer:
+          'TopEdge unlocks an advanced drag-and-drop node builder on all plans with unlimited execution. AiSensy’s chatbot flow builder typically requires a higher plan tier or paid add-on, with runs capped by credits / subscription tiers.',
+      },
+      {
+        question: 'Can AiSensy do unified customer identity like TopEdge?',
+        answer:
+          'AiSensy generally keeps single-number contact records. TopEdge auto-merges orders, phones, and emails into one unified profile with native lead deduplication.',
+      },
+    ],
+    related: [
+      { label: 'All comparisons', href: '/compare' },
+      { label: 'vs WATI', href: '/compare/wati' },
+      { label: '3-way board', href: '/compare/topedge-vs-wati-vs-aisensy' },
+      { label: 'TopEdge pricing', href: '/pricing' },
     ],
   },
 

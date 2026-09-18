@@ -41,23 +41,23 @@ const CART: ProductDemoAsset = {
 };
 
 const COD: ProductDemoAsset = {
-  src: '/marketing/demos/cod-prepaid11.mp4',
-  poster: '/marketing/demos/cod-prepaid-poster.jpg',
+  src: '/marketing/demos/cod-prepaid11.mp4?v=20260918a',
+  poster: '/marketing/demos/cod-prepaid-poster.jpg?v=20260918a',
 };
 
 const FLOW: ProductDemoAsset = {
-  src: '/marketing/demos/flowwww1.mp4',
-  poster: '/marketing/demos/flow-builder-poster.jpg',
+  src: '/marketing/demos/flowwww1.mp4?v=20260918a',
+  poster: '/marketing/demos/flow-builder-poster.jpg?v=20260918a',
 };
 
 const OPTIN: ProductDemoAsset = {
-  src: '/marketing/demos/opt-in.mp4',
-  poster: '/marketing/demos/optin-popup-poster.jpg',
+  src: '/marketing/demos/opt-in.mp4?v=20260918a',
+  poster: '/marketing/demos/optin-popup-poster.jpg?v=20260918a',
 };
 
 const INTENT: ProductDemoAsset = {
-  src: '/marketing/demos/intentt.mp4',
-  poster: '/marketing/demos/intent-poster.jpg',
+  src: '/marketing/demos/intentt.mp4?v=20260918a',
+  poster: '/marketing/demos/intent-poster.jpg?v=20260918a',
 };
 
 const SEGMENT: ProductDemoAsset = {

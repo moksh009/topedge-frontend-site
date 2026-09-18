@@ -37,6 +37,7 @@ const RoiPage = React.lazy(() => import('./marketing/pages/RoiPage'));
 const TermsPage = React.lazy(() => import('./marketing/pages/TermsPage'));
 const CompareIndexPage = React.lazy(() => import('./marketing/pages/CompareIndexPage'));
 const ComparePage = React.lazy(() => import('./marketing/pages/ComparePage'));
+const CompareThreeWayPage = React.lazy(() => import('./marketing/pages/CompareThreeWayPage'));
 const SeoTopicPage = React.lazy(() => import('./marketing/pages/SeoTopicPage'));
 const ProductFeaturePage = React.lazy(() => import('./marketing/pages/ProductFeaturePage'));
 const NotFoundPage = React.lazy(() => import('./marketing/pages/NotFoundPage'));
@@ -282,6 +283,7 @@ const AnimatedRoutes = () => {
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/terms-of-service" element={<TermsPage />} />
           <Route path="/compare" element={<CompareIndexPage />} />
+          <Route path="/compare/topedge-vs-wati-vs-aisensy" element={<CompareThreeWayPage />} />
           <Route path="/compare/:competitor" element={<ComparePage />} />
           <Route
             path="/whatsapp-cart-recovery"
