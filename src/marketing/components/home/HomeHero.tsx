@@ -2,10 +2,12 @@ import { ArrowRight } from 'lucide-react';
 import { PrimaryButton } from '../ui';
 import HeroRippleBackground from '../effects/HeroRippleBackground';
 import HomeTrust from './HomeTrust';
-import DemoProductStage from './demo/DemoProductStage';
+
+const HERO_PRODUCT_SHOT = '/herooo-immage.png';
+const SHOPIFY_APP_URL = 'https://apps.shopify.com/';
 
 /**
- * Homepage hero — centered headline + CTA, dashboard below, logos under stage.
+ * Homepage hero — headline + CTAs + trusted-by, then product shot clipped ~20% at bottom.
  */
 export default function HomeHero() {
   return (
@@ -42,19 +44,42 @@ export default function HomeHero() {
               </p>
               <div className="home-hero__actions">
                 <PrimaryButton to="/signup">
-                  Start free
+                  Start free trial
                   <ArrowRight className="h-4 w-4" />
                 </PrimaryButton>
+                <a
+                  className="home-hero__shopify-btn"
+                  href={SHOPIFY_APP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Install on Shopify
+                  <img
+                    src="/platforms/shopify.svg"
+                    alt=""
+                    width={18}
+                    height={18}
+                    className="home-hero__shopify-logo"
+                    decoding="async"
+                  />
+                </a>
+              </div>
+
+              <div className="home-hero__trust">
+                <HomeTrust onStage />
               </div>
             </div>
 
-            <div className="home-hero__visual">
-              <DemoProductStage />
+            <div className="home-hero__shot">
+              <img
+                src={HERO_PRODUCT_SHOT}
+                alt="TopEdge dashboard — WhatsApp commerce workspace"
+                width={1600}
+                height={1000}
+                decoding="async"
+                fetchPriority="high"
+              />
             </div>
-          </div>
-
-          <div className="home-hero__trust">
-            <HomeTrust onStage />
           </div>
         </div>
       </div>

@@ -67,8 +67,8 @@ export default function HeroRippleBackground() {
         spacing={16}
         dispersion={0.05}
         glint={0.12}
-        tint="#c4b5fd"
-        tintAmount={0.1}
+        tint="#93c5fd"
+        tintAmount={0.06}
         highlightColor="#ffffff"
         trigger="both"
         clickStrength={1.8}
