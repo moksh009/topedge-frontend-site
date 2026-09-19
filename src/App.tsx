@@ -9,6 +9,7 @@ import MarketingNavbar from './marketing/components/MarketingNavbar';
 import CommunityNavbar from './components/community/layout/CommunityNavbar';
 import Footer from './components/Footer';
 import MarketingFooter from './marketing/components/MarketingFooter';
+import MarketingConvertPrompt from './marketing/components/MarketingConvertPrompt';
 import MarketingSmoothScroll, {
   SmoothScrollToTop,
 } from './marketing/components/effects/MarketingSmoothScroll';
@@ -25,7 +26,6 @@ const FeaturesPage = React.lazy(() => import('./marketing/pages/FeaturesPage'));
 const FeatureDetailPage = React.lazy(() => import('./marketing/pages/FeatureDetailPage'));
 const IntegrationsPage = React.lazy(() => import('./marketing/pages/IntegrationsPage'));
 const CustomersPage = React.lazy(() => import('./marketing/pages/CustomersPage'));
-const SolutionPage = React.lazy(() => import('./marketing/pages/SolutionPage'));
 const AgencyPage = React.lazy(() => import('./marketing/pages/AgencyPage'));
 const SecurityPage = React.lazy(() => import('./marketing/pages/SecurityPage'));
 const SignupRedirect = React.lazy(() => import('./marketing/pages/SignupRedirect'));
@@ -148,6 +148,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       )}
 
       {!isCommunityRoute && !isLegalRoute && (marketing ? <MarketingFooter /> : <Footer />)}
+      {marketing && !isCommunityRoute && !isLegalRoute ? <MarketingConvertPrompt /> : null}
       {isCommunityRoute && !isAuthPage && <Footer />}
     </div>
   );
@@ -266,7 +267,8 @@ const AnimatedRoutes = () => {
           {DevShowcasePage && <Route path="/dev/showcase" element={<DevShowcasePage />} />}
           <Route path="/integrations" element={<IntegrationsPage />} />
           <Route path="/customers" element={<CustomersPage />} />
-          <Route path="/solutions/:vertical" element={<SolutionPage />} />
+          <Route path="/solutions" element={<Navigate to="/features" replace />} />
+          <Route path="/solutions/:vertical" element={<Navigate to="/features" replace />} />
           <Route path="/agency" element={<AgencyPage />} />
           <Route path="/security" element={<SecurityPage />} />
           <Route path="/signup" element={<SignupRedirect />} />
@@ -290,7 +292,7 @@ const AnimatedRoutes = () => {
           />
           <Route
             path="/cod-confirmation-whatsapp"
-            element={<Navigate to="/features/journeys#cod-prepaid" replace />}
+            element={<Navigate to="/features/journeys" replace />}
           />
           <Route
             path="/shopify-whatsapp-integration"

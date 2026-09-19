@@ -16,6 +16,20 @@ export const COMPANY_ADDRESS_LINES = [
 
 export const COMPANY_EMAIL = 'team@topedgeai.com';
 export const COMPANY_PHONE = '+91 93130 45439';
+/** Digits only for wa.me / tel links */
+export const COMPANY_PHONE_E164 = '919313045439';
+
+export const COMPANY_WHATSAPP_URL =
+  `https://wa.me/${COMPANY_PHONE_E164}?text=${encodeURIComponent(
+    'Hi TopEdge — I want to talk about WhatsApp automation for my Shopify store.',
+  )}`;
+
+export const COMPANY_SOCIAL = {
+  linkedin: 'https://www.linkedin.com/company/topedgeai',
+  instagram: 'https://www.instagram.com/topedge_ai/',
+  youtube: 'https://www.youtube.com/@topedge_ai',
+} as const;
+
 export const COMPANY_DASHBOARD_URL = 'https://dash.topedgeai.com';
 export const COMPANY_API_URL = 'https://api.topedgeai.com';
 export const COMPANY_SITE_PRIVACY_URL = 'https://topedgeai.com/privacy';

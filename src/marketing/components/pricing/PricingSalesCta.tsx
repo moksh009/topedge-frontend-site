@@ -1,6 +1,6 @@
 import { ArrowUpRight } from 'lucide-react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { SALES_MAILTO } from '../../lib/billingCatalog';
+import { SALES_WHATSAPP_URL } from '../../lib/billingCatalog';
 import PricingSectionHead from './PricingSectionHead';
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -29,12 +29,17 @@ export default function PricingSalesCta() {
             eyebrow="Help"
             title="Still deciding?"
             highlight="We're here"
-            sub="Tell us your order volume — we'll recommend a plan and help you launch your first recovery flow."
+            sub="Tell us your order volume on WhatsApp — we'll recommend a plan and help you launch your first recovery flow."
             className="mkt-sales__head"
           />
 
-          <a className="mkt-sales__cta" href={SALES_MAILTO}>
-            Talk to sales
+          <a
+            className="mkt-sales__cta"
+            href={SALES_WHATSAPP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Talk to sales on WhatsApp
             <ArrowUpRight size={15} strokeWidth={2.25} aria-hidden />
           </a>
         </div>

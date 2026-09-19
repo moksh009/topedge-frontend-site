@@ -1,5 +1,20 @@
 /* TopEdge marketing — Apple-like Inter / system UI (no Outfit) */
 
+/* Hide scrollbar sitewide (scroll still works) — same as homepage */
+html,
+body {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+  display: none !important;
+  background: transparent !important;
+}
+
 :root {
   --mkt-violet: #7c3aed;
   --mkt-violet-hover: #6d28d9;
@@ -178,6 +193,11 @@
   text-align: center;
 }
 
+.mkt-cta--oneline .mkt-cta__inner {
+  width: min(100%, 54rem);
+  padding-inline: 0.25rem;
+}
+
 .mkt-cta__eyebrow {
   margin: 0 0 0.75rem;
   font-size: 0.7rem;
@@ -194,6 +214,13 @@
   letter-spacing: -0.03em;
   line-height: 1.28;
   color: #0c1222;
+}
+
+.mkt-cta--oneline .mkt-cta__title {
+  /* Scale with viewport so the line stays one row */
+  font-size: clamp(0.95rem, 0.55rem + 2.1vw, 2.15rem);
+  line-height: 1.25;
+  white-space: nowrap;
 }
 
 .mkt-cta__hl {
@@ -241,24 +268,6 @@
   background: rgba(255, 255, 255, 0.85) !important;
 }
 
-.mkt-cta__note {
-  margin: 1.25rem 0 0;
-  font-size: 0.82rem;
-  line-height: 1.45;
-  color: #94a3b8;
-}
-
-.mkt-cta__note-link {
-  color: #7c3aed;
-  font-weight: 450;
-  text-decoration: none;
-}
-
-.mkt-cta__note-link:hover {
-  color: #6d28d9;
-  text-decoration: underline;
-}
-
 @media (max-width: 560px) {
   .mkt-cta {
     padding: 3.5rem 1rem 3.75rem;
@@ -266,6 +275,15 @@
 
   .mkt-cta__hl {
     white-space: normal;
+  }
+
+  .mkt-cta--oneline .mkt-cta__title {
+    font-size: clamp(0.78rem, 0.42rem + 3.2vw, 1.15rem);
+  }
+
+  .mkt-cta--oneline .mkt-cta__hl {
+    white-space: nowrap;
+    padding: 0.06em 0.2em 0.08em;
   }
 
   .mkt-cta__actions {
@@ -1044,22 +1062,66 @@ html.mkt-nav-locked .mkt-nav__mobile-scroll {
 .mkt-foot__shell {
   position: relative;
   z-index: 2;
-  width: min(100%, var(--mkt-max-wide));
+  width: min(100%, 1180px);
   margin: 0 auto;
-  padding: clamp(2.5rem, 4.5vw, 3.25rem) 1.25rem 1.35rem;
+  padding: clamp(2.25rem, 3.5vw, 2.85rem) clamp(0.85rem, 2vw, 1.35rem) 1.25rem;
 }
 
 .mkt-foot__top {
   display: grid;
-  grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.75fr);
-  gap: clamp(1.75rem, 3.5vw, 2.75rem);
+  grid-template-columns: minmax(0, 1fr) minmax(19rem, 22.5rem);
+  gap: clamp(1.35rem, 2.5vw, 2rem);
   align-items: start;
+}
+
+.mkt-foot__main {
+  display: grid;
+  grid-template-columns: minmax(12.5rem, 16rem) minmax(0, 1fr);
+  gap: clamp(1.25rem, 2.2vw, 1.85rem);
+  align-items: start;
+  min-width: 0;
+}
+
+.mkt-foot__brand {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  min-width: 0;
+}
+
+.mkt-foot__logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: fit-content;
+  text-decoration: none;
+}
+
+.mkt-foot__logo-mark {
+  display: block;
+  width: 1.75rem;
+  height: 1.75rem;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.mkt-foot__logo-text {
+  font-size: 0.98rem;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  color: #0c1222;
+  white-space: nowrap;
+}
+
+.mkt-foot__logo-text span {
+  color: #7c3aed;
 }
 
 .mkt-foot__sitemap {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1.35rem 1.1rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.15rem 0.85rem;
+  min-width: 0;
 }
 
 .mkt-foot__capsule {
@@ -1123,12 +1185,12 @@ html.mkt-nav-locked .mkt-nav__mobile-scroll {
 .mkt-foot__news {
   display: flex;
   flex-direction: column;
-  padding: 1.15rem 1.15rem 1.05rem;
+  padding: 1.15rem 1.2rem 1.05rem;
   border-radius: 1rem;
   overflow: hidden;
   background: #fafafa;
-  border: 1px solid #f1f5f9;
-  box-shadow: none;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
 }
 
 .mkt-foot__news-head {
@@ -1158,11 +1220,12 @@ html.mkt-nav-locked .mkt-nav__mobile-scroll {
 
 .mkt-foot__news-title {
   margin: 0.55rem 0 0;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 500;
   letter-spacing: -0.025em;
   line-height: 1.3;
   color: #0c1222;
+  white-space: nowrap;
 }
 
 .mkt-foot__news-sub {
@@ -1345,6 +1408,44 @@ a.mkt-foot__partner:hover {
   object-fit: contain;
 }
 
+.mkt-foot__company-rows {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.mkt-foot__company-row {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 0.35rem 0.4rem;
+  font-size: 0.75rem;
+  line-height: 1.45;
+  color: #64748b;
+}
+
+.mkt-foot__company-row svg {
+  flex-shrink: 0;
+  margin-top: 0.18rem;
+  color: #94a3b8;
+}
+
+.mkt-foot__company-row a {
+  color: #475569;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.mkt-foot__company-row a:hover {
+  color: #7c3aed;
+}
+
+.mkt-foot__company-sep {
+  color: #cbd5e1;
+}
+
 .mkt-foot__legal {
   display: flex;
   flex-wrap: wrap;
@@ -1390,12 +1491,26 @@ a.mkt-foot__partner:hover {
     grid-template-columns: 1fr;
   }
 
+  .mkt-foot__main {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
   .mkt-foot__aside {
-    max-width: 26rem;
+    max-width: 28rem;
+  }
+
+  .mkt-foot__news-title {
+    white-space: normal;
   }
 }
 
 @media (max-width: 720px) {
+  .mkt-foot__shell {
+    padding-left: 0.85rem;
+    padding-right: 0.85rem;
+  }
+
   .mkt-foot__sitemap {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1.5rem 1.15rem;
@@ -1403,6 +1518,10 @@ a.mkt-foot__partner:hover {
 
   .mkt-foot__aside {
     max-width: none;
+  }
+
+  .mkt-foot__news-title {
+    white-space: normal;
   }
 
   .mkt-foot__field {

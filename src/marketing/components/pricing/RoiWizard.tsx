@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { ArrowRight, Info, Link2, RotateCcw } from 'lucide-react';
+import { ArrowRight, ChevronDown, Link2, RotateCcw } from 'lucide-react';
 import { PrimaryButton, GhostButton } from '../ui';
 import {
   DEFAULT_ROI_INPUTS,
@@ -11,15 +11,18 @@ import {
   parseRoiFromQuery,
   serializeRoiToQuery,
   type RoiInputs,
-  type RoiMode,
   type RoiModules,
 } from '../../data/roiCalc';
 
-const MODULE_META: { id: keyof RoiModules; title: string; blurb: string }[] = [
-  { id: 'cart', title: 'Cart recovery', blurb: 'WhatsApp nudges on abandoned checkouts' },
-  { id: 'cod', title: 'COD → Prepaid / RTO', blurb: 'Confirm before ship + prepaid convert' },
-  { id: 'campaigns', title: 'Audience campaigns', blurb: 'Meta-safe broadcasts, net of template cost' },
-  { id: 'support', title: 'Support / Flow', blurb: 'Tickets deflected by automation' },
+const MODULE_META: {
+  id: keyof RoiModules;
+  title: string;
+  short: string;
+}[] = [
+  { id: 'cart', title: 'Cart recovery', short: 'Abandoned checkouts' },
+  { id: 'cod', title: 'COD / RTO', short: 'Confirm + prepaid' },
+  { id: 'campaigns', title: 'Campaigns', short: 'Net of Meta' },
+  { id: 'support', title: 'Support', short: 'Flow / AI deflection' },
 ];
 
 const MODULE_COLORS: Record<string, string> = {
@@ -47,6 +50,18 @@ function Field({
   );
 }
 
+/** Strip leading zeros from integer/decimal draft strings ("0100" → "100"). */
+function sanitizeNumericDraft(raw: string): string {
+  const cleaned = raw.replace(/[^\d.]/g, '');
+  if (cleaned === '' || cleaned === '.') return cleaned;
+  const neg = raw.trim().startsWith('-');
+  const [intPart = '', ...rest] = cleaned.split('.');
+  const frac = rest.length ? rest.join('') : null;
+  const strippedInt = intPart.replace(/^0+(?=\d)/, '') || (frac != null ? '0' : '0');
+  const next = frac != null ? `${strippedInt}.${frac}` : strippedInt;
+  return neg ? `-${next}` : next;
+}
+
 function NumInput({
   value,
   onChange,
@@ -64,23 +79,60 @@ function NumInput({
   prefix?: string;
   suffix?: string;
 }) {
+  const [focused, setFocused] = useState(false);
+  const [draft, setDraft] = useState(() => String(Number.isFinite(value) ? value : 0));
+
+  useEffect(() => {
+    if (!focused) {
+      setDraft(String(Number.isFinite(value) ? value : 0));
+    }
+  }, [value, focused]);
+
+  const commit = (raw: string) => {
+    const sanitized = sanitizeNumericDraft(raw);
+    if (sanitized === '' || sanitized === '-' || sanitized === '.') {
+      onChange(min);
+      setDraft(String(min));
+      return;
+    }
+    const n = Number(sanitized);
+    const next = clamp(Number.isFinite(n) ? n : min, min, max);
+    onChange(next);
+    setDraft(String(next));
+  };
+
   return (
     <div className="roi-num">
       {prefix ? <span className="roi-num__affix">{prefix}</span> : null}
       <input
-        type="number"
+        type="text"
+        inputMode={step < 1 ? 'decimal' : 'numeric'}
         className="roi-num__input"
-        value={Number.isFinite(value) ? value : 0}
-        min={min}
-        max={max}
-        step={step}
+        value={focused ? draft : String(Number.isFinite(value) ? value : 0)}
+        onFocus={() => {
+          setFocused(true);
+          setDraft(String(Number.isFinite(value) ? value : 0));
+        }}
+        onBlur={() => {
+          setFocused(false);
+          commit(draft);
+        }}
         onChange={(e) => {
           const raw = e.target.value;
-          if (raw === '' || raw === '-') {
-            onChange(min);
+          if (raw === '' || raw === '-' || raw === '.') {
+            setDraft(raw);
             return;
           }
-          onChange(clamp(Number(raw), min, max));
+          if (!/^[\d.]*$/.test(raw)) return;
+          const sanitized = sanitizeNumericDraft(raw);
+          setDraft(sanitized);
+          const n = Number(sanitized);
+          if (Number.isFinite(n)) onChange(clamp(n, min, max));
+        }}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            (e.target as HTMLInputElement).blur();
+          }
         }}
       />
       {suffix ? <span className="roi-num__affix">{suffix}</span> : null}
@@ -123,50 +175,118 @@ function useAnimatedNumber(target: number, duration = 420) {
   return display;
 }
 
+function polar(cx: number, cy: number, r: number, angleDeg: number) {
+  const rad = ((angleDeg - 90) * Math.PI) / 180;
+  return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
+}
+
+function DonutChart({
+  modules,
+  total,
+}: {
+  modules: { id: string; label: string; amount: number }[];
+  total: number;
+}) {
+  const size = 168;
+  const cx = size / 2;
+  const cy = size / 2;
+  const r = 64;
+  const stroke = 18;
+  const safeTotal = Math.max(total, 1);
+
+  let angle = 0;
+  const arcs = modules
+    .filter((m) => m.amount > 0)
+    .map((m) => {
+      const sweep = (m.amount / safeTotal) * 360;
+      const start = angle;
+      const end = angle + Math.max(sweep, 0.8);
+      angle = end;
+      const large = end - start > 180 ? 1 : 0;
+      const p0 = polar(cx, cy, r, start);
+      const p1 = polar(cx, cy, r, end);
+      return {
+        id: m.id,
+        d: `M ${p0.x} ${p0.y} A ${r} ${r} 0 ${large} 1 ${p1.x} ${p1.y}`,
+        color: MODULE_COLORS[m.id] || '#94a3b8',
+      };
+    });
+
+  return (
+    <svg className="roi-donut" viewBox={`0 0 ${size} ${size}`} role="img" aria-label="Value mix by module">
+      <circle cx={cx} cy={cy} r={r} className="roi-donut__track" fill="none" strokeWidth={stroke} />
+      {arcs.length === 0 ? null : arcs.length === 1 ? (
+        <circle
+          cx={cx}
+          cy={cy}
+          r={r}
+          fill="none"
+          stroke={arcs[0].color}
+          strokeWidth={stroke}
+          strokeLinecap="round"
+        />
+      ) : (
+        arcs.map((a) => (
+          <path
+            key={a.id}
+            d={a.d}
+            fill="none"
+            stroke={a.color}
+            strokeWidth={stroke}
+            strokeLinecap="butt"
+          />
+        ))
+      )}
+      <text className="roi-donut__center-label" x={cx} y={cy - 8} textAnchor="middle">
+        Monthly
+      </text>
+      <text className="roi-donut__center-value" x={cx} y={cy + 14} textAnchor="middle">
+        {formatInr(total)}
+      </text>
+    </svg>
+  );
+}
+
 function AreaChart({
   series,
 }: {
   series: { label: string; monthly: number; cumulative: number }[];
 }) {
-  const w = 320;
-  const h = 120;
-  const pad = { t: 8, r: 8, b: 22, l: 8 };
+  const w = 360;
+  const h = 148;
+  const pad = { t: 14, r: 12, b: 26, l: 12 };
   const innerW = w - pad.l - pad.r;
   const innerH = h - pad.t - pad.b;
   const maxCum = Math.max(...series.map((s) => s.cumulative), 1);
-  const maxMo = Math.max(...series.map((s) => s.monthly), 1);
   const n = Math.max(series.length - 1, 1);
 
-  const cumPath = series
-    .map((s, i) => {
-      const x = pad.l + (i / n) * innerW;
-      const y = pad.t + innerH - (s.cumulative / maxCum) * innerH;
-      return `${i === 0 ? 'M' : 'L'}${x.toFixed(1)},${y.toFixed(1)}`;
-    })
-    .join(' ');
+  const points = series.map((s, i) => {
+    const x = pad.l + (i / n) * innerW;
+    const y = pad.t + innerH - (s.cumulative / maxCum) * innerH;
+    return { x, y, ...s };
+  });
 
+  const cumPath = points
+    .map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x.toFixed(1)},${p.y.toFixed(1)}`)
+    .join(' ');
   const areaPath = `${cumPath} L${pad.l + innerW},${pad.t + innerH} L${pad.l},${pad.t + innerH} Z`;
+
+  const gridYs = [0.25, 0.5, 0.75].map((f) => pad.t + innerH * (1 - f));
 
   return (
     <svg className="roi-area" viewBox={`0 0 ${w} ${h}`} role="img" aria-label="12-month cumulative value">
+      {gridYs.map((y) => (
+        <line key={y} className="roi-area__grid" x1={pad.l} x2={pad.l + innerW} y1={y} y2={y} />
+      ))}
       <path d={areaPath} className="roi-area__fill" />
       <path d={cumPath} className="roi-area__line" fill="none" />
-      {series.map((s, i) => {
-        if (i % 2 === 1 && i !== series.length - 1) return null;
-        const x = pad.l + (i / n) * innerW;
-        const barH = (s.monthly / maxMo) * (innerH * 0.35);
+      {points.map((p, i) => {
+        if (i % 2 === 1 && i !== points.length - 1) return null;
         return (
-          <g key={s.label}>
-            <rect
-              className="roi-area__bar"
-              x={x - 4}
-              y={pad.t + innerH - barH}
-              width={8}
-              height={Math.max(2, barH)}
-              rx={2}
-            />
-            <text className="roi-area__label" x={x} y={h - 4} textAnchor="middle">
-              {s.label}
+          <g key={p.label}>
+            <circle className="roi-area__dot" cx={p.x} cy={p.y} r={2.5} />
+            <text className="roi-area__label" x={p.x} y={h - 6} textAnchor="middle">
+              {p.label}
             </text>
           </g>
         );
@@ -175,24 +295,199 @@ function AreaChart({
   );
 }
 
+function ModuleFineTune({
+  id,
+  inputs,
+  result,
+  patchModule,
+}: {
+  id: keyof RoiModules;
+  inputs: RoiInputs;
+  result: ReturnType<typeof calculateRoi>;
+  patchModule: <M extends keyof RoiModules>(id: M, patch: Partial<RoiModules[M]>) => void;
+}) {
+  const sendCap = inputs.modules.campaigns.audienceSize * 3;
+
+  if (id === 'cart') {
+    return (
+      <div className="roi-panel__fields roi-panel__fields--compact">
+        <Field
+          label="WhatsApp recovery rate"
+          hint={`~${Math.round(result.abandonedCarts)} abandoned carts / mo`}
+        >
+          <NumInput
+            value={inputs.modules.cart.recoveryRate}
+            onChange={(n) => patchModule('cart', { recoveryRate: clampPct(n) })}
+            min={0}
+            max={100}
+            step={0.5}
+            suffix="%"
+          />
+        </Field>
+      </div>
+    );
+  }
+
+  if (id === 'cod') {
+    return (
+      <div className="roi-panel__fields roi-panel__fields--compact">
+        <Field label="RTO rate on COD">
+          <NumInput
+            value={inputs.modules.cod.rtoRate}
+            onChange={(n) => patchModule('cod', { rtoRate: clampPct(n) })}
+            min={0}
+            max={100}
+            step={1}
+            suffix="%"
+          />
+        </Field>
+        <Field label="Cost per RTO">
+          <NumInput
+            value={inputs.modules.cod.rtoCost}
+            onChange={(n) => patchModule('cod', { rtoCost: n })}
+            min={0}
+            max={5000}
+            step={25}
+            prefix="₹"
+          />
+        </Field>
+        <Field label="RTOs avoided with confirm">
+          <NumInput
+            value={inputs.modules.cod.confirmEffectiveness}
+            onChange={(n) => patchModule('cod', { confirmEffectiveness: clampPct(n) })}
+            min={0}
+            max={100}
+            step={1}
+            suffix="%"
+          />
+        </Field>
+        <Field label="COD → prepaid convert">
+          <NumInput
+            value={inputs.modules.cod.prepaidConvert}
+            onChange={(n) => patchModule('cod', { prepaidConvert: clampPct(n) })}
+            min={0}
+            max={100}
+            step={0.5}
+            suffix="%"
+          />
+        </Field>
+      </div>
+    );
+  }
+
+  if (id === 'campaigns') {
+    return (
+      <div className="roi-panel__fields roi-panel__fields--compact">
+        <Field label="WhatsApp audience">
+          <NumInput
+            value={inputs.modules.campaigns.audienceSize}
+            onChange={(n) => patchModule('campaigns', { audienceSize: n })}
+            min={0}
+            max={500000}
+            step={100}
+          />
+        </Field>
+        <Field
+          label="Marketing sends / month"
+          hint={
+            result.campaignSendsCapped
+              ? `Capped at ${Math.round(result.campaignSendsUsed).toLocaleString('en-IN')} (audience × 3)`
+              : `Cap ${Math.round(sendCap).toLocaleString('en-IN')}`
+          }
+        >
+          <NumInput
+            value={inputs.modules.campaigns.monthlySends}
+            onChange={(n) => patchModule('campaigns', { monthlySends: n })}
+            min={0}
+            max={500000}
+            step={100}
+          />
+        </Field>
+        <Field label="Purchase rate per send">
+          <NumInput
+            value={inputs.modules.campaigns.purchaseRate}
+            onChange={(n) => patchModule('campaigns', { purchaseRate: clampPct(n) })}
+            min={0}
+            max={100}
+            step={0.1}
+            suffix="%"
+          />
+        </Field>
+        <Field label="Meta cost / message">
+          <NumInput
+            value={inputs.modules.campaigns.metaCostPerMsg}
+            onChange={(n) => patchModule('campaigns', { metaCostPerMsg: n })}
+            min={0}
+            max={5}
+            step={0.05}
+            prefix="₹"
+          />
+        </Field>
+      </div>
+    );
+  }
+
+  return (
+    <div className="roi-panel__fields roi-panel__fields--compact">
+      <Field label="WhatsApp tickets / month">
+        <NumInput
+          value={inputs.modules.support.ticketsPerMonth}
+          onChange={(n) => patchModule('support', { ticketsPerMonth: n })}
+          min={0}
+          max={20000}
+          step={10}
+        />
+      </Field>
+      <Field label="Deflection via Flow / AI">
+        <NumInput
+          value={inputs.modules.support.deflectionRate}
+          onChange={(n) => patchModule('support', { deflectionRate: clampPct(n) })}
+          min={0}
+          max={100}
+          step={1}
+          suffix="%"
+        />
+      </Field>
+      <Field label="Minutes per ticket">
+        <NumInput
+          value={inputs.modules.support.minutesPerTicket}
+          onChange={(n) => patchModule('support', { minutesPerTicket: n })}
+          min={0}
+          max={45}
+          step={1}
+        />
+      </Field>
+      <Field label="Agent cost / hour">
+        <NumInput
+          value={inputs.modules.support.agentHourlyCost}
+          onChange={(n) => patchModule('support', { agentHourlyCost: n })}
+          min={0}
+          max={2000}
+          step={10}
+          prefix="₹"
+        />
+      </Field>
+    </div>
+  );
+}
+
 export default function RoiWizard() {
   const [searchParams, setSearchParams] = useSearchParams();
   const boot = useMemo(() => parseRoiFromQuery(searchParams.toString()), []);
-  const [mode, setMode] = useState<RoiMode>(boot?.mode ?? 'full');
   const [inputs, setInputs] = useState<RoiInputs>(boot?.inputs ?? DEFAULT_ROI_INPUTS);
+  const [moreOpen, setMoreOpen] = useState(false);
+  const [openModule, setOpenModule] = useState<keyof RoiModules | null>(null);
+  const [detailOpen, setDetailOpen] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [formulaOpen, setFormulaOpen] = useState<string | null>(null);
 
   const result = useMemo(() => calculateRoi(inputs), [inputs]);
   const animTotal = useAnimatedNumber(result.totalMonthly);
-  const maxStack = Math.max(result.totalMonthly, 1);
+  const animPayback = useAnimatedNumber(result.paybackDays ?? 0);
 
-  // Sync URL (shareable scenario)
   useEffect(() => {
-    const q = serializeRoiToQuery(inputs, mode);
-    const next = new URLSearchParams(q);
-    setSearchParams(next, { replace: true });
-  }, [inputs, mode, setSearchParams]);
+    const q = serializeRoiToQuery(inputs, 'quick');
+    setSearchParams(new URLSearchParams(q), { replace: true });
+  }, [inputs, setSearchParams]);
 
   const setBaseline = <K extends keyof RoiInputs['baseline']>(
     key: K,
@@ -226,13 +521,13 @@ export default function RoiWizard() {
 
   const reset = () => {
     setInputs(DEFAULT_ROI_INPUTS);
-    setMode('full');
+    setOpenModule(null);
+    setMoreOpen(false);
+    setDetailOpen(false);
   };
 
-  const goCustomize = () => setMode('full');
-
   const copyShareLink = async () => {
-    const url = `${window.location.origin}/roi?${serializeRoiToQuery(inputs, mode)}`;
+    const url = `${window.location.origin}/roi?${serializeRoiToQuery(inputs, 'quick')}`;
     try {
       await navigator.clipboard.writeText(url);
       setCopied(true);
@@ -242,536 +537,307 @@ export default function RoiWizard() {
     }
   };
 
-  const sendCap = inputs.modules.campaigns.audienceSize * 3;
+  const paybackLabel =
+    result.needsVolumeTalk || result.paybackDays == null
+      ? null
+      : result.paybackDays <= 1
+        ? 'under a day'
+        : `~${Math.round(animPayback)} days`;
+
+  const mobilePayback =
+    result.needsVolumeTalk || result.paybackDays == null
+      ? null
+      : result.paybackDays <= 1
+        ? 'Pays back <1d'
+        : `Pays back in ~${Math.round(animPayback)}d`;
 
   return (
     <div className="roi-calc">
-      <div className="roi-mode" role="tablist" aria-label="Calculator mode">
-        <button
-          type="button"
-          role="tab"
-          aria-selected={mode === 'quick'}
-          className={`roi-mode__btn${mode === 'quick' ? ' is-active' : ''}`}
-          onClick={() => setMode('quick')}
-        >
-          Quick Estimate
-        </button>
-        <button
-          type="button"
-          role="tab"
-          aria-selected={mode === 'full'}
-          className={`roi-mode__btn${mode === 'full' ? ' is-active' : ''}`}
-          onClick={() => setMode('full')}
-        >
-          Full calculator
-        </button>
-      </div>
-
       <div className="roi-calc__grid">
         <div className="roi-calc__controls">
-          {mode === 'quick' ? (
-            <section className="roi-panel">
-              <header className="roi-panel__head">
-                <h2 className="roi-panel__title">Three numbers. One estimate.</h2>
-                <p className="roi-panel__sub">
-                  Everything else uses smart defaults — then customize when you want rigor.
-                </p>
-              </header>
-              <div className="roi-panel__fields">
-                <Field label="Paid orders / month">
+          <section className="roi-panel">
+            <header className="roi-panel__head">
+              <h2 className="roi-panel__title">Your store</h2>
+              <p className="roi-panel__sub">Three numbers. Smart defaults for the rest.</p>
+            </header>
+            <div className="roi-panel__fields roi-panel__fields--hero">
+              <Field label="Paid orders / month">
+                <NumInput
+                  value={inputs.baseline.orders}
+                  onChange={(n) => setBaseline('orders', n)}
+                  min={0}
+                  max={20000}
+                  step={10}
+                />
+              </Field>
+              <Field label="Average order value">
+                <NumInput
+                  value={inputs.baseline.aov}
+                  onChange={(n) => setBaseline('aov', n)}
+                  min={0}
+                  max={50000}
+                  step={50}
+                  prefix="₹"
+                />
+              </Field>
+              <Field label="COD share of orders">
+                <NumInput
+                  value={inputs.baseline.codShare}
+                  onChange={(n) => setBaseline('codShare', clampPct(n))}
+                  min={0}
+                  max={100}
+                  step={1}
+                  suffix="%"
+                />
+              </Field>
+            </div>
+
+            <button
+              type="button"
+              className={`roi-disclose${moreOpen ? ' is-open' : ''}`}
+              aria-expanded={moreOpen}
+              onClick={() => setMoreOpen((v) => !v)}
+            >
+              More store details
+              <ChevronDown className="roi-disclose__icon" aria-hidden />
+            </button>
+            {moreOpen ? (
+              <div className="roi-panel__fields roi-panel__fields--compact">
+                <Field
+                  label="Checkout abandon rate"
+                  hint="Used to estimate abandoned carts from paid orders"
+                >
                   <NumInput
-                    value={inputs.baseline.orders}
-                    onChange={(n) => setBaseline('orders', n)}
+                    value={inputs.baseline.abandonRate}
+                    onChange={(n) => setBaseline('abandonRate', clamp(n, 0, 95))}
                     min={0}
-                    max={20000}
-                    step={10}
-                  />
-                </Field>
-                <Field label="Average order value">
-                  <NumInput
-                    value={inputs.baseline.aov}
-                    onChange={(n) => setBaseline('aov', n)}
-                    min={0}
-                    max={50000}
-                    step={50}
-                    prefix="₹"
-                  />
-                </Field>
-                <Field label="COD share of orders">
-                  <NumInput
-                    value={inputs.baseline.codShare}
-                    onChange={(n) => setBaseline('codShare', clampPct(n))}
-                    min={0}
-                    max={100}
+                    max={95}
                     step={1}
                     suffix="%"
                   />
                 </Field>
               </div>
-              <button type="button" className="roi-handoff" onClick={goCustomize}>
-                Customize every assumption →
-              </button>
-            </section>
-          ) : (
-            <>
-              <section className="roi-panel">
-                <header className="roi-panel__head roi-panel__head--row">
-                  <div>
-                    <h2 className="roi-panel__title">Store baseline</h2>
-                    <p className="roi-panel__sub">Shared across every module</p>
-                  </div>
-                  <label className="roi-adv">
-                    <input
-                      type="checkbox"
-                      checked={inputs.advancedMode}
-                      onChange={(e) =>
-                        setInputs((prev) => ({ ...prev, advancedMode: e.target.checked }))
-                      }
-                    />
-                    <span>
-                      Advanced
-                      <em> more conservative cart math</em>
-                    </span>
-                  </label>
-                </header>
-                <div className="roi-panel__fields">
-                  <Field label="Paid orders / month" hint="Typical month, not festival peak">
-                    <NumInput
-                      value={inputs.baseline.orders}
-                      onChange={(n) => setBaseline('orders', n)}
-                      min={0}
-                      max={20000}
-                      step={10}
-                    />
-                  </Field>
-                  <Field label="Average order value">
-                    <NumInput
-                      value={inputs.baseline.aov}
-                      onChange={(n) => setBaseline('aov', n)}
-                      min={0}
-                      max={50000}
-                      step={50}
-                      prefix="₹"
-                    />
-                  </Field>
-                  <Field
-                    label="Checkout abandon rate"
-                    hint="Capped at 95% — used to derive abandoned carts from paid orders"
-                  >
-                    <NumInput
-                      value={inputs.baseline.abandonRate}
-                      onChange={(n) => setBaseline('abandonRate', clamp(n, 0, 95))}
-                      min={0}
-                      max={95}
-                      step={1}
-                      suffix="%"
-                    />
-                  </Field>
-                  <Field label="COD share of orders">
-                    <NumInput
-                      value={inputs.baseline.codShare}
-                      onChange={(n) => setBaseline('codShare', clampPct(n))}
-                      min={0}
-                      max={100}
-                      step={1}
-                      suffix="%"
-                    />
-                  </Field>
-                </div>
-              </section>
+            ) : null}
+          </section>
 
+          <section className="roi-panel">
+            <header className="roi-panel__head">
+              <h2 className="roi-panel__title">What to count</h2>
+              <p className="roi-panel__sub">Tap to include. Expand to fine-tune.</p>
+            </header>
+            <div className="roi-chips" role="group" aria-label="ROI modules">
               {MODULE_META.map((mod) => {
                 const enabled = inputs.modules[mod.id].enabled;
+                const expanded = openModule === mod.id && enabled;
                 return (
-                  <section
+                  <div
                     key={mod.id}
-                    className={`roi-panel roi-panel--module${enabled ? ' is-on' : ''}`}
-                    data-module={mod.id}
+                    className={`roi-chip${enabled ? ' is-on' : ''}${expanded ? ' is-open' : ''}`}
                   >
-                    <header className="roi-panel__head roi-panel__head--row">
-                      <div>
-                        <h2 className="roi-panel__title">{mod.title}</h2>
-                        <p className="roi-panel__sub">{mod.blurb}</p>
-                      </div>
+                    <div className="roi-chip__row">
                       <button
                         type="button"
-                        className={`roi-toggle${enabled ? ' is-on' : ''}`}
+                        className="roi-chip__toggle"
                         aria-pressed={enabled}
-                        onClick={() => toggleModule(mod.id)}
+                        onClick={() => {
+                          const turningOn = !enabled;
+                          toggleModule(mod.id);
+                          if (turningOn) setOpenModule(mod.id);
+                          else if (openModule === mod.id) setOpenModule(null);
+                        }}
                       >
-                        <span className="roi-toggle__knob" />
-                        <span className="roi-toggle__text">{enabled ? 'On' : 'Off'}</span>
+                        <span
+                          className="roi-chip__dot"
+                          style={{ background: enabled ? MODULE_COLORS[mod.id] : '#cbd5e1' }}
+                        />
+                        <span className="roi-chip__text">
+                          <span className="roi-chip__title">{mod.title}</span>
+                          <span className="roi-chip__short">{mod.short}</span>
+                        </span>
                       </button>
-                    </header>
-
-                    {enabled && mod.id === 'cart' ? (
-                      <div className="roi-panel__fields">
-                        <Field
-                          label="WhatsApp recovery rate"
-                          hint={`~${Math.round(result.abandonedCarts)} abandoned carts / mo in play`}
+                      {enabled ? (
+                        <button
+                          type="button"
+                          className="roi-chip__expand"
+                          aria-expanded={expanded}
+                          aria-label={`${expanded ? 'Hide' : 'Show'} ${mod.title} settings`}
+                          onClick={() => setOpenModule(expanded ? null : mod.id)}
                         >
-                          <NumInput
-                            value={inputs.modules.cart.recoveryRate}
-                            onChange={(n) =>
-                              patchModule('cart', { recoveryRate: clampPct(n) })
-                            }
-                            min={0}
-                            max={100}
-                            step={0.5}
-                            suffix="%"
-                          />
-                        </Field>
-                        {inputs.advancedMode ? (
-                          <Field
-                            label="Organic / baseline recovery"
-                            hint="Email, retargeting, return visits without WhatsApp — only the gap counts"
-                          >
-                            <NumInput
-                              value={inputs.modules.cart.baselineRecoveryRate}
-                              onChange={(n) =>
-                                patchModule('cart', {
-                                  baselineRecoveryRate: clampPct(n),
-                                })
-                              }
-                              min={0}
-                              max={100}
-                              step={0.5}
-                              suffix="%"
-                            />
-                          </Field>
-                        ) : null}
-                      </div>
+                          <ChevronDown className="roi-disclose__icon" aria-hidden />
+                        </button>
+                      ) : null}
+                    </div>
+                    {expanded ? (
+                      <ModuleFineTune
+                        id={mod.id}
+                        inputs={inputs}
+                        result={result}
+                        patchModule={patchModule}
+                      />
                     ) : null}
-
-                    {enabled && mod.id === 'cod' ? (
-                      <div className="roi-panel__fields">
-                        <Field label="RTO rate on COD (without confirm)">
-                          <NumInput
-                            value={inputs.modules.cod.rtoRate}
-                            onChange={(n) => patchModule('cod', { rtoRate: clampPct(n) })}
-                            min={0}
-                            max={100}
-                            step={1}
-                            suffix="%"
-                          />
-                        </Field>
-                        <Field label="Cost per RTO">
-                          <NumInput
-                            value={inputs.modules.cod.rtoCost}
-                            onChange={(n) => patchModule('cod', { rtoCost: n })}
-                            min={0}
-                            max={5000}
-                            step={25}
-                            prefix="₹"
-                          />
-                        </Field>
-                        <Field label="RTOs avoided with WA confirm">
-                          <NumInput
-                            value={inputs.modules.cod.confirmEffectiveness}
-                            onChange={(n) =>
-                              patchModule('cod', { confirmEffectiveness: clampPct(n) })
-                            }
-                            min={0}
-                            max={100}
-                            step={1}
-                            suffix="%"
-                          />
-                        </Field>
-                        <Field label="COD → prepaid convert rate">
-                          <NumInput
-                            value={inputs.modules.cod.prepaidConvert}
-                            onChange={(n) =>
-                              patchModule('cod', { prepaidConvert: clampPct(n) })
-                            }
-                            min={0}
-                            max={100}
-                            step={0.5}
-                            suffix="%"
-                          />
-                        </Field>
-                      </div>
-                    ) : null}
-
-                    {enabled && mod.id === 'campaigns' ? (
-                      <div className="roi-panel__fields">
-                        <Field label="Reachable WhatsApp audience">
-                          <NumInput
-                            value={inputs.modules.campaigns.audienceSize}
-                            onChange={(n) => patchModule('campaigns', { audienceSize: n })}
-                            min={0}
-                            max={500000}
-                            step={100}
-                          />
-                        </Field>
-                        <Field
-                          label="Marketing sends / month"
-                          hint={`Capped at audience × 3 (≤ ${Math.round(sendCap).toLocaleString('en-IN')}). ${
-                            result.campaignSendsCapped
-                              ? `Using ${Math.round(result.campaignSendsUsed).toLocaleString('en-IN')} sends.`
-                              : 'Raise audience to unlock more sends.'
-                          }`}
-                        >
-                          <NumInput
-                            value={inputs.modules.campaigns.monthlySends}
-                            onChange={(n) => patchModule('campaigns', { monthlySends: n })}
-                            min={0}
-                            max={500000}
-                            step={100}
-                          />
-                        </Field>
-                        <Field label="Purchase rate per send">
-                          <NumInput
-                            value={inputs.modules.campaigns.purchaseRate}
-                            onChange={(n) =>
-                              patchModule('campaigns', { purchaseRate: clampPct(n) })
-                            }
-                            min={0}
-                            max={100}
-                            step={0.1}
-                            suffix="%"
-                          />
-                        </Field>
-                        <Field label="Meta cost / message">
-                          <NumInput
-                            value={inputs.modules.campaigns.metaCostPerMsg}
-                            onChange={(n) => patchModule('campaigns', { metaCostPerMsg: n })}
-                            min={0}
-                            max={5}
-                            step={0.05}
-                            prefix="₹"
-                          />
-                        </Field>
-                      </div>
-                    ) : null}
-
-                    {enabled && mod.id === 'support' ? (
-                      <div className="roi-panel__fields">
-                        <Field label="WhatsApp tickets / month">
-                          <NumInput
-                            value={inputs.modules.support.ticketsPerMonth}
-                            onChange={(n) => patchModule('support', { ticketsPerMonth: n })}
-                            min={0}
-                            max={20000}
-                            step={10}
-                          />
-                        </Field>
-                        <Field label="Deflection via Flow / AI">
-                          <NumInput
-                            value={inputs.modules.support.deflectionRate}
-                            onChange={(n) =>
-                              patchModule('support', { deflectionRate: clampPct(n) })
-                            }
-                            min={0}
-                            max={100}
-                            step={1}
-                            suffix="%"
-                          />
-                        </Field>
-                        <Field label="Minutes per ticket today">
-                          <NumInput
-                            value={inputs.modules.support.minutesPerTicket}
-                            onChange={(n) => patchModule('support', { minutesPerTicket: n })}
-                            min={0}
-                            max={45}
-                            step={1}
-                          />
-                        </Field>
-                        <Field label="Agent cost / hour">
-                          <NumInput
-                            value={inputs.modules.support.agentHourlyCost}
-                            onChange={(n) => patchModule('support', { agentHourlyCost: n })}
-                            min={0}
-                            max={2000}
-                            step={10}
-                            prefix="₹"
-                          />
-                        </Field>
-                      </div>
-                    ) : null}
-                  </section>
+                  </div>
                 );
               })}
-
-              <button type="button" className="roi-reset" onClick={reset}>
-                <RotateCcw className="h-3.5 w-3.5" aria-hidden />
-                Reset to defaults
-              </button>
-            </>
-          )}
-
-          <div className="roi-controls-cta">
-            <p className="roi-controls-cta__title">
-              Estimate looks right? Put it live on WhatsApp.
-            </p>
-            <p className="roi-controls-cta__sub">
-              {result.needsVolumeTalk ? (
-                <>
-                  Volume is above Scale’s 1,500-order cap — talk to us for a fit.
-                </>
-              ) : (
-                <>
-                  Suggested plan: <strong>{result.plan?.name ?? '—'}</strong> ·{' '}
-                  {formatInr(result.totalMonthly)}/mo modeled value
-                </>
-              )}
-            </p>
-            <div className="roi-controls-cta__actions">
-              {result.needsVolumeTalk ? (
-                <PrimaryButton to="/contact">
-                  Let&apos;s talk volume
-                  <ArrowRight className="h-4 w-4" />
-                </PrimaryButton>
-              ) : (
-                <PrimaryButton to="/signup">
-                  Start free on {result.plan?.name}
-                  <ArrowRight className="h-4 w-4" />
-                </PrimaryButton>
-              )}
-              <GhostButton to="/pricing">Compare plans</GhostButton>
             </div>
-          </div>
+            <button type="button" className="roi-reset" onClick={reset}>
+              <RotateCcw className="h-3.5 w-3.5" aria-hidden />
+              Reset defaults
+            </button>
+          </section>
         </div>
 
         <aside className="roi-calc__results" aria-live="polite">
           <div className="roi-results">
-            <p className="roi-results__eyebrow">Estimated monthly value</p>
-            <p className="roi-results__total">{formatInr(animTotal)}</p>
-            <p className="roi-results__sub">
-              {formatInr(result.totalMonthly / 4)} / week · {formatInr(result.yearEstimate)} / year
-              (12-mo ramp sum)
-            </p>
-
-            <div className="roi-stack" aria-label="Value by module">
-              {result.modules.length === 0 ? (
-                <p className="roi-stack__empty">Turn on at least one module to see value.</p>
-              ) : (
-                result.modules.map((mod) => (
-                  <div key={mod.id} className="roi-stack__row">
-                    <div className="roi-stack__meta">
-                      <span className="roi-stack__label">
-                        {mod.label}
-                        <button
-                          type="button"
-                          className="roi-tip__btn"
-                          aria-label={`How ${mod.label} is calculated`}
-                          onClick={() =>
-                            setFormulaOpen((cur) => (cur === mod.id ? null : mod.id))
-                          }
-                        >
-                          <Info className="h-3.5 w-3.5" aria-hidden />
-                        </button>
-                      </span>
-                      <span className="roi-stack__amount">{formatInr(mod.amount)}</span>
-                    </div>
-                    {formulaOpen === mod.id ? (
-                      <p className="roi-stack__formula">{mod.formula}</p>
-                    ) : null}
-                    <div className="roi-stack__track">
-                      <span
-                        className="roi-stack__fill"
-                        style={{
-                          width: `${Math.max(4, (mod.amount / maxStack) * 100)}%`,
-                          background: MODULE_COLORS[mod.id],
-                        }}
-                      />
-                    </div>
-                    <p className="roi-stack__detail">{mod.detail}</p>
-                  </div>
-                ))
-              )}
-            </div>
-
-            <div className="roi-chart" aria-label="Twelve-month ramp">
-              <div className="roi-chart__head">
-                <h3 className="roi-chart__title">12-month ramp</h3>
-                <p className="roi-chart__note">
-                  M1–M6 climb, then steady-state through M12 · illustrative
-                </p>
-              </div>
-              <AreaChart series={result.growthSeries} />
-              <p className="roi-chart__cum">
-                Year total (sum of 12 months):{' '}
-                <strong>{formatInr(result.yearEstimate)}</strong>
-              </p>
-            </div>
-
             {result.needsVolumeTalk ? (
-              <div className="roi-plan roi-plan--talk">
-                <p className="roi-plan__eyebrow">Above published caps</p>
-                <p className="roi-plan__name">Let&apos;s talk volume</p>
-                <p className="roi-plan__pitch">
-                  {Math.round(inputs.baseline.orders).toLocaleString('en-IN')} orders/mo exceeds
-                  Scale’s 1,500-order cycle cap. We’ll size dispatch and Meta volume with you —
-                  not force-fit a self-serve tier.
+              <>
+                <p className="roi-results__eyebrow">High volume</p>
+                <p className="roi-results__payback">Let&apos;s size this together</p>
+                <p className="roi-results__total-line">
+                  Modeled value <span className="roi-results__em">{formatInr(animTotal)}</span>
+                  <span> / month</span>
                 </p>
-                <div className="roi-results__actions">
-                  <PrimaryButton to="/contact">
-                    Talk to us
-                    <ArrowRight className="h-4 w-4" />
-                  </PrimaryButton>
+                <p className="roi-results__sub">
+                  {Math.round(inputs.baseline.orders).toLocaleString('en-IN')} orders/mo is above
+                  Scale’s self-serve cap. We’ll fit dispatch with you.
+                </p>
+              </>
+            ) : (
+              <>
+                <p className="roi-results__eyebrow">
+                  {result.plan ? `Pays for ${result.plan.name}` : 'Estimated value'}
+                </p>
+                {paybackLabel != null ? (
+                  <p className="roi-results__payback">
+                    in <span>{paybackLabel}</span>
+                  </p>
+                ) : (
+                  <p className="roi-results__payback">Add store numbers to see payback</p>
+                )}
+                <p className="roi-results__total-line">
+                  <span className="roi-results__em">{formatInr(animTotal)}</span>
+                  <span> / month estimated</span>
+                </p>
+                {result.plan ? (
+                  <p className="roi-results__sub">
+                    Plan {result.plan.priceLabel} · Net after plan{' '}
+                    <span className="roi-results__em">{formatInr(result.netAfterPlan)}</span>
+                    {result.planMultiple >= 1
+                      ? ` · ~${result.planMultiple.toFixed(0)}× coverage`
+                      : null}
+                  </p>
+                ) : null}
+              </>
+            )}
+
+            <div className="roi-viz" aria-label="Value breakdown">
+              {result.modules.length === 0 ? (
+                <p className="roi-stack__empty">Turn on at least one module.</p>
+              ) : (
+                <div className="roi-viz__mix">
+                  <DonutChart modules={result.modules} total={result.totalMonthly} />
+                  <ul className="roi-legend">
+                    {result.modules.map((mod) => {
+                      const pct =
+                        result.totalMonthly > 0
+                          ? Math.round((mod.amount / result.totalMonthly) * 100)
+                          : 0;
+                      return (
+                        <li key={mod.id} className="roi-legend__row">
+                          <span
+                            className="roi-legend__swatch"
+                            style={{ background: MODULE_COLORS[mod.id] }}
+                          />
+                          <div className="roi-legend__body">
+                            <div className="roi-legend__meta">
+                              <span className="roi-legend__label">{mod.label}</span>
+                              <span className="roi-legend__amount">{formatInr(mod.amount)}</span>
+                            </div>
+                            <p className="roi-legend__detail">
+                              {mod.detail}
+                              {pct > 0 ? ` · ${pct}%` : ''}
+                            </p>
+                          </div>
+                        </li>
+                      );
+                    })}
+                  </ul>
                 </div>
-              </div>
-            ) : result.plan ? (
-              <div className="roi-plan">
-                <div className="roi-plan__top">
-                  <div>
-                    <p className="roi-plan__eyebrow">Suggested plan (by order volume)</p>
-                    <p className="roi-plan__name">{result.plan.name}</p>
+              )}
+
+              {result.totalMonthly > 0 ? (
+                <div className="roi-chart" aria-label="Twelve-month ramp">
+                  <div className="roi-chart__head">
+                    <h3 className="roi-chart__title">12-month ramp</h3>
+                    <p className="roi-chart__note">Illustrative M1–M6 climb, then steady</p>
                   </div>
-                  <p className="roi-plan__price">{result.plan.priceLabel}</p>
+                  <AreaChart series={result.growthSeries} />
+                  <p className="roi-chart__cum">
+                    Year total: <span className="roi-results__em">{formatInr(result.yearEstimate)}</span>
+                  </p>
                 </div>
-                <p className="roi-plan__pitch">{result.plan.pitch}</p>
-                <div className="roi-plan__meter" aria-hidden>
-                  <span
-                    className="roi-plan__meter-fill"
-                    style={{
-                      width: `${Math.min(100, Math.max(8, (result.planMultiple / 40) * 100))}%`,
-                    }}
-                  />
-                </div>
-                <p className="roi-plan__cov">
-                  Covers ~<strong>{result.planMultiple.toFixed(1)}×</strong> plan cost · Net after
-                  plan <strong>{formatInr(result.netAfterPlan)}</strong>
-                </p>
-              </div>
-            ) : null}
+              ) : null}
+            </div>
 
             <div className="roi-results__actions">
-              {result.needsVolumeTalk ? null : (
+              {result.needsVolumeTalk ? (
+                <PrimaryButton to="/contact" className="roi-results__cta">
+                  Talk to us
+                  <ArrowRight className="h-4 w-4" />
+                </PrimaryButton>
+              ) : (
                 <PrimaryButton to="/signup" className="roi-results__cta">
-                  Start free on {result.plan?.name}
+                  Start free{result.plan ? ` on ${result.plan.name}` : ''}
                   <ArrowRight className="h-4 w-4" />
                 </PrimaryButton>
               )}
               <GhostButton to="/pricing">Compare plans</GhostButton>
-              <button type="button" className="roi-share" onClick={copyShareLink}>
-                <Link2 className="h-3.5 w-3.5" aria-hidden />
-                {copied ? 'Link copied' : 'Copy share link'}
-              </button>
             </div>
 
+            <button
+              type="button"
+              className={`roi-disclose roi-disclose--block${detailOpen ? ' is-open' : ''}`}
+              aria-expanded={detailOpen}
+              onClick={() => setDetailOpen((v) => !v)}
+            >
+              How we calculated
+              <ChevronDown className="roi-disclose__icon" aria-hidden />
+            </button>
+
+            {detailOpen ? (
+              <div className="roi-detail">
+                <ul className="roi-detail__formulas">
+                  {result.modules.map((mod) => (
+                    <li key={mod.id}>
+                      <span className="roi-detail__name">{mod.label}</span>
+                      <span>{mod.formula}</span>
+                    </li>
+                  ))}
+                </ul>
+                <button type="button" className="roi-share" onClick={copyShareLink}>
+                  <Link2 className="h-3.5 w-3.5" aria-hidden />
+                  {copied ? 'Link copied' : 'Copy share link'}
+                </button>
+                <p className="roi-results__links">
+                  <Link to="/features/journeys#abandoned-cart">Cart recovery</Link>
+                  {' · '}
+                  <Link to="/features/journeys">COD confirm</Link>
+                  {' · '}
+                  <Link to="/features/campaigns">Campaigns</Link>
+                </p>
+              </div>
+            ) : null}
+
             <p className="roi-results__foot">
-              Illustrative model for Shopify WhatsApp ops in India — not a guarantee.
-              {inputs.advancedMode
-                ? ' Advanced mode credits only incremental cart recovery above organic baseline.'
-                : null}{' '}
-              Meta rates vary by category and quality.
-            </p>
-            <p className="roi-results__links">
-              <Link to="/features/journeys#abandoned-cart">Cart recovery</Link>
-              {' · '}
-              <Link to="/features/journeys#cod-prepaid">COD confirm</Link>
-              {' · '}
-              <Link to="/features/campaigns">Campaigns</Link>
+              Illustrative model for Shopify WhatsApp ops in India — not a guarantee. Meta rates
+              vary by category and quality.
             </p>
           </div>
         </aside>
       </div>
 
-      {/* Mobile sticky total */}
-      <div className="roi-mobile-bar" aria-hidden={false}>
+      <div className="roi-mobile-bar">
         <div>
-          <p className="roi-mobile-bar__label">Monthly value</p>
+          <p className="roi-mobile-bar__label">{mobilePayback ?? 'Monthly value'}</p>
           <p className="roi-mobile-bar__total">{formatInr(animTotal)}</p>
         </div>
         {result.needsVolumeTalk ? (

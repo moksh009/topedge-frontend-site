@@ -66,7 +66,11 @@ export default function FeatureDetailPage() {
         ]}
       />
       <MarketingPage>
-        <PageHero eyebrow={feature.label} title={feature.title} subtitle={feature.body} />
+        <PageHero
+          title={feature.title}
+          subtitle={feature.body}
+          atmosphere="mesh"
+        />
 
         <Section className="!pt-0 !pb-8">
           <div className="mx-auto w-full max-w-5xl px-1">

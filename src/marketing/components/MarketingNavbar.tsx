@@ -22,14 +22,16 @@ const productColumns: NavColumn[] = [
     items: [
       { label: 'Journey', href: '/features/journeys' },
       { label: 'Abandoned Cart', href: '/features/journeys#abandoned-cart' },
-      { label: 'COD → Prepaid', href: '/features/journeys#cod-prepaid' },
+      { label: 'Conditional routes', href: '/features/journeys#conditional-routes' },
+      { label: 'Return & retarget', href: '/features/journeys#return-retarget' },
+      { label: 'COD → Prepaid', href: '/features/journeys' },
     ],
   },
   {
     title: 'Engage',
     items: [
       { label: 'Flow + Shopify Tools', href: '/features/flow-builder' },
-      { label: 'Opt-in Popup', href: '/features/flow-builder' },
+      { label: 'Opt-in tools', href: '/features/opt-in-tools' },
       { label: 'Audience Campaigns', href: '/features/campaigns' },
       { label: 'Audience CRM', href: '/features/audience-crm' },
       { label: 'Warranty', href: '/features/warranty' },
@@ -40,17 +42,11 @@ const productColumns: NavColumn[] = [
     items: [
       { label: 'Tracking Pixel', href: '/features/analytics' },
       { label: 'Intent detection', href: '/features/intent-detection' },
+      { label: 'AI Brain', href: '/features/ai-brain' },
       { label: 'BYOK AI', href: '/features/byok' },
-      { label: 'P&L Analytics', href: '/features/profit-loss' },
+      { label: 'Profit & costs', href: '/features/profit-loss' },
     ],
   },
-];
-
-const solutionItems: NavLink[] = [
-  { label: 'Fashion & apparel', href: '/solutions/fashion' },
-  { label: 'Beauty & skincare', href: '/solutions/beauty' },
-  { label: 'Electronics & gadgets', href: '/solutions/electronics' },
-  { label: 'COD-first brands', href: '/solutions/cod' },
 ];
 
 const primaryLinks = [
@@ -64,24 +60,18 @@ const easeOut = [0.22, 1, 0.36, 1] as const;
 export default function MarketingNavbar() {
   const [open, setOpen] = useState(false);
   const [productOpen, setProductOpen] = useState(false);
-  const [solutionsOpen, setSolutionsOpen] = useState(false);
   const [mobileProductOpen, setMobileProductOpen] = useState(false);
-  const [mobileSolutionsOpen, setMobileSolutionsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const closeTimer = useRef<number | null>(null);
-  const solutionsCloseTimer = useRef<number | null>(null);
   const lockY = useRef(0);
   const location = useLocation();
-  const isHome = location.pathname === '/';
   const lenis = useLenis();
   const reduceMotion = useReducedMotion();
 
   useEffect(() => {
     setOpen(false);
     setProductOpen(false);
-    setSolutionsOpen(false);
     setMobileProductOpen(false);
-    setMobileSolutionsOpen(false);
   }, [location.pathname]);
 
   useEffect(() => {
@@ -101,7 +91,6 @@ export default function MarketingNavbar() {
     if (!open) {
       lenis?.start();
       setMobileProductOpen(false);
-      setMobileSolutionsOpen(false);
       return;
     }
 
@@ -119,16 +108,15 @@ export default function MarketingNavbar() {
   }, [open, lenis]);
 
   useEffect(() => {
-    if (!productOpen && !solutionsOpen && !open) return;
+    if (!productOpen && !open) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== 'Escape') return;
       setProductOpen(false);
-      setSolutionsOpen(false);
       setOpen(false);
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [productOpen, solutionsOpen, open]);
+  }, [productOpen, open]);
 
   useEffect(() => {
     const mq = window.matchMedia('(min-width: 1024px)');
@@ -139,12 +127,11 @@ export default function MarketingNavbar() {
     return () => mq.removeEventListener('change', onChange);
   }, []);
 
-  const capsule = scrolled || !isHome || open;
+  // Transparent (ghost) until scroll — solid capsule after scroll / mobile menu open
+  const capsule = scrolled || open;
 
   const openProduct = () => {
     if (closeTimer.current) window.clearTimeout(closeTimer.current);
-    if (solutionsCloseTimer.current) window.clearTimeout(solutionsCloseTimer.current);
-    setSolutionsOpen(false);
     setProductOpen(true);
   };
 
@@ -153,26 +140,8 @@ export default function MarketingNavbar() {
     closeTimer.current = window.setTimeout(() => setProductOpen(false), 140);
   };
 
-  const openSolutions = () => {
-    if (solutionsCloseTimer.current) window.clearTimeout(solutionsCloseTimer.current);
-    if (closeTimer.current) window.clearTimeout(closeTimer.current);
-    setProductOpen(false);
-    setSolutionsOpen(true);
-  };
-
-  const scheduleCloseSolutions = () => {
-    if (solutionsCloseTimer.current) window.clearTimeout(solutionsCloseTimer.current);
-    solutionsCloseTimer.current = window.setTimeout(() => setSolutionsOpen(false), 140);
-  };
-
   const toggleMobileProduct = () => {
     setMobileProductOpen((v) => !v);
-    setMobileSolutionsOpen(false);
-  };
-
-  const toggleMobileSolutions = () => {
-    setMobileSolutionsOpen((v) => !v);
-    setMobileProductOpen(false);
   };
 
   return (
@@ -253,59 +222,6 @@ export default function MarketingNavbar() {
                             </div>
                           ))}
                         </div>
-                      </div>
-                    </motion.div>
-                  ) : null}
-                </AnimatePresence>
-              </div>
-
-              <div
-                className="mkt-nav__solutions"
-                onMouseEnter={openSolutions}
-                onMouseLeave={scheduleCloseSolutions}
-                onFocus={openSolutions}
-                onBlur={(e) => {
-                  if (!e.currentTarget.contains(e.relatedTarget as Node)) {
-                    setSolutionsOpen(false);
-                  }
-                }}
-              >
-                <button
-                  type="button"
-                  className={cn('mkt-nav__link mkt-nav__link--btn', solutionsOpen && 'is-active')}
-                  aria-expanded={solutionsOpen}
-                  aria-haspopup="true"
-                >
-                  Solutions
-                  <ChevronDown className={cn('mkt-nav__chev', solutionsOpen && 'is-open')} aria-hidden />
-                </button>
-
-                <AnimatePresence mode="sync">
-                  {solutionsOpen ? (
-                    <motion.div
-                      key="solutions-mega"
-                      className="mkt-nav__mega mkt-nav__mega--solutions"
-                      initial={reduceMotion ? false : { opacity: 0, y: 6 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={reduceMotion ? undefined : { opacity: 0, y: 4 }}
-                      transition={{ duration: 0.2, ease: easeOut }}
-                      onMouseEnter={openSolutions}
-                      onMouseLeave={scheduleCloseSolutions}
-                    >
-                      <div className="mkt-nav__mega-card mkt-nav__mega-card--solutions">
-                        <p className="mkt-nav__mega-col-title">Solutions</p>
-                        <ul className="mkt-nav__mega-links">
-                          {solutionItems.map((item) => (
-                            <li key={item.href}>
-                              <Link to={item.href} className="mkt-nav__mega-link">
-                                <span className="mkt-nav__mega-link-text">{item.label}</span>
-                                <span className="mkt-nav__mega-link-arrow" aria-hidden>
-                                  →
-                                </span>
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
                       </div>
                     </motion.div>
                   ) : null}
@@ -410,49 +326,6 @@ export default function MarketingNavbar() {
                                 </Link>
                               )),
                             )}
-                          </div>
-                        </motion.div>
-                      ) : null}
-                    </AnimatePresence>
-                  </div>
-
-                  <div className="mkt-nav__mobile-section">
-                    <button
-                      type="button"
-                      className={cn(
-                        'mkt-nav__mobile-trigger',
-                        mobileSolutionsOpen && 'is-open',
-                      )}
-                      aria-expanded={mobileSolutionsOpen}
-                      onClick={toggleMobileSolutions}
-                    >
-                      Solutions
-                      <ChevronDown
-                        className={cn('mkt-nav__chev', mobileSolutionsOpen && 'is-open')}
-                        aria-hidden
-                      />
-                    </button>
-                    <AnimatePresence initial={false}>
-                      {mobileSolutionsOpen ? (
-                        <motion.div
-                          key="mobile-solutions"
-                          className="mkt-nav__mobile-submenu"
-                          initial={reduceMotion ? false : { height: 0, opacity: 0 }}
-                          animate={{ height: 'auto', opacity: 1 }}
-                          exit={reduceMotion ? undefined : { height: 0, opacity: 0 }}
-                          transition={{ duration: 0.22, ease: easeOut }}
-                        >
-                          <div className="mkt-nav__mobile-products">
-                            {solutionItems.map((item) => (
-                              <Link
-                                key={item.href}
-                                to={item.href}
-                                className="mkt-nav__mobile-item"
-                                onClick={() => setOpen(false)}
-                              >
-                                {item.label}
-                              </Link>
-                            ))}
                           </div>
                         </motion.div>
                       ) : null}

@@ -34,9 +34,10 @@ export default function FeaturesPage() {
       />
       <MarketingPage>
         <PageHero
-          eyebrow="Product"
           title="Every hub your operators actually open"
           subtitle="Not a feature dump ,  each capability maps to a workspace you run on dash.topedgeai.com. Store data syncs from Shopify; you edit it in the dashboard."
+          atmosphere="mesh"
+          mesh="features-index"
         />
 
         <Section className="!pt-0">

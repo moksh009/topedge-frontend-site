@@ -143,8 +143,9 @@ export const FEATURE_SEO: Record<string, { title: string; description: string; k
   journeys: {
     title: 'WhatsApp Cart Recovery Journeys | Abandoned Cart Automation for Shopify',
     description:
-      'Visual journey builder for WhatsApp abandoned cart recovery, COD confirmations, and post-purchase ecommerce automation on Shopify — Meta-approved sends only.',
-    keywords: 'WhatsApp cart recovery, abandoned cart recovery WhatsApp, Shopify journey automation, COD WhatsApp flow',
+      'Visual WhatsApp journey builder for Shopify: drag-and-drop canvas, pre-built cart and COD templates, Meta approval gating, and recovered-revenue attribution.',
+    keywords:
+      'WhatsApp cart recovery, abandoned cart recovery WhatsApp, Shopify journey automation, Meta template approval journeys, WhatsApp recovery revenue',
   },
   'live-chat': {
     title: 'WhatsApp Shared Inbox for Shopify | Live Chat with Order Context',
@@ -159,16 +160,18 @@ export const FEATURE_SEO: Record<string, { title: string; description: string; k
     keywords: 'WhatsApp flow builder, WhatsApp chatbot for ecommerce, Shopify chatbot builder',
   },
   'ai-brain': {
-    title: 'AI WhatsApp Chatbot for Shopify | Catalog-Grounded Answers',
+    title: 'AI WhatsApp Chatbot for Shopify | BYOK Gemini/OpenAI + Store Knowledge',
     description:
-      'AI Brain answers WhatsApp shoppers using live Shopify SKUs and ₹ prices — ecommerce automation that stays honest to your catalog.',
-    keywords: 'AI WhatsApp chatbot Shopify, ecommerce AI chatbot India, catalog WhatsApp AI',
+      'TopEdge AI Brain for Shopify WhatsApp: bring your own Gemini or OpenAI key, store knowledge RAG, bot persona, and intent routing — catalog-grounded replies you control.',
+    keywords:
+      'AI WhatsApp chatbot Shopify, BYOK Gemini OpenAI ecommerce, store knowledge RAG WhatsApp, WhatsApp bot persona India',
   },
   campaigns: {
     title: 'WhatsApp Marketing Campaigns for Shopify | Meta-Safe Broadcasts',
     description:
-      'Run WhatsApp marketing campaigns on Shopify audiences with Meta-approved templates — drops, restocks, and ecommerce promotions without spam risk.',
-    keywords: 'WhatsApp marketing Shopify, WhatsApp broadcast ecommerce, Meta template campaigns India',
+      'WhatsApp audience campaigns for Shopify: behavior segments, Meta-safe frequency capping, lead scoring, and net-of-Meta cost reporting.',
+    keywords:
+      'WhatsApp marketing Shopify, WhatsApp broadcast ecommerce, Meta template campaigns India, WhatsApp campaign ROI',
   },
   instagram: {
     title: 'Instagram to WhatsApp Automation | Comment-to-DM for Shopify',
@@ -179,8 +182,9 @@ export const FEATURE_SEO: Record<string, { title: string; description: string; k
   analytics: {
     title: 'WhatsApp Ecommerce Analytics | Cart Recovery & Campaign ROI',
     description:
-      'Track WhatsApp automation that matters: sent, read, clicked, paid. Measure cart recovery ₹ and campaign ROI for Shopify India brands.',
-    keywords: 'WhatsApp analytics Shopify, cart recovery ROI, ecommerce WhatsApp metrics',
+      'TopEdge tracking pixel for Shopify: theme app embed install, product and cart intent matched to WhatsApp, consent-aware firing, and pixel health monitoring.',
+    keywords:
+      'WhatsApp analytics Shopify, website tracking pixel WhatsApp, Shopify theme app embed tracking, cart recovery ROI',
   },
   'meta-manager': {
     title: 'Meta WhatsApp Template Manager | Cloud API for Shopify Brands',
@@ -191,8 +195,8 @@ export const FEATURE_SEO: Record<string, { title: string; description: string; k
   'audience-crm': {
     title: 'WhatsApp Audience CRM for Shopify | Segments & Lead Scoring',
     description:
-      'Segment Shopify customers for WhatsApp automation — cart abandoners, COD buyers, VIPs — and score leads for personalized ecommerce messaging.',
-    keywords: 'WhatsApp CRM Shopify, ecommerce audience segmentation, WhatsApp lead scoring',
+      'WhatsApp Audience CRM for Shopify: unified contact timeline, purchase-based lead scoring, in-product segments, and unlimited profiles on every plan.',
+    keywords: 'WhatsApp CRM Shopify, ecommerce audience segmentation, WhatsApp lead scoring, Shopify customer timeline',
   },
   'chat-rules': {
     title: 'WhatsApp Chat Rules for Ecommerce | Auto-Route & Assign',
@@ -206,16 +210,24 @@ export const FEATURE_SEO: Record<string, { title: string; description: string; k
       'Assign product warranties on WhatsApp for Shopify brands — customer registration portal, OTP, claim workflow, and status updates tied to orders.',
     keywords: 'WhatsApp warranty Shopify, digital warranty ecommerce India, warranty assignment WhatsApp',
   },
-  'profit-loss': {
-    title: 'WhatsApp P&L Analytics for Shopify | Recovery ROI & Meta Costs',
+  'opt-in-tools': {
+    title: 'WhatsApp Opt-in Tools for Shopify | Popup, Spin Wheel & VIP Drop',
     description:
-      'Track WhatsApp profit and loss for Shopify ecommerce — cart recovery revenue, campaign Meta costs, and contribution margins in one analytics view.',
-    keywords: 'WhatsApp P&L analytics Shopify, cart recovery ROI, Meta cost ecommerce India',
+      'Capture WhatsApp numbers on Shopify with Pulse Drop, welcome popup, spin wheel, mystery discount, and chat widget — then message consented subscribers with campaigns and journeys.',
+    keywords:
+      'WhatsApp opt-in Shopify, WhatsApp popup Shopify India, spin to win WhatsApp, WhatsApp widget Shopify, WhatsApp subscriber list',
+  },
+  'profit-loss': {
+    title: 'Shopify P&L Analytics India | COGS, COD, RTO & Net Profit',
+    description:
+      'TopEdge Profit & costs for Shopify India: COGS, packaging, payment fees, COD RTO, marketing — true net profit with a cost waterfall and product margins.',
+    keywords:
+      'Shopify P&L India, ecommerce COGS RTO analytics, COD profit calculator Shopify, WhatsApp D2C net profit',
   },
   byok: {
     title: 'BYOK AI for WhatsApp Shopify | Bring Your Own Gemini or OpenAI Key',
     description:
-      'Bring your own AI API keys to TopEdge — Gemini or OpenAI BYOK for Shopify WhatsApp automation with store knowledge RAG.',
+      'Bring your own Gemini or OpenAI API key to TopEdge — activate WhatsApp AI on your bill, choose model, cap reply words, and track tokens and cost.',
     keywords: 'BYOK AI WhatsApp Shopify, bring your own OpenAI key ecommerce, Gemini WhatsApp chatbot India',
   },
   'intent-detection': {
@@ -312,11 +324,16 @@ export function organizationJsonLd() {
     description:
       'WhatsApp automation and cart recovery platform for Shopify ecommerce brands in India.',
     foundingDate: '2024',
-    sameAs: ['https://www.linkedin.com/company/topedgeai', 'https://twitter.com/topedgeai'],
+    sameAs: [
+      'https://www.linkedin.com/company/topedgeai',
+      'https://www.instagram.com/topedge_ai/',
+      'https://www.youtube.com/@topedge_ai',
+    ],
     contactPoint: {
       '@type': 'ContactPoint',
       contactType: 'sales',
-      email: 'contact@topedgeai.com',
+      email: 'team@topedgeai.com',
+      telephone: '+91-93130-45439',
       availableLanguage: ['English', 'Hindi'],
       areaServed: 'IN',
     },

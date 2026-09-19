@@ -11,22 +11,26 @@ import {
 import { PageHero, Section, SectionHeading, MarketingCard } from '../marketing/components/ui';
 import { Reveal } from '../marketing/components/motion';
 import MarketingPage from '../marketing/components/MarketingPage';
+import {
+  COMPANY_EMAIL,
+  COMPANY_PHONE,
+  COMPANY_WHATSAPP_URL,
+} from '../marketing/legal/companyIdentity';
 
 const channels = [
+  {
+    icon: MessageCircle,
+    title: 'WhatsApp sales',
+    desc: 'Fastest way to pick a plan and launch cart recovery.',
+    action: `Chat ${COMPANY_PHONE}`,
+    href: COMPANY_WHATSAPP_URL,
+  },
   {
     icon: Mail,
     title: 'Email',
     desc: 'Implementation, partnerships, and billing.',
-    action: 'hello@topedgeai.com',
-    href: 'mailto:hello@topedgeai.com',
-  },
-  {
-    icon: MessageCircle,
-    title: 'New to TopEdge?',
-    desc: 'Start free — connect Shopify and publish your first flow in ~15 minutes.',
-    action: 'Create free account',
-    href: '/signup',
-    internal: true,
+    action: COMPANY_EMAIL,
+    href: `mailto:${COMPANY_EMAIL}`,
   },
   {
     icon: Clock,
@@ -47,11 +51,10 @@ export default function Contact() {
     const email = String(fd.get('email') ?? '');
     const store = String(fd.get('store') ?? '');
     const message = String(fd.get('message') ?? '');
-    const subject = encodeURIComponent(`TopEdge inquiry — ${name || 'Shopify merchant'}`);
-    const body = encodeURIComponent(
-      `Name: ${name}\nEmail: ${email}\nShopify store: ${store}\n\nWhat to automate:\n${message}`
+    const text = encodeURIComponent(
+      `Hi TopEdge — inquiry from ${name || 'Shopify merchant'}\nEmail: ${email}\nStore: ${store}\n\n${message}`,
     );
-    window.location.href = `mailto:hello@topedgeai.com?subject=${subject}&body=${body}`;
+    window.open(`https://wa.me/919313045439?text=${text}`, '_blank', 'noopener,noreferrer');
     setSent(true);
   };
 
@@ -91,7 +94,7 @@ export default function Contact() {
                 WhatsApp cart recovery
               </Link>
               ,{' '}
-              <Link to="/features/journeys#cod-prepaid" className="font-medium text-[#7C3AED]">
+              <Link to="/features/journeys" className="font-medium text-[#7C3AED]">
                 COD confirmation
               </Link>
               , and shared inbox support with Meta Cloud API. Prefer self-serve?{' '}
@@ -117,9 +120,18 @@ export default function Contact() {
               >
                 {sent ? (
                   <div className="rounded-xl border border-marketing-border bg-violet-50/50 p-5 text-sm text-slate-600">
-                    Opening your email client… If it did not open, write to{' '}
-                    <a href="mailto:hello@topedgeai.com" className="font-medium text-[#7C3AED] hover:underline">
-                      hello@topedgeai.com
+                    Opening WhatsApp… If it did not open, chat us at{' '}
+                    <a
+                      href={COMPANY_WHATSAPP_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-medium text-[#7C3AED] hover:underline"
+                    >
+                      {COMPANY_PHONE}
+                    </a>{' '}
+                    or email{' '}
+                    <a href={`mailto:${COMPANY_EMAIL}`} className="font-medium text-[#7C3AED] hover:underline">
+                      {COMPANY_EMAIL}
                     </a>
                     .
                   </div>
@@ -179,7 +191,7 @@ export default function Contact() {
                   type="submit"
                   className="marketing-btn-gradient inline-flex h-11 w-full items-center justify-center rounded-full px-8 text-sm font-medium text-white sm:w-auto"
                 >
-                  Send request
+                  Send on WhatsApp
                 </button>
                 <p className="text-xs text-slate-400">
                   By submitting, you agree we may contact you about TopEdge. No spam — India-focused team.
@@ -202,21 +214,15 @@ export default function Contact() {
                           <h3 className="font-medium text-[#0c1222]">{c.title}</h3>
                           <p className="mt-1 text-sm text-slate-500">{c.desc}</p>
                           {c.href ? (
-                            'internal' in c && c.internal ? (
-                              <Link
-                                to={c.href}
-                                className="mt-2 inline-block text-sm font-medium text-[#7C3AED] hover:underline"
-                              >
-                                {c.action}
-                              </Link>
-                            ) : (
-                              <a
-                                href={c.href}
-                                className="mt-2 inline-block text-sm font-medium text-[#7C3AED] hover:underline"
-                              >
-                                {c.action}
-                              </a>
-                            )
+                            <a
+                              href={c.href}
+                              className="mt-2 inline-block text-sm font-medium text-[#7C3AED] hover:underline"
+                              {...(c.href.startsWith('http')
+                                ? { target: '_blank', rel: 'noopener noreferrer' }
+                                : {})}
+                            >
+                              {c.action}
+                            </a>
                           ) : (
                             <p className="mt-2 text-sm font-medium text-slate-700">{c.action}</p>
                           )}

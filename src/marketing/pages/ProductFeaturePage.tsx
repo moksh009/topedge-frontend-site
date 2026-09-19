@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import MarketingSEO from '../components/MarketingSEO';
 import MarketingPage from '../components/MarketingPage';
 import MarketingCtaBand from '../components/MarketingCtaBand';
@@ -13,6 +13,7 @@ import {
   type ProductShowcase,
 } from '../data/productPages';
 import { organizationJsonLd, breadcrumbJsonLd, webPageJsonLd } from '../data/pageSeo';
+import FeatureMeshStage from '../components/effects/FeatureMeshStage';
 import '../styles/product-feature.css';
 
 type Props = {
@@ -139,8 +140,8 @@ function ProductFeatureView({ page }: { page: ProductPage }) {
         ]}
       />
       <MarketingPage className="mkt-pf">
+        <FeatureMeshStage mesh={page.id}>
         <header className="mkt-pf__hero">
-          <p className="mkt-pf__eyebrow">{page.eyebrow}</p>
           <h1 className="mkt-pf__title">
             {page.title}{' '}
             <span className="mkt-pf__title-accent">{page.titleAccent}</span>
@@ -148,22 +149,23 @@ function ProductFeatureView({ page }: { page: ProductPage }) {
           <p className="mkt-pf__sub">{page.subtitle}</p>
         </header>
 
-        <section className="mkt-pf__media" aria-label="Product preview">
-          {page.hero.kind === 'video' ? (
-            <DemoProductVideoFrame
-              src={page.hero.src}
-              poster={page.hero.poster}
-              glow={page.hero.glow ?? 'violet'}
-              title={page.hero.label}
-            />
-          ) : (
-            <DemoProductImageFrame
-              src={page.hero.src}
-              alt={page.hero.alt}
-              glow={page.hero.glow ?? 'violet'}
-            />
-          )}
-        </section>
+          <section className="mkt-pf__media" aria-label="Product preview">
+            {page.hero.kind === 'video' ? (
+              <DemoProductVideoFrame
+                src={page.hero.src}
+                poster={page.hero.poster}
+                glow={page.hero.glow ?? 'violet'}
+                title={page.hero.label}
+              />
+            ) : (
+              <DemoProductImageFrame
+                src={page.hero.src}
+                alt={page.hero.alt}
+                glow={page.hero.glow ?? 'violet'}
+              />
+            )}
+          </section>
+        </FeatureMeshStage>
 
         <section className="mkt-pf__section" aria-labelledby="mkt-pf-bento">
           <div className="mkt-pf__head">
@@ -172,7 +174,7 @@ function ProductFeatureView({ page }: { page: ProductPage }) {
             </h2>
             {page.bentoSub ? <p className="mkt-pf__head-sub">{page.bentoSub}</p> : null}
           </div>
-          <div className="mkt-pf__bento">
+          <div className={`mkt-pf__bento${page.bentos.length >= 5 ? ' mkt-pf__bento--five' : ''}`}>
             {page.bentos.map((tile) => (
               <BentoTile key={`${tile.titleLead}-${tile.titleAccent}`} tile={tile} />
             ))}
@@ -180,13 +182,10 @@ function ProductFeatureView({ page }: { page: ProductPage }) {
         </section>
 
         {hasShowcases ? (
-          <section className="mkt-pf__section" aria-labelledby="mkt-pf-show">
-            <div className="mkt-pf__head">
-              <h2 id="mkt-pf-show" className="mkt-pf__head-title">
-                {page.showcasesTitle} <span>{page.showcasesAccent}</span>
-              </h2>
-              {page.showcasesSub ? <p className="mkt-pf__head-sub">{page.showcasesSub}</p> : null}
-            </div>
+          <section
+            className="mkt-pf__section"
+            aria-label={`${page.showcasesTitle} ${page.showcasesAccent}`.trim()}
+          >
             <div className="mkt-pf__showcases">
               {page.showcases!.map((item, i) => (
                 <ShowcaseRow key={`${item.title}-${i}`} item={item} index={i} />
@@ -195,7 +194,10 @@ function ProductFeatureView({ page }: { page: ProductPage }) {
           </section>
         ) : null}
 
-        <section className="mkt-pf__section" aria-labelledby="mkt-pf-steps">
+        <section
+          className="mkt-pf__section mkt-pf__section--last mkt-pf__section--steps"
+          aria-labelledby="mkt-pf-steps"
+        >
           <div className="mkt-pf__head">
             <h2 id="mkt-pf-steps" className="mkt-pf__head-title">
               {page.stepsTitle} <span>{page.stepsAccent}</span>
@@ -204,9 +206,9 @@ function ProductFeatureView({ page }: { page: ProductPage }) {
           <ol className="mkt-pf__steps">
             {page.steps.map((step, i) => (
               <li key={step.title} className="mkt-pf__step">
-                <span className="mkt-pf__step-num" aria-hidden>
-                  {String(i + 1).padStart(2, '0')}
-                </span>
+                <div className="mkt-pf__step-index" aria-hidden>
+                  <span className="mkt-pf__step-num">{String(i + 1).padStart(2, '0')}</span>
+                </div>
                 <div className="mkt-pf__step-body">
                   <h3 className="mkt-pf__step-title">{step.title}</h3>
                   <p className="mkt-pf__step-copy">{step.body}</p>
@@ -214,21 +216,6 @@ function ProductFeatureView({ page }: { page: ProductPage }) {
               </li>
             ))}
           </ol>
-        </section>
-
-        <section className="mkt-pf__section mkt-pf__section--last" aria-labelledby="mkt-pf-related">
-          <div className="mkt-pf__head">
-            <h2 id="mkt-pf-related" className="mkt-pf__head-title">
-              {page.relatedTitle} <span>{page.relatedAccent}</span>
-            </h2>
-          </div>
-          <div className="mkt-pf__related">
-            {page.related.map((r) => (
-              <Link key={r.href + r.label} to={r.href} className="mkt-pf__related-link">
-                {r.label}
-              </Link>
-            ))}
-          </div>
         </section>
 
         <MarketingCtaBand

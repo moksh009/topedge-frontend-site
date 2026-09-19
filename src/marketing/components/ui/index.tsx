@@ -1,6 +1,8 @@
 import { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+import FeatureMeshStage, { type MeshKey, type MeshTint } from '../effects/FeatureMeshStage';
+import '../../styles/product-feature.css';
 
 export function Eyebrow({ children, className }: { children: ReactNode; className?: string }) {
   return <p className={cn('mkt-eyebrow', className)}>{children}</p>;
@@ -139,22 +141,70 @@ export function PageHero({
   subtitle,
   children,
   className,
+  atmosphere = 'wash',
+  tint = 'violet',
+  mesh = 'features-index',
 }: {
   eyebrow?: string;
   title: string;
   subtitle?: string;
   children?: ReactNode;
   className?: string;
+  /** wash = soft violet fade; mesh = unique generated mesh image */
+  atmosphere?: 'wash' | 'mesh';
+  tint?: MeshTint;
+  mesh?: MeshKey;
 }) {
+  const body = (
+    <div className={cn(atmosphere === 'mesh' ? 'px-5 pt-32 pb-16 md:px-8 md:pt-40 md:pb-20' : undefined)}>
+      <div className="mx-auto max-w-[var(--mkt-max-text)]">
+        {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
+        <h1
+          className={cn(
+            'mkt-display font-normal tracking-[-0.034em] leading-[1.15] text-[#0c1222]',
+            'text-[clamp(1.45rem,2.8vw,2.35rem)]',
+            'max-[640px]:text-[clamp(1.35rem,5.5vw,1.75rem)]',
+            eyebrow ? 'mt-4' : 'mt-0',
+          )}
+        >
+          {title}
+        </h1>
+        {subtitle && (
+          <p className="mt-5 max-w-3xl text-[clamp(0.9rem,1.5vw,1.05rem)] leading-snug text-slate-500 max-[640px]:text-[0.875rem]">
+            {subtitle}
+          </p>
+        )}
+        {children && <div className="mt-8 flex flex-wrap gap-3">{children}</div>}
+      </div>
+    </div>
+  );
+
+  if (atmosphere === 'mesh') {
+    return (
+      <FeatureMeshStage tint={tint} mesh={mesh} fillViewport={false} className={className}>
+        {body}
+      </FeatureMeshStage>
+    );
+  }
+
   return (
     <section className={cn('mkt-wash px-5 pt-32 pb-20 md:px-8 md:pt-40 md:pb-24', className)}>
       <div className="mx-auto max-w-[var(--mkt-max-text)]">
         {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
-        <h1 className="mkt-display mt-4 text-4xl font-medium tracking-tight text-[#0c1222] md:text-5xl md:leading-[1.1]">
+        <h1
+          className={cn(
+            'mkt-display font-normal tracking-[-0.034em] leading-[1.15] text-[#0c1222]',
+            'text-[clamp(1.45rem,2.8vw,2.35rem)]',
+            'max-[640px]:text-[clamp(1.35rem,5.5vw,1.75rem)]',
+            eyebrow ? 'mt-4' : 'mt-0',
+          )}
+        >
           {title}
         </h1>
         {subtitle && (
-          <p className="mt-5 max-w-3xl text-lg leading-snug text-slate-500">{subtitle}</p>
+          <p className="mt-5 max-w-3xl text-[clamp(0.9rem,1.5vw,1.05rem)] leading-snug text-slate-500 max-[640px]:text-[0.875rem]">
+            {subtitle}
+          </p>
         )}
         {children && <div className="mt-8 flex flex-wrap gap-3">{children}</div>}
       </div>

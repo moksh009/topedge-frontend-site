@@ -170,6 +170,8 @@ export type RoiResult = {
   needsVolumeTalk: boolean;
   planMultiple: number;
   netAfterPlan: number;
+  /** Calendar days for plan price to equal estimated monthly value (null if no plan / zero value) */
+  paybackDays: number | null;
   growthSeries: GrowthPoint[];
   yearEstimate: number;
 };
@@ -334,7 +336,7 @@ export function calculateRoi(inputs: RoiInputs): RoiResult {
       amount: supportSavings,
       detail:
         supportSavings > 0
-          ? `${supportHoursSaved.toFixed(1)} agent-hours saved`
+          ? `${formatHours(supportHoursSaved)} agent-hours saved`
           : 'No support savings at current inputs',
       formula: `${Math.round(m.support.ticketsPerMonth * (m.support.deflectionRate / 100))} tickets × ${m.support.minutesPerTicket} min × ₹${m.support.agentHourlyCost}/hr`,
     });
@@ -347,6 +349,10 @@ export function calculateRoi(inputs: RoiInputs): RoiResult {
   const planPrice = plan?.price ?? 0;
   const planMultiple = planPrice > 0 ? totalMonthly / planPrice : 0;
   const netAfterPlan = totalMonthly - planPrice;
+  const paybackDays =
+    planPrice > 0 && totalMonthly > 0
+      ? Math.max(1, Math.ceil(planPrice / (totalMonthly / 30)))
+      : null;
 
   const factors12: number[] = [...RAMP_6];
   const steady = RAMP_6[5];
@@ -390,6 +396,7 @@ export function calculateRoi(inputs: RoiInputs): RoiResult {
     needsVolumeTalk,
     planMultiple: finite(planMultiple),
     netAfterPlan: finite(netAfterPlan),
+    paybackDays,
     growthSeries,
     yearEstimate,
   };
@@ -403,6 +410,13 @@ export function formatInr(n: number, digits = 0): string {
   const v = finite(safeNum(n));
   const rounded = digits === 0 ? Math.round(v) : Number(v.toFixed(digits));
   return `₹${rounded.toLocaleString('en-IN')}`;
+}
+
+/** Whole hours as "28"; fractional as "28.5" — never "28.0". */
+export function formatHours(n: number): string {
+  const v = finite(safeNum(n));
+  if (Math.abs(v - Math.round(v)) < 0.05) return String(Math.round(v));
+  return v.toFixed(1).replace(/\.0$/, '');
 }
 
 /* ——— URL serialize / hydrate ——— */

@@ -4,7 +4,6 @@ import { featureStories } from './home';
 export type MarketingFeature = {
   slug: string;
   scene: FeatureStoryId | 'hero';
-  label: string;
   title: string;
   body: string;
   bullets: readonly string[];
@@ -17,25 +16,23 @@ export const MARKETING_FEATURES: MarketingFeature[] = [
   {
     slug: 'journeys',
     scene: 'journey',
-    label: 'Journey',
     title: 'Visual journeys that sell and support on WhatsApp',
-    body: 'Drag triggers, waits, conditions, and Meta-approved sends on a canvas. Branch on COD, pause until templates are live, ship without code.',
+    body: 'Drag Shopify events onto a canvas, start from pre-built templates, and never send until Meta says APPROVED — then read recovered ₹, not vanity sends.',
     bullets: [
-      'Trigger → wait → branch → send',
-      'COD & Shopify conditions',
-      'Nothing fires until Meta approves',
+      'Drag-and-drop builder — no code',
+      'Pre-built cart, COD, and shipping templates',
+      'Meta approval gating + recovered ₹',
     ],
     outcomes: [
       '3-step cart recovery without custom code',
-      'Order update paths that respect Meta utility templates',
-      'Gates that block sends until templates are APPROVED',
+      'Journeys blocked until templates are APPROVED',
+      'Recovered revenue attribution per journey',
     ],
     aliases: ['journey', 'order-automations', 'order-messages', 'cart-recovery'],
   },
   {
     slug: 'live-chat',
     scene: 'inbox',
-    label: 'Live Chat',
     title: 'Every thread beside the order it belongs to',
     body: 'WhatsApp and Instagram in one inbox. Customer 360 shows order #, COD status, LTV, and cart history ,  agents never tab-switch to Shopify admin.',
     bullets: [
@@ -53,7 +50,6 @@ export const MARKETING_FEATURES: MarketingFeature[] = [
   {
     slug: 'flow-builder',
     scene: 'flow-builder',
-    label: 'Flow Builder',
     title: 'Describe the bot ,  AI drafts the flow canvas',
     body: 'Fill a short AI form (niche, tone, goals). TopEdge generates a WhatsApp flow you can edit node-by-node ,  menus, conditions, catalog sends, human handoff.',
     bullets: [
@@ -70,24 +66,22 @@ export const MARKETING_FEATURES: MarketingFeature[] = [
   {
     slug: 'ai-brain',
     scene: 'ai-brain',
-    label: 'AI Brain',
-    title: 'Replies grounded in your catalog ,  not generic chatbots',
-    body: 'Intents, store policies, and Shopify products feed the brain. Answers cite real SKUs and prices so support stays on-brand and accurate.',
+    title: 'Your catalog + policies + persona — on your API key',
+    body: 'Intelligence hub: store knowledge RAG, bot persona, and BYOK Gemini or OpenAI. Intent Detect routes phrases without burning tokens on every message.',
     bullets: [
-      'Catalog + policy knowledge',
-      'Intent routing you control',
-      'Human takeover anytime',
+      'Store knowledge + bot persona',
+      'BYOK Gemini or OpenAI',
+      'Intent Detect without AI waste',
     ],
     outcomes: [
-      'Fewer “let me check and get back” loops',
-      'Intent sandbox before go-live',
-      'Brain pauses the moment an agent takes over',
+      'Catalog-grounded replies on your provider bill',
+      'Live Chat takeover pauses AI instantly',
+      'Flow AI nodes powered by the same hub',
     ],
   },
   {
     slug: 'campaigns',
     scene: 'campaigns',
-    label: 'Campaigns',
     title: 'Meta-safe broadcasts with honest ₹ costs',
     body: 'Pick an audience, lock an approved marketing template, preview the bubble, then send. See category rates before you spend.',
     bullets: [
@@ -104,7 +98,6 @@ export const MARKETING_FEATURES: MarketingFeature[] = [
   {
     slug: 'instagram',
     scene: 'instagram',
-    label: 'IG Automation',
     title: 'Comment or story → DM, without leaving Instagram',
     body: 'Auto-reply to comments and story mentions with a WhatsApp or IG DM. Capture interest while it’s hot ,  then continue in Live Chat.',
     bullets: [
@@ -121,7 +114,6 @@ export const MARKETING_FEATURES: MarketingFeature[] = [
   {
     slug: 'analytics',
     scene: 'analytics',
-    label: 'Analytics',
     title: 'Sent → read → clicked → paid ,  the funnel that matters',
     body: 'Track WhatsApp recovery performance with Meta-honest costs. Know which step converts and which template wastes spend.',
     bullets: [
@@ -138,7 +130,6 @@ export const MARKETING_FEATURES: MarketingFeature[] = [
   {
     slug: 'meta-manager',
     scene: 'meta-manager',
-    label: 'Meta Manager',
     title: 'You approve every template before anything sends',
     body: 'Create, sync, and track WhatsApp template status with Meta. Catalog and QR live here too ,  nothing broadcasts until approval lands.',
     bullets: [
@@ -155,7 +146,6 @@ export const MARKETING_FEATURES: MarketingFeature[] = [
   {
     slug: 'audience-crm',
     scene: 'audience',
-    label: 'Audience',
     title: 'Segments, scores, and cart leads in one CRM',
     body: 'See who abandoned, who’s VIP, and who’s COD-risk. Build segments for campaigns and journeys from real Shopify + WhatsApp behavior.',
     bullets: [
@@ -173,7 +163,6 @@ export const MARKETING_FEATURES: MarketingFeature[] = [
   {
     slug: 'chat-rules',
     scene: 'inbox',
-    label: 'Chat rules',
     title: 'Route the right conversations to the right people',
     body: 'Smart rules for assignment, COD keywords, and escalation ,  so Live Chat stays calm when volume spikes.',
     bullets: [
@@ -191,7 +180,6 @@ export const MARKETING_FEATURES: MarketingFeature[] = [
   {
     slug: 'warranty',
     scene: 'audience',
-    label: 'Warranty',
     title: 'Digital warranty on WhatsApp — batches, portal, claims',
     body: 'Link Shopify products to warranty batches, let customers register with WhatsApp OTP, and update claim status without spreadsheets.',
     bullets: [
@@ -206,33 +194,48 @@ export const MARKETING_FEATURES: MarketingFeature[] = [
     ],
   },
   {
-    slug: 'profit-loss',
-    scene: 'analytics',
-    label: 'P&L Analytics',
-    title: 'WhatsApp spend vs real profit',
-    body: 'Recovery ₹, campaign Meta costs, and contribution margins — so growth sees what paid, not just what opened.',
+    slug: 'opt-in-tools',
+    scene: 'hero',
+    title: 'WhatsApp opt-in tools for your Shopify storefront',
+    body: 'Pulse Drop, Popup, Spin wheel, Mystery discount, and WhatsApp widget — capture consented numbers, then campaign and journey from one subscriber list.',
     bullets: [
-      'Recovery funnel with attributed ₹',
-      'Meta category cost clarity',
-      'Contribution after message fees',
+      'Five storefront capture tools',
+      'Subscriber list with marketing consent',
+      'Bridge into campaigns at 100+ signups',
     ],
     outcomes: [
-      'Cut journeys that spend without paid orders',
-      'Finance sees marketing vs utility rates honestly',
-      'Margins from Store engine meet WhatsApp costs',
+      'Publish into Shopify theme without risky surgery',
+      'Every opt-in lands in a WhatsApp-ready list',
+      'Message consented audiences for recovery and revenue',
     ],
-    aliases: ['pnl', 'p-and-l', 'profit-and-loss', 'pl-analytics'],
+    aliases: ['opt-in', 'optin', 'opt-in-popup', 'optin-popup', 'popup'],
+  },
+  {
+    slug: 'profit-loss',
+    scene: 'analytics',
+    title: 'After Indian D2C costs, what did I keep?',
+    body: 'India-aware Profit & costs — COGS, packaging, payment fees, COD, RTO, and ads — true net profit, not vanity revenue.',
+    bullets: [
+      '3-step setup: products, fees, COD & returns',
+      'Cost waterfall to net profit ₹',
+      'Product margins with missing COGS called out',
+    ],
+    outcomes: [
+      'See net profit vs prior period',
+      'Plain-language COD and RTO findings',
+      'Sample mode labeled until Shopify connects',
+    ],
+    aliases: ['pnl', 'p-and-l', 'profit-and-loss', 'pl-analytics', 'profit-costs'],
   },
   {
     slug: 'byok',
     scene: 'ai-brain',
-    label: 'BYOK AI',
     title: 'Bring your own Gemini or OpenAI keys',
-    body: 'Encrypted per-workspace API keys, store knowledge RAG, and optimised token usage — without an enterprise AI add-on tax.',
+    body: 'Merchant-paid API usage on your key — activate AI, pick model, cap reply words, track tokens and cost. Powers Live Chat and Flow AI.',
     bullets: [
-      'Gemini or OpenAI BYOK',
-      'Store knowledge cited first',
-      '~₹0.2–₹0.3 / message token estimate',
+      'Gemini and/or OpenAI BYOK',
+      'Model + max reply words',
+      'Usage KPIs on your provider bill',
     ],
     outcomes: [
       'Your token bill, your spend ceiling',
@@ -243,8 +246,7 @@ export const MARKETING_FEATURES: MarketingFeature[] = [
   },
   {
     slug: 'intent-detection',
-    scene: 'ai-brain',
-    label: 'Intent detection',
+    scene: 'ai-brain',  
     title: 'Route chats by what they mean',
     body: 'Algorithmic intent matches shipping, returns, COD, and handoff — steer flows without burning AI on every message.',
     bullets: [
@@ -291,6 +293,10 @@ export function canonicalHrefForStory(storyId: string): string {
     inbox: '/features/live-chat',
     journey: '/features/journeys',
     'flow-builder': '/features/flow-builder',
+    'opt-in-tools': '/features/opt-in-tools',
+    'opt-in': '/features/opt-in-tools',
+    optin: '/features/opt-in-tools',
+    'optin-popup': '/features/opt-in-tools',
     'ai-brain': '/features/ai-brain',
     campaigns: '/features/campaigns',
     instagram: '/features/instagram',
@@ -302,6 +308,8 @@ export function canonicalHrefForStory(storyId: string): string {
     'intent-detection': '/features/intent-detection',
     segmentation: '/features/audience-crm',
     segment: '/features/audience-crm',
+    'profit-loss': '/features/profit-loss',
+    byok: '/features/byok',
   };
   return map[storyId] ?? '/features';
 }

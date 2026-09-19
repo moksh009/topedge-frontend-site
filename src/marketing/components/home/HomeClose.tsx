@@ -3,7 +3,6 @@ import MarketingCtaBand from '../MarketingCtaBand';
 export default function HomeClose() {
   return (
     <MarketingCtaBand
-      eyebrow="Get started"
       title={
         <>
           Recover more carts with{' '}
@@ -17,6 +16,7 @@ export default function HomeClose() {
       primaryLabel="Start free"
       secondaryLabel="See pricing"
       secondaryTo="/pricing"
+      titleOneLine
     />
   );
 }

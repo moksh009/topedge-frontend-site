@@ -1,6 +1,15 @@
 import { FormEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Linkedin, Instagram, Youtube, Twitter } from 'lucide-react';
+import { Linkedin, Instagram, Youtube, Mail, MapPin, Phone } from 'lucide-react';
+import {
+  COMPANY_ADDRESS_LINES,
+  COMPANY_BRAND_NAME,
+  COMPANY_EMAIL,
+  COMPANY_PHONE,
+  COMPANY_PHONE_E164,
+  COMPANY_SOCIAL,
+  COMPANY_WHATSAPP_URL,
+} from '../legal/companyIdentity';
 
 type FootLink = { label: string; href: string; badge?: string };
 
@@ -21,8 +30,10 @@ const columns: { title: string; links: FootLink[] }[] = [
       { label: 'Pricing', href: '/pricing' },
       { label: 'ROI calculator', href: '/roi', badge: 'New' },
       { label: 'Journey', href: '/features/journeys' },
+      { label: 'Opt-in tools', href: '/features/opt-in-tools' },
       { label: 'Audience Campaigns', href: '/features/campaigns' },
-      { label: 'Audience CRM', href: '/features/audience-crm' },
+      { label: 'Profit & costs', href: '/features/profit-loss' },
+      { label: 'AI Brain', href: '/features/ai-brain' },
     ],
   },
   {
@@ -35,42 +46,16 @@ const columns: { title: string; links: FootLink[] }[] = [
       { label: 'TopEdge vs Bitespeed', href: '/compare/bitespeed' },
     ],
   },
-  {
-    title: 'Solutions',
-    links: [
-      { label: 'Fashion & apparel', href: '/solutions/fashion' },
-      { label: 'Beauty & skincare', href: '/solutions/beauty' },
-      { label: 'Electronics & gadgets', href: '/solutions/electronics' },
-      { label: 'COD-first brands', href: '/solutions/cod' },
-    ],
-  },
 ];
 
 const socials = [
-  {
-    label: 'LinkedIn',
-    href: 'https://www.linkedin.com/company/topedgeai',
-    Icon: Linkedin,
-  },
-  {
-    label: 'X / Twitter',
-    href: 'https://twitter.com/topedgeai',
-    Icon: Twitter,
-  },
-  {
-    label: 'Instagram',
-    href: 'https://www.instagram.com/',
-    Icon: Instagram,
-  },
-  {
-    label: 'YouTube',
-    href: 'https://www.youtube.com/',
-    Icon: Youtube,
-  },
+  { label: 'LinkedIn', href: COMPANY_SOCIAL.linkedin, Icon: Linkedin },
+  { label: 'Instagram', href: COMPANY_SOCIAL.instagram, Icon: Instagram },
+  { label: 'YouTube', href: COMPANY_SOCIAL.youtube, Icon: Youtube },
 ];
 
 /**
- * Minimal site footer — quiet sitemap + light newsletter, matches marketing UI.
+ * Minimal site footer — brand + contact first, then sitemap + newsletter.
  */
 export default function MarketingFooter() {
   const [email, setEmail] = useState('');
@@ -86,23 +71,61 @@ export default function MarketingFooter() {
     <footer className="mkt-foot" aria-label="Site footer">
       <div className="mkt-foot__shell">
         <div className="mkt-foot__top">
-          <nav className="mkt-foot__sitemap" aria-label="Sitemap">
-            {columns.map((col) => (
-              <div key={col.title} className="mkt-foot__col">
-                <p className="mkt-foot__capsule">{col.title}</p>
-                <ul className="mkt-foot__list">
-                  {col.links.map((l) => (
-                    <li key={l.href + l.label}>
-                      <Link to={l.href} className="mkt-foot__link">
-                        {l.label}
-                        {l.badge ? <span className="mkt-foot__badge">{l.badge}</span> : null}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
+          <div className="mkt-foot__main">
+            <div className="mkt-foot__brand" aria-label="Company details">
+              <Link to="/" className="mkt-foot__logo" aria-label={`${COMPANY_BRAND_NAME} home`}>
+                <img
+                  src="/logo.png"
+                  alt=""
+                  width={28}
+                  height={28}
+                  className="mkt-foot__logo-mark"
+                  decoding="async"
+                />
+                <span className="mkt-foot__logo-text">
+                  TopEdge <span>AI</span>
+                </span>
+              </Link>
+              <div className="mkt-foot__company-rows">
+                <p className="mkt-foot__company-row">
+                  <MapPin size={13} strokeWidth={1.75} aria-hidden />
+                  <span>{COMPANY_ADDRESS_LINES.join(', ')}</span>
+                </p>
+                <p className="mkt-foot__company-row">
+                  <Mail size={13} strokeWidth={1.75} aria-hidden />
+                  <a href={`mailto:${COMPANY_EMAIL}`}>{COMPANY_EMAIL}</a>
+                </p>
+                <p className="mkt-foot__company-row">
+                  <Phone size={13} strokeWidth={1.75} aria-hidden />
+                  <a href={`tel:+${COMPANY_PHONE_E164}`}>{COMPANY_PHONE}</a>
+                  <span className="mkt-foot__company-sep" aria-hidden>
+                    ·
+                  </span>
+                  <a href={COMPANY_WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+                    WhatsApp
+                  </a>
+                </p>
               </div>
-            ))}
-          </nav>
+            </div>
+
+            <nav className="mkt-foot__sitemap" aria-label="Sitemap">
+              {columns.map((col) => (
+                <div key={col.title} className="mkt-foot__col">
+                  <p className="mkt-foot__capsule">{col.title}</p>
+                  <ul className="mkt-foot__list">
+                    {col.links.map((l) => (
+                      <li key={l.href + l.label}>
+                        <Link to={l.href} className="mkt-foot__link">
+                          {l.label}
+                          {l.badge ? <span className="mkt-foot__badge">{l.badge}</span> : null}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </nav>
+          </div>
 
           <aside className="mkt-foot__aside">
             <div className="mkt-foot__news">

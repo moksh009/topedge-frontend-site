@@ -259,12 +259,13 @@ export default function HomeTestimonials({ hideHeader = false }: { hideHeader?: 
       <div className="home-voices__inner">
         {!hideHeader && (
           <header className="home-voices__head">
-            <p className="home-voices__eyebrow">Customer outcomes</p>
             <h2 className="home-voices__title">
               Trusted by founders{' '}
               <span className="home-voices__hl">backed by results</span>
             </h2>
-            <p className="home-voices__sub">Results that speak through founder voices.</p>
+            <p className="home-voices__sub">
+              Cart recovery, COD confirms, and inbox wins — in their words.
+            </p>
           </header>
         )}
 

@@ -13,23 +13,19 @@
 }
 
 .mkt-customers__eyebrow {
-  margin: 0 0 0.7rem;
-  font-size: 0.72rem;
-  font-weight: 550;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #7c3aed;
+  display: none;
 }
 
 .mkt-customers__title {
   margin: 0 auto;
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: clamp(1.35rem, 2.5vw, 2.15rem);
+  font-size: clamp(1.45rem, 2.8vw, 2.35rem);
   font-weight: 400;
   letter-spacing: -0.034em;
-  line-height: 1.2;
+  line-height: 1.15;
   color: #0c1222;
-  white-space: nowrap;
+  max-width: 44rem;
+  text-wrap: balance;
 }
 
 .mkt-customers__title-accent {
@@ -37,9 +33,16 @@
   color: #5b21b6;
   background: #ede9fe;
   border-radius: 0.5em;
-  padding: 0.06em 0.28em 0.1em;
+  padding: 0.04em 0.22em 0.06em;
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
+}
+
+@media (max-width: 640px) {
+  .mkt-customers__title {
+    font-size: clamp(1.35rem, 5.5vw, 1.75rem);
+    line-height: 1.18;
+  }
 }
 
 .mkt-customers__sub {
@@ -50,6 +53,37 @@
   line-height: 1.55;
   color: #64748b;
   text-wrap: pretty;
+}
+
+/* Dark strip so white trust marks (same as home hero) stay readable */
+.mkt-customers__trust {
+  width: min(100%, 36rem);
+  margin: 1.35rem auto 0;
+  padding: 0.95rem 1.1rem 1.05rem;
+  border-radius: 1rem;
+  background: #0c1222;
+  box-shadow: 0 12px 28px -18px rgba(15, 23, 42, 0.45);
+}
+
+.mkt-customers__trust .home-trust-logos {
+  max-width: none;
+}
+
+.mkt-customers__trust .home-trust-logos__label {
+  margin-bottom: 0.65rem;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.1em;
+}
+
+.mkt-customers__trust .home-trust-logos__track {
+  gap: 2.25rem;
+}
+
+.mkt-customers__trust .home-trust-logos__item img {
+  height: 18px;
+  max-width: 100px;
+  filter: none;
+  opacity: 0.92;
 }
 
 .mkt-customers__outcomes {

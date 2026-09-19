@@ -1,6 +1,5 @@
 import type { ReactNode } from 'react';
 import { ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import { PrimaryButton, GhostButton } from './ui';
 
 export default function MarketingCtaBand({
@@ -13,6 +12,7 @@ export default function MarketingCtaBand({
   secondaryLabel,
   secondaryTo,
   secondaryHref,
+  titleOneLine = false,
 }: {
   eyebrow?: string;
   title: ReactNode;
@@ -23,9 +23,14 @@ export default function MarketingCtaBand({
   secondaryLabel?: string;
   secondaryTo?: string;
   secondaryHref?: string;
+  /** Keep the title on a single row; font scales with viewport */
+  titleOneLine?: boolean;
 }) {
   return (
-    <section className="mkt-cta" aria-label="Get started">
+    <section
+      className={['mkt-cta', titleOneLine ? 'mkt-cta--oneline' : ''].filter(Boolean).join(' ')}
+      aria-label="Start free"
+    >
       <div className="mkt-cta__glow" aria-hidden />
       <div className="mkt-cta__inner">
         {eyebrow ? <p className="mkt-cta__eyebrow">{eyebrow}</p> : null}
@@ -55,12 +60,6 @@ export default function MarketingCtaBand({
             )
           ) : null}
         </div>
-        <p className="mkt-cta__note">
-          Free to start · Shopify + WhatsApp · No card required —{' '}
-          <Link to="/roi" className="mkt-cta__note-link">
-            estimate ROI
-          </Link>
-        </p>
       </div>
     </section>
   );

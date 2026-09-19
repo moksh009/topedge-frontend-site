@@ -66,7 +66,7 @@ export const SEO_TOPICS: Record<string, SeoTopic> = {
     ],
     related: [
       { label: 'Journey builder', href: '/features/journeys' },
-      { label: 'COD confirmation', href: '/features/journeys#cod-prepaid' },
+      { label: 'COD confirmation', href: '/features/journeys' },
       { label: 'Cart recovery playbook', href: '/blog/whatsapp-abandoned-cart-recovery-shopify' },
       { label: 'Pricing', href: '/pricing' },
     ],
@@ -117,7 +117,7 @@ export const SEO_TOPICS: Record<string, SeoTopic> = {
       },
     ],
     related: [
-      { label: 'COD solution page', href: '/solutions/cod' },
+      { label: 'Journeys', href: '/features/journeys' },
       { label: 'Cart recovery', href: '/features/journeys#abandoned-cart' },
       { label: 'RTO playbook', href: '/blog/how-to-reduce-rto-with-whatsapp-cod-confirmation' },
       { label: 'Journeys', href: '/features/journeys' },

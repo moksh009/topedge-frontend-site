@@ -128,7 +128,7 @@ export default function HomeRoiPayoff() {
     <section className="home-roi" aria-label="Recovery ROI">
       <div className="home-roi__inner home-roi__inner--bento">
         <header className="home-roi__intro">
-          <p className="home-roi__eyebrow">Recovery math</p>
+         
           <h2 className="home-roi__title">
             See how much{' '}
             <span className="roi-brand">

@@ -54,6 +54,10 @@ export const DASH_SIGNUP = `${DASH_ORIGIN}/signup`;
 export const DASH_LOGIN = `${DASH_ORIGIN}/login`;
 export const DASH_BILLING = `${DASH_ORIGIN}/settings?tab=billing`;
 export const DASH_BILLING_ADJUST = `${DASH_ORIGIN}/settings?tab=billing&adjust=1`;
+
+/** Prefer WhatsApp for sales — opens chat with prefilled intro. */
+export { COMPANY_WHATSAPP_URL as SALES_WHATSAPP_URL } from '../legal/companyIdentity';
+/** @deprecated Use SALES_WHATSAPP_URL — kept for any leftover mailto CTAs */
 export const SALES_MAILTO = 'mailto:team@topedgeai.com';
 
 const PUBLIC_PLANS = new Set(['launch', 'growth', 'scale']);

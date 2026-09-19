@@ -36,15 +36,14 @@ export default function RoiPage() {
       />
       <MarketingPage className="roi-page" fillHeight={false}>
         <header className="roi-page__hero">
-          <p className="roi-page__eyebrow">Operator ROI</p>
           <h1 className="roi-page__title">
-            WhatsApp ROI for{' '}
+            Will TopEdge{' '}
             <span className="roi-brand">
-              TopEdge <span>AI</span>
+              pay for itself<span>?</span>
             </span>
           </h1>
           <p className="roi-page__sub">
-            Cart recovery, COD / RTO, campaigns, and support — Quick Estimate or full control.
+            Three store numbers → payback days and monthly ₹. Illustrative, not a guarantee.
           </p>
         </header>
         <div className="roi-page__body">

@@ -96,7 +96,7 @@ export const blogPosts: BlogPost[] = [
 <p>Trigger a clear confirm / reschedule / cancel path after order creation. Use utility templates where possible, show order # and ₹ total from Shopify, and escalate unsure buyers to Live Chat.</p>
 <h2>Branch journeys on COD status</h2>
 <p>Prepaid and COD should not share the same recovery tone. Condition your WhatsApp journeys on payment method and shipping state so automation stays honest.</p>
-<p><a href="/solutions/cod">COD-first solution</a> · <a href="/features/journeys">Journey builder</a></p>
+<p><a href="/features/journeys">COD confirmation</a> · <a href="/features/journeys">Journey builder</a></p>
 `,
   },
   {
@@ -309,7 +309,7 @@ export const blogPosts: BlogPost[] = [
 </ol>
 <h2>Measure what finance cares about</h2>
 <p>Track confirmation rate, ship rate, and RTO % before/after — not just message opens.</p>
-<p><a href="/features/journeys#cod-prepaid">COD confirmation product page</a> · <a href="/solutions/cod">COD solution</a> · <a href="/features/journeys">Journeys</a></p>
+<p><a href="/features/journeys">COD confirmation</a> · <a href="/features/journeys">Journeys</a></p>
 `,
   },
   {

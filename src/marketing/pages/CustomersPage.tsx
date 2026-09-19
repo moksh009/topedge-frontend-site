@@ -8,12 +8,13 @@ import {
 import MarketingPage from '../components/MarketingPage';
 import MarketingCtaBand from '../components/MarketingCtaBand';
 import HomeTestimonials from '../components/home/HomeTestimonials';
+import HomeTrust from '../components/home/HomeTrust';
 import '../styles/customers.css';
 
 const outcomes = [
   {
     pose: 'left' as const,
-    metric: '+7pp',
+    metric: '+7%',
     label: 'Cart recovery lift',
     detail: 'Email-only → 3-message WhatsApp sequence',
     image: '/marketing/customers/customers-outcome-cart.png',
@@ -21,15 +22,15 @@ const outcomes = [
   {
     pose: 'center' as const,
     metric: '3→1',
-    label: 'Support tabs',
-    detail: 'Shopify + WA Web + sheets → Live Chat',
+    label: 'Inbox for support',
+    detail: 'Shopify + WA Web + sheets → one Live Chat',
     image: '/marketing/customers/customers-outcome-inbox.png',
   },
   {
     pose: 'right' as const,
     metric: '36h',
-    label: 'Template approval',
-    detail: 'Clear Meta feedback → second submit live',
+    label: 'Template live',
+    detail: 'Clear Meta feedback → second submit approved',
     image: '/marketing/customers/customers-outcome-template.png',
   },
 ];
@@ -58,15 +59,17 @@ export default function CustomersPage() {
       />
       <MarketingPage className="mkt-customers">
         <header className="mkt-customers__hero">
-          <p className="mkt-customers__eyebrow">Customers</p>
           <h1 className="mkt-customers__title">
-            Shopify brands growing on{' '}
-            <span className="mkt-customers__title-accent">WhatsApp automation</span>
+            Shopify brands recovering carts on{' '}
+            <span className="mkt-customers__title-accent">WhatsApp</span>
           </h1>
           <p className="mkt-customers__sub">
-            Founders, marketers, and support leads across Indian ecommerce use TopEdge for cart
-            recovery, COD flows, and a shared inbox with order context.
+            Indian D2C teams use TopEdge to recover abandoned carts, confirm COD, and answer
+            buyers in one inbox — with Shopify order context.
           </p>
+          <div className="mkt-customers__trust">
+            <HomeTrust onStage />
+          </div>
         </header>
 
         <section className="mkt-customers__outcomes" aria-label="Customer outcomes">
@@ -98,8 +101,8 @@ export default function CustomersPage() {
         <HomeTestimonials hideHeader={false} />
 
         <MarketingCtaBand
-          title="Run the same playbook on your store"
-          subtitle="Start free — connect Shopify and WhatsApp, approve templates, publish your first journey."
+          title="Get the same cart recovery on your store"
+          subtitle="Start free — connect Shopify + WhatsApp, approve templates, publish your first journey."
           primaryLabel="Start free"
           secondaryLabel="See pricing"
           secondaryTo="/pricing"

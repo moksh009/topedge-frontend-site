@@ -1,5 +1,6 @@
 import DemoProductVideoFrame from './demo/DemoProductVideoFrame';
 import DemoProductImageFrame from './demo/DemoProductImageFrame';
+import DemoPixelTrackingUi from './demo/DemoPixelTrackingUi';
 import {
   FEATURE_VIDEOS,
   FEATURE_IMAGES,
@@ -17,6 +18,7 @@ type Story = {
 } & (
   | { kind: 'video'; video: DemoVideo }
   | { kind: 'image'; image: { src: string } }
+  | { kind: 'pixel' }
 );
 
 const STORIES: Story[] = [
@@ -41,8 +43,8 @@ const STORIES: Story[] = [
   {
     id: 'optin-popup',
     titleLead: 'Website Opt-in',
-    titleAccent: 'Popup Builder',
-    body: 'Design exit-intent and discount popups that capture WhatsApp numbers without breaking your theme.',
+    titleAccent: 'tools',
+    body: 'Pulse Drop, popup, spin wheel, mystery discount, and WhatsApp widget — capture numbers, then campaign from a consented list.',
     glow: 'indigo',
     kind: 'video',
     video: FEATURE_VIDEOS.optin,
@@ -79,9 +81,8 @@ const STORIES: Story[] = [
     titleLead: 'Website Detailed',
     titleAccent: 'Tracking Pixel',
     body: 'Watch live product views, scroll, and carts matched to WhatsApp numbers — ready to message.',
-    glow: 'amber',
-    kind: 'image',
-    image: FEATURE_IMAGES.pixel,
+    glow: 'violet',
+    kind: 'pixel',
   },
   {
     id: 'audience-campaigns',
@@ -134,6 +135,8 @@ function FeatureMoment({ story }: { story: Story }) {
               glow={story.glow}
               title={`${title} preview`}
             />
+          ) : story.kind === 'pixel' ? (
+            <DemoPixelTrackingUi />
           ) : (
             <DemoProductImageFrame
               src={story.image.src}

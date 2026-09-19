@@ -21,7 +21,7 @@ export default function HomeHero() {
             <div className="home-hero__copy">
               <h1 className="home-hero__title">
                 <span className="home-hero__title-line">
-                  Recover revenue with{' '}
+                Shopify D2C Growth Suite{' '}
                   <span className="home-hero__title-brand">
                     <img
                       src="/brand-mark.png"
