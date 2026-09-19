@@ -239,7 +239,7 @@ export const blogPosts: BlogPost[] = [
 <li>Turn on order-update utility paths</li>
 </ol>
 <p>Most stores finish the technical connect in about fifteen minutes; Meta review is the usual wait.</p>
-<p><a href="/signup">Start free</a> · <a href="/features/shopify">Shopify connection</a></p>
+<p><a href="/signup">Start free</a> · <a href="/integrations">Shopify connection</a></p>
 `,
   },
   {
@@ -276,7 +276,7 @@ export const blogPosts: BlogPost[] = [
 </ol>
 <h2>How TopEdge fits</h2>
 <p>TopEdge is built as a WhatsApp growth OS for Shopify India: journeys, Live Chat, Meta manager, and recovery math in one workspace. Compare named alternatives on our <a href="/compare">compare hub</a> — including <a href="/compare/wati">vs WATI</a>, <a href="/compare/interakt">vs Interakt</a>, and <a href="/compare/bitespeed">vs Bitespeed</a>.</p>
-<p><a href="/whatsapp-cart-recovery">Cart recovery lander</a> · <a href="/pricing">Pricing</a></p>
+<p><a href="/features/journeys#abandoned-cart">Cart recovery lander</a> · <a href="/pricing">Pricing</a></p>
 `,
   },
   {
@@ -309,7 +309,7 @@ export const blogPosts: BlogPost[] = [
 </ol>
 <h2>Measure what finance cares about</h2>
 <p>Track confirmation rate, ship rate, and RTO % before/after — not just message opens.</p>
-<p><a href="/cod-confirmation-whatsapp">COD confirmation product page</a> · <a href="/solutions/cod">COD solution</a> · <a href="/features/journeys">Journeys</a></p>
+<p><a href="/features/journeys#cod-prepaid">COD confirmation product page</a> · <a href="/solutions/cod">COD solution</a> · <a href="/features/journeys">Journeys</a></p>
 `,
   },
   {

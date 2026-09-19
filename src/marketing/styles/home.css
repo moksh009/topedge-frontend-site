@@ -61,7 +61,7 @@ html:has(.home-page) body::-webkit-scrollbar,
   flex-direction: column;
   width: 100%;
   max-width: none;
-  /* Mesh board owns the first viewport — trust strip sits below */
+  /* Mesh board owns the first viewport — shot sits under copy with natural height */
   height: auto;
   min-height: 0;
   margin: 0;
@@ -81,8 +81,9 @@ html:has(.home-page) body::-webkit-scrollbar,
   flex: 0 0 auto;
   width: 100%;
   max-width: none;
-  /* At least one viewport; grow with content so the shot can sit higher */
+  /* At least one viewport; grow with content so gaps stay natural */
   min-height: 100svh;
+  min-height: 100dvh;
   height: auto;
   border-radius: 0;
   padding: 6.5rem 1rem 0;
@@ -216,7 +217,7 @@ html:has(.home-page) body::-webkit-scrollbar,
   }
 }
 
-/* Product shot — closer under trusted-by; bottom clipped to section end */
+/* Product shot — natural height under trusted-by; bottom clipped flush to section */
 .home-hero__shot {
   position: relative;
   z-index: 2;
@@ -237,13 +238,23 @@ html:has(.home-page) body::-webkit-scrollbar,
   align-self: center;
 }
 
+.home-hero__shot picture {
+  display: block;
+  width: 100%;
+  line-height: 0;
+}
+
 .home-hero__shot img {
   display: block;
   width: 100%;
   height: auto;
-  margin-bottom: -12%;
+  max-width: none;
+  /* Pull bottom edge flush — crops a sliver so it meets the section end */
+  margin: 0 0 -4%;
   object-fit: cover;
   object-position: top center;
+  image-rendering: auto;
+  -ms-interpolation-mode: bicubic;
   user-select: none;
   pointer-events: none;
 }
@@ -422,11 +433,11 @@ html:has(.home-page) body::-webkit-scrollbar,
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.55rem;
-  height: 2.875rem;
-  padding: 0 1.35rem 0 1.45rem;
+  gap: 0.45rem;
+  height: 2.45rem;
+  padding: 0 1.1rem 0 1.15rem;
   border-radius: 9999px;
-  font-size: 0.9375rem;
+  font-size: 0.8125rem;
   font-weight: 500;
   letter-spacing: -0.01em;
   color: #0c1222;
@@ -478,6 +489,16 @@ html:has(.home-page) body::-webkit-scrollbar,
   width: auto;
   min-width: 0;
   flex: 0 0 auto;
+  height: 2.45rem;
+  min-height: 2.45rem;
+  padding-left: 1.1rem;
+  padding-right: 1.1rem;
+  font-size: 0.8125rem;
+}
+
+.home-hero__actions .mkt-btn-primary svg {
+  width: 0.9rem;
+  height: 0.9rem;
 }
 
 .home-hero__ghost {
@@ -839,9 +860,10 @@ html:has(.home-page) body::-webkit-scrollbar,
 
 @media (max-width: 959px) {
   .home-hero__layout {
-    gap: 1.15rem;
-    max-width: min(100%, 560px);
+    gap: 0;
+    max-width: none;
     margin: 0 auto;
+    width: 100%;
   }
   .home-hero__copy {
     align-items: center;
@@ -849,31 +871,68 @@ html:has(.home-page) body::-webkit-scrollbar,
     max-width: 28rem;
     margin: 0 auto;
     width: 100%;
+    margin-bottom: 0;
   }
   .home-hero__title { align-items: center; max-width: none; }
   .home-hero__title-line {
     white-space: nowrap;
     flex-wrap: nowrap;
   }
-  .home-hero__actions { justify-content: center; width: auto; }
+  .home-hero__actions {
+    justify-content: center;
+    width: 100%;
+    gap: 0.5rem;
+  }
   .home-hero__actions .mkt-btn-primary,
   .home-hero__actions .mkt-btn-ghost,
-  .home-hero__ghost { width: auto; }
+  .home-hero__actions .home-hero__shopify-btn,
+  .home-hero__ghost {
+    width: auto;
+    min-height: 2.35rem;
+    height: 2.35rem;
+    padding: 0 1rem;
+    font-size: 0.8125rem;
+  }
+  .home-hero__shopify-btn {
+    height: 2.35rem;
+    padding: 0 0.95rem;
+    font-size: 0.8125rem;
+  }
+  .home-hero__shopify-logo {
+    width: 14px;
+    height: 14px;
+  }
   .home-hero__sub {
-    margin-left: auto; margin-right: auto; max-width: 26rem; text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 26rem;
+    text-align: center;
   }
   .home-hero__visual {
     display: none;
   }
   .home-hero__shot {
     width: min(100%, 92%);
-    margin-top: 0.75rem;
-    border-radius: 16px 16px 0 0;
+    max-width: 28rem;
+    margin-top: 1.15rem;
+    border-radius: 14px 14px 0 0;
+    flex: 0 0 auto;
+    height: auto;
+    aspect-ratio: auto;
   }
 
-  /* Phone-primary composition — don't kill tilt via !important; soften instead */
-  /* Soft cams on mobile — no whip pans */
+  .home-hero__shot picture,
+  .home-hero__shot img {
+    position: static;
+    inset: auto;
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0 0 -8%;
+    object-fit: cover;
+    object-position: top center;
   }
+}
 
 /* ——— Continuous visual reel (legacy unused) ——— */
 
@@ -2347,7 +2406,7 @@ html:has(.home-page) body::-webkit-scrollbar,
 
 .home-trust-logos--on-stage .home-trust-logos__label {
   color: rgba(255, 255, 255, 0.88);
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
   font-weight: 500;
   letter-spacing: 0.14em;
   text-shadow: 0 1px 8px rgba(15, 23, 42, 0.18);
@@ -2500,20 +2559,41 @@ html:has(.home-page) body::-webkit-scrollbar,
 @media (max-width: 767px) {
   .home-hero {
     padding: 0;
+    overflow: clip;
+    /* Don’t lock to 100dvh — that forced a huge mid-gap above a short landscape shot */
+    height: auto;
     min-height: 0;
-    overflow: visible;
+  }
+
+  .home-hero__inner {
+    height: auto;
+    min-height: 0;
   }
 
   .home-hero__board {
-    min-height: 0;
     height: auto;
+    min-height: 0;
+    flex: 0 0 auto;
     padding:
-      max(5.75rem, calc(env(safe-area-inset-top, 0px) + 4.75rem))
-      max(1rem, env(safe-area-inset-right))
-      max(1.5rem, env(safe-area-inset-bottom))
-      max(1rem, env(safe-area-inset-left));
+      max(4.85rem, calc(env(safe-area-inset-top, 0px) + 4rem))
+      max(1.15rem, env(safe-area-inset-right))
+      0
+      max(1.15rem, env(safe-area-inset-left));
     border-radius: 0;
-    min-height: auto;
+  }
+
+  .home-hero__layout {
+    height: auto;
+    flex: 0 0 auto;
+    min-height: 0;
+    gap: 0;
+  }
+
+  .home-hero__copy {
+    flex: 0 0 auto;
+    margin-bottom: 0;
+    padding-top: 0.55rem;
+    max-width: 22.5rem;
   }
 
   .home-hero__board.is-menu-open {
@@ -2530,13 +2610,35 @@ html:has(.home-page) body::-webkit-scrollbar,
     margin-top: 1.35rem;
     gap: 1rem;
     justify-content: flex-start;
-    flex: 1 1 auto;
+    flex: 0 0 auto;
   }
 
   .home-hero__trust {
     padding: 0;
-    margin: 1.75rem auto 1.35rem;
+    margin: 1.5rem auto 0;
     max-width: 100%;
+  }
+
+  .home-trust-logos--on-stage .home-trust-logos__label {
+    margin-bottom: 0.75rem;
+  }
+
+  .home-hero__shot {
+    width: 100%;
+    max-width: none;
+    margin-top: 1.25rem;
+    flex: 0 0 auto;
+    height: auto;
+    aspect-ratio: auto;
+    border-radius: 12px 12px 0 0;
+  }
+
+  .home-hero__shot picture,
+  .home-hero__shot img {
+    position: static;
+    width: 100%;
+    height: auto;
+    margin: 0 0 -6%;
   }
 
   .home-hero__top {
@@ -2547,7 +2649,7 @@ html:has(.home-page) body::-webkit-scrollbar,
 
   .home-hero__title {
     max-width: none;
-    font-size: clamp(1.55rem, 6.4vw, 2rem);
+    font-size: clamp(1.45rem, 6vw, 1.85rem);
     line-height: 1.14;
     gap: 0.3rem;
   }
@@ -2561,32 +2663,52 @@ html:has(.home-page) body::-webkit-scrollbar,
   }
 
   .home-hero__sub {
-    margin-top: 0.85rem;
-    max-width: 26rem;
-    padding: 0;
-    font-size: 0.9rem;
-    line-height: 1.5;
+    margin-top: 1rem;
+    max-width: 22rem;
+    padding: 0 0.25rem;
+    font-size: 0.8125rem;
+    line-height: 1.45;
   }
 
   .home-hero__actions {
-    margin-top: 1.15rem;
-    gap: 0.55rem;
+    margin-top: 1.25rem;
+    gap: 0.5rem;
     width: 100%;
     justify-content: center;
     align-items: center;
     flex-direction: row;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
   }
 
   .home-hero__actions .mkt-btn-primary,
   .home-hero__actions .mkt-btn-ghost,
+  .home-hero__actions .home-hero__shopify-btn,
   .home-hero__ghost {
     width: auto;
     min-width: 0;
-    min-height: 2.65rem;
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
-    flex: 0 0 auto;
+    min-height: 2.25rem;
+    height: 2.25rem;
+    padding-left: 0.9rem;
+    padding-right: 0.9rem;
+    font-size: 0.75rem;
+    flex: 0 1 auto;
+  }
+
+  .home-hero__shopify-btn {
+    height: 2.25rem;
+    padding: 0 0.85rem;
+    font-size: 0.75rem;
+    gap: 0.35rem;
+  }
+
+  .home-hero__shopify-logo {
+    width: 13px;
+    height: 13px;
+  }
+
+  .home-hero__actions .mkt-btn-primary svg {
+    width: 0.85rem;
+    height: 0.85rem;
   }
 
   .home-hero__ask {
@@ -2726,18 +2848,16 @@ html:has(.home-page) body::-webkit-scrollbar,
 @media (max-width: 479px) {
   .home-hero__board {
     padding:
-      max(4.5rem, calc(env(safe-area-inset-top, 0px) + 3.75rem))
-      max(0.85rem, env(safe-area-inset-right))
-      max(1.5rem, env(safe-area-inset-bottom))
-      max(0.85rem, env(safe-area-inset-left));
+      max(4.5rem, calc(env(safe-area-inset-top, 0px) + 3.65rem))
+      max(1rem, env(safe-area-inset-right))
+      0
+      max(1rem, env(safe-area-inset-left));
     border-radius: 0;
-    min-height: auto;
-    height: auto;
   }
 
   .home-hero__title {
     max-width: none;
-    font-size: clamp(1.35rem, 6.4vw, 1.7rem);
+    font-size: clamp(1.28rem, 6vw, 1.55rem);
   }
 
   .home-hero__title-line {
@@ -2746,21 +2866,45 @@ html:has(.home-page) body::-webkit-scrollbar,
   }
 
   .home-hero__sub {
-    font-size: 0.8125rem;
+    font-size: 0.75rem;
+    margin-top: 0.6rem;
   }
 
   .home-hero__actions {
     flex-direction: row;
     align-items: center;
-    justify-content: flex-start;
-    width: auto;
+    justify-content: center;
+    width: 100%;
+    margin-top: 0.85rem;
+    gap: 0.4rem;
   }
 
   .home-hero__actions .mkt-btn-primary,
   .home-hero__actions .mkt-btn-ghost,
+  .home-hero__actions .home-hero__shopify-btn,
   .home-hero__ghost {
     width: auto;
     justify-content: center;
+    min-height: 2.15rem;
+    height: 2.15rem;
+    padding-left: 0.8rem;
+    padding-right: 0.8rem;
+    font-size: 0.7rem;
+  }
+
+  .home-hero__shopify-btn {
+    height: 2.15rem;
+    padding: 0 0.75rem;
+    font-size: 0.7rem;
+  }
+
+  .home-hero__trust {
+    margin-top: 1.25rem;
+  }
+
+  .home-hero__shot {
+    width: 100%;
+    margin-top: 1.25rem;
   }
 
   .home-hero__ask-field {
@@ -2814,13 +2958,11 @@ html:has(.home-page) body::-webkit-scrollbar,
 
   }
 
-/* Short phones / landscape */
+/* Short phones / landscape — keep flush shot, compress copy only */
 @media (max-height: 700px) and (max-width: 900px) {
   .home-hero__board {
-    min-height: 0;
-    height: auto;
-    padding-top: 2.25rem;
-    padding-bottom: 1rem;
+    padding-top: max(3.5rem, calc(env(safe-area-inset-top, 0px) + 2.75rem));
+    padding-bottom: 0;
   }
 
   .home-hero__bottom {
@@ -2841,8 +2983,19 @@ html:has(.home-page) body::-webkit-scrollbar,
   }
 
   .home-hero__trust {
-    margin: 1.5rem auto 1.15rem;
+    margin: 1rem auto 0;
     padding: 0;
+  }
+
+  .home-hero__shot {
+    margin-top: 1.15rem;
+    flex: 0 0 auto;
+    height: auto;
+    aspect-ratio: auto;
+  }
+
+  .home-hero__sub {
+    display: none;
   }
 }
 
@@ -3464,12 +3617,6 @@ html:has(.home-page) body::-webkit-scrollbar,
 
   .home-hero {
     position: relative;
-    height: auto;
-  }
-
-  .home-hero__board {
-    min-height: 0;
-    height: auto;
   }
 }
 
@@ -3998,7 +4145,6 @@ html:has(.home-page) body::-webkit-scrollbar,
 
 @media (max-height: 850px) {
   .home-hero { padding-top: 0; }
-  .home-hero__board { min-height: 100svh; height: auto; padding: 4.25rem 1.25rem 0; }
   .home-hero__title { font-size: clamp(1.4rem, 3vw, 2.15rem); }
   .home-hero__sub { margin-top: 0.6rem; font-size: 0.85rem; line-height: 1.4; }
   .home-hero__ask { margin-top: 1.25rem; }
@@ -5093,11 +5239,6 @@ html:has(.home-page) body::-webkit-scrollbar,
 
 /* ——— Responsive polish (cleanup pass) ——— */
 @media (max-width: 900px) {
-  .home-hero__inner,
-  .home-hero__board {
-    min-height: 0;
-  }
-
   .home-hero__title {
     flex-wrap: wrap;
     font-size: clamp(1.35rem, 5.2vw, 1.95rem);

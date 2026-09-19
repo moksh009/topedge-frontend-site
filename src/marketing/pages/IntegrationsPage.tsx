@@ -14,7 +14,7 @@ const integrations = [
   {
     name: 'Shopify',
     body: 'OAuth connect, orders, carts, catalog, and COD fields sync into TopEdge. Edit store data in Shopify / the dashboard — not on this marketing site.',
-    href: '/features/shopify',
+    href: '/shopify-whatsapp-integration',
   },
   {
     name: 'Meta WhatsApp',
@@ -78,7 +78,7 @@ export default function IntegrationsPage() {
               Shopify WhatsApp integration guide
             </Link>
             {' · '}
-            <Link to="/whatsapp-cart-recovery" className="font-medium text-[#7C3AED]">
+            <Link to="/features/journeys#abandoned-cart" className="font-medium text-[#7C3AED]">
               Cart recovery
             </Link>
             {' · '}

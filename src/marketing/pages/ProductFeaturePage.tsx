@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import MarketingSEO from '../components/MarketingSEO';
 import MarketingPage from '../components/MarketingPage';
 import MarketingCtaBand from '../components/MarketingCtaBand';
@@ -79,7 +79,10 @@ function ShowcaseRow({ item, index }: { item: ProductShowcase; index: number }) 
   const label = item.imageLabel || `${item.title}${item.titleAccent ? ` ${item.titleAccent}` : ''}`;
 
   return (
-    <article className={`mkt-pf__showcase${reverse ? ' is-reverse' : ''}`}>
+    <article
+      id={item.anchor}
+      className={`mkt-pf__showcase${reverse ? ' is-reverse' : ''}${item.anchor ? ' has-anchor' : ''}`}
+    >
       <div className="mkt-pf__showcase-media">
         <ShotFrame src={item.image} label={label} wide />
       </div>
@@ -100,8 +103,18 @@ function ShowcaseRow({ item, index }: { item: ProductShowcase; index: number }) 
 }
 
 function ProductFeatureView({ page }: { page: ProductPage }) {
+  const location = useLocation();
   const fullTitle = `${page.title} ${page.titleAccent}`.replace(/\s+/g, ' ').trim();
   const hasShowcases = Boolean(page.showcases?.length);
+
+  useEffect(() => {
+    const hash = location.hash.replace(/^#/, '');
+    if (!hash) return;
+    const t = window.setTimeout(() => {
+      document.getElementById(hash)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 80);
+    return () => window.clearTimeout(t);
+  }, [location.hash, page.id]);
 
   return (
     <>
@@ -211,7 +224,7 @@ function ProductFeatureView({ page }: { page: ProductPage }) {
           </div>
           <div className="mkt-pf__related">
             {page.related.map((r) => (
-              <Link key={r.href} to={r.href} className="mkt-pf__related-link">
+              <Link key={r.href + r.label} to={r.href} className="mkt-pf__related-link">
                 {r.label}
               </Link>
             ))}
@@ -230,7 +243,7 @@ function ProductFeatureView({ page }: { page: ProductPage }) {
   );
 }
 
-/** Shared enterprise product page — cart, COD, flow, campaigns, CRM, and more. */
+/** Shared enterprise product page — Journey, flow, campaigns, CRM, and more. */
 export default function ProductFeaturePage({ pageId }: Props) {
   const page = getProductPage(pageId);
   return <ProductFeatureView page={page} />;

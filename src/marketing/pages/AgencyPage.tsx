@@ -70,7 +70,7 @@ export default function AgencyPage() {
               multi-brand agency playbook
             </Link>{' '}
             or start from{' '}
-            <Link to="/whatsapp-cart-recovery" className="font-medium text-[#7C3AED]">
+            <Link to="/features/journeys#abandoned-cart" className="font-medium text-[#7C3AED]">
               cart recovery
             </Link>
             .

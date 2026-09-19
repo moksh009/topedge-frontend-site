@@ -18,6 +18,11 @@ import { ArrowRight } from 'lucide-react';
 
 export default function FeatureDetailPage() {
   const { slug = '' } = useParams();
+
+  if (slug === 'shopify' || slug === 'store-engine') {
+    return <Navigate to="/integrations" replace />;
+  }
+
   const canonical = resolveFeatureSlug(slug);
   const feature = getFeatureBySlug(slug);
 
@@ -100,8 +105,8 @@ export default function FeatureDetailPage() {
                   Shopify WhatsApp integration
                 </Link>{' '}
                 and{' '}
-                <Link to="/whatsapp-cart-recovery" className="font-medium text-[#7C3AED]">
-                  cart recovery
+                <Link to="/features/journeys#abandoned-cart" className="font-medium text-[#7C3AED]">
+                  cart recovery journeys
                 </Link>
                 .
               </p>

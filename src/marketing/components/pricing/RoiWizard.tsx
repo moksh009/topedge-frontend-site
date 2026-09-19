@@ -758,9 +758,9 @@ export default function RoiWizard() {
               Meta rates vary by category and quality.
             </p>
             <p className="roi-results__links">
-              <Link to="/whatsapp-cart-recovery">Cart recovery</Link>
+              <Link to="/features/journeys#abandoned-cart">Cart recovery</Link>
               {' · '}
-              <Link to="/cod-confirmation-whatsapp">COD confirm</Link>
+              <Link to="/features/journeys#cod-prepaid">COD confirm</Link>
               {' · '}
               <Link to="/features/campaigns">Campaigns</Link>
             </p>

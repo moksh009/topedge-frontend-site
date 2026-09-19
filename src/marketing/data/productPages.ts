@@ -4,12 +4,9 @@
  */
 
 export type ProductPageId =
-  | 'cart-recovery'
-  | 'cod-prepaid'
   | 'flow-builder'
   | 'campaigns'
   | 'audience-crm'
-  | 'shopify'
   | 'journeys'
   | 'tracking-pixel'
   | 'live-chat'
@@ -20,8 +17,7 @@ export type ProductPageId =
   | 'warranty'
   | 'profit-loss'
   | 'byok'
-  | 'intent-detection'
-  | 'segments';
+  | 'intent-detection';
 
 export type ProductHeroMedia =
   | { kind: 'video'; src: string; poster: string; label: string; glow?: ProductGlow }
@@ -46,6 +42,8 @@ export type ProductShowcase = {
   image: string;
   imageLabel?: string;
   reverse?: boolean;
+  /** In-page anchor id (e.g. abandoned-cart) for deep links */
+  anchor?: string;
 };
 
 export type ProductPage = {
@@ -100,250 +98,6 @@ const FLOW_VIDEO = {
 } as const;
 
 export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
-  'cart-recovery': {
-    id: 'cart-recovery',
-    path: '/whatsapp-cart-recovery',
-    eyebrow: 'Abandoned cart',
-    title: 'Recover abandoned carts',
-    titleAccent: 'on WhatsApp',
-    subtitle:
-      'Timed Meta-safe nudges with live Shopify cart lines and ₹ totals — so shoppers reopen checkout before the cart goes cold.',
-    seoTitle: 'WhatsApp Cart Recovery for Shopify | TopEdge',
-    seoDescription:
-      'Abandoned cart recovery on WhatsApp for Shopify India — timing, Meta templates, COD-aware journeys, and recovery ₹ tracking in one workspace.',
-    keywords:
-      'WhatsApp cart recovery, abandoned cart recovery WhatsApp, Shopify cart recovery, ecommerce automation India',
-    hero: {
-      kind: 'video',
-      ...CART_VIDEO,
-      label: 'Abandoned cart recovery on WhatsApp',
-      glow: 'emerald',
-    },
-    outcomesTitle: 'What recovery',
-    outcomesAccent: 'teams measure',
-    outcomes: [
-      {
-        metric: '30–60m',
-        label: 'First nudge window',
-        detail: 'Hit open carts while intent is still warm',
-      },
-      {
-        metric: '3-msg',
-        label: 'Meta-safe sequence',
-        detail: 'Remind → value → human help — not spam',
-      },
-      {
-        metric: '₹',
-        label: 'Attributed recovery',
-        detail: 'Sent → clicked → paid against Shopify orders',
-      },
-    ],
-    bentoTitle: 'Built for',
-    bentoAccent: 'checkout recovery',
-    bentoSub: 'Live cart context, approved templates, and branching — not a generic blast tool.',
-    bentos: [
-      {
-        titleLead: 'Live cart',
-        titleAccent: 'context',
-        body: 'Product cards, variants, and checkout links pull from the same Shopify abandon event — so the message matches what they left behind.',
-        image: '/marketing/features/abandoned-cart.png',
-        span: 'third',
-      },
-      {
-        titleLead: 'COD-aware',
-        titleAccent: 'branches',
-        body: 'Route prepaid vs COD shoppers differently inside one canvas so recovery stays honest and Meta-safe.',
-        image: '/marketing/features/cart-still.jpg',
-        span: 'third',
-      },
-      {
-        titleLead: 'Inbox',
-        titleAccent: 'takeover',
-        body: 'When a shopper replies, automation pauses and Live Chat picks up with order context beside the thread.',
-        image: '/marketing/features/shopify-whatsapp.png',
-        span: 'third',
-      },
-    ],
-    showcasesTitle: 'Inside',
-    showcasesAccent: 'cart recovery',
-    showcasesSub: 'Swap in dashboard screenshots — each row is a sub-feature your team actually opens.',
-    showcases: [
-      {
-        title: 'Abandon event',
-        titleAccent: '→ journey',
-        body: 'Checkout drop syncs cart lines, value, and payment method so the first Meta-safe nudge matches what they left behind.',
-        image: '/marketing/features/abandoned-cart.png',
-        imageLabel: 'Cart recovery journey — abandon trigger & waits',
-      },
-      {
-        title: 'COD vs prepaid',
-        titleAccent: 'branches',
-        body: 'Route recovery differently by payment method — prepaid reopen vs COD-aware follow-ups — without a second tool.',
-        image: '/marketing/features/cart-still.jpg',
-        imageLabel: 'Branch conditions on COD / prepaid',
-      },
-      {
-        title: 'Reply lands in',
-        titleAccent: 'Live Chat',
-        body: 'When a shopper answers, automation pauses and agents see order context beside the thread.',
-        image: '/marketing/features/shopify-whatsapp.png',
-        imageLabel: 'Live Chat takeover from recovery reply',
-      },
-    ],
-
-    stepsTitle: 'How cart recovery',
-    stepsAccent: 'runs',
-    steps: [
-      {
-        title: 'Shopify abandon fires',
-        body: 'Checkout drop syncs into TopEdge with cart lines, value, and payment method.',
-      },
-      {
-        title: 'Journey waits, then branches',
-        body: 'Timed waits and COD/prepaid conditions decide which approved template goes out.',
-      },
-      {
-        title: 'Shopper returns or talks',
-        body: 'One-tap checkout reopen — or a human reply in Live Chat if they ask a question.',
-      },
-      {
-        title: 'Recovery ₹ lands in analytics',
-        body: 'Attribute paid orders back to the sequence so ops knows what actually converted.',
-      },
-    ],
-    relatedTitle: 'Works with',
-    relatedAccent: 'the rest of TopEdge',
-    related: [
-      { label: 'COD → Prepaid', href: '/cod-confirmation-whatsapp' },
-      { label: 'Flow Builder', href: '/features/flow-builder' },
-      { label: 'Audience CRM', href: '/features/audience-crm' },
-    ],
-    ctaTitle: 'Start recovering carts on WhatsApp',
-    ctaSub: 'Connect Shopify, approve templates, and publish your first sequence — usually the same afternoon.',
-  },
-
-  'cod-prepaid': {
-    id: 'cod-prepaid',
-    path: '/cod-confirmation-whatsapp',
-    eyebrow: 'COD / RTO',
-    title: 'Confirm COD,',
-    titleAccent: 'convert to prepaid',
-    subtitle:
-      'Ask for confirmation before the bag leaves — then nudge prepaid when it protects margin. Cut RTO without killing checkout conversion.',
-    seoTitle: 'COD Confirmation on WhatsApp | Reduce RTO Shopify',
-    seoDescription:
-      'WhatsApp COD confirmation for Shopify India: confirm, reschedule, or cancel before dispatch to reduce RTO while keeping conversion high.',
-    keywords:
-      'COD confirmation WhatsApp, reduce RTO Shopify, COD WhatsApp automation, Cash on Delivery confirmation India',
-    hero: {
-      kind: 'video',
-      ...COD_VIDEO,
-      label: 'COD confirmation and prepaid conversion',
-      glow: 'violet',
-    },
-    outcomesTitle: 'What ops',
-    outcomesAccent: 'protects',
-    outcomes: [
-      {
-        metric: 'Pre-ship',
-        label: 'Confirm intent',
-        detail: 'YES / reschedule / cancel before courier pickup',
-      },
-      {
-        metric: 'Prepaid',
-        label: 'Nudge when it fits',
-        detail: 'Convert high-risk COD without a hard wall',
-      },
-      {
-        metric: 'RTO',
-        label: 'Fewer blind ships',
-        detail: 'Stop packing orders that will refuse on door',
-      },
-    ],
-    bentoTitle: 'Confirmation that',
-    bentoAccent: 'respects the order',
-    bentoSub: 'Shopify order #, COD amount, and clear reply paths — not a vague chatbot script.',
-    bentos: [
-      {
-        titleLead: 'Order-aware',
-        titleAccent: 'confirm',
-        body: 'Utility-friendly templates show items and ₹ COD amount from Shopify so buyers know exactly what they are confirming.',
-        image: '/marketing/features/cod-still.jpg',
-        span: 'third',
-      },
-      {
-        titleLead: 'Prepaid',
-        titleAccent: 'nudge',
-        body: 'Branch high-AOV or high-RTO COD into a prepaid incentive path before you book the courier.',
-        image: '/marketing/features/orders-ops.png',
-        span: 'third',
-      },
-      {
-        titleLead: 'Human',
-        titleAccent: 'escalation',
-        body: 'Unsure buyers land in Live Chat with the order open — automation pauses the moment an agent takes over.',
-        image: '/marketing/features/shopify-whatsapp.png',
-        span: 'third',
-      },
-    ],
-    showcasesTitle: 'Inside',
-    showcasesAccent: 'COD protection',
-    showcasesSub: 'Confirm before ship, then nudge prepaid when margin needs it.',
-    showcases: [
-      {
-        title: 'Order-aware',
-        titleAccent: 'confirm',
-        body: 'Utility templates pull items and ₹ COD amount from Shopify so the buyer knows exactly what they are confirming.',
-        image: '/marketing/features/cod-still.jpg',
-        imageLabel: 'COD confirmation template with order context',
-      },
-      {
-        title: 'Prepaid',
-        titleAccent: 'nudge path',
-        body: 'High-risk or high-AOV COD can branch into a prepaid incentive before courier pickup.',
-        image: '/marketing/features/orders-ops.png',
-        imageLabel: 'COD → prepaid branch on the journey canvas',
-      },
-      {
-        title: 'Human',
-        titleAccent: 'escalation',
-        body: 'Unsure replies escalate to Live Chat with the order open — automation pauses on takeover.',
-        image: '/marketing/features/shopify-whatsapp.png',
-        imageLabel: 'Live Chat with COD order sidebar',
-      },
-    ],
-
-    stepsTitle: 'How COD protection',
-    stepsAccent: 'works',
-    steps: [
-      {
-        title: 'Order created as COD',
-        body: 'Shopify flags payment method; TopEdge starts the confirmation journey immediately.',
-      },
-      {
-        title: 'Buyer confirms or changes mind',
-        body: 'Clear reply paths update status — or escalate to an agent when the answer is messy.',
-      },
-      {
-        title: 'Optional prepaid convert',
-        body: 'When rules say so, send a prepaid nudge with the same order context before dispatch.',
-      },
-      {
-        title: 'Ship only what is real',
-        body: 'Pack confirmed orders; cancel or hold the rest so RTO does not eat your margin.',
-      },
-    ],
-    relatedTitle: 'Works with',
-    relatedAccent: 'cart + care',
-    related: [
-      { label: 'Cart recovery', href: '/whatsapp-cart-recovery' },
-      { label: 'Audience CRM', href: '/features/audience-crm' },
-      { label: 'COD solution', href: '/solutions/cod' },
-    ],
-    ctaTitle: 'Cut RTO before the courier leaves',
-    ctaSub: 'Confirm COD on WhatsApp with live Shopify order context — then nudge prepaid when it pays.',
-  },
-
   'flow-builder': {
     id: 'flow-builder',
     path: '/features/flow-builder',
@@ -458,7 +212,7 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     relatedTitle: 'Works with',
     relatedAccent: 'recovery + CRM',
     related: [
-      { label: 'Cart recovery', href: '/whatsapp-cart-recovery' },
+      { label: 'Cart recovery', href: '/features/journeys#abandoned-cart' },
       { label: 'Campaigns', href: '/features/campaigns' },
       { label: 'Audience CRM', href: '/features/audience-crm' },
     ],
@@ -581,7 +335,7 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     relatedAccent: 'CRM + pixel',
     related: [
       { label: 'Audience CRM', href: '/features/audience-crm' },
-      { label: 'Cart recovery', href: '/whatsapp-cart-recovery' },
+      { label: 'Cart recovery', href: '/features/journeys#abandoned-cart' },
       { label: 'Flow Builder', href: '/features/flow-builder' },
     ],
     ctaTitle: 'Launch a Meta-safe audience campaign',
@@ -703,133 +457,11 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     relatedAccent: 'growth tools',
     related: [
       { label: 'Campaigns', href: '/features/campaigns' },
-      { label: 'Cart recovery', href: '/whatsapp-cart-recovery' },
-      { label: 'COD → Prepaid', href: '/cod-confirmation-whatsapp' },
+      { label: 'Cart recovery', href: '/features/journeys#abandoned-cart' },
+      { label: 'COD → Prepaid', href: '/features/journeys#cod-prepaid' },
     ],
     ctaTitle: 'Run WhatsApp from one customer record',
     ctaSub: 'Unify identity, then recover, campaign, and care without duplicate shoppers.',
-  },
-
-  shopify: {
-    id: 'shopify',
-    path: '/features/shopify',
-    featureSlug: 'shopify',
-    eyebrow: 'Shopify Store Sync',
-    title: 'Your store data,',
-    titleAccent: 'live in TopEdge',
-    subtitle:
-      'OAuth-connect Shopify once. Products, carts, orders, and COD status sync into the workspace — so every WhatsApp send and reply uses real store context.',
-    seoTitle: 'Shopify WhatsApp Integration | Store Sync for Ecommerce Automation',
-    seoDescription:
-      'Connect Shopify to WhatsApp automation. Sync products, carts, orders, and COD status so cart recovery and Live Chat always use live store data.',
-    keywords: 'Shopify WhatsApp integration, Shopify ecommerce automation, Shopify cart sync WhatsApp',
-    hero: {
-      kind: 'image',
-      src: '/marketing/features/shopify-whatsapp.png',
-      alt: 'Shopify store sync with WhatsApp workspace',
-      glow: 'emerald',
-    },
-    outcomesTitle: 'What sync',
-    outcomesAccent: 'unlocks',
-    outcomes: [
-      {
-        metric: 'OAuth',
-        label: 'One-click connect',
-        detail: 'Products, carts, orders — no Zapier glue',
-      },
-      {
-        metric: 'Live',
-        label: 'Cart & COD flags',
-        detail: 'Recovery and confirm journeys fire from real events',
-      },
-      {
-        metric: 'Catalog',
-        label: 'SKU + ₹ prices',
-        detail: 'Flows and AI replies cite what is actually in stock',
-      },
-    ],
-    bentoTitle: 'Shopify context',
-    bentoAccent: 'everywhere',
-    bentoSub: 'The same store truth powers recovery, COD, Live Chat, and campaigns — not a second spreadsheet.',
-    bentos: [
-      {
-        titleLead: 'Orders &',
-        titleAccent: 'carts',
-        body: 'Abandoned checkouts and paid orders stream in so journeys and agents never guess what the shopper left behind.',
-        image: '/marketing/features/orders-ops.png',
-        span: 'third',
-      },
-      {
-        titleLead: 'Catalog',
-        titleAccent: 'grounding',
-        body: 'Variants, prices, and availability stay current for catalog sends and support answers.',
-        image: '/marketing/features/shopify-whatsapp.png',
-        span: 'third',
-      },
-      {
-        titleLead: 'COD',
-        titleAccent: 'status',
-        body: 'Payment method flags travel with the order so confirmation and prepaid nudges stay honest.',
-        image: '/marketing/features/cod-still.jpg',
-        span: 'third',
-      },
-    ],
-    showcasesTitle: 'Inside',
-    showcasesAccent: 'store sync',
-    showcasesSub: 'One OAuth — carts, orders, catalog, and COD flags everywhere.',
-    showcases: [
-      {
-        title: 'OAuth',
-        titleAccent: 'connect',
-        body: 'Authorize Shopify once. Products, carts, and orders sync without Zapier glue.',
-        image: '/marketing/features/shopify-whatsapp.png',
-        imageLabel: 'Shopify connection in Settings',
-      },
-      {
-        title: 'Orders &',
-        titleAccent: 'carts',
-        body: 'Abandoned checkouts and paid orders stream in so journeys never guess what they left behind.',
-        image: '/marketing/features/orders-ops.png',
-        imageLabel: 'Orders synced from Shopify',
-      },
-      {
-        title: 'Catalog',
-        titleAccent: 'grounding',
-        body: 'Variants, prices, and stock stay current for catalog sends and support answers.',
-        image: '',
-        imageLabel: 'Catalog sync — products & variants',
-      },
-    ],
-
-    stepsTitle: 'How store sync',
-    stepsAccent: 'goes live',
-    steps: [
-      {
-        title: 'Connect Shopify OAuth',
-        body: 'Authorize TopEdge once — no custom middleware or nightly CSV dumps.',
-      },
-      {
-        title: 'Events start flowing',
-        body: 'Carts, orders, catalog, and COD flags land in the workspace as they happen.',
-      },
-      {
-        title: 'WhatsApp tools read the store',
-        body: 'Journeys, flows, and Live Chat pull the same live context beside every thread.',
-      },
-      {
-        title: 'Ops edits in one place',
-        body: 'Catalog and automation settings stay in the dashboard — marketing pages only tell the story.',
-      },
-    ],
-    relatedTitle: 'Works with',
-    relatedAccent: 'recovery + chat',
-    related: [
-      { label: 'Cart recovery', href: '/whatsapp-cart-recovery' },
-      { label: 'Journey', href: '/features/journeys' },
-      { label: 'Flow Builder', href: '/features/flow-builder' },
-    ],
-    ctaTitle: 'Connect Shopify to WhatsApp properly',
-    ctaSub: 'One OAuth — then recovery, COD, and support share live store data.',
   },
 
   journeys: {
@@ -897,28 +529,30 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
         span: 'third',
       },
     ],
-    showcasesTitle: 'Inside',
-    showcasesAccent: 'Journeys',
-    showcasesSub: 'Timed Shopify automations — cart, COD, and order updates. Menus live in Flow Builder.',
+    showcasesTitle: 'Journey',
+    showcasesAccent: 'use-cases',
+    showcasesSub: 'Abandoned cart and COD → prepaid are Journey paths — one canvas, Meta-safe by default.',
     showcases: [
       {
-        title: 'Trigger →',
-        titleAccent: 'wait → send',
-        body: 'Start from abandon or order created, add waits and Meta-approved templates — drafts stay blocked.',
+        anchor: 'abandoned-cart',
+        title: 'Abandoned',
+        titleAccent: 'Cart',
+        body: 'Time the first WhatsApp nudge when a shopper leaves checkout. Branch on COD vs prepaid, reopen live cart lines, and track recovery ₹ — all on the Journey canvas.',
         image: '/marketing/features/abandoned-cart.png',
-        imageLabel: 'Journey canvas — trigger and waits',
+        imageLabel: 'Abandoned cart recovery journey',
       },
       {
-        title: 'Shopify',
-        titleAccent: 'conditions',
-        body: 'Branch on COD, cart value, or tags so each shopper gets the right path.',
+        anchor: 'cod-prepaid',
+        title: 'COD →',
+        titleAccent: 'Prepaid',
+        body: 'Confirm before ship, reschedule, or cancel on WhatsApp — then nudge prepaid when margin needs it. Same visual builder, Shopify payment conditions included.',
         image: '/marketing/features/cod-still.jpg',
-        imageLabel: 'Journey branch on payment method',
+        imageLabel: 'COD confirmation journey',
       },
       {
         title: 'Publish &',
         titleAccent: 'measure',
-        body: 'Watch sent → clicked → paid, then tighten the steps that leak recovery ₹.',
+        body: 'Waits, branches, and Meta-approved templates only. Watch sent → clicked → paid, then tighten the steps that leak recovery ₹.',
         image: '/marketing/features/flow-still.jpg',
         imageLabel: 'Journey publish and performance',
       },
@@ -947,9 +581,9 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     relatedTitle: 'Works with',
     relatedAccent: 'store + inbox',
     related: [
-      { label: 'Cart recovery', href: '/whatsapp-cart-recovery' },
-      { label: 'COD → Prepaid', href: '/cod-confirmation-whatsapp' },
-      { label: 'Shopify Sync', href: '/features/shopify' },
+      { label: 'Flow Builder', href: '/features/flow-builder' },
+      { label: 'Audience CRM', href: '/features/audience-crm' },
+      { label: 'P&L Analytics', href: '/features/profit-loss' },
     ],
     ctaTitle: 'Build your first WhatsApp journey',
     ctaSub: 'Visual canvas, Shopify conditions, Meta-safe sends — live without custom engineering.',
@@ -1070,7 +704,7 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     relatedAccent: 'campaigns + recovery',
     related: [
       { label: 'Campaigns', href: '/features/campaigns' },
-      { label: 'Cart recovery', href: '/whatsapp-cart-recovery' },
+      { label: 'Cart recovery', href: '/features/journeys#abandoned-cart' },
       { label: 'Audience CRM', href: '/features/audience-crm' },
     ],
     ctaTitle: 'Turn site intent into WhatsApp revenue',
@@ -1434,7 +1068,7 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     related: [
       { label: 'Campaigns', href: '/features/campaigns' },
       { label: 'Journeys', href: '/features/journeys' },
-      { label: 'Cart recovery', href: '/whatsapp-cart-recovery' },
+      { label: 'Cart recovery', href: '/features/journeys#abandoned-cart' },
     ],
     ctaTitle: 'Own every Meta approval',
     ctaSub: 'Submit templates, sync status, and only blast what Meta already greenlit.',
@@ -1879,7 +1513,7 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     relatedAccent: 'growth',
     related: [
       { label: 'Campaigns', href: '/features/campaigns' },
-      { label: 'Cart recovery', href: '/whatsapp-cart-recovery' },
+      { label: 'Cart recovery', href: '/features/journeys#abandoned-cart' },
       { label: 'Tracking pixel', href: '/features/analytics' },
     ],
     ctaTitle: 'See WhatsApp profit, not vanity opens',
@@ -2091,108 +1725,6 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     ctaSub: 'Match phrases, steer flows, save AI tokens for the hard questions.',
   },
 
-  segments: {
-    id: 'segments',
-    path: '/features/segments',
-    featureSlug: 'segments',
-    eyebrow: 'Segments',
-    title: 'Audiences that',
-    titleAccent: 'earn a message',
-    subtitle:
-      'Build cohorts from carts, COD risk, purchase history, and pixel intent — then push into Campaigns and Journeys without CSV gymnastics.',
-    seoTitle: 'WhatsApp Audience Segments for Shopify | Cart, COD & Pixel Cohorts',
-    seoDescription:
-      'Segment Shopify customers for WhatsApp — abandoned carts, COD buyers, VIPs, and pixel lookers — then broadcast with Meta-approved templates.',
-    keywords: 'WhatsApp segments Shopify, ecommerce audience segmentation India, pixel segments WhatsApp',
-    hero: {
-      kind: 'video',
-      src: '/marketing/demos/segment.mp4',
-      poster: '/marketing/demos/segment-poster.jpg',
-      label: 'Audience segments for WhatsApp campaigns',
-      glow: 'rose',
-    },
-    bentoTitle: 'Segments from',
-    bentoAccent: 'real behaviour',
-    bentoSub: 'Carts, scores, and site intent — campaign-ready lists that stay synced.',
-    bentos: [
-      {
-        titleLead: 'Behaviour',
-        titleAccent: 'cohorts',
-        body: 'Abandoned carts, COD buyers, VIP LTV — build from Shopify + WhatsApp signals, not static CSVs.',
-        image: '/marketing/demos/segment-poster.jpg',
-        span: 'third',
-      },
-      {
-        titleLead: 'Pixel',
-        titleAccent: 'lookers',
-        body: 'Push warm site visitors into segments when tracking matches a WhatsApp number.',
-        image: '/marketing/features/pixel-tracking.png',
-        span: 'third',
-      },
-      {
-        titleLead: 'Campaign',
-        titleAccent: 'ready',
-        body: 'One click into Meta-safe broadcasts — Approved templates only, attributed ₹ after send.',
-        image: '/marketing/features/audience-campaigns.png',
-        span: 'third',
-      },
-    ],
-    showcasesTitle: 'Inside',
-    showcasesAccent: 'segments',
-    showcasesSub: 'Build, refresh, and enroll — then measure attributed revenue.',
-    showcases: [
-      {
-        title: 'Segment',
-        titleAccent: 'builder',
-        body: 'Combine cart state, order history, tags, and lead scores — save once, reuse in Campaigns and Journeys.',
-        image: '/marketing/demos/segment-poster.jpg',
-        imageLabel: 'Audience segment builder with Shopify filters',
-      },
-      {
-        title: 'Live',
-        titleAccent: 'refresh',
-        body: 'Lists update as carts, orders, and chats change — no nightly spreadsheet merge.',
-        image: '/2.png?v=1',
-        imageLabel: 'Segment membership refreshing from live events',
-      },
-      {
-        title: 'Enroll',
-        titleAccent: 'to send',
-        body: 'Hand off into Campaigns or recovery journeys — Meta gates stay on Approved templates.',
-        image: '/campaignn.png',
-        imageLabel: 'Segment enrolled into a WhatsApp campaign',
-      },
-    ],
-    stepsTitle: 'How a segment',
-    stepsAccent: 'earns sends',
-    steps: [
-      {
-        title: 'Pick the signal',
-        body: 'Cart abandoners, COD risk, VIP spend, or pixel lookers.',
-      },
-      {
-        title: 'Save the cohort',
-        body: 'Name filters so growth and ops share the same definition.',
-      },
-      {
-        title: 'Enroll automations',
-        body: 'Campaigns or Journeys pull the live list — not a frozen export.',
-      },
-      {
-        title: 'Read attributed ₹',
-        body: 'P&L and campaign analytics show which segments actually paid.',
-      },
-    ],
-    relatedTitle: 'Works with',
-    relatedAccent: 'CRM + campaigns',
-    related: [
-      { label: 'Audience CRM', href: '/features/audience-crm' },
-      { label: 'Campaigns', href: '/features/campaigns' },
-      { label: 'P&L Analytics', href: '/features/profit-loss' },
-    ],
-    ctaTitle: 'Message people who already showed intent',
-    ctaSub: 'Build segments from carts and pixel — then broadcast Meta-safe.',
-  },
 };
 
 export function getProductPage(id: ProductPageId): ProductPage {

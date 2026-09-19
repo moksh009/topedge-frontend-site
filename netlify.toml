@@ -78,7 +78,12 @@
 
 [[redirects]]
   from = "/features/store-engine"
-  to = "/features/shopify"
+  to = "/integrations"
+  status = 301
+
+[[redirects]]
+  from = "/features/shopify"
+  to = "/integrations"
   status = 301
 
 [[redirects]]
@@ -87,9 +92,31 @@
   status = 301
 
 [[redirects]]
+  from = "/features/segments"
+  to = "/features/audience-crm"
+  status = 301
+
+[[redirects]]
+  from = "/features/segmentation"
+  to = "/features/audience-crm"
+  status = 301
+
+[[redirects]]
   from = "/features/cart-recovery"
   to = "/features/journeys"
   status = 301
+
+[[redirects]]
+  from = "/whatsapp-cart-recovery"
+  to = "/features/journeys"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/cod-confirmation-whatsapp"
+  to = "/features/journeys"
+  status = 301
+  force = true
 
 [[redirects]]
   from = "/features/journey"

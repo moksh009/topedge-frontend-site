@@ -130,13 +130,13 @@ export const SOLUTION_VERTICALS: Record<string, SolutionVertical> = {
         feature: 'Abandoned Cart',
         title: 'Recover outfits before the next scroll',
         body: 'Trigger a 3-message sequence from real Shopify abandon events. Keep size, colour, and price honest to the cart.',
-        href: '/whatsapp-cart-recovery',
+        href: '/features/journeys#abandoned-cart',
       },
       {
         feature: 'COD → Prepaid',
         title: 'Confirm apparel COD before dispatch',
         body: 'Ask shoppers to confirm or flip to prepaid on WhatsApp — fewer fake COD orders on high-AOV fashion.',
-        href: '/cod-confirmation-whatsapp',
+        href: '/features/journeys#cod-prepaid',
       },
       {
         feature: 'Audience Campaigns',
@@ -157,7 +157,7 @@ export const SOLUTION_VERTICALS: Record<string, SolutionVertical> = {
       { label: 'Beauty & skincare', href: '/solutions/beauty' },
       { label: 'Electronics', href: '/solutions/electronics' },
       { label: 'COD-first brands', href: '/solutions/cod' },
-      { label: 'Cart recovery', href: '/whatsapp-cart-recovery' },
+      { label: 'Cart recovery', href: '/features/journeys#abandoned-cart' },
       { label: 'Pricing', href: '/pricing' },
     ],
     ctaTitle: 'Run fashion recovery on your catalog',
@@ -239,7 +239,7 @@ export const SOLUTION_VERTICALS: Record<string, SolutionVertical> = {
         feature: 'Abandoned Cart',
         title: 'Recover high-intent beauty carts',
         body: 'Routine builders abandon often. TopEdge sequences re-open the conversation with approved templates and product context.',
-        href: '/whatsapp-cart-recovery',
+        href: '/features/journeys#abandoned-cart',
       },
       {
         feature: 'Opt-in Popup',
@@ -266,7 +266,7 @@ export const SOLUTION_VERTICALS: Record<string, SolutionVertical> = {
       { label: 'Fashion & apparel', href: '/solutions/fashion' },
       { label: 'Electronics', href: '/solutions/electronics' },
       { label: 'COD-first brands', href: '/solutions/cod' },
-      { label: 'Cart recovery', href: '/whatsapp-cart-recovery' },
+      { label: 'Cart recovery', href: '/features/journeys#abandoned-cart' },
       { label: 'Pricing', href: '/pricing' },
     ],
     ctaTitle: 'See beauty recovery on your SKUs',
@@ -348,13 +348,13 @@ export const SOLUTION_VERTICALS: Record<string, SolutionVertical> = {
         feature: 'COD → Prepaid',
         title: 'The journey Indian checkouts need',
         body: 'Branch on COD status inside Flow + journeys. Convert willing buyers to prepaid; cancel ghosts before pick-up.',
-        href: '/cod-confirmation-whatsapp',
+        href: '/features/journeys#cod-prepaid',
       },
       {
         feature: 'Abandoned Cart',
         title: 'Recover without promising fake COD',
         body: 'Cart recovery stays honest — approved templates, clear next steps, no dark patterns that inflate RTO later.',
-        href: '/whatsapp-cart-recovery',
+        href: '/features/journeys#abandoned-cart',
       },
       {
         feature: 'Live Chat',
@@ -366,7 +366,7 @@ export const SOLUTION_VERTICALS: Record<string, SolutionVertical> = {
         feature: 'Shopify sync',
         title: 'Orders drive the automation',
         body: 'OAuth sync keeps carts, orders, and COD state in TopEdge so journeys fire from store truth.',
-        href: '/features/shopify',
+        href: '/integrations',
       },
     ],
     relatedTitle: 'Also',
@@ -374,7 +374,7 @@ export const SOLUTION_VERTICALS: Record<string, SolutionVertical> = {
     related: [
       { label: 'Fashion & apparel', href: '/solutions/fashion' },
       { label: 'Electronics', href: '/solutions/electronics' },
-      { label: 'COD confirmation guide', href: '/cod-confirmation-whatsapp' },
+      { label: 'COD confirmation guide', href: '/features/journeys#cod-prepaid' },
       { label: 'Pricing', href: '/pricing' },
     ],
     ctaTitle: 'Run COD confirmation on your store',
@@ -468,7 +468,7 @@ export const SOLUTION_VERTICALS: Record<string, SolutionVertical> = {
         feature: 'Abandoned Cart',
         title: 'Recover high-ticket gadgets',
         body: 'Trigger approved recovery from real Shopify abandon events. Keep model, storage, and ₹ honest to the cart.',
-        href: '/whatsapp-cart-recovery',
+        href: '/features/journeys#abandoned-cart',
       },
       {
         feature: 'Journeys',
@@ -483,7 +483,7 @@ export const SOLUTION_VERTICALS: Record<string, SolutionVertical> = {
       { label: 'Fashion & apparel', href: '/solutions/fashion' },
       { label: 'COD-first brands', href: '/solutions/cod' },
       { label: 'Warranty', href: '/features/warranty' },
-      { label: 'Cart recovery', href: '/whatsapp-cart-recovery' },
+      { label: 'Cart recovery', href: '/features/journeys#abandoned-cart' },
       { label: 'Pricing', href: '/pricing' },
     ],
     ctaTitle: 'Run warranty + recovery on your catalog',
@@ -494,19 +494,3 @@ export const SOLUTION_VERTICALS: Record<string, SolutionVertical> = {
 export function getSolutionVertical(slug: string) {
   return SOLUTION_VERTICALS[slug] ?? null;
 }
-
-/** Used by SolutionTemplatePhones mock previews */
-export type SolutionWaTemplate = {
-  broadcastTitle: string;
-  recipients: string;
-  avatarLetter: string;
-  avatarTone: 'violet' | 'rose' | 'sky' | 'amber' | 'emerald';
-  image: string;
-  imageAlt: string;
-  headline: string;
-  subhead: string;
-  body: string;
-  linkLabel: string;
-  ctaLabel: string;
-  time: string;
-};

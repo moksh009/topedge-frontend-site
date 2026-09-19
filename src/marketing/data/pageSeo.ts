@@ -224,12 +224,6 @@ export const FEATURE_SEO: Record<string, { title: string; description: string; k
       'Detect WhatsApp message intent and route Shopify ecommerce chatbots — algorithmic intent detection for better support.',
     keywords: 'WhatsApp intent detection, chatbot intent routing Shopify, ecommerce chat intent India',
   },
-  segments: {
-    title: 'WhatsApp Audience Segments for Shopify | Cart, COD & Pixel Cohorts',
-    description:
-      'Segment Shopify customers for WhatsApp — abandoned carts, COD buyers, VIPs, and pixel lookers — then broadcast with Meta-approved templates.',
-    keywords: 'WhatsApp segments Shopify, ecommerce audience segmentation India, pixel segments WhatsApp',
-  },
 };
 
 export const SOLUTION_SEO: Record<

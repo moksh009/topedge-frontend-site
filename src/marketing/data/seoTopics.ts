@@ -66,7 +66,7 @@ export const SEO_TOPICS: Record<string, SeoTopic> = {
     ],
     related: [
       { label: 'Journey builder', href: '/features/journeys' },
-      { label: 'COD confirmation', href: '/cod-confirmation-whatsapp' },
+      { label: 'COD confirmation', href: '/features/journeys#cod-prepaid' },
       { label: 'Cart recovery playbook', href: '/blog/whatsapp-abandoned-cart-recovery-shopify' },
       { label: 'Pricing', href: '/pricing' },
     ],
@@ -118,7 +118,7 @@ export const SEO_TOPICS: Record<string, SeoTopic> = {
     ],
     related: [
       { label: 'COD solution page', href: '/solutions/cod' },
-      { label: 'Cart recovery', href: '/whatsapp-cart-recovery' },
+      { label: 'Cart recovery', href: '/features/journeys#abandoned-cart' },
       { label: 'RTO playbook', href: '/blog/how-to-reduce-rto-with-whatsapp-cod-confirmation' },
       { label: 'Journeys', href: '/features/journeys' },
     ],
@@ -170,7 +170,7 @@ export const SEO_TOPICS: Record<string, SeoTopic> = {
     ],
     related: [
       { label: 'Integrations overview', href: '/integrations' },
-      { label: 'Shopify connection feature', href: '/features/shopify' },
+      { label: 'Shopify connection feature', href: '/integrations' },
       { label: 'Meta template manager', href: '/features/meta-manager' },
       { label: 'What to automate first', href: '/blog/shopify-whatsapp-automation-what-to-automate-first' },
     ],

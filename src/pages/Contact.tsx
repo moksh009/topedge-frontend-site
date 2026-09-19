@@ -87,11 +87,11 @@ export default function Contact() {
           <div className="mx-auto max-w-3xl text-base leading-relaxed text-slate-600">
             <p>
               TopEdge helps Indian Shopify brands run{' '}
-              <Link to="/whatsapp-cart-recovery" className="font-medium text-[#7C3AED]">
+              <Link to="/features/journeys#abandoned-cart" className="font-medium text-[#7C3AED]">
                 WhatsApp cart recovery
               </Link>
               ,{' '}
-              <Link to="/cod-confirmation-whatsapp" className="font-medium text-[#7C3AED]">
+              <Link to="/features/journeys#cod-prepaid" className="font-medium text-[#7C3AED]">
                 COD confirmation
               </Link>
               , and shared inbox support with Meta Cloud API. Prefer self-serve?{' '}

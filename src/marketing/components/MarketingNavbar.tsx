@@ -5,144 +5,52 @@ import { ChevronDown, Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useLenis } from 'lenis/react';
 
-type ProductItem = {
+type NavLink = {
   label: string;
-  desc: string;
   href: string;
-  tone: 'wa' | 'violet' | 'amber' | 'sky';
-  image: string;
 };
 
-const productItems: ProductItem[] = [
+type NavColumn = {
+  title: string;
+  items: NavLink[];
+};
+
+/** Product IA — Journey owns cart + COD; no Shopify Sync / Segments peers */
+const productColumns: NavColumn[] = [
   {
-    label: 'Shopify Store Sync',
-    desc: 'OAuth products, carts, orders & catalog',
-    href: '/features/shopify',
-    tone: 'wa',
-    image: '/marketing/nav/nav-clay-shopify.png',
+    title: 'Journey',
+    items: [
+      { label: 'Journey', href: '/features/journeys' },
+      { label: 'Abandoned Cart', href: '/features/journeys#abandoned-cart' },
+      { label: 'COD → Prepaid', href: '/features/journeys#cod-prepaid' },
+    ],
   },
   {
-    label: 'Abandoned Cart',
-    desc: 'WhatsApp recovery when shoppers leave',
-    href: '/whatsapp-cart-recovery',
-    tone: 'wa',
-    image: '/marketing/nav/nav-clay-cart.png',
+    title: 'Engage',
+    items: [
+      { label: 'Flow + Shopify Tools', href: '/features/flow-builder' },
+      { label: 'Opt-in Popup', href: '/features/flow-builder' },
+      { label: 'Audience Campaigns', href: '/features/campaigns' },
+      { label: 'Audience CRM', href: '/features/audience-crm' },
+      { label: 'Warranty', href: '/features/warranty' },
+    ],
   },
   {
-    label: 'Journey',
-    desc: 'Canvas journeys from triggers to WhatsApp',
-    href: '/features/journeys',
-    tone: 'violet',
-    image: '/marketing/nav/nav-clay-journey.png',
-  },
-  {
-    label: 'COD → Prepaid',
-    desc: 'Convert COD checkouts before ship',
-    href: '/cod-confirmation-whatsapp',
-    tone: 'violet',
-    image: '/marketing/nav/nav-clay-cod.png',
-  },
-  {
-    label: 'Flow + Shopify Tools',
-    desc: 'Orders, address, cancel, support flows',
-    href: '/features/flow-builder',
-    tone: 'sky',
-    image: '/marketing/nav/nav-clay-flow.png',
-  },
-  {
-    label: 'Audience Campaigns',
-    desc: 'Segments → Meta-safe broadcasts',
-    href: '/features/campaigns',
-    tone: 'violet',
-    image: '/marketing/nav/nav-clay-campaigns.png',
-  },
-  {
-    label: 'Tracking Pixel',
-    desc: 'Live visits matched to WhatsApp',
-    href: '/features/analytics',
-    tone: 'amber',
-    image: '/marketing/nav/nav-clay-pixel.png',
-  },
-  {
-    label: 'Opt-in Popup',
-    desc: 'Capture numbers without theme hacks',
-    href: '/features/flow-builder',
-    tone: 'sky',
-    image: '/marketing/nav/nav-clay-optin.png',
-  },
-  {
-    label: 'Audience CRM',
-    desc: 'Identity, profiles, warranty & care',
-    href: '/features/audience-crm',
-    tone: 'violet',
-    image: '/marketing/nav/nav-clay-crm.png',
-  },
-  {
-    label: 'Warranty',
-    desc: 'Batches, portal OTP & claims',
-    href: '/features/warranty',
-    tone: 'wa',
-    image: '/marketing/nav/nav-clay-crm.png',
-  },
-  {
-    label: 'Intent detection',
-    desc: 'Route chats by what they mean',
-    href: '/features/intent-detection',
-    tone: 'sky',
-    image: '/marketing/nav/nav-clay-pixel.png',
-  },
-  {
-    label: 'Segments',
-    desc: 'Cart, COD & pixel cohorts',
-    href: '/features/segments',
-    tone: 'violet',
-    image: '/marketing/nav/nav-clay-campaigns.png',
-  },
-  {
-    label: 'BYOK AI',
-    desc: 'Your Gemini or OpenAI keys',
-    href: '/features/byok',
-    tone: 'amber',
-    image: '/marketing/nav/nav-clay-flow.png',
-  },
-  {
-    label: 'P&L Analytics',
-    desc: 'Recovery ₹ vs Meta costs',
-    href: '/features/profit-loss',
-    tone: 'amber',
-    image: '/marketing/nav/nav-clay-pixel.png',
+    title: 'Intelligence',
+    items: [
+      { label: 'Tracking Pixel', href: '/features/analytics' },
+      { label: 'Intent detection', href: '/features/intent-detection' },
+      { label: 'BYOK AI', href: '/features/byok' },
+      { label: 'P&L Analytics', href: '/features/profit-loss' },
+    ],
   },
 ];
 
-const solutionItems = [
-  {
-    label: 'Fashion & apparel',
-    desc: 'Size-aware recovery, COD & drops',
-    href: '/solutions/fashion',
-    tone: 'violet' as const,
-    image: '/marketing/nav/nav-clay-fashion.png?v=2',
-  },
-  {
-    label: 'Beauty & skincare',
-    desc: 'Serum carts, catalog answers, opt-in',
-    href: '/solutions/beauty',
-    tone: 'violet' as const,
-    image: '/marketing/nav/nav-clay-beauty.png?v=2',
-  },
-  {
-    label: 'Electronics & gadgets',
-    desc: 'Warranty, DOA support, high-AOV carts',
-    href: '/solutions/electronics',
-    tone: 'sky' as const,
-    image: '/marketing/nav/nav-clay-electronics.png?v=2',
-  },
-  {
-    label: 'COD-first brands',
-    desc: 'Confirm before ship, cut RTO',
-    href: '/solutions/cod',
-    tone: 'amber' as const,
-    image: '/marketing/nav/nav-clay-cod-brands.png?v=2',
-  },
+const solutionItems: NavLink[] = [
+  { label: 'Fashion & apparel', href: '/solutions/fashion' },
+  { label: 'Beauty & skincare', href: '/solutions/beauty' },
+  { label: 'Electronics & gadgets', href: '/solutions/electronics' },
+  { label: 'COD-first brands', href: '/solutions/cod' },
 ];
 
 const primaryLinks = [
@@ -153,24 +61,12 @@ const primaryLinks = [
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
-function ClayThumb({ src, alt = '' }: { src: string; alt?: string }) {
-  return (
-    <img
-      src={src}
-      alt={alt}
-      width={56}
-      height={56}
-      className="mkt-nav__clay-img"
-      decoding="async"
-      loading="lazy"
-    />
-  );
-}
-
 export default function MarketingNavbar() {
   const [open, setOpen] = useState(false);
   const [productOpen, setProductOpen] = useState(false);
   const [solutionsOpen, setSolutionsOpen] = useState(false);
+  const [mobileProductOpen, setMobileProductOpen] = useState(false);
+  const [mobileSolutionsOpen, setMobileSolutionsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const closeTimer = useRef<number | null>(null);
   const solutionsCloseTimer = useRef<number | null>(null);
@@ -184,6 +80,8 @@ export default function MarketingNavbar() {
     setOpen(false);
     setProductOpen(false);
     setSolutionsOpen(false);
+    setMobileProductOpen(false);
+    setMobileSolutionsOpen(false);
   }, [location.pathname]);
 
   useEffect(() => {
@@ -199,10 +97,11 @@ export default function MarketingNavbar() {
     };
   }, [lenis]);
 
-  /* Lock page scroll when mobile menu is open — keep the panel itself scrollable */
   useEffect(() => {
     if (!open) {
       lenis?.start();
+      setMobileProductOpen(false);
+      setMobileSolutionsOpen(false);
       return;
     }
 
@@ -266,6 +165,16 @@ export default function MarketingNavbar() {
     solutionsCloseTimer.current = window.setTimeout(() => setSolutionsOpen(false), 140);
   };
 
+  const toggleMobileProduct = () => {
+    setMobileProductOpen((v) => !v);
+    setMobileSolutionsOpen(false);
+  };
+
+  const toggleMobileSolutions = () => {
+    setMobileSolutionsOpen((v) => !v);
+    setMobileProductOpen(false);
+  };
+
   return (
     <header className="mkt-nav pointer-events-none fixed inset-x-0 top-0 z-50">
       <div className="mkt-nav__shell pointer-events-none">
@@ -318,48 +227,33 @@ export default function MarketingNavbar() {
                     <motion.div
                       key="product-mega"
                       className="mkt-nav__mega"
-                      initial={reduceMotion ? false : { opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={reduceMotion ? undefined : { opacity: 0 }}
+                      initial={reduceMotion ? false : { opacity: 0, y: 6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={reduceMotion ? undefined : { opacity: 0, y: 4 }}
                       transition={{ duration: 0.2, ease: easeOut }}
                       onMouseEnter={openProduct}
                       onMouseLeave={scheduleCloseProduct}
                     >
-                      <motion.div
-                        className="mkt-nav__mega-card"
-                        initial={reduceMotion ? false : { y: 8, scale: 0.985 }}
-                        animate={{ y: 0, scale: 1 }}
-                        exit={reduceMotion ? undefined : { y: 6, scale: 0.99 }}
-                        transition={{ duration: 0.28, ease: easeOut }}
-                      >
-                        <div className="mkt-nav__mega-list">
-                          {productItems.map((item, i) => (
-                            <motion.div
-                              key={item.href + item.label}
-                              initial={reduceMotion ? false : { opacity: 0, y: 5 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              transition={{
-                                duration: 0.24,
-                                delay: reduceMotion ? 0 : 0.03 + i * 0.015,
-                                ease: easeOut,
-                              }}
-                            >
-                              <Link
-                                to={item.href}
-                                className={cn('mkt-nav__mega-item', `is-${item.tone}`)}
-                              >
-                                <span className="mkt-nav__mega-thumb" aria-hidden>
-                                  <ClayThumb src={item.image} />
-                                </span>
-                                <span className="mkt-nav__mega-copy">
-                                  <span className="mkt-nav__mega-label">{item.label}</span>
-                                  <span className="mkt-nav__mega-desc">{item.desc}</span>
-                                </span>
-                              </Link>
-                            </motion.div>
+                      <div className="mkt-nav__mega-card mkt-nav__mega-card--links-only">
+                        <div className="mkt-nav__mega-cols">
+                          {productColumns.map((col) => (
+                            <div key={col.title} className="mkt-nav__mega-col">
+                              <ul className="mkt-nav__mega-links">
+                                {col.items.map((item) => (
+                                  <li key={item.label}>
+                                    <Link to={item.href} className="mkt-nav__mega-link">
+                                      <span className="mkt-nav__mega-link-text">{item.label}</span>
+                                      <span className="mkt-nav__mega-link-arrow" aria-hidden>
+                                        →
+                                      </span>
+                                    </Link>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
                           ))}
                         </div>
-                      </motion.div>
+                      </div>
                     </motion.div>
                   ) : null}
                 </AnimatePresence>
@@ -391,48 +285,28 @@ export default function MarketingNavbar() {
                     <motion.div
                       key="solutions-mega"
                       className="mkt-nav__mega mkt-nav__mega--solutions"
-                      initial={reduceMotion ? false : { opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={reduceMotion ? undefined : { opacity: 0 }}
+                      initial={reduceMotion ? false : { opacity: 0, y: 6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={reduceMotion ? undefined : { opacity: 0, y: 4 }}
                       transition={{ duration: 0.2, ease: easeOut }}
                       onMouseEnter={openSolutions}
                       onMouseLeave={scheduleCloseSolutions}
                     >
-                      <motion.div
-                        className="mkt-nav__mega-card"
-                        initial={reduceMotion ? false : { y: 8, scale: 0.985 }}
-                        animate={{ y: 0, scale: 1 }}
-                        exit={reduceMotion ? undefined : { y: 6, scale: 0.99 }}
-                        transition={{ duration: 0.28, ease: easeOut }}
-                      >
-                        <div className="mkt-nav__mega-list mkt-nav__mega-list--solutions">
-                          {solutionItems.map((item, i) => (
-                            <motion.div
-                              key={item.href}
-                              initial={reduceMotion ? false : { opacity: 0, y: 5 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              transition={{
-                                duration: 0.24,
-                                delay: reduceMotion ? 0 : 0.03 + i * 0.02,
-                                ease: easeOut,
-                              }}
-                            >
-                              <Link
-                                to={item.href}
-                                className={cn('mkt-nav__mega-item', `is-${item.tone}`)}
-                              >
-                                <span className="mkt-nav__mega-thumb" aria-hidden>
-                                  <ClayThumb src={item.image} />
-                                </span>
-                                <span className="mkt-nav__mega-copy">
-                                  <span className="mkt-nav__mega-label">{item.label}</span>
-                                  <span className="mkt-nav__mega-desc">{item.desc}</span>
+                      <div className="mkt-nav__mega-card mkt-nav__mega-card--solutions">
+                        <p className="mkt-nav__mega-col-title">Solutions</p>
+                        <ul className="mkt-nav__mega-links">
+                          {solutionItems.map((item) => (
+                            <li key={item.href}>
+                              <Link to={item.href} className="mkt-nav__mega-link">
+                                <span className="mkt-nav__mega-link-text">{item.label}</span>
+                                <span className="mkt-nav__mega-link-arrow" aria-hidden>
+                                  →
                                 </span>
                               </Link>
-                            </motion.div>
+                            </li>
                           ))}
-                        </div>
-                      </motion.div>
+                        </ul>
+                      </div>
                     </motion.div>
                   ) : null}
                 </AnimatePresence>
@@ -481,7 +355,7 @@ export default function MarketingNavbar() {
             </button>
           </div>
 
-          <AnimatePresence>
+          <AnimatePresence initial={false}>
             {open ? (
               <motion.div
                 key="mobile-nav"
@@ -490,41 +364,99 @@ export default function MarketingNavbar() {
                 initial={reduceMotion ? false : { height: 0, opacity: 0 }}
                 animate={{ height: 'auto', opacity: 1 }}
                 exit={reduceMotion ? undefined : { height: 0, opacity: 0 }}
-                transition={{ duration: 0.3, ease: easeOut }}
+                transition={{ duration: 0.28, ease: easeOut }}
               >
                 <div
                   className="mkt-nav__mobile-scroll"
                   data-lenis-prevent
                   data-lenis-prevent-touch
                 >
-                  <p className="mkt-nav__mobile-label">Product</p>
-                  <div className="mkt-nav__mobile-products">
-                    {productItems.map((item) => (
-                      <Link key={item.href + item.label} to={item.href} className="mkt-nav__mobile-item">
-                        <span className={cn('mkt-nav__mega-thumb', `is-${item.tone}`)} aria-hidden>
-                          <ClayThumb src={item.image} />
-                        </span>
-                        <span className="mkt-nav__mega-copy">
-                          <span className="mkt-nav__mega-label">{item.label}</span>
-                          <span className="mkt-nav__mega-desc">{item.desc}</span>
-                        </span>
-                      </Link>
-                    ))}
+                  <div className="mkt-nav__mobile-section">
+                    <button
+                      type="button"
+                      className={cn(
+                        'mkt-nav__mobile-trigger',
+                        mobileProductOpen && 'is-open',
+                      )}
+                      aria-expanded={mobileProductOpen}
+                      onClick={toggleMobileProduct}
+                    >
+                      Product
+                      <ChevronDown
+                        className={cn('mkt-nav__chev', mobileProductOpen && 'is-open')}
+                        aria-hidden
+                      />
+                    </button>
+                    <AnimatePresence initial={false}>
+                      {mobileProductOpen ? (
+                        <motion.div
+                          key="mobile-product"
+                          className="mkt-nav__mobile-submenu"
+                          initial={reduceMotion ? false : { height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={reduceMotion ? undefined : { height: 0, opacity: 0 }}
+                          transition={{ duration: 0.22, ease: easeOut }}
+                        >
+                          <div className="mkt-nav__mobile-products">
+                            {productColumns.flatMap((col) =>
+                              col.items.map((item) => (
+                                <Link
+                                  key={item.label}
+                                  to={item.href}
+                                  className="mkt-nav__mobile-item"
+                                  onClick={() => setOpen(false)}
+                                >
+                                  {item.label}
+                                </Link>
+                              )),
+                            )}
+                          </div>
+                        </motion.div>
+                      ) : null}
+                    </AnimatePresence>
                   </div>
 
-                  <p className="mkt-nav__mobile-label">Solutions</p>
-                  <div className="mkt-nav__mobile-products">
-                    {solutionItems.map((item) => (
-                      <Link key={item.href} to={item.href} className="mkt-nav__mobile-item">
-                        <span className={cn('mkt-nav__mega-thumb', `is-${item.tone}`)} aria-hidden>
-                          <ClayThumb src={item.image} />
-                        </span>
-                        <span className="mkt-nav__mega-copy">
-                          <span className="mkt-nav__mega-label">{item.label}</span>
-                          <span className="mkt-nav__mega-desc">{item.desc}</span>
-                        </span>
-                      </Link>
-                    ))}
+                  <div className="mkt-nav__mobile-section">
+                    <button
+                      type="button"
+                      className={cn(
+                        'mkt-nav__mobile-trigger',
+                        mobileSolutionsOpen && 'is-open',
+                      )}
+                      aria-expanded={mobileSolutionsOpen}
+                      onClick={toggleMobileSolutions}
+                    >
+                      Solutions
+                      <ChevronDown
+                        className={cn('mkt-nav__chev', mobileSolutionsOpen && 'is-open')}
+                        aria-hidden
+                      />
+                    </button>
+                    <AnimatePresence initial={false}>
+                      {mobileSolutionsOpen ? (
+                        <motion.div
+                          key="mobile-solutions"
+                          className="mkt-nav__mobile-submenu"
+                          initial={reduceMotion ? false : { height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={reduceMotion ? undefined : { height: 0, opacity: 0 }}
+                          transition={{ duration: 0.22, ease: easeOut }}
+                        >
+                          <div className="mkt-nav__mobile-products">
+                            {solutionItems.map((item) => (
+                              <Link
+                                key={item.href}
+                                to={item.href}
+                                className="mkt-nav__mobile-item"
+                                onClick={() => setOpen(false)}
+                              >
+                                {item.label}
+                              </Link>
+                            ))}
+                          </div>
+                        </motion.div>
+                      ) : null}
+                    </AnimatePresence>
                   </div>
 
                   <p className="mkt-nav__mobile-label">Explore</p>
@@ -537,6 +469,7 @@ export default function MarketingNavbar() {
                           'mkt-nav__mobile-link',
                           location.pathname === l.href && 'is-active',
                         )}
+                        onClick={() => setOpen(false)}
                       >
                         {l.label}
                       </Link>
@@ -545,10 +478,14 @@ export default function MarketingNavbar() {
                 </div>
 
                 <div className="mkt-nav__mobile-cta">
-                  <Link to="/login" className="mkt-nav__mobile-login">
+                  <Link to="/login" className="mkt-nav__mobile-login" onClick={() => setOpen(false)}>
                     Log in
                   </Link>
-                  <Link to="/signup" className="mkt-btn-primary mkt-nav__mobile-signup">
+                  <Link
+                    to="/signup"
+                    className="mkt-btn-primary mkt-nav__mobile-signup"
+                    onClick={() => setOpen(false)}
+                  >
                     Start free
                   </Link>
                 </div>

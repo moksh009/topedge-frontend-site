@@ -20,8 +20,7 @@ const columns: { title: string; links: FootLink[] }[] = [
     links: [
       { label: 'Pricing', href: '/pricing' },
       { label: 'ROI calculator', href: '/roi', badge: 'New' },
-      { label: 'Cart recovery', href: '/whatsapp-cart-recovery' },
-      { label: 'COD → Prepaid', href: '/cod-confirmation-whatsapp' },
+      { label: 'Journey', href: '/features/journeys' },
       { label: 'Audience Campaigns', href: '/features/campaigns' },
       { label: 'Audience CRM', href: '/features/audience-crm' },
     ],

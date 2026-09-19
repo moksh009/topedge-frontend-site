@@ -70,7 +70,7 @@ export const homeStories = [
     id: 'connect' as const,
     title: 'Automated Order & Shipping Alerts',
     body: 'Send confirmations, tracking, and shipping updates on WhatsApp—cut WISMO tickets.',
-    href: '/features/shopify',
+    href: '/integrations',
     cta: 'Start free',
   },
 ];
@@ -83,7 +83,7 @@ export const homeIntegrations = [
       { label: 'Source of truth', value: 'Edit in dashboard' },
     ],
     action: 'Connect',
-    href: '/features/shopify',
+    href: '/integrations',
   },
   {
     name: 'Meta WhatsApp',
@@ -144,22 +144,20 @@ export type FeatureStoryId =
 
 export const modules = [
   { name: 'Dashboard', outcome: 'Store + support KPIs at a glance', href: '/features' },
-  { name: 'Shopify / Store', outcome: 'OAuth sync · edit in dashboard', href: '/features/shopify' },
   { name: 'Live Chat', outcome: 'Unified WA + IG inbox', href: '/features/live-chat' },
   { name: 'AI Brain', outcome: 'Catalog-grounded replies', href: '/features/ai-brain' },
   { name: 'Analytics', outcome: 'Recovery ₹, not vanity charts', href: '/features/analytics' },
   { name: 'Audience', outcome: 'Customers, segments, scores', href: '/features/audience-crm' },
   { name: 'Campaigns', outcome: 'Meta-safe broadcasts', href: '/features/campaigns' },
   { name: 'Flow Builder', outcome: 'AI form → WA flows', href: '/features/flow-builder' },
-  { name: 'Journey', outcome: 'Canvas journeys · triggers to WA', href: '/features/journeys' },
+  { name: 'Journey', outcome: 'Cart, COD & order journeys', href: '/features/journeys' },
   { name: 'Meta Manager', outcome: 'Templates, catalog, QR', href: '/features/meta-manager' },
   { name: 'IG Automation', outcome: 'Comment & story to DM', href: '/features/instagram' },
   { name: 'Warranty', outcome: 'Batches, portal, claims', href: '/features/warranty' },
   { name: 'Intent detection', outcome: 'Route chats by meaning', href: '/features/intent-detection' },
-  { name: 'Segments', outcome: 'Cart, COD & pixel cohorts', href: '/features/segments' },
   { name: 'BYOK AI', outcome: 'Your Gemini / OpenAI keys', href: '/features/byok' },
   { name: 'P&L Analytics', outcome: 'Recovery ₹ vs Meta costs', href: '/features/profit-loss' },
-  { name: 'Cart recovery', outcome: '3-message sequences', href: '/features/journeys' },
+  { name: 'Integrations', outcome: 'Shopify + Meta connect', href: '/integrations' },
 ];
 
 

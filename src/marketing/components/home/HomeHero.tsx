@@ -3,11 +3,10 @@ import { PrimaryButton } from '../ui';
 import HeroRippleBackground from '../effects/HeroRippleBackground';
 import HomeTrust from './HomeTrust';
 
-const HERO_PRODUCT_SHOT = '/herooo-immage.png';
 const SHOPIFY_APP_URL = 'https://apps.shopify.com/';
 
 /**
- * Homepage hero — headline + CTAs + trusted-by, then product shot clipped ~20% at bottom.
+ * Homepage hero — headline + CTAs + trusted-by, product shot flush to section bottom.
  */
 export default function HomeHero() {
   return (
@@ -71,14 +70,18 @@ export default function HomeHero() {
             </div>
 
             <div className="home-hero__shot">
-              <img
-                src={HERO_PRODUCT_SHOT}
-                alt="TopEdge dashboard — WhatsApp commerce workspace"
-                width={1600}
-                height={1000}
-                decoding="async"
-                fetchPriority="high"
-              />
+              <picture>
+                <source type="image/webp" srcSet="/herooo-immage-2400.webp?v=2" />
+                <img
+                  src="/herooo-immage-2400.png"
+                  srcSet="/herooo-immage-2400.png 1x, /herooo-immage.png 2x"
+                  alt="TopEdge dashboard — WhatsApp commerce workspace"
+                  width={2398}
+                  height={1216}
+                  decoding="async"
+                  fetchPriority="high"
+                />
+              </picture>
             </div>
           </div>
         </div>

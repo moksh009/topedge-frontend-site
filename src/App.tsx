@@ -1,5 +1,5 @@
 import React, { useEffect, Suspense } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Toaster } from 'react-hot-toast';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
@@ -39,7 +39,6 @@ const CompareIndexPage = React.lazy(() => import('./marketing/pages/CompareIndex
 const ComparePage = React.lazy(() => import('./marketing/pages/ComparePage'));
 const CompareThreeWayPage = React.lazy(() => import('./marketing/pages/CompareThreeWayPage'));
 const SeoTopicPage = React.lazy(() => import('./marketing/pages/SeoTopicPage'));
-const ProductFeaturePage = React.lazy(() => import('./marketing/pages/ProductFeaturePage'));
 const NotFoundPage = React.lazy(() => import('./marketing/pages/NotFoundPage'));
 const DevShowcasePage = import.meta.env.DEV
   ? React.lazy(() => import('./marketing/pages/DevShowcasePage'))
@@ -287,11 +286,11 @@ const AnimatedRoutes = () => {
           <Route path="/compare/:competitor" element={<ComparePage />} />
           <Route
             path="/whatsapp-cart-recovery"
-            element={<ProductFeaturePage pageId="cart-recovery" />}
+            element={<Navigate to="/features/journeys#abandoned-cart" replace />}
           />
           <Route
             path="/cod-confirmation-whatsapp"
-            element={<ProductFeaturePage pageId="cod-prepaid" />}
+            element={<Navigate to="/features/journeys#cod-prepaid" replace />}
           />
           <Route
             path="/shopify-whatsapp-integration"

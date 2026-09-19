@@ -15,24 +15,6 @@ export type MarketingFeature = {
 /** Canonical public slugs (aligned with netlify.toml redirects) */
 export const MARKETING_FEATURES: MarketingFeature[] = [
   {
-    slug: 'shopify',
-    scene: 'shopify',
-    label: 'Shopify connection',
-    title: 'Your store data, live in TopEdge',
-    body: 'OAuth-connect Shopify once. Products, carts, orders, and COD status sync into the workspace. Edit catalog and settings in the dashboard ,  marketing only tells the story.',
-    bullets: [
-      'One-click Shopify OAuth',
-      'Orders, carts & catalog sync',
-      'Edit everything at dash.topedgeai.com',
-    ],
-    outcomes: [
-      'See open carts and recent orders beside WhatsApp threads',
-      'Recovery journeys fire from real abandon events',
-      'Catalog-grounded AI replies use live SKUs and ₹ prices',
-    ],
-    aliases: ['store-engine'],
-  },
-  {
     slug: 'journeys',
     scene: 'journey',
     label: 'Journey',
@@ -277,24 +259,6 @@ export const MARKETING_FEATURES: MarketingFeature[] = [
     ],
     aliases: ['intent', 'intents'],
   },
-  {
-    slug: 'segments',
-    scene: 'audience',
-    label: 'Segments',
-    title: 'Audiences that earn a message',
-    body: 'Cohorts from carts, COD risk, purchase history, and pixel intent — campaign-ready without CSV merges.',
-    bullets: [
-      'Behaviour and cart cohorts',
-      'Pixel lookers when numbers match',
-      'One-click into Campaigns',
-    ],
-    outcomes: [
-      'Warm lists stay synced to live events',
-      'Broadcasts only hit people who showed intent',
-      'Attributed ₹ shows which segments paid',
-    ],
-    aliases: ['segmentation', 'audience-segments'],
-  },
 ];
 
 const aliasToSlug = new Map<string, string>();
@@ -302,6 +266,12 @@ for (const f of MARKETING_FEATURES) {
   aliasToSlug.set(f.slug, f.slug);
   f.aliases?.forEach((a) => aliasToSlug.set(a, f.slug));
 }
+
+/* Redirected / retired slugs — resolve to surviving hubs */
+aliasToSlug.set('segments', 'audience-crm');
+aliasToSlug.set('segmentation', 'audience-crm');
+aliasToSlug.set('segment', 'audience-crm');
+aliasToSlug.set('audience-segments', 'audience-crm');
 
 export function resolveFeatureSlug(raw: string): string | null {
   return aliasToSlug.get(raw) ?? null;
@@ -316,7 +286,7 @@ export function getFeatureBySlug(raw: string): MarketingFeature | undefined {
 /** Sync homepage story hrefs to canonical feature slugs */
 export function canonicalHrefForStory(storyId: string): string {
   const map: Record<string, string> = {
-    shopify: '/features/shopify',
+    shopify: '/integrations',
     'cart-recovery': '/features/journeys',
     inbox: '/features/live-chat',
     journey: '/features/journeys',
@@ -330,8 +300,8 @@ export function canonicalHrefForStory(storyId: string): string {
     audience: '/features/audience-crm',
     intent: '/features/intent-detection',
     'intent-detection': '/features/intent-detection',
-    segmentation: '/features/segments',
-    segment: '/features/segments',
+    segmentation: '/features/audience-crm',
+    segment: '/features/audience-crm',
   };
   return map[storyId] ?? '/features';
 }
