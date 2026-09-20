@@ -9,6 +9,7 @@ import {
   breadcrumbJsonLd,
   webPageJsonLd,
 } from '../data/pageSeo';
+import { pricingModifiedIso } from '../data/contentDates';
 import MarketingPage from '../components/MarketingPage';
 import CycleToggle from '../components/pricing/CycleToggle';
 import PlanGrid from '../components/pricing/PlanGrid';
@@ -46,6 +47,7 @@ export default function PricingPage() {
 
   const seo = PAGE_SEO.pricing;
   const faqSchema = PRICING_FAQS.map((f) => ({ question: f.q, answer: f.a }));
+  const modifiedIso = pricingModifiedIso();
 
   const rise = (delay = 0) =>
     reduceMotion
@@ -72,6 +74,7 @@ export default function PricingPage() {
             name: 'Pricing',
             description: seo.description,
             path: seo.path,
+            dateModified: modifiedIso,
           }),
           breadcrumbJsonLd([
             { name: 'Home', path: '/' },

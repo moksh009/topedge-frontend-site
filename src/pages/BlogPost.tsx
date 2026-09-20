@@ -124,6 +124,22 @@ export default function BlogPost() {
               dangerouslySetInnerHTML={{ __html: post.content || '' }}
             />
 
+            {post.faqs?.length && !(post.content || '').includes('mkt-blog-faq') ? (
+              <section className="mkt-blog-faq-block" aria-labelledby="blog-faq-heading">
+                <h2 id="blog-faq-heading" className="mkt-blog-faq-block__title">
+                  Common questions
+                </h2>
+                <div className="mkt-blog-faq">
+                  {post.faqs.map((f) => (
+                    <details key={f.question} open>
+                      <summary>{f.question}</summary>
+                      <p>{f.answer}</p>
+                    </details>
+                  ))}
+                </div>
+              </section>
+            ) : null}
+
             <aside className="mkt-blog-cta" aria-label="Get started">
               <p className="mkt-blog-cta__title">Run this on your Shopify store</p>
               <p className="mkt-blog-cta__sub">

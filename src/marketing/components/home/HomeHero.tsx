@@ -40,9 +40,8 @@ export default function HomeHero() {
                 </span>
               </h1>
               <p className="home-hero__sub">
-                Abandoned carts, COD confirms, and Live Chat with Shopify order context.
-                <br className="home-hero__sub-br" />
-                On WhatsApp, live in about fifteen minutes.
+                TopEdge AI recovers abandoned carts, confirms COD, and runs Live Chat with Shopify
+                order context on WhatsApp—typically live in about fifteen minutes.
               </p>
               <div className="home-hero__actions">
                 <PrimaryButton to="/signup">

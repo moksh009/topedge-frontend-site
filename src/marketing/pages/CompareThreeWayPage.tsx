@@ -90,59 +90,60 @@ export default function CompareThreeWayPage() {
           </div>
 
           <div className="mkt-cmp__triple-wrap">
-            <div className="mkt-cmp__triple" role="table" aria-label="TopEdge vs WATI vs AiSensy">
-              <div className="mkt-cmp__triple-head" role="row">
-                <span className="mkt-cmp__triple-cap" role="columnheader">
-                  Feature
-                </span>
-                <span className="mkt-cmp__triple-col is-te" role="columnheader">
-                  <img src="/logo.png" alt="TopEdge AI" width={18} height={18} />
-                  TopEdge AI
-                </span>
-                <span className="mkt-cmp__triple-col" role="columnheader">
-                  <img src={LOGO_WATI} alt="WATI" width={18} height={18} />
-                  WATI
-                </span>
-                <span className="mkt-cmp__triple-col" role="columnheader">
-                  <img src={LOGO_AISENSY} alt="AiSensy" width={18} height={18} />
-                  AiSensy
-                </span>
-              </div>
-
-              {THREE_WAY_FEATURE_MATRIX.map((row) => (
-                <div key={row.id} className="mkt-cmp__triple-row" role="row">
-                  <div className="mkt-cmp__triple-main">
-                    <div className="mkt-cmp__triple-feat" role="rowheader">
+            <table className="mkt-cmp__triple" aria-label="TopEdge vs WATI vs AiSensy">
+              <thead>
+                <tr className="mkt-cmp__triple-head">
+                  <th scope="col" className="mkt-cmp__triple-cap">
+                    Feature
+                  </th>
+                  <th scope="col" className="mkt-cmp__triple-col is-te">
+                    <img src="/logo.png" alt="" width={18} height={18} />
+                    TopEdge AI
+                  </th>
+                  <th scope="col" className="mkt-cmp__triple-col">
+                    <img src={LOGO_WATI} alt="" width={18} height={18} />
+                    WATI
+                  </th>
+                  <th scope="col" className="mkt-cmp__triple-col">
+                    <img src={LOGO_AISENSY} alt="" width={18} height={18} />
+                    AiSensy
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {THREE_WAY_FEATURE_MATRIX.map((row) => (
+                  <tr key={row.id} className="mkt-cmp__triple-row">
+                    <th scope="row" className="mkt-cmp__triple-feat">
                       <span className="mkt-cmp__board-feat">{row.name}</span>
                       {row.description ? (
                         <p className="mkt-cmp__feat-desc">{row.description}</p>
                       ) : null}
-                    </div>
-                    <div className="mkt-cmp__triple-cell is-te" role="cell">
+                    </th>
+                    <td className="mkt-cmp__triple-cell is-te">
                       <span className="mkt-cmp__cell-brand">
                         <img src="/logo.png" alt="" width={16} height={16} />
                         TopEdge AI
                       </span>
                       <CompareStatus value={row.topedge} />
-                    </div>
-                    <div className="mkt-cmp__triple-cell" role="cell">
+                    </td>
+                    <td className="mkt-cmp__triple-cell">
                       <span className="mkt-cmp__cell-brand">
                         <img src={LOGO_WATI} alt="" width={16} height={16} />
                         WATI
                       </span>
                       <CompareStatus value={row.wati} />
-                    </div>
-                    <div className="mkt-cmp__triple-cell" role="cell">
+                    </td>
+                    <td className="mkt-cmp__triple-cell">
                       <span className="mkt-cmp__cell-brand">
                         <img src={LOGO_AISENSY} alt="" width={16} height={16} />
                         AiSensy
                       </span>
                       <CompareStatus value={row.aisensy} />
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
 
           <nav className="mkt-cmp__more" aria-label="Pairwise comparisons">

@@ -171,46 +171,50 @@ export default function ComparePage({ competitor: competitorProp }: Props) {
             </h2>
           </div>
 
-          <div className={`mkt-cmp__board${boardWide ? ' is-wide' : ''}`}>
-            <div className="mkt-cmp__board-head">
-              <span className="mkt-cmp__board-cap">Capability</span>
-              <span className="mkt-cmp__board-col is-te">
-                <img src="/logo.png" alt="TopEdge AI" width={18} height={18} />
-                TopEdge AI
-              </span>
-              <span className="mkt-cmp__board-col">
-                <img src={data.logo} alt={data.logoAlt} width={18} height={18} />
-                {data.name}
-              </span>
-            </div>
-            <ul className="mkt-cmp__board-list">
-              {data.matrix.map((row) => (
-                <li key={row.label} className="mkt-cmp__board-row">
-                  <div className="mkt-cmp__board-main">
-                    <div className="mkt-cmp__board-label">
+          <div className={`mkt-cmp__board-wrap${boardWide ? ' is-wide' : ''}`}>
+            <table className={`mkt-cmp__board${boardWide ? ' is-wide' : ''}`}>
+              <thead>
+                <tr className="mkt-cmp__board-head">
+                  <th scope="col" className="mkt-cmp__board-cap">
+                    Capability
+                  </th>
+                  <th scope="col" className="mkt-cmp__board-col is-te">
+                    <img src="/logo.png" alt="" width={18} height={18} />
+                    TopEdge AI
+                  </th>
+                  <th scope="col" className="mkt-cmp__board-col">
+                    <img src={data.logo} alt="" width={18} height={18} />
+                    {data.name}
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="mkt-cmp__board-list">
+                {data.matrix.map((row) => (
+                  <tr key={row.label} className="mkt-cmp__board-row">
+                    <th scope="row" className="mkt-cmp__board-label">
                       <span className="mkt-cmp__board-feat">{row.label}</span>
                       {row.description ? (
                         <p className="mkt-cmp__feat-desc">{row.description}</p>
                       ) : null}
-                    </div>
-                    <span className="mkt-cmp__board-cell is-te">
+                    </th>
+                    <td className="mkt-cmp__board-cell is-te">
                       <span className="mkt-cmp__cell-brand">
                         <img src="/logo.png" alt="" width={16} height={16} />
                         TopEdge AI
                       </span>
                       <CompareStatus value={row.topedge} />
-                    </span>
-                    <span className="mkt-cmp__board-cell">
+                    </td>
+                    <td className="mkt-cmp__board-cell">
                       <span className="mkt-cmp__cell-brand">
                         <img src={data.logo} alt="" width={16} height={16} />
                         {data.name}
                       </span>
                       <CompareStatus value={row.competitor} />
-                    </span>
-                  </div>
-                </li>
-              ))}
-            </ul>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
           {data.matrixNote ? <p className="mkt-cmp__fine">{data.matrixNote}</p> : null}
         </section>
@@ -222,27 +226,33 @@ export default function ComparePage({ competitor: competitorProp }: Props) {
                 Honest <span className="mkt-cmp__hl">scorecard</span>
               </h2>
             </div>
-            <div className="mkt-cmp__score" data-competitor={data.shortName}>
-              <div className="mkt-cmp__score-head" aria-hidden>
-                <span>Area</span>
-                <span>TopEdge AI</span>
-                <span>{data.name}</span>
-                <span>Edge</span>
-              </div>
-              <ul className="mkt-cmp__score-list">
-                {data.scorecard!.map((row) => (
-                  <li key={row.area} className="mkt-cmp__score-row">
-                    <span className="mkt-cmp__score-area">{row.area}</span>
-                    <span className="mkt-cmp__score-cell">{row.topedge}</span>
-                    <span className="mkt-cmp__score-cell" data-comp-label={data.shortName}>
-                      {row.competitor}
-                    </span>
-                    <span className="mkt-cmp__score-cell is-edge">
-                      <ScoreEdge edge={row.edge} competitorName={data.shortName} />
-                    </span>
-                  </li>
-                ))}
-              </ul>
+            <div className="mkt-cmp__score-wrap" data-competitor={data.shortName}>
+              <table className="mkt-cmp__score">
+                <thead>
+                  <tr className="mkt-cmp__score-head">
+                    <th scope="col">Area</th>
+                    <th scope="col">TopEdge AI</th>
+                    <th scope="col">{data.name}</th>
+                    <th scope="col">Edge</th>
+                  </tr>
+                </thead>
+                <tbody className="mkt-cmp__score-list">
+                  {data.scorecard!.map((row) => (
+                    <tr key={row.area} className="mkt-cmp__score-row">
+                      <th scope="row" className="mkt-cmp__score-area">
+                        {row.area}
+                      </th>
+                      <td className="mkt-cmp__score-cell">{row.topedge}</td>
+                      <td className="mkt-cmp__score-cell" data-comp-label={data.shortName}>
+                        {row.competitor}
+                      </td>
+                      <td className="mkt-cmp__score-cell is-edge">
+                        <ScoreEdge edge={row.edge} competitorName={data.shortName} />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </section>
         ) : null}
@@ -277,59 +287,70 @@ export default function ComparePage({ competitor: competitorProp }: Props) {
               </h2>
             </div>
 
-            <div className="mkt-cmp__duel">
-              <div className="mkt-cmp__duel-head">
-                <span className="mkt-cmp__duel-cap">Feature</span>
-                <div className="mkt-cmp__duel-brand is-te">
-                  <span className="mkt-cmp__duel-brand-top">
-                    <img src="/logo.png" alt="TopEdge AI" width={20} height={20} />
-                    <strong>TopEdge AI</strong>
-                  </span>
-                  <span className="mkt-cmp__duel-plan">{teBest.name}</span>
-                </div>
-                <div className="mkt-cmp__duel-brand">
-                  <span className="mkt-cmp__duel-brand-top">
-                    <img src={data.logo} alt={data.logoAlt} width={20} height={20} />
-                    <strong>{data.name}</strong>
-                  </span>
-                  <span className="mkt-cmp__duel-plan">{compBest.name}</span>
-                </div>
-              </div>
+            <table className="mkt-cmp__duel">
+              <thead>
+                <tr className="mkt-cmp__duel-head">
+                  <th scope="col" className="mkt-cmp__duel-cap">
+                    Feature
+                  </th>
+                  <th scope="col" className="mkt-cmp__duel-brand is-te">
+                    <span className="mkt-cmp__duel-brand-top">
+                      <img src="/logo.png" alt="" width={20} height={20} />
+                      <strong>TopEdge AI</strong>
+                    </span>
+                    <span className="mkt-cmp__duel-plan">{teBest.name}</span>
+                  </th>
+                  <th scope="col" className="mkt-cmp__duel-brand">
+                    <span className="mkt-cmp__duel-brand-top">
+                      <img src={data.logo} alt="" width={20} height={20} />
+                      <strong>{data.name}</strong>
+                    </span>
+                    <span className="mkt-cmp__duel-plan">{compBest.name}</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="mkt-cmp__duel-row">
+                  <th scope="row" className="mkt-cmp__duel-label">
+                    Plan fit
+                  </th>
+                  <td className="mkt-cmp__duel-cell is-te">{teBest.note}</td>
+                  <td className="mkt-cmp__duel-cell">{compBest.note || '—'}</td>
+                </tr>
 
-              <div className="mkt-cmp__duel-row">
-                <span className="mkt-cmp__duel-label">Plan fit</span>
-                <span className="mkt-cmp__duel-cell is-te">{teBest.note}</span>
-                <span className="mkt-cmp__duel-cell">{compBest.note || ', '}</span>
-              </div>
+                {duelFeatures.map((row) => (
+                  <tr key={row.label} className="mkt-cmp__duel-row">
+                    <th scope="row" className="mkt-cmp__duel-label">
+                      {row.label}
+                    </th>
+                    <td className="mkt-cmp__duel-cell is-te">
+                      <CompareStatus value={row.topedge} />
+                    </td>
+                    <td className="mkt-cmp__duel-cell">
+                      <CompareStatus value={row.competitor} />
+                    </td>
+                  </tr>
+                ))}
 
-              {duelFeatures.map((row) => (
-                <div key={row.label} className="mkt-cmp__duel-row">
-                  <span className="mkt-cmp__duel-label">{row.label}</span>
-                  <span className="mkt-cmp__duel-cell is-te">
-                    <CompareStatus value={row.topedge} />
-                  </span>
-                  <span className="mkt-cmp__duel-cell">
-                    <CompareStatus value={row.competitor} />
-                  </span>
-                </div>
-              ))}
-
-              <div className="mkt-cmp__duel-row is-price">
-                <span className="mkt-cmp__duel-label">Price</span>
-                <span className="mkt-cmp__duel-cell is-te">
-                  <span>
-                    <span className="mkt-cmp__duel-starts">starts at</span>
-                    <span className="mkt-cmp__duel-price">{teBest.price}</span>
-                  </span>
-                </span>
-                <span className="mkt-cmp__duel-cell">
-                  <span>
-                    <span className="mkt-cmp__duel-starts">starts at</span>
-                    <span className="mkt-cmp__duel-price">{compBest.price}</span>
-                  </span>
-                </span>
-              </div>
-            </div>
+                <tr className="mkt-cmp__duel-row is-price">
+                  <th scope="row" className="mkt-cmp__duel-label">
+                    Price
+                  </th>
+                  <td className="mkt-cmp__duel-cell is-te">
+                    <span>
+                      <span className="mkt-cmp__duel-starts">starts at</span>
+                      <span className="mkt-cmp__duel-price">{teBest.price}</span>
+                    </span>
+                  </td>
+                  <td className="mkt-cmp__duel-cell">
+                    <span>
+                      <span className="mkt-cmp__duel-starts">starts at</span>
+                      <span className="mkt-cmp__duel-price">{compBest.price}</span>
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
 
             <div className="mkt-cmp__duel-foot">
               <Link to="/signup" className="mkt-cmp__duel-cta is-solid">

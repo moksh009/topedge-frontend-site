@@ -13,6 +13,7 @@ import {
   type ProductShowcase,
 } from '../data/productPages';
 import { organizationJsonLd, breadcrumbJsonLd, webPageJsonLd } from '../data/pageSeo';
+import { featurePagesModifiedIso } from '../data/contentDates';
 import FeatureMeshStage from '../components/effects/FeatureMeshStage';
 import HomeTrust from '../components/home/HomeTrust';
 import '../styles/product-feature.css';
@@ -108,6 +109,7 @@ function ProductFeatureView({ page }: { page: ProductPage }) {
   const location = useLocation();
   const fullTitle = `${page.title} ${page.titleAccent}`.replace(/\s+/g, ' ').trim();
   const hasShowcases = Boolean(page.showcases?.length);
+  const modifiedIso = featurePagesModifiedIso();
 
   useEffect(() => {
     const hash = location.hash.replace(/^#/, '');
@@ -132,6 +134,7 @@ function ProductFeatureView({ page }: { page: ProductPage }) {
             name: fullTitle,
             description: page.seoDescription,
             path: page.path,
+            dateModified: modifiedIso,
           }),
           breadcrumbJsonLd([
             { name: 'Home', path: '/' },

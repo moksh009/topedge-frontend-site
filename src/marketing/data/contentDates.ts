@@ -29,6 +29,14 @@ export function blogCorpusModifiedIso(): string {
   return CONTENT_DATES.blogPosts;
 }
 
+export function featurePagesModifiedIso(): string {
+  return CONTENT_DATES.featurePages;
+}
+
+export function pricingModifiedIso(): string {
+  return CONTENT_DATES.pricing;
+}
+
 /**
  * Article dateModified: optional per-post `updated`, else blogPosts.ts file mtime
  * (build-generated). Never a hardcoded evergreen string.

@@ -10,6 +10,7 @@ import {
   breadcrumbJsonLd,
   webPageJsonLd,
 } from '../data/pageSeo';
+import { featurePagesModifiedIso } from '../data/contentDates';
 import { demoAssetFor } from '../data/productDemoVideos';
 import { getProductPageByFeatureSlug } from '../data/productPages';
 import ProductFeaturePage from './ProductFeaturePage';
@@ -42,6 +43,7 @@ export default function FeatureDetailPage() {
   const others = MARKETING_FEATURES.filter((f) => f.slug !== feature.slug).slice(0, 3);
   const featureSeo = FEATURE_SEO[feature.slug];
   const demo = demoAssetFor(feature.scene || feature.slug);
+  const modifiedIso = featurePagesModifiedIso();
 
   return (
     <>
@@ -57,6 +59,7 @@ export default function FeatureDetailPage() {
             name: feature.title,
             description: featureSeo?.description ?? feature.body,
             path: `/features/${feature.slug}`,
+            dateModified: modifiedIso,
           }),
           breadcrumbJsonLd([
             { name: 'Home', path: '/' },
