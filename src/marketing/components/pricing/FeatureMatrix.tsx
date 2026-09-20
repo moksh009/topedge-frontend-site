@@ -169,7 +169,7 @@ export default function FeatureMatrix({
                       className={`mkt-compare__cta${plan.emphasis ? ' mkt-compare__cta--solid' : ''}`}
                       to={signupTo}
                     >
-                      Start free trial
+                      {`Choose ${plan.displayName}`}
                     </Link>
                   </div>
                 );

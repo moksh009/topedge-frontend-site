@@ -27,7 +27,8 @@ export default function SignupRedirect() {
           Taking you to create your account
         </h1>
         <p className="mt-2 text-sm text-slate-500">
-          Sign up on the dashboard. We’ll open the plan you picked so you can confirm it after you’re in.
+          Sign up on the dashboard. If you picked a plan, we&apos;ll open billing so you can confirm
+          it after you&apos;re in.
         </p>
       </div>
     </main>

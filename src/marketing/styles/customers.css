@@ -285,8 +285,12 @@
     font-size: clamp(1.35rem, 5.5vw, 1.7rem);
   }
 
+  /* Push title lower under the fixed nav */
   .mkt-customers__hero {
-    padding: clamp(4.75rem, 14vw, 5.75rem) 1rem 0.75rem;
+    padding:
+      max(7.5rem, calc(env(safe-area-inset-top, 0px) + 6.25rem))
+      1rem
+      0.65rem;
   }
 
   .mkt-customers__sub {
@@ -296,63 +300,148 @@
 
   .mkt-customers__trust {
     width: 100%;
-    margin-top: 1.15rem;
+    margin-top: 1.05rem;
     padding-inline: 0;
   }
 
   .mkt-customers__outcomes {
-    padding: 0.35rem 1rem 0.5rem;
+    padding: 0.15rem 0.65rem 0.35rem;
   }
 
+  /* Compact dashboard fan — all 3 cards visible together (not a tall stack) */
   .mkt-customers__fan {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0.85rem;
-    min-height: 0;
+    display: block;
+    position: relative;
+    width: 100%;
+    min-height: 17.5rem;
+    margin: 0.35rem auto 0.15rem;
+    isolation: isolate;
   }
 
   .mkt-customers__fan::before {
-    display: none;
+    display: block;
+    inset: 22% 8% 18%;
+    border-radius: 28px;
   }
 
   .mkt-customers__card,
   .mkt-customers__card.is-left,
   .mkt-customers__card.is-right,
   .mkt-customers__card.is-center {
-    position: relative;
-    top: auto;
-    left: auto;
-    width: 100%;
-    max-width: 22rem;
-    margin-inline: auto;
-    transform: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: min(10.75rem, 46vw);
+    max-width: none;
+    margin-inline: 0;
+    padding: 0.85rem 0.7rem 0.9rem;
+    border-radius: 18px;
     z-index: 1;
   }
 
+  .mkt-customers__card.is-left {
+    transform: translate(-50%, -50%) translateX(-5.65rem) rotate(-10deg) scale(0.9);
+    z-index: 1;
+  }
+
+  .mkt-customers__card.is-right {
+    transform: translate(-50%, -50%) translateX(5.65rem) rotate(10deg) scale(0.9);
+    z-index: 1;
+  }
+
+  .mkt-customers__card.is-center {
+    transform: translate(-50%, -50%) translateY(-0.1rem) scale(1.02);
+    z-index: 3;
+    border-color: #ddd6fe;
+    box-shadow: 0 12px 22px -14px rgba(76, 29, 149, 0.3);
+  }
+
   .mkt-customers__art {
-    width: 6.5rem;
-    height: 6.5rem;
+    width: 4.15rem;
+    height: 4.15rem;
+    margin: 0 0 0.55rem;
   }
 
   .mkt-customers__art img {
     object-fit: cover;
     aspect-ratio: 1 / 1;
   }
+
+  .mkt-customers__metric {
+    font-size: 1.35rem;
+  }
+
+  .mkt-customers__label {
+    margin-top: 0.35rem;
+    font-size: 0.8125rem;
+    line-height: 1.2;
+  }
+
+  .mkt-customers__detail {
+    margin-top: 0.3rem;
+    max-width: 9.5rem;
+    font-size: 0.6875rem;
+    line-height: 1.35;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    overflow: hidden;
+  }
+}
+
+/* Very narrow phones — keep fan readable */
+@media (max-width: 380px) {
+  .mkt-customers__fan {
+    min-height: 16.25rem;
+  }
+
+  .mkt-customers__card,
+  .mkt-customers__card.is-left,
+  .mkt-customers__card.is-right,
+  .mkt-customers__card.is-center {
+    width: min(9.75rem, 48vw);
+    padding: 0.75rem 0.55rem 0.8rem;
+  }
+
+  .mkt-customers__card.is-left {
+    transform: translate(-50%, -50%) translateX(-4.85rem) rotate(-9deg) scale(0.88);
+  }
+
+  .mkt-customers__card.is-right {
+    transform: translate(-50%, -50%) translateX(4.85rem) rotate(9deg) scale(0.88);
+  }
+
+  .mkt-customers__art {
+    width: 3.6rem;
+    height: 3.6rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .mkt-customers__card.is-left,
-  .mkt-customers__card.is-right,
+  .mkt-customers__card.is-left {
+    transform: translate(-50%, -50%) translateX(-13.75rem);
+  }
+
+  .mkt-customers__card.is-right {
+    transform: translate(-50%, -50%) translateX(13.75rem);
+  }
+
   .mkt-customers__card.is-center {
     transform: translate(-50%, -50%);
   }
 
   @media (max-width: 640px) {
-    .mkt-customers__card.is-left,
-    .mkt-customers__card.is-right,
+    .mkt-customers__card.is-left {
+      transform: translate(-50%, -50%) translateX(-5.65rem) scale(0.9);
+    }
+
+    .mkt-customers__card.is-right {
+      transform: translate(-50%, -50%) translateX(5.65rem) scale(0.9);
+    }
+
     .mkt-customers__card.is-center {
-      transform: none;
+      transform: translate(-50%, -50%) scale(1.02);
     }
   }
 }

@@ -840,10 +840,11 @@ body::-webkit-scrollbar {
 }
 
 .mkt-nav__mobile-scroll {
-  flex: 0 1 auto;
+  flex: 1 1 auto;
   min-height: 0;
   height: auto;
-  max-height: min(58dvh, 26rem);
+  /* Closed Product: compact. Open Product: grow so the full list is usable */
+  max-height: min(38dvh, 14.5rem);
   overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior: contain;
@@ -852,6 +853,11 @@ body::-webkit-scrollbar {
   padding: 0.45rem 0.55rem 0.55rem;
   scrollbar-width: thin;
   scrollbar-color: rgba(124, 58, 237, 0.25) transparent;
+  transition: max-height 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mkt-nav__mobile.is-product-open .mkt-nav__mobile-scroll {
+  max-height: min(68dvh, 34rem);
 }
 
 .mkt-nav__mobile-section {
@@ -923,6 +929,17 @@ body::-webkit-scrollbar {
 
 .mkt-nav__mobile-submenu {
   overflow: hidden;
+  will-change: height, opacity;
+}
+
+.mkt-nav__mobile-products {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.35rem 0.15rem 0.35rem;
+  margin: 0.15rem 0 0;
+  border-left: 0;
+  margin-left: 0;
 }
 
 .mkt-nav__mobile-label {
@@ -935,16 +952,6 @@ body::-webkit-scrollbar {
   text-transform: uppercase;
   color: #94a3b8;
   line-height: 1;
-}
-
-.mkt-nav__mobile-products {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  padding: 0.35rem 0.15rem 0.2rem;
-  margin: 0.15rem 0 0;
-  border-left: 0;
-  margin-left: 0;
 }
 
 .mkt-nav__mobile-group {
@@ -1143,7 +1150,11 @@ html.mkt-nav-locked .mkt-nav__mobile-scroll {
   }
 
   .mkt-nav__mobile-scroll {
-    max-height: min(55dvh, 24rem);
+    max-height: min(40dvh, 15rem);
+  }
+
+  .mkt-nav__mobile.is-product-open .mkt-nav__mobile-scroll {
+    max-height: min(70dvh, 36rem);
   }
 }
 
@@ -1184,9 +1195,24 @@ html.mkt-nav-locked .mkt-nav__mobile-scroll {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  background: #ffffff;
+  /* Same soft violet wash as marketing CTA band */
+  background:
+    radial-gradient(70% 55% at 50% 100%, rgba(124, 58, 237, 0.14), transparent 58%),
+    radial-gradient(40% 35% at 12% 20%, rgba(167, 139, 250, 0.08), transparent 55%),
+    linear-gradient(180deg, #ffffff 0%, #faf8ff 55%, #f5f3ff 100%);
   border-top: 1px solid #f1f5f9;
   color: #0c1222;
+}
+
+.mkt-foot::before {
+  content: '';
+  pointer-events: none;
+  position: absolute;
+  inset: auto 8% -42% 8%;
+  height: 72%;
+  background: radial-gradient(ellipse at center, rgba(196, 181, 253, 0.28), transparent 68%);
+  filter: blur(36px);
+  z-index: 0;
 }
 
 .mkt-foot__shell {

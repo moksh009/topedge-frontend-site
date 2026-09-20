@@ -310,7 +310,7 @@ export default function MarketingNavbar() {
               <motion.div
                 id="mkt-nav-mobile"
                 key="mobile-panel"
-                className="mkt-nav__mobile"
+                className={cn('mkt-nav__mobile', mobileProductOpen && 'is-product-open')}
                 initial={reduceMotion ? false : { height: 0, opacity: 0 }}
                 animate={{ height: 'auto', opacity: 1 }}
                 exit={reduceMotion ? undefined : { height: 0, opacity: 0 }}
@@ -345,7 +345,7 @@ export default function MarketingNavbar() {
                           initial={reduceMotion ? false : { height: 0, opacity: 0 }}
                           animate={{ height: 'auto', opacity: 1 }}
                           exit={reduceMotion ? undefined : { height: 0, opacity: 0 }}
-                          transition={{ duration: 0.32, ease: easeSoft }}
+                          transition={{ duration: 0.36, ease: easeSoft }}
                         >
                           <div className="mkt-nav__mobile-products">
                             {productColumns.flatMap((col) =>

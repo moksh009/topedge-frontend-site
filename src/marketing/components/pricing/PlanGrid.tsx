@@ -179,7 +179,7 @@ function PlanCard({
           className={`mkt-plan__cta${emphasized ? ' mkt-plan__cta--solid' : ' mkt-plan__cta--ghost'}`}
           to={signupTo}
         >
-          Start free trial
+          {`Choose ${plan.displayName}`}
         </Link>
       ) : null}
     </div>
