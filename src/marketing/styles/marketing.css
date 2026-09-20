@@ -1195,24 +1195,34 @@ html.mkt-nav-locked .mkt-nav__mobile-scroll {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  /* Same soft violet wash as marketing CTA band */
-  background:
-    radial-gradient(70% 55% at 50% 100%, rgba(124, 58, 237, 0.14), transparent 58%),
-    radial-gradient(40% 35% at 12% 20%, rgba(167, 139, 250, 0.08), transparent 55%),
-    linear-gradient(180deg, #ffffff 0%, #faf8ff 55%, #f5f3ff 100%);
+  background: #ffffff;
   border-top: 1px solid #f1f5f9;
   color: #0c1222;
 }
 
 .mkt-foot::before {
-  content: '';
-  pointer-events: none;
-  position: absolute;
-  inset: auto 8% -42% 8%;
-  height: 72%;
-  background: radial-gradient(ellipse at center, rgba(196, 181, 253, 0.28), transparent 68%);
-  filter: blur(36px);
-  z-index: 0;
+  content: none;
+}
+
+/* Soft violet wash on mobile only */
+@media (max-width: 768px) {
+  .mkt-foot {
+    background:
+      radial-gradient(70% 55% at 50% 100%, rgba(124, 58, 237, 0.14), transparent 58%),
+      radial-gradient(40% 35% at 12% 20%, rgba(167, 139, 250, 0.08), transparent 55%),
+      linear-gradient(180deg, #ffffff 0%, #faf8ff 55%, #f5f3ff 100%);
+  }
+
+  .mkt-foot::before {
+    content: '';
+    pointer-events: none;
+    position: absolute;
+    inset: auto 8% -42% 8%;
+    height: 72%;
+    background: radial-gradient(ellipse at center, rgba(196, 181, 253, 0.28), transparent 68%);
+    filter: blur(36px);
+    z-index: 0;
+  }
 }
 
 .mkt-foot__shell {

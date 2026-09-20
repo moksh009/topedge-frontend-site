@@ -40,6 +40,23 @@ export function parseCompareCell(value: CompareCell): { tone: CellTone; text: st
   return { tone: 'text', text: v };
 }
 
+/** Split trailing "(…)" onto its own line for cleaner cell layout. Content unchanged. */
+export function splitTrailingParen(text: string): { main: string; aside: string | null } {
+  const match = text.match(/^(.+?)\s+(\([^()]+\))\s*$/);
+  if (!match) return { main: text, aside: null };
+  return { main: match[1], aside: match[2] };
+}
+
+function StatusLabel({ text }: { text: string }) {
+  const { main, aside } = splitTrailingParen(text);
+  return (
+    <span className="mkt-cmp__status-label">
+      <span className="mkt-cmp__status-main">{main}</span>
+      {aside ? <span className="mkt-cmp__status-aside">{aside}</span> : null}
+    </span>
+  );
+}
+
 /** Cashify-style cell: green check / red x / dash + optional light text. */
 export default function CompareStatus({ value }: { value: CompareCell }) {
   const { tone, text } = parseCompareCell(value);
@@ -78,10 +95,15 @@ export default function CompareStatus({ value }: { value: CompareCell }) {
       {tone === 'no' ? (
         <X className="mkt-cmp__status-mark" strokeWidth={2.5} aria-hidden color="#e11d48" />
       ) : null}
-      {tone === 'partial' ? (
-        <Minus className="mkt-cmp__status-mark" strokeWidth={2.5} aria-hidden color="#94a3b8" />
+      {tone === 'partial' || tone === 'text' ? (
+        <Minus
+          className="mkt-cmp__status-mark"
+          strokeWidth={2.5}
+          aria-hidden
+          color="#94a3b8"
+        />
       ) : null}
-      <span className="mkt-cmp__status-label">{text}</span>
+      <StatusLabel text={text!} />
     </span>
   );
 }

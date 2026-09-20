@@ -27,7 +27,7 @@ const quickLinks: LinkItem[] = [
   { label: "About Us", path: "/about" },
   { label: "Pricing", path: "/pricing" },
   { label: "Contact", path: "/contact" },
-  { label: "Book Demo", path: "/booking" },
+  { label: "Book Demo", path: "/contact" },
 ];
 
 const communityQuickLinks: LinkItem[] = [

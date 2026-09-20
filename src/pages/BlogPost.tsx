@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import MarketingSEO from '../marketing/components/MarketingSEO';
 import MarketingPage from '../marketing/components/MarketingPage';
 import { SITE_URL } from '../marketing/data/marketingSeo';
+import { breadcrumbJsonLd } from '../marketing/data/pageSeo';
 import { blogPosts } from '../data/blogPosts';
 import { filterMarketingBlogPosts, isMarketingBlogPost } from '../marketing/data/blog';
 import type { BlogPost as BlogPostModel } from '../types/blog';
@@ -46,6 +47,13 @@ export default function BlogPost() {
         path={`/blog/${post.slug}`}
         type="article"
         noSuffix
+        jsonLd={[
+          breadcrumbJsonLd([
+            { name: 'Home', path: '/' },
+            { name: 'Blog', path: '/blog' },
+            { name: post.title, path: `/blog/${post.slug}` },
+          ]),
+        ]}
       />
       <Helmet>
         <script type="application/ld+json">
@@ -56,12 +64,13 @@ export default function BlogPost() {
             description: post.description,
             image: imageAbs,
             datePublished: new Date(post.date).toISOString(),
-            author: { '@type': 'Organization', name: 'TopEdge' },
+            dateModified: new Date(post.date).toISOString(),
+            author: { '@type': 'Organization', name: 'TopEdge AI', url: SITE_URL },
             publisher: {
               '@type': 'Organization',
-              name: 'TopEdge',
+              name: 'TopEdge AI',
               url: SITE_URL,
-              logo: { '@type': 'ImageObject', url: `${SITE_URL}/og-image.png` },
+              logo: { '@type': 'ImageObject', url: `${SITE_URL}/brand-mark.png` },
             },
             mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
             keywords: post.keywords?.join(', '),
@@ -87,6 +96,16 @@ export default function BlogPost() {
                 <span className="mkt-blog-meta__dot" aria-hidden />
                 <span>{post.readTime} read</span>
               </div>
+            </div>
+            <div className="mkt-blog-cover-img">
+              <img
+                src={post.image}
+                alt={post.imageAlt || post.title}
+                width={1200}
+                height={675}
+                loading="eager"
+                decoding="async"
+              />
             </div>
           </div>
         </header>
@@ -126,11 +145,23 @@ export default function BlogPost() {
               <div className="mkt-blog-related__grid">
                 {related.map((r) => (
                   <Link key={r.slug} to={`/blog/${r.slug}`} className="mkt-blog-related__card">
-                    <span className="mkt-blog-related__card-cat">{r.category}</span>
-                    <span className="mkt-blog-related__card-title">{r.title}</span>
-                    <span className="mkt-blog-related__card-meta">
-                      {formatDate(r.date)} · {r.readTime}
-                    </span>
+                    <div className="mkt-blog-related__thumb">
+                      <img
+                        src={r.image}
+                        alt=""
+                        width={400}
+                        height={225}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                    <div className="mkt-blog-related__card-body">
+                      <span className="mkt-blog-related__card-cat">{r.category}</span>
+                      <span className="mkt-blog-related__card-title">{r.title}</span>
+                      <span className="mkt-blog-related__card-meta">
+                        {formatDate(r.date)} · {r.readTime}
+                      </span>
+                    </div>
                   </Link>
                 ))}
               </div>

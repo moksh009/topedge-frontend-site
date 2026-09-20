@@ -1,11 +1,9 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronRight } from 'lucide-react';
 import MarketingSEO from '../components/MarketingSEO';
 import MarketingPage from '../components/MarketingPage';
 import MarketingCtaBand from '../components/MarketingCtaBand';
 import CompareStatus from '../components/compare/CompareStatus';
-import { COMPARE_FEATURE_MATRIX } from '../data/compareFeatureMatrix';
+import { THREE_WAY_FEATURE_MATRIX } from '../data/compareFeatureMatrix';
 import { breadcrumbJsonLd, organizationJsonLd, webPageJsonLd } from '../data/pageSeo';
 import '../styles/compare.css';
 
@@ -19,8 +17,6 @@ const LOGO_WATI = '/marketing/compare/compare-logo-wati.png';
 const LOGO_AISENSY = '/marketing/compare/compare-logo-aisensy.png';
 
 export default function CompareThreeWayPage() {
-  const [openRow, setOpenRow] = useState<string | null>(null);
-
   return (
     <>
       <MarketingSEO
@@ -69,47 +65,6 @@ export default function CompareThreeWayPage() {
           </h1>
         </header>
 
-        <section className="mkt-cmp__block" aria-label="Who it's for">
-          <div className="mkt-cmp__pick mkt-cmp__pick--trio">
-            <article className="mkt-cmp__pick-col is-te">
-              <div className="mkt-cmp__pick-top">
-                <img src="/logo.png" alt="TopEdge AI" width={22} height={22} />
-                <p className="mkt-cmp__pick-kicker">
-                  Best with <span className="mkt-cmp__hl">TopEdge AI</span>
-                </p>
-              </div>
-              <p className="mkt-cmp__pick-body">
-                You want 0% Meta markup, BYOK AI, unified identity, COD → prepaid, warranty, and
-                unlimited flows, native for Shopify India.
-              </p>
-            </article>
-            <article className="mkt-cmp__pick-col">
-              <div className="mkt-cmp__pick-top">
-                <img src={LOGO_WATI} alt="WATI" width={22} height={22} />
-                <p className="mkt-cmp__pick-kicker">
-                  Best with <span className="mkt-cmp__pick-peer">WATI</span>
-                </p>
-              </div>
-              <p className="mkt-cmp__pick-body">
-                You need a broad WhatsApp BSP with keyword automations and can live with usage charges
-                plus monthly trigger caps.
-              </p>
-            </article>
-            <article className="mkt-cmp__pick-col">
-              <div className="mkt-cmp__pick-top">
-                <img src={LOGO_AISENSY} alt="AiSensy" width={22} height={22} />
-                <p className="mkt-cmp__pick-kicker">
-                  Best with <span className="mkt-cmp__pick-peer">AiSensy</span>
-                </p>
-              </div>
-              <p className="mkt-cmp__pick-body">
-                You want WhatsApp marketing with credit packaging and are fine gating AI / flows behind
-                higher tiers.
-              </p>
-            </article>
-          </div>
-        </section>
-
         <section className="mkt-cmp__block" aria-labelledby="cmp-3way">
           <div className="mkt-cmp__block-head">
             <h2 id="cmp-3way">
@@ -137,46 +92,39 @@ export default function CompareThreeWayPage() {
                 </span>
               </div>
 
-              {COMPARE_FEATURE_MATRIX.map((row) => {
-                const isOpen = openRow === row.id;
-                return (
-                  <div
-                    key={row.id}
-                    className={`mkt-cmp__triple-row${isOpen ? ' is-open' : ''}`}
-                    role="row"
-                  >
-                    <div className="mkt-cmp__triple-main">
-                      <div className="mkt-cmp__triple-feat" role="rowheader">
-                        {row.description ? (
-                          <button
-                            type="button"
-                            className="mkt-cmp__board-toggle"
-                            aria-expanded={isOpen}
-                            onClick={() => setOpenRow(isOpen ? null : row.id)}
-                          >
-                            <ChevronRight className="mkt-cmp__board-chevron" aria-hidden />
-                            <span className="mkt-cmp__board-feat">{row.name}</span>
-                          </button>
-                        ) : (
-                          <span className="mkt-cmp__board-feat">{row.name}</span>
-                        )}
-                      </div>
-                      <div className="mkt-cmp__triple-cell is-te" role="cell" data-label="TopEdge AI">
-                        <CompareStatus value={row.topedge} />
-                      </div>
-                      <div className="mkt-cmp__triple-cell" role="cell" data-label="WATI">
-                        <CompareStatus value={row.wati} />
-                      </div>
-                      <div className="mkt-cmp__triple-cell" role="cell" data-label="AiSensy">
-                        <CompareStatus value={row.aisensy} />
-                      </div>
+              {THREE_WAY_FEATURE_MATRIX.map((row) => (
+                <div key={row.id} className="mkt-cmp__triple-row" role="row">
+                  <div className="mkt-cmp__triple-main">
+                    <div className="mkt-cmp__triple-feat" role="rowheader">
+                      <span className="mkt-cmp__board-feat">{row.name}</span>
+                      {row.description ? (
+                        <p className="mkt-cmp__feat-desc">{row.description}</p>
+                      ) : null}
                     </div>
-                    {row.description && isOpen ? (
-                      <p className="mkt-cmp__triple-desc">{row.description}</p>
-                    ) : null}
+                    <div className="mkt-cmp__triple-cell is-te" role="cell">
+                      <span className="mkt-cmp__cell-brand">
+                        <img src="/logo.png" alt="" width={16} height={16} />
+                        TopEdge AI
+                      </span>
+                      <CompareStatus value={row.topedge} />
+                    </div>
+                    <div className="mkt-cmp__triple-cell" role="cell">
+                      <span className="mkt-cmp__cell-brand">
+                        <img src={LOGO_WATI} alt="" width={16} height={16} />
+                        WATI
+                      </span>
+                      <CompareStatus value={row.wati} />
+                    </div>
+                    <div className="mkt-cmp__triple-cell" role="cell">
+                      <span className="mkt-cmp__cell-brand">
+                        <img src={LOGO_AISENSY} alt="" width={16} height={16} />
+                        AiSensy
+                      </span>
+                      <CompareStatus value={row.aisensy} />
+                    </div>
                   </div>
-                );
-              })}
+                </div>
+              ))}
             </div>
           </div>
 

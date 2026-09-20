@@ -11,11 +11,11 @@ Disallow: /dev/
 Allow: /blog/
 Allow: /features/
 Allow: /pricing/
-Allow: /solutions/
 Allow: /about/
 Allow: /contact/
-Allow: /agency/
 Allow: /integrations/
+Allow: /customers/
+Allow: /compare/
 
 Sitemap: https://topedgeai.com/sitemap.xml
 

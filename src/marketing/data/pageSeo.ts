@@ -66,22 +66,6 @@ export const PAGE_SEO = {
       'WhatsApp marketing Shopify case study, cart recovery results India, D2C WhatsApp automation',
     path: '/customers',
   },
-  agency: {
-    title: 'WhatsApp Automation for Agencies | Multi-Brand Shopify Ops',
-    description:
-      'Run WhatsApp automation for multiple Shopify brands, standardized cart recovery, template hygiene, Live Chat, and Meta-safe campaigns without rebuilding each time.',
-    keywords:
-      'WhatsApp agency Shopify, multi-brand WhatsApp automation, ecommerce agency tools India, DFY WhatsApp marketing',
-    path: '/agency',
-  },
-  security: {
-    title: 'Security for Shopify WhatsApp Automation | Data & Access Control',
-    description:
-      'How TopEdge protects Shopify sync, Meta template approvals, and tenant isolation for ecommerce teams running WhatsApp automation in India.',
-    keywords:
-      'WhatsApp Business API security, Shopify app security, ecommerce automation compliance',
-    path: '/security',
-  },
   compare: {
     title: 'TopEdge vs WATI, AiSensy, Interakt & Bitespeed | Shopify WhatsApp India',
     description:
@@ -91,19 +75,19 @@ export const PAGE_SEO = {
     path: '/compare',
   },
   blog: {
-    title: 'WhatsApp & Shopify Automation Playbooks | Cart Recovery Blog',
+    title: 'WhatsApp Shopify Playbooks | Cart Recovery, COD & Meta Templates',
     description:
-      'Practical guides on WhatsApp automation, Shopify cart recovery, COD confirmations, Meta templates, and ecommerce messaging for Indian D2C operators.',
+      'Operator playbooks for WhatsApp automation on Shopify India: abandoned cart recovery, COD confirmation to cut RTO, Meta Cloud API templates, shared inbox, and catalog-grounded AI.',
     keywords:
-      'WhatsApp automation guide, Shopify cart recovery blog, ecommerce WhatsApp playbook India, COD WhatsApp tips',
+      'WhatsApp Shopify playbooks, abandoned cart recovery WhatsApp India, COD confirmation WhatsApp, Meta WhatsApp templates Shopify, ecommerce automation blog India, WhatsApp shared inbox Shopify',
     path: '/blog',
   },
   about: {
-    title: 'About TopEdge | WhatsApp Growth OS for Shopify Ecommerce',
+    title: 'About TopEdge AI | Founders Moksh Patel & Smit Tilva | Shopify WhatsApp India',
     description:
-      'Why we built TopEdge: one workspace for Shopify data, Meta WhatsApp templates, cart recovery journeys, AI, and human handoff for Indian ecommerce brands.',
+      'Meet TopEdge AI, the WhatsApp growth OS for Shopify India founded by Moksh Patel and Smit Tilva. Built for cart recovery, COD confirmation, Meta templates, and brands like Delitech Smart Home and Apex Light.',
     keywords:
-      'TopEdge AI company, WhatsApp Shopify platform India, ecommerce automation company',
+      'About TopEdge AI, Moksh Patel TopEdge, Smit Tilva TopEdge, WhatsApp Shopify platform India, ecommerce automation company Ahmedabad, Delitech Smart Home WhatsApp, Apex Light Shopify WhatsApp',
     path: '/about',
   },
   contact: {
@@ -113,14 +97,6 @@ export const PAGE_SEO = {
     keywords:
       'WhatsApp automation demo, Shopify WhatsApp consultation, cart recovery setup India',
     path: '/contact',
-  },
-  testimonials: {
-    title: 'Testimonials | Shopify WhatsApp Automation & Cart Recovery',
-    description:
-      'What Indian D2C teams say about TopEdge, WhatsApp cart recovery, Live Chat with order context, and Meta template workflows on Shopify.',
-    keywords:
-      'WhatsApp Shopify reviews, cart recovery software testimonials India',
-    path: '/testimonials',
   },
 } as const satisfies Record<string, PageSeoEntry>;
 
@@ -298,19 +274,6 @@ export const SOLUTION_SEO: Record<
     ],
     scene: 'inbox',
   },
-  agencies: {
-    title: 'WhatsApp Ecommerce Automation for Agencies | Multi-Store Shopify',
-    description:
-      'Standardize WhatsApp cart recovery and Meta campaigns across Shopify client brands, agency-ready ecommerce automation in India.',
-    keywords: 'WhatsApp agency ecommerce, multi-store Shopify WhatsApp, agency cart recovery tools',
-    body: 'Operate WhatsApp growth for the brands you manage, recovery, inbox, and Meta-safe campaigns without rebuilding each time.',
-    bullets: [
-      'Playbooks you reuse across client stores',
-      'Template hygiene and approval tracking',
-      'Shared inbox patterns for agency teams',
-    ],
-    scene: 'journey',
-  },
 };
 
 export function organizationJsonLd() {
@@ -324,6 +287,20 @@ export function organizationJsonLd() {
     description:
       'WhatsApp automation and cart recovery platform for Shopify ecommerce brands in India.',
     foundingDate: '2024',
+    founder: [
+      {
+        '@type': 'Person',
+        name: 'Moksh Patel',
+        jobTitle: 'Co-founder',
+        image: `${SITE_URL}/marketing/team/moksh-patel.jpg`,
+      },
+      {
+        '@type': 'Person',
+        name: 'Smit Tilva',
+        jobTitle: 'Co-founder',
+        image: `${SITE_URL}/marketing/team/smit-tilva.png`,
+      },
+    ],
     sameAs: [
       'https://www.linkedin.com/company/topedgeai',
       'https://www.instagram.com/topedge_ai/',

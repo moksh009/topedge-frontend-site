@@ -27,8 +27,7 @@ export type ProductDemoId =
   | 'cod'
   | 'optin'
   | 'intent'
-  | 'segmentation'
-  | 'agencies';
+  | 'segmentation';
 
 export type ProductDemoAsset = {
   src: string;
@@ -119,7 +118,6 @@ export const PRODUCT_DEMO_ASSETS: Record<ProductDemoId, ProductDemoAsset> = {
   fashion: CART,
   beauty: CART,
   food: CART,
-  agencies: CART,
 };
 
 export function demoAssetFor(id: string): ProductDemoAsset {

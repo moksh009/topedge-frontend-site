@@ -5,9 +5,15 @@ import { ArrowRight, X } from 'lucide-react';
 import { marketingSignupPath, SALES_WHATSAPP_URL } from '../lib/billingCatalog';
 import '../styles/convert-prompt.css';
 
-const STORAGE_KEY = 'te_mkt_convert_prompt_v3';
-const SCROLL_RATIO = 0.42;
-const MIN_SCROLL_PX = 720;
+const STORAGE_KEY = 'te_mkt_convert_prompt_v4';
+/** Page progress required (document scroll). */
+const SCROLL_RATIO = 0.58;
+/** Absolute scroll floor so short pages do not fire early. */
+const MIN_SCROLL_PX = 1400;
+/** Dwell time before the prompt can arm (ms). */
+const MIN_DWELL_MS = 18_000;
+/** Extra delay after thresholds so it does not pop mid-flick. */
+const SETTLE_MS = 900;
 
 const SKIP_PREFIXES = [
   '/signup',
@@ -50,8 +56,9 @@ function markSeen() {
 }
 
 /**
- * One soft convert prompt per browser session after ~40% scroll.
- * Skips signup/login/legal/pricing (those pages already convert).
+ * One soft convert prompt per browser session after real engagement:
+ * ~58% page depth AND 1400px scrolled, plus ~18s dwell, then a short settle.
+ * Skips signup/login/legal/pricing/contact (those pages already convert).
  */
 export default function MarketingConvertPrompt() {
   const location = useLocation();
@@ -77,21 +84,68 @@ export default function MarketingConvertPrompt() {
     }
 
     let armed = true;
-    const onScroll = () => {
+    let settleTimer: ReturnType<typeof setTimeout> | null = null;
+    let dwellTimer: ReturnType<typeof setTimeout> | null = null;
+    const pageEnteredAt = Date.now();
+
+    const clearTimers = () => {
+      if (settleTimer) {
+        clearTimeout(settleTimer);
+        settleTimer = null;
+      }
+      if (dwellTimer) {
+        clearTimeout(dwellTimer);
+        dwellTimer = null;
+      }
+    };
+
+    const show = () => {
       if (!armed) return;
-      const doc = document.documentElement;
-      const maxScroll = Math.max(doc.scrollHeight - window.innerHeight, 1);
-      const progress = window.scrollY / maxScroll;
-      if (progress < SCROLL_RATIO && window.scrollY < MIN_SCROLL_PX) return;
       armed = false;
+      clearTimers();
       markSeen();
       setOpen(true);
       window.removeEventListener('scroll', onScroll, { capture: true } as AddEventListenerOptions);
     };
 
+    const isDeepEnough = () => {
+      const doc = document.documentElement;
+      const maxScroll = Math.max(doc.scrollHeight - window.innerHeight, 1);
+      const progress = window.scrollY / maxScroll;
+      return progress >= SCROLL_RATIO && window.scrollY >= MIN_SCROLL_PX;
+    };
+
+    const scheduleShow = () => {
+      if (!armed || settleTimer) return;
+      settleTimer = setTimeout(show, SETTLE_MS);
+    };
+
+    const onScroll = () => {
+      if (!armed) return;
+      if (!isDeepEnough()) {
+        clearTimers();
+        return;
+      }
+
+      const remainingDwell = MIN_DWELL_MS - (Date.now() - pageEnteredAt);
+      if (remainingDwell > 0) {
+        if (dwellTimer) return;
+        dwellTimer = setTimeout(() => {
+          dwellTimer = null;
+          if (armed && isDeepEnough()) scheduleShow();
+        }, remainingDwell);
+        return;
+      }
+
+      scheduleShow();
+    };
+
     window.addEventListener('scroll', onScroll, { passive: true, capture: true });
-    onScroll();
-    return () => window.removeEventListener('scroll', onScroll, { capture: true } as EventListenerOptions);
+    // Do not evaluate on mount — wait for real scroll + dwell.
+    return () => {
+      clearTimers();
+      window.removeEventListener('scroll', onScroll, { capture: true } as EventListenerOptions);
+    };
   }, [location.pathname, location.search]);
 
   useEffect(() => {

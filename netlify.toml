@@ -134,6 +134,36 @@
   status = 301
 
 [[redirects]]
+  from = "/testimonials"
+  to = "/customers"
+  status = 301
+
+[[redirects]]
+  from = "/agency"
+  to = "/customers"
+  status = 301
+
+[[redirects]]
+  from = "/security"
+  to = "/features"
+  status = 301
+
+[[redirects]]
+  from = "/roi"
+  to = "/features/journeys"
+  status = 301
+
+[[redirects]]
+  from = "/solutions"
+  to = "/features"
+  status = 301
+
+[[redirects]]
+  from = "/solutions/*"
+  to = "/features"
+  status = 301
+
+[[redirects]]
   from = "/ecommerce"
   to = "/"
   status = 301
@@ -161,6 +191,27 @@
 [[redirects]]
   from = "/blog/:file.webp"
   to = "/blog-media/:file.webp"
+  status = 301
+
+# Legacy plural blog URL (old Navbar/Footer shell)
+[[redirects]]
+  from = "/blogs"
+  to = "/blog"
+  status = 301
+
+[[redirects]]
+  from = "/blogs/"
+  to = "/blog"
+  status = 301
+
+[[redirects]]
+  from = "/blogs/*"
+  to = "/blog"
+  status = 301
+
+[[redirects]]
+  from = "/blog/agencies-whatsapp-automation-multi-brand-shopify"
+  to = "/blog"
   status = 301
 
 [[redirects]]

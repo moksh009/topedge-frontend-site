@@ -128,6 +128,21 @@ export function SmoothScrollToTop() {
   const lenis = useLenis();
 
   useEffect(() => {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+  }, []);
+
+  useEffect(() => {
+    const forceTop = () => {
+      if (lenis) {
+        lenis.scrollTo(0, { immediate: true });
+      }
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    };
+
     if (hash) {
       const id = hash.replace('#', '');
       const el = document.getElementById(id);
@@ -143,11 +158,15 @@ export function SmoothScrollToTop() {
       return;
     }
 
-    if (lenis) {
-      lenis.scrollTo(0, { immediate: true });
-    } else {
-      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-    }
+    // Immediate + after paint (mobile footer nav often lands mid-page otherwise)
+    forceTop();
+    requestAnimationFrame(forceTop);
+    const t1 = window.setTimeout(forceTop, 50);
+    const t2 = window.setTimeout(forceTop, 200);
+    return () => {
+      window.clearTimeout(t1);
+      window.clearTimeout(t2);
+    };
   }, [pathname, hash, lenis]);
 
   return null;

@@ -1,10 +1,9 @@
-import React, { useEffect, Suspense } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Toaster } from 'react-hot-toast';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider } from './contexts/ThemeContext';
-import Navbar from './components/navigation/Navbar';
 import MarketingNavbar from './marketing/components/MarketingNavbar';
 import CommunityNavbar from './components/community/layout/CommunityNavbar';
 import Footer from './components/Footer';
@@ -17,17 +16,14 @@ import { isMarketingRoute } from './marketing/routes';
 import MarketingPageLoader from './marketing/components/MarketingPageLoader';
 import MetaPixel from './components/MetaPixel';
 import Home from './pages/Home';
+
 const About = React.lazy(() => import('./pages/About'));
-const Services = React.lazy(() => import('./marketing/pages/ServicesRedirect'));
 const Contact = React.lazy(() => import('./pages/Contact'));
-const Booking = React.lazy(() => import('./marketing/pages/BookingRedirect'));
 const Pricing = React.lazy(() => import('./marketing/pages/PricingPage'));
 const FeaturesPage = React.lazy(() => import('./marketing/pages/FeaturesPage'));
 const FeatureDetailPage = React.lazy(() => import('./marketing/pages/FeatureDetailPage'));
 const IntegrationsPage = React.lazy(() => import('./marketing/pages/IntegrationsPage'));
 const CustomersPage = React.lazy(() => import('./marketing/pages/CustomersPage'));
-const AgencyPage = React.lazy(() => import('./marketing/pages/AgencyPage'));
-const SecurityPage = React.lazy(() => import('./marketing/pages/SecurityPage'));
 const SignupRedirect = React.lazy(() => import('./marketing/pages/SignupRedirect'));
 const LoginRedirect = React.lazy(() => import('./marketing/pages/LoginRedirect'));
 const DocsRedirect = React.lazy(() => import('./marketing/pages/DocsRedirect'));
@@ -39,22 +35,16 @@ const ComparePage = React.lazy(() => import('./marketing/pages/ComparePage'));
 const CompareThreeWayPage = React.lazy(() => import('./marketing/pages/CompareThreeWayPage'));
 const SeoTopicPage = React.lazy(() => import('./marketing/pages/SeoTopicPage'));
 const NotFoundPage = React.lazy(() => import('./marketing/pages/NotFoundPage'));
-const DevShowcasePage = import.meta.env.DEV
-  ? React.lazy(() => import('./marketing/pages/DevShowcasePage'))
-  : null;
-const AiCallerRedirect = React.lazy(() =>
-  import('./marketing/pages/legacyRedirects').then((m) => ({ default: m.AiCallerRedirect }))
-);
-const AiChatbotRedirect = React.lazy(() =>
-  import('./marketing/pages/legacyRedirects').then((m) => ({ default: m.AiChatbotRedirect }))
-);
 const PrivacyPolicy = React.lazy(() => import('./pages/PrivacyPolicy'));
 const ProtectedRoute = React.lazy(() =>
   import('./components/admin/ProtectedRoute').then((m) => ({ default: m.ProtectedRoute }))
 );
-const Testimonials = React.lazy(() => import('./pages/Testimonials'));
 
-// Community Pages
+const DevShowcasePage = import.meta.env.DEV
+  ? React.lazy(() => import('./marketing/pages/DevShowcasePage'))
+  : null;
+
+// Community
 const CommunityHome = React.lazy(() => import('./pages/community/home'));
 const CommunityLogin = React.lazy(() => import('./pages/community/login'));
 const CommunitySignup = React.lazy(() => import('./pages/community/signup'));
@@ -76,15 +66,17 @@ const ApproveAccess = React.lazy(() => import('./pages/community/ApproveAccess')
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
   const isCommunityRoute = location.pathname.startsWith('/community');
-  const isAuthPage = location.pathname === '/community/login' || location.pathname === '/community/signup';
+  const isAuthPage =
+    location.pathname === '/community/login' || location.pathname === '/community/signup';
   const marketing = isMarketingRoute(location.pathname);
   const isLegalRoute =
     location.pathname === '/privacy' ||
     location.pathname === '/privacy-policy' ||
     location.pathname === '/terms' ||
     location.pathname === '/terms-of-service';
+  const isAuthHandoff =
+    location.pathname === '/signup' || location.pathname === '/login';
 
-  // Dynamic Metadata based on route
   const pageTitle = isCommunityRoute
     ? 'Community | TopEdge'
     : marketing
@@ -108,7 +100,10 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           <>
             <title>{pageTitle}</title>
             <meta name="description" content={pageDescription} />
-            <meta name="keywords" content="TopEdge, WhatsApp Shopify, community, automation workflows, Indian D2C" />
+            <meta
+              name="keywords"
+              content="TopEdge, WhatsApp Shopify, community, automation workflows, Indian D2C"
+            />
             <meta property="og:type" content="website" />
             <meta property="og:url" content="https://topedgeai.com/" />
             <meta property="og:title" content={pageTitle} />
@@ -127,9 +122,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Helmet>
 
-      {!isCommunityRoute && !isLegalRoute && (
-        <motion.div key={marketing ? 'marketing-nav' : 'legacy-nav'}>
-          {marketing ? <MarketingNavbar /> : <Navbar />}
+      {!isCommunityRoute && !isLegalRoute && !isAuthHandoff && (
+        <motion.div key="marketing-nav">
+          <MarketingNavbar />
         </motion.div>
       )}
       {isCommunityRoute && !isAuthPage && <CommunityNavbar />}
@@ -146,14 +141,11 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         </div>
       )}
 
-      {/* Marketing/legacy footers render inside Suspense (see RouteOutlet) so they
-          stay hidden while MarketingPageLoader is showing. */}
       {isCommunityRoute && !isAuthPage && <Footer />}
     </div>
   );
 };
 
-/** Page routes + site chrome that should wait for the lazy chunk (hide footer on load). */
 function RouteOutlet() {
   const { pathname } = useLocation();
   const marketing = isMarketingRoute(pathname);
@@ -163,17 +155,23 @@ function RouteOutlet() {
     pathname === '/privacy-policy' ||
     pathname === '/terms' ||
     pathname === '/terms-of-service';
+  const isAuthHandoff = pathname === '/signup' || pathname === '/login';
 
   return (
     <>
       <AnimatedRoutes />
-      {!isCommunityRoute && !isLegalRoute && (marketing ? <MarketingFooter /> : <Footer />)}
-      {marketing && !isCommunityRoute && !isLegalRoute ? <MarketingConvertPrompt /> : null}
+      {!isCommunityRoute && !isLegalRoute && !isAuthHandoff && <MarketingFooter />}
+      {marketing && !isCommunityRoute && !isLegalRoute && !isAuthHandoff ? (
+        <MarketingConvertPrompt />
+      ) : null}
     </>
   );
 }
 
-class AppErrorBoundary extends React.Component<{ children: React.ReactNode }, { hasError: boolean }> {
+class AppErrorBoundary extends React.Component<
+  { children: React.ReactNode },
+  { hasError: boolean }
+> {
   constructor(props: { children: React.ReactNode }) {
     super(props);
     this.state = { hasError: false };
@@ -192,7 +190,9 @@ class AppErrorBoundary extends React.Component<{ children: React.ReactNode }, { 
       return (
         <div className="min-h-screen flex items-center justify-center bg-[#F8F9FB] text-slate-900">
           <div className="text-center px-6">
-            <p className="text-xs font-semibold tracking-wide text-slate-400 uppercase mb-2">Something went wrong</p>
+            <p className="text-xs font-semibold tracking-wide text-slate-400 uppercase mb-2">
+              Something went wrong
+            </p>
             <p className="text-lg font-bold mb-4">The page failed to load.</p>
             <button
               onClick={() => {
@@ -211,7 +211,6 @@ class AppErrorBoundary extends React.Component<{ children: React.ReactNode }, { 
   }
 }
 
-/** Lazy-load Firebase/auth only for community & admin routes */
 const LazyAuthShell = React.lazy(() =>
   Promise.all([import('./contexts/AuthContext'), import('./contexts/CommunityCacheContext')]).then(
     ([auth, cache]) => ({
@@ -224,7 +223,6 @@ const LazyAuthShell = React.lazy(() =>
   )
 );
 
-/** Skip Firebase/auth bundle on marketing routes, faster first paint for GTM pages */
 function RouteProviders({ children }: { children: React.ReactNode }) {
   const { pathname } = useLocation();
   if (isMarketingRoute(pathname)) {
@@ -274,52 +272,41 @@ const AnimatedRoutes = () => {
         transition={{ duration: 0.2, ease: 'easeOut' }}
       >
         <Routes location={location}>
+          {/* Marketing */}
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/testimonials" element={<Testimonials />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/booking" element={<Booking />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/features" element={<FeaturesPage />} />
           <Route path="/features/:slug" element={<FeatureDetailPage />} />
-          {DevShowcasePage && <Route path="/dev/showcase" element={<DevShowcasePage />} />}
           <Route path="/integrations" element={<IntegrationsPage />} />
           <Route path="/customers" element={<CustomersPage />} />
-          <Route path="/solutions" element={<Navigate to="/features" replace />} />
-          <Route path="/solutions/:vertical" element={<Navigate to="/features" replace />} />
-          <Route path="/agency" element={<AgencyPage />} />
-          <Route path="/security" element={<SecurityPage />} />
-          <Route path="/signup" element={<SignupRedirect />} />
-          <Route path="/login" element={<LoginRedirect />} />
-          <Route path="/docs" element={<DocsRedirect />} />
-          <Route path="/roi" element={<Navigate to="/features/journeys" replace />} />
-          <Route path="/ai-caller" element={<AiCallerRedirect />} />
-          <Route path="/ai-chatbot" element={<AiChatbotRedirect />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/blog/:slug" element={<BlogPost />} />
-          <Route path="/privacy" element={<PrivacyPolicy />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/terms" element={<TermsPage />} />
-          <Route path="/terms-of-service" element={<TermsPage />} />
           <Route path="/compare" element={<CompareIndexPage />} />
           <Route path="/compare/topedge-vs-wati-vs-aisensy" element={<CompareThreeWayPage />} />
           <Route path="/compare/:competitor" element={<ComparePage />} />
-          <Route
-            path="/whatsapp-cart-recovery"
-            element={<Navigate to="/features/journeys#abandoned-cart" replace />}
-          />
-          <Route
-            path="/cod-confirmation-whatsapp"
-            element={<Navigate to="/features/journeys" replace />}
-          />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
           <Route
             path="/shopify-whatsapp-integration"
             element={<SeoTopicPage slug="shopify-whatsapp-integration" />}
           />
+          <Route path="/signup" element={<SignupRedirect />} />
+          <Route path="/login" element={<LoginRedirect />} />
+          <Route path="/docs" element={<DocsRedirect />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms" element={<TermsPage />} />
+          <Route path="/terms-of-service" element={<TermsPage />} />
+
+          {/* Legacy plural blog URL */}
+          <Route path="/blogs" element={<Navigate to="/blog" replace />} />
+          <Route path="/blogs/*" element={<Navigate to="/blog" replace />} />
+
+          {DevShowcasePage && <Route path="/dev/showcase" element={<DevShowcasePage />} />}
+
           <Route path="/admin/login" element={<CommunityLogin />} />
 
-          {/* Community Routes */}
+          {/* Community */}
           <Route path="/community" element={<CommunityHome />} />
           <Route path="/community/home" element={<CommunityHome />} />
           <Route path="/community/login" element={<CommunityLogin />} />
@@ -345,6 +332,7 @@ const AnimatedRoutes = () => {
             }
           />
           <Route path="/community/requests" element={<RequestBoard />} />
+
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </motion.div>

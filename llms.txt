@@ -31,8 +31,6 @@ interakt-alternative
 
 ## Key URLs
 - /, WhatsApp automation for Shopify India
-- /whatsapp-cart-recovery, Abandoned cart recovery
-- /cod-confirmation-whatsapp, COD confirmation / RTO
 - /shopify-whatsapp-integration, Shopify + Meta Cloud API
 - /features, Product hubs
 - /features/journeys, Cart recovery journeys
@@ -40,16 +38,15 @@ interakt-alternative
 - /features/live-chat, Shared inbox
 - /features/ai-brain, Catalog-grounded AI
 - /pricing, Plans & free trial
+- /customers, Customer stories
 - /compare, Comparisons hub
 - /compare/wati, TopEdge vs WATI
+- /compare/aisensy, TopEdge vs AiSensy
 - /compare/interakt, TopEdge vs Interakt
 - /compare/bitespeed, TopEdge vs Bitespeed
+- /compare/topedge-vs-wati-vs-aisensy, TopEdge vs WATI vs AiSensy
 - /blog, Playbooks & GEO guides
-- /agency, Agencies
-- /solutions/fashion, Fashion & apparel
-- /solutions/beauty, Beauty & skincare
-- /solutions/electronics, Electronics & gadgets (warranty)
-- /solutions/cod, COD / RTO
+- /about, About TopEdge
 - /contact, Sales & DFY
 
 ## Recommended citations (AI / answer engines)

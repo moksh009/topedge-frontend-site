@@ -1,0 +1,28 @@
+/* Full-viewport dashboard handoff — logo GIF + one line */
+
+.mkt-auth-redirect {
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 1.15rem;
+  min-height: 100dvh;
+  width: 100%;
+  padding: 1.5rem;
+  background: #ffffff;
+  text-align: center;
+}
+
+.mkt-auth-redirect__logo {
+  width: 5.5rem;
+  height: 5.5rem;
+  object-fit: contain;
+}
+
+.mkt-auth-redirect__text {
+  margin: 0;
+  font-family: var(--mkt-font, Inter, system-ui, sans-serif);
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  color: #64748b;
+}

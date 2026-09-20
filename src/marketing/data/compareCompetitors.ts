@@ -1,4 +1,9 @@
-import { pairwiseMatrix } from './compareFeatureMatrix';
+import {
+  AISENSY_PAIRWISE_MATRIX,
+  BITESPEED_PAIRWISE_MATRIX,
+  INTERAKT_PAIRWISE_MATRIX,
+  WATI_PAIRWISE_MATRIX,
+} from './compareFeatureMatrix';
 
 export type CompareCell = 'yes' | 'no' | 'partial' | string;
 
@@ -128,24 +133,15 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
         body: 'Advanced builder with unlimited execution on every plan, not monthly trigger caps.',
       },
     ],
-    matrix: pairwiseMatrix('wati'),
+    matrix: WATI_PAIRWISE_MATRIX.map(({ label, description, topedge, competitor }) => ({
+      label,
+      description,
+      topedge,
+      competitor,
+    })),
     matrixNote:
       'Capability claims reflect TopEdge product positioning vs publicly described WATI platform patterns. Confirm live plan limits and fees on wati.io before purchase.',
     researchAsOf: 'Sep 2026',
-    deepDives: [
-      {
-        title: 'Cost at volume',
-        body: 'At high template volume, WATI’s usage charges stack on Meta. TopEdge keeps markup at 0%, the gap shows up on the monthly bill, not the feature list.',
-      },
-      {
-        title: 'Shopify ops vs BSP toolkit',
-        body: 'TopEdge ships COD → prepaid, store pixel, warranty, and order locks native. On WATI those jobs usually mean APIs, webhooks, or another CRM.',
-      },
-      {
-        title: 'When WATI wins',
-        body: 'Need a broad BSP for CTWA acquisition or non-Shopify channels? WATI’s wider toolkit can fit better than a Shopify-first growth OS.',
-      },
-    ],
     competitorPlans: [
       {
         name: 'Pay-as-you-go',
@@ -191,6 +187,7 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
     related: [
       { label: 'All comparisons', href: '/compare' },
       { label: 'vs AiSensy', href: '/compare/aisensy' },
+      { label: 'vs Bitespeed', href: '/compare/bitespeed' },
       { label: '3-way board', href: '/compare/topedge-vs-wati-vs-aisensy' },
       { label: 'TopEdge pricing', href: '/pricing' },
     ],
@@ -238,24 +235,15 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
         body: 'Advanced flows with unlimited runs on every plan, not credit gates or higher-tier unlocks.',
       },
     ],
-    matrix: pairwiseMatrix('aisensy'),
+    matrix: AISENSY_PAIRWISE_MATRIX.map(({ label, description, topedge, competitor }) => ({
+      label,
+      description,
+      topedge,
+      competitor,
+    })),
     matrixNote:
       'Capability claims reflect TopEdge product positioning vs publicly described AiSensy platform patterns. Confirm live plan limits, credits, and fees on aisensy.com before purchase.',
     researchAsOf: 'Sep 2026',
-    deepDives: [
-      {
-        title: 'Two meters that add up',
-        body: 'AiSensy often stacks platform usage on templates plus a per-message AI add-on. TopEdge keeps markup at 0% and AI on BYOK, the difference compounds with send volume.',
-      },
-      {
-        title: 'Glue work vs native stack',
-        body: 'Payment-link mapping, pixel identity, and warranty usually mean APIs or another CRM on AiSensy. TopEdge ships those jobs in-product.',
-      },
-      {
-        title: 'When AiSensy is enough',
-        body: 'If broadcasts and keyword automations are the whole job, and deep Shopify ops are secondary, AiSensy’s marketing-platform model can still fit.',
-      },
-    ],
     competitorPlans: [
       {
         name: 'Starter / Basic',
@@ -301,6 +289,7 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
     related: [
       { label: 'All comparisons', href: '/compare' },
       { label: 'vs WATI', href: '/compare/wati' },
+      { label: 'vs Bitespeed', href: '/compare/bitespeed' },
       { label: '3-way board', href: '/compare/topedge-vs-wati-vs-aisensy' },
       { label: 'TopEdge pricing', href: '/pricing' },
     ],
@@ -348,7 +337,12 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
         body: 'Advanced builder unlocked day one, not basic linear on Growth and branching only on Advanced+.',
       },
     ],
-    matrix: pairwiseMatrix('interakt'),
+    matrix: INTERAKT_PAIRWISE_MATRIX.map(({ label, description, topedge, competitor }) => ({
+      label,
+      description,
+      topedge,
+      competitor,
+    })),
     matrixNote:
       'Interakt claims drawn from Shopify App Store listings and interakt.shop docs (Sep 2026). Confirm live App vs India website tiers, AI add-ons, and Meta fees before purchase.',
     researchAsOf: 'Sep 2026',
@@ -485,6 +479,7 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
     related: [
       { label: 'All comparisons', href: '/compare' },
       { label: 'vs WATI', href: '/compare/wati' },
+      { label: 'vs AiSensy', href: '/compare/aisensy' },
       { label: 'vs Bitespeed', href: '/compare/bitespeed' },
       { label: 'TopEdge pricing', href: '/pricing' },
     ],
@@ -533,7 +528,12 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
         body: 'Bitespeed covers cart + browse. TopEdge ships cart recovery today, we do not claim browse parity.',
       },
     ],
-    matrix: pairwiseMatrix('bitespeed'),
+    matrix: BITESPEED_PAIRWISE_MATRIX.map(({ label, description, topedge, competitor }) => ({
+      label,
+      description,
+      topedge,
+      competitor,
+    })),
     matrixNote:
       'Bitespeed pricing and AI add-ons as of September 2026 from public listings / third-party summaries. Confirm live on bitespeed.co and the Shopify App Store before purchase.',
     scorecard: [
@@ -682,8 +682,9 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
     ],
     related: [
       { label: 'All comparisons', href: '/compare' },
-      { label: 'vs Interakt', href: '/compare/interakt' },
       { label: 'vs WATI', href: '/compare/wati' },
+      { label: 'vs AiSensy', href: '/compare/aisensy' },
+      { label: 'vs Interakt', href: '/compare/interakt' },
       { label: 'TopEdge pricing', href: '/pricing' },
     ],
   },

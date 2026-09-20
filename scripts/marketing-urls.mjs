@@ -17,15 +17,9 @@ export const FEATURE_SLUGS = [
   'chat-rules',
 ];
 
-export const SOLUTION_SLUGS = ['fashion', 'beauty', 'electronics', 'cod'];
-
 export const COMPARE_SLUGS = ['wati', 'aisensy', 'interakt', 'bitespeed'];
 
-export const TOPIC_SLUGS = [
-  'whatsapp-cart-recovery',
-  'cod-confirmation-whatsapp',
-  'shopify-whatsapp-integration',
-];
+export const TOPIC_SLUGS = ['shopify-whatsapp-integration'];
 
 export const BLOG_SLUGS = [
   'whatsapp-abandoned-cart-recovery-shopify',
@@ -34,7 +28,6 @@ export const BLOG_SLUGS = [
   'ecommerce-automation-whatsapp-vs-email-india',
   'meta-whatsapp-cloud-api-shopify-templates',
   'whatsapp-shared-inbox-shopify-order-context',
-  'agencies-whatsapp-automation-multi-brand-shopify',
   'shopify-automation-checklist-whatsapp-cart-recovery',
   'best-whatsapp-automation-tools-shopify-india',
   'how-to-reduce-rto-with-whatsapp-cod-confirmation',
@@ -44,25 +37,20 @@ export const BLOG_SLUGS = [
 
 /** Static marketing paths (no trailing slash except root as '/') */
 export function getMarketingPrerenderPaths() {
-  const paths = [
+  return [
     '/',
     '/pricing',
     '/features',
     '/integrations',
     '/customers',
-    '/agency',
-    '/security',
     '/compare',
     '/compare/topedge-vs-wati-vs-aisensy',
     '/about',
     '/contact',
-    '/testimonials',
     '/blog',
     ...FEATURE_SLUGS.map((s) => `/features/${s}`),
-    ...SOLUTION_SLUGS.map((s) => `/solutions/${s}`),
     ...COMPARE_SLUGS.map((s) => `/compare/${s}`),
     ...TOPIC_SLUGS.map((s) => `/${s}`),
     ...BLOG_SLUGS.map((s) => `/blog/${s}`),
   ];
-  return paths;
 }

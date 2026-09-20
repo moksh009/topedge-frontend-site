@@ -1,0 +1,364 @@
+/* About — theme-aligned company story */
+
+.mkt-about {
+  background:
+    radial-gradient(ellipse 75% 42% at 50% -10%, rgba(124, 58, 237, 0.1), transparent 55%),
+    linear-gradient(180deg, #faf9ff 0%, #ffffff 28%, #ffffff 100%);
+  color: var(--mkt-ink, #0c1222);
+}
+
+.mkt-about__hero {
+  max-width: min(100%, 46rem);
+  margin: 0 auto;
+  padding: clamp(5.5rem, 10vw, 7.5rem) 1.25rem 2.5rem;
+  text-align: center;
+}
+
+.mkt-about__brand {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 0 auto 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--mkt-ink);
+}
+
+.mkt-about__brand img {
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+}
+
+.mkt-about__brand span span {
+  color: var(--mkt-violet);
+}
+
+.mkt-about__h1 {
+  margin: 0 auto;
+  font-family: var(--mkt-font);
+  font-size: clamp(1.75rem, 4vw, 2.55rem);
+  font-weight: 400;
+  letter-spacing: -0.034em;
+  line-height: 1.12;
+  color: var(--mkt-ink);
+  text-wrap: balance;
+  max-width: 16ch;
+}
+
+@media (min-width: 900px) {
+  .mkt-about__h1 {
+    max-width: none;
+    width: max-content;
+    white-space: nowrap;
+    text-wrap: nowrap;
+    font-size: clamp(1.7rem, 2.35vw, 2.35rem);
+  }
+
+  .mkt-about__hero {
+    max-width: min(100%, 72rem);
+  }
+}
+
+.mkt-about__h1-accent {
+  color: #5b21b6;
+  background: #ede9fe;
+  border-radius: 0.45em;
+  padding: 0.02em 0.18em 0.04em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.mkt-about__lede {
+  margin: 1.1rem auto 0;
+  max-width: 34rem;
+  font-size: clamp(0.98rem, 1.5vw, 1.1rem);
+  line-height: 1.6;
+  color: #64748b;
+  text-wrap: pretty;
+}
+
+.mkt-about__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1.6rem;
+}
+
+.mkt-about__section {
+  max-width: min(100%, 68rem);
+  margin: 0 auto;
+  padding: 3rem 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .mkt-about__section {
+    padding: 4rem 1.5rem;
+  }
+}
+
+.mkt-about__section--wash {
+  max-width: none;
+  padding-left: 0;
+  padding-right: 0;
+  background: #faf9ff;
+  border-top: 1px solid var(--mkt-border, #efeaf8);
+  border-bottom: 1px solid var(--mkt-border, #efeaf8);
+}
+
+.mkt-about__section--wash > .mkt-about__section-inner {
+  max-width: min(100%, 68rem);
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .mkt-about__section--wash > .mkt-about__section-inner {
+    padding: 0 1.5rem;
+  }
+}
+
+.mkt-about__eyebrow {
+  margin: 0;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mkt-violet);
+}
+
+.mkt-about__heading {
+  margin: 0.65rem 0 0;
+  font-family: var(--mkt-font);
+  font-size: clamp(1.45rem, 2.6vw, 1.9rem);
+  font-weight: 560;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  color: var(--mkt-ink);
+  text-wrap: balance;
+  max-width: 28rem;
+}
+
+.mkt-about__intro {
+  margin: 0.9rem 0 0;
+  max-width: 38rem;
+  font-size: 1.02rem;
+  line-height: 1.65;
+  color: #475569;
+}
+
+.mkt-about__beliefs {
+  display: grid;
+  gap: 1.75rem;
+  margin-top: 2.25rem;
+}
+
+@media (min-width: 768px) {
+  .mkt-about__beliefs {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+}
+
+.mkt-about__belief h3 {
+  margin: 0;
+  font-family: var(--mkt-font);
+  font-size: 1.05rem;
+  font-weight: 560;
+  letter-spacing: -0.015em;
+  color: var(--mkt-ink);
+}
+
+.mkt-about__belief p {
+  margin: 0.55rem 0 0;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: #64748b;
+}
+
+.mkt-about__founders {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 2.25rem;
+}
+
+@media (min-width: 768px) {
+  .mkt-about__founders {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+}
+
+.mkt-about__founder {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--mkt-border, #efeaf8);
+  border-radius: 12px;
+  background: #fff;
+  overflow: hidden;
+  box-shadow: 0 1px 0 rgba(15, 23, 42, 0.03);
+}
+
+.mkt-about__founder-media {
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #0c1222;
+}
+
+.mkt-about__founder-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+.mkt-about__founder-body {
+  padding: 1.35rem 1.4rem 1.55rem;
+}
+
+.mkt-about__founder-role {
+  margin: 0;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mkt-violet);
+}
+
+.mkt-about__founder-name {
+  margin: 0.4rem 0 0;
+  font-family: var(--mkt-font);
+  font-size: 1.25rem;
+  font-weight: 560;
+  letter-spacing: -0.02em;
+  color: var(--mkt-ink);
+}
+
+.mkt-about__founder-bio {
+  margin: 0.65rem 0 0;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: #64748b;
+}
+
+.mkt-about__brands {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 2.25rem;
+}
+
+@media (min-width: 768px) {
+  .mkt-about__brands {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+}
+
+.mkt-about__brand-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--mkt-border, #efeaf8);
+  border-radius: 12px;
+  background: #fff;
+  overflow: hidden;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mkt-about__brand-card:hover {
+  border-color: #ddd6fe;
+  box-shadow: 0 16px 36px -28px rgba(15, 23, 42, 0.35);
+}
+
+.mkt-about__brand-top {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 1.15rem 1.35rem;
+  background: #0c1222;
+}
+
+.mkt-about__brand-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.25rem;
+  max-width: 8.5rem;
+}
+
+.mkt-about__brand-logo img {
+  max-height: 100%;
+  max-width: 100%;
+  width: auto;
+  object-fit: contain;
+}
+
+.mkt-about__brand-site {
+  margin-left: auto;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.mkt-about__brand-body {
+  padding: 1.25rem 1.35rem 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.mkt-about__brand-name {
+  margin: 0;
+  font-family: var(--mkt-font);
+  font-size: 1.1rem;
+  font-weight: 560;
+  letter-spacing: -0.015em;
+  color: var(--mkt-ink);
+}
+
+.mkt-about__brand-tag {
+  margin: 0.35rem 0 0;
+  font-size: 0.8125rem;
+  color: #64748b;
+}
+
+.mkt-about__brand-copy {
+  margin: 0.85rem 0 0;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: #475569;
+  flex: 1;
+}
+
+.mkt-about__brand-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.1rem;
+}
+
+.mkt-about__brand-stat {
+  padding: 0.35rem 0.65rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 550;
+  color: #5b21b6;
+  background: #ede9fe;
+}
+
+.mkt-about__brand-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 1.15rem;
+  font-size: 0.875rem;
+  font-weight: 550;
+  color: var(--mkt-violet);
+}
+
+.mkt-about__brand-link:hover {
+  opacity: 0.85;
+}

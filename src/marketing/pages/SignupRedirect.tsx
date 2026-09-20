@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { DASH_SIGNUP } from '../lib/billingCatalog';
+import '../styles/auth-redirect.css';
 
 const ALLOWED_PLANS = new Set(['launch', 'growth', 'scale']);
 const ALLOWED_CYCLES = new Set(['monthly', 'quarterly', 'yearly', 'annual']);
@@ -20,17 +21,16 @@ export default function SignupRedirect() {
   }, [location.search]);
 
   return (
-    <main className="grid min-h-[70vh] place-items-center px-6 text-center">
-      <div>
-        <p className="text-sm font-medium text-[#7C3AED]">TopEdge</p>
-        <h1 className="mt-2 text-2xl font-semibold tracking-tight text-[#0c1222]">
-          Taking you to create your account
-        </h1>
-        <p className="mt-2 text-sm text-slate-500">
-          Sign up on the dashboard. If you picked a plan, we&apos;ll open billing so you can confirm
-          it after you&apos;re in.
-        </p>
-      </div>
+    <main className="mkt-auth-redirect" aria-busy="true" aria-live="polite">
+      <img
+        src="/topedge-loader.gif"
+        alt=""
+        width={96}
+        height={96}
+        className="mkt-auth-redirect__logo"
+        decoding="async"
+      />
+      <p className="mkt-auth-redirect__text">Opening your account…</p>
     </main>
   );
 }

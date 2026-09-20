@@ -13,7 +13,7 @@ const priorityFor = (p) => {
   if (p === '/pricing' || p === '/features' || p.includes('journeys') || p.includes('cart-recovery'))
     return '0.95';
   if (p.startsWith('/blog/')) return '0.85';
-  if (p.startsWith('/features/') || p.startsWith('/solutions/') || p.startsWith('/compare/'))
+  if (p.startsWith('/features/') || p.startsWith('/compare/'))
     return '0.85';
   return '0.8';
 };
