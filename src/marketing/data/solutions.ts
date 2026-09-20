@@ -62,7 +62,7 @@ export const SOLUTION_VERTICALS: Record<string, SolutionVertical> = {
     title: 'WhatsApp growth for',
     titleAccent: 'fashion & apparel',
     subtitle:
-      'Recover size-sensitive carts, confirm COD before ship, and answer “where is my order?” with Shopify context — without living in WhatsApp Web.',
+      'Recover size-sensitive carts, confirm COD before ship, and answer “where is my order?” with Shopify context, without living in WhatsApp Web.',
     seoTitle: 'WhatsApp Automation for Fashion Shopify Stores | Cart, Size & COD',
     seoDescription:
       'TopEdge helps fashion & apparel brands on Shopify India recover abandoned carts with size/variant context, confirm COD to cut RTO, and run Meta-safe drop campaigns on WhatsApp.',
@@ -72,45 +72,45 @@ export const SOLUTION_VERTICALS: Record<string, SolutionVertical> = {
     heroAlt: 'Fashion cart recovery and order support on WhatsApp with Shopify context',
     bentoTitle: 'How TopEdge',
     bentoAccent: 'helps',
-    bentoSub: 'Workflows built for apparel catalogs, sizes, and drop weekends — not generic WhatsApp blasts.',
+    bentoSub: 'Workflows built for apparel catalogs, sizes, and drop weekends, not generic WhatsApp blasts.',
     bentos: [
       {
         titleLead: 'Size-aware',
         titleAccent: 'cart recovery',
-        body: 'When shoppers leave mid-size or variant, TopEdge sends approved WhatsApp recovery with the same SKU context — not a generic “you left something” blast.',
+        body: 'When shoppers leave mid-size or variant, TopEdge sends approved WhatsApp recovery with the same SKU context, not a generic “you left something” blast.',
         image: '/marketing/solutions/sol-fashion-cart-saas.png',
         span: 'third',
       },
       {
         titleLead: 'Support with',
         titleAccent: 'order context',
-        body: 'Exchanges, delayed couriers, and COD questions land in Live Chat next to the Shopify order — so agents do not tab-hunt.',
+        body: 'Exchanges, delayed couriers, and COD questions land in Live Chat next to the Shopify order, so agents do not tab-hunt.',
         image: '/marketing/solutions/sol-fashion-inbox-saas.png',
         span: 'third',
       },
       {
         titleLead: 'Drop weekends,',
         titleAccent: 'Meta-safe',
-        body: 'Segment past buyers and lookers, then broadcast only with approved templates — so festival drops do not risk your number.',
+        body: 'Segment past buyers and lookers, then broadcast only with approved templates, so festival drops do not risk your number.',
         image: '/marketing/solutions/sol-fashion-campaign-saas.png',
         span: 'third',
       },
     ],
     showcasesTitle: 'Inside',
     showcasesAccent: 'fashion ops',
-    showcasesSub: 'Recovery, inbox, and drop campaigns — the screens apparel teams open every day.',
+    showcasesSub: 'Recovery, inbox, and drop campaigns, the screens apparel teams open every day.',
     showcases: [
       {
         title: 'Size-aware',
         titleAccent: 'recovery',
-        body: 'Abandoned carts keep size, colour, and ₹ honest to Shopify — so the WhatsApp nudge matches the outfit they almost bought.',
+        body: 'Abandoned carts keep size, colour, and ₹ honest to Shopify, so the WhatsApp nudge matches the outfit they almost bought.',
         image: '/marketing/solutions/sol-fashion-cart-saas.png',
         imageLabel: 'Fashion cart recovery with size and variant context',
       },
       {
         title: 'Inbox beside',
         titleAccent: 'the order',
-        body: 'Exchanges and “where is my order?” land next to Shopify order # — agents reply without leaving Live Chat.',
+        body: 'Exchanges and “where is my order?” land next to Shopify order #, agents reply without leaving Live Chat.',
         image: '/marketing/solutions/sol-fashion-inbox-saas.png',
         imageLabel: 'Fashion Live Chat with Shopify order context',
       },
@@ -124,7 +124,7 @@ export const SOLUTION_VERTICALS: Record<string, SolutionVertical> = {
     ],
     helpsTitle: 'Features that',
     helpsAccent: 'fit fashion',
-    helpsSub: 'Specific TopEdge capabilities for apparel brands — not generic WhatsApp tips.',
+    helpsSub: 'Specific TopEdge capabilities for apparel brands, not generic WhatsApp tips.',
     helps: [
       {
         feature: 'Abandoned Cart',
@@ -135,7 +135,7 @@ export const SOLUTION_VERTICALS: Record<string, SolutionVertical> = {
       {
         feature: 'COD → Prepaid',
         title: 'Confirm apparel COD before dispatch',
-        body: 'Ask shoppers to confirm or flip to prepaid on WhatsApp — fewer fake COD orders on high-AOV fashion.',
+        body: 'Ask shoppers to confirm or flip to prepaid on WhatsApp, fewer fake COD orders on high-AOV fashion.',
         href: '/solutions/cod',
       },
       {
@@ -161,7 +161,7 @@ export const SOLUTION_VERTICALS: Record<string, SolutionVertical> = {
       { label: 'Pricing', href: '/pricing' },
     ],
     ctaTitle: 'Run fashion recovery on your catalog',
-    ctaSub: 'Connect Shopify and WhatsApp — publish size-aware cart recovery in your trial.',
+    ctaSub: 'Connect Shopify and WhatsApp, publish size-aware cart recovery in your trial.',
   },
 
   beauty: {
@@ -171,29 +171,29 @@ export const SOLUTION_VERTICALS: Record<string, SolutionVertical> = {
     title: 'WhatsApp commerce for',
     titleAccent: 'beauty & skincare',
     subtitle:
-      'Recover serum carts, answer ingredient questions with catalog truth, and capture WhatsApp numbers without theme hacks — built for Indian beauty D2C on Shopify.',
+      'Recover serum carts, answer ingredient questions with catalog truth, and capture WhatsApp numbers without theme hacks, built for Indian beauty D2C on Shopify.',
     seoTitle: 'WhatsApp Automation for Beauty & Skincare Shopify Brands | India',
     seoDescription:
-      'TopEdge helps beauty and skincare Shopify brands recover abandoned carts, answer with live catalog SKUs, capture opt-ins, and confirm COD on WhatsApp — Meta-safe for India D2C.',
+      'TopEdge helps beauty and skincare Shopify brands recover abandoned carts, answer with live catalog SKUs, capture opt-ins, and confirm COD on WhatsApp, Meta-safe for India D2C.',
     keywords:
       'beauty WhatsApp automation Shopify, skincare cart recovery India, WhatsApp for beauty D2C, serum abandoned cart WhatsApp, beauty COD confirmation WhatsApp',
     heroImage: '/marketing/solutions/sol-beauty-hero.png',
     heroAlt: 'Beauty product cart recovery and catalog replies on WhatsApp',
     bentoTitle: 'How TopEdge',
     bentoAccent: 'helps',
-    bentoSub: 'Product-card recovery, catalog-true replies, and clean opt-in — tuned for beauty SKUs.',
+    bentoSub: 'Product-card recovery, catalog-true replies, and clean opt-in, tuned for beauty SKUs.',
     bentos: [
       {
         titleLead: 'Product-card',
         titleAccent: 'cart recovery',
-        body: 'Bring shoppers back to the exact serum or kit they left — with WhatsApp product cards tied to Shopify, not a vague reminder.',
+        body: 'Bring shoppers back to the exact serum or kit they left, with WhatsApp product cards tied to Shopify, not a vague reminder.',
         image: '/marketing/solutions/sol-beauty-cart-saas.png',
         span: 'third',
       },
       {
         titleLead: 'Catalog-grounded',
         titleAccent: 'replies',
-        body: 'When someone asks “is this for oily skin?” or price, answers stay anchored to live SKUs and ₹ — then hand off to a human cleanly.',
+        body: 'When someone asks “is this for oily skin?” or price, answers stay anchored to live SKUs and ₹, then hand off to a human cleanly.',
         image: '/marketing/solutions/sol-beauty-catalog-saas.png',
         span: 'third',
       },
@@ -207,12 +207,12 @@ export const SOLUTION_VERTICALS: Record<string, SolutionVertical> = {
     ],
     showcasesTitle: 'Inside',
     showcasesAccent: 'beauty ops',
-    showcasesSub: 'Recovery cards, catalog answers, and storefront opt-in — built for beauty SKUs.',
+    showcasesSub: 'Recovery cards, catalog answers, and storefront opt-in, built for beauty SKUs.',
     showcases: [
       {
         title: 'Serum cart',
         titleAccent: 'recovery',
-        body: 'Product cards reopen the exact kit or serum left behind — Meta-approved templates with live Shopify pricing.',
+        body: 'Product cards reopen the exact kit or serum left behind, Meta-approved templates with live Shopify pricing.',
         image: '/marketing/solutions/sol-beauty-cart-saas.png',
         imageLabel: 'Beauty abandoned cart with product cards',
       },
@@ -226,14 +226,14 @@ export const SOLUTION_VERTICALS: Record<string, SolutionVertical> = {
       {
         title: 'Opt-in',
         titleAccent: 'on storefront',
-        body: 'Capture WhatsApp numbers on PDP and exit intent without risky theme surgery — then enroll into journeys safely.',
+        body: 'Capture WhatsApp numbers on PDP and exit intent without risky theme surgery, then enroll into journeys safely.',
         image: '/marketing/solutions/sol-beauty-optin-saas.png',
         imageLabel: 'Beauty WhatsApp opt-in popup on storefront',
       },
     ],
     helpsTitle: 'Features that',
     helpsAccent: 'fit beauty',
-    helpsSub: 'Capabilities beauty operators actually ship — recovery, opt-in, and Meta-safe campaigns.',
+    helpsSub: 'Capabilities beauty operators actually ship, recovery, opt-in, and Meta-safe campaigns.',
     helps: [
       {
         feature: 'Abandoned Cart',
@@ -244,7 +244,7 @@ export const SOLUTION_VERTICALS: Record<string, SolutionVertical> = {
       {
         feature: 'Opt-in Popup',
         title: 'Grow a reachable beauty list',
-        body: 'Collect consent and numbers on storefront moments that matter — then enroll into journeys and drops safely.',
+        body: 'Collect consent and numbers on storefront moments that matter, then enroll into journeys and drops safely.',
         href: '/features/flow-builder',
       },
       {
@@ -256,7 +256,7 @@ export const SOLUTION_VERTICALS: Record<string, SolutionVertical> = {
       {
         feature: 'Tracking Pixel',
         title: 'Match site visits to WhatsApp',
-        body: 'See who is on the PDP now and continue the conversation on WhatsApp with context — not cold spam.',
+        body: 'See who is on the PDP now and continue the conversation on WhatsApp with context, not cold spam.',
         href: '/features/analytics',
       },
     ],
@@ -270,7 +270,7 @@ export const SOLUTION_VERTICALS: Record<string, SolutionVertical> = {
       { label: 'Pricing', href: '/pricing' },
     ],
     ctaTitle: 'See beauty recovery on your SKUs',
-    ctaSub: 'Start free — connect Shopify, approve templates, publish your first journey.',
+    ctaSub: 'Start free, connect Shopify, approve templates, publish your first journey.',
   },
 
   cod: {
@@ -280,7 +280,7 @@ export const SOLUTION_VERTICALS: Record<string, SolutionVertical> = {
     title: 'WhatsApp for',
     titleAccent: 'COD-first brands',
     subtitle:
-      'One-click COD → prepaid on WhatsApp, counted as one sale (linked orders — not double-reported), and RTO caught before the courier leaves.',
+      'One-click COD → prepaid on WhatsApp, counted as one sale (linked orders, not double-reported), and RTO caught before the courier leaves.',
     seoTitle: 'COD Confirmation on WhatsApp | Reduce RTO for Shopify India',
     seoDescription:
       'TopEdge helps COD-first Shopify brands confirm orders on WhatsApp, convert COD to prepaid as one linked sale, and cut RTO before shipping with dedicated conversion analytics.',
@@ -290,54 +290,54 @@ export const SOLUTION_VERTICALS: Record<string, SolutionVertical> = {
     heroAlt: 'COD confirmation and prepaid nudge on WhatsApp for Shopify orders',
     bentoTitle: 'How TopEdge',
     bentoAccent: 'helps',
-    bentoSub: 'Confirm, convert once, cut RTO — with dedicated conversion analytics.',
+    bentoSub: 'Confirm, convert once, cut RTO, with dedicated conversion analytics.',
     bentos: [
       {
         titleLead: 'One-click',
         titleAccent: 'conversion',
-        body: 'Customer confirms on WhatsApp — the order becomes prepaid automatically. No back-office double entry.',
+        body: 'Customer confirms on WhatsApp, the order becomes prepaid automatically. No back-office double entry.',
         image: '/marketing/solutions/sol-cod-prepaid-saas.png',
         span: 'third',
       },
       {
         titleLead: 'One sale,',
         titleAccent: 'not two',
-        body: 'Original COD and converted prepaid stay linked by order tagging — finance sees one order, not inflated conversion math.',
+        body: 'Original COD and converted prepaid stay linked by order tagging, finance sees one order, not inflated conversion math.',
         image: '/marketing/solutions/sol-cod-confirm-saas.png',
         span: 'third',
       },
       {
         titleLead: 'RTO before',
         titleAccent: 'shipping',
-        body: 'Catch a doomed COD order before it ships — not after it’s returned. Confirmation status sits beside the Shopify order in Live Chat.',
+        body: 'Catch a doomed COD order before it ships, not after it’s returned. Confirmation status sits beside the Shopify order in Live Chat.',
         image: '/marketing/solutions/sol-cod-rto-saas.png',
         span: 'third',
       },
     ],
     showcasesTitle: 'Inside',
     showcasesAccent: 'COD protection',
-    showcasesSub: 'Confirm, convert once, and measure RTOs avoided — before dispatch.',
+    showcasesSub: 'Confirm, convert once, and measure RTOs avoided, before dispatch.',
     showcases: [
       {
         title: 'Confirm',
         titleAccent: 'before dispatch',
-        body: 'Utility templates ask confirm / cancel while the order is still soft — operators jump in from Live Chat when needed.',
+        body: 'Utility templates ask confirm / cancel while the order is still soft, operators jump in from Live Chat when needed.',
         image: '/marketing/solutions/sol-cod-confirm-saas.png',
         imageLabel: 'COD confirmation journey on WhatsApp',
       },
       {
         title: 'COD →',
         titleAccent: 'prepaid',
-        body: 'One-click conversion with linked orders — counted as one sale so prepaid flips don’t double-report revenue.',
+        body: 'One-click conversion with linked orders, counted as one sale so prepaid flips don’t double-report revenue.',
         image: '/marketing/solutions/sol-cod-prepaid-saas.png',
-        imageLabel: 'COD to prepaid conversion — linked orders',
+        imageLabel: 'COD to prepaid conversion, linked orders',
       },
       {
         title: 'Conversion',
         titleAccent: 'analytics',
-        body: 'RTOs avoided, prepaid conversion rate, and cost savings in the COD Conversion Data view — numbers ops can defend.',
+        body: 'RTOs avoided, prepaid conversion rate, and cost savings in the COD Conversion Data view, numbers ops can defend.',
         image: '/marketing/solutions/sol-cod-rto-saas.png',
-        imageLabel: 'COD conversion analytics — RTO avoided',
+        imageLabel: 'COD conversion analytics, RTO avoided',
       },
     ],
     helpsTitle: 'Features that',
@@ -346,20 +346,20 @@ export const SOLUTION_VERTICALS: Record<string, SolutionVertical> = {
     helps: [
       {
         feature: 'COD → Prepaid',
-        title: 'Convert once — report once',
+        title: 'Convert once, report once',
         body: 'Linked orders and one-click WhatsApp conversion. Branch on COD status; cancel ghosts before pick-up.',
         href: '/solutions/cod',
       },
       {
         feature: 'Abandoned Cart',
         title: 'Recover without promising fake COD',
-        body: 'Cart recovery stays honest — approved templates, clear next steps, no dark patterns that inflate RTO later.',
+        body: 'Cart recovery stays honest, approved templates, clear next steps, no dark patterns that inflate RTO later.',
         href: '/features/journeys#abandoned-cart',
       },
       {
         feature: 'Live Chat',
         title: 'COD pending beside the thread',
-        body: 'Support sees COD flags and order # while chatting — faster resolution when someone says “cancel my COD”.',
+        body: 'Support sees COD flags and order # while chatting, faster resolution when someone says “cancel my COD”.',
         href: '/features/live-chat',
       },
       {
@@ -378,7 +378,7 @@ export const SOLUTION_VERTICALS: Record<string, SolutionVertical> = {
       { label: 'Pricing', href: '/pricing' },
     ],
     ctaTitle: 'Run COD confirmation on your store',
-    ctaSub: 'Start free — connect Shopify, approve utility templates, publish COD → prepaid.',
+    ctaSub: 'Start free, connect Shopify, approve utility templates, publish COD → prepaid.',
   },
 
   electronics: {
@@ -388,55 +388,55 @@ export const SOLUTION_VERTICALS: Record<string, SolutionVertical> = {
     title: 'WhatsApp growth for',
     titleAccent: 'electronics & gadgets',
     subtitle:
-      'Assign warranties after purchase, answer install and DOA questions with order context, and recover high-AOV carts — without agents living in WhatsApp Web.',
+      'Assign warranties after purchase, answer install and DOA questions with order context, and recover high-AOV carts, without agents living in WhatsApp Web.',
     seoTitle: 'WhatsApp Automation for Electronics Shopify Brands | Warranty & Support',
     seoDescription:
-      'TopEdge helps electronics & gadget brands on Shopify India assign warranties on WhatsApp, support with order + SKU context, and recover high-AOV abandoned carts — Meta-safe.',
+      'TopEdge helps electronics & gadget brands on Shopify India assign warranties on WhatsApp, support with order + SKU context, and recover high-AOV abandoned carts, Meta-safe.',
     keywords:
       'electronics WhatsApp automation Shopify, warranty assign WhatsApp, gadget cart recovery India, DOA support WhatsApp, Shopify WhatsApp for electronics brands',
     heroImage: '/marketing/solutions/sol-electronics-hero.png',
     heroAlt: 'Electronics warranty assign and product support on WhatsApp with Shopify order context',
     bentoTitle: 'How TopEdge',
     bentoAccent: 'helps',
-    bentoSub: 'Warranty assign, high-ticket support, and AOV-aware recovery — built for gadgets.',
+    bentoSub: 'Warranty assign, high-ticket support, and AOV-aware recovery, built for gadgets.',
     bentos: [
       {
         titleLead: 'Warranty assign',
         titleAccent: 'on WhatsApp',
-        body: 'After delivery, send an approved template to register serial or warranty. Confirm on-chat and write the note to CRM — no spreadsheet chase.',
+        body: 'After delivery, send an approved template to register serial or warranty. Confirm on-chat and write the note to CRM with no spreadsheet chase.',
         image: '/marketing/solutions/sol-electronics-warranty-saas.png',
         span: 'third',
       },
       {
         titleLead: 'Support with',
         titleAccent: 'product context',
-        body: 'Install help, DOA, and courier delays land in Live Chat beside Shopify order # and SKU — agents reply with truth, not tabs.',
+        body: 'Install help, DOA, and courier delays land in Live Chat beside Shopify order # and SKU, agents reply with truth, not tabs.',
         image: '/marketing/solutions/sol-electronics-inbox-saas.png',
         span: 'third',
       },
       {
         titleLead: 'High-AOV',
         titleAccent: 'cart recovery',
-        body: 'Phones, laptops, and accessories abandon often. Recover with the exact variant and price from Shopify — not a generic nudge.',
+        body: 'Phones, laptops, and accessories abandon often. Recover with the exact variant and price from Shopify, not a generic nudge.',
         image: '/marketing/solutions/sol-electronics-cart-saas.png',
         span: 'third',
       },
     ],
     showcasesTitle: 'Inside',
     showcasesAccent: 'electronics ops',
-    showcasesSub: 'Warranty register, DOA support, and high-ticket recovery — wired to Shopify.',
+    showcasesSub: 'Warranty register, DOA support, and high-ticket recovery, wired to Shopify.',
     showcases: [
       {
         title: 'Warranty',
         titleAccent: 'on WhatsApp',
-        body: 'Post-delivery templates register serial or warranty window — confirm on-chat and store it on the customer profile.',
+        body: 'Post-delivery templates register serial or warranty window, confirm on-chat and store it on the customer profile.',
         image: '/marketing/solutions/sol-electronics-warranty-saas.png',
         imageLabel: 'Electronics warranty assignment on WhatsApp',
       },
       {
         title: 'DOA & install',
         titleAccent: 'beside the order',
-        body: 'Agents see order #, SKU, and shipment status while chatting — faster resolution on high-ticket gadgets.',
+        body: 'Agents see order #, SKU, and shipment status while chatting, faster resolution on high-ticket gadgets.',
         image: '/marketing/solutions/sol-electronics-inbox-saas.png',
         imageLabel: 'Electronics Live Chat with product context',
       },
@@ -450,18 +450,18 @@ export const SOLUTION_VERTICALS: Record<string, SolutionVertical> = {
     ],
     helpsTitle: 'Features that',
     helpsAccent: 'fit electronics',
-    helpsSub: 'Warranty notes, DOA support, and high-ticket recovery — wired to Shopify.',
+    helpsSub: 'Warranty notes, DOA support, and high-ticket recovery, wired to Shopify.',
     helps: [
       {
         feature: 'Warranty',
         title: 'Warranty notes stay on the profile',
-        body: 'Serial, warranty window, and purchase history live beside WhatsApp identity — so renewals and care journeys stay personal.',
+        body: 'Serial, warranty window, and purchase history live beside WhatsApp identity, so renewals and care journeys stay personal.',
         href: '/features/warranty',
       },
       {
         feature: 'Live Chat',
         title: 'DOA and install beside the order',
-        body: 'Agents see order #, SKU, and shipment status while chatting — faster resolution on high-ticket electronics.',
+        body: 'Agents see order #, SKU, and shipment status while chatting, faster resolution on high-ticket electronics.',
         href: '/features/live-chat',
       },
       {
@@ -487,7 +487,7 @@ export const SOLUTION_VERTICALS: Record<string, SolutionVertical> = {
       { label: 'Pricing', href: '/pricing' },
     ],
     ctaTitle: 'Run warranty + recovery on your catalog',
-    ctaSub: 'Connect Shopify and WhatsApp — publish warranty assign and high-AOV cart recovery in your trial.',
+    ctaSub: 'Connect Shopify and WhatsApp, publish warranty assign and high-AOV cart recovery in your trial.',
   },
 };
 

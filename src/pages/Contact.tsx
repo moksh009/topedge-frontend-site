@@ -35,8 +35,8 @@ const channels = [
   {
     icon: Clock,
     title: 'Response time',
-    desc: 'IST business hours — usually same day.',
-    action: 'Mon–Sat, 10am–7pm IST',
+    desc: 'IST business hours, usually same day.',
+    action: 'Mon-Sat, 10am-7pm IST',
     href: undefined,
   },
 ];
@@ -52,7 +52,7 @@ export default function Contact() {
     const store = String(fd.get('store') ?? '');
     const message = String(fd.get('message') ?? '');
     const text = encodeURIComponent(
-      `Hi TopEdge — inquiry from ${name || 'Shopify merchant'}\nEmail: ${email}\nStore: ${store}\n\n${message}`,
+      `Hi TopEdge, inquiry from ${name || 'Shopify merchant'}\nEmail: ${email}\nStore: ${store}\n\n${message}`,
     );
     window.open(`https://wa.me/919313045439?text=${text}`, '_blank', 'noopener,noreferrer');
     setSent(true);
@@ -83,7 +83,7 @@ export default function Contact() {
         <PageHero
           eyebrow="Contact"
           title="Tell us what you want to automate first"
-          subtitle="Cart recovery, COD confirm, campaigns, or full WhatsApp ops — we will map a practical rollout for your store."
+          subtitle="Cart recovery, COD confirm, campaigns, or full WhatsApp ops, we will map a practical rollout for your store."
         />
 
         <Section className="!pt-0 !pb-4">
@@ -194,7 +194,7 @@ export default function Contact() {
                   Send on WhatsApp
                 </button>
                 <p className="text-xs text-slate-400">
-                  By submitting, you agree we may contact you about TopEdge. No spam — India-focused team.
+                  By submitting, you agree we may contact you about TopEdge. No spam, India-focused team.
                 </p>
               </form>
             </Reveal>

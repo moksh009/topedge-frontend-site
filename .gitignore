@@ -52,3 +52,10 @@ Thumbs.db
 # Google Cloud credentials
 server/booking-meeting-445311-5a86de3aa9b7.json
 .vercel
+
+# Local audit / capture artifacts (not shipped)
+lighthouse-*.json
+bundle-report.html
+docs/product/hero-duo-debug-shots/
+docs/product/scene-captures/
+.DS_Store

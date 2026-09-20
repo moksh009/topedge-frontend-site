@@ -1,5 +1,5 @@
 /**
- * TopEdge Ai — legal entity identity (SSOT for Privacy / Terms).
+ * TopEdge Ai, legal entity identity (SSOT for Privacy / Terms).
  * Keep in sync with dashboard `src/legal/companyIdentity.js`.
  */
 
@@ -9,9 +9,9 @@ export const COMPANY_CONSTITUTION = 'Partnership';
 export const COMPANY_GSTIN = '24ABAFT1041M1ZD';
 
 export const COMPANY_ADDRESS_LINES = [
-  'Block-A, 606, Prahladnagar Trade Center',
-  'Ahmedabad, Gujarat 380051',
-  'India',
+  'Block-A, 606, Prahladnagar',
+  'Trade Center Ahmedabad,',
+  'Gujarat 380051 India',
 ] as const;
 
 export const COMPANY_EMAIL = 'team@topedgeai.com';
@@ -21,7 +21,7 @@ export const COMPANY_PHONE_E164 = '919313045439';
 
 export const COMPANY_WHATSAPP_URL =
   `https://wa.me/${COMPANY_PHONE_E164}?text=${encodeURIComponent(
-    'Hi TopEdge — I want to talk about WhatsApp automation for my Shopify store.',
+    'Hi TopEdge, I want to talk about WhatsApp automation for my Shopify store.',
   )}`;
 
 export const COMPANY_SOCIAL = {

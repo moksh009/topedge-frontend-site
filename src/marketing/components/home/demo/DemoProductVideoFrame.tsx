@@ -20,7 +20,7 @@ type DemoProductVideoFrameProps = {
 };
 
 /**
- * Frameless product demo video — poster first, muted loop.
+ * Frameless product demo video, poster first, muted loop.
  * Always restarts from 0 when it enters the viewport so users never land mid-clip.
  */
 export default function DemoProductVideoFrame({
@@ -79,7 +79,7 @@ export default function DemoProductVideoFrame({
       const play = video.play();
       if (play && typeof play.catch === 'function') {
         play.catch(() => {
-          /* Autoplay blocked until gesture — already muted */
+          /* Autoplay blocked until gesture, already muted */
         });
       }
     };
@@ -106,7 +106,7 @@ export default function DemoProductVideoFrame({
 
     const onVisibility = () => {
       if (document.hidden) {
-        // Pause only — keep wasVisible so we can resume when the tab returns
+        // Pause only, keep wasVisible so we can resume when the tab returns
         video.pause();
         return;
       }

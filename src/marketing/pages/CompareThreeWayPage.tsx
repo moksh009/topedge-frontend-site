@@ -46,7 +46,7 @@ export default function CompareThreeWayPage() {
             <span className="mkt-cmp__h1-brand">
               <img
                 src="/brand-mark.png"
-                alt=""
+                alt="TopEdge AI"
                 width={28}
                 height={28}
                 className="mkt-cmp__h1-mark"
@@ -58,12 +58,12 @@ export default function CompareThreeWayPage() {
             </span>
             <span className="mkt-cmp__h1-vs">vs</span>
             <span className="mkt-cmp__h1-peer">
-              <img src={LOGO_WATI} alt="" width={28} height={28} decoding="async" />
+              <img src={LOGO_WATI} alt="WATI" width={28} height={28} decoding="async" />
               <span className="mkt-cmp__h1-peer-name">WATI</span>
             </span>
             <span className="mkt-cmp__h1-vs">vs</span>
             <span className="mkt-cmp__h1-peer">
-              <img src={LOGO_AISENSY} alt="" width={28} height={28} decoding="async" />
+              <img src={LOGO_AISENSY} alt="AiSensy" width={28} height={28} decoding="async" />
               <span className="mkt-cmp__h1-peer-name">AiSensy</span>
             </span>
           </h1>
@@ -73,19 +73,19 @@ export default function CompareThreeWayPage() {
           <div className="mkt-cmp__pick mkt-cmp__pick--trio">
             <article className="mkt-cmp__pick-col is-te">
               <div className="mkt-cmp__pick-top">
-                <img src="/logo.png" alt="" width={22} height={22} />
+                <img src="/logo.png" alt="TopEdge AI" width={22} height={22} />
                 <p className="mkt-cmp__pick-kicker">
                   Best with <span className="mkt-cmp__hl">TopEdge AI</span>
                 </p>
               </div>
               <p className="mkt-cmp__pick-body">
                 You want 0% Meta markup, BYOK AI, unified identity, COD → prepaid, warranty, and
-                unlimited flows — native for Shopify India.
+                unlimited flows, native for Shopify India.
               </p>
             </article>
             <article className="mkt-cmp__pick-col">
               <div className="mkt-cmp__pick-top">
-                <img src={LOGO_WATI} alt="" width={22} height={22} />
+                <img src={LOGO_WATI} alt="WATI" width={22} height={22} />
                 <p className="mkt-cmp__pick-kicker">
                   Best with <span className="mkt-cmp__pick-peer">WATI</span>
                 </p>
@@ -97,7 +97,7 @@ export default function CompareThreeWayPage() {
             </article>
             <article className="mkt-cmp__pick-col">
               <div className="mkt-cmp__pick-top">
-                <img src={LOGO_AISENSY} alt="" width={22} height={22} />
+                <img src={LOGO_AISENSY} alt="AiSensy" width={22} height={22} />
                 <p className="mkt-cmp__pick-kicker">
                   Best with <span className="mkt-cmp__pick-peer">AiSensy</span>
                 </p>
@@ -124,15 +124,15 @@ export default function CompareThreeWayPage() {
                   Feature
                 </span>
                 <span className="mkt-cmp__triple-col is-te" role="columnheader">
-                  <img src="/logo.png" alt="" width={18} height={18} />
+                  <img src="/logo.png" alt="TopEdge AI" width={18} height={18} />
                   TopEdge AI
                 </span>
                 <span className="mkt-cmp__triple-col" role="columnheader">
-                  <img src={LOGO_WATI} alt="" width={18} height={18} />
+                  <img src={LOGO_WATI} alt="WATI" width={18} height={18} />
                   WATI
                 </span>
                 <span className="mkt-cmp__triple-col" role="columnheader">
-                  <img src={LOGO_AISENSY} alt="" width={18} height={18} />
+                  <img src={LOGO_AISENSY} alt="AiSensy" width={18} height={18} />
                   AiSensy
                 </span>
               </div>
@@ -190,7 +190,7 @@ export default function CompareThreeWayPage() {
 
         <MarketingCtaBand
           title="Run WhatsApp growth without the markup tax"
-          subtitle="0% template markup, BYOK AI, unified identity, and unlimited chatflows — start free on Shopify."
+          subtitle="0% template markup, BYOK AI, unified identity, and unlimited chatflows, start free on Shopify."
           primaryLabel="Start free"
           secondaryLabel="See pricing"
           secondaryTo="/pricing"

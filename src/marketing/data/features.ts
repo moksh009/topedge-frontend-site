@@ -17,9 +17,9 @@ export const MARKETING_FEATURES: MarketingFeature[] = [
     slug: 'journeys',
     scene: 'journey',
     title: 'Visual journeys that sell and support on WhatsApp',
-    body: 'Drag Shopify events onto a canvas, start from pre-built templates, and never send until Meta says APPROVED — then read recovered ₹, not vanity sends.',
+    body: 'Drag Shopify events onto a canvas, start from pre-built templates, and never send until Meta says APPROVED, then read recovered ₹, not vanity sends.',
     bullets: [
-      'Drag-and-drop builder — no code',
+      'Drag-and-drop builder, no code',
       'Pre-built cart, COD, and shipping templates',
       'Meta approval gating + recovered ₹',
     ],
@@ -67,7 +67,7 @@ export const MARKETING_FEATURES: MarketingFeature[] = [
     slug: 'ai-brain',
     scene: 'ai-brain',
     title: 'WhatsApp AI on your own API keys',
-    body: 'Connect OpenAI or Claude. Ground replies in your catalog and policies — Intent Detect saves tokens for hard questions.',
+    body: 'Connect OpenAI or Claude. Ground replies in your catalog and policies, Intent Detect saves tokens for hard questions.',
     bullets: [
       'Store knowledge + bot persona',
       'Bring your own OpenAI or Claude key',
@@ -114,17 +114,17 @@ export const MARKETING_FEATURES: MarketingFeature[] = [
   {
     slug: 'analytics',
     scene: 'analytics',
-    title: 'Sent → read → clicked → paid ,  the funnel that matters',
-    body: 'Track WhatsApp recovery performance with Meta-honest costs. Know which step converts and which template wastes spend.',
+    title: 'Tracking Pixel, website intent → WhatsApp',
+    body: 'Install via Shopify theme app embed. Match product views and cart intent to WhatsApp outreach, fire consent-aware events, and monitor pixel health, not a vanity sent→read chart.',
     bullets: [
-      'Recovery funnel clarity',
-      'Template-level performance',
-      'Honest Meta cost view',
+      'Theme app embed install',
+      'Product & cart intent → WhatsApp',
+      'Consent-aware firing + pixel health',
     ],
     outcomes: [
-      'Recovery ₹ instead of vanity open rates alone',
-      'See which journey step actually converts',
-      'Plan spend with real Meta category rates',
+      'Reach shoppers who browsed but never opened chat',
+      'Intent signals wire into journeys and campaigns',
+      'Know when the pixel is healthy before you spend',
     ],
   },
   {
@@ -180,7 +180,7 @@ export const MARKETING_FEATURES: MarketingFeature[] = [
   {
     slug: 'warranty',
     scene: 'audience',
-    title: 'Digital warranty workspace — hub, queue, assign',
+    title: 'Digital warranty workspace, hub, queue, assign',
     body: 'One warranty hub with status badges, an unassigned queue that stays visible, and manual assign to the right Shopify order or teammate.',
     bullets: [
       'Warranty hub list with status badges',
@@ -197,7 +197,7 @@ export const MARKETING_FEATURES: MarketingFeature[] = [
     slug: 'opt-in-tools',
     scene: 'hero',
     title: 'WhatsApp opt-in tools for your Shopify storefront',
-    body: 'Pulse Drop, Popup, Spin wheel, Mystery discount, and WhatsApp widget — capture consented numbers, then campaign and journey from one subscriber list.',
+    body: 'Pulse Drop, Popup, Spin wheel, Mystery discount, and WhatsApp widget. Capture consented numbers, then campaign and journey from one subscriber list.',
     bullets: [
       'Five storefront capture tools',
       'Subscriber list with marketing consent',
@@ -214,7 +214,7 @@ export const MARKETING_FEATURES: MarketingFeature[] = [
     slug: 'profit-loss',
     scene: 'analytics',
     title: 'After Indian D2C costs, what did I keep?',
-    body: 'India-aware Profit & costs — COGS, packaging, payment fees, COD, RTO, and ads — true net profit, not vanity revenue.',
+    body: 'India-aware Profit & costs, COGS, packaging, payment fees, COD, RTO, and ads, true net profit, not vanity revenue.',
     bullets: [
       '3-step setup: products, fees, COD & returns',
       'Cost waterfall to net profit ₹',
@@ -231,7 +231,7 @@ export const MARKETING_FEATURES: MarketingFeature[] = [
     slug: 'intent-detection',
     scene: 'ai-brain',  
     title: 'Route chats by what they mean',
-    body: 'Algorithmic intent matches shipping, returns, COD, and handoff — steer flows without burning AI on every message.',
+    body: 'Algorithmic intent matches shipping, returns, COD, and handoff, steer flows without burning AI on every message.',
     bullets: [
       'Phrase matching you control',
       'Route without AI spend',
@@ -252,7 +252,7 @@ for (const f of MARKETING_FEATURES) {
   f.aliases?.forEach((a) => aliasToSlug.set(a, f.slug));
 }
 
-/* Redirected / retired slugs — resolve to surviving hubs */
+/* Redirected / retired slugs, resolve to surviving hubs */
 aliasToSlug.set('segments', 'audience-crm');
 aliasToSlug.set('segmentation', 'audience-crm');
 aliasToSlug.set('segment', 'audience-crm');

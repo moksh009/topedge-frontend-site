@@ -68,7 +68,7 @@ function LenisGsapBridge() {
 }
 
 /**
- * Marketing Lenis smooth scroll — desktop capable devices only.
+ * Marketing Lenis smooth scroll, desktop capable devices only.
  * Mobile / low-end / reduced-motion → native scroll (faster, less jank).
  */
 export default function MarketingSmoothScroll({ children }: SmoothScrollProps) {

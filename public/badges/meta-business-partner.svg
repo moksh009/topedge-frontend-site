@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 72" fill="none" role="img" aria-label="Meta Business Partner">
-  <title>Meta Business Partner</title>
-  <rect width="320" height="72" rx="12" fill="#FFFFFF" stroke="#E8EDF3"/>
-  <rect x="12" y="12" width="48" height="48" rx="10" fill="#0081FB"/>
-  <!-- Meta infinity -->
-  <path fill="#FFFFFF" transform="translate(16.5 26) scale(0.85)" d="M29.649 8.35c-1.626-2.862-3.37-4.4-5.642-4.4-2.125 0-3.847 1.235-5.452 3.125-.076.09-.676.81-.686.82-.413.52-1.036 1.305-1.376 1.305-.232 0-.652-.645-.982-1.195-1.15-1.914-2.735-4.55-5.724-4.55-2.75 0-5.643 3.322-5.643 9.556 0 3.56.663 8.142 3.567 8.142 2.013 0 3.44-1.685 4.79-3.61.52-.74 1.35-1.96 1.63-1.96.232 0 .662.56 1.002 1.08 1.42 2.17 3.41 5.19 6.5 5.19 2.33 0 4.59-1.86 6.58-4.87C32.1 19.94 35 14.04 35 10.81c0-2.8-.93-4.8-2.44-4.8-1.35 0-2.45 1.13-2.91 2.34z"/>
-  <text x="76" y="32" fill="#0C1222" font-family="Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif" font-size="16" font-weight="700" letter-spacing="-0.03em">Meta Business Partner</text>
-  <text x="76" y="52" fill="#64748B" font-family="Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="500">Official Meta technology partner</text>
-</svg>

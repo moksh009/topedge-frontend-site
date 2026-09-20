@@ -514,7 +514,7 @@ const CreatorDashboard = () => {
                             <div>
                                 <div className="font-semibold text-slate-100">Tiers</div>
                                 <div className="text-[10px] mt-1">
-                                    Builder 0–50 pts, Architect 51–200 pts, Grandmaster 201+ pts
+                                    Builder 0-50 pts, Architect 51-200 pts, Grandmaster 201+ pts
                                 </div>
                             </div>
                             <div className="text-right">

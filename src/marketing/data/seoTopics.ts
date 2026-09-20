@@ -22,15 +22,15 @@ export const SEO_TOPICS: Record<string, SeoTopic> = {
       'Recover abandoned carts on WhatsApp with Meta-approved templates, live Shopify cart data, and a three-message sequence built for Indian D2C.',
     title: 'WhatsApp Cart Recovery for Shopify | TopEdge',
     description:
-      'Abandoned cart recovery on WhatsApp for Shopify India — timing, Meta templates, COD-aware journeys, and recovery ₹ tracking in one workspace.',
+      'Abandoned cart recovery on WhatsApp for Shopify India, timing, Meta templates, COD-aware journeys, and recovery ₹ tracking in one workspace.',
     keywords:
       'WhatsApp cart recovery, abandoned cart recovery WhatsApp, Shopify cart recovery, ecommerce automation India',
     answerFirst:
-      'WhatsApp cart recovery is ecommerce automation that detects Shopify abandoned checkouts and sends Meta-approved WhatsApp messages with product, price, and a return-to-checkout link. For Indian D2C, it typically outperforms email because shoppers read WhatsApp faster — especially on COD-heavy catalogs.',
+      'WhatsApp cart recovery is ecommerce automation that detects Shopify abandoned checkouts and sends Meta-approved WhatsApp messages with product, price, and a return-to-checkout link. For Indian D2C, it typically outperforms email because shoppers read WhatsApp faster, especially on COD-heavy catalogs.',
     sections: [
       {
         h2: 'Why abandoned cart recovery belongs on WhatsApp',
-        body: 'Email still matters for newsletters, but cart abandonment is a short-window problem. A WhatsApp reminder within 30–60 minutes, grounded in live Shopify cart lines and ₹ totals, gives shoppers a one-tap path back to checkout. Pair it with a second value nudge and a final close within 72 hours — without spamming beyond Meta policy.',
+        body: 'Email still matters for newsletters, but cart abandonment is a short-window problem. A WhatsApp reminder within 30-60 minutes, grounded in live Shopify cart lines and ₹ totals, gives shoppers a one-tap path back to checkout. Pair it with a second value nudge and a final close within 72 hours, without spamming beyond Meta policy.',
       },
       {
         h2: 'A three-message sequence that respects Meta rules',
@@ -38,7 +38,7 @@ export const SEO_TOPICS: Record<string, SeoTopic> = {
       },
       {
         h2: 'Measure recovery ₹, not vanity opens',
-        body: 'Track sent → read → clicked → paid against Shopify orders. That is how you know cart recovery software is paying for itself — not just message volume.',
+        body: 'Track sent → read → clicked → paid against Shopify orders. That is how you know cart recovery software is paying for itself, not just message volume.',
       },
     ],
     bullets: [
@@ -56,7 +56,7 @@ export const SEO_TOPICS: Record<string, SeoTopic> = {
       {
         question: 'How many WhatsApp cart recovery messages should I send?',
         answer:
-          'Most Indian D2C brands see strong results with two to three messages over 48–72 hours. More than that often hurts trust and risks template quality.',
+          'Most Indian D2C brands see strong results with two to three messages over 48-72 hours. More than that often hurts trust and risks template quality.',
       },
       {
         question: 'Does TopEdge require Zapier for cart recovery?',
@@ -76,7 +76,7 @@ export const SEO_TOPICS: Record<string, SeoTopic> = {
     eyebrow: 'COD / RTO',
     h1: 'COD confirmation on WhatsApp',
     subtitle:
-      'Confirm Cash on Delivery orders before you ship — cut RTO risk with utility templates, Shopify order context, and operator takeover.',
+      'Confirm Cash on Delivery orders before you ship, cut RTO risk with utility templates, Shopify order context, and operator takeover.',
     title: 'COD Confirmation on WhatsApp | Reduce RTO Shopify',
     description:
       'WhatsApp COD confirmation for Shopify India: confirm, reschedule, or cancel before dispatch to reduce RTO while keeping conversion high.',
@@ -87,7 +87,7 @@ export const SEO_TOPICS: Record<string, SeoTopic> = {
     sections: [
       {
         h2: 'Confirm before you pack',
-        body: 'Trigger confirmation right after order creation. Show order number, items, and ₹ COD amount from Shopify. Offer clear reply paths — YES / reschedule / cancel — and escalate unsure buyers to Live Chat instead of shipping blindly.',
+        body: 'Trigger confirmation right after order creation. Show order number, items, and ₹ COD amount from Shopify. Offer clear reply paths, YES / reschedule / cancel, and escalate unsure buyers to Live Chat instead of shipping blindly.',
       },
       {
         h2: 'Branch journeys on payment method',
@@ -108,7 +108,7 @@ export const SEO_TOPICS: Record<string, SeoTopic> = {
       {
         question: 'Does COD confirmation on WhatsApp reduce RTO?',
         answer:
-          'Yes — confirming intent before dispatch typically cuts failed deliveries and refusal-on-delivery. Exact lift varies by category, AOV, and follow-up policy.',
+          'Yes, confirming intent before dispatch typically cuts failed deliveries and refusal-on-delivery. Exact lift varies by category, AOV, and follow-up policy.',
       },
       {
         question: 'Is COD confirmation a marketing or utility message?',
@@ -128,14 +128,14 @@ export const SEO_TOPICS: Record<string, SeoTopic> = {
     eyebrow: 'Integrations',
     h1: 'Shopify WhatsApp integration',
     subtitle:
-      'Connect Shopify OAuth and Meta WhatsApp Cloud API in one workspace — carts, orders, catalogs, and templates without duct-taping tools.',
+      'Connect Shopify OAuth and Meta WhatsApp Cloud API in one workspace, carts, orders, catalogs, and templates without duct-taping tools.',
     title: 'Shopify WhatsApp Integration | Meta Cloud API',
     description:
       'Native Shopify WhatsApp integration for Indian ecommerce: sync carts and orders, approve Meta templates, and run WhatsApp automation in TopEdge.',
     keywords:
       'Shopify WhatsApp integration, WhatsApp for Shopify, Meta Cloud API Shopify, ecommerce WhatsApp automation',
     answerFirst:
-      'A Shopify WhatsApp integration connects your store events (carts, orders, customers, catalog) to Meta’s WhatsApp Cloud API so you can automate cart recovery, COD confirmation, order updates, and support with live store data — not generic chatbot replies.',
+      'A Shopify WhatsApp integration connects your store events (carts, orders, customers, catalog) to Meta’s WhatsApp Cloud API so you can automate cart recovery, COD confirmation, order updates, and support with live store data, not generic chatbot replies.',
     sections: [
       {
         h2: 'What syncs from Shopify',
@@ -147,7 +147,7 @@ export const SEO_TOPICS: Record<string, SeoTopic> = {
       },
       {
         h2: 'Go live without a three-month project',
-        body: 'Most stores connect Shopify and WhatsApp credentials in about fifteen minutes. Meta business verification and first template approvals are the usual wait — not engineering.',
+        body: 'Most stores connect Shopify and WhatsApp credentials in about fifteen minutes. Meta business verification and first template approvals are the usual wait, not engineering.',
       },
     ],
     bullets: [

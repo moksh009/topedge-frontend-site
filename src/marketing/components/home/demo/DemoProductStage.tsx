@@ -2,7 +2,7 @@ import DemoProductVideoFrame from './DemoProductVideoFrame';
 import { demoAssetFor } from '../../../data/productDemoVideos';
 
 /**
- * Homepage hero — cart recovery demo video (no device chrome / iframe).
+ * Homepage hero, cart recovery demo video (no device chrome / iframe).
  */
 export default function DemoProductStage() {
   const demo = demoAssetFor('hero');

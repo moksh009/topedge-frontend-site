@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 export const PRICING_FAQS = [
   {
     q: 'Is GST included?',
-    a: 'No — prices are exclusive. +18% GST (SAC 998314). Invoices included on every plan.',
+    a: 'No, prices are exclusive. +18% GST (SAC 998314). Invoices included on every plan.',
   },
   {
     q: 'What’s in the free trial?',

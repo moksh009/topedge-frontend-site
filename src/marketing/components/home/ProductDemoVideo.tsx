@@ -9,7 +9,7 @@ type ProductDemoVideoProps = {
 };
 
 /**
- * Rounded product demo video — poster first, loads when near viewport.
+ * Rounded product demo video, poster first, loads when near viewport.
  * Restarts from 0 every time it enters view.
  */
 export default function ProductDemoVideo({
@@ -59,7 +59,7 @@ export default function ProductDemoVideo({
       const play = video.play();
       if (play && typeof play.catch === 'function') {
         play.catch(() => {
-          /* Autoplay can be blocked until user gesture — mute is already set */
+          /* Autoplay can be blocked until user gesture, mute is already set */
         });
       }
     };
@@ -78,7 +78,7 @@ export default function ProductDemoVideo({
 
     const onVisibility = () => {
       if (document.hidden) {
-        // Pause only — keep wasVisible so we can resume when the tab returns
+        // Pause only, keep wasVisible so we can resume when the tab returns
         video.pause();
         return;
       }

@@ -36,7 +36,7 @@ export default function AgencyPage() {
         <PageHero
           eyebrow="Agencies"
           title="Operate WhatsApp for the brands you manage"
-          subtitle="Standardize cart recovery, template hygiene, and inbox ops across clients — without rebuilding from scratch each time."
+          subtitle="Standardize cart recovery, template hygiene, and inbox ops across clients, without rebuilding from scratch each time."
         />
         <Section className="!pt-0">
           <SectionHeading
@@ -55,7 +55,7 @@ export default function AgencyPage() {
               },
               {
                 t: 'Honest reporting',
-                d: 'Recovery ₹ and Meta costs clients can understand — not vanity dashboards.',
+                d: 'Recovery ₹ and Meta costs clients can understand, not vanity dashboards.',
               },
             ].map((c) => (
               <MarketingCard key={c.t} className="!p-6">
@@ -78,7 +78,7 @@ export default function AgencyPage() {
         </Section>
         <MarketingCtaBand
           title="Pitch TopEdge on your next retainer"
-          subtitle="Start free on a client store — or talk DFY setup with our team."
+          subtitle="Start free on a client store, or talk DFY setup with our team."
           primaryLabel="Start free"
           secondaryLabel="Contact DFY"
           secondaryTo="/contact"

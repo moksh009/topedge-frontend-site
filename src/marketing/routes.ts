@@ -12,7 +12,6 @@ const MARKETING_PREFIXES = [
   '/signup',
   '/login',
   '/docs',
-  '/roi',
   '/terms',
   '/terms-of-service',
   '/compare',

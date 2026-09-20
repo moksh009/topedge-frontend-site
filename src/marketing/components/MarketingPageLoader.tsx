@@ -1,7 +1,23 @@
+/**
+ * Route/Suspense fallback, TopEdge brand loader (no generic spinner).
+ */
 export default function MarketingPageLoader() {
   return (
-    <div className="flex min-h-[50vh] items-center justify-center bg-white">
-      <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#efeaf8] border-t-[#7C3AED]" />
+    <div
+      className="flex min-h-[50vh] w-full items-center justify-center bg-white"
+      role="status"
+      aria-live="polite"
+      aria-label="Loading"
+    >
+      <img
+        src="/topedge-loader.gif"
+        alt=""
+        width={88}
+        height={88}
+        className="h-[5.5rem] w-[5.5rem] object-contain"
+        decoding="async"
+      />
+      <span className="sr-only">Loading…</span>
     </div>
   );
 }

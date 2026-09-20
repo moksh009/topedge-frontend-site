@@ -511,37 +511,215 @@
 }
 
 @media (max-width: 900px) {
+  /* Same 16:9 footprint as video / image cards — never grow taller */
   .demo-pixel__panel.demo-video-glow__frame {
-    aspect-ratio: 16 / 11;
+    aspect-ratio: 16 / 9;
     border-radius: 12px;
   }
 
   .demo-pixel__body {
-    grid-template-columns: 1fr 1fr;
-    gap: 0.55rem;
-    padding: 0.65rem;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    gap: 0.45rem;
+    padding: 0.5rem;
+  }
+
+  .demo-pixel__card-head {
+    padding: 0.45rem 0.55rem 0.2rem;
+    gap: 0.4rem;
+  }
+
+  .demo-pixel__card-title {
+    font-size: 0.625rem;
+  }
+
+  .demo-pixel__card-meta {
+    font-size: 0.5rem;
+  }
+
+  .demo-pixel__list {
+    padding: 0 0.2rem 0.3rem;
+  }
+
+  .demo-pixel__row {
+    gap: 0.4rem;
+    padding: 0.35rem 0.4rem;
+  }
+
+  .demo-pixel__avatar {
+    width: 1.65rem;
+    height: 1.65rem;
+  }
+
+  .demo-pixel__row-action {
+    font-size: 0.625rem;
+  }
+
+  .demo-pixel__row-phone {
+    font-size: 0.55rem;
+    margin-top: 0.06rem;
   }
 
   .demo-pixel__row-place {
     display: none;
   }
-}
 
-@media (max-width: 640px) {
-  .demo-pixel__panel.demo-video-glow__frame {
-    aspect-ratio: 10 / 12;
-  }
-
-  .demo-pixel__body {
-    grid-template-columns: 1fr;
+  .demo-pixel__row-time {
+    font-size: 0.5rem;
   }
 
   .demo-pixel__india {
-    min-height: 11rem;
+    margin: 0 0.1rem 0.25rem;
+  }
+
+  .demo-pixel__popup {
+    min-width: 5.5rem;
+    max-width: 6.75rem;
+    padding: 0.3rem 0.4rem 0.35rem;
+    border-radius: 8px;
+  }
+
+  .demo-pixel__popup-city {
+    font-size: 0.55rem;
+  }
+
+  .demo-pixel__popup-state {
+    font-size: 0.42rem;
+  }
+
+  .demo-pixel__popup-action {
+    font-size: 0.5rem;
+    margin-top: 0.1rem;
+  }
+
+  .demo-pixel__popup-phone {
+    font-size: 0.45rem;
+  }
+}
+
+@media (max-width: 640px) {
+  /* Match demo-video-glow cards exactly — width + 16:9 height */
+  .demo-pixel.demo-video-glow {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .demo-pixel__panel.demo-video-glow__frame {
+    aspect-ratio: 16 / 9;
+    border-radius: 12px;
+  }
+
+  /* Stay side-by-side like desktop so the frame doesn’t become a tall stack */
+  .demo-pixel__body {
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
+    gap: 0.35rem;
+    padding: 0.4rem;
+  }
+
+  .demo-pixel__card {
+    border-radius: 10px;
+  }
+
+  .demo-pixel__card-head {
+    padding: 0.35rem 0.45rem 0.15rem;
+  }
+
+  .demo-pixel__card-title {
+    font-size: 0.55rem;
+  }
+
+  .demo-pixel__card-meta {
+    font-size: 0.45rem;
+    gap: 0.25rem;
+  }
+
+  .demo-pixel__live-dot {
+    width: 0.28rem;
+    height: 0.28rem;
+    box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.18);
+  }
+
+  .demo-pixel__list {
+    padding: 0 0.15rem 0.25rem;
+  }
+
+  /* Fit three rows cleanly inside the shared 16:9 card */
+  .demo-pixel__row:nth-child(n + 4) {
+    display: none;
+  }
+
+  .demo-pixel__row {
+    gap: 0.3rem;
+    padding: 0.28rem 0.3rem;
+  }
+
+  .demo-pixel__row.is-fresh {
+    border-radius: 8px;
   }
 
   .demo-pixel__avatar {
-    width: 2.1rem;
-    height: 2.1rem;
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+
+  .demo-pixel__row-action {
+    font-size: 0.55rem;
+    line-height: 1.15;
+  }
+
+  .demo-pixel__row-phone {
+    font-size: 0.48rem;
+  }
+
+  .demo-pixel__row-time {
+    font-size: 0.45rem;
+  }
+
+  .demo-pixel__india {
+    min-height: 0;
+    margin: 0 0.05rem 0.2rem;
+  }
+
+  .demo-pixel__india-img {
+    height: 92%;
+    max-width: 78%;
+  }
+
+  .demo-pixel__popup {
+    min-width: 4.6rem;
+    max-width: 5.6rem;
+    padding: 0.22rem 0.3rem 0.28rem;
+    border-radius: 7px;
+  }
+
+  .demo-pixel__popup--right.demo-pixel__popup--above,
+  .demo-pixel__popup--left.demo-pixel__popup--above {
+    bottom: 1rem;
+  }
+
+  .demo-pixel__popup-city {
+    font-size: 0.48rem;
+  }
+
+  .demo-pixel__popup-state {
+    font-size: 0.38rem;
+  }
+
+  .demo-pixel__popup-action {
+    font-size: 0.42rem;
+  }
+
+  .demo-pixel__popup-phone {
+    font-size: 0.38rem;
+  }
+
+  .demo-pixel__pin-marker svg {
+    width: 14px;
+    height: 18px;
+  }
+
+  .demo-pixel__pin-pulse {
+    width: 1.1rem;
+    height: 1.1rem;
+    margin-left: -0.55rem;
   }
 }

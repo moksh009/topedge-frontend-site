@@ -104,7 +104,7 @@ function groupItems(items: string[]) {
   return groups;
 }
 
-/** Flat feature inventory — every plan. Quiet, dense, no card theater. */
+/** Flat feature inventory, every plan. Quiet, dense, no card theater. */
 export default function IncludedFeatures({ items }: { items: string[] }) {
   const groups = useMemo(() => groupItems(items || []), [items]);
   if (!groups.length) return null;

@@ -175,3 +175,51 @@
     display: none;
   }
 }
+
+@media (max-width: 899px) {
+  .mkt-sol.mkt-pf .mkt-pf__title {
+    font-size: clamp(1.35rem, 5.8vw, 1.85rem);
+  }
+
+  .mkt-sol.mkt-pf .mkt-pf__sub {
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+
+  .mkt-sol__actions {
+    gap: 0.55rem;
+    margin-top: 1.15rem;
+  }
+
+  .mkt-sol__actions > * {
+    flex: 1 1 auto;
+    min-width: min(100%, 9.5rem);
+    justify-content: center;
+  }
+
+  .mkt-sol__media {
+    padding-top: 0.5rem;
+  }
+
+  .mkt-sol__media::before {
+    inset: 10% 2% auto;
+    height: 55%;
+  }
+}
+
+@media (max-width: 639px) {
+  .mkt-sol__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .mkt-sol__actions > * {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .mkt-sol__help {
+    padding: 1.05rem 1rem;
+    border-radius: 16px;
+  }
+}

@@ -31,7 +31,7 @@ import {
 import '../marketing/styles/legal-page.css';
 
 /**
- * Public Privacy Policy — mirrors dash.topedgeai.com/privacy (v2026-08-02).
+ * Public Privacy Policy, mirrors dash.topedgeai.com/privacy (v2026-08-02).
  * Also served as static public/privacy.html for Meta crawlers.
  */
 export default function PrivacyPolicy() {
@@ -54,7 +54,7 @@ export default function PrivacyPolicy() {
             </li>
             <li>
               <strong>Integration data:</strong> When you connect Shopify, Meta (WhatsApp / Ads), or
-              related services — access tokens, store config, orders, catalogs, checkout events,
+              related services, access tokens, store config, orders, catalogs, checkout events,
               messaging history, and (when you connect Meta Ads) hashed Custom Audience uploads
               needed for automations you enable. Instagram messaging may appear in product UI but is
               not active in the current public release unless enabled for your workspace.
@@ -66,7 +66,7 @@ export default function PrivacyPolicy() {
             </li>
             <li>
               <strong>End-customer data:</strong> Shopper names, phones, emails, orders, and message
-              content — solely to run automations you configure.
+              content, solely to run automations you configure.
             </li>
             <li>
               <strong>Usage data:</strong> IP, browser, OS, and pages visited on our platform.
@@ -122,7 +122,7 @@ export default function PrivacyPolicy() {
               process data on our behalf.
             </li>
             <li>
-              <strong>Platform integrations:</strong> Meta / Shopify — only as required by actions
+              <strong>Platform integrations:</strong> Meta / Shopify, only as required by actions
               you configure.
             </li>
             <li>
@@ -167,8 +167,8 @@ export default function PrivacyPolicy() {
               <strong>Access</strong> a copy of personal data we hold about you.
             </li>
             <li>
-              <strong>Erasure</strong> — request deletion, subject to legal exceptions (Shopify
-              compliance webhooks are honored — see Section 7).
+              <strong>Erasure</strong>, request deletion, subject to legal exceptions (Shopify
+              compliance webhooks are honored, see Section 7).
             </li>
             <li>
               <strong>Rectification</strong> of inaccurate or incomplete data.
@@ -194,7 +194,7 @@ export default function PrivacyPolicy() {
           <h4>What we access</h4>
           <ul>
             <li>
-              <strong>Public profile:</strong> Name, picture, user ID — authentication and
+              <strong>Public profile:</strong> Name, picture, user ID, authentication and
               personalization.
             </li>
             <li>
@@ -205,7 +205,7 @@ export default function PrivacyPolicy() {
               connected.
             </li>
             <li>
-              <strong>Ads data:</strong> If you connect an Ad Account — performance metrics for
+              <strong>Ads data:</strong> If you connect an Ad Account, performance metrics for
               analytics (we do not manage ads without your action).
             </li>
             <li>
@@ -264,7 +264,7 @@ export default function PrivacyPolicy() {
               <a href={ACCOUNT_DELETE_URL}>{COMPANY_DASHBOARD_URL.replace(/^https:\/\//, '')}/settings</a>.
             </li>
             <li>
-              Remove the app in Facebook Apps and Websites — callback{' '}
+              Remove the app in Facebook Apps and Websites, callback{' '}
               <strong>{META_DATA_DELETION_URL}</strong> returns a confirmation URL.
             </li>
             <li>
@@ -291,7 +291,7 @@ export default function PrivacyPolicy() {
           </p>
           <h4>Shopify App Store</h4>
           <p>
-            Our app is <strong>free to install</strong> on the Shopify App Store — no Shopify app
+            Our app is <strong>free to install</strong> on the Shopify App Store, no Shopify app
             billing and no paywall on the connector. Optional TopEdge platform plans on{' '}
             <strong>dash.topedgeai.com</strong> are separate and not required for the Shopify
             integration.
@@ -307,15 +307,15 @@ export default function PrivacyPolicy() {
           </p>
           <ul>
             <li>
-              <strong>customers/data_request</strong> — log and provide available data on verified
+              <strong>customers/data_request</strong>, log and provide available data on verified
               request.
             </li>
             <li>
-              <strong>customers/redact</strong> — erase personal data for that customer in your
+              <strong>customers/redact</strong>, erase personal data for that customer in your
               workspace.
             </li>
             <li>
-              <strong>shop/redact</strong> — after uninstall, disconnect credentials and purge
+              <strong>shop/redact</strong>, after uninstall, disconnect credentials and purge
               store-linked data.
             </li>
           </ul>
@@ -409,7 +409,7 @@ export default function PrivacyPolicy() {
         <title>Privacy Policy | TopEdge AI</title>
         <meta
           name="description"
-          content="TopEdge AI Privacy Policy — how TopEdge Ai collects, uses, and protects data for Shopify and Meta / WhatsApp integrations."
+          content="TopEdge AI Privacy Policy, how TopEdge Ai collects, uses, and protects data for Shopify and Meta / WhatsApp integrations."
         />
         <link rel="canonical" href={COMPANY_SITE_PRIVACY_URL} />
         <meta property="og:type" content="website" />

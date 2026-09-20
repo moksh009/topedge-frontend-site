@@ -78,10 +78,30 @@ export default defineConfig(({ mode }) => {
       },
       rollupOptions: {
         output: {
-          manualChunks: {
-            vendor: ['react', 'react-dom', 'react-router-dom'],
-            animations: ['framer-motion'],
-            charts: ['chart.js', 'react-chartjs-2'],
+          manualChunks(id) {
+            if (id.includes('node_modules')) {
+              if (id.includes('react-dom') || id.includes('/react/') || id.includes('react-router')) {
+                return 'vendor';
+              }
+              if (id.includes('framer-motion') || id.includes('gsap') || id.includes('lenis')) {
+                return 'animations';
+              }
+              if (id.includes('chart.js') || id.includes('react-chartjs-2')) {
+                return 'charts';
+              }
+              if (id.includes('firebase')) {
+                return 'firebase';
+              }
+              if (id.includes('jspdf') || id.includes('mathjs')) {
+                return 'heavy';
+              }
+            }
+            if (id.includes('/src/marketing/')) {
+              return 'marketing';
+            }
+            if (id.includes('/src/pages/community/')) {
+              return 'community';
+            }
           },
         },
       },

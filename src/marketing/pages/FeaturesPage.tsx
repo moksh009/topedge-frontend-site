@@ -48,7 +48,7 @@ export default function FeaturesPage() {
                 to={`/features/${feature.slug}`}
                 className="group rounded-[24px] border border-[#efeaf8] bg-white p-6 transition hover:border-[#c4b5fd] hover:shadow-[0_20px_40px_-24px_rgba(124,58,237,0.35)]"
               >
-                <p className="mkt-eyebrow">{feature.label}</p>
+                <p className="mkt-eyebrow">{feature.slug.replace(/-/g, ' ')}</p>
                 <h2 className="mt-3 text-lg font-medium tracking-tight text-[#0c1222] group-hover:text-[#7C3AED]">
                   {feature.title}
                 </h2>
@@ -65,7 +65,7 @@ export default function FeaturesPage() {
           <SectionHeading
             eyebrow="How it feels"
             title="See TopEdge in motion"
-            subtitle="Product demos for the hubs your team opens every day — cart recovery, journeys, inbox, and more."
+            subtitle="Product demos for the hubs your team opens every day, cart recovery, journeys, inbox, and more."
             className="mb-10"
           />
           <div className="mx-auto w-full max-w-5xl">

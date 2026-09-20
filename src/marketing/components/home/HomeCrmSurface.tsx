@@ -17,7 +17,7 @@ function BentoTile({ tile }: { tile: Tile }) {
         <img
           className="home-crm__tile-img"
           src={tile.image}
-          alt=""
+          alt={`TopEdge ${tile.titleLead} ${tile.titleAccent} product screenshot`}
           width={3200}
           height={3200}
           loading="eager"
@@ -32,7 +32,7 @@ function BentoTile({ tile }: { tile: Tile }) {
   );
 }
 
-/** CRM bento — Orders · Profiles · Stock (Codex-style showcase tiles). */
+/** CRM bento, Orders · Profiles · Stock (Codex-style showcase tiles). */
 export default function HomeCrmSurface() {
   const { orders, profiles, stock } = CRM_BENTO;
 
@@ -44,7 +44,7 @@ export default function HomeCrmSurface() {
             Identity & <span className="home-crm__title-accent">CRM</span>
           </h2>
           <p className="home-crm__sub">
-            Orders, profiles, and stock — the ops surface your team opens every day.
+            Orders, profiles, and stock, the ops surface your team opens every day.
           </p>
         </header>
 

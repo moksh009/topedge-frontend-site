@@ -13,7 +13,7 @@ import { PageHero, Section, SectionHeading, MarketingCard } from '../components/
 const points = [
   {
     t: 'You own Meta approvals',
-    d: 'Templates never send until Meta marks them APPROVED. TopEdge surfaces status — it does not bypass your review.',
+    d: 'Templates never send until Meta marks them APPROVED. TopEdge surfaces status, it does not bypass your review.',
   },
   {
     t: 'Shopify is source of truth',
@@ -54,7 +54,7 @@ export default function SecurityPage() {
       <MarketingPage>
         <PageHero
           eyebrow="Security & trust"
-          title="Operator control first — especially on WhatsApp"
+          title="Operator control first, especially on WhatsApp"
           subtitle="WhatsApp is high-trust. TopEdge is built so merchants stay in charge of templates, sends, and store data."
         />
         <Section className="!pt-0">
@@ -84,7 +84,7 @@ export default function SecurityPage() {
         </Section>
         <MarketingCtaBand
           title="Run WhatsApp with clear controls"
-          subtitle="Start free — approve every template before anything sends."
+          subtitle="Start free, approve every template before anything sends."
           primaryLabel="Start free"
           secondaryLabel="See pricing"
           secondaryTo="/pricing"

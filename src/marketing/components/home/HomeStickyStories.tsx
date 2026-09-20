@@ -26,7 +26,7 @@ const STORIES: Story[] = [
     id: 'cod-prepaid',
     titleLead: 'COD → Prepaid',
     titleAccent: 'Conversion',
-    body: 'Convert cash-on-delivery checkouts to prepaid on a visual canvas—wait, branch, and message before it ships.',
+    body: 'Convert cash-on-delivery checkouts to prepaid on a visual canvas: wait, branch, and message before it ships.',
     glow: 'violet',
     kind: 'video',
     video: FEATURE_VIDEOS.cod,
@@ -35,7 +35,7 @@ const STORIES: Story[] = [
     id: 'shopify-tools',
     titleLead: 'Flow Builder +',
     titleAccent: 'Shopify Tools',
-    body: 'Build WhatsApp flows that fetch orders, update addresses, cancel shipments, and hand off to support—automation that already knows the cart and the SKU.',
+    body: 'Build WhatsApp flows that fetch orders, update addresses, cancel shipments, and hand off to support, automation that already knows the cart and the SKU.',
     glow: 'sky',
     kind: 'video',
     video: FEATURE_VIDEOS.shopifyTools,
@@ -44,7 +44,7 @@ const STORIES: Story[] = [
     id: 'optin-popup',
     titleLead: 'Website Opt-in',
     titleAccent: 'tools',
-    body: 'Pulse Drop, popup, spin wheel, mystery discount, and WhatsApp widget — capture numbers, then campaign from a consented list.',
+    body: 'Pulse Drop, popup, spin wheel, mystery discount, and WhatsApp widget. Capture numbers, then campaign from a consented list.',
     glow: 'indigo',
     kind: 'video',
     video: FEATURE_VIDEOS.optin,
@@ -53,7 +53,7 @@ const STORIES: Story[] = [
     id: 'intent-detection',
     titleLead: 'Real-time',
     titleAccent: 'Intent Detection',
-    body: 'Read purchase, size, and COD signals in WhatsApp — then route the right journey before the shopper goes cold.',
+    body: 'Read purchase, size, and COD signals in WhatsApp, then route the right journey before the shopper goes cold.',
     glow: 'indigo',
     kind: 'video',
     video: FEATURE_VIDEOS.intent,
@@ -62,7 +62,7 @@ const STORIES: Story[] = [
     id: 'segmentation',
     titleLead: 'Smart Audience',
     titleAccent: 'Segmentation',
-    body: 'Build cohorts from carts, COD risk, and purchase history — then enroll journeys and measure attributed revenue in one list.',
+    body: 'Build cohorts from carts, COD risk, and purchase history, then enroll journeys and measure attributed revenue in one list.',
     glow: 'rose',
     kind: 'video',
     video: FEATURE_VIDEOS.segmentation,
@@ -80,7 +80,7 @@ const STORIES: Story[] = [
     id: 'website-pixel',
     titleLead: 'Website Detailed',
     titleAccent: 'Tracking Pixel',
-    body: 'Watch live product views, scroll, and carts matched to WhatsApp numbers — ready to message.',
+    body: 'Watch live product views, scroll, and carts matched to WhatsApp numbers, ready to message.',
     glow: 'violet',
     kind: 'pixel',
   },
@@ -97,7 +97,7 @@ const STORIES: Story[] = [
     id: 'unified-identity',
     titleLead: 'Unified Customer',
     titleAccent: 'Identity',
-    body: 'Primary + secondary numbers and multiple emails collapse into one lead — so every chat and order stays on the same shopper.',
+    body: 'Primary + secondary numbers and multiple emails collapse into one lead, so every chat and order stays on the same shopper.',
     glow: 'violet',
     kind: 'image',
     image: FEATURE_IMAGES.unifiedIdentity,
@@ -150,7 +150,7 @@ function FeatureMoment({ story }: { story: Story }) {
   );
 }
 
-/** Product feature moments — video or still, restart from start when in view. */
+/** Product feature moments, video or still, restart from start when in view. */
 export default function HomeStickyStories() {
   return (
     <section

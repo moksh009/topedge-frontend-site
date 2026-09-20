@@ -26,7 +26,7 @@ function pickDeviceProfile(): {
   }
 
   const mobile = window.matchMedia('(max-width: 900px)').matches;
-  // CSS mesh is enough on phones/tablets — WebGL kills low-end scroll
+  // CSS mesh is enough on phones/tablets, WebGL kills low-end scroll
   if (mobile) {
     return { quality: 'low', maxDpr: 1, maxWaves: 12, enabled: false };
   }

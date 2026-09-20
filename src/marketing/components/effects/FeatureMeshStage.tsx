@@ -21,14 +21,13 @@ const MESH_SRC: Record<MeshKey, string> = {
   instagram: '/meshes/instagram.png',
   warranty: '/meshes/warranty.png',
   'profit-loss': '/meshes/profit-loss.png',
-  byok: '/meshes/byok.png',
   'intent-detection': '/meshes/intent-detection.png',
   'features-index': '/meshes/features-index.png',
   default: '/meshes/features-index.png',
 };
 
 /**
- * First-viewport mesh atmosphere — AI image per feature page
+ * First-viewport mesh atmosphere, AI image per feature page
  * (same language as homepage `/hero-mesh.png`, different color mood).
  */
 export default function FeatureMeshStage({
@@ -38,7 +37,7 @@ export default function FeatureMeshStage({
   fillViewport = true,
 }: {
   mesh?: MeshKey;
-  /** @deprecated unused — color comes from the AI mesh image */
+  /** @deprecated unused, color comes from the AI mesh image */
   tint?: MeshTint;
   children: ReactNode;
   className?: string;

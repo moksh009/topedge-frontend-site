@@ -9,7 +9,7 @@ export const blogPosts: BlogPost[] = [
     id: 1,
     title: 'WhatsApp Abandoned Cart Recovery for Shopify: A Practical Playbook',
     description:
-      'How Indian D2C brands recover abandoned carts on WhatsApp — timing, Meta templates, COD quirks, and measuring recovery ₹ on Shopify.',
+      'How Indian D2C brands recover abandoned carts on WhatsApp, timing, Meta templates, COD quirks, and measuring recovery ₹ on Shopify.',
     slug: 'whatsapp-abandoned-cart-recovery-shopify',
     date: '2026-09-01',
     readTime: '8 min',
@@ -24,19 +24,19 @@ export const blogPosts: BlogPost[] = [
       'cart recovery WhatsApp India',
     ],
     content: `
-<p>Abandoned carts are the quiet revenue leak in every Shopify store. Email recovery helps — but in India, shoppers live on WhatsApp. <strong>WhatsApp abandoned cart recovery</strong> closes the gap between “left at checkout” and “paid,” especially for COD-heavy catalogs.</p>
+<p>Abandoned carts are the quiet revenue leak in every Shopify store. Email recovery helps, but in India, shoppers live on WhatsApp. <strong>WhatsApp abandoned cart recovery</strong> closes the gap between “left at checkout” and “paid,” especially for COD-heavy catalogs.</p>
 <h2>Why WhatsApp beats email for cart recovery</h2>
 <p>Open rates on WhatsApp utility and carefully approved marketing templates routinely outperform email. Pair that with live Shopify cart data and you get ecommerce automation that feels personal: product name, variant, ₹ total, and a one-tap path back to checkout.</p>
 <h2>A three-message recovery sequence that works</h2>
 <ol>
-<li><strong>Gentle reminder (30–60 minutes)</strong> — utility-friendly tone: items waiting, stock note if relevant.</li>
-<li><strong>Value nudge (next day)</strong> — shipping reassurance, size help, or COD clarity — not a random discount spam.</li>
-<li><strong>Final close (48–72 hours)</strong> — scarcity only if true; otherwise offer human help via Live Chat.</li>
+<li><strong>Gentle reminder (30-60 minutes)</strong>, utility-friendly tone: items waiting, stock note if relevant.</li>
+<li><strong>Value nudge (next day)</strong>, shipping reassurance, size help, or COD clarity, not a random discount spam.</li>
+<li><strong>Final close (48-72 hours)</strong>, scarcity only if true; otherwise offer human help via Live Chat.</li>
 </ol>
 <h2>Meta template hygiene</h2>
 <p>Nothing sends until templates are approved. Build cart recovery copy that Meta will accept, track statuses in a template manager, and gate journeys so drafts never blast customers.</p>
 <h2>Measure recovery ₹, not vanity opens</h2>
-<p>Track sent → read → clicked → paid against Shopify orders. That is how you judge whether your <strong>Shopify automation</strong> is working — not just message volume.</p>
+<p>Track sent → read → clicked → paid against Shopify orders. That is how you judge whether your <strong>Shopify automation</strong> is working, not just message volume.</p>
 <p>Ready to run this on your store? <a href="/features/journeys">See WhatsApp cart recovery journeys</a> or <a href="/pricing">start a free trial</a>.</p>
 `,
   },
@@ -44,7 +44,7 @@ export const blogPosts: BlogPost[] = [
     id: 2,
     title: 'Shopify WhatsApp Automation: What to Automate First in 2026',
     description:
-      'Prioritize Shopify WhatsApp automation that pays: cart recovery, COD confirmation, order updates, then campaigns — a rollout order for Indian ecommerce.',
+      'Prioritize Shopify WhatsApp automation that pays: cart recovery, COD confirmation, order updates, then campaigns, a rollout order for Indian ecommerce.',
     slug: 'shopify-whatsapp-automation-what-to-automate-first',
     date: '2026-09-02',
     readTime: '7 min',
@@ -58,13 +58,13 @@ export const blogPosts: BlogPost[] = [
       'WhatsApp for Shopify',
     ],
     content: `
-<p><strong>Shopify WhatsApp automation</strong> is not “send more broadcasts.” It is connecting store events — carts, orders, COD status — to Meta-approved WhatsApp messages and a shared inbox your team can trust.</p>
+<p><strong>Shopify WhatsApp automation</strong> is not “send more broadcasts.” It is connecting store events, carts, orders, COD status, to Meta-approved WhatsApp messages and a shared inbox your team can trust.</p>
 <h2>Automate in this order</h2>
 <ol>
-<li><strong>Abandoned cart recovery</strong> — highest ROI for most D2C catalogs.</li>
-<li><strong>COD confirmation</strong> — cut RTO before you scale paid traffic.</li>
-<li><strong>Order &amp; shipping updates</strong> — kill WISMO tickets.</li>
-<li><strong>Campaigns &amp; drops</strong> — only after template and audience hygiene are solid.</li>
+<li><strong>Abandoned cart recovery</strong>, highest ROI for most D2C catalogs.</li>
+<li><strong>COD confirmation</strong>, cut RTO before you scale paid traffic.</li>
+<li><strong>Order &amp; shipping updates</strong>, kill WISMO tickets.</li>
+<li><strong>Campaigns &amp; drops</strong>, only after template and audience hygiene are solid.</li>
 </ol>
 <h2>Connect Shopify before you write copy</h2>
 <p>Without live carts and orders, WhatsApp becomes another generic chatbot. OAuth sync keeps prices, SKUs, and COD flags accurate inside every thread.</p>
@@ -77,7 +77,7 @@ export const blogPosts: BlogPost[] = [
     id: 3,
     title: 'COD Confirmation on WhatsApp: Reduce RTO for Shopify India',
     description:
-      'Use WhatsApp COD confirmation flows to reduce RTO on Shopify — utility templates, timing, and operator takeover for Indian D2C.',
+      'Use WhatsApp COD confirmation flows to reduce RTO on Shopify, utility templates, timing, and operator takeover for Indian D2C.',
     slug: 'cod-confirmation-whatsapp-reduce-rto-shopify',
     date: '2026-09-03',
     readTime: '6 min',
@@ -103,7 +103,7 @@ export const blogPosts: BlogPost[] = [
     id: 4,
     title: 'Ecommerce Automation on WhatsApp vs Email: What Wins for D2C India',
     description:
-      'Compare WhatsApp ecommerce automation vs email for cart recovery, order updates, and campaigns — when to use each channel on Shopify.',
+      'Compare WhatsApp ecommerce automation vs email for cart recovery, order updates, and campaigns, when to use each channel on Shopify.',
     slug: 'ecommerce-automation-whatsapp-vs-email-india',
     date: '2026-09-04',
     readTime: '6 min',
@@ -129,7 +129,7 @@ export const blogPosts: BlogPost[] = [
 <li>You need rich storytelling or newsletters</li>
 <li>WhatsApp marketing template limits are tight</li>
 </ul>
-<p>Best stacks run both — with Shopify as the source of truth and WhatsApp as the conversion channel.</p>
+<p>Best stacks run both, with Shopify as the source of truth and WhatsApp as the conversion channel.</p>
 <p><a href="/compare">How TopEdge compares</a> · <a href="/pricing">Pricing</a></p>
 `,
   },
@@ -137,7 +137,7 @@ export const blogPosts: BlogPost[] = [
     id: 5,
     title: 'Meta WhatsApp Cloud API for Shopify Brands: Templates Without the Headache',
     description:
-      'A plain-English guide to Meta WhatsApp Cloud API templates for Shopify ecommerce — categories, approval tips, and transparent rates.',
+      'A plain-English guide to Meta WhatsApp Cloud API templates for Shopify ecommerce, categories, approval tips, and transparent rates.',
     slug: 'meta-whatsapp-cloud-api-shopify-templates',
     date: '2026-09-05',
     readTime: '7 min',
@@ -163,7 +163,7 @@ export const blogPosts: BlogPost[] = [
     id: 6,
     title: 'WhatsApp Shared Inbox for Shopify: Support That Sees the Order',
     description:
-      'Why ecommerce teams need a WhatsApp shared inbox with Shopify order context — assignment, AI handoff, and Instant Instagram in one place.',
+      'Why ecommerce teams need a WhatsApp shared inbox with Shopify order context, assignment, AI handoff, and Instant Instagram in one place.',
     slug: 'whatsapp-shared-inbox-shopify-order-context',
     date: '2026-09-06',
     readTime: '5 min',
@@ -191,7 +191,7 @@ export const blogPosts: BlogPost[] = [
     id: 7,
     title: 'How Agencies Run WhatsApp Automation Across Multiple Shopify Brands',
     description:
-      'Agency playbook for multi-brand WhatsApp automation on Shopify — reusable cart recovery journeys, template hygiene, and DFY ops.',
+      'Agency playbook for multi-brand WhatsApp automation on Shopify, reusable cart recovery journeys, template hygiene, and DFY ops.',
     slug: 'agencies-whatsapp-automation-multi-brand-shopify',
     date: '2026-09-07',
     readTime: '6 min',
@@ -205,7 +205,7 @@ export const blogPosts: BlogPost[] = [
       'ecommerce automation agency',
     ],
     content: `
-<p>Agencies lose margin rebuilding the same cart recovery flow for every Shopify client. Standardize <strong>WhatsApp automation</strong> playbooks: journeys, templates, inbox rules — then customize catalog and tone.</p>
+<p>Agencies lose margin rebuilding the same cart recovery flow for every Shopify client. Standardize <strong>WhatsApp automation</strong> playbooks: journeys, templates, inbox rules, then customize catalog and tone.</p>
 <h2>Productize your DFY offer</h2>
 <p>Package setup (connect Shopify + Meta), recovery live, and monthly campaign ops. Keep Meta approvals visible so clients trust the channel.</p>
 <p><a href="/agency">Agency WhatsApp automation</a> · <a href="/contact">Talk DFY</a></p>
@@ -246,7 +246,7 @@ export const blogPosts: BlogPost[] = [
     id: 9,
     title: 'Best WhatsApp Automation Tools for Shopify India (2026)',
     description:
-      'How to evaluate WhatsApp automation tools for Shopify India — cart recovery, COD, Meta Cloud API, inbox, and pricing signals that matter.',
+      'How to evaluate WhatsApp automation tools for Shopify India, cart recovery, COD, Meta Cloud API, inbox, and pricing signals that matter.',
     slug: 'best-whatsapp-automation-tools-shopify-india',
     date: '2026-09-08',
     readTime: '9 min',
@@ -264,18 +264,18 @@ export const blogPosts: BlogPost[] = [
     content: `
 <p><strong>Best WhatsApp automation tools for Shopify India</strong> share five traits: native Shopify sync, Meta Cloud API templates, abandoned cart recovery, COD confirmation, and a shared inbox with order context. Everything else is nice-to-have.</p>
 <h2>What “best” means for Indian D2C</h2>
-<p>Indian Shopify brands care about RTO, COD, ₹ pricing, and Meta template approvals — not generic chatbot demos. Rank tools by whether carts and orders drive journeys automatically.</p>
+<p>Indian Shopify brands care about RTO, COD, ₹ pricing, and Meta template approvals, not generic chatbot demos. Rank tools by whether carts and orders drive journeys automatically.</p>
 <h2>Evaluation checklist</h2>
 <ol>
-<li><strong>Shopify OAuth depth</strong> — carts, orders, COD flags, catalog.</li>
-<li><strong>Template gating</strong> — no sends until APPROVED.</li>
-<li><strong>Cart recovery sequence</strong> — 2–3 messages with checkout links.</li>
-<li><strong>COD confirmation</strong> — confirm / reschedule / cancel before ship.</li>
-<li><strong>Inbox + AI handoff</strong> — humans see order # beside the thread.</li>
-<li><strong>Transparent Meta rates</strong> — pass-through pricing you can forecast.</li>
+<li><strong>Shopify OAuth depth</strong>, carts, orders, COD flags, catalog.</li>
+<li><strong>Template gating</strong>, no sends until APPROVED.</li>
+<li><strong>Cart recovery sequence</strong>, 2-3 messages with checkout links.</li>
+<li><strong>COD confirmation</strong>, confirm / reschedule / cancel before ship.</li>
+<li><strong>Inbox + AI handoff</strong>, humans see order # beside the thread.</li>
+<li><strong>Transparent Meta rates</strong>, pass-through pricing you can forecast.</li>
 </ol>
 <h2>How TopEdge fits</h2>
-<p>TopEdge is built as a WhatsApp growth OS for Shopify India: journeys, Live Chat, Meta manager, and recovery math in one workspace. Compare named alternatives on our <a href="/compare">compare hub</a> — including <a href="/compare/wati">vs WATI</a>, <a href="/compare/interakt">vs Interakt</a>, and <a href="/compare/bitespeed">vs Bitespeed</a>.</p>
+<p>TopEdge is built as a WhatsApp growth OS for Shopify India: journeys, Live Chat, Meta manager, and recovery math in one workspace. Compare named alternatives on our <a href="/compare">compare hub</a>, including <a href="/compare/wati">vs WATI</a>, <a href="/compare/interakt">vs Interakt</a>, and <a href="/compare/bitespeed">vs Bitespeed</a>.</p>
 <p><a href="/features/journeys#abandoned-cart">Cart recovery lander</a> · <a href="/pricing">Pricing</a></p>
 `,
   },
@@ -283,7 +283,7 @@ export const blogPosts: BlogPost[] = [
     id: 10,
     title: 'How to Reduce RTO with WhatsApp COD Confirmation',
     description:
-      'Step-by-step: reduce RTO on Shopify with WhatsApp COD confirmation — timing, utility templates, reply paths, and operator takeover.',
+      'Step-by-step: reduce RTO on Shopify with WhatsApp COD confirmation, timing, utility templates, reply paths, and operator takeover.',
     slug: 'how-to-reduce-rto-with-whatsapp-cod-confirmation',
     date: '2026-09-08',
     readTime: '8 min',
@@ -308,7 +308,7 @@ export const blogPosts: BlogPost[] = [
 <li>Pause automation when an agent replies.</li>
 </ol>
 <h2>Measure what finance cares about</h2>
-<p>Track confirmation rate, ship rate, and RTO % before/after — not just message opens.</p>
+<p>Track confirmation rate, ship rate, and RTO % before/after, not just message opens.</p>
 <p><a href="/features/journeys">COD confirmation</a> · <a href="/features/journeys">Journeys</a></p>
 `,
   },
@@ -316,7 +316,7 @@ export const blogPosts: BlogPost[] = [
     id: 11,
     title: 'What Is Ecommerce Automation on Shopify WhatsApp?',
     description:
-      'Plain definition of ecommerce automation on Shopify WhatsApp — carts, COD, order updates, campaigns — and what to automate first in India.',
+      'Plain definition of ecommerce automation on Shopify WhatsApp, carts, COD, order updates, campaigns, and what to automate first in India.',
     slug: 'what-is-ecommerce-automation-shopify-whatsapp',
     date: '2026-09-08',
     readTime: '7 min',
@@ -330,7 +330,7 @@ export const blogPosts: BlogPost[] = [
       'D2C automation India',
     ],
     content: `
-<p><strong>Ecommerce automation on Shopify WhatsApp</strong> means connecting store events — abandoned carts, orders, COD status, shipments — to Meta-approved WhatsApp messages and a team inbox, so growth and support run without copy-pasting from Shopify admin.</p>
+<p><strong>Ecommerce automation on Shopify WhatsApp</strong> means connecting store events, abandoned carts, orders, COD status, shipments, to Meta-approved WhatsApp messages and a team inbox, so growth and support run without copy-pasting from Shopify admin.</p>
 <h2>Core automations</h2>
 <ul>
 <li>Abandoned cart recovery</li>
@@ -348,7 +348,7 @@ export const blogPosts: BlogPost[] = [
     id: 12,
     title: 'AI WhatsApp Chatbot for Shopify India: Catalog-Grounded Answers',
     description:
-      'What a good AI WhatsApp chatbot for Shopify looks like in India — live SKUs, ₹ prices, COD FAQs, and clean handoff to humans.',
+      'What a good AI WhatsApp chatbot for Shopify looks like in India, live SKUs, ₹ prices, COD FAQs, and clean handoff to humans.',
     slug: 'ai-whatsapp-chatbot-for-shopify-india',
     date: '2026-09-08',
     readTime: '7 min',
@@ -362,7 +362,7 @@ export const blogPosts: BlogPost[] = [
       'WhatsApp automation AI',
     ],
     content: `
-<p>An <strong>AI WhatsApp chatbot for Shopify India</strong> should answer from live catalog data — SKUs, sizes, ₹ prices — then hand off to humans when intent is purchase risk, COD doubt, or complaint. Hallucinated inventory destroys trust faster than slow replies.</p>
+<p>An <strong>AI WhatsApp chatbot for Shopify India</strong> should answer from live catalog data, SKUs, sizes, ₹ prices, then hand off to humans when intent is purchase risk, COD doubt, or complaint. Hallucinated inventory destroys trust faster than slow replies.</p>
 <h2>Must-have behaviors</h2>
 <ol>
 <li>Ground answers in Shopify catalog and order APIs.</li>

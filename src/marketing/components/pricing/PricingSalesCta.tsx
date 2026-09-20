@@ -29,7 +29,7 @@ export default function PricingSalesCta() {
             eyebrow="Help"
             title="Still deciding?"
             highlight="We're here"
-            sub="Tell us your order volume on WhatsApp — we'll recommend a plan and help you launch your first recovery flow."
+            sub="Tell us your order volume on WhatsApp, we'll recommend a plan and help you launch your first recovery flow."
             className="mkt-sales__head"
           />
 

@@ -105,7 +105,7 @@ export default function FeatureMatrix({
           eyebrow="Comparison"
           title="Compare"
           highlight="all plans"
-          sub="Volume and journey powers change by tier — everything else stays on every plan."
+          sub="Volume and journey powers change by tier, everything else stays on every plan."
         />
       </motion.div>
 

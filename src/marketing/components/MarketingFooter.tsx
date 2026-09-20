@@ -1,6 +1,6 @@
 import { FormEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Linkedin, Instagram, Youtube, Mail, MapPin, Phone } from 'lucide-react';
+import { Mail, MapPin, Phone } from 'lucide-react';
 import {
   COMPANY_ADDRESS_LINES,
   COMPANY_BRAND_NAME,
@@ -28,7 +28,6 @@ const columns: { title: string; links: FootLink[] }[] = [
     title: 'Product',
     links: [
       { label: 'Pricing', href: '/pricing' },
-      { label: 'ROI calculator', href: '/roi', badge: 'New' },
       { label: 'Journey', href: '/features/journeys' },
       { label: 'Opt-in tools', href: '/features/opt-in-tools' },
       { label: 'Audience Campaigns', href: '/features/campaigns' },
@@ -48,14 +47,57 @@ const columns: { title: string; links: FootLink[] }[] = [
   },
 ];
 
+function SocialLinkedIn() {
+  return (
+    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden>
+      <path
+        fill="#0A66C2"
+        d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.73V1.73C24 .77 23.21 0 22.23 0z"
+      />
+    </svg>
+  );
+}
+
+function SocialInstagram() {
+  return (
+    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden>
+      <defs>
+        <radialGradient id="mkt-foot-ig" cx="30%" cy="107%" r="150%">
+          <stop offset="0%" stopColor="#fdf497" />
+          <stop offset="5%" stopColor="#fdf497" />
+          <stop offset="45%" stopColor="#fd5949" />
+          <stop offset="60%" stopColor="#d6249f" />
+          <stop offset="90%" stopColor="#285AEB" />
+        </radialGradient>
+      </defs>
+      <path
+        fill="url(#mkt-foot-ig)"
+        d="M12 2.16c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85C2.38 3.92 3.9 2.38 7.15 2.23 8.42 2.17 8.8 2.16 12 2.16zM12 0C8.74 0 8.33.01 7.05.07 2.7.27.27 2.69.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.2 4.36 2.62 6.78 6.98 6.98C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c4.35-.2 6.78-2.62 6.98-6.98.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95C23.73 2.7 21.31.27 16.95.07 15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-11.85a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"
+      />
+    </svg>
+  );
+}
+
+function SocialYouTube() {
+  return (
+    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden>
+      <path
+        fill="#FF0000"
+        d="M23.5 6.2a3.02 3.02 0 0 0-2.12-2.14C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.38.56A3.02 3.02 0 0 0 .5 6.2 31.6 31.6 0 0 0 0 12a31.6 31.6 0 0 0 .5 5.8 3.02 3.02 0 0 0 2.12 2.14c1.88.56 9.38.56 9.38.56s7.5 0 9.38-.56a3.02 3.02 0 0 0 2.12-2.14A31.6 31.6 0 0 0 24 12a31.6 31.6 0 0 0-.5-5.8z"
+      />
+      <path fill="#fff" d="M9.75 15.02V8.98L15.5 12l-5.75 3.02z" />
+    </svg>
+  );
+}
+
 const socials = [
-  { label: 'LinkedIn', href: COMPANY_SOCIAL.linkedin, Icon: Linkedin },
-  { label: 'Instagram', href: COMPANY_SOCIAL.instagram, Icon: Instagram },
-  { label: 'YouTube', href: COMPANY_SOCIAL.youtube, Icon: Youtube },
+  { label: 'LinkedIn', href: COMPANY_SOCIAL.linkedin, Icon: SocialLinkedIn },
+  { label: 'Instagram', href: COMPANY_SOCIAL.instagram, Icon: SocialInstagram },
+  { label: 'YouTube', href: COMPANY_SOCIAL.youtube, Icon: SocialYouTube },
 ];
 
 /**
- * Minimal site footer — brand + contact first, then sitemap + newsletter.
+ * Minimal site footer, brand + contact first, then sitemap + newsletter.
  */
 export default function MarketingFooter() {
   const [email, setEmail] = useState('');
@@ -76,7 +118,7 @@ export default function MarketingFooter() {
               <Link to="/" className="mkt-foot__logo" aria-label={`${COMPANY_BRAND_NAME} home`}>
                 <img
                   src="/logo.png"
-                  alt=""
+                  alt="TopEdge AI"
                   width={28}
                   height={28}
                   className="mkt-foot__logo-mark"
@@ -88,22 +130,33 @@ export default function MarketingFooter() {
               </Link>
               <div className="mkt-foot__company-rows">
                 <p className="mkt-foot__company-row">
-                  <MapPin size={13} strokeWidth={1.75} aria-hidden />
-                  <span>{COMPANY_ADDRESS_LINES.join(', ')}</span>
-                </p>
-                <p className="mkt-foot__company-row">
-                  <Mail size={13} strokeWidth={1.75} aria-hidden />
-                  <a href={`mailto:${COMPANY_EMAIL}`}>{COMPANY_EMAIL}</a>
-                </p>
-                <p className="mkt-foot__company-row">
-                  <Phone size={13} strokeWidth={1.75} aria-hidden />
-                  <a href={`tel:+${COMPANY_PHONE_E164}`}>{COMPANY_PHONE}</a>
-                  <span className="mkt-foot__company-sep" aria-hidden>
-                    ·
+                  <MapPin size={14} strokeWidth={1.75} aria-hidden />
+                  <span className="mkt-foot__company-text">
+                    {COMPANY_ADDRESS_LINES.map((line, i) => (
+                      <span key={line}>
+                        {i > 0 ? <br /> : null}
+                        {line}
+                      </span>
+                    ))}
                   </span>
-                  <a href={COMPANY_WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
-                    WhatsApp
-                  </a>
+                </p>
+                <p className="mkt-foot__company-row">
+                  <Mail size={14} strokeWidth={1.75} aria-hidden />
+                  <span className="mkt-foot__company-text">
+                    <a href={`mailto:${COMPANY_EMAIL}`}>{COMPANY_EMAIL}</a>
+                  </span>
+                </p>
+                <p className="mkt-foot__company-row">
+                  <Phone size={14} strokeWidth={1.75} aria-hidden />
+                  <span className="mkt-foot__company-text">
+                    <a href={`tel:+${COMPANY_PHONE_E164}`}>{COMPANY_PHONE}</a>
+                    <span className="mkt-foot__company-sep" aria-hidden>
+                      ·
+                    </span>
+                    <a href={COMPANY_WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+                      WhatsApp
+                    </a>
+                  </span>
                 </p>
               </div>
             </div>
@@ -132,11 +185,11 @@ export default function MarketingFooter() {
               <p className="mkt-foot__news-eyebrow">Newsletter</p>
               <h3 className="mkt-foot__news-title">Recovery playbooks in your inbox</h3>
               <p className="mkt-foot__news-sub">
-                Short WhatsApp + Shopify tips — no fluff.
+                Short WhatsApp + Shopify tips, no fluff.
               </p>
               {sent ? (
                 <p className="mkt-foot__news-ok" role="status">
-                  Thanks — you&apos;re on the list. Meanwhile,{' '}
+                  Thanks, you&apos;re on the list. Meanwhile,{' '}
                   <Link to="/blog">browse the blog</Link>.
                 </p>
               ) : (
@@ -175,7 +228,7 @@ export default function MarketingFooter() {
                         rel="noopener noreferrer"
                         aria-label={label}
                       >
-                        <Icon className="h-3.5 w-3.5" strokeWidth={1.75} />
+                        <Icon />
                       </a>
                     </li>
                   ))}

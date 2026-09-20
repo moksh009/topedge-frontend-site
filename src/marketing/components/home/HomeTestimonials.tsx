@@ -7,7 +7,7 @@ const SIDE_MS = 520;
 const SWAP_MS = 580;
 
 /**
- * Back cards share the same spot — tilt only, no offset “depth” stack.
+ * Back cards share the same spot, tilt only, no offset “depth” stack.
  */
 const POSES = [
   { x: 0, y: 0, rotate: 0, scale: 1, opacity: 1 },
@@ -182,7 +182,7 @@ function TestimonialCard({
         <div className="home-voices__biz" aria-label="TopEdge AI">
           <img
             src="/brand-mark.png"
-            alt=""
+            alt="TopEdge AI"
             width={22}
             height={22}
             loading="lazy"
@@ -198,7 +198,7 @@ function TestimonialCard({
 }
 
 /**
- * Badge-stack — every 5s:
+ * Badge-stack, every 5s:
  * 1) front slides aside (other cards stay put, same position / tilt only)
  * 2) front tucks behind; next card rises; lanyard threads the hole
  */
@@ -264,7 +264,7 @@ export default function HomeTestimonials({ hideHeader = false }: { hideHeader?: 
               <span className="home-voices__hl">backed by results</span>
             </h2>
             <p className="home-voices__sub">
-              Cart recovery, COD confirms, and inbox wins — in their words.
+              Cart recovery, COD confirms, and inbox wins, in their words.
             </p>
           </header>
         )}

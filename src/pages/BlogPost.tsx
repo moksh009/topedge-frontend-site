@@ -102,7 +102,7 @@ export default function BlogPost() {
               <p className="mkt-blog-cta__title">Run this on your Shopify store</p>
               <p className="mkt-blog-cta__sub">
                 Connect Shopify and WhatsApp, approve Meta templates, and publish cart recovery
-                journeys — free for 14 days.
+                journeys, free for 14 days.
               </p>
               <div className="mkt-blog-cta__actions">
                 <a href={DASH_SIGNUP} className="mkt-btn-primary">

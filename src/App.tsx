@@ -33,7 +33,6 @@ const LoginRedirect = React.lazy(() => import('./marketing/pages/LoginRedirect')
 const DocsRedirect = React.lazy(() => import('./marketing/pages/DocsRedirect'));
 const Blog = React.lazy(() => import('./pages/Blog'));
 const BlogPost = React.lazy(() => import('./pages/BlogPost'));
-const RoiPage = React.lazy(() => import('./marketing/pages/RoiPage'));
 const TermsPage = React.lazy(() => import('./marketing/pages/TermsPage'));
 const CompareIndexPage = React.lazy(() => import('./marketing/pages/CompareIndexPage'));
 const ComparePage = React.lazy(() => import('./marketing/pages/ComparePage'));
@@ -93,10 +92,10 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       : 'TopEdge';
 
   const pageDescription = isCommunityRoute
-    ? 'Join the TopEdge community — automation workflows, resources, and builders.'
+    ? 'Join the TopEdge community, automation workflows, resources, and builders.'
     : marketing
       ? 'WhatsApp automation for Shopify: abandoned cart recovery, COD confirmations, Live Chat, and ecommerce journeys for Indian D2C.'
-      : 'TopEdge — WhatsApp growth for Shopify and builders.';
+      : 'TopEdge, WhatsApp growth for Shopify and builders.';
 
   return (
     <div
@@ -205,7 +204,7 @@ const LazyAuthShell = React.lazy(() =>
   )
 );
 
-/** Skip Firebase/auth bundle on marketing routes — faster first paint for GTM pages */
+/** Skip Firebase/auth bundle on marketing routes, faster first paint for GTM pages */
 function RouteProviders({ children }: { children: React.ReactNode }) {
   const { pathname } = useLocation();
   if (isMarketingRoute(pathname)) {
@@ -274,7 +273,7 @@ const AnimatedRoutes = () => {
           <Route path="/signup" element={<SignupRedirect />} />
           <Route path="/login" element={<LoginRedirect />} />
           <Route path="/docs" element={<DocsRedirect />} />
-          <Route path="/roi" element={<RoiPage />} />
+          <Route path="/roi" element={<Navigate to="/features/journeys" replace />} />
           <Route path="/ai-caller" element={<AiCallerRedirect />} />
           <Route path="/ai-chatbot" element={<AiChatbotRedirect />} />
           <Route path="/blog" element={<Blog />} />

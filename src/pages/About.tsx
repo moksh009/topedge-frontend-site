@@ -13,11 +13,11 @@ import MarketingPage from '../marketing/components/MarketingPage';
 const values = [
   {
     title: 'Built for Indian D2C',
-    desc: 'COD, ₹ pricing, RTO economics, and Meta template rules — not a US-first playbook pasted onto WhatsApp.',
+    desc: 'COD, ₹ pricing, RTO economics, and Meta template rules, not a US-first playbook pasted onto WhatsApp.',
   },
   {
     title: 'Revenue over vanity metrics',
-    desc: 'We measure recovered carts, reply rates, and campaign ROI — not message volume for its own sake.',
+    desc: 'We measure recovered carts, reply rates, and campaign ROI, not message volume for its own sake.',
   },
   {
     title: 'You stay in control',
@@ -28,7 +28,7 @@ const values = [
 const stats = [
   { value: '15 min', label: 'Typical time to first live flow' },
   { value: '3×', label: 'Common cart recovery uplift vs email-only' },
-  { value: '24–48h', label: 'Meta template approval window' },
+  { value: '24-48h', label: 'Meta template approval window' },
   { value: '₹', label: 'Transparent pricing for India' },
 ];
 
@@ -58,7 +58,7 @@ export default function About() {
         <PageHero
           eyebrow="About TopEdge"
           title="WhatsApp growth OS for Shopify India"
-          subtitle="We connect Shopify data, Meta-approved templates, visual automations, and AI — so D2C teams sell and support on the channel customers already use."
+          subtitle="We connect Shopify data, Meta-approved templates, visual automations, and AI, so D2C teams sell and support on the channel customers already use."
         >
               <PrimaryButton to="/signup">Start free</PrimaryButton>
         </PageHero>
@@ -80,7 +80,7 @@ export default function About() {
           <SectionHeading
             eyebrow="What we believe"
             title="Commerce conversations should drive revenue"
-            subtitle="TopEdge is the operating layer between your store, Meta, and WhatsApp — not another generic chatbot."
+            subtitle="TopEdge is the operating layer between your store, Meta, and WhatsApp, not another generic chatbot."
             center
           />
           <Stagger className="grid gap-6 md:grid-cols-3">
@@ -100,7 +100,7 @@ export default function About() {
             <Eyebrow className="text-center">Join us</Eyebrow>
             <h2 className="text-2xl tracking-tight md:text-3xl">Ready to see it on your store?</h2>
             <p className="mt-4 text-slate-500">
-              Connect Shopify, approve templates, and publish your first flow — or talk to us about fully managed setup.
+              Connect Shopify, approve templates, and publish your first flow, or talk to us about fully managed setup.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <PrimaryButton to="/signup">Create free account</PrimaryButton>

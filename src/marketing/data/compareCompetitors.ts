@@ -39,7 +39,7 @@ export type CompareCompetitor = {
   keywords: string;
   h1: string;
   subtitle: string;
-  /** GEO / AI-answer block — concise verdict */
+  /** GEO / AI-answer block, concise verdict */
   answerFirst: string;
   whoForTopEdge: string;
   whoForCompetitor: string;
@@ -61,7 +61,7 @@ export type CompareCompetitor = {
   related: { label: string; href: string }[];
 };
 
-/** TopEdge public plans (marketing catalog — monthly labels). */
+/** TopEdge public plans (marketing catalog, monthly labels). */
 export const TOPEDGE_PLANS_SUMMARY = [
   {
     name: 'Launch',
@@ -112,20 +112,20 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
       'WATI is a WhatsApp Business Solution Provider. TopEdge is a Shopify-first WhatsApp growth OS. The gap shows up in Meta billing transparency, native ecommerce identity, and how much setup COD / warranty / pixel work needs.',
     differentiators: [
       {
-        title: 'Pay Meta — not a markup tax',
+        title: 'Pay Meta, not a markup tax',
         body: 'Template traffic stays at Meta rates. No platform usage layer eating margin as you scale sends.',
       },
       {
         title: 'AI without an Astra gate',
-        body: 'BYOK + RAG on core plans (~₹0.2–₹0.3 / message). No jump to a higher tier just to turn AI on.',
+        body: 'BYOK + RAG on core plans (~₹0.2-₹0.3 / message). No jump to a higher tier just to turn AI on.',
       },
       {
         title: 'One shopper, one profile',
-        body: 'Orders, phones, and emails merge automatically — COD, warranty, and journeys share the same identity.',
+        body: 'Orders, phones, and emails merge automatically, COD, warranty, and journeys share the same identity.',
       },
       {
         title: 'Flows that do not meter out',
-        body: 'Advanced builder with unlimited execution on every plan — not monthly trigger caps.',
+        body: 'Advanced builder with unlimited execution on every plan, not monthly trigger caps.',
       },
     ],
     matrix: pairwiseMatrix('wati'),
@@ -135,7 +135,7 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
     deepDives: [
       {
         title: 'Cost at volume',
-        body: 'At high template volume, WATI’s usage charges stack on Meta. TopEdge keeps markup at 0% — the gap shows up on the monthly bill, not the feature list.',
+        body: 'At high template volume, WATI’s usage charges stack on Meta. TopEdge keeps markup at 0%, the gap shows up on the monthly bill, not the feature list.',
       },
       {
         title: 'Shopify ops vs BSP toolkit',
@@ -162,30 +162,30 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
       },
       {
         name: 'Pro / Business',
-        price: '~₹5,999–₹16,999/mo',
+        price: '~₹5,999-₹16,999/mo',
         note: 'Higher automation & AI (Astra) tiers',
         highlights: ['Advanced automation', 'AI on higher tiers', 'More integrations', 'Priority support'],
       },
     ],
     topedgePlansNote:
-      'TopEdge Launch / Growth / Scale include AI tooling, unlimited flow execution, and 0% template markup — Meta fees pass through separately.',
+      'TopEdge Launch / Growth / Scale include AI tooling, unlimited flow execution, and 0% template markup, Meta fees pass through separately.',
     pricingCaveat:
       'Competitor plan prices change often and may differ by region, billing cycle, and add-ons. Verify on wati.io. Meta WhatsApp fees apply on both platforms; WATI may add platform usage charges above Meta base rates.',
     faqs: [
       {
         question: 'Will my WhatsApp bill be lower on TopEdge?',
         answer:
-          'Often at volume — TopEdge keeps 0% template markup. WATI adds platform usage above Meta. Run your monthly send volume through both before switching.',
+          'Often at volume, TopEdge keeps 0% template markup. WATI adds platform usage above Meta. Run your monthly send volume through both before switching.',
       },
       {
         question: 'Do I need Astra for AI on WATI?',
         answer:
-          'WATI AI typically needs Astra or a higher tier. TopEdge AI is BYOK + RAG on core plans (~₹0.2–₹0.3 / message).',
+          'WATI AI typically needs Astra or a higher tier. TopEdge AI is BYOK + RAG on core plans (~₹0.2-₹0.3 / message).',
       },
       {
         question: 'Can I run COD → prepaid without developers?',
         answer:
-          'On TopEdge yes — Shopify-native checkout (e.g. GoKwik). On WATI that funnel usually needs custom API / webhook work.',
+          'On TopEdge yes, Shopify-native checkout (e.g. GoKwik). On WATI that funnel usually needs custom API / webhook work.',
       },
     ],
     related: [
@@ -213,9 +213,9 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
     h1: 'TopEdge vs AiSensy',
     subtitle: 'TopEdge AI vs AiSensy for Shopify WhatsApp ecommerce.',
     answerFirst:
-      'Pick TopEdge AI for native Shopify ops — 0% Meta markup, BYOK AI, unified identity, COD → prepaid, and unlimited flows. Pick AiSensy if you want WhatsApp marketing with credits and are fine gating flows / AI behind tiers.',
+      'Pick TopEdge AI for native Shopify ops, 0% Meta markup, BYOK AI, unified identity, COD → prepaid, and unlimited flows. Pick AiSensy if you want WhatsApp marketing with credits and are fine gating flows / AI behind tiers.',
     whoForTopEdge:
-      'You want one Shopify-native stack: identity, COD → prepaid, analytics, warranty, and unlimited chatflows — without template markups.',
+      'You want one Shopify-native stack: identity, COD → prepaid, analytics, warranty, and unlimited chatflows, without template markups.',
     whoForCompetitor:
       'You mainly need WhatsApp campaigns and keyword automations, and can pay AI / flow unlocks as credits or higher tiers.',
     positioning:
@@ -223,19 +223,19 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
     differentiators: [
       {
         title: 'Templates without a usage layer',
-        body: 'Meta billed direct — no platform markup stacking on every marketing conversation.',
+        body: 'Meta billed direct, no platform markup stacking on every marketing conversation.',
       },
       {
         title: 'Predictable AI cost',
-        body: 'BYOK + RAG (~₹0.2–₹0.3 / message) instead of a per-message AI add-on meter.',
+        body: 'BYOK + RAG (~₹0.2-₹0.3 / message) instead of a per-message AI add-on meter.',
       },
       {
         title: 'Ecommerce ops built in',
-        body: 'Unified identity, store pixel, warranty, and COD → prepaid ship native — not webhook projects.',
+        body: 'Unified identity, store pixel, warranty, and COD → prepaid ship native, not webhook projects.',
       },
       {
         title: 'Builder unlocked on day one',
-        body: 'Advanced flows with unlimited runs on every plan — not credit gates or higher-tier unlocks.',
+        body: 'Advanced flows with unlimited runs on every plan, not credit gates or higher-tier unlocks.',
       },
     ],
     matrix: pairwiseMatrix('aisensy'),
@@ -245,7 +245,7 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
     deepDives: [
       {
         title: 'Two meters that add up',
-        body: 'AiSensy often stacks platform usage on templates plus a per-message AI add-on. TopEdge keeps markup at 0% and AI on BYOK — the difference compounds with send volume.',
+        body: 'AiSensy often stacks platform usage on templates plus a per-message AI add-on. TopEdge keeps markup at 0% and AI on BYOK, the difference compounds with send volume.',
       },
       {
         title: 'Glue work vs native stack',
@@ -253,7 +253,7 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
       },
       {
         title: 'When AiSensy is enough',
-        body: 'If broadcasts and keyword automations are the whole job — and deep Shopify ops are secondary — AiSensy’s marketing-platform model can still fit.',
+        body: 'If broadcasts and keyword automations are the whole job, and deep Shopify ops are secondary, AiSensy’s marketing-platform model can still fit.',
       },
     ],
     competitorPlans: [
@@ -278,19 +278,19 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
       },
     ],
     topedgePlansNote:
-      'TopEdge Launch / Growth / Scale include the advanced flow builder, unlimited executions, and 0% template markup — Meta fees pass through separately.',
+      'TopEdge Launch / Growth / Scale include the advanced flow builder, unlimited executions, and 0% template markup, Meta fees pass through separately.',
     pricingCaveat:
       'AiSensy pricing, credits, and add-ons change often. Verify on aisensy.com. Meta WhatsApp fees apply on both platforms; AiSensy may add platform usage charges and AI add-on fees above Meta base rates.',
     faqs: [
       {
         question: 'Is my template bill lower on TopEdge?',
         answer:
-          'Often yes at volume — 0% markup vs AiSensy’s platform usage above Meta. Compare with your monthly send mix.',
+          'Often yes at volume, 0% markup vs AiSensy’s platform usage above Meta. Compare with your monthly send mix.',
       },
       {
         question: 'How is AI priced differently?',
         answer:
-          'TopEdge is BYOK + RAG (~₹0.2–₹0.3 / message). AiSensy commonly meters AI as a per-message add-on.',
+          'TopEdge is BYOK + RAG (~₹0.2-₹0.3 / message). AiSensy commonly meters AI as a per-message add-on.',
       },
       {
         question: 'Is the flow builder gated?',
@@ -325,7 +325,7 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
     answerFirst:
       'Pick TopEdge AI for INR order-based plans, 0% Meta markup, BYOK AI, unified identity, and unlimited flows. Pick Interakt if you want a Shopify App Store WhatsApp suite (catalog sync, cart reminders, COD → prepaid via WhatsApp Pay) with USD app billing.',
     whoForTopEdge:
-      'You want flat INR pricing, Meta at cost, one unified customer profile, warranty, and unlimited flow runs — without stacking App + conversation fees.',
+      'You want flat INR pricing, Meta at cost, one unified customer profile, warranty, and unlimited flow runs, without stacking App + conversation fees.',
     whoForCompetitor:
       'You want a Shopify-listed WhatsApp app for catalog sync, cart reminders, COD → prepaid on WhatsApp Pay, and chatbot tiers from the App Store.',
     positioning:
@@ -333,7 +333,7 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
     differentiators: [
       {
         title: 'INR plans, Meta at cost',
-        body: 'Published Launch / Growth / Scale in INR — no Shopify App subscription stacked on conversation fees.',
+        body: 'Published Launch / Growth / Scale in INR, no Shopify App subscription stacked on conversation fees.',
       },
       {
         title: 'AI on core plans',
@@ -341,11 +341,11 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
       },
       {
         title: 'Identity that survives every order',
-        body: 'One merged profile with warranty batches — not standard Shopify / WhatsApp contacts alone.',
+        body: 'One merged profile with warranty batches, not standard Shopify / WhatsApp contacts alone.',
       },
       {
         title: 'Unlimited flows, every plan',
-        body: 'Advanced builder unlocked day one — not basic linear on Growth and branching only on Advanced+.',
+        body: 'Advanced builder unlocked day one, not basic linear on Growth and branching only on Advanced+.',
       },
     ],
     matrix: pairwiseMatrix('interakt'),
@@ -405,19 +405,19 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
     deepDives: [
       {
         title: 'Two Interakt price surfaces',
-        body: 'Shopify App Store lists Growth ~$41/mo, Advanced ~$51/mo, Enterprise ~$99/mo (plus Meta charges). Interakt’s India website also shows INR CRM-style plans (e.g. ~₹2,499/mo Starter) with separate AI-agent packaging. Always match the surface you will buy — App vs web — before comparing to TopEdge’s published INR catalog.',
+        body: 'Shopify App Store lists Growth ~$41/mo, Advanced ~$51/mo, Enterprise ~$99/mo (plus Meta charges). Interakt’s India website also shows INR CRM-style plans (e.g. ~₹2,499/mo Starter) with separate AI-agent packaging. Always match the surface you will buy, App vs web, before comparing to TopEdge’s published INR catalog.',
       },
       {
         title: 'COD → prepaid is real on Interakt',
-        body: 'Interakt documents COD → prepaid on WhatsApp Pay with Razorpay or PayU, expiry windows, and discount incentives. TopEdge is competitive here via Shopify-native checkout partners and identity-linked journeys — the gap is less “can they?” and more stack depth around identity, warranty, and Meta gates.',
+        body: 'Interakt documents COD → prepaid on WhatsApp Pay with Razorpay or PayU, expiry windows, and discount incentives. TopEdge is competitive here via Shopify-native checkout partners and identity-linked journeys, the gap is less “can they?” and more stack depth around identity, warranty, and Meta gates.',
       },
       {
         title: 'AI agents vs BYOK',
-        body: 'Interakt markets Sales, FAQ, and Lead Qualification WhatsApp AI Agents — typically Enterprise App (~$99) or a paid add-on on Growth/Advanced. TopEdge keeps AI on BYOK + RAG without locking it to the top App tier.',
+        body: 'Interakt markets Sales, FAQ, and Lead Qualification WhatsApp AI Agents, typically Enterprise App (~$99) or a paid add-on on Growth/Advanced. TopEdge keeps AI on BYOK + RAG without locking it to the top App tier.',
       },
       {
         title: 'Where Interakt still fits',
-        body: 'If your priority is a Shopify App Store install for catalog sync, cart reminders, and WhatsApp Pay COD conversion — and deep native identity / warranty are secondary — Interakt’s App path can be enough.',
+        body: 'If your priority is a Shopify App Store install for catalog sync, cart reminders, and WhatsApp Pay COD conversion, and deep native identity / warranty are secondary, Interakt’s App path can be enough.',
       },
     ],
     competitorPlans: [
@@ -457,14 +457,14 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
       },
     ],
     topedgePlansNote:
-      'TopEdge Launch / Growth / Scale include AI tooling, unlimited flow execution, and 0% template markup — Meta fees pass through separately.',
+      'TopEdge Launch / Growth / Scale include AI tooling, unlimited flow execution, and 0% template markup, Meta fees pass through separately.',
     pricingCaveat:
-      'Interakt Shopify App prices (Sep 2026): Growth ~$41 · Advanced ~$51 · Enterprise ~$99 /mo plus Meta conversation fees. India website INR tiers and AI add-ons differ — verify on apps.shopify.com/interakt-sales and interakt.shop/pricing.',
+      'Interakt Shopify App prices (Sep 2026): Growth ~$41 · Advanced ~$51 · Enterprise ~$99 /mo plus Meta conversation fees. India website INR tiers and AI add-ons differ, verify on apps.shopify.com/interakt-sales and interakt.shop/pricing.',
     faqs: [
       {
         question: 'Is Interakt cheaper once Meta fees are in?',
         answer:
-          'Maybe at low volume — but Interakt stacks an App subscription (from ~$41) on Meta charges. TopEdge keeps 0% markup with flat INR plans. Model both at your send rate.',
+          'Maybe at low volume, but Interakt stacks an App subscription (from ~$41) on Meta charges. TopEdge keeps 0% markup with flat INR plans. Model both at your send rate.',
       },
       {
         question: 'Where do Interakt AI agents unlock?',
@@ -474,7 +474,7 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
       {
         question: 'Can Interakt convert COD to prepaid?',
         answer:
-          'Yes — WhatsApp Pay with Razorpay or PayU is documented. TopEdge does the same job with Shopify checkout partners plus unified identity.',
+          'Yes, WhatsApp Pay with Razorpay or PayU is documented. TopEdge does the same job with Shopify checkout partners plus unified identity.',
       },
       {
         question: 'USD App or INR website?',
@@ -507,9 +507,9 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
     h1: 'TopEdge vs Bitespeed',
     subtitle: 'TopEdge AI vs Bitespeed for Shopify WhatsApp ecommerce.',
     answerFirst:
-      'Pick TopEdge AI for Shopify India recovery, COD, and inbox on flat INR pricing with AI included. Pick Bitespeed when you want WhatsApp plus email, SMS, Instagram, and voice AI agents — and can budget a ~$250+/mo USD base plus AI add-ons.',
+      'Pick TopEdge AI for Shopify India recovery, COD, and inbox on flat INR pricing with AI included. Pick Bitespeed when you want WhatsApp plus email, SMS, Instagram, and voice AI agents, and can budget a ~$250+/mo USD base plus AI add-ons.',
     whoForTopEdge:
-      'You want Shopify India cart recovery, COD, and inbox — flat INR pricing, AI included, no USD platform floor.',
+      'You want Shopify India cart recovery, COD, and inbox, flat INR pricing, AI included, no USD platform floor.',
     whoForCompetitor:
       'You want an omnichannel growth OS: WhatsApp plus email, SMS, Instagram, and voice AI agents under one vendor.',
     positioning:
@@ -518,19 +518,19 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
     differentiators: [
       {
         title: 'AI in the base plan',
-        body: 'Intelligence hub / BYOK included — not ~$100/mo AI Chatbot and Marketing add-ons on a USD floor.',
+        body: 'Intelligence hub / BYOK included, not ~$100/mo AI Chatbot and Marketing add-ons on a USD floor.',
       },
       {
         title: 'INR pricing you can publish',
-        body: 'Launch ₹1,999 · Growth ₹3,999 · Scale ₹6,499 by Shopify order volume — no ~$250+ USD starting tier.',
+        body: 'Launch ₹1,999 · Growth ₹3,999 · Scale ₹6,499 by Shopify order volume, no ~$250+ USD starting tier.',
       },
       {
         title: 'WhatsApp depth over channel sprawl',
-        body: 'Shopify-native recovery, COD, Meta gates, and warranty — built for India D2C, not an omnichannel suite.',
+        body: 'Shopify-native recovery, COD, Meta gates, and warranty, built for India D2C, not an omnichannel suite.',
       },
       {
         title: 'Honest on browse recovery',
-        body: 'Bitespeed covers cart + browse. TopEdge ships cart recovery today — we do not claim browse parity.',
+        body: 'Bitespeed covers cart + browse. TopEdge ships cart recovery today, we do not claim browse parity.',
       },
     ],
     matrix: pairwiseMatrix('bitespeed'),
@@ -575,14 +575,14 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
       },
       {
         area: 'Instagram automation',
-        topedge: 'Soon — not live',
+        topedge: 'Soon, not live',
         competitor: 'Live (bots + comment automation)',
         edge: 'Competitor',
       },
       {
         area: 'Website pixel tracking',
         topedge: 'Yes, Shopify-native',
-        competitor: 'Popups / widgets — full pixel not verified',
+        competitor: 'Popups / widgets, full pixel not verified',
         edge: 'TopEdge',
       },
       {
@@ -607,15 +607,15 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
     deepDives: [
       {
         title: 'What the USD floor really costs',
-        body: 'Public Bitespeed tiers start ~$250–$500/mo plus Meta fees, then ~$100 each for AI Chatbot and AI Marketing (1k AI chats, then ~$0.05). TopEdge’s published INR catalog is easier to forecast for mid-market D2C.',
+        body: 'Public Bitespeed tiers start ~$250-$500/mo plus Meta fees, then ~$100 each for AI Chatbot and AI Marketing (1k AI chats, then ~$0.05). TopEdge’s published INR catalog is easier to forecast for mid-market D2C.',
       },
       {
         title: 'Omnichannel vs WhatsApp focus',
-        body: 'Bitespeed wins if you need email, SMS, Instagram, and voice in one inbox. TopEdge is deliberately WhatsApp + Shopify — pair an ESP if you already have one.',
+        body: 'Bitespeed wins if you need email, SMS, Instagram, and voice in one inbox. TopEdge is deliberately WhatsApp + Shopify, pair an ESP if you already have one.',
       },
       {
         title: 'When Bitespeed still fits',
-        body: 'Global or multi-channel brands that want AI agents across WhatsApp and social — and can absorb a USD platform floor — should evaluate Bitespeed seriously.',
+        body: 'Global or multi-channel brands that want AI agents across WhatsApp and social, and can absorb a USD platform floor, should evaluate Bitespeed seriously.',
       },
     ],
     competitorPlans: [
@@ -655,19 +655,19 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
       },
     ],
     topedgePlansNote:
-      'TopEdge Launch ₹1,999 · Growth ₹3,999 · Scale ₹6,499 — flat INR, published, tied to Shopify order volume. AI included; Meta conversation fees pass through separately.',
+      'TopEdge Launch ₹1,999 · Growth ₹3,999 · Scale ₹6,499, flat INR, published, tied to Shopify order volume. AI included; Meta conversation fees pass through separately.',
     pricingCaveat:
-      'Bitespeed plans (Sep 2026, public listings): WhatsApp Stack ~$250 · Omnichannel Starter ~$350 · Full Stack ~$500 /mo — plus ~$100/mo each for AI Chatbot and AI Marketing (1k AI chats then ~$0.05). Verify on bitespeed.co.',
+      'Bitespeed plans (Sep 2026, public listings): WhatsApp Stack ~$250 · Omnichannel Starter ~$350 · Full Stack ~$500 /mo, plus ~$100/mo each for AI Chatbot and AI Marketing (1k AI chats then ~$0.05). Verify on bitespeed.co.',
     faqs: [
       {
         question: 'Who should pick TopEdge over Bitespeed?',
         answer:
-          'Shopify India teams that want cart, COD, and inbox on flat INR with AI included — without a full omnichannel USD stack.',
+          'Shopify India teams that want cart, COD, and inbox on flat INR with AI included, without a full omnichannel USD stack.',
       },
       {
         question: 'Does Bitespeed do cart and COD?',
         answer:
-          'Yes — cart and browse recovery, COD confirm / COD → prepaid, broadcasts, and support. TopEdge matches cart + COD; we do not claim browse parity.',
+          'Yes, cart and browse recovery, COD confirm / COD → prepaid, broadcasts, and support. TopEdge matches cart + COD; we do not claim browse parity.',
       },
       {
         question: 'Why does AI cost more on Bitespeed?',

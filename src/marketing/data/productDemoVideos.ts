@@ -1,5 +1,5 @@
 /**
- * Product demo videos — quality-first H.264 (not GIF, not CRF 30@1280).
+ * Product demo videos, quality-first H.264 (not GIF, not CRF 30@1280).
  *
  * Encode: ./scripts/compress-demo-video.sh input.mp4 name
  *   → 1920 wide, lanczos, CRF 18 @ 30fps, muted, faststart + sharp JPG poster

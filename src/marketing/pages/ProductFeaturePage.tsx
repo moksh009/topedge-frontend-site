@@ -14,6 +14,7 @@ import {
 } from '../data/productPages';
 import { organizationJsonLd, breadcrumbJsonLd, webPageJsonLd } from '../data/pageSeo';
 import FeatureMeshStage from '../components/effects/FeatureMeshStage';
+import HomeTrust from '../components/home/HomeTrust';
 import '../styles/product-feature.css';
 
 type Props = {
@@ -57,7 +58,7 @@ function ShotFrame({
 
 function BentoTile({ tile }: { tile: ProductBento }) {
   const span = tile.span === 'half' ? 'half' : tile.span === 'full' ? 'full' : 'third';
-  const label = `${tile.titleLead} ${tile.titleAccent}`.trim();
+  const label = tile.imageAlt || `${tile.titleLead} ${tile.titleAccent}`.trim();
 
   return (
     <article className={`mkt-pf__tile mkt-pf__tile--${span}`}>
@@ -146,7 +147,17 @@ function ProductFeatureView({ page }: { page: ProductPage }) {
             {page.title}{' '}
             <span className="mkt-pf__title-accent">{page.titleAccent}</span>
           </h1>
-          <p className="mkt-pf__sub">{page.subtitle}</p>
+          <p className="mkt-pf__sub">
+            {page.subtitle.split('\n').map((line, i) => (
+              <span key={`${line}-${i}`}>
+                {i > 0 ? <br /> : null}
+                {line}
+              </span>
+            ))}
+          </p>
+          <div className="mkt-pf__trust">
+            <HomeTrust onStage />
+          </div>
         </header>
 
           <section className="mkt-pf__media" aria-label="Product preview">
@@ -232,7 +243,7 @@ function ProductFeatureView({ page }: { page: ProductPage }) {
   );
 }
 
-/** Shared enterprise product page — Journey, flow, campaigns, CRM, and more. */
+/** Shared enterprise product page, Journey, flow, campaigns, CRM, and more. */
 export default function ProductFeaturePage({ pageId }: Props) {
   const page = getProductPage(pageId);
   return <ProductFeatureView page={page} />;

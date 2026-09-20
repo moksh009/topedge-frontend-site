@@ -7,7 +7,7 @@ export const faqs = [
   {
     question: 'How does abandoned cart recovery on WhatsApp work?',
     answer:
-      'When a shopper leaves items in cart, Journey triggers Meta-approved WhatsApp nudges with product context. Most merchants go live after template approval — typically 24 to 48 hours.',
+      'When a shopper leaves items in cart, Journey triggers Meta-approved WhatsApp nudges with product context. Most merchants go live after template approval, typically 24 to 48 hours.',
   },
   {
     question: 'How long does Shopify WhatsApp setup take?',
@@ -22,7 +22,7 @@ export const faqs = [
   {
     question: 'Can TopEdge handle COD confirmation on WhatsApp?',
     answer:
-      'Yes. Journeys branch on COD status, rupee totals, and RTO-aware copy — built for Indian D2C checkout patterns.',
+      'Yes. Journeys branch on COD status, rupee totals, and RTO-aware copy, built for Indian D2C checkout patterns.',
   },
   {
     question: 'How does Meta WhatsApp billing work?',
@@ -48,7 +48,7 @@ export const homeStories = [
   {
     id: 'journey' as const,
     title: 'Drag-and-Drop Journey Builder',
-    body: 'Map post-purchase flows on a visual canvas—wait, branch, and message from one place.',
+    body: 'Map post-purchase flows on a visual canvas: wait, branch, and message from one place.',
     href: '/features/journeys',
     cta: 'Start free',
   },
@@ -61,15 +61,15 @@ export const homeStories = [
   },
   {
     id: 'ai-brain' as const,
-    title: 'Audience Segmentation & Lead Scoring',
-    body: 'Score and segment shoppers by engagement so every broadcast reaches the right people.',
-    href: '/features/audience-crm',
+    title: 'AI Brain, WhatsApp AI on Your Keys',
+    body: 'Bring your own OpenAI or Claude key. Ground replies in catalog and policies, Intent Detect saves tokens.',
+    href: '/features/ai-brain',
     cta: 'Start free',
   },
   {
     id: 'connect' as const,
     title: 'Automated Order & Shipping Alerts',
-    body: 'Send confirmations, tracking, and shipping updates on WhatsApp—cut WISMO tickets.',
+    body: 'Send confirmations, tracking, and shipping updates on WhatsApp, cut WISMO tickets.',
     href: '/integrations',
     cta: 'Start free',
   },
@@ -104,10 +104,10 @@ export const homeIntegrations = [
     href: '/features/instagram',
   },
   {
-    name: 'Analytics',
+    name: 'Tracking Pixel',
     rows: [
-      { label: 'Funnel', value: 'Sent · read · clicked · paid' },
-      { label: 'Outcome', value: 'Recovery ₹, not vanity' },
+      { label: 'Install', value: 'Shopify theme app embed' },
+      { label: 'Signal', value: 'Product · cart intent → WhatsApp' },
     ],
     action: 'Open',
     href: '/features/analytics',
@@ -146,16 +146,17 @@ export const modules = [
   { name: 'Dashboard', outcome: 'Store + support KPIs at a glance', href: '/features' },
   { name: 'Live Chat', outcome: 'Unified WA + IG inbox', href: '/features/live-chat' },
   { name: 'AI Brain', outcome: 'Catalog-grounded replies', href: '/features/ai-brain' },
-  { name: 'Analytics', outcome: 'Recovery ₹, not vanity charts', href: '/features/analytics' },
+  { name: 'Tracking Pixel', outcome: 'Website intent → WhatsApp', href: '/features/analytics' },
   { name: 'Audience', outcome: 'Customers, segments, scores', href: '/features/audience-crm' },
   { name: 'Campaigns', outcome: 'Meta-safe broadcasts', href: '/features/campaigns' },
   { name: 'Flow Builder', outcome: 'AI form → WA flows', href: '/features/flow-builder' },
   { name: 'Journey', outcome: 'Cart, COD & order journeys', href: '/features/journeys' },
   { name: 'Meta Manager', outcome: 'Templates, catalog, QR', href: '/features/meta-manager' },
   { name: 'IG Automation', outcome: 'Comment & story to DM', href: '/features/instagram' },
-  { name: 'Warranty', outcome: 'Batches, portal, claims', href: '/features/warranty' },
+  { name: 'Warranty', outcome: 'Hub, queue, assign', href: '/features/warranty' },
   { name: 'Intent detection', outcome: 'Route chats by meaning', href: '/features/intent-detection' },
-  { name: 'P&L Analytics', outcome: 'Recovery ₹ vs Meta costs', href: '/features/profit-loss' },
+  { name: 'Profit & costs', outcome: 'True net after COD & RTO', href: '/features/profit-loss' },
+  { name: 'Opt-in tools', outcome: 'Popup, spin, widget capture', href: '/features/opt-in-tools' },
   { name: 'Integrations', outcome: 'Shopify + Meta connect', href: '/integrations' },
 ];
 
@@ -186,7 +187,7 @@ export const howItWorks = [
 export const testimonials = [
   {
     quote:
-      'We moved cart recovery from email-only to a 3-message WhatsApp sequence. Recovery went from 4% to 11% in the first month — and we finally see which template actually converts.',
+      'We moved cart recovery from email-only to a 3-message WhatsApp sequence. Recovery went from 4% to 11% in the first month, and we finally see which template actually converts.',
     name: 'Priya Mehta',
     role: 'Founder of Kaya Roots',
     company: 'Kaya Roots',
@@ -212,7 +213,7 @@ export const testimonials = [
   },
   {
     quote:
-      'The AI form built our first Flow Builder bot in minutes. We tweaked two nodes and were live before the weekend sale — no agency sprint required.',
+      'The AI form built our first Flow Builder bot in minutes. We tweaked two nodes and were live before the weekend sale, no agency sprint required.',
     name: 'Neha Sharma',
     role: 'Growth lead at Bean & Brew',
     company: 'Bean & Brew',

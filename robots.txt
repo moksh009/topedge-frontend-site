@@ -1,4 +1,4 @@
-# Root copy — deployed robots live in public/robots.txt
+# Root copy, deployed robots live in public/robots.txt
 # Canonical site: https://topedgeai.com
 
 User-agent: *

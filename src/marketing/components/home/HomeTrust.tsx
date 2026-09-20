@@ -21,7 +21,7 @@ const logos = [
   },
 ];
 
-/** Trusted-logo marquee — white marks only, no wordmark duplicates */
+/** Trusted-logo marquee, white marks only, no wordmark duplicates */
 export default function HomeTrust({ onStage = false }: { onStage?: boolean }) {
   const track = [...logos, ...logos, ...logos, ...logos];
 
@@ -42,7 +42,7 @@ export default function HomeTrust({ onStage = false }: { onStage?: boolean }) {
               rel={logo.href === '#' ? undefined : 'noopener noreferrer'}
               aria-label={logo.name}
             >
-              <img src={logo.src} alt="" />
+              <img src={logo.src} alt={logo.name} />
             </a>
           ))}
         </div>

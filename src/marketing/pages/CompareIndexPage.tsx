@@ -11,11 +11,11 @@ const FEATURED = [
   {
     href: '/compare/topedge-vs-wati-vs-aisensy',
     title: 'TopEdge AI vs WATI vs AiSensy',
-    body: 'Markup, AI cost, identity, COD → prepaid, and chatflow caps — one board.',
+    body: 'Markup, AI cost, identity, COD → prepaid, and chatflow caps, one board.',
     logos: [
-      '/logo.png',
-      '/marketing/compare/compare-logo-wati.png',
-      '/marketing/compare/compare-logo-aisensy.png',
+      { src: '/logo.png', alt: 'TopEdge AI' },
+      { src: '/marketing/compare/compare-logo-wati.png', alt: 'WATI' },
+      { src: '/marketing/compare/compare-logo-aisensy.png', alt: 'AiSensy' },
     ],
     badge: '3-way',
   },
@@ -52,7 +52,7 @@ export default function CompareIndexPage() {
             <span className="mkt-cmp__h1-brand">
               <img
                 src="/brand-mark.png"
-                alt=""
+                alt="TopEdge AI"
                 width={28}
                 height={28}
                 className="mkt-cmp__h1-mark"
@@ -73,10 +73,10 @@ export default function CompareIndexPage() {
               <Link key={f.href} to={f.href} className="mkt-cmp-index__card mkt-cmp-index__card--wide">
                 {f.badge ? <span className="mkt-cmp-index__badge">{f.badge}</span> : null}
                 <div className="mkt-cmp-index__card-top">
-                  {f.logos.map((src, i) => (
-                    <span key={src} className="mkt-cmp-index__logo-stack">
+                  {f.logos.map((logo, i) => (
+                    <span key={logo.src} className="mkt-cmp-index__logo-stack">
                       {i > 0 ? <span className="mkt-cmp-index__vs">vs</span> : null}
-                      <img src={src} alt="" width={32} height={32} />
+                      <img src={logo.src} alt={logo.alt} width={32} height={32} />
                     </span>
                   ))}
                 </div>
@@ -101,9 +101,9 @@ export default function CompareIndexPage() {
             {competitors.map((c) => (
               <Link key={c.slug} to={`/compare/${c.slug}`} className="mkt-cmp-index__card">
                 <div className="mkt-cmp-index__card-top">
-                  <img src="/logo.png" alt="" width={32} height={32} />
+                  <img src="/logo.png" alt="TopEdge AI" width={32} height={32} />
                   <span className="mkt-cmp-index__vs">vs</span>
-                  <img src={c.logo} alt="" width={32} height={32} />
+                  <img src={c.logo} alt={c.logoAlt} width={32} height={32} />
                 </div>
                 <h2>TopEdge AI vs {c.name}</h2>
                 <p>{c.brandTag || 'WhatsApp platform'}</p>
@@ -118,7 +118,7 @@ export default function CompareIndexPage() {
 
         <MarketingCtaBand
           title="Try TopEdge AI on your store"
-          subtitle="Start free — connect Shopify and WhatsApp, approve templates, publish recovery."
+          subtitle="Start free, connect Shopify and WhatsApp, approve templates, publish recovery."
           primaryLabel="Start free"
           secondaryLabel="See pricing"
           secondaryTo="/pricing"

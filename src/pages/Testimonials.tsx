@@ -19,12 +19,12 @@ export default function Testimonials() {
         <PageHero
           eyebrow="Social proof"
           title="Teams on Shopify India trust TopEdge"
-          subtitle="Recovery, speed, and control — from D2C brands running WhatsApp on live store data. Illustrative outcomes from merchant conversations."
+          subtitle="Recovery, speed, and control, from D2C brands running WhatsApp on live store data. Illustrative outcomes from merchant conversations."
         />
         <HomeTestimonials hideHeader />
         <MarketingCtaBand
           title="See what TopEdge can do on your store"
-          subtitle="Connect Shopify, approve templates, and publish your first flow — free for 14 days."
+          subtitle="Connect Shopify, approve templates, and publish your first flow, free for 14 days."
           primaryLabel="Start free"
           secondaryLabel="View case studies"
           secondaryTo="/customers"

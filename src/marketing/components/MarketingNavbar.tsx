@@ -1,55 +1,76 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, type ComponentType } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { ChevronDown, Menu, X } from 'lucide-react';
+import {
+  Bot,
+  ChevronDown,
+  Crosshair,
+  MapPin,
+  Megaphone,
+  Menu,
+  PackageCheck,
+  Radio,
+  ShieldCheck,
+  ShoppingBag,
+  Split,
+  TrendingUp,
+  Undo2,
+  UserCircle2,
+  Wand2,
+  Workflow,
+  X,
+  type LucideProps,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useLenis } from 'lenis/react';
+
+type NavIcon = ComponentType<LucideProps>;
 
 type NavLink = {
   label: string;
   href: string;
+  icon: NavIcon;
 };
 
 type NavColumn = {
-  title: string;
+  id: string;
   items: NavLink[];
 };
 
 /** Product IA — Journey owns cart + COD; no Shopify Sync / Segments peers */
 const productColumns: NavColumn[] = [
   {
-    title: 'Journey',
+    id: 'journey',
     items: [
-      { label: 'Journey', href: '/features/journeys' },
-      { label: 'Abandoned Cart', href: '/features/journeys#abandoned-cart' },
-      { label: 'Conditional routes', href: '/features/journeys#conditional-routes' },
-      { label: 'Return & retarget', href: '/features/journeys#return-retarget' },
-      { label: 'COD → Prepaid', href: '/features/journeys' },
+      { label: 'Journey', href: '/features/journeys', icon: MapPin },
+      { label: 'Abandoned Cart', href: '/features/journeys#abandoned-cart', icon: ShoppingBag },
+      { label: 'Conditional routes', href: '/features/journeys#conditional-routes', icon: Split },
+      { label: 'Return & retarget', href: '/features/journeys#return-retarget', icon: Undo2 },
+      { label: 'COD → Prepaid', href: '/features/journeys', icon: PackageCheck },
     ],
   },
   {
-    title: 'Engage',
+    id: 'engage',
     items: [
-      { label: 'Flow + Shopify Tools', href: '/features/flow-builder' },
-      { label: 'Opt-in tools', href: '/features/opt-in-tools' },
-      { label: 'Audience Campaigns', href: '/features/campaigns' },
-      { label: 'Audience CRM', href: '/features/audience-crm' },
-      { label: 'Warranty', href: '/features/warranty' },
+      { label: 'Flow + Shopify Tools', href: '/features/flow-builder', icon: Workflow },
+      { label: 'Opt-in tools', href: '/features/opt-in-tools', icon: Wand2 },
+      { label: 'Audience Campaigns', href: '/features/campaigns', icon: Megaphone },
+      { label: 'Audience CRM', href: '/features/audience-crm', icon: UserCircle2 },
+      { label: 'Warranty', href: '/features/warranty', icon: ShieldCheck },
     ],
   },
   {
-    title: 'Intelligence',
+    id: 'intelligence',
     items: [
-      { label: 'Tracking Pixel', href: '/features/analytics' },
-      { label: 'Intent detection', href: '/features/intent-detection' },
-      { label: 'AI Brain', href: '/features/ai-brain' },
-      { label: 'Profit & costs', href: '/features/profit-loss' },
+      { label: 'Tracking Pixel', href: '/features/analytics', icon: Crosshair },
+      { label: 'Intent detection', href: '/features/intent-detection', icon: Radio },
+      { label: 'AI Brain', href: '/features/ai-brain', icon: Bot },
+      { label: 'Profit & costs', href: '/features/profit-loss', icon: TrendingUp },
     ],
   },
 ];
 
 const primaryLinks = [
-  { label: 'ROI Calculator', href: '/roi' },
   { label: 'Pricing', href: '/pricing' },
   { label: 'Customers', href: '/customers' },
 ] as const;
@@ -126,7 +147,7 @@ export default function MarketingNavbar() {
     return () => mq.removeEventListener('change', onChange);
   }, []);
 
-  // Transparent (ghost) until scroll — solid capsule after scroll / mobile menu open
+  // Transparent (ghost) until scroll, solid capsule after scroll / mobile menu open
   const capsule = scrolled || open;
 
   const openProduct = () => {
@@ -157,7 +178,7 @@ export default function MarketingNavbar() {
             <Link to="/" className="mkt-nav__brand" onClick={() => setOpen(false)}>
               <img
                 src="/logo.png"
-                alt=""
+                alt="TopEdge AI"
                 width={28}
                 height={28}
                 className="mkt-nav__brand-mark"
@@ -195,28 +216,31 @@ export default function MarketingNavbar() {
                     <motion.div
                       key="product-mega"
                       className="mkt-nav__mega"
-                      initial={reduceMotion ? false : { opacity: 0, y: 6 }}
+                      initial={reduceMotion ? false : { opacity: 0, y: 8 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={reduceMotion ? undefined : { opacity: 0, y: 4 }}
-                      transition={{ duration: 0.2, ease: easeOut }}
+                      transition={{ duration: 0.18, ease: easeOut }}
                       onMouseEnter={openProduct}
                       onMouseLeave={scheduleCloseProduct}
                     >
-                      <div className="mkt-nav__mega-card mkt-nav__mega-card--links-only">
+                      <div className="mkt-nav__mega-card">
                         <div className="mkt-nav__mega-cols">
                           {productColumns.map((col) => (
-                            <div key={col.title} className="mkt-nav__mega-col">
+                            <div key={col.id} className="mkt-nav__mega-col">
                               <ul className="mkt-nav__mega-links">
-                                {col.items.map((item) => (
-                                  <li key={item.label}>
-                                    <Link to={item.href} className="mkt-nav__mega-link">
-                                      <span className="mkt-nav__mega-link-text">{item.label}</span>
-                                      <span className="mkt-nav__mega-link-arrow" aria-hidden>
-                                        →
-                                      </span>
-                                    </Link>
-                                  </li>
-                                ))}
+                                {col.items.map((item) => {
+                                  const Icon = item.icon;
+                                  return (
+                                    <li key={item.label}>
+                                      <Link to={item.href} className="mkt-nav__mega-link">
+                                        <span className="mkt-nav__mega-link-icon" aria-hidden>
+                                          <Icon strokeWidth={1.6} absoluteStrokeWidth={false} />
+                                        </span>
+                                        <span className="mkt-nav__mega-link-label">{item.label}</span>
+                                      </Link>
+                                    </li>
+                                  );
+                                })}
                               </ul>
                             </div>
                           ))}
@@ -273,8 +297,8 @@ export default function MarketingNavbar() {
           <AnimatePresence initial={false}>
             {open ? (
               <motion.div
-                key="mobile-nav"
                 id="mkt-nav-mobile"
+                key="mobile-panel"
                 className="mkt-nav__mobile"
                 initial={reduceMotion ? false : { height: 0, opacity: 0 }}
                 animate={{ height: 'auto', opacity: 1 }}

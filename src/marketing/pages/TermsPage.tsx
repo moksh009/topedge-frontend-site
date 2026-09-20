@@ -28,7 +28,7 @@ import {
 import '../styles/legal-page.css';
 
 /**
- * Public Terms of Service — mirrors dash.topedgeai.com/terms (v2026-08-02).
+ * Public Terms of Service, mirrors dash.topedgeai.com/terms (v2026-08-02).
  * Also served as static public/terms.html for crawlers.
  */
 export default function TermsPage() {
@@ -109,7 +109,7 @@ export default function TermsPage() {
           </p>
           <p>
             For personal data about <strong>your customers</strong> that we process only to provide
-            the Service, you are generally the controller and we act as a processor — see the Privacy
+            the Service, you are generally the controller and we act as a processor, see the Privacy
             Policy.
           </p>
         </>
@@ -127,7 +127,7 @@ export default function TermsPage() {
           </p>
           <ul>
             <li>
-              Customers may opt out with <strong>STOP</strong> (or configured keywords) —
+              Customers may opt out with <strong>STOP</strong> (or configured keywords) , 
               campaigns and cart recovery stop for that contact.
             </li>
             <li>Utility messages (e.g. order updates) may still send where policy and law allow.</li>
@@ -177,7 +177,7 @@ export default function TermsPage() {
           </div>
           <p>
             The Service depends on hosting, networks, APIs, webhooks, Meta, Shopify, email, and AI
-            providers — which can experience downtime, delays, errors, or policy changes outside our
+            providers, which can experience downtime, delays, errors, or policy changes outside our
             control.
           </p>
           <p>
@@ -298,7 +298,7 @@ export default function TermsPage() {
         <title>Terms of Service | TopEdge AI</title>
         <meta
           name="description"
-          content="TopEdge AI Terms of Service — agreement for using the TopEdge Ai dashboard, Shopify, and Meta / WhatsApp integrations."
+          content="TopEdge AI Terms of Service, agreement for using the TopEdge Ai dashboard, Shopify, and Meta / WhatsApp integrations."
         />
         <link rel="canonical" href={COMPANY_SITE_TERMS_URL} />
         <meta property="og:type" content="website" />

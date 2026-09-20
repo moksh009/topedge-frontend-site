@@ -53,7 +53,7 @@ export default function Blog() {
         <PageHero
           eyebrow="Resources"
           title="WhatsApp & Shopify automation playbooks"
-          subtitle="Cart recovery, COD confirmations, Meta templates, and ecommerce messaging for Indian D2C — written for operators, not fluff."
+          subtitle="Cart recovery, COD confirmations, Meta templates, and ecommerce messaging for Indian D2C, written for operators, not fluff."
         />
 
         <Section className="!pt-0 !pb-16 md:!pb-24">

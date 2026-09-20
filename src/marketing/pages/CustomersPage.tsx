@@ -14,23 +14,23 @@ import '../styles/customers.css';
 const outcomes = [
   {
     pose: 'left' as const,
-    metric: '+7%',
-    label: 'Cart recovery lift',
-    detail: 'Email-only → 3-message WhatsApp sequence',
+    metric: 'Live',
+    label: 'With real D2C brands',
+    detail: 'Choice Salon, Delitech, Apex Light, and peers run WhatsApp recovery on TopEdge',
     image: '/marketing/customers/customers-outcome-cart.png',
   },
   {
     pose: 'center' as const,
-    metric: '3→1',
-    label: 'Inbox for support',
-    detail: 'Shopify + WA Web + sheets → one Live Chat',
+    metric: 'Trusted',
+    label: 'By support + growth',
+    detail: 'One shared inbox so agents and marketers stop fighting over tabs and sheets',
     image: '/marketing/customers/customers-outcome-inbox.png',
   },
   {
     pose: 'right' as const,
-    metric: '36h',
-    label: 'Template live',
-    detail: 'Clear Meta feedback → second submit approved',
+    metric: 'Kept',
+    label: 'As the client stack',
+    detail: 'Teams stay after templates clear and the first cart journey goes live',
     image: '/marketing/customers/customers-outcome-template.png',
   },
 ];
@@ -65,14 +65,14 @@ export default function CustomersPage() {
           </h1>
           <p className="mkt-customers__sub">
             Indian D2C teams use TopEdge to recover abandoned carts, confirm COD, and answer
-            buyers in one inbox — with Shopify order context.
+            buyers in one inbox, with Shopify order context.
           </p>
           <div className="mkt-customers__trust">
             <HomeTrust onStage />
           </div>
         </header>
 
-        <section className="mkt-customers__outcomes" aria-label="Customer outcomes">
+        <section className="mkt-customers__outcomes" aria-label="Why brands trust TopEdge">
           <div className="mkt-customers__fan" role="list">
             {outcomes.map((o) => (
               <article
@@ -80,10 +80,10 @@ export default function CustomersPage() {
                 className={`mkt-customers__card is-${o.pose}`}
                 role="listitem"
               >
-                <div className="mkt-customers__art" aria-hidden>
+                <div className="mkt-customers__art">
                   <img
                     src={o.image}
-                    alt=""
+                    alt={`${o.label}: ${o.metric}`}
                     width={160}
                     height={160}
                     loading="lazy"
@@ -102,7 +102,7 @@ export default function CustomersPage() {
 
         <MarketingCtaBand
           title="Get the same cart recovery on your store"
-          subtitle="Start free — connect Shopify + WhatsApp, approve templates, publish your first journey."
+          subtitle="Start free, connect Shopify + WhatsApp, approve templates, publish your first journey."
           primaryLabel="Start free"
           secondaryLabel="See pricing"
           secondaryTo="/pricing"

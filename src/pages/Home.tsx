@@ -23,7 +23,7 @@ import HomeClose from '../marketing/components/home/HomeClose';
 export default function Home() {
   const seo = PAGE_SEO.home;
 
-  // Land at top once on mount — do not re-run when Lenis attaches (that felt like scroll fighting).
+  // Land at top once on mount, do not re-run when Lenis attaches (that felt like scroll fighting).
   useEffect(() => {
     if (typeof window === 'undefined') return undefined;
     try {

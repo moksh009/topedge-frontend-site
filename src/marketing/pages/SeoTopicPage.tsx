@@ -116,7 +116,7 @@ export default function SeoTopicPage({ slug }: Props) {
 
         <MarketingCtaBand
           title="Run this on your Shopify store"
-          subtitle="Start free — connect Shopify and WhatsApp, approve templates, publish your first journey."
+          subtitle="Start free, connect Shopify and WhatsApp, approve templates, publish your first journey."
           primaryLabel="Start free"
           secondaryLabel="See pricing"
           secondaryTo="/pricing"

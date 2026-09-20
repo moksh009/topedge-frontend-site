@@ -37,7 +37,7 @@ const SEGMENT: DemoVideo = {
   poster: '/marketing/demos/segment-poster.jpg',
 };
 
-/** Feature moments — video demos. */
+/** Feature moments, video demos. */
 export const FEATURE_VIDEOS = {
   cart: CART,
   cod: COD,
@@ -66,7 +66,7 @@ export const CRM_BENTO = {
     id: 'orders',
     titleLead: 'Orders &',
     titleAccent: 'care',
-    body: 'Shipments, warranty, and supplier follow-ups — without leaving WhatsApp.',
+    body: 'Shipments, warranty, and supplier follow-ups, without leaving WhatsApp.',
     image: '/1.png?v=1',
   },
   profiles: {

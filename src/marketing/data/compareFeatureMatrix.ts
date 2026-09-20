@@ -21,17 +21,17 @@ export const COMPARE_FEATURE_MATRIX: CompareFeatureRow[] = [
     id: 'template-markup',
     name: 'WhatsApp Template Message Markup %',
     description: 'What you pay above Meta’s base WhatsApp conversation rates.',
-    topedge: '0% markup — billing direct on Meta',
+    topedge: '0% markup, billing direct on Meta',
     wati: 'Platform usage charges applied above Meta base rates',
     aisensy: 'Platform usage charges applied above Meta base rates',
     interakt: 'Shopify App sub + Meta conversation charges (FB actuals)',
-    bitespeed: 'Meta conversation fees on top of USD plan — verify live',
+    bitespeed: 'Meta conversation fees on top of USD plan, verify live',
   },
   {
     id: 'ai-llm',
     name: 'AI LLM Integration / AI Messages',
     description: 'How AI replies are powered and what they cost per conversation.',
-    topedge: 'BYOK & built-in RAG pipeline — optimised token usage est. ₹0.2–₹0.3 / message',
+    topedge: 'BYOK & built-in RAG pipeline, optimised token usage est. ₹0.2-₹0.3 / message',
     wati: 'Requires Astra / higher-tier plan',
     aisensy: 'Per-message AI add-on fee structure',
     interakt: 'AI Agents on Enterprise App (~$99) or ~$74.99 add-on on Growth/Advanced',
@@ -57,7 +57,7 @@ export const COMPARE_FEATURE_MATRIX: CompareFeatureRow[] = [
     wati: 'Single-number contact record',
     aisensy: 'Single-number contact record',
     interakt: 'Standard Shopify + WhatsApp contact records',
-    bitespeed: 'Omnichannel profiles — verify merge depth live',
+    bitespeed: 'Omnichannel profiles, verify merge depth live',
   },
   {
     id: 'lead-dedupe',
@@ -67,7 +67,7 @@ export const COMPARE_FEATURE_MATRIX: CompareFeatureRow[] = [
     wati: 'Manual contact management',
     aisensy: 'Manual contact management',
     interakt: 'Standard contact / CRM handling',
-    bitespeed: 'Segmentation & CRM — verify auto-dedupe live',
+    bitespeed: 'Segmentation & CRM, verify auto-dedupe live',
   },
   {
     id: 'store-pixel',
@@ -78,7 +78,7 @@ export const COMPARE_FEATURE_MATRIX: CompareFeatureRow[] = [
     wati: 'Standard webhook integration',
     aisensy: 'Standard webhook integration',
     interakt: 'WhatsApp number popup / widget capture',
-    bitespeed: 'Popups & spin-the-wheel widgets — full pixel depth not verified',
+    bitespeed: 'Popups & spin-the-wheel widgets, full pixel depth not verified',
   },
   {
     id: 'cod-prepaid',
@@ -87,7 +87,7 @@ export const COMPARE_FEATURE_MATRIX: CompareFeatureRow[] = [
     topedge: 'Shopify-native checkout (GoKwik & other checkout partners compatible)',
     wati: 'Requires manual developer API setup',
     aisensy: 'Requires API setup to map payment links to WhatsApp templates',
-    interakt: 'WhatsApp Pay COD → prepaid (Razorpay / PayU) — documented',
+    interakt: 'WhatsApp Pay COD → prepaid (Razorpay / PayU), documented',
     bitespeed: 'COD confirmation / COD → prepaid supported',
   },
   {
@@ -109,7 +109,7 @@ export const COMPARE_FEATURE_MATRIX: CompareFeatureRow[] = [
     topedge: 'Built-in automated warranty batches tied to unified customer profile',
     wati: 'Requires external CRM / custom setup',
     aisensy: 'Requires external CRM / custom setup',
-    interakt: 'Not found in public feature set — external CRM',
+    interakt: 'Not found in public feature set, external CRM',
     bitespeed: 'Not found in public feature set',
   },
   {
@@ -117,7 +117,7 @@ export const COMPARE_FEATURE_MATRIX: CompareFeatureRow[] = [
     name: 'Order Modification via WhatsApp',
     description:
       'Customers can cancel orders or change shipping address with time-based and fulfillment-status locks.',
-    topedge: 'Yes — with security layer',
+    topedge: 'Yes, with security layer',
     wati: 'Standard trigger-based order updates',
     aisensy: 'Standard trigger-based order updates',
     interakt: 'Order updates / Order Management AI on higher tiers',
@@ -167,7 +167,7 @@ export function pairwiseMatrix(
   }));
 }
 
-/** Standout rows for best-plan duel — where TopEdge usually wins, plus fair “they can too”. */
+/** Standout rows for best-plan duel, where TopEdge usually wins, plus fair “they can too”. */
 const PLAN_DUEL_IDS = [
   'template-markup',
   'ai-llm',

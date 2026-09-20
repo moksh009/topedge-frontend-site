@@ -14,7 +14,6 @@ const SKIP_PREFIXES = [
   '/login',
   '/privacy',
   '/terms',
-  '/roi',
   '/pricing',
   '/contact',
   '/community',
@@ -52,7 +51,7 @@ function markSeen() {
 
 /**
  * One soft convert prompt per browser session after ~40% scroll.
- * Skips signup/login/legal/pricing/roi (those pages already convert).
+ * Skips signup/login/legal/pricing (those pages already convert).
  */
 export default function MarketingConvertPrompt() {
   const location = useLocation();
@@ -130,7 +129,7 @@ export default function MarketingConvertPrompt() {
         <div className="mkt-convert__brand">
           <img
             src="/logo.png"
-            alt=""
+            alt="TopEdge AI"
             width={22}
             height={22}
             className="mkt-convert__brand-mark"
@@ -142,11 +141,11 @@ export default function MarketingConvertPrompt() {
         </div>
 
         <h2 id={titleId} className="mkt-convert__title">
-          Recover <span className="mkt-convert__title-accent">abandoned carts</span> before they go
-          cold
+          Recover <span className="mkt-convert__title-accent">abandoned carts</span>
+          <br />
+          before they go cold
         </h2>
-        <p className="mkt-convert__sub">Live in about 15 minutes.</p>
-        <p className="mkt-convert__trial">14-day trial — no card on this site.</p>
+        <p className="mkt-convert__sub">Live in about 15 minutes. 14-day trial, no card on this site.</p>
 
         <div className="mkt-convert__stats" aria-label="Proof points">
           <div className="mkt-convert__stat">
@@ -168,7 +167,7 @@ export default function MarketingConvertPrompt() {
             <div className="mkt-convert__brands-track">
               {brandTrack.map((b, i) => (
                 <span key={`${b.name}-${i}`} className="mkt-convert__brands-item" title={b.name}>
-                  <img src={b.src} alt="" width={88} height={28} decoding="async" />
+                  <img src={b.src} alt={b.name} width={88} height={28} decoding="async" />
                 </span>
               ))}
             </div>

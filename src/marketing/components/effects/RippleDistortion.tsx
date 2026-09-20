@@ -27,7 +27,7 @@ export type RippleDistortionProps = {
   trigger?: Trigger;
   clickStrength?: number;
   quality?: RippleQuality;
-  /** Cap devicePixelRatio (1–1.5 keeps phones smooth) */
+  /** Cap devicePixelRatio (1-1.5 keeps phones smooth) */
   maxDpr?: number;
   /** Active wave pool size */
   maxWaves?: number;
@@ -214,7 +214,7 @@ const RippleDistortion = ({
       powerPreference: 'high-performance',
     } as ConstructorParameters<typeof Renderer>[0]);
     const gl = renderer.gl;
-    // Transparent until mesh texture loads — CSS mesh stays visible (no black flash)
+    // Transparent until mesh texture loads, CSS mesh stays visible (no black flash)
     gl.clearColor(0, 0, 0, 0);
     const canvas = gl.canvas as HTMLCanvasElement;
     canvas.style.width = '100%';

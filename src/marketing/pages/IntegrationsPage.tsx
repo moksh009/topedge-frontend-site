@@ -13,7 +13,7 @@ import { PageHero, Section, SectionHeading, MarketingCard } from '../components/
 const integrations = [
   {
     name: 'Shopify',
-    body: 'OAuth connect, orders, carts, catalog, and COD fields sync into TopEdge. Edit store data in Shopify / the dashboard — not on this marketing site.',
+    body: 'OAuth connect, orders, carts, catalog, and COD fields sync into TopEdge. Edit store data in Shopify / the dashboard, not on this marketing site.',
     href: '/shopify-whatsapp-integration',
   },
   {
@@ -53,7 +53,7 @@ export default function IntegrationsPage() {
       <MarketingPage>
         <PageHero
           eyebrow="Integrations"
-          title="Shopify + Meta — the stack Indian D2C already runs"
+          title="Shopify + Meta, the stack Indian D2C already runs"
           subtitle="TopEdge sits on the tools you already trust. Connect once, sync continuously, operate from one workspace."
         />
         <Section className="!pt-0">
@@ -89,7 +89,7 @@ export default function IntegrationsPage() {
         </Section>
         <MarketingCtaBand
           title="Connect your store in about fifteen minutes"
-          subtitle="Start free — Shopify OAuth and WhatsApp credentials are guided in onboarding."
+          subtitle="Start free, Shopify OAuth and WhatsApp credentials are guided in onboarding."
           primaryLabel="Start free"
           secondaryLabel="See features"
           secondaryTo="/features"

@@ -11,7 +11,7 @@ type EventRow = {
   leadId: string;
 };
 
-/** Shared lead pool — left feed + map stay in sync */
+/** Shared lead pool, left feed + map stay in sync */
 const LEADS = [
   {
     id: 'delhi',
@@ -80,7 +80,7 @@ const FEED_MAX = 5;
 const MAP_SCALE = 1.38;
 
 /**
- * Live pixel feed — smooth pan/zoom camera + inward lead cards.
+ * Live pixel feed, smooth pan/zoom camera + inward lead cards.
  */
 export default function DemoPixelTrackingUi({ className }: { className?: string }) {
   const [active, setActive] = useState(0);

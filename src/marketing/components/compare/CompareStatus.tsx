@@ -20,7 +20,7 @@ export function parseCompareCell(value: CompareCell): { tone: CellTone; text: st
   }
 
   if (
-    /^0%|native|built-in|unlimited|1-click|byok|shopify-native|yes —|unlocked on all|automated warranty|billing direct/i.test(
+    /^0%|native|built-in|unlimited|1-click|byok|shopify-native|yes , |unlocked on all|automated warranty|billing direct/i.test(
       lower,
     ) ||
     lower.includes('native algorithmic') ||

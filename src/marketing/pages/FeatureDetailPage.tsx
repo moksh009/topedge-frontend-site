@@ -46,7 +46,7 @@ export default function FeatureDetailPage() {
   return (
     <>
       <MarketingSEO
-        title={featureSeo?.title ?? `${feature.label} | TopEdge`}
+        title={featureSeo?.title ?? `${feature.title} | TopEdge`}
         description={featureSeo?.description ?? feature.body}
         keywords={featureSeo?.keywords}
         path={`/features/${feature.slug}`}
@@ -61,7 +61,7 @@ export default function FeatureDetailPage() {
           breadcrumbJsonLd([
             { name: 'Home', path: '/' },
             { name: 'Features', path: '/features' },
-            { name: feature.label, path: `/features/${feature.slug}` },
+            { name: feature.title, path: `/features/${feature.slug}` },
           ]),
         ]}
       />
@@ -77,7 +77,7 @@ export default function FeatureDetailPage() {
             <ProductDemoVideo
               src={demo.src}
               poster={demo.poster}
-              label={`${feature.label} product demo`}
+              label={`${feature.title} product demo`}
             />
           </div>
         </Section>
@@ -143,8 +143,8 @@ export default function FeatureDetailPage() {
                 to={`/features/${f.slug}`}
                 className="rounded-[20px] border border-[#efeaf8] bg-white/90 p-5 transition hover:border-[#c4b5fd]"
               >
-                <p className="text-sm font-medium text-[#0c1222]">{f.label}</p>
-                <p className="mt-2 line-clamp-2 text-sm text-slate-500">{f.title}</p>
+                <p className="text-sm font-medium text-[#0c1222]">{f.title}</p>
+                <p className="mt-2 line-clamp-2 text-sm text-slate-500">{f.body}</p>
               </Link>
             ))}
           </div>
@@ -154,8 +154,8 @@ export default function FeatureDetailPage() {
         </Section>
 
         <MarketingCtaBand
-          title={`Put ${feature.label} to work on your store`}
-          subtitle="Connect Shopify, approve templates, and go live ,  usually in about fifteen minutes plus Meta review."
+          title={`Put ${feature.title} to work on your store`}
+          subtitle="Connect Shopify, approve templates, and go live, usually in about fifteen minutes plus Meta review."
           primaryLabel="Start free"
           secondaryLabel="Talk to us"
           secondaryTo="/contact"

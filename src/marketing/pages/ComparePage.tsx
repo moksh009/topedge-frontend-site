@@ -41,7 +41,7 @@ function topedgeOfferJsonLd() {
     '@type': 'Product',
     name: 'TopEdge',
     description:
-      'Shopify-native WhatsApp growth OS for India D2C — cart recovery, COD workflows, Meta-gated journeys, and order-aware inbox.',
+      'Shopify-native WhatsApp growth OS for India D2C, cart recovery, COD workflows, Meta-gated journeys, and order-aware inbox.',
     brand: { '@type': 'Brand', name: 'TopEdge' },
     offers: TOPEDGE_PLANS_SUMMARY.map((p) => ({
       '@type': 'Offer',
@@ -108,7 +108,7 @@ export default function ComparePage({ competitor: competitorProp }: Props) {
             <span className="mkt-cmp__h1-brand">
               <img
                 src="/brand-mark.png"
-                alt=""
+                alt="TopEdge AI"
                 width={28}
                 height={28}
                 className="mkt-cmp__h1-mark"
@@ -120,7 +120,7 @@ export default function ComparePage({ competitor: competitorProp }: Props) {
             </span>
             <span className="mkt-cmp__h1-vs">vs</span>
             <span className="mkt-cmp__h1-peer">
-              <img src={data.logo} alt="" width={28} height={28} decoding="async" />
+              <img src={data.logo} alt={data.logoAlt} width={28} height={28} decoding="async" />
               <span className="mkt-cmp__h1-peer-name">{data.name}</span>
             </span>
           </h1>
@@ -130,7 +130,7 @@ export default function ComparePage({ competitor: competitorProp }: Props) {
           <div className="mkt-cmp__pick">
             <article className="mkt-cmp__pick-col is-te">
               <div className="mkt-cmp__pick-top">
-                <img src="/logo.png" alt="" width={22} height={22} />
+                <img src="/logo.png" alt="TopEdge AI" width={22} height={22} />
                 <p className="mkt-cmp__pick-kicker">
                   Best with <span className="mkt-cmp__hl">TopEdge AI</span>
                 </p>
@@ -139,7 +139,7 @@ export default function ComparePage({ competitor: competitorProp }: Props) {
             </article>
             <article className="mkt-cmp__pick-col">
               <div className="mkt-cmp__pick-top">
-                <img src={data.logo} alt="" width={22} height={22} />
+                <img src={data.logo} alt={data.logoAlt} width={22} height={22} />
                 <p className="mkt-cmp__pick-kicker">
                   Best with <span className="mkt-cmp__pick-peer">{data.name}</span>
                 </p>
@@ -164,11 +164,11 @@ export default function ComparePage({ competitor: competitorProp }: Props) {
             <div className="mkt-cmp__board-head">
               <span className="mkt-cmp__board-cap">Capability</span>
               <span className="mkt-cmp__board-col is-te">
-                <img src="/logo.png" alt="" width={18} height={18} />
+                <img src="/logo.png" alt="TopEdge AI" width={18} height={18} />
                 TopEdge AI
               </span>
               <span className="mkt-cmp__board-col">
-                <img src={data.logo} alt="" width={18} height={18} />
+                <img src={data.logo} alt={data.logoAlt} width={18} height={18} />
                 {data.name}
               </span>
             </div>
@@ -277,14 +277,14 @@ export default function ComparePage({ competitor: competitorProp }: Props) {
               <span className="mkt-cmp__duel-cap">Feature</span>
               <div className="mkt-cmp__duel-brand is-te">
                 <span className="mkt-cmp__duel-brand-top">
-                  <img src="/logo.png" alt="" width={20} height={20} />
+                  <img src="/logo.png" alt="TopEdge AI" width={20} height={20} />
                   <strong>TopEdge AI</strong>
                 </span>
                 <span className="mkt-cmp__duel-plan">{teBest.name}</span>
               </div>
               <div className="mkt-cmp__duel-brand">
                 <span className="mkt-cmp__duel-brand-top">
-                  <img src={data.logo} alt="" width={20} height={20} />
+                  <img src={data.logo} alt={data.logoAlt} width={20} height={20} />
                   <strong>{data.name}</strong>
                 </span>
                 <span className="mkt-cmp__duel-plan">{compBest.name}</span>
@@ -294,7 +294,7 @@ export default function ComparePage({ competitor: competitorProp }: Props) {
             <div className="mkt-cmp__duel-row">
               <span className="mkt-cmp__duel-label">Plan fit</span>
               <span className="mkt-cmp__duel-cell is-te">{teBest.note}</span>
-              <span className="mkt-cmp__duel-cell">{compBest.note || '—'}</span>
+              <span className="mkt-cmp__duel-cell">{compBest.note || ', '}</span>
             </div>
 
             {duelFeatures.map((row) => (

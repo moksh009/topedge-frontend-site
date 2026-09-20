@@ -16,7 +16,6 @@ import FeatureMatrix from '../components/pricing/FeatureMatrix';
 import IncludedFeatures from '../components/pricing/IncludedFeatures';
 import PricingFaq, { PRICING_FAQS } from '../components/pricing/PricingFaq';
 import PricingSectionHead from '../components/pricing/PricingSectionHead';
-import PricingRoiStrip from '../components/pricing/PricingRoiStrip';
 import PricingSalesCta from '../components/pricing/PricingSalesCta';
 import {
   BillingCatalog,
@@ -90,7 +89,7 @@ export default function PricingPage() {
                 highlight="not guesswork."
                 sub={
                   <>
-                    Three plans built around how many orders you actually process —{' '}
+                    Three plans built around how many orders you actually process , {' '}
                     <span className="mkt-psec__keep">100 to 1,500 a month.</span>
                   </>
                 }
@@ -122,14 +121,12 @@ export default function PricingPage() {
 
             <FeatureMatrix plans={catalog.plans} cycle={cycle} />
 
-            <PricingRoiStrip />
-
             <section className="mkt-pricing__block">
               <PricingSectionHead
                 eyebrow="FAQ"
                 title="Common"
                 highlight="questions"
-                sub="Billing, trial, and checkout — answered in one place."
+                sub="Billing, trial, and checkout, answered in one place."
               />
               <PricingFaq />
             </section>

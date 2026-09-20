@@ -73,22 +73,125 @@
 
 .mkt-pf__sub {
   margin: 0.95rem auto 0;
-  max-width: 38rem;
+  max-width: 32rem;
   font-size: clamp(0.9rem, 1.5vw, 1.05rem);
-  line-height: 1.55;
+  line-height: 1.5;
   color: var(--pf-muted);
-  text-wrap: pretty;
+  text-wrap: balance;
+}
+
+.mkt-pf__trust {
+  width: min(100%, 28rem);
+  margin: 1.15rem auto 0;
+  padding: 0.15rem 0 0;
+}
+
+.mkt-pf__trust .home-trust-logos {
+  margin: 0 auto;
+  max-width: none;
+  text-align: center;
+}
+
+.mkt-pf__trust .home-trust-logos__label,
+.mkt-pf__trust .home-trust-logos--on-stage .home-trust-logos__label {
+  margin: 0 0 0.7rem;
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(15, 23, 42, 0.5);
+  text-shadow: none;
+}
+
+.mkt-pf__trust .home-trust-logos__viewport {
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+
+.mkt-pf__trust .home-trust-logos__track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  gap: 2.75rem;
+  animation: mkt-pf-trust-marquee 28s linear infinite;
+}
+
+.mkt-pf__trust .home-trust-logos__item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  opacity: 1;
+  padding: 0;
+  text-decoration: none;
+}
+
+.mkt-pf__trust .home-trust-logos__item img,
+.mkt-pf__trust .home-trust-logos--on-stage .home-trust-logos__item img {
+  display: block;
+  height: 20px;
+  width: auto;
+  max-width: 110px;
+  object-fit: contain;
+  /* white trust marks → solid dark */
+  filter: brightness(0) opacity(0.72);
+  opacity: 1;
+  transition: filter 0.2s ease;
+}
+
+.mkt-pf__trust .home-trust-logos__item:hover img,
+.mkt-pf__trust .home-trust-logos--on-stage .home-trust-logos__item:hover img {
+  filter: brightness(0) opacity(0.92);
+}
+
+@keyframes mkt-pf-trust-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-25%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mkt-pf__trust .home-trust-logos__track {
+    animation: none;
+  }
 }
 
 @media (max-width: 640px) {
   .mkt-pf__title {
-    font-size: clamp(1.35rem, 5.5vw, 1.75rem);
-    line-height: 1.18;
+    font-size: clamp(2.15rem, 9vw, 2.55rem);
+    line-height: 1.1;
+    letter-spacing: -0.038em;
   }
 
   .mkt-pf__sub {
-    font-size: 0.875rem;
-    line-height: 1.5;
+    margin-top: 0.9rem;
+    max-width: 21rem;
+    font-size: 0.9375rem;
+    line-height: 1.45;
+  }
+
+  .mkt-pf__trust {
+    width: min(100%, 22rem);
+    margin-top: 0.9rem;
+  }
+
+  .mkt-pf__trust .home-trust-logos__label {
+    margin-bottom: 0.6rem;
+    color: rgba(15, 23, 42, 0.48);
+  }
+
+  .mkt-pf__trust .home-trust-logos__track {
+    gap: 2.25rem;
+  }
+
+  .mkt-pf__trust .home-trust-logos__item img {
+    height: 16px;
+    max-width: 88px;
+    filter: brightness(0) opacity(0.7);
   }
 }
 
@@ -236,9 +339,14 @@
   min-width: 0;
   height: 100%;
   border-radius: 20px;
-  border: 1px solid #e8e4f2;
+  border: none;
   background: #ffffff;
   overflow: hidden;
+  box-shadow:
+    0 0 0 1px rgba(15, 23, 42, 0.03),
+    0 2px 8px rgba(15, 23, 42, 0.05),
+    0 8px 24px -8px rgba(15, 23, 42, 0.1),
+    0 18px 40px -20px rgba(76, 29, 149, 0.08);
 }
 
 .mkt-pf__tile-visual {
@@ -335,36 +443,36 @@
   text-align: center;
 }
 
-/* Showcases — line-by-line sub-features with image slots */
+/* Showcases — image + text beside it (no card chrome) */
 .mkt-pf__showcases {
   display: flex;
   flex-direction: column;
-  gap: 1.75rem;
+  gap: 5.25rem;
 }
 
 .mkt-pf__showcase {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1rem;
+  gap: 1.15rem;
   align-items: center;
-  padding: 0.85rem;
-  border-radius: 22px;
-  border: 1px solid var(--pf-line);
-  background: #fff;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+  background: transparent;
+  box-shadow: none;
   scroll-margin-top: 5.5rem;
 }
 
 @media (min-width: 860px) {
   .mkt-pf__showcase {
-    /* Media always in the wide track — reverse only swaps sides */
-    grid-template-columns: minmax(0, 1.35fr) minmax(16rem, 0.9fr);
+    grid-template-columns: minmax(0, 1.4fr) minmax(14rem, 0.85fr);
     grid-template-areas: 'media copy';
-    gap: 1.35rem;
-    padding: 1rem;
+    gap: 2rem;
+    align-items: center;
   }
 
   .mkt-pf__showcase.is-reverse {
-    grid-template-columns: minmax(16rem, 0.9fr) minmax(0, 1.35fr);
+    grid-template-columns: minmax(14rem, 0.85fr) minmax(0, 1.4fr);
     grid-template-areas: 'copy media';
   }
 
@@ -374,21 +482,39 @@
 
   .mkt-pf__showcase-copy {
     grid-area: copy;
+    text-align: left;
+    max-width: 22rem;
+  }
+
+  .mkt-pf__showcase.is-reverse .mkt-pf__showcase-copy {
+    justify-self: end;
   }
 }
 
 .mkt-pf__showcase-media {
   min-width: 0;
   width: 100%;
-  border-radius: 16px;
-  overflow: hidden;
-  background: #f1f5f9;
-  border: 1px solid #e8edf3;
+  border-radius: 0;
+  overflow: visible;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  line-height: 0;
 }
 
 .mkt-pf__showcase-media .mkt-pf__shot {
   width: 100%;
-  aspect-ratio: 16 / 9;
+  height: auto;
+  min-height: 0;
+  aspect-ratio: auto;
+  background: transparent;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px rgba(15, 23, 42, 0.03),
+    0 2px 8px rgba(15, 23, 42, 0.05),
+    0 8px 24px -8px rgba(15, 23, 42, 0.1),
+    0 18px 40px -20px rgba(76, 29, 149, 0.08);
 }
 
 .mkt-pf__showcase-media .mkt-pf__shot.is-empty {
@@ -397,19 +523,21 @@
 }
 
 .mkt-pf__showcase-media .mkt-pf__shot-img {
+  display: block;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+  object-fit: contain;
   object-position: center;
 }
 
 .mkt-pf__showcase-copy {
-  padding: 0.35rem 0.35rem 0.4rem;
+  padding: 0;
+  text-align: left;
 }
 
 @media (min-width: 860px) {
   .mkt-pf__showcase-copy {
-    padding: 0.35rem 0.5rem;
+    padding: 0.25rem 0;
   }
 }
 
@@ -591,5 +719,251 @@
 
   .mkt-pf__tile-body {
     padding: 0.95rem 1.05rem 1.15rem;
+  }
+}
+
+/* ——— Mobile + tablet polish (desktop ≥900/860 unchanged) ——— */
+
+.mkt-pf {
+  overflow-x: clip;
+}
+
+.mkt-pf__stage {
+  overflow-x: clip;
+}
+
+.mkt-pf__title-accent,
+.mkt-pf__head-title span,
+.mkt-pf__tile-accent {
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+@media (max-width: 899px) {
+  /* ~65–70% viewport mesh band — not full-bleed flush like homepage */
+  .mkt-pf__stage {
+    display: flex;
+    flex-direction: column;
+    min-height: 68svh;
+    min-height: 68dvh;
+    box-sizing: border-box;
+    /* keep media above the stage floor */
+    padding-bottom: 1.35rem;
+  }
+
+  .mkt-pf__stage--compact {
+    min-height: 0;
+    padding-bottom: 0;
+  }
+
+  .mkt-pf__stage-content {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .mkt-pf__mesh {
+    inset: -6% -4% 0;
+    transform: scale(1.02);
+    background-position: 50% 28%;
+  }
+
+  .mkt-pf__hero {
+    flex: 0 0 auto;
+    /* title sits lower under the nav */
+    padding:
+      max(7.25rem, calc(env(safe-area-inset-top, 0px) + 6.15rem))
+      1rem
+      0.25rem;
+    max-width: min(100%, 26rem);
+  }
+
+  .mkt-pf__sub {
+    max-width: 22rem;
+    padding-inline: 0.2rem;
+    margin-top: 0.85rem;
+  }
+
+  .mkt-pf__trust {
+    margin-top: 0.75rem;
+  }
+
+  .mkt-pf__media {
+    /* close under trust logos — leftover mesh height sits below the media */
+    margin-top: 0.65rem;
+    margin-bottom: 0;
+    padding: 0 1rem 0.35rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .mkt-pf__media .demo-video-glow {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .mkt-pf__media .demo-video-glow__frame {
+    border-radius: 14px;
+    border-width: 2px;
+  }
+
+  .mkt-pf__media .demo-video-glow__still {
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  .mkt-pf__section {
+    padding: 2.15rem 1rem 0.35rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .mkt-pf__section--steps {
+    padding-top: 2.5rem;
+  }
+
+  .mkt-pf__head {
+    margin-bottom: 1.35rem;
+    padding-inline: 0.15rem;
+  }
+
+  .mkt-pf__head-sub {
+    font-size: 0.8125rem;
+  }
+
+  .mkt-pf__bento {
+    gap: 0.85rem;
+  }
+
+  .mkt-pf__tile-visual {
+    aspect-ratio: 1 / 1;
+    max-height: min(100vw - 2rem, 28rem);
+  }
+
+  .mkt-pf__tile-visual .mkt-pf__shot,
+  .mkt-pf__tile-visual .mkt-pf__shot-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .mkt-pf__showcases {
+    gap: 2rem;
+  }
+
+  .mkt-pf__showcase {
+    padding: 0;
+    border-radius: 0;
+    gap: 0.95rem;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .mkt-pf__showcase-media {
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .mkt-pf__showcase-media .mkt-pf__shot {
+    border-radius: 14px;
+  }
+
+  .mkt-pf__showcase-media .mkt-pf__shot,
+  .mkt-pf__showcase-media .mkt-pf__shot.is-empty {
+    aspect-ratio: auto;
+    min-height: 0;
+  }
+
+  .mkt-pf__showcase-copy {
+    padding: 0;
+    text-align: left;
+  }
+
+  .mkt-pf__showcase-title {
+    font-size: 1.1rem;
+  }
+
+  .mkt-pf__showcase-body {
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  .mkt-pf__step {
+    padding: 1.15rem 0;
+    gap: 0.7rem 0.85rem;
+  }
+
+  .mkt-pf__step-copy {
+    max-width: none;
+  }
+
+  .mkt-pf__related {
+    gap: 0.5rem;
+    padding-inline: 0.15rem;
+  }
+
+  .mkt-pf__related-link {
+    min-height: 2.35rem;
+    padding: 0 0.95rem;
+    font-size: 0.8125rem;
+  }
+}
+
+/* Tablet: 2-up bentos — desktop 3-up from 900px stays as-is */
+@media (min-width: 640px) and (max-width: 899px) {
+  .mkt-pf__bento {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .mkt-pf__bento--five {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .mkt-pf__tile-visual {
+    max-height: none;
+  }
+
+  .mkt-pf__hero {
+    padding-inline: 1.25rem;
+  }
+
+  .mkt-pf__media,
+  .mkt-pf__section {
+    padding-inline: 1.25rem;
+  }
+}
+
+@media (max-width: 639px) {
+  .mkt-pf__title {
+    font-size: clamp(2.05rem, 8.8vw, 2.45rem);
+    line-height: 1.1;
+    padding-inline: 0.1rem;
+  }
+
+  .mkt-pf__title-accent {
+    padding: 0.05em 0.2em 0.07em;
+  }
+
+  .mkt-pf__outcome {
+    padding: 1.05rem 1rem;
+    border-radius: 16px;
+  }
+
+  .mkt-pf__shot.is-empty {
+    min-height: 10.5rem;
+  }
+
+  .mkt-pf__shot.is-wide.is-empty {
+    min-height: 0;
+    aspect-ratio: 16 / 9;
   }
 }

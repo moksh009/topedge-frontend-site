@@ -4,7 +4,7 @@ import App from './App.tsx'
 import './index.css'
 import './marketing/styles/marketing.css'
 
-// Marketing site defaults to light — never flash OS dark / body #000 on refresh
+// Marketing site defaults to light, never flash OS dark / body #000 on refresh
 const initializeTheme = () => {
   const storedTheme = localStorage.getItem('theme')
   const theme = storedTheme === 'dark' || storedTheme === 'light' ? storedTheme : 'light'
