@@ -66,11 +66,11 @@ export const MARKETING_FEATURES: MarketingFeature[] = [
   {
     slug: 'ai-brain',
     scene: 'ai-brain',
-    title: 'Your catalog + policies + persona — on your API key',
-    body: 'Intelligence hub: store knowledge RAG, bot persona, and BYOK Gemini or OpenAI. Intent Detect routes phrases without burning tokens on every message.',
+    title: 'WhatsApp AI on your own API keys',
+    body: 'Connect OpenAI or Claude. Ground replies in your catalog and policies — Intent Detect saves tokens for hard questions.',
     bullets: [
       'Store knowledge + bot persona',
-      'BYOK Gemini or OpenAI',
+      'Bring your own OpenAI or Claude key',
       'Intent Detect without AI waste',
     ],
     outcomes: [
@@ -180,17 +180,17 @@ export const MARKETING_FEATURES: MarketingFeature[] = [
   {
     slug: 'warranty',
     scene: 'audience',
-    title: 'Digital warranty on WhatsApp — batches, portal, claims',
-    body: 'Link Shopify products to warranty batches, let customers register with WhatsApp OTP, and update claim status without spreadsheets.',
+    title: 'Digital warranty workspace — hub, queue, assign',
+    body: 'One warranty hub with status badges, an unassigned queue that stays visible, and manual assign to the right Shopify order or teammate.',
     bullets: [
-      'Product batches + coverage rules',
-      'Customer portal with WhatsApp OTP',
-      'Claims Pending → Approved with WA updates',
+      'Warranty hub list with status badges',
+      'Unassigned queue that doesn’t disappear',
+      'Manual assign to order or teammate',
     ],
     outcomes: [
-      'Serial and warranty window on the unified profile',
-      'Packaging QR opens pre-filled warranty chat',
-      'Claim status changes notify customers on WhatsApp',
+      'No spreadsheet chase for warranty records',
+      'Ownerless warranties stay in a clear queue',
+      'Assign lands on the right Shopify order',
     ],
   },
   {
@@ -228,23 +228,6 @@ export const MARKETING_FEATURES: MarketingFeature[] = [
     aliases: ['pnl', 'p-and-l', 'profit-and-loss', 'pl-analytics', 'profit-costs'],
   },
   {
-    slug: 'byok',
-    scene: 'ai-brain',
-    title: 'Bring your own Gemini or OpenAI keys',
-    body: 'Merchant-paid API usage on your key — activate AI, pick model, cap reply words, track tokens and cost. Powers Live Chat and Flow AI.',
-    bullets: [
-      'Gemini and/or OpenAI BYOK',
-      'Model + max reply words',
-      'Usage KPIs on your provider bill',
-    ],
-    outcomes: [
-      'Your token bill, your spend ceiling',
-      'Keyword FAQs work even without a key',
-      'Live Chat takeover pauses AI instantly',
-    ],
-    aliases: ['byok-ai', 'bring-your-own-key'],
-  },
-  {
     slug: 'intent-detection',
     scene: 'ai-brain',  
     title: 'Route chats by what they mean',
@@ -274,6 +257,9 @@ aliasToSlug.set('segments', 'audience-crm');
 aliasToSlug.set('segmentation', 'audience-crm');
 aliasToSlug.set('segment', 'audience-crm');
 aliasToSlug.set('audience-segments', 'audience-crm');
+aliasToSlug.set('byok', 'ai-brain');
+aliasToSlug.set('byok-ai', 'ai-brain');
+aliasToSlug.set('bring-your-own-key', 'ai-brain');
 
 export function resolveFeatureSlug(raw: string): string | null {
   return aliasToSlug.get(raw) ?? null;
@@ -309,7 +295,7 @@ export function canonicalHrefForStory(storyId: string): string {
     segmentation: '/features/audience-crm',
     segment: '/features/audience-crm',
     'profit-loss': '/features/profit-loss',
-    byok: '/features/byok',
+    byok: '/features/ai-brain',
   };
   return map[storyId] ?? '/features';
 }

@@ -167,19 +167,21 @@ function ProductFeatureView({ page }: { page: ProductPage }) {
           </section>
         </FeatureMeshStage>
 
-        <section className="mkt-pf__section" aria-labelledby="mkt-pf-bento">
-          <div className="mkt-pf__head">
-            <h2 id="mkt-pf-bento" className="mkt-pf__head-title">
-              {page.bentoTitle} <span>{page.bentoAccent}</span>
-            </h2>
-            {page.bentoSub ? <p className="mkt-pf__head-sub">{page.bentoSub}</p> : null}
-          </div>
-          <div className={`mkt-pf__bento${page.bentos.length >= 5 ? ' mkt-pf__bento--five' : ''}`}>
-            {page.bentos.map((tile) => (
-              <BentoTile key={`${tile.titleLead}-${tile.titleAccent}`} tile={tile} />
-            ))}
-          </div>
-        </section>
+        {page.bentos.length > 0 ? (
+          <section className="mkt-pf__section" aria-labelledby="mkt-pf-bento">
+            <div className="mkt-pf__head">
+              <h2 id="mkt-pf-bento" className="mkt-pf__head-title">
+                {page.bentoTitle} <span>{page.bentoAccent}</span>
+              </h2>
+              {page.bentoSub ? <p className="mkt-pf__head-sub">{page.bentoSub}</p> : null}
+            </div>
+            <div className={`mkt-pf__bento${page.bentos.length >= 5 ? ' mkt-pf__bento--five' : ''}`}>
+              {page.bentos.map((tile) => (
+                <BentoTile key={`${tile.titleLead}-${tile.titleAccent}`} tile={tile} />
+              ))}
+            </div>
+          </section>
+        ) : null}
 
         {hasShowcases ? (
           <section

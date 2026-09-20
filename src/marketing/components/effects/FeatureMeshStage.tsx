@@ -59,7 +59,6 @@ export default function FeatureMeshStage({
         aria-hidden
         style={{ backgroundImage: `url('${src}')` }}
       />
-      <div className="mkt-pf__edge-glow" aria-hidden />
       <div className="mkt-pf__stage-content">{children}</div>
     </div>
   );

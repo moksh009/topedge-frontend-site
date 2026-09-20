@@ -155,7 +155,6 @@ export const modules = [
   { name: 'IG Automation', outcome: 'Comment & story to DM', href: '/features/instagram' },
   { name: 'Warranty', outcome: 'Batches, portal, claims', href: '/features/warranty' },
   { name: 'Intent detection', outcome: 'Route chats by meaning', href: '/features/intent-detection' },
-  { name: 'BYOK AI', outcome: 'Your Gemini / OpenAI keys', href: '/features/byok' },
   { name: 'P&L Analytics', outcome: 'Recovery ₹ vs Meta costs', href: '/features/profit-loss' },
   { name: 'Integrations', outcome: 'Shopify + Meta connect', href: '/integrations' },
 ];

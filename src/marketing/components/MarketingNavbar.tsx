@@ -43,7 +43,6 @@ const productColumns: NavColumn[] = [
       { label: 'Tracking Pixel', href: '/features/analytics' },
       { label: 'Intent detection', href: '/features/intent-detection' },
       { label: 'AI Brain', href: '/features/ai-brain' },
-      { label: 'BYOK AI', href: '/features/byok' },
       { label: 'Profit & costs', href: '/features/profit-loss' },
     ],
   },

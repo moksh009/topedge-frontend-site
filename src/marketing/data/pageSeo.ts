@@ -160,11 +160,11 @@ export const FEATURE_SEO: Record<string, { title: string; description: string; k
     keywords: 'WhatsApp flow builder, WhatsApp chatbot for ecommerce, Shopify chatbot builder',
   },
   'ai-brain': {
-    title: 'AI WhatsApp Chatbot for Shopify | BYOK Gemini/OpenAI + Store Knowledge',
+    title: 'WhatsApp AI on Your Own API Keys | TopEdge AI Brain for Shopify',
     description:
-      'TopEdge AI Brain for Shopify WhatsApp: bring your own Gemini or OpenAI key, store knowledge RAG, bot persona, and intent routing — catalog-grounded replies you control.',
+      'Connect OpenAI or Claude to TopEdge. Ground WhatsApp replies in your store knowledge and persona — Intent Detect saves tokens for hard questions.',
     keywords:
-      'AI WhatsApp chatbot Shopify, BYOK Gemini OpenAI ecommerce, store knowledge RAG WhatsApp, WhatsApp bot persona India',
+      'WhatsApp AI own API keys Shopify, BYOK OpenAI Claude ecommerce, store knowledge WhatsApp bot India',
   },
   campaigns: {
     title: 'WhatsApp Marketing Campaigns for Shopify | Meta-Safe Broadcasts',
@@ -205,9 +205,9 @@ export const FEATURE_SEO: Record<string, { title: string; description: string; k
     keywords: 'WhatsApp chat rules, ecommerce inbox routing, WhatsApp assignment Shopify',
   },
   warranty: {
-    title: 'WhatsApp Warranty for Shopify | Digital Warranty & Claims',
+    title: 'WhatsApp Warranty for Shopify | Digital Warranty Assign',
     description:
-      'Assign product warranties on WhatsApp for Shopify brands — customer registration portal, OTP, claim workflow, and status updates tied to orders.',
+      'Warranty workspace for Shopify brands — hub list with status badges, unassigned queue, and manual assign to orders or teammates.',
     keywords: 'WhatsApp warranty Shopify, digital warranty ecommerce India, warranty assignment WhatsApp',
   },
   'opt-in-tools': {
