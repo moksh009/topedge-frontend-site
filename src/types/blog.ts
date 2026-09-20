@@ -13,4 +13,6 @@ export interface BlogPost {
   imageAlt?: string;
   content?: string;
   keywords?: string[];
+  /** Visible FAQ answers + FAQPage schema (pillar / GEO pages). */
+  faqs?: { question: string; answer: string }[];
 }

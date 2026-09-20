@@ -32,6 +32,9 @@ const BlogPost = React.lazy(() => import('./pages/BlogPost'));
 const TermsPage = React.lazy(() => import('./marketing/pages/TermsPage'));
 const CompareIndexPage = React.lazy(() => import('./marketing/pages/CompareIndexPage'));
 const ComparePage = React.lazy(() => import('./marketing/pages/ComparePage'));
+const CompareAlternativesPage = React.lazy(
+  () => import('./marketing/pages/CompareAlternativesPage'),
+);
 const CompareThreeWayPage = React.lazy(() => import('./marketing/pages/CompareThreeWayPage'));
 const SeoTopicPage = React.lazy(() => import('./marketing/pages/SeoTopicPage'));
 const NotFoundPage = React.lazy(() => import('./marketing/pages/NotFoundPage'));
@@ -283,6 +286,7 @@ const AnimatedRoutes = () => {
           <Route path="/customers" element={<CustomersPage />} />
           <Route path="/compare" element={<CompareIndexPage />} />
           <Route path="/compare/topedge-vs-wati-vs-aisensy" element={<CompareThreeWayPage />} />
+          <Route path="/compare/alternatives" element={<CompareAlternativesPage />} />
           <Route path="/compare/:competitor" element={<ComparePage />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />

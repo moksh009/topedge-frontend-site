@@ -53,6 +53,7 @@ export default function BlogPost() {
         path={`/blog/${post.slug}`}
         type="article"
         noSuffix
+        faqSchema={post.faqs}
         jsonLd={[
           breadcrumbJsonLd([
             { name: 'Home', path: '/' },

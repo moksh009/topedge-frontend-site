@@ -19,6 +19,17 @@ const FEATURED = [
     ],
     badge: '3-way',
   },
+  {
+    href: '/compare/alternatives',
+    title: 'WhatsApp automation alternatives',
+    body: 'Fair one-line index: WATI, AiSensy, Interakt, Bitespeed, Zoko, Getgabs, Kanal.',
+    logos: [
+      { src: '/logo.png', alt: 'TopEdge AI' },
+      { src: '/marketing/compare/compare-logo-zoko.svg', alt: 'Zoko' },
+      { src: '/marketing/compare/compare-logo-kanal.svg', alt: 'Kanal' },
+    ],
+    badge: 'Index',
+  },
 ];
 
 export default function CompareIndexPage() {

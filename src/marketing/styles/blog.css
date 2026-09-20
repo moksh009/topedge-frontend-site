@@ -447,6 +447,96 @@
   font-size: 0.95rem;
 }
 
+.mkt-blog-prose .mkt-blog-verdict {
+  margin: 0 0 1.75rem;
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--mkt-border);
+  border-radius: 14px;
+  background: #faf9ff;
+}
+
+.mkt-blog-prose .mkt-blog-verdict summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: #0c1222;
+  list-style: none;
+}
+
+.mkt-blog-prose .mkt-blog-verdict summary::-webkit-details-marker {
+  display: none;
+}
+
+.mkt-blog-prose .mkt-blog-verdict p {
+  margin: 0.75rem 0 0;
+  font-size: 0.98rem;
+  line-height: 1.55;
+  color: #334155;
+}
+
+.mkt-blog-prose .mkt-blog-table-wrap {
+  margin: 1.25rem 0 0.75rem;
+  overflow-x: auto;
+  border: 1px solid var(--mkt-border);
+  border-radius: 14px;
+}
+
+.mkt-blog-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.mkt-blog-prose th,
+.mkt-blog-prose td {
+  padding: 0.7rem 0.85rem;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--mkt-border);
+}
+
+.mkt-blog-prose th {
+  background: #f8f7fc;
+  font-weight: 600;
+  color: #0c1222;
+  white-space: nowrap;
+}
+
+.mkt-blog-prose tr:last-child td {
+  border-bottom: none;
+}
+
+.mkt-blog-prose .mkt-blog-footnote {
+  font-size: 0.8125rem;
+  color: #64748b;
+  margin: 0.5rem 0 1.5rem;
+}
+
+.mkt-blog-prose .mkt-blog-faq {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin: 1rem 0 1.75rem;
+}
+
+.mkt-blog-prose .mkt-blog-faq details {
+  border: 1px solid var(--mkt-border);
+  border-radius: 12px;
+  padding: 0.85rem 1rem;
+  background: #fff;
+}
+
+.mkt-blog-prose .mkt-blog-faq summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: #0c1222;
+}
+
+.mkt-blog-prose .mkt-blog-faq details p {
+  margin: 0.65rem 0 0;
+  font-size: 0.95rem;
+  color: #475569;
+}
+
 .mkt-blog-cta {
   margin: 3rem 0 0;
   padding: 1.75rem 1.5rem;

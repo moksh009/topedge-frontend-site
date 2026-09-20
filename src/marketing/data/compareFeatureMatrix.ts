@@ -3,7 +3,14 @@
  * WATI / AiSensy / Bitespeed / Interakt / 3-way each have independent boards.
  */
 
-export type MatrixCompetitor = 'wati' | 'aisensy' | 'interakt' | 'bitespeed';
+export type MatrixCompetitor =
+  | 'wati'
+  | 'aisensy'
+  | 'interakt'
+  | 'bitespeed'
+  | 'zoko'
+  | 'getgabs'
+  | 'kanal';
 
 export type CompareFeatureRow = {
   id: string;
@@ -604,6 +611,216 @@ export const BITESPEED_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
   },
 ];
 
+/** TopEdge vs Zoko — verified against zoko.io/pricing (Sep 2026). */
+export const ZOKO_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
+  {
+    id: 'template-markup',
+    label: 'WhatsApp conversation economics',
+    description: 'How platform fees sit on top of Meta rates.',
+    topedge: '0% markup; Meta pass-through; flat INR plan by Shopify orders',
+    competitor:
+      'Starter: ~$0.015/conversation markup (zoko.io). Plus/Elite/Max: included conversation buckets then overage rates',
+  },
+  {
+    id: 'ai-llm',
+    label: 'AI / auto order agents',
+    description: 'How AI replies and order collection are priced.',
+    topedge: 'BYOK + RAG on core plans (~₹0.2–₹0.3 / message)',
+    competitor: 'AI agents billed per resolution (e.g. ~$0.09/resolution on Guru/WISMO; Sello % of order value) — verify live',
+  },
+  {
+    id: 'intent-routing',
+    label: 'Intent routing',
+    description: 'Route chats without burning LLM tokens on every message.',
+    topedge: 'Native algorithmic intent detection',
+    competitor: 'Flows + AI agents; intent engine depth verify live',
+  },
+  {
+    id: 'unified-identity',
+    label: 'Unified customer identity',
+    description: 'Merge phones, emails, and orders into one profile.',
+    topedge: 'Native built-in',
+    competitor: 'Shopify sync + inbox contacts; multi-number merge depth verify live',
+  },
+  {
+    id: 'cod-prepaid',
+    label: 'COD confirm & COD → prepaid',
+    description: 'India COD risk tools on WhatsApp.',
+    topedge: 'Native journeys + Shopify checkout partners',
+    competitor: 'Essential free flows include double-confirm COD and convert COD → prepaid (zoko.io)',
+  },
+  {
+    id: 'warranty',
+    label: 'Warranty management',
+    description: 'Warranty hub tied to orders and profiles.',
+    topedge: 'Native warranty hub',
+    competitor: 'Not found as a first-class warranty product on public pricing',
+  },
+  {
+    id: 'flow-builder',
+    label: 'Flow / journey builder',
+    description: 'Visual automation for recovery and support.',
+    topedge: 'Visual journeys + Flow Builder, unlimited runs on all plans',
+    competitor:
+      '11 essential ecommerce flows free; custom/premium flows ~$5.99/mo each + step fair-use overage',
+  },
+  {
+    id: 'flow-cap',
+    label: 'Execution / conversation meters',
+    description: 'What spikes during festival or sale traffic.',
+    topedge: 'Plan priced on Shopify order volume; Meta fees separate',
+    competitor: 'Conversation buckets/markup + FlowHippo step fair use (500K steps then overage)',
+  },
+  {
+    id: 'ecommerce-analytics',
+    label: 'Ecommerce analytics',
+    description: 'Recovery ₹ and store metrics operators actually use.',
+    topedge: 'Native ecommerce / P&L style analytics',
+    competitor: 'Detailed analytics listed; depth vs TopEdge P&L verify live',
+  },
+  {
+    id: 'india-payments',
+    label: 'India payment / commerce hooks',
+    description: 'UPI / Razorpay / in-chat commerce patterns.',
+    topedge: 'Shopify checkout partners + WhatsApp journeys',
+    competitor: 'Strong India commerce positioning (UPI/Razorpay, catalog, CTWA) — verify live',
+  },
+];
+
+/** TopEdge vs Getgabs — verified against getgabs.com/pricing + Shopify App Store listing. */
+export const GETGABS_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
+  {
+    id: 'template-markup',
+    label: 'Meta markup',
+    description: 'Platform fee above Meta conversation rates.',
+    topedge: '0% markup; Meta pass-through',
+    competitor: 'Claims 0% Meta markup on getgabs.com; platform subscription billed separately (USD)',
+  },
+  {
+    id: 'ai-llm',
+    label: 'AI chatbot',
+    description: 'AI replies included vs metered.',
+    topedge: 'BYOK + RAG on core plans',
+    competitor: 'AI AnswerNode included on website plans with crawl limits / add-ons — verify live',
+  },
+  {
+    id: 'unified-identity',
+    label: 'Unified customer identity',
+    description: 'One shopper across phones and emails.',
+    topedge: 'Native built-in',
+    competitor: 'Lead CRM / contacts; multi-identity merge depth not highlighted',
+  },
+  {
+    id: 'cod-prepaid',
+    label: 'COD → prepaid conversion',
+    description: 'Distinct COD risk conversion, not only COD confirm texts.',
+    topedge: 'Native COD → prepaid journeys with checkout partners',
+    competitor: 'COD verification / confirmations listed; COD→prepaid builder depth verify live',
+  },
+  {
+    id: 'warranty',
+    label: 'Warranty management',
+    description: 'Post-purchase warranty hub.',
+    topedge: 'Native warranty hub',
+    competitor: 'Not found as a first-class warranty product',
+  },
+  {
+    id: 'flow-builder',
+    label: 'Automation / journeys',
+    description: 'Visual builders for cart and lifecycle.',
+    topedge: 'Visual journeys + Flow Builder, unlimited runs',
+    competitor: 'Chatbot Flow builder (unlimited flows claimed); Shopify ecommerce automations on paid tiers',
+  },
+  {
+    id: 'cart-recovery',
+    label: 'Abandoned cart recovery',
+    description: 'Shopify cart / checkout recovery on WhatsApp.',
+    topedge: 'Native cart recovery journeys with Meta gating',
+    competitor: 'Abandoned cart recovery on Shopify app + site ecommerce features',
+  },
+  {
+    id: 'flow-cap',
+    label: 'Plan meters',
+    description: 'What you hit as volume grows.',
+    topedge: 'Order-volume INR plans',
+    competitor: 'Broadcast / widget / agent / crawl limits by USD tier',
+  },
+  {
+    id: 'pricing-entry',
+    label: 'Entry pricing',
+    description: 'Cost to start.',
+    topedge: 'Launch ₹1,999/mo (published INR)',
+    competitor: 'Free to install on Shopify; paid from ~$11–$15/mo (App Store / getgabs.com — verify live)',
+  },
+];
+
+/** TopEdge vs Kanal — verified against getkanal.com/pricing (EUR). */
+export const KANAL_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
+  {
+    id: 'template-markup',
+    label: 'Pricing currency / model',
+    description: 'How the platform fee is published.',
+    topedge: 'Flat INR Launch / Growth / Scale by Shopify orders',
+    competitor: 'EUR plans from Pro €89/mo (getkanal.com/pricing); Meta fees separate',
+  },
+  {
+    id: 'ai-llm',
+    label: 'AI agent',
+    description: 'Where AI unlocks.',
+    topedge: 'BYOK + RAG on core plans',
+    competitor: 'AI Agent on Scale+ (€149+) — verify live',
+  },
+  {
+    id: 'klaviyo',
+    label: 'Email stack complement',
+    description: 'Works beside an ESP instead of replacing it.',
+    topedge: 'WhatsApp + Shopify focus; pair your ESP',
+    competitor: 'Native Klaviyo integration (and Recharge / Crisp / Gorgias)',
+  },
+  {
+    id: 'cod-prepaid',
+    label: 'India COD workflows',
+    description: 'COD confirm and COD → prepaid for Indian D2C.',
+    topedge: 'Native COD journeys for India checkout patterns',
+    competitor: 'No India-specific COD positioning found on public marketing',
+  },
+  {
+    id: 'unified-identity',
+    label: 'Unified customer identity',
+    description: 'Merge phones / emails / orders.',
+    topedge: 'Native built-in',
+    competitor: 'Shopify sync + automations; merge depth verify live',
+  },
+  {
+    id: 'warranty',
+    label: 'Warranty management',
+    description: 'Warranty hub for post-purchase.',
+    topedge: 'Native warranty hub',
+    competitor: 'Not found as a first-class warranty product',
+  },
+  {
+    id: 'cart-recovery',
+    label: 'Abandoned cart recovery',
+    description: 'WhatsApp cart recovery on Shopify.',
+    topedge: 'Native cart recovery journeys',
+    competitor: 'Abandoned cart recovery on Pro+',
+  },
+  {
+    id: 'flow-builder',
+    label: 'Automations depth',
+    description: 'Advanced automation unlocks.',
+    topedge: 'Journeys + Flow Builder on core plans',
+    competitor: 'Advanced automations / unlimited automations on Scale+',
+  },
+  {
+    id: 'india-focus',
+    label: 'India / INR positioning',
+    description: 'Built for Indian D2C operators.',
+    topedge: 'India-first: INR pricing, COD, Meta gating',
+    competitor: 'Global / multi-market WhatsApp marketing (EUR)',
+  },
+];
+
 /** TopEdge Ai vs Interakt — dedicated pairwise board. */
 export const INTERAKT_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
   {
@@ -741,6 +958,30 @@ export function pairwiseMatrix(
       competitor: cell,
     }));
   }
+  if (competitor === 'zoko') {
+    return ZOKO_PAIRWISE_MATRIX.map(({ label, description, topedge, competitor: cell }) => ({
+      label,
+      description,
+      topedge,
+      competitor: cell,
+    }));
+  }
+  if (competitor === 'getgabs') {
+    return GETGABS_PAIRWISE_MATRIX.map(({ label, description, topedge, competitor: cell }) => ({
+      label,
+      description,
+      topedge,
+      competitor: cell,
+    }));
+  }
+  if (competitor === 'kanal') {
+    return KANAL_PAIRWISE_MATRIX.map(({ label, description, topedge, competitor: cell }) => ({
+      label,
+      description,
+      topedge,
+      competitor: cell,
+    }));
+  }
   return LEGACY_COMPARE_FEATURE_MATRIX.map((row) => ({
     label: row.name,
     description: row.description,
@@ -779,6 +1020,9 @@ function pairwiseForDuel(competitor: MatrixCompetitor): PairwiseFeatureRow[] {
   if (competitor === 'aisensy') return AISENSY_PAIRWISE_MATRIX;
   if (competitor === 'bitespeed') return BITESPEED_PAIRWISE_MATRIX;
   if (competitor === 'interakt') return INTERAKT_PAIRWISE_MATRIX;
+  if (competitor === 'zoko') return ZOKO_PAIRWISE_MATRIX;
+  if (competitor === 'getgabs') return GETGABS_PAIRWISE_MATRIX;
+  if (competitor === 'kanal') return KANAL_PAIRWISE_MATRIX;
   return LEGACY_COMPARE_FEATURE_MATRIX.map((row) => ({
     id: row.id,
     label: row.name,
@@ -794,12 +1038,15 @@ export function planDuelFeatures(competitor: MatrixCompetitor): {
   competitor: string;
 }[] {
   const matrix = pairwiseForDuel(competitor);
-  return PLAN_DUEL_IDS.map((id) => {
-    const row = matrix.find((r) => r.id === id)!;
-    return {
-      label: PLAN_DUEL_SHORT[id],
-      topedge: row.topedge,
-      competitor: row.competitor,
-    };
+  return PLAN_DUEL_IDS.flatMap((id) => {
+    const row = matrix.find((r) => r.id === id);
+    if (!row) return [];
+    return [
+      {
+        label: PLAN_DUEL_SHORT[id],
+        topedge: row.topedge,
+        competitor: row.competitor,
+      },
+    ];
   });
 }

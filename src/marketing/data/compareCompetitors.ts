@@ -1,8 +1,11 @@
 import {
   AISENSY_PAIRWISE_MATRIX,
   BITESPEED_PAIRWISE_MATRIX,
+  GETGABS_PAIRWISE_MATRIX,
   INTERAKT_PAIRWISE_MATRIX,
+  KANAL_PAIRWISE_MATRIX,
   WATI_PAIRWISE_MATRIX,
+  ZOKO_PAIRWISE_MATRIX,
 } from './compareFeatureMatrix';
 import { FALLBACK_CATALOG } from '../lib/billingCatalog';
 
@@ -691,9 +694,528 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
     ],
     related: [
       { label: 'All comparisons', href: '/compare' },
+      { label: 'Alternatives index', href: '/compare/alternatives' },
       { label: 'vs WATI', href: '/compare/wati' },
       { label: 'vs AiSensy', href: '/compare/aisensy' },
       { label: 'vs Interakt', href: '/compare/interakt' },
+      { label: 'TopEdge pricing', href: '/pricing' },
+    ],
+  },
+
+  zoko: {
+    slug: 'zoko',
+    name: 'Zoko',
+    shortName: 'Zoko',
+    website: 'https://www.zoko.io',
+    logo: '/marketing/compare/compare-logo-zoko.svg',
+    logoAlt: 'Zoko logo',
+    accent: '#2563eb',
+    brandTag: 'India WhatsApp commerce',
+    title: 'TopEdge vs Zoko (2026) | Flat Order Plans vs Conversation Metering',
+    description:
+      'Compare TopEdge vs Zoko for Shopify WhatsApp: flat INR order-volume plans vs Zoko base fee plus per-conversation metering, COD flows, AI add-ons, and India commerce hooks.',
+    keywords:
+      'TopEdge vs Zoko, Zoko alternative Shopify, Zoko pricing conversations, Shopify WhatsApp India Zoko, Zoko vs TopEdge',
+    h1: 'TopEdge vs Zoko',
+    subtitle: 'TopEdge AI vs Zoko for Shopify WhatsApp ecommerce.',
+    answerFirst:
+      'Pick TopEdge AI when you want Shopify India recovery, COD → prepaid, warranty, and unified identity on flat INR order-volume plans. Pick Zoko when you want India-native WhatsApp commerce (catalog, COD confirm flows, CTWA) and are comfortable with a USD base plus conversation metering that can rise in festival traffic.',
+    whoForTopEdge:
+      'You want predictable INR cost by Shopify orders, COD → prepaid as a first-class journey, warranty, and AI included without a per-conversation platform fee.',
+    whoForCompetitor:
+      'You want a mature India WhatsApp commerce stack (catalog shopping, free essential ecommerce flows, COD verification) and accept conversation buckets or Starter markup.',
+    positioning:
+      'Both serve Indian Shopify D2C on WhatsApp. Zoko is strong on India commerce flows and meters conversations on top of a USD plan. TopEdge prices the platform on order volume in INR and keeps Meta fees separate.',
+    researchAsOf: 'Sep 2026',
+    differentiators: [
+      {
+        title: 'Predictable platform fee vs conversation spikes',
+        body: 'TopEdge Launch / Growth / Scale are flat INR by Shopify orders. Zoko Starter adds $0.015 per conversation; Plus/Elite/Max include conversation buckets then overage — festival traffic can move the bill.',
+      },
+      {
+        title: 'COD → prepaid and warranty in the core stack',
+        body: 'TopEdge ships COD → prepaid with checkout partners and a warranty hub. Zoko lists COD verification / convert COD→prepaid in essential flows — strong, but warranty is not a first-class public product.',
+      },
+      {
+        title: 'AI economics',
+        body: 'TopEdge includes Intelligence / BYOK on core plans. Zoko AI bots are paid add-ons (Shopify listing: from ~$24.99/mo/bot) — verify live.',
+      },
+      {
+        title: 'Honest on India commerce',
+        body: 'Zoko earns the India-native commerce claim (catalog-in-chat, essential COD flows). We do not pretend TopEdge invented that category — we compete on metering model, warranty, and unified identity.',
+      },
+    ],
+    matrix: ZOKO_PAIRWISE_MATRIX.map(({ label, description, topedge, competitor }) => ({
+      label,
+      description,
+      topedge,
+      competitor,
+    })),
+    matrixNote:
+      'Zoko plans and conversation rates as of September 2026 from zoko.io/pricing and apps.shopify.com/whatsapp-button-chat (Starter $49.99 · Plus $79.99 · Elite $139.99 · Max $499.99; Shopify reviews ~445). Confirm live before purchase — figures change.',
+    scorecard: [
+      {
+        area: 'Pricing model',
+        topedge: 'Flat INR by Shopify orders',
+        competitor: 'USD base + conversation markup / buckets',
+        edge: 'TopEdge',
+      },
+      {
+        area: 'India commerce / COD',
+        topedge: 'COD journeys + COD → prepaid',
+        competitor: 'Essential free flows include COD confirm / convert COD→prepaid',
+        edge: 'Even',
+      },
+      {
+        area: 'Catalog / in-chat commerce',
+        topedge: 'Shopify + WhatsApp journeys',
+        competitor: 'Catalog shopping inside WhatsApp (strong public claim)',
+        edge: 'Competitor',
+      },
+      {
+        area: 'AI agents',
+        topedge: 'Included (Intelligence / BYOK)',
+        competitor: 'Paid AI bots / resolution-priced agents — verify live',
+        edge: 'TopEdge',
+      },
+      {
+        area: 'Warranty management',
+        topedge: 'Native hub',
+        competitor: 'Not found as first-class product',
+        edge: 'TopEdge',
+      },
+      {
+        area: 'Unified customer identity',
+        topedge: 'Native multi-number / email merge',
+        competitor: 'Shopify sync + inbox; merge depth verify live',
+        edge: 'TopEdge',
+      },
+      {
+        area: 'Flow economics',
+        topedge: 'Unlimited journey runs on plans',
+        competitor: '11 essential flows free; custom flows ~$5.99/mo each',
+        edge: 'Trade-off',
+      },
+      {
+        area: 'Shopify App Store traction',
+        topedge: 'Newer listing / growing',
+        competitor: '~445 reviews @ 4.9★ (Sep 2026) — verify live',
+        edge: 'Competitor',
+      },
+    ],
+    deepDives: [
+      {
+        title: 'Why conversation metering matters in India',
+        body: 'Festival and sale weeks spike WhatsApp volume. A Starter-style $0.015/conversation fee (plus Meta) scales with chatter, not just orders. TopEdge’s published INR catalog is easier to forecast when CX volume and order volume diverge.',
+      },
+      {
+        title: 'Where Zoko still wins',
+        body: 'If you want catalog shopping inside WhatsApp, a long Shopify review history, and free essential ecommerce playbooks (including COD confirm), Zoko is a serious India-native option — evaluate their estimator with your peak conversation count.',
+      },
+      {
+        title: 'AI is not free on either side of Meta',
+        body: 'Meta fees always apply. On Zoko, AI bots are listed as paid add-ons; on TopEdge, Intelligence / BYOK sits in the base plan with your own LLM keys.',
+      },
+    ],
+    competitorPlans: [
+      {
+        name: 'Starter',
+        price: 'from $49.99/mo',
+        note: 'USD · $0.015/conversation markup · Meta separate',
+        highlights: [
+          'Unlimited agents',
+          'Pre-built Shopify flows free',
+          'Catalog sync',
+          'AI bots add-on',
+        ],
+        popular: true,
+      },
+      {
+        name: 'Plus',
+        price: 'from $79.99/mo',
+        note: '5K conv included · then $0.00199/conv',
+        highlights: ['5 agents included', 'Shared inbox', 'Broadcast segments', 'AI bots add-on'],
+      },
+      {
+        name: 'Elite',
+        price: 'from $139.99/mo',
+        note: '100K conv included · then $0.00099/conv',
+        highlights: ['10 agents included', 'Higher conversation bucket', 'Same commerce stack'],
+      },
+    ],
+    topedgePlansNote:
+      'TopEdge Launch ₹1,999 · Growth ₹3,999 · Scale ₹6,499, flat INR by Shopify order volume. AI included; Meta conversation fees pass through separately — no Zoko-style per-conversation platform markup on Starter.',
+    pricingCaveat:
+      'Zoko (Sep 2026): Starter $49.99 + $0.015/conversation · Plus $79.99 (5K conv) · Elite $139.99 (100K) · Max $499.99 (5M) on zoko.io/pricing and the Shopify App Store listing. Custom flows ~$5.99/mo; AI bots from ~$24.99/mo/bot on the listing. Verify on zoko.io and apps.shopify.com/whatsapp-button-chat before purchase.',
+    faqs: [
+      {
+        question: 'Who should pick TopEdge over Zoko?',
+        answer:
+          'Shopify India teams that want flat INR order-volume pricing, COD → prepaid and warranty in the core stack, and do not want platform cost to track conversation spikes during sales.',
+      },
+      {
+        question: 'Does Zoko support COD?',
+        answer:
+          'Yes. Zoko’s public pricing lists essential ecommerce flows including double-confirm COD and convert COD → prepaid. TopEdge also ships COD journeys; we compete more on metering model and warranty than on “who can text COD.”',
+      },
+      {
+        question: 'Is Zoko cheaper than TopEdge?',
+        answer:
+          'It depends on conversation volume. Starter looks mid-range in USD but adds $0.015 per conversation. Model your festival peak on zoko.io’s estimator, then compare to TopEdge’s published INR plans plus Meta pass-through.',
+      },
+      {
+        question: 'Does TopEdge claim to be more “India-native” than Zoko?',
+        answer:
+          'No. Zoko markets India commerce hard and has the review history to match. TopEdge’s edge here is predictable INR platform pricing, warranty, and unified identity — not a claim that Zoko is foreign.',
+      },
+    ],
+    related: [
+      { label: 'Alternatives index', href: '/compare/alternatives' },
+      { label: 'vs Bitespeed', href: '/compare/bitespeed' },
+      { label: 'vs Getgabs', href: '/compare/getgabs' },
+      { label: 'vs Kanal', href: '/compare/kanal' },
+      { label: 'TopEdge pricing', href: '/pricing' },
+    ],
+  },
+
+  getgabs: {
+    slug: 'getgabs',
+    name: 'Getgabs',
+    shortName: 'Getgabs',
+    website: 'https://getgabs.com',
+    logo: '/marketing/compare/compare-logo-getgabs.svg',
+    logoAlt: 'Getgabs logo',
+    accent: '#16a34a',
+    brandTag: 'Low-cost WhatsApp entry',
+    title: 'TopEdge vs Getgabs (2026) | Cheap Entry vs Native Depth',
+    description:
+      'Compare TopEdge vs Getgabs: free-to-install / low USD entry vs TopEdge’s COD → prepaid, warranty, unified identity, and visual journeys included on INR plans.',
+    keywords:
+      'TopEdge vs Getgabs, Getgabs alternative Shopify, Getgabs pricing, cheap WhatsApp Shopify app, Getgabs vs TopEdge',
+    h1: 'TopEdge vs Getgabs',
+    subtitle: 'TopEdge AI vs Getgabs for Shopify WhatsApp ecommerce.',
+    answerFirst:
+      'Pick Getgabs if you want the cheapest possible entry (free to install; paid from about $11–$15/mo depending on listing) and will add depth later. Pick TopEdge AI if you want COD → prepaid, warranty, unified customer identity, and a full visual journey stack built in from day one on published INR plans.',
+    whoForTopEdge:
+      'You need COD risk conversion, warranty, unified identity, and Meta-gated journeys without piecing depth together from add-ons later.',
+    whoForCompetitor:
+      'You are cost-sensitive at install time and mainly need cart reminders, order updates, COD confirmations, and a shared inbox to start.',
+    positioning:
+      'Getgabs wins on sticker price. TopEdge wins on what ships natively for Indian D2C ops — do not use this page to claim TopEdge is cheaper.',
+    researchAsOf: 'Sep 2026',
+    differentiators: [
+      {
+        title: 'Depth at day one',
+        body: 'COD → prepaid as a distinct builder, warranty hub, and unified identity ship on TopEdge. Getgabs lists COD verification and cart recovery — check which ecommerce automations unlock only on higher tiers.',
+      },
+      {
+        title: 'Journey builder vs flow limits',
+        body: 'TopEdge visual journeys run unlimited on plans. Getgabs chatbot flows are unlimited on site plans, but auto-trigger and crawl meters still apply — verify live.',
+      },
+      {
+        title: 'Honest on price',
+        body: 'Getgabs is dramatically cheaper to start. If budget is the only criterion, they win. This comparison is about what you still need to buy or build after install.',
+      },
+      {
+        title: 'INR forecasting',
+        body: 'TopEdge publishes Launch ₹1,999 · Growth ₹3,999 · Scale ₹6,499. Getgabs bills USD subscriptions plus Meta — fine for many stores, harder for India finance teams modeling ₹.',
+      },
+    ],
+    matrix: GETGABS_PAIRWISE_MATRIX.map(({ label, description, topedge, competitor }) => ({
+      label,
+      description,
+      topedge,
+      competitor,
+    })),
+    matrixNote:
+      'Getgabs pricing as of September 2026: getgabs.com lists Basic $15 · Plus $21 · Pro $59 (0% Meta markup claimed). Shopify App Store (apps.shopify.com/getgabs-whatsapp-chatbot-api) shows free to install, Plus $11/mo, Pro $59/mo, ~15 reviews. Figures disagree across surfaces — confirm live before purchase.',
+    scorecard: [
+      {
+        area: 'Entry price',
+        topedge: 'Launch ₹1,999/mo',
+        competitor: 'Free install; paid ~$11–$15/mo entry',
+        edge: 'Competitor',
+      },
+      {
+        area: 'COD → prepaid depth',
+        topedge: 'Native conversion journeys',
+        competitor: 'COD verification listed; conversion builder depth verify live',
+        edge: 'TopEdge',
+      },
+      {
+        area: 'Warranty',
+        topedge: 'Native hub',
+        competitor: 'Not found as first-class product',
+        edge: 'TopEdge',
+      },
+      {
+        area: 'Unified identity',
+        topedge: 'Native',
+        competitor: 'Lead CRM / contacts',
+        edge: 'TopEdge',
+      },
+      {
+        area: 'Cart recovery',
+        topedge: 'Native journeys',
+        competitor: 'Abandoned cart on Shopify app + site ecommerce tiers',
+        edge: 'Even',
+      },
+      {
+        area: 'Shared inbox',
+        topedge: 'WhatsApp inbox with order context',
+        competitor: 'Team inbox (agent seats by plan)',
+        edge: 'Even',
+      },
+      {
+        area: 'Meta markup',
+        topedge: '0% platform markup',
+        competitor: 'Claims 0% markup on getgabs.com',
+        edge: 'Even',
+      },
+      {
+        area: 'Shopify review history',
+        topedge: 'Newer / growing',
+        competitor: '~15 reviews (Sep 2026) — verify live',
+        edge: 'Trade-off',
+      },
+    ],
+    deepDives: [
+      {
+        title: 'Cheap to start, check what is still gated',
+        body: 'On getgabs.com, abandoned checkout reminders and several ecommerce automations sit on Plus+. On Shopify, Plus starts at $11/mo. Map the exact feature you need (COD conversion, warranty, identity) to the tier — do not assume the free install unlocks the full stack.',
+      },
+      {
+        title: 'When Getgabs is the right call',
+        body: 'Early stores that only need cart nudges, order updates, and a light inbox should try Getgabs first. Switching later is normal; this page is not arguing you must buy TopEdge on day one.',
+      },
+      {
+        title: 'When TopEdge pays for itself',
+        body: 'If COD RTO, warranty claims, or multi-number shoppers already cost you ops hours, the higher INR plan often replaces several add-ons and spreadsheets — still not a “cheaper” claim.',
+      },
+    ],
+    competitorPlans: [
+      {
+        name: 'Free install',
+        price: 'Free to install',
+        note: 'Shopify listing · paid subscription unlocks features',
+        highlights: ['Install from App Store', 'Paid plan required for full stack', 'Meta fees separate'],
+      },
+      {
+        name: 'Plus (Shopify listing)',
+        price: 'from $11/mo',
+        note: 'App Store · site Basic/Plus differ ($15/$21) — verify',
+        highlights: ['Higher broadcast limits', 'Team inbox seats', 'Ecommerce automations'],
+        popular: true,
+      },
+      {
+        name: 'Pro',
+        price: 'from $59/mo',
+        note: 'Unlimited broadcast on listing · Meta separate',
+        highlights: ['Higher agent seats', 'Dedicated support', 'Advanced automation'],
+      },
+    ],
+    topedgePlansNote:
+      'TopEdge Launch ₹1,999 · Growth ₹3,999 · Scale ₹6,499. Not the cheapest entry — priced for COD, warranty, identity, and journeys included.',
+    pricingCaveat:
+      'Getgabs (Sep 2026): Shopify App Store free to install, Plus $11/mo, Pro $59/mo (~15 reviews). getgabs.com shows Basic $15 · Plus $21 · Pro $59 with 0% markup claim. Verify on getgabs.com/pricing and apps.shopify.com/getgabs-whatsapp-chatbot-api — do not mix the two tables without checking.',
+    faqs: [
+      {
+        question: 'Is Getgabs cheaper than TopEdge?',
+        answer:
+          'Yes on entry price. Free to install and paid tiers around $11–$15/mo beat TopEdge Launch on sticker cost. This page does not claim TopEdge wins on price.',
+      },
+      {
+        question: 'What does TopEdge include that Getgabs may not at entry?',
+        answer:
+          'COD → prepaid as a distinct journey, warranty management, unified customer identity across numbers/emails, and a full visual journey stack on published INR plans. Confirm Getgabs tier gates on their live pricing matrix.',
+      },
+      {
+        question: 'Does Getgabs do abandoned cart and COD?',
+        answer:
+          'Yes — abandoned cart recovery, order notifications, and COD confirmations are core marketing claims. Depth of COD → prepaid conversion vs confirm-only is what you should verify in a demo.',
+      },
+      {
+        question: 'Which listing should I trust for price?',
+        answer:
+          'Check both getgabs.com/pricing and the Shopify App Store listing the same day you buy. As of Sep 2026 they disagree on entry tier dollars.',
+      },
+    ],
+    related: [
+      { label: 'Alternatives index', href: '/compare/alternatives' },
+      { label: 'vs Zoko', href: '/compare/zoko' },
+      { label: 'vs Bitespeed', href: '/compare/bitespeed' },
+      { label: 'vs Kanal', href: '/compare/kanal' },
+      { label: 'TopEdge pricing', href: '/pricing' },
+    ],
+  },
+
+  kanal: {
+    slug: 'kanal',
+    name: 'Kanal',
+    shortName: 'Kanal',
+    website: 'https://getkanal.com',
+    logo: '/marketing/compare/compare-logo-kanal.svg',
+    logoAlt: 'Kanal logo',
+    accent: '#7c3aed',
+    brandTag: 'Global WhatsApp + Klaviyo',
+    title: 'TopEdge vs Kanal (2026) | INR Shopify India vs EUR Global WhatsApp',
+    description:
+      'Compare TopEdge vs Kanal: flat INR India COD workflows vs Kanal Pro from €89/mo, Klaviyo integration, and global WhatsApp marketing for Shopify.',
+    keywords:
+      'TopEdge vs Kanal, Kanal alternative Shopify, Kanal pricing, Kanal WhatsApp Klaviyo, Shopify WhatsApp India vs Kanal',
+    h1: 'TopEdge vs Kanal',
+    subtitle: 'TopEdge AI vs Kanal for Shopify WhatsApp ecommerce.',
+    answerFirst:
+      'Pick TopEdge AI for Shopify India recovery, COD, and inbox on flat INR pricing with no EUR/USD platform floor. Pick Kanal when you want global WhatsApp marketing beside Klaviyo (and Recharge / Gorgias) and can budget Pro from €89/mo on getkanal.com.',
+    whoForTopEdge:
+      'India D2C operators who need COD workflows, INR forecasting, and WhatsApp + Shopify without an ESP-first global stack.',
+    whoForCompetitor:
+      'Multi-market Shopify brands that already run Klaviyo and want WhatsApp as a complementary channel with EU-priced plans.',
+    positioning:
+      'Kanal is a strong global WhatsApp marketing app with ESP integrations. TopEdge is India-first: INR plans, COD, Meta gating — the same angle that fits vs Bitespeed applies cleanly here.',
+    researchAsOf: 'Sep 2026',
+    differentiators: [
+      {
+        title: 'INR vs EUR floor',
+        body: 'TopEdge Launch starts at ₹1,999/mo. Kanal Pro starts at €89/mo on getkanal.com (Shopify listing often shows $89) — a real currency and floor difference for Indian finance teams.',
+      },
+      {
+        title: 'India COD workflows',
+        body: 'TopEdge ships COD confirm and COD → prepaid for Indian checkout patterns. Kanal’s public marketing is global cart recovery and campaigns — no India-specific COD positioning found.',
+      },
+      {
+        title: 'Klaviyo complement',
+        body: 'Kanal integrates natively with Klaviyo. TopEdge is WhatsApp + Shopify focused — keep your ESP if you have one; we do not claim to replace Klaviyo.',
+      },
+      {
+        title: 'AI unlock',
+        body: 'TopEdge includes Intelligence / BYOK on core plans. Kanal’s AI Agent is listed on Scale+ (€149+) on getkanal.com — verify live.',
+      },
+    ],
+    matrix: KANAL_PAIRWISE_MATRIX.map(({ label, description, topedge, competitor }) => ({
+      label,
+      description,
+      topedge,
+      competitor,
+    })),
+    matrixNote:
+      'Kanal plans as of September 2026 from getkanal.com/pricing: Pro €89 · Scale €149 · Business €350 · Agency €1,900 /mo. Shopify App Store (apps.shopify.com/kanal-marketing-ai) shows Pro/Scale in USD (~$89/$149) and ~97 reviews @ 5.0 — verify live; currency display differs by surface.',
+    scorecard: [
+      {
+        area: 'Pricing currency / floor',
+        topedge: 'Flat INR from ₹1,999',
+        competitor: 'From €89/mo Pro (getkanal.com)',
+        edge: 'TopEdge',
+      },
+      {
+        area: 'India COD',
+        topedge: 'Native COD + COD → prepaid',
+        competitor: 'No India-specific COD positioning found',
+        edge: 'TopEdge',
+      },
+      {
+        area: 'Klaviyo / ESP complement',
+        topedge: 'Pair your own ESP',
+        competitor: 'Native Klaviyo (+ Recharge, Gorgias, Crisp)',
+        edge: 'Competitor',
+      },
+      {
+        area: 'Abandoned cart',
+        topedge: 'Native journeys',
+        competitor: 'On Pro+',
+        edge: 'Even',
+      },
+      {
+        area: 'AI agent',
+        topedge: 'Included on core plans',
+        competitor: 'Scale+ (€149+) — verify live',
+        edge: 'TopEdge',
+      },
+      {
+        area: 'Warranty',
+        topedge: 'Native hub',
+        competitor: 'Not found as first-class product',
+        edge: 'TopEdge',
+      },
+      {
+        area: 'Multi-market',
+        topedge: 'India-first',
+        competitor: 'Multi-market add-ons on Scale+',
+        edge: 'Competitor',
+      },
+      {
+        area: 'Shopify reviews',
+        topedge: 'Newer / growing',
+        competitor: '~97 reviews @ 5.0 (Sep 2026) — verify live',
+        edge: 'Competitor',
+      },
+    ],
+    deepDives: [
+      {
+        title: 'Same India angle as vs Bitespeed',
+        body: 'Kanal is EUR/global-first. Flat INR, COD-native journeys, and no Western currency floor are honest differentiators here — unlike vs Zoko, where India-native positioning already belongs to the competitor.',
+      },
+      {
+        title: 'When Kanal fits better',
+        body: 'If Klaviyo is the center of your lifecycle stack and WhatsApp is a complementary channel across markets, Kanal’s integrations and Pro footprint are built for that job.',
+      },
+      {
+        title: 'AI and advanced automations',
+        body: 'On getkanal.com, AI Agent and advanced automations unlock on Scale (€149+). Model that against TopEdge Growth/Scale where Intelligence is already in the base catalog.',
+      },
+    ],
+    competitorPlans: [
+      {
+        name: 'Pro',
+        price: 'from €89/mo',
+        note: 'getkanal.com · 1 user · cart recovery',
+        highlights: ['Abandoned cart recovery', 'Klaviyo / Recharge / Crisp / Gorgias', 'Campaigns'],
+        popular: true,
+      },
+      {
+        name: 'Scale',
+        price: 'from €149/mo',
+        note: '5 users · AI Agent · advanced automations',
+        highlights: ['AI Agent', 'Unlimited automations', 'Klaviyo', 'Segments'],
+      },
+      {
+        name: 'Business',
+        price: 'from €350/mo',
+        note: 'Done-for-you · unlimited users',
+        highlights: ['Flow setup by experts', 'Campaigns on demand', 'Dedicated AM'],
+      },
+    ],
+    topedgePlansNote:
+      'TopEdge Launch ₹1,999 · Growth ₹3,999 · Scale ₹6,499, flat INR by Shopify orders for India D2C — no €89 Pro floor.',
+    pricingCaveat:
+      'Kanal (Sep 2026): Pro €89 · Scale €149 · Business €350 · Agency €1,900 /mo on getkanal.com/pricing. Shopify listing shows ~$89/$149 USD and ~97 reviews @ 5.0. Meta fees separate. Verify on getkanal.com and apps.shopify.com/kanal-marketing-ai before purchase.',
+    faqs: [
+      {
+        question: 'Who should pick TopEdge over Kanal?',
+        answer:
+          'Shopify India teams that need COD workflows and INR pricing without a €89+ global WhatsApp floor, and that do not need native Klaviyo as the buying criterion.',
+      },
+      {
+        question: 'Does Kanal integrate with Klaviyo?',
+        answer:
+          'Yes — Klaviyo is a listed integration on Pro/Scale marketing. TopEdge does not try to replace your ESP; pair whatever email stack you already run.',
+      },
+      {
+        question: 'Is Kanal priced in INR?',
+        answer:
+          'Public getkanal.com pricing is in EUR. Shopify may display USD. TopEdge publishes and bills flat INR Launch / Growth / Scale.',
+      },
+      {
+        question: 'Does Kanal do India COD → prepaid?',
+        answer:
+          'No India-specific COD positioning showed up on public marketing at research time. TopEdge treats COD confirm and COD → prepaid as core India journeys — verify any Kanal COD claims live if they appear later.',
+      },
+    ],
+    related: [
+      { label: 'Alternatives index', href: '/compare/alternatives' },
+      { label: 'vs Bitespeed', href: '/compare/bitespeed' },
+      { label: 'vs Zoko', href: '/compare/zoko' },
+      { label: 'vs Getgabs', href: '/compare/getgabs' },
       { label: 'TopEdge pricing', href: '/pricing' },
     ],
   },

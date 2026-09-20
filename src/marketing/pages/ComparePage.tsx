@@ -212,6 +212,7 @@ export default function ComparePage({ competitor: competitorProp }: Props) {
               ))}
             </ul>
           </div>
+          {data.matrixNote ? <p className="mkt-cmp__fine">{data.matrixNote}</p> : null}
         </section>
 
         {hasScorecard ? (

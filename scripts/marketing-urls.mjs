@@ -26,7 +26,16 @@ export const FEATURE_SLUGS = [
   'intent-detection',
 ];
 
-export const COMPARE_SLUGS = ['wati', 'aisensy', 'interakt', 'bitespeed'];
+export const COMPARE_SLUGS = [
+  'wati',
+  'aisensy',
+  'interakt',
+  'bitespeed',
+  'zoko',
+  'getgabs',
+  'kanal',
+  'alternatives',
+];
 
 export const TOPIC_SLUGS = ['shopify-whatsapp-integration'];
 
