@@ -4,6 +4,8 @@ export interface BlogPost {
   description: string;
   slug: string;
   date: string;
+  /** Optional ISO date when the post was last substantively edited. */
+  updated?: string;
   readTime: string;
   category: string;
   author: string;

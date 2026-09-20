@@ -1,4 +1,5 @@
 import { SITE_URL } from './marketingSeo';
+import { catalogMonthlyOffersJsonLd, TRIAL } from '../lib/billingCatalog';
 
 /** Core commercial keywords TopEdge should compete for (natural use in titles/descriptions). */
 export const CORE_KEYWORDS = [
@@ -327,13 +328,18 @@ export function softwareApplicationJsonLd() {
     url: SITE_URL,
     description:
       'WhatsApp automation for Shopify: abandoned cart recovery, COD confirmations, Live Chat, journeys, and Meta Cloud API campaigns for Indian ecommerce.',
-    offers: {
-      '@type': 'Offer',
-      price: '0',
-      priceCurrency: 'INR',
-      description: '14-day free trial',
-      url: `${SITE_URL}/pricing`,
-    },
+    offers: [
+      {
+        '@type': 'Offer',
+        name: 'Free trial',
+        price: '0',
+        priceCurrency: 'INR',
+        description: `${TRIAL.days}-day free trial`,
+        url: `${SITE_URL}/pricing`,
+        availability: 'https://schema.org/InStock',
+      },
+      ...catalogMonthlyOffersJsonLd(undefined, { url: `${SITE_URL}/pricing` }),
+    ],
     featureList: [
       'WhatsApp cart recovery',
       'Shopify integration',
@@ -366,7 +372,12 @@ export function websiteJsonLd() {
   };
 }
 
-export function webPageJsonLd(opts: { name: string; description: string; path: string }) {
+export function webPageJsonLd(opts: {
+  name: string;
+  description: string;
+  path: string;
+  dateModified?: string;
+}) {
   const url = `${SITE_URL}${opts.path === '/' ? '' : opts.path}`;
   return {
     '@context': 'https://schema.org',
@@ -374,6 +385,13 @@ export function webPageJsonLd(opts: { name: string; description: string; path: s
     name: opts.name,
     description: opts.description,
     url,
+    ...(opts.dateModified
+      ? {
+          dateModified: new Date(
+            opts.dateModified.includes('T') ? opts.dateModified : `${opts.dateModified}T12:00:00Z`,
+          ).toISOString(),
+        }
+      : {}),
     isPartOf: { '@type': 'WebSite', name: 'TopEdge', url: SITE_URL },
     about: {
       '@type': 'SoftwareApplication',

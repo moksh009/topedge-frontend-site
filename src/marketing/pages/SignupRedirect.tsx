@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { DASH_SIGNUP } from '../lib/billingCatalog';
 import '../styles/auth-redirect.css';
 
@@ -22,6 +23,11 @@ export default function SignupRedirect() {
 
   return (
     <main className="mkt-auth-redirect" aria-busy="true" aria-live="polite">
+      <Helmet>
+        <title>Opening signup | TopEdge</title>
+        <meta name="robots" content="noindex, nofollow" />
+        <link rel="canonical" href="https://topedgeai.com/signup" />
+      </Helmet>
       <img
         src="/topedge-loader.gif"
         alt=""

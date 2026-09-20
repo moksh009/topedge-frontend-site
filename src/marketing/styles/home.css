@@ -5233,6 +5233,10 @@
   background: linear-gradient(180deg, #fafffb 0%, #ffffff 100%);
 }
 
+.home-voices__card--rose {
+  background: linear-gradient(180deg, #fff8fa 0%, #ffffff 100%);
+}
+
 .home-voices__card.is-front {
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.95) inset,
@@ -5337,10 +5341,21 @@
 .home-voices__brand-logo--amber {
   height: 1.45rem;
   max-width: 6.5rem;
+  mix-blend-mode: normal;
+  filter: brightness(0) saturate(100%);
+  opacity: 0.88;
 }
 
 .home-voices__brand-logo--emerald {
   height: 1.35rem;
+  max-width: 7rem;
+  mix-blend-mode: normal;
+  filter: brightness(0) saturate(100%);
+  opacity: 0.88;
+}
+
+.home-voices__brand-logo--rose {
+  height: 1.4rem;
   max-width: 7rem;
   mix-blend-mode: normal;
   filter: brightness(0) saturate(100%);
@@ -5424,9 +5439,13 @@
   width: 2.45rem;
   height: 2.45rem;
   border-radius: 999px;
-  object-fit: cover;
-  background: #eee;
+  object-fit: contain;
+  object-position: center;
+  padding: 0.35rem;
+  background: #f4f4f5;
   border: 1px solid rgba(0, 0, 0, 0.06);
+  filter: brightness(0) saturate(100%);
+  opacity: 0.85;
 }
 
 .home-voices__who strong {

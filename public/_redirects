@@ -1,1 +1,74 @@
-/* /index.html 200 
+# Force (!) so rules win over prerendered files / SPA shell.
+# Order: host → legacy aliases → static HTML → SPA fallback.
+
+# Apex preferred
+https://www.topedgeai.com/*  https://topedgeai.com/:splat  301!
+
+# Legal (static HTML for Meta crawlers)
+/privacy  /privacy.html  200!
+/privacy/  /privacy.html  200!
+/privacy-policy  /privacy  301!
+/privacy-policy/  /privacy  301!
+/terms  /terms.html  200!
+/terms/  /terms.html  200!
+/terms-of-service  /terms  301!
+/terms-of-service/  /terms  301!
+
+# Community shell
+/community/*  /community.html  200!
+
+# Feature aliases → canonical hubs
+/features/shopify  /integrations  301!
+/features/shopify/  /integrations  301!
+/features/store-engine  /integrations  301!
+/features/store-engine/  /integrations  301!
+/features/order-messages  /features/journeys  301!
+/features/order-messages/  /features/journeys  301!
+/features/order-automations  /features/journeys  301!
+/features/order-automations/  /features/journeys  301!
+/features/cart-recovery  /features/journeys  301!
+/features/cart-recovery/  /features/journeys  301!
+/features/journey  /features/journeys  301!
+/features/journey/  /features/journeys  301!
+/features/inbox  /features/live-chat  301!
+/features/inbox/  /features/live-chat  301!
+/features/audience  /features/audience-crm  301!
+/features/audience/  /features/audience-crm  301!
+/features/segments  /features/audience-crm  301!
+/features/segments/  /features/audience-crm  301!
+/features/segmentation  /features/audience-crm  301!
+/features/segmentation/  /features/audience-crm  301!
+/features/rules  /features/chat-rules  301!
+/features/rules/  /features/chat-rules  301!
+
+# Retired topic / marketing URLs
+/whatsapp-cart-recovery  /features/journeys  301!
+/whatsapp-cart-recovery/  /features/journeys  301!
+/cod-confirmation-whatsapp  /features/journeys  301!
+/cod-confirmation-whatsapp/  /features/journeys  301!
+/services  /features  301!
+/booking  /contact  301!
+/testimonials  /customers  301!
+/agency  /customers  301!
+/agency/  /customers  301!
+/security  /features  301!
+/roi  /features/journeys  301!
+/solutions  /features  301!
+/solutions/*  /features  301!
+/ecommerce  /  301!
+/ai-caller  /features/ai-brain  301!
+/ai-chatbot  /features/live-chat  301!
+
+# Blog media + legacy plural
+/blog/:file.jpg  /blog-media/:file.jpg  301!
+/blog/:file.webp  /blog-media/:file.webp  301!
+/blogs  /blog  301!
+/blogs/  /blog  301!
+/blogs/*  /blog  301!
+/blog/agencies-whatsapp-automation-multi-brand-shopify  /blog  301!
+
+# Trailing-slash → slashless (matches canonicals after flat .html prerender)
+/*/  /:splat  301!
+
+# SPA fallback (must be last)
+/*  /index.html  200

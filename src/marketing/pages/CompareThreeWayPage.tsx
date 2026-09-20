@@ -5,6 +5,10 @@ import MarketingCtaBand from '../components/MarketingCtaBand';
 import CompareStatus from '../components/compare/CompareStatus';
 import { THREE_WAY_FEATURE_MATRIX } from '../data/compareFeatureMatrix';
 import { breadcrumbJsonLd, organizationJsonLd, webPageJsonLd } from '../data/pageSeo';
+import {
+  compareThreeWayModifiedIso,
+  updatedKicker,
+} from '../data/contentDates';
 import '../styles/compare.css';
 
 const PATH = '/compare/topedge-vs-wati-vs-aisensy';
@@ -17,6 +21,8 @@ const LOGO_WATI = '/marketing/compare/compare-logo-wati.png';
 const LOGO_AISENSY = '/marketing/compare/compare-logo-aisensy.png';
 
 export default function CompareThreeWayPage() {
+  const modifiedIso = compareThreeWayModifiedIso();
+
   return (
     <>
       <MarketingSEO
@@ -27,7 +33,12 @@ export default function CompareThreeWayPage() {
         noSuffix
         jsonLd={[
           organizationJsonLd(),
-          webPageJsonLd({ name: 'TopEdge vs WATI vs AiSensy', description: DESCRIPTION, path: PATH }),
+          webPageJsonLd({
+            name: 'TopEdge vs WATI vs AiSensy',
+            description: DESCRIPTION,
+            path: PATH,
+            dateModified: modifiedIso,
+          }),
           breadcrumbJsonLd([
             { name: 'Home', path: '/' },
             { name: 'Compare', path: '/compare' },
@@ -37,7 +48,13 @@ export default function CompareThreeWayPage() {
       />
       <MarketingPage className="mkt-cmp">
         <header className="mkt-cmp__arena">
-          <p className="mkt-cmp__kicker">Comparison · 3-way</p>
+          <p className="mkt-cmp__kicker">
+            Comparison · 3-way
+            <span className="mkt-cmp__asof">
+              {' '}
+              · <time dateTime={modifiedIso}>{updatedKicker(modifiedIso)}</time>
+            </span>
+          </p>
           <h1 className="mkt-cmp__h1 mkt-cmp__h1--trio">
             <span className="mkt-cmp__h1-brand">
               <img

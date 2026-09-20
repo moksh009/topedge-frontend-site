@@ -293,6 +293,42 @@ function asPlan(raw: CatalogPlan): CatalogPlan {
   };
 }
 
+/** Digits-only INR amount from a display label like ₹1,999. */
+export function inrAmountFromLabel(label: string): string {
+  return String(label || '').replace(/[^\d]/g, '');
+}
+
+/** priceValidUntil ~1 year out (schema freshness); recomputed at call time. */
+export function offerPriceValidUntil(from = new Date()): string {
+  const d = new Date(from);
+  d.setFullYear(d.getFullYear() + 1);
+  return d.toISOString().slice(0, 10);
+}
+
+/**
+ * Schema.org Offer[] for SoftwareApplication / Product — sourced from the catalog
+ * (FALLBACK_CATALOG when called at module load; pass live catalog when available).
+ */
+export function catalogMonthlyOffersJsonLd(
+  catalog: BillingCatalog = FALLBACK_CATALOG,
+  opts?: { url?: string },
+) {
+  const url = opts?.url || 'https://topedgeai.com/pricing';
+  const validUntil = offerPriceValidUntil();
+  return catalog.plans
+    .filter((p) => PUBLIC_PLANS.has(p.slug))
+    .map((p) => ({
+      '@type': 'Offer' as const,
+      name: p.displayName,
+      price: inrAmountFromLabel(p.monthlyPriceLabel),
+      priceCurrency: catalog.currency || 'INR',
+      priceValidUntil: validUntil,
+      url,
+      availability: 'https://schema.org/InStock',
+      description: `${p.ordersPerCycle} orders / cycle · ${p.campaignEmailSendsPerCycle.toLocaleString('en-IN')} campaign sends · billed monthly`,
+    }));
+}
+
 export async function fetchBillingCatalog(): Promise<BillingCatalog> {
   const ctrl = new AbortController();
   const timer = window.setTimeout(() => ctrl.abort(), 6000);

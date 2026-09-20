@@ -36,10 +36,16 @@ async function waitForServer(url, attempts = 60) {
   throw new Error(`Preview server did not start at ${url}`);
 }
 
+/**
+ * Write `pricing.html` (not `pricing/index.html`).
+ * Directory indexes make Netlify 301 `/pricing` → `/pricing/`, which fights
+ * slashless canonicals in MarketingSEO and floods GSC with "Page with redirect".
+ * Flat `.html` + Pretty URLs → `/pricing` returns 200 directly.
+ */
 function outPathFor(route) {
   if (route === '/') return path.join(dist, 'index.html');
   const clean = route.replace(/^\//, '').replace(/\/$/, '');
-  return path.join(dist, clean, 'index.html');
+  return path.join(dist, `${clean}.html`);
 }
 
 function installChromium() {

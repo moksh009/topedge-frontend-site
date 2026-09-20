@@ -4,6 +4,7 @@ import {
   INTERAKT_PAIRWISE_MATRIX,
   WATI_PAIRWISE_MATRIX,
 } from './compareFeatureMatrix';
+import { FALLBACK_CATALOG } from '../lib/billingCatalog';
 
 export type CompareCell = 'yes' | 'no' | 'partial' | string;
 
@@ -66,28 +67,36 @@ export type CompareCompetitor = {
   related: { label: string; href: string }[];
 };
 
-/** TopEdge public plans (marketing catalog, monthly labels). */
-export const TOPEDGE_PLANS_SUMMARY = [
-  {
-    name: 'Launch',
-    price: '₹1,999/mo',
-    note: '100 orders · 3k campaign sends',
+/** TopEdge public plans — labels derived from billingCatalog FALLBACK (same SSOT as /pricing). */
+const PLAN_HIGHLIGHTS: Record<string, { highlights: string[]; popular?: boolean }> = {
+  launch: {
     highlights: ['Abandoned cart recovery', 'COD tools', 'Live Chat + CRM', 'Meta templates'],
   },
-  {
-    name: 'Growth',
-    price: '₹3,999/mo',
-    note: '800 orders · 15k campaign sends',
+  growth: {
     highlights: ['Journey branching', 'COD → prepaid', 'Priority send', 'Most popular'],
     popular: true,
   },
-  {
-    name: 'Scale',
-    price: '₹6,499/mo',
-    note: '1,500 orders · 30k campaign sends',
+  scale: {
     highlights: ['Highest send priority', 'Larger volume', 'Same core stack', 'Team-ready'],
   },
-] as const;
+};
+
+export const TOPEDGE_PLANS_SUMMARY = FALLBACK_CATALOG.plans
+  .filter((p) => ['launch', 'growth', 'scale'].includes(p.slug))
+  .map((p) => {
+    const extra = PLAN_HIGHLIGHTS[p.slug] || { highlights: [] as string[] };
+    const sends =
+      p.campaignEmailSendsPerCycle >= 1000
+        ? `${Math.round(p.campaignEmailSendsPerCycle / 1000)}k`
+        : String(p.campaignEmailSendsPerCycle);
+    return {
+      name: p.displayName,
+      price: `${p.monthlyPriceLabel}/mo`,
+      note: `${p.ordersPerCycle.toLocaleString('en-IN')} orders · ${sends} campaign sends`,
+      highlights: extra.highlights,
+      ...(extra.popular ? { popular: true as const } : {}),
+    };
+  });
 
 
 export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {

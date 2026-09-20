@@ -10,6 +10,8 @@ type MarketingSEOProps = {
   image?: string;
   keywords?: string;
   noSuffix?: boolean;
+  /** Soft-404 / auth handoff pages — keep out of the index */
+  noIndex?: boolean;
   faqSchema?: FaqItem[];
   /** Extra JSON-LD objects (Organization, SoftwareApplication, etc.) */
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
@@ -23,6 +25,7 @@ export default function MarketingSEO({
   image = `${SITE_URL}/og/og-default.svg`,
   keywords,
   noSuffix = false,
+  noIndex = false,
   faqSchema,
   jsonLd,
   type = 'website',
@@ -54,7 +57,14 @@ export default function MarketingSEO({
       <meta name="description" content={description} />
       {keywords ? <meta name="keywords" content={keywords} /> : null}
       <link rel="canonical" href={url} />
-      <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+      <meta
+        name="robots"
+        content={
+          noIndex
+            ? 'noindex, nofollow'
+            : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
+        }
+      />
       <meta property="og:type" content={type} />
       <meta property="og:site_name" content="TopEdge" />
       <meta property="og:locale" content="en_IN" />

@@ -1,9 +1,16 @@
 import { Link } from 'react-router-dom';
 import MarketingPage from '../components/MarketingPage';
+import MarketingSEO from '../components/MarketingSEO';
 
 export default function NotFoundPage() {
   return (
     <MarketingPage className="flex min-h-[70vh] items-center justify-center px-5">
+      <MarketingSEO
+        title="Page not found"
+        description="This TopEdge page does not exist. Head home for WhatsApp automation for Shopify India."
+        path="/404"
+        noIndex
+      />
       <div className="text-center">
         <p className="mkt-eyebrow">404</p>
         <h1 className="mkt-display mt-4 text-4xl font-medium text-[#0c1222]">Page not found</h1>

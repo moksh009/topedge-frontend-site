@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
 export const PRICING_FAQS = [
@@ -28,6 +28,7 @@ export const PRICING_FAQS = [
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
+/** Answers stay in the DOM for crawlers (same pattern as CompareFaq). */
 export default function PricingFaq() {
   const [open, setOpen] = useState<number | null>(0);
   const reduceMotion = useReducedMotion();
@@ -50,6 +51,8 @@ export default function PricingFaq() {
               type="button"
               className="mkt-faq__trigger"
               aria-expanded={isOpen}
+              aria-controls={`mkt-faq-panel-${index}`}
+              id={`mkt-faq-trigger-${index}`}
               onClick={() => setOpen(isOpen ? null : index)}
             >
               <span className="mkt-faq__q">{item.q}</span>
@@ -58,20 +61,15 @@ export default function PricingFaq() {
               </span>
             </button>
 
-            <AnimatePresence initial={false}>
-              {isOpen ? (
-                <motion.div
-                  key="panel"
-                  className="mkt-faq__panel"
-                  initial={reduceMotion ? false : { height: 0, opacity: 0 }}
-                  animate={reduceMotion ? undefined : { height: 'auto', opacity: 1 }}
-                  exit={reduceMotion ? undefined : { height: 0, opacity: 0 }}
-                  transition={{ duration: 0.28, ease }}
-                >
-                  <p className="mkt-faq__a">{item.a}</p>
-                </motion.div>
-              ) : null}
-            </AnimatePresence>
+            <div
+              id={`mkt-faq-panel-${index}`}
+              role="region"
+              aria-labelledby={`mkt-faq-trigger-${index}`}
+              className="mkt-faq__panel"
+              hidden={!isOpen}
+            >
+              <p className="mkt-faq__a">{item.a}</p>
+            </div>
           </motion.div>
         );
       })}

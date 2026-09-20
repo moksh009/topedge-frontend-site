@@ -9,6 +9,10 @@ import { blogPosts } from '../data/blogPosts';
 import { filterMarketingBlogPosts, isMarketingBlogPost } from '../marketing/data/blog';
 import type { BlogPost as BlogPostModel } from '../types/blog';
 import { DASH_SIGNUP } from '../marketing/routes';
+import {
+  articleDateModifiedIso,
+  articleDatePublishedIso,
+} from '../marketing/data/contentDates';
 import '../marketing/styles/blog.css';
 
 const allBlogPosts = filterMarketingBlogPosts([...blogPosts] as BlogPostModel[]);
@@ -36,6 +40,8 @@ export default function BlogPost() {
     .filter((p) => p.slug !== post.slug && isMarketingBlogPost(p))
     .slice(0, 3);
   const imageAbs = post.image.startsWith('http') ? post.image : `${SITE_URL}${post.image}`;
+  const datePublished = articleDatePublishedIso(post.date);
+  const dateModified = articleDateModifiedIso({ updated: post.updated });
 
   return (
     <>
@@ -63,8 +69,8 @@ export default function BlogPost() {
             headline: post.title,
             description: post.description,
             image: imageAbs,
-            datePublished: new Date(post.date).toISOString(),
-            dateModified: new Date(post.date).toISOString(),
+            datePublished,
+            dateModified,
             author: { '@type': 'Organization', name: 'TopEdge AI', url: SITE_URL },
             publisher: {
               '@type': 'Organization',

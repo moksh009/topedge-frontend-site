@@ -13,6 +13,11 @@ import {
 import { planDuelFeatures, type MatrixCompetitor } from '../data/compareFeatureMatrix';
 import { breadcrumbJsonLd, organizationJsonLd, webPageJsonLd } from '../data/pageSeo';
 import { SITE_URL } from '../data/marketingSeo';
+import { catalogMonthlyOffersJsonLd } from '../lib/billingCatalog';
+import {
+  compareTwoWayModifiedIso,
+  updatedKicker,
+} from '../data/contentDates';
 import '../styles/compare.css';
 
 type Props = { competitor?: string };
@@ -45,17 +50,10 @@ function topedgeOfferJsonLd() {
     description:
       'Shopify-native WhatsApp growth OS for India D2C, cart recovery, COD workflows, Meta-gated journeys, and order-aware inbox.',
     brand: { '@type': 'Brand', name: 'TopEdge' },
-    offers: TOPEDGE_PLANS_SUMMARY.map((p) => ({
-      '@type': 'Offer',
-      name: p.name,
-      priceCurrency: 'INR',
-      price: p.price.replace(/[^\d]/g, ''),
-      description: p.note,
-      url: `${SITE_URL}/pricing`,
-      availability: 'https://schema.org/InStock',
-    })),
+    offers: catalogMonthlyOffersJsonLd(undefined, { url: `${SITE_URL}/pricing` }),
   };
 }
+
 
 export default function ComparePage({ competitor: competitorProp }: Props) {
   const { competitor: param } = useParams();
@@ -79,6 +77,7 @@ export default function ComparePage({ competitor: competitorProp }: Props) {
   const teBest = pickBestPlan(TOPEDGE_PLANS_SUMMARY);
   const compBest = pickBestPlan(data.competitorPlans);
   const duelFeatures = lean ? [] : planDuelFeatures(data.slug as MatrixCompetitor);
+  const modifiedIso = compareTwoWayModifiedIso();
 
   return (
     <>
@@ -91,22 +90,28 @@ export default function ComparePage({ competitor: competitorProp }: Props) {
         faqSchema={faqSchema}
         jsonLd={[
           organizationJsonLd(),
-          webPageJsonLd({ name: data.h1, description: data.description, path }),
+          webPageJsonLd({
+            name: data.h1,
+            description: data.description,
+            path,
+            dateModified: modifiedIso,
+          }),
           breadcrumbJsonLd([
             { name: 'Home', path: '/' },
             { name: 'Compare', path: '/compare' },
             { name: data.name, path },
           ]),
-          ...(lean ? [] : [topedgeOfferJsonLd()]),
+          topedgeOfferJsonLd(),
         ]}
       />
       <MarketingPage className="mkt-cmp">
         <header className="mkt-cmp__arena">
           <p className="mkt-cmp__kicker">
             Comparison
-            {!lean && data.researchAsOf ? (
-              <span className="mkt-cmp__asof"> · {data.researchAsOf}</span>
-            ) : null}
+            <span className="mkt-cmp__asof">
+              {' '}
+              · <time dateTime={modifiedIso}>{updatedKicker(modifiedIso)}</time>
+            </span>
           </p>
           <h1 className="mkt-cmp__h1">
             <span className="mkt-cmp__h1-brand">
