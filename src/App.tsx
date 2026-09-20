@@ -146,12 +146,32 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         </div>
       )}
 
-      {!isCommunityRoute && !isLegalRoute && (marketing ? <MarketingFooter /> : <Footer />)}
-      {marketing && !isCommunityRoute && !isLegalRoute ? <MarketingConvertPrompt /> : null}
+      {/* Marketing/legacy footers render inside Suspense (see RouteOutlet) so they
+          stay hidden while MarketingPageLoader is showing. */}
       {isCommunityRoute && !isAuthPage && <Footer />}
     </div>
   );
 };
+
+/** Page routes + site chrome that should wait for the lazy chunk (hide footer on load). */
+function RouteOutlet() {
+  const { pathname } = useLocation();
+  const marketing = isMarketingRoute(pathname);
+  const isCommunityRoute = pathname.startsWith('/community');
+  const isLegalRoute =
+    pathname === '/privacy' ||
+    pathname === '/privacy-policy' ||
+    pathname === '/terms' ||
+    pathname === '/terms-of-service';
+
+  return (
+    <>
+      <AnimatedRoutes />
+      {!isCommunityRoute && !isLegalRoute && (marketing ? <MarketingFooter /> : <Footer />)}
+      {marketing && !isCommunityRoute && !isLegalRoute ? <MarketingConvertPrompt /> : null}
+    </>
+  );
+}
 
 class AppErrorBoundary extends React.Component<{ children: React.ReactNode }, { hasError: boolean }> {
   constructor(props: { children: React.ReactNode }) {
@@ -229,7 +249,7 @@ const App: React.FC = () => {
                 <MetaPixel />
                 <Layout>
                   <React.Suspense fallback={<MarketingPageLoader />}>
-                    <AnimatedRoutes />
+                    <RouteOutlet />
                   </React.Suspense>
                 </Layout>
               </MarketingSmoothScroll>

@@ -3174,6 +3174,14 @@
   }
 }
 
+/* Standard tall phones (iPhone 14/15/16 ~390×852) — more air under CTAs; SE stays tight */
+@media (min-width: 380px) and (max-width: 413px) and (min-height: 800px) {
+  .home-hero__trust {
+    margin-top: 3.15rem;
+    margin-bottom: 0.75rem;
+  }
+}
+
 /* Large / tall phones (iPhone Pro Max class) — SE stays tight */
 @media (min-width: 414px) and (max-width: 767px) and (min-height: 800px) {
   .home-hero__copy {
@@ -4165,30 +4173,32 @@
   }
 
   .home-sticky--moments .home-sticky__static {
-    gap: 4.25rem;
-    padding: 1.75rem clamp(1rem, 3vw, 1.5rem) 3rem;
+    gap: 5.5rem;
+    /* Tighter sides so product cards read larger on phone */
+    padding: 1.75rem 0.45rem 3.5rem;
   }
 
   .home-sticky--moments-static .home-sticky__static {
-    gap: 4.25rem;
-    padding: 1.75rem clamp(1rem, 3vw, 1.5rem) 3.25rem;
+    gap: 5.5rem;
+    padding: 1.75rem 0.45rem 3.75rem;
   }
 
   .home-sticky--moments-flow .home-sticky__moment {
-    padding-top: 0.85rem;
+    padding-top: 1.5rem;
+    padding-bottom: 0.85rem;
   }
 
   .home-sticky--moments-flow .home-sticky__moment + .home-sticky__moment {
-    padding-top: 1.35rem;
+    padding-top: 2.75rem;
   }
 
   .home-sticky--moments-flow .home-sticky__stage {
-    gap: 1.65rem;
+    gap: 1.85rem;
   }
 
   .home-sticky__static {
     gap: 4.5rem;
-    padding: 2rem 1.15rem 4rem;
+    padding: 2rem 0.45rem 4rem;
   }
 
   .home-sticky__static-block {
@@ -4245,9 +4255,11 @@
   }
 
   .home-sticky__body {
-    font-size: 0.75rem;
+    font-size: 0.8125rem;
     line-height: 1.45;
-    max-width: 22rem;
+    max-width: none;
+    width: 100%;
+    padding-inline: 0.2rem;
     margin: 0 auto;
     display: -webkit-box;
     -webkit-line-clamp: 3;
@@ -5481,19 +5493,70 @@
   }
 
   .home-voices__stage {
-    width: min(100%, 20.5rem);
-    height: 23rem;
-    padding-top: 2.75rem;
+    width: min(100%, 17.25rem);
+    height: 19.25rem;
+    padding-top: 2.2rem;
+    margin-top: 1.15rem;
   }
 
   .home-voices__card {
-    top: 2.75rem;
-    padding: 1.15rem 1.05rem 1rem;
-    border-radius: 1.4rem;
+    top: 2.2rem;
+    padding: 0.95rem 0.9rem 0.85rem;
+    border-radius: 1.25rem;
+  }
+
+  .home-voices__slot {
+    width: 2.25rem;
+    height: 0.65rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .home-voices__thread {
+    top: -3.85rem;
+    width: 1.35rem;
+    height: 4.35rem;
+    margin-left: -0.675rem;
+  }
+
+  .home-voices__quote {
+    margin-top: 0.95rem;
+    gap: 0.4rem;
+  }
+
+  .home-voices__qmark {
+    font-size: 1.35rem;
   }
 
   .home-voices__quote p {
-    font-size: 0.9rem;
+    font-size: 0.8125rem;
+    line-height: 1.45;
+  }
+
+  .home-voices__person {
+    gap: 0.55rem;
+    padding-top: 0.85rem;
+  }
+
+  .home-voices__avatar {
+    width: 2.15rem;
+    height: 2.15rem;
+  }
+
+  .home-voices__who strong {
+    font-size: 0.8125rem;
+  }
+
+  .home-voices__who em {
+    font-size: 0.6875rem;
+  }
+
+  .home-voices__biz img {
+    width: 1.15rem;
+    height: 1.15rem;
+  }
+
+  .home-voices__biz-name {
+    font-size: 0.6875rem;
   }
 }
 
@@ -5733,11 +5796,37 @@
 
 @media (max-width: 640px) {
   .home-sticky__stage {
-    gap: 1.25rem;
+    gap: 1.5rem;
   }
 
   .home-sticky__body {
     font-size: 0.95rem;
+  }
+
+  /* Phone: almost edge-to-edge product frames for readability */
+  .home-sticky--moments .home-sticky__static,
+  .home-sticky--moments-static .home-sticky__static,
+  .home-sticky__static {
+    padding-left: 0.35rem;
+    padding-right: 0.35rem;
+  }
+
+  .home-sticky--moments .home-sticky__static-copy,
+  .home-sticky--moments-static .home-sticky__static-copy {
+    padding-inline: 0.35rem;
+    max-width: none;
+  }
+
+  .home-sticky--moments-flow .home-sticky__moment + .home-sticky__moment {
+    padding-top: 3.25rem;
+  }
+
+  .home-sticky--moments-flow .home-sticky__stage {
+    gap: 1.65rem;
+  }
+
+  .home-sticky__moment-scene .demo-video-glow__frame {
+    border-radius: 14px;
   }
 }
 

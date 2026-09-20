@@ -713,12 +713,17 @@
 }
 
 @media (max-width: 640px) {
+  .mkt-pf__bento {
+    gap: 2.15rem;
+  }
+
   .mkt-pf__tile {
     border-radius: 18px;
   }
 
   .mkt-pf__tile-body {
-    padding: 0.95rem 1.05rem 1.15rem;
+    padding: 1.1rem 0.95rem 1.3rem;
+    text-align: center;
   }
 }
 
@@ -793,7 +798,7 @@
     /* close under trust logos — leftover mesh height sits below the media */
     margin-top: 0.65rem;
     margin-bottom: 0;
-    padding: 0 1rem 0.35rem;
+    padding: 0 0.4rem 0.35rem;
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
@@ -819,7 +824,7 @@
   }
 
   .mkt-pf__section {
-    padding: 2.15rem 1rem 0.35rem;
+    padding: 2.15rem 0.4rem 0.35rem;
     width: 100%;
     box-sizing: border-box;
   }
@@ -830,7 +835,7 @@
 
   .mkt-pf__head {
     margin-bottom: 1.35rem;
-    padding-inline: 0.15rem;
+    padding-inline: 0.45rem;
   }
 
   .mkt-pf__head-sub {
@@ -838,12 +843,12 @@
   }
 
   .mkt-pf__bento {
-    gap: 0.85rem;
+    gap: 1.85rem;
   }
 
   .mkt-pf__tile-visual {
     aspect-ratio: 1 / 1;
-    max-height: min(100vw - 2rem, 28rem);
+    max-height: min(100vw - 0.8rem, 28rem);
   }
 
   .mkt-pf__tile-visual .mkt-pf__shot,
@@ -854,26 +859,45 @@
     object-position: center;
   }
 
+  .mkt-pf__tile-body {
+    padding: 1.15rem 1rem 1.35rem;
+    text-align: center;
+  }
+
+  .mkt-pf__tile-title {
+    text-wrap: balance;
+  }
+
+  .mkt-pf__tile-copy {
+    margin-top: 0.5rem;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 22rem;
+    text-wrap: pretty;
+  }
+
   .mkt-pf__showcases {
-    gap: 2rem;
+    gap: 3.75rem;
   }
 
   .mkt-pf__showcase {
     padding: 0;
     border-radius: 0;
-    gap: 0.95rem;
+    gap: 1.35rem;
     background: transparent;
     box-shadow: none;
+    scroll-margin-top: 6.25rem;
   }
 
   .mkt-pf__showcase-media {
+    order: 2;
     border-radius: 0;
     background: transparent;
     box-shadow: none;
   }
 
   .mkt-pf__showcase-media .mkt-pf__shot {
-    border-radius: 14px;
+    border-radius: 12px;
   }
 
   .mkt-pf__showcase-media .mkt-pf__shot,
@@ -882,18 +906,24 @@
     min-height: 0;
   }
 
+  /* Title + body above the screenshot on phone */
   .mkt-pf__showcase-copy {
-    padding: 0;
-    text-align: left;
+    order: 1;
+    padding: 0 0.35rem;
+    text-align: center;
   }
 
   .mkt-pf__showcase-title {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
   }
 
   .mkt-pf__showcase-body {
     font-size: 0.875rem;
-    line-height: 1.5;
+    line-height: 1.55;
+    margin-top: 0.5rem;
+    max-width: 22rem;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .mkt-pf__step {
@@ -921,7 +951,7 @@
 @media (min-width: 640px) and (max-width: 899px) {
   .mkt-pf__bento {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1rem;
+    gap: 1.35rem;
   }
 
   .mkt-pf__bento--five {
@@ -932,13 +962,17 @@
     max-height: none;
   }
 
+  .mkt-pf__tile-body {
+    text-align: center;
+  }
+
   .mkt-pf__hero {
     padding-inline: 1.25rem;
   }
 
   .mkt-pf__media,
   .mkt-pf__section {
-    padding-inline: 1.25rem;
+    padding-inline: 0.65rem;
   }
 }
 

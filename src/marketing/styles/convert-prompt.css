@@ -384,12 +384,62 @@
   .mkt-convert__secondary {
     width: 100%;
     min-width: 0;
+    min-height: 2.35rem;
     padding: 0 0.75rem;
+    font-size: 0.8125rem;
+  }
+
+  .mkt-convert__wa-icon {
+    width: 0.9rem;
+    height: 0.9rem;
   }
 }
 
-@media (max-width: 380px) {
+/* Narrow phones: keep CTAs side-by-side, just smaller */
+@media (max-width: 430px) {
+  .mkt-convert__card {
+    padding: 1.1rem 0.9rem 0.95rem;
+  }
+
   .mkt-convert__actions {
-    grid-template-columns: 1fr;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.4rem;
+    margin-top: 0.95rem;
+  }
+
+  .mkt-convert__primary,
+  .mkt-convert__secondary {
+    width: 100%;
+    min-width: 0;
+    min-height: 2.05rem;
+    height: 2.05rem;
+    padding: 0 0.55rem;
+    font-size: 0.75rem;
+    gap: 0.28rem;
+  }
+
+  .mkt-convert__wa-icon {
+    width: 0.85rem;
+    height: 0.85rem;
+  }
+
+  .mkt-convert__primary svg {
+    width: 0.85rem;
+    height: 0.85rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .mkt-convert__actions {
+    gap: 0.3rem;
+  }
+
+  .mkt-convert__primary,
+  .mkt-convert__secondary {
+    min-height: 1.95rem;
+    height: 1.95rem;
+    padding: 0 0.4rem;
+    font-size: 0.7rem;
   }
 }

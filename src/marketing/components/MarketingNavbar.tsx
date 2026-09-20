@@ -75,7 +75,8 @@ const primaryLinks = [
   { label: 'Customers', href: '/customers' },
 ] as const;
 
-const easeOut = [0.22, 1, 0.36, 1] as const;
+const easeSoft = [0.16, 1, 0.3, 1] as const;
+const softSpring = { type: 'spring' as const, stiffness: 420, damping: 34, mass: 0.85 };
 
 export default function MarketingNavbar() {
   const [open, setOpen] = useState(false);
@@ -177,10 +178,10 @@ export default function MarketingNavbar() {
           <div className="mkt-nav__bar">
             <Link to="/" className="mkt-nav__brand" onClick={() => setOpen(false)}>
               <img
-                src="/logo.png"
+                src="/topedge-loader.gif"
                 alt="TopEdge AI"
-                width={28}
-                height={28}
+                width={40}
+                height={40}
                 className="mkt-nav__brand-mark"
                 decoding="async"
               />
@@ -216,10 +217,10 @@ export default function MarketingNavbar() {
                     <motion.div
                       key="product-mega"
                       className="mkt-nav__mega"
-                      initial={reduceMotion ? false : { opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={reduceMotion ? undefined : { opacity: 0, y: 4 }}
-                      transition={{ duration: 0.18, ease: easeOut }}
+                      initial={reduceMotion ? false : { opacity: 0, y: 12, scale: 0.96 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={reduceMotion ? undefined : { opacity: 0, y: 8, scale: 0.98 }}
+                      transition={reduceMotion ? { duration: 0.12 } : softSpring}
                       onMouseEnter={openProduct}
                       onMouseLeave={scheduleCloseProduct}
                     >
@@ -228,16 +229,26 @@ export default function MarketingNavbar() {
                           {productColumns.map((col) => (
                             <div key={col.id} className="mkt-nav__mega-col">
                               <ul className="mkt-nav__mega-links">
-                                {col.items.map((item) => {
+                                {col.items.map((item, itemIndex) => {
                                   const Icon = item.icon;
                                   return (
                                     <li key={item.label}>
-                                      <Link to={item.href} className="mkt-nav__mega-link">
-                                        <span className="mkt-nav__mega-link-icon" aria-hidden>
-                                          <Icon strokeWidth={1.6} absoluteStrokeWidth={false} />
-                                        </span>
-                                        <span className="mkt-nav__mega-link-label">{item.label}</span>
-                                      </Link>
+                                      <motion.div
+                                        initial={reduceMotion ? false : { opacity: 0, y: 6 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{
+                                          delay: reduceMotion ? 0 : 0.04 + itemIndex * 0.02,
+                                          duration: 0.28,
+                                          ease: easeSoft,
+                                        }}
+                                      >
+                                        <Link to={item.href} className="mkt-nav__mega-link">
+                                          <span className="mkt-nav__mega-link-icon" aria-hidden>
+                                            <Icon strokeWidth={1.6} absoluteStrokeWidth={false} />
+                                          </span>
+                                          <span className="mkt-nav__mega-link-label">{item.label}</span>
+                                        </Link>
+                                      </motion.div>
                                     </li>
                                   );
                                 })}
@@ -303,14 +314,14 @@ export default function MarketingNavbar() {
                 initial={reduceMotion ? false : { height: 0, opacity: 0 }}
                 animate={{ height: 'auto', opacity: 1 }}
                 exit={reduceMotion ? undefined : { height: 0, opacity: 0 }}
-                transition={{ duration: 0.28, ease: easeOut }}
+                transition={{ duration: 0.34, ease: easeSoft }}
               >
                 <div
                   className="mkt-nav__mobile-scroll"
                   data-lenis-prevent
                   data-lenis-prevent-touch
                 >
-                  <div className="mkt-nav__mobile-section">
+                  <div className={cn('mkt-nav__mobile-section', mobileProductOpen && 'is-open')}>
                     <button
                       type="button"
                       className={cn(
@@ -334,20 +345,36 @@ export default function MarketingNavbar() {
                           initial={reduceMotion ? false : { height: 0, opacity: 0 }}
                           animate={{ height: 'auto', opacity: 1 }}
                           exit={reduceMotion ? undefined : { height: 0, opacity: 0 }}
-                          transition={{ duration: 0.22, ease: easeOut }}
+                          transition={{ duration: 0.32, ease: easeSoft }}
                         >
                           <div className="mkt-nav__mobile-products">
                             {productColumns.flatMap((col) =>
-                              col.items.map((item) => (
-                                <Link
-                                  key={item.label}
-                                  to={item.href}
-                                  className="mkt-nav__mobile-item"
-                                  onClick={() => setOpen(false)}
-                                >
-                                  {item.label}
-                                </Link>
-                              )),
+                              col.items.map((item, itemIndex) => {
+                                const Icon = item.icon;
+                                return (
+                                  <motion.div
+                                    key={item.label}
+                                    initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{
+                                      delay: reduceMotion ? 0 : 0.04 + itemIndex * 0.025,
+                                      duration: 0.28,
+                                      ease: easeSoft,
+                                    }}
+                                  >
+                                    <Link
+                                      to={item.href}
+                                      className="mkt-nav__mobile-item"
+                                      onClick={() => setOpen(false)}
+                                    >
+                                      <span className="mkt-nav__mobile-item-icon" aria-hidden>
+                                        <Icon strokeWidth={1.7} absoluteStrokeWidth={false} />
+                                      </span>
+                                      <span className="mkt-nav__mobile-item-label">{item.label}</span>
+                                    </Link>
+                                  </motion.div>
+                                );
+                              }),
                             )}
                           </div>
                         </motion.div>

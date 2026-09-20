@@ -8,7 +8,9 @@ export default function HomeClose() {
           Recover more carts with{' '}
           <span className="mkt-cta__hl">
             TopEdge <span>AI</span>
-          </span>{' '}
+          </span>
+          <br className="mkt-cta__br" />
+          {' '}
           on WhatsApp
         </>
       }
