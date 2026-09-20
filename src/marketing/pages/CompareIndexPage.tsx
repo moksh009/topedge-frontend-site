@@ -33,7 +33,9 @@ const FEATURED = [
 ];
 
 export default function CompareIndexPage() {
-  const competitors = allCompareCompetitors();
+  const order = ['wati', 'aisensy', 'interakt', 'bitespeed', 'zoko', 'getgabs', 'kanal'];
+  const bySlug = Object.fromEntries(allCompareCompetitors().map((c) => [c.slug, c]));
+  const competitors = order.map((slug) => bySlug[slug]).filter(Boolean);
 
   return (
     <>

@@ -802,4 +802,320 @@ export const blogPosts: BlogPost[] = [
 <p>See AI beside the rest of the stack on <a href="/features/ai-brain">AI Brain</a>, connect store data via <a href="/shopify-whatsapp-integration">Shopify WhatsApp integration</a>, and compare platforms on <a href="/compare">compare</a>. For tool selection criteria, read <a href="/blog/best-whatsapp-automation-tools-shopify-india">best WhatsApp automation tools</a>. Questions? <a href="/contact">Contact</a> or view <a href="/pricing">pricing</a>.</p>
 `,
   },
+  {
+    id: 12,
+    title: 'Looking for a Zoko Alternative for Shopify India?',
+    description:
+      'When Zoko’s conversation metering and festival bill spikes become the problem—and what to check before switching to another Shopify WhatsApp stack.',
+    slug: 'zoko-alternative-shopify-india',
+    date: '2026-09-20',
+    readTime: '10 min',
+    category: 'Comparisons',
+    author: 'TopEdge',
+    image: '/marketing/features/unified-identity.png',
+    imageAlt: 'Shopify India team evaluating a Zoko alternative for WhatsApp commerce',
+    keywords: [
+      'Zoko alternative',
+      'Zoko alternative Shopify',
+      'Zoko vs TopEdge',
+      'WhatsApp automation India',
+      'Shopify WhatsApp India',
+    ],
+    content: `
+<p>Searching for a <strong>Zoko alternative</strong> usually means something specific broke in the model—not that Zoko is “bad.” Zoko is a serious India WhatsApp commerce option (catalog flows, COD-oriented playbooks, long Shopify review history). The switch trigger is often <em>cost shape</em>: a USD base plan plus conversation metering that climbs when festival or sale traffic hits the inbox.</p>
+
+<h2>The problem operators actually describe</h2>
+<p>You planned recovery and support around order volume. Then Diwali week (or a viral drop) floods conversations. Meta fees rise—that part is unavoidable—but a platform fee that also meters conversations can surprise finance after the campaign works. That is a structural mismatch with “we price the store on orders,” not a feature complaint.</p>
+<ul>
+<li>Starter-style per-conversation platform markup on top of Meta</li>
+<li>Higher tiers with included conversation buckets, then overage</li>
+<li>AI bots and custom flows billed as add-ons on public listings</li>
+</ul>
+<p>Exact dollars change. Confirm on <a href="https://www.zoko.io/pricing" rel="noopener noreferrer" target="_blank">zoko.io/pricing</a> and the Shopify App Store listing before you decide—same discipline as our compare footnotes.</p>
+
+<h2>What “alternative” should mean (not a clone hunt)</h2>
+<p>Do not replace Zoko with a thinner inbox that only looks cheaper on day one. Keep the jobs Zoko already does well in your shortlist criteria:</p>
+<ol>
+<li>Shopify cart / order sync you can demo live</li>
+<li>COD confirm (and ideally COD → prepaid) that warehouse respects</li>
+<li>Meta template gating—no sends until APPROVED</li>
+<li>A pricing model finance can forecast in ₹ without guessing peak chatter</li>
+</ol>
+
+<h2>Where TopEdge AI fits that gap</h2>
+<p>TopEdge is built as a Shopify-native WhatsApp growth OS for India: flat INR plans by order volume, Meta pass-through without a Zoko-style conversation platform markup on the published catalog, plus COD journeys, warranty, and unified identity in the core stack. We do <em>not</em> claim to out-India Zoko on catalog-in-chat heritage—that is their strength. We compete on predictable platform cost and India ops depth.</p>
+<p>For the scorecard, plan table, and verify-live footnotes, open the full board: <a href="/compare/zoko">TopEdge vs Zoko</a>. For a fair one-liner index of other tools, see <a href="/compare/alternatives">alternatives</a>.</p>
+
+<h2>Switch checklist (one afternoon)</h2>
+<ol>
+<li>Export or screenshot your peak-month conversation count and Meta bill</li>
+<li>Map which Zoko flows you actually use (cart, COD, inbox, AI)</li>
+<li>Ask any vendor to show those flows on a live Shopify store—not slides</li>
+<li>Model festival volume under their meters before you cancel anything</li>
+</ol>
+<blockquote><p>If the demo cannot show a live cart and a COD branch, you are shopping for a broadcast tool—not a Zoko-class commerce stack.</p></blockquote>
+
+<p class="mkt-blog-footnote">Pricing and feature claims about Zoko should be re-checked on zoko.io and apps.shopify.com before purchase. Snapshot research for our compare page: Sep 2026.</p>
+<p>Related: <a href="/blog/best-whatsapp-automation-tools-shopify-india">best WhatsApp tools for Shopify India</a>, <a href="/pricing">TopEdge pricing</a>, <a href="/contact">contact</a>.</p>
+`,
+  },
+  {
+    id: 13,
+    title: 'Getgabs Alternative: When Cheap WhatsApp Entry Is Not Enough',
+    description:
+      'Getgabs wins on entry price. Here is when Shopify India teams outgrow free-to-install WhatsApp apps—and how to evaluate depth without a defensive price argument.',
+    slug: 'getgabs-alternative-shopify-whatsapp',
+    date: '2026-09-20',
+    readTime: '9 min',
+    category: 'Comparisons',
+    author: 'TopEdge',
+    image: '/marketing/solutions/sol-fashion-inbox-saas.png',
+    imageAlt: 'Merchant comparing Getgabs entry pricing with deeper Shopify WhatsApp stacks',
+    keywords: [
+      'Getgabs alternative',
+      'Getgabs vs TopEdge',
+      'cheap WhatsApp Shopify app',
+      'Shopify WhatsApp abandoned cart',
+      'WhatsApp app free to install',
+    ],
+    content: `
+<p>A <strong>Getgabs alternative</strong> search rarely starts with “we hate Getgabs.” It starts with: free-to-install was perfect for week one, and now COD risk, warranty tickets, or multi-number shoppers are eating ops hours that a $11–$15/mo entry tier was never meant to solve.</p>
+
+<h2>Be honest about the price gap</h2>
+<p>Getgabs is dramatically cheaper to start than TopEdge Launch. On the Shopify App Store it is free to install with paid tiers listed from about $11/mo; getgabs.com publishes different USD tiers (Basic/Plus/Pro). Those surfaces disagree—<strong>verify live</strong> the day you buy. This post will not pretend TopEdge wins on sticker price. It will not.</p>
+
+<h2>What “cheap entry” usually still gates</h2>
+<p>Before you blame the vendor, map what you need against what unlocks on which tier:</p>
+<ul>
+<li>Abandoned cart / checkout reminders</li>
+<li>COD confirmation vs a real COD → prepaid conversion path</li>
+<li>Shared inbox agent seats and routing</li>
+<li>AI crawl / auto-trigger meters</li>
+<li>Warranty, unified identity, visual journeys with Meta gating</li>
+</ul>
+<p>If your pain is only “send a cart nudge and an order update,” staying on a low-cost app is rational. If your pain is RTO, claims, or identity sprawl, price shopping alone steers you wrong.</p>
+
+<h2>When TopEdge is the better next step</h2>
+<p>Pick TopEdge when you want COD → prepaid, warranty, unified customer identity, and visual journeys on published INR plans from day one—not as later add-ons. Pick Getgabs when budget is the binding constraint and depth can wait. That is the same concessive framing as our compare page.</p>
+<p>Full board (plans, scorecard, footnotes): <a href="/compare/getgabs">TopEdge vs Getgabs</a>. Index of other options: <a href="/compare/alternatives">alternatives</a>.</p>
+
+<h2>A fair evaluation script</h2>
+<ol>
+<li>Write the three workflows that cost you money this month (e.g. COD no-shows, warranty WhatsApps, duplicate profiles)</li>
+<li>Ask Getgabs and any alternative to show those three on a live store</li>
+<li>Price the <em>tier that unlocks all three</em>—not the install page headline</li>
+<li>Only then compare ₹ / USD total cost of ownership with Meta fees added</li>
+</ol>
+
+<p class="mkt-blog-footnote">Getgabs pricing: confirm on getgabs.com/pricing and apps.shopify.com/getgabs-whatsapp-chatbot-api. Research snapshot used on our compare page: Sep 2026.</p>
+<p>Also read <a href="/blog/how-to-choose-whatsapp-app-shopify-app-store">how to choose a WhatsApp app from the Shopify App Store</a> and <a href="/blog/how-to-reduce-rto-with-whatsapp-cod-confirmation">COD confirmation for RTO</a>.</p>
+`,
+  },
+  {
+    id: 14,
+    title: 'Kanal WhatsApp Alternative for Shopify India Brands',
+    description:
+      'Kanal is strong for global WhatsApp + Klaviyo stacks. When India COD and INR pricing matter more than an EUR floor, here is how to evaluate alternatives.',
+    slug: 'kanal-whatsapp-alternative-shopify',
+    date: '2026-09-20',
+    readTime: '9 min',
+    category: 'Comparisons',
+    author: 'TopEdge',
+    image: '/marketing/customers/customers-outcome-template.png',
+    imageAlt: 'Shopify India brand evaluating Kanal as a WhatsApp alternative',
+    keywords: [
+      'Kanal alternative',
+      'Kanal WhatsApp alternative',
+      'Kanal vs TopEdge',
+      'Shopify WhatsApp Klaviyo',
+      'WhatsApp marketing India',
+    ],
+    content: `
+<p>People looking for a <strong>Kanal WhatsApp alternative</strong> are often India- or INR-first operators who tried (or shortlisted) a global WhatsApp marketing app built to sit beside Klaviyo—and then noticed the floor is in EUR/USD with no India-specific COD story on the public site.</p>
+
+<h2>What Kanal is genuinely good at</h2>
+<p>Give credit where it is due: abandoned cart on WhatsApp, campaigns, official API positioning, and native Klaviyo (plus tools like Recharge / Gorgias) on published plans starting at Pro €89/mo on getkanal.com. Shopify’s listing may show USD. <strong>Verify live</strong> before you budget.</p>
+<p>If your lifecycle center of gravity is already Klaviyo and WhatsApp is a complementary channel across markets, Kanal is a rational shortlist item—not a straw man.</p>
+
+<h2>Where India D2C usually diverges</h2>
+<ul>
+<li><strong>Currency / floor</strong> — finance wants published INR, not an €89+ starting tier</li>
+<li><strong>COD</strong> — confirm and COD → prepaid before warehouse release, not only “order updates”</li>
+<li><strong>AI unlock</strong> — check which tier includes the AI agent (on getkanal.com, Scale+ is where AI is listed—confirm live)</li>
+</ul>
+<p>That India/INR angle is the same one that holds on our Bitespeed compare; it does <em>not</em> hold against India-native tools like Zoko. Do not reuse angles that fail a sanity check.</p>
+
+<h2>TopEdge as the India-shaped alternative</h2>
+<p>TopEdge publishes flat INR Launch / Growth / Scale by Shopify order volume, ships COD-oriented journeys, and keeps Meta fees as pass-through. We do not try to replace Klaviyo—keep your ESP if you have one.</p>
+<p>Scorecard and plan comparison: <a href="/compare/kanal">TopEdge vs Kanal</a>. Broader index: <a href="/compare/alternatives">alternatives</a>.</p>
+
+<h2>Decision rule in one sentence</h2>
+<p>Choose Kanal when Klaviyo-first global WhatsApp is the product you want. Choose TopEdge when Shopify India recovery, COD, and INR forecasting are the product you want.</p>
+
+<p class="mkt-blog-footnote">Kanal plans: confirm on getkanal.com/pricing and apps.shopify.com/kanal-marketing-ai. Snapshot used on our compare page: Sep 2026.</p>
+<p>Related: <a href="/blog/whatsapp-business-api-pricing-india">Meta Cloud API pricing in India</a>, <a href="/pricing">TopEdge pricing</a>.</p>
+`,
+  },
+  {
+    id: 15,
+    title: 'How to Choose a WhatsApp App from the Shopify App Store',
+    description:
+      'A practical pre-install checklist: Meta markup, COD depth, conversation metering vs flat pricing, free-to-install vs gated features, and reviews that actually matter.',
+    slug: 'how-to-choose-whatsapp-app-shopify-app-store',
+    date: '2026-09-20',
+    readTime: '12 min',
+    category: 'Guides',
+    author: 'TopEdge',
+    image: '/marketing/features/optin-popup.png',
+    imageAlt: 'Shopify merchant evaluating WhatsApp apps in the App Store',
+    keywords: [
+      'Shopify WhatsApp app',
+      'best WhatsApp app Shopify',
+      'Shopify App Store WhatsApp',
+      'WhatsApp abandoned cart Shopify',
+      'choose WhatsApp Business API app',
+    ],
+    content: `
+<p>The Shopify App Store is full of WhatsApp tiles that look identical in the first three bullets. <strong>How you choose</strong> is less about star ratings and more about five economic and ops checks before you click Install.</p>
+
+<details class="mkt-blog-verdict" open>
+<summary>Quick answer</summary>
+<p>Before installing, verify (1) Meta markup transparency, (2) COD confirm vs COD → prepaid depth, (3) conversation metering vs flat platform pricing, (4) what stays gated after “free to install,” and (5) whether a live Shopify cart appears in a WhatsApp preview. Then open a compare board—not another roundup.</p>
+</details>
+
+<h2>1. Meta markup — read past “official API”</h2>
+<p>Almost everyone claims official WhatsApp / Cloud API. Ask: do you pay Meta’s rate card only, or Meta plus a platform per-conversation markup? Pass-through vendors make finance modeling possible. Markup vendors can still be fine—just model peak weeks. See our explainer on <a href="/blog/whatsapp-business-api-pricing-india">WhatsApp Business API pricing in India</a>.</p>
+
+<h2>2. COD handling — confirm is not conversion</h2>
+<p>Listing text that says “COD verification” may mean a yes/no text. Indian D2C often needs branches warehouse will honor, and sometimes COD → prepaid. Ask for a screen recording on a COD order, not a marketing slide.</p>
+
+<h2>3. Conversation metering vs flat pricing</h2>
+<p>Two honest models:</p>
+<ul>
+<li><strong>Metered conversations / credits</strong> — scales with chatter (festival risk)</li>
+<li><strong>Flat platform fee by orders or seats</strong> — scales with store size; Meta still separate</li>
+</ul>
+<p>Neither is morally better. The wrong one for your traffic shape is expensive.</p>
+
+<h2>4. Free to install ≠ free to run</h2>
+<p>Shopify’s “Free to install” only means the listing install path. Paid subscriptions, Meta fees, AI add-ons, and flow packs still apply. Price the tier that unlocks <em>your</em> workflows.</p>
+
+<h2>5. Reviews — prefer recency and ops detail</h2>
+<p>Star averages lag reality. Skim the newest reviews for billing surprises, support TAT, and “worked on sale week.” Ignore roundups published on a vendor’s own blog that crown themselves #1.</p>
+
+<h2>6. Demo non-negotiables</h2>
+<ol>
+<li>Live abandoned cart with line items + checkout link</li>
+<li>Template stuck in PENDING cannot send</li>
+<li>Agent takeover pauses the bot</li>
+<li>Order number visible in the inbox thread</li>
+</ol>
+
+<h2>Where to go next (without another generic list)</h2>
+<p>Use the fair index at <a href="/compare/alternatives">/compare/alternatives</a>, then open only the pairwise boards you care about (WATI, AiSensy, Interakt, Bitespeed, Zoko, Getgabs, Kanal). For a pillar overview: <a href="/blog/best-whatsapp-automation-tools-shopify-india">best WhatsApp automation tools for Shopify India</a>.</p>
+
+<p class="mkt-blog-footnote">App Store prices, review counts, and plan names change. Re-check the vendor listing and pricing page the day you install.</p>
+<p>Build on <a href="/features/journeys">Journeys</a> when you are ready, or <a href="/contact">contact</a> for a walkthrough.</p>
+`,
+  },
+  {
+    id: 16,
+    title: 'WhatsApp Business API / Meta Cloud API Pricing in India (2026)',
+    description:
+      'What Meta charges for WhatsApp Cloud API conversations in India, how categories work, and why 0% platform markup matters when you compare Shopify WhatsApp apps.',
+    slug: 'whatsapp-business-api-pricing-india',
+    date: '2026-09-20',
+    readTime: '11 min',
+    category: 'Meta',
+    author: 'TopEdge',
+    image: '/marketing/features/shopify-whatsapp.png',
+    imageAlt: 'Meta WhatsApp Cloud API pricing categories for Indian Shopify brands',
+    keywords: [
+      'WhatsApp Business API pricing India',
+      'Meta Cloud API pricing India',
+      'WhatsApp conversation rate India',
+      'WhatsApp template pricing',
+      'Meta markup WhatsApp',
+    ],
+    faqs: [
+      {
+        question: 'Does Meta charge for every WhatsApp message in India?',
+        answer:
+          'Meta bills by conversation category and country rate card rules, not a flat “per SMS” fee. Service conversations inside the customer care window are typically the cheapest path; marketing and utility follow the published rate card. Always verify on Meta’s current WhatsApp pricing docs.',
+      },
+      {
+        question: 'What is platform markup vs Meta fee?',
+        answer:
+          'Meta’s fee is what Meta charges for eligible conversations. Platform markup is an extra amount some BSPs add per conversation or credit. TopEdge publishes 0% markup on Meta pass-through; you still pay Meta.',
+      },
+      {
+        question: 'Why does this matter for Shopify India apps?',
+        answer:
+          'Two apps can show similar subscription prices while one meters conversations on top of Meta. Festival traffic then diverges the total bill. Compare subscription shape and markup separately.',
+      },
+    ],
+    content: `
+<details class="mkt-blog-verdict" open>
+<summary>Quick verdict</summary>
+<p><strong>WhatsApp Business API pricing in India</strong> is Meta’s conversation rate card (by category and destination country) plus whatever your software vendor adds on top. TopEdge’s pricing story only makes sense once you separate those two lines: Meta pass-through vs platform subscription.</p>
+</details>
+
+<h2>Two bills, not one</h2>
+<ol>
+<li><strong>Meta Cloud API / WhatsApp conversations</strong> — owed to Meta under their rate card</li>
+<li><strong>Your app / BSP subscription</strong> — seats, orders, credits, or conversation markups</li>
+</ol>
+<p>Roundup articles that quote a single “WhatsApp costs ₹X” number without splitting those layers are not usable for finance.</p>
+
+<h2>Categories operators actually use</h2>
+<ul>
+<li><strong>Marketing</strong> — promos, drops, many win-backs (usually highest)</li>
+<li><strong>Utility</strong> — transactional updates when they qualify (orders, shipping, many COD confirms)</li>
+<li><strong>Authentication</strong> — OTPs / verification where applicable</li>
+<li><strong>Service</strong> — user-initiated care window (often the cheapest path when buyers write first)</li>
+</ul>
+<p>Do not stuff marketing into utility templates. Approvals and quality ratings punish that shortcut. Template workflow: <a href="/blog/meta-whatsapp-cloud-api-shopify-templates">Meta templates for Shopify</a> and <a href="/features/meta-manager">Meta Manager</a>.</p>
+
+<h2>India rates — verify live, do not freeze a blog number</h2>
+<p>Meta updates country rate cards. Any rupee figure you saw in a 2024 thread or a competitor’s sales deck may already be wrong. Treat our older illustrative footnotes on <a href="/pricing">pricing</a> as directional only.</p>
+<p><strong>Source of truth:</strong> Meta’s current WhatsApp Business Platform pricing documentation (developers.facebook.com / WhatsApp pricing). Re-open it the week you forecast Q4.</p>
+
+<h2>Where apps quietly add cost</h2>
+<ul>
+<li>Per-conversation platform markup (common on some “Starter” WhatsApp commerce plans)</li>
+<li>Credit packs for broadcasts or AI replies</li>
+<li>Flow / bot add-ons billed monthly</li>
+</ul>
+<p>That is why compare pages for <a href="/compare/zoko">Zoko</a>, <a href="/compare/getgabs">Getgabs</a>, <a href="/compare/kanal">Kanal</a>, and <a href="/compare/bitespeed">Bitespeed</a> separate Meta from platform. Use <a href="/compare/alternatives">alternatives</a> as the index.</p>
+
+<h2>How TopEdge positions against Meta’s bill</h2>
+<p>TopEdge charges a flat INR platform subscription by Shopify order volume (Launch / Growth / Scale on the public catalog) and passes Meta conversation fees through at <strong>0% markup</strong>. You still pay Meta. The point is transparency: finance can model Meta volume separately from the SaaS line.</p>
+
+<h2>Forecasting worksheet (simple)</h2>
+<ol>
+<li>Estimate monthly marketing vs utility conversations for India recipients</li>
+<li>Multiply by Meta’s current rate card (verify live)</li>
+<li>Add your vendor’s subscription + any conversation markup or AI add-ons</li>
+<li>Stress-test at 2× conversation volume for festival week</li>
+</ol>
+
+<div class="mkt-blog-faq">
+<details>
+<summary>Does Meta charge for every WhatsApp message in India?</summary>
+<p>Meta bills by conversation category and country rate card rules, not a flat “per SMS” fee. Service conversations inside the customer care window are typically the cheapest path; marketing and utility follow the published rate card. Always verify on Meta’s current WhatsApp pricing docs.</p>
+</details>
+<details>
+<summary>What is platform markup vs Meta fee?</summary>
+<p>Meta’s fee is what Meta charges for eligible conversations. Platform markup is an extra amount some BSPs add per conversation or credit. TopEdge publishes 0% markup on Meta pass-through; you still pay Meta.</p>
+</details>
+<details>
+<summary>Why does this matter for Shopify India apps?</summary>
+<p>Two apps can show similar subscription prices while one meters conversations on top of Meta. Festival traffic then diverges the total bill. Compare subscription shape and markup separately.</p>
+</details>
+</div>
+
+<p class="mkt-blog-footnote">Meta rate cards change. Confirm on Meta’s official WhatsApp pricing documentation before budgeting. TopEdge plan amounts: see <a href="/pricing">/pricing</a>.</p>
+<p>Next: <a href="/blog/how-to-choose-whatsapp-app-shopify-app-store">choose a Shopify WhatsApp app</a>, or start on <a href="/features/journeys">Journeys</a>.</p>
+`,
+  },
 ];

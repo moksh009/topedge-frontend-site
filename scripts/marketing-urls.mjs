@@ -51,6 +51,11 @@ export const BLOG_SLUGS = [
   'how-to-reduce-rto-with-whatsapp-cod-confirmation',
   'what-is-ecommerce-automation-shopify-whatsapp',
   'ai-whatsapp-chatbot-for-shopify-india',
+  'zoko-alternative-shopify-india',
+  'getgabs-alternative-shopify-whatsapp',
+  'kanal-whatsapp-alternative-shopify',
+  'how-to-choose-whatsapp-app-shopify-app-store',
+  'whatsapp-business-api-pricing-india',
 ];
 
 /** Static marketing paths (no trailing slash except root as '/') */
