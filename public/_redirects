@@ -1,5 +1,8 @@
 # Force (!) so rules win over prerendered files / SPA shell.
 # Order: host → legacy aliases → static HTML → SPA fallback.
+#
+# NEVER add `/*/  /:splat  301!` — with Netlify that rule 301-loops every
+# path onto itself (ERR_TOO_MANY_REDIRECTS), including `/` and static files.
 
 # Apex preferred
 https://www.topedgeai.com/*  https://topedgeai.com/:splat  301!
@@ -66,9 +69,6 @@ https://www.topedgeai.com/*  https://topedgeai.com/:splat  301!
 /blogs/  /blog  301!
 /blogs/*  /blog  301!
 /blog/agencies-whatsapp-automation-multi-brand-shopify  /blog  301!
-
-# Trailing-slash → slashless (matches canonicals after flat .html prerender)
-/*/  /:splat  301!
 
 # SPA fallback (must be last)
 /*  /index.html  200
