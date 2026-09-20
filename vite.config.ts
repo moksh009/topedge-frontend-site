@@ -78,29 +78,33 @@ export default defineConfig(({ mode }) => {
       },
       rollupOptions: {
         output: {
+          // Keep React in a leaf vendor chunk. Do NOT force-split app source
+          // (marketing/community) — that created vendor→community cycles and
+          // left React undefined when framer-motion called createContext
+          // (blank pages + prerender h1 timeouts on Netlify).
           manualChunks(id) {
-            if (id.includes('node_modules')) {
-              if (id.includes('react-dom') || id.includes('/react/') || id.includes('react-router')) {
-                return 'vendor';
-              }
-              if (id.includes('framer-motion') || id.includes('gsap') || id.includes('lenis')) {
-                return 'animations';
-              }
-              if (id.includes('chart.js') || id.includes('react-chartjs-2')) {
-                return 'charts';
-              }
-              if (id.includes('firebase')) {
-                return 'firebase';
-              }
-              if (id.includes('jspdf') || id.includes('mathjs')) {
-                return 'heavy';
-              }
+            if (!id.includes('node_modules')) return;
+            if (
+              id.includes('/react-dom/') ||
+              id.includes('/react/') ||
+              id.includes('/scheduler/') ||
+              id.includes('/react-router') ||
+              id.includes('/react-helmet-async/') ||
+              id.includes('/react-hot-toast/')
+            ) {
+              return 'vendor';
             }
-            if (id.includes('/src/marketing/')) {
-              return 'marketing';
+            if (id.includes('framer-motion') || id.includes('/gsap/') || id.includes('/lenis/')) {
+              return 'animations';
             }
-            if (id.includes('/src/pages/community/')) {
-              return 'community';
+            if (id.includes('chart.js') || id.includes('react-chartjs-2')) {
+              return 'charts';
+            }
+            if (id.includes('firebase')) {
+              return 'firebase';
+            }
+            if (id.includes('jspdf') || id.includes('mathjs')) {
+              return 'heavy';
             }
           },
         },
