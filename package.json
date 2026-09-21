@@ -6,11 +6,12 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "build:netlify": "node scripts/generate-content-dates.mjs && node scripts/generate-sitemap.mjs && vite build && node build-static.js && node scripts/prerender-marketing.mjs",
+    "build:netlify": "node scripts/generate-content-dates.mjs && node scripts/generate-sitemap.mjs && node scripts/generate-redirects.mjs && vite build && node build-static.js && node scripts/prerender-marketing.mjs",
     "build:firebase": "node scripts/generate-content-dates.mjs && vite build && node build-static.js && node scripts/prerender-marketing.mjs",
     "build:static": "node scripts/generate-content-dates.mjs && vite build && node build-static.js && node scripts/prerender-marketing.mjs",
     "prerender": "node scripts/prerender-marketing.mjs",
     "sitemap": "node scripts/generate-sitemap.mjs",
+    "redirects": "node scripts/generate-redirects.mjs",
     "content:dates": "node scripts/generate-content-dates.mjs",
     "sitemap:validate": "node scripts/validate-sitemap.mjs",
     "indexnow": "node scripts/indexnow.mjs",

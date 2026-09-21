@@ -1,6 +1,4 @@
-# Root copy for reference — deployed robots live in public/robots.txt
-# Keep in sync with public/robots.txt
-
+# https://topedgeai.com/robots.txt
 User-agent: *
 Allow: /
 
@@ -8,8 +6,56 @@ Disallow: /admin/
 Disallow: /private/
 Disallow: /api/
 Disallow: /community/admin/
+Disallow: /community/login
+Disallow: /community/signup
+Disallow: /community/settings
+Disallow: /community/dashboard
+Disallow: /community/approve-access
 Disallow: /dev/
 Disallow: /signup
 Disallow: /login
+Disallow: /docs
+
+Allow: /blog/
+Allow: /features/
+Allow: /pricing/
+Allow: /about/
+Allow: /contact/
+Allow: /integrations/
+Allow: /customers/
+Allow: /compare/
+Allow: /privacy
+Allow: /terms
 
 Sitemap: https://topedgeai.com/sitemap.xml
+
+# AI / answer-engine crawlers (explicit allow — do not rely on *)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /

@@ -60,6 +60,9 @@ export const BLOG_SLUGS = [
   'dondy-alternative-shopify-india',
 ];
 
+/** Soft-404 shell — prerendered to dist/404.html (Netlify 404 document). Not in sitemap. */
+export const NOT_FOUND_PRERENDER_PATH = '/404';
+
 /** Static marketing paths (no trailing slash except root as '/') */
 export function getMarketingPrerenderPaths() {
   // privacy/terms are static HTML in public/ (Meta crawler-safe) — do not overwrite via prerender
@@ -78,10 +81,15 @@ export function getMarketingPrerenderPaths() {
     ...COMPARE_SLUGS.map((s) => `/compare/${s}`),
     ...TOPIC_SLUGS.map((s) => `/${s}`),
     ...BLOG_SLUGS.map((s) => `/blog/${s}`),
+    NOT_FOUND_PRERENDER_PATH,
   ];
 }
 
-/** Indexable URLs for sitemap.xml (includes static legal pages). */
+/** Indexable URLs for sitemap.xml (includes static legal pages; excludes soft-404 shell). */
 export function getSitemapPaths() {
-  return [...getMarketingPrerenderPaths(), '/privacy', '/terms'];
+  return [
+    ...getMarketingPrerenderPaths().filter((p) => p !== NOT_FOUND_PRERENDER_PATH),
+    '/privacy',
+    '/terms',
+  ];
 }

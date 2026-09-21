@@ -35,6 +35,7 @@ Pulled from Phases 1–4 builds (not generic filler).
 | B5 | zoko alternative shopify india | `/compare/zoko`, `/blog/zoko-alternative-shopify-india` |
 | B6 | getgabs alternative | `/compare/getgabs`, `/blog/getgabs-alternative-shopify-whatsapp` |
 | B7 | kanal whatsapp alternative | `/compare/kanal`, `/blog/kanal-whatsapp-alternative-shopify` |
+| B8 | dondy alternative shopify india | `/compare/dondy`, `/blog/dondy-alternative-shopify-india` |
 
 ### C. Problem / how-to
 

@@ -215,9 +215,9 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
     logoAlt: 'AiSensy logo',
     accent: '#0f766e',
     brandTag: 'WhatsApp marketing platform',
-    title: 'TopEdge vs AiSensy (2026) | WhatsApp Ecommerce for Shopify India',
+    title: 'TopEdge vs AiSensy (2026) | WhatsApp Ecommerce Shopify',
     description:
-      'Compare TopEdge vs AiSensy on Meta template markup, AI add-on fees, intent routing, unified identity, COD → prepaid, warranty, journey builder, and chatflow plan limits.',
+      'Compare TopEdge vs AiSensy on Meta markup, AI fees, intent routing, unified identity, COD → prepaid, and chatflow limits.',
     keywords:
       'TopEdge vs AiSensy, AiSensy alternative India, AiSensy vs TopEdge, WhatsApp template markup, COD prepaid WhatsApp, unified customer profile WhatsApp, AiSensy pricing India',
     h1: 'TopEdge vs AiSensy',
@@ -507,9 +507,9 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
     logoAlt: 'Bitespeed logo',
     accent: '#ea580c',
     brandTag: 'AI-agent omnichannel OS',
-    title: 'TopEdge vs Bitespeed (2026) | Shopify WhatsApp with INR Pricing',
+    title: 'TopEdge vs Bitespeed (2026) | Shopify WhatsApp INR Plans',
     description:
-      'Compare TopEdge vs Bitespeed: Meta economics, AI included vs ~$100 add-ons, cart + browse recovery, COD, warranty, and INR order-based plans vs USD omnichannel floors.',
+      'Compare TopEdge vs Bitespeed: Meta economics, AI included vs ~$100 add-ons, cart recovery, COD, and INR plans vs USD floors.',
     keywords:
       'TopEdge vs Bitespeed, Bitespeed alternative Shopify, Bitespeed pricing India, Shopify WhatsApp app INR pricing, Bitespeed vs TopEdge, Bitespeed AI add-on',
     h1: 'TopEdge vs Bitespeed',
@@ -699,6 +699,7 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
       { label: 'vs WATI', href: '/compare/wati' },
       { label: 'vs AiSensy', href: '/compare/aisensy' },
       { label: 'vs Interakt', href: '/compare/interakt' },
+      { label: 'vs Dondy', href: '/compare/dondy' },
       { label: 'TopEdge pricing', href: '/pricing' },
     ],
   },
@@ -712,7 +713,7 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
     logoAlt: 'Zoko logo',
     accent: '#2563eb',
     brandTag: 'India WhatsApp commerce',
-    title: 'TopEdge vs Zoko (2026) | Flat Order Plans vs Conversation Metering',
+    title: 'TopEdge vs Zoko (2026) | Flat INR vs Conversation Meters',
     description:
       'Compare TopEdge vs Zoko: flat INR order plans vs Zoko’s base fee plus per-conversation metering, COD flows, and India commerce hooks.',
     keywords:
@@ -875,6 +876,7 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
       { label: 'vs Bitespeed', href: '/compare/bitespeed' },
       { label: 'vs Getgabs', href: '/compare/getgabs' },
       { label: 'vs Kanal', href: '/compare/kanal' },
+      { label: 'vs Dondy', href: '/compare/dondy' },
       { label: 'TopEdge pricing', href: '/pricing' },
     ],
   },
@@ -1046,6 +1048,7 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
       { label: 'vs Zoko', href: '/compare/zoko' },
       { label: 'vs Bitespeed', href: '/compare/bitespeed' },
       { label: 'vs Kanal', href: '/compare/kanal' },
+      { label: 'vs Dondy', href: '/compare/dondy' },
       { label: 'TopEdge pricing', href: '/pricing' },
     ],
   },
@@ -1059,9 +1062,9 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
     logoAlt: 'Kanal logo',
     accent: '#7c3aed',
     brandTag: 'Global WhatsApp + Klaviyo',
-    title: 'TopEdge vs Kanal (2026) | INR Shopify India vs EUR Global WhatsApp',
+    title: 'TopEdge vs Kanal (2026) | INR India vs EUR Global WA',
     description:
-      'Compare TopEdge vs Kanal: flat INR India COD workflows vs Kanal Pro from €89/mo, Klaviyo integration, and global WhatsApp marketing for Shopify.',
+      'Compare TopEdge vs Kanal: flat INR India COD workflows vs Kanal Pro from €89/mo, Klaviyo, and global WhatsApp for Shopify.',
     keywords:
       'TopEdge vs Kanal, Kanal alternative Shopify, Kanal pricing, Kanal WhatsApp Klaviyo, Shopify WhatsApp India vs Kanal',
     h1: 'TopEdge vs Kanal',
@@ -1217,6 +1220,7 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
       { label: 'vs Bitespeed', href: '/compare/bitespeed' },
       { label: 'vs Zoko', href: '/compare/zoko' },
       { label: 'vs Getgabs', href: '/compare/getgabs' },
+      { label: 'vs Dondy', href: '/compare/dondy' },
       { label: 'TopEdge pricing', href: '/pricing' },
     ],
   },

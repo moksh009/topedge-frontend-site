@@ -442,10 +442,10 @@ export const blogPosts: BlogPost[] = [
     id: 8,
     title: 'Best WhatsApp Automation Tools for Shopify India (2026)',
     description:
-      'Direct answer plus a comparison table of WhatsApp automation tools for Shopify India—WATI, AiSensy, Interakt, Bitespeed, Zoko, Getgabs, Kanal, and TopEdge.',
+      'Direct answer plus a comparison table of WhatsApp automation tools for Shopify India—WATI, AiSensy, Interakt, Bitespeed, Zoko, Getgabs, Kanal, Dondy, TopEdge.',
     slug: 'best-whatsapp-automation-tools-shopify-india',
     date: '2026-09-08',
-    updated: '2026-09-20',
+    updated: '2026-09-21',
     readTime: '16 min',
     category: 'Comparisons',
     author: 'TopEdge',
@@ -459,6 +459,7 @@ export const blogPosts: BlogPost[] = [
       'Zoko alternative',
       'Getgabs alternative',
       'Kanal alternative',
+      'Dondy alternative',
       'Bitespeed alternative',
       'ecommerce automation Shopify',
     ],
@@ -466,12 +467,12 @@ export const blogPosts: BlogPost[] = [
       {
         question: 'What is the best WhatsApp automation tool for Shopify India in 2026?',
         answer:
-          'For Shopify India D2C that needs cart recovery, COD workflows, Meta template control, and INR forecasting, TopEdge AI is the strongest fit on this list. Pick Zoko for India commerce with conversation metering, Getgabs for the cheapest entry, Kanal or Bitespeed for global/omnichannel stacks, and WATI / AiSensy / Interakt when you already standardize on those BSPs.',
+          'For Shopify India D2C that needs cart recovery, COD workflows, Meta template control, and INR forecasting, TopEdge AI is the strongest fit on this list. Pick Zoko for India commerce with conversation metering, Getgabs for the cheapest entry, Kanal or Bitespeed for global/omnichannel stacks, Dondy when widget breadth matters more than Meta rate-card markup, and WATI / AiSensy / Interakt when you already standardize on those BSPs.',
       },
       {
         question: 'Should I choose on price alone?',
         answer:
-          'No. Getgabs wins on entry sticker price. Zoko and Kanal can look mid-range until conversation meters or EUR floors show up in festival weeks. Model Meta fees plus platform meters against your peak WhatsApp volume.',
+          'No. Getgabs wins on entry sticker price. Zoko, Kanal, and Dondy can look mid-range until conversation meters, EUR floors, or published rate-card markups show up in festival weeks. Model Meta fees plus platform meters against your peak WhatsApp volume.',
       },
       {
         question: 'Which tools are strongest for COD and RTO?',
@@ -487,7 +488,7 @@ export const blogPosts: BlogPost[] = [
     content: `
 <details class="mkt-blog-verdict" open>
 <summary>Quick verdict</summary>
-<p><strong>Best WhatsApp automation tool for Shopify India (2026):</strong> TopEdge AI if you need cart recovery, COD → prepaid, Meta-gated journeys, and flat INR plans in one Shopify-native stack. Choose Zoko for India-native commerce with conversation metering, Getgabs for the cheapest entry, Kanal when Klaviyo-first global WhatsApp matters, and Bitespeed when you want omnichannel AI above a USD floor.</p>
+<p><strong>Best WhatsApp automation tool for Shopify India (2026):</strong> TopEdge AI if you need cart recovery, COD → prepaid, Meta-gated journeys, and flat INR plans in one Shopify-native stack. Choose Zoko for India-native commerce with conversation metering, Getgabs for the cheapest entry, Kanal when Klaviyo-first global WhatsApp matters, Dondy when a broad widget outweighs a published Meta rate-card markup, and Bitespeed when you want omnichannel AI above a USD floor.</p>
 </details>
 
 <h2>Comparison table (verify prices live)</h2>
@@ -560,6 +561,13 @@ export const blogPosts: BlogPost[] = [
 <td>No India-specific COD positioning found</td>
 <td><a href="/compare/kanal">vs Kanal</a></td>
 </tr>
+<tr>
+<td>Dondy</td>
+<td>Widget + USD automation</td>
+<td>USD plans + published rate table (~60% above Meta marketing rates)</td>
+<td>Broad Shopify app; concede AI/inbox/Klaviyo</td>
+<td><a href="/compare/dondy">vs Dondy</a></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -590,7 +598,7 @@ export const blogPosts: BlogPost[] = [
 <p>Start at the <a href="/compare/alternatives">alternatives index</a> for one factual line per tool, then open only the pairwise pages you care about. If a vendor cannot show a live Shopify cart inside a WhatsApp preview, you are buying a broadcast tool—not ecommerce automation.</p>
 
 <h2>Where does TopEdge fit on this shortlist?</h2>
-<p>TopEdge is built as a WhatsApp growth OS for Shopify India: <a href="/features/journeys">Journeys</a>, <a href="/features/live-chat">Live Chat</a>, <a href="/features/meta-manager">Meta Manager</a>, and recovery math in one workspace. Compare named alternatives on our <a href="/compare">compare hub</a>, including <a href="/compare/wati">vs WATI</a>, <a href="/compare/zoko">vs Zoko</a>, and <a href="/compare/kanal">vs Kanal</a>.</p>
+<p>TopEdge is built as a WhatsApp growth OS for Shopify India: <a href="/features/journeys">Journeys</a>, <a href="/features/live-chat">Live Chat</a>, <a href="/features/meta-manager">Meta Manager</a>, and recovery math in one workspace. Compare named alternatives on our <a href="/compare">compare hub</a>, including <a href="/compare/wati">vs WATI</a>, <a href="/compare/zoko">vs Zoko</a>, <a href="/compare/kanal">vs Kanal</a>, and <a href="/compare/dondy">vs Dondy</a>.</p>
 <blockquote><p>If a demo cannot show a live Shopify cart inside a WhatsApp preview, you are buying a broadcast tool—not ecommerce automation.</p></blockquote>
 
 <h2>What are red flags while buying a WhatsApp app?</h2>
@@ -610,11 +618,11 @@ export const blogPosts: BlogPost[] = [
 <div class="mkt-blog-faq">
 <details>
 <summary>What is the best WhatsApp automation tool for Shopify India in 2026?</summary>
-<p>For Shopify India D2C that needs cart recovery, COD workflows, Meta template control, and INR forecasting, TopEdge AI is the strongest fit on this list. Pick Zoko for India commerce with conversation metering, Getgabs for the cheapest entry, Kanal or Bitespeed for global/omnichannel stacks, and WATI / AiSensy / Interakt when you already standardize on those BSPs.</p>
+<p>For Shopify India D2C that needs cart recovery, COD workflows, Meta template control, and INR forecasting, TopEdge AI is the strongest fit on this list. Pick Zoko for India commerce with conversation metering, Getgabs for the cheapest entry, Kanal or Bitespeed for global/omnichannel stacks, Dondy when widget breadth matters more than Meta rate-card markup, and WATI / AiSensy / Interakt when you already standardize on those BSPs.</p>
 </details>
 <details>
 <summary>Should I choose on price alone?</summary>
-<p>No. Getgabs wins on entry sticker price. Zoko and Kanal can look mid-range until conversation meters or EUR floors show up in festival weeks. Model Meta fees plus platform meters against your peak WhatsApp volume.</p>
+<p>No. Getgabs wins on entry sticker price. Zoko, Kanal, and Dondy can look mid-range until conversation meters, EUR floors, or published rate-card markups show up in festival weeks. Model Meta fees plus platform meters against your peak WhatsApp volume.</p>
 </details>
 <details>
 <summary>Which tools are strongest for COD and RTO?</summary>
@@ -863,7 +871,7 @@ export const blogPosts: BlogPost[] = [
     id: 13,
     title: 'Getgabs Alternative for Shopify WhatsApp',
     description:
-      'Getgabs wins on entry price. Here is when Shopify India teams outgrow free-to-install WhatsApp apps—and how to evaluate depth without a defensive price argument.',
+      'Getgabs wins on entry price. When Shopify India teams outgrow free-to-install WhatsApp apps—and how to judge depth without a price fight.',
     slug: 'getgabs-alternative-shopify-whatsapp',
     date: '2026-09-20',
     readTime: '9 min',
@@ -960,7 +968,7 @@ export const blogPosts: BlogPost[] = [
     id: 15,
     title: 'How to Choose a WhatsApp App from the Shopify App Store',
     description:
-      'A practical pre-install checklist: Meta markup, COD depth, conversation metering vs flat pricing, free-to-install vs gated features, and reviews that actually matter.',
+      'Pre-install checklist: Meta markup, COD depth, conversation metering vs flat pricing, free-to-install vs gated features, and reviews that matter.',
     slug: 'how-to-choose-whatsapp-app-shopify-app-store',
     date: '2026-09-20',
     readTime: '12 min',
@@ -1122,7 +1130,7 @@ export const blogPosts: BlogPost[] = [
     id: 17,
     title: 'Dondy Alternative for Shopify India: The Meta Markup',
     description:
-      'Dondy’s published WhatsApp rate table sits about 60% above Meta’s marketing rates. When that math matters for Shopify India — and when Dondy’s broader toolkit still fits.',
+      'Dondy’s WhatsApp rate table sits ~60% above Meta marketing rates. When that math matters for Shopify India — and when Dondy’s toolkit still fits.',
     slug: 'dondy-alternative-shopify-india',
     date: '2026-09-21',
     readTime: '9 min',
