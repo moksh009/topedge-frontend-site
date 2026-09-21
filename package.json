@@ -13,6 +13,7 @@
     "sitemap": "node scripts/generate-sitemap.mjs",
     "content:dates": "node scripts/generate-content-dates.mjs",
     "sitemap:validate": "node scripts/validate-sitemap.mjs",
+    "indexnow": "node scripts/indexnow.mjs",
     "deploy": "npm run build:static && firebase deploy --only hosting",
     "lint": "eslint . --fix",
     "preview": "vite preview",

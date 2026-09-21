@@ -2,7 +2,9 @@
 
 > **Rule:** This file is discovery + draft queue only. Nothing here is auto-sent or auto-published. A human reviews, edits, and personally sends or posts.
 
-Last refreshed: **2026-09-20** (manual Week 1 pass)
+Last refreshed: **2026-09-21** (manual Week 1 pass; Phase 6 measurement cross-ref added)
+
+Related: [`measurement.md`](./measurement.md) (monthly review must cross-ref this tracker when citations appear after a roundup win).
 
 Status legend: `todo` → `drafted` → `sent` → `replied` → `won` / `pass` / `nurture`
 

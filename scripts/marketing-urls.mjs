@@ -34,6 +34,7 @@ export const COMPARE_SLUGS = [
   'zoko',
   'getgabs',
   'kanal',
+  'dondy',
   'alternatives',
 ];
 
@@ -56,6 +57,7 @@ export const BLOG_SLUGS = [
   'kanal-whatsapp-alternative-shopify',
   'how-to-choose-whatsapp-app-shopify-app-store',
   'whatsapp-business-api-pricing-india',
+  'dondy-alternative-shopify-india',
 ];
 
 /** Static marketing paths (no trailing slash except root as '/') */

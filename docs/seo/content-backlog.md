@@ -2,7 +2,9 @@
 
 > **Rule:** Log ideas here the moment they appear (research, sales calls, Phase 5 discovery, GSC queries). Nothing auto-publishes. One researched post every **1–2 weeks** beats a burst then silence.
 
-Last refreshed: **2026-09-20**
+Related: Phase 6 measurement hub — [`measurement.md`](./measurement.md) · citation log — [`geo-citation-log.md`](./geo-citation-log.md). Impressions for unexpected queries in GSC/Bing should land in the content backlog below, not only in Search Console screenshots.
+
+Last refreshed: **2026-09-21**
 
 Status: `idea` → `outlined` → `drafting` → `fact-check` → `published` → `refresh`
 
@@ -27,6 +29,7 @@ Status: `idea` → `outlined` → `drafting` → `fact-check` → `published` �
 | 2026-09-20 | `kanal-whatsapp-alternative-shopify` | published | Phase 3 batch |
 | 2026-09-20 | `how-to-choose-whatsapp-app-shopify-app-store` | published | Phase 3 batch |
 | 2026-09-20 | `whatsapp-business-api-pricing-india` | published | Phase 3 batch |
+| 2026-09-21 | `dondy-alternative-shopify-india` | published | GEO baseline; links `/compare/dondy` |
 | Next 1–2 weeks | _(pick from backlog)_ | idea | Prefer one refresh or one new gap, not five |
 
 ---
@@ -40,6 +43,7 @@ Status: `idea` → `outlined` → `drafting` → `fact-check` → `published` �
 | C3 | Kanal WhatsApp alternative | alternative | P0 | published | Master audit Phase 3 | Links `/compare/kanal` |
 | C4 | How to choose a WhatsApp app (Shopify App Store) | buyer guide | P0 | published | Master audit Phase 3 | Funnel into `/compare/alternatives` |
 | C5 | WhatsApp Business API / Meta Cloud API pricing India | pricing explainer | P0 | published | Master audit Phase 3 | Verify Meta rate card live before refresh |
+| C13 | Dondy alternative (rate-card markup) | alternative | P0 | published | GEO baseline | Links `/compare/dondy`. Live 21 Sep 2026: 4.9★ / 821, India $0.01888 |
 | C6 | **State of WhatsApp Commerce in India** (original data) | report | P1 | **blocked** | Master audit / GEO | Needs real aggregable store metrics — see below |
 | C7 | Interakt alternative (narrative) | alternative | P2 | idea | Symmetry with Phase 2 compares | After C1–C5 settle |
 | C8 | Bitespeed alternative for India D2C | alternative | P2 | idea | Roundup outreach | Pair with `/compare/bitespeed` |

@@ -10,7 +10,8 @@ export type MatrixCompetitor =
   | 'bitespeed'
   | 'zoko'
   | 'getgabs'
-  | 'kanal';
+  | 'kanal'
+  | 'dondy';
 
 export type CompareFeatureRow = {
   id: string;
@@ -821,6 +822,76 @@ export const KANAL_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
   },
 ];
 
+/** TopEdge vs Dondy — verified Sep 21 2026 against apps.shopify.com/dondy-marketing-ai and dondy.net/dondy-pricing. */
+export const DONDYY_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
+  {
+    id: 'template-markup',
+    label: 'Meta messaging markup',
+    description: 'What you pay versus Meta’s own marketing rate.',
+    topedge: '0% markup; Meta pass-through on flat INR plans',
+    competitor:
+      'Published rate table is ~60% above Meta marketing rates (India $0.01888/msg on dondy.net — verify Meta’s card live)',
+  },
+  {
+    id: 'ai-llm',
+    label: 'AI sales / support agent',
+    description: 'Where AI unlocks.',
+    topedge: 'Intelligence / BYOK on core plans',
+    competitor: 'AI chatbot for sales & support on Elite ($159.99/mo) — Shopify listing',
+  },
+  {
+    id: 'cod-prepaid',
+    label: 'COD → prepaid',
+    description: 'India COD risk conversion, not only a verification tag.',
+    topedge: 'Native COD → prepaid journeys',
+    competitor: 'COD verification is a listed Shopify feature; COD→prepaid builder depth not shown as India-native',
+  },
+  {
+    id: 'unified-identity',
+    label: 'Unified customer identity',
+    description: 'Merge phones, emails, and orders.',
+    topedge: 'Native built-in',
+    competitor: 'Inbox + Shopify sync; multi-number merge depth verify live',
+  },
+  {
+    id: 'warranty',
+    label: 'Warranty management',
+    description: 'Post-purchase warranty hub.',
+    topedge: 'Native warranty hub',
+    competitor: 'Not found as a first-class warranty product',
+  },
+  {
+    id: 'flow-builder',
+    label: 'Widget, flows, and inbox',
+    description: 'Out-of-the-box WhatsApp surface area.',
+    topedge: 'Journeys + Flow Builder + WhatsApp inbox',
+    competitor:
+      'Free floating widget; automations from Power ($79.99); multi-agent inbox on Elite (listing says 5 agents; site says unlimited)',
+  },
+  {
+    id: 'klaviyo',
+    label: 'Klaviyo',
+    description: 'Works beside an email stack.',
+    topedge: 'Pair your own ESP',
+    competitor: 'Klaviyo listed under Works with on the Shopify listing',
+  },
+  {
+    id: 'india-focus',
+    label: 'India / INR positioning',
+    description: 'Built for Indian D2C operators.',
+    topedge: 'India-first: INR pricing, COD, Meta gating',
+    competitor: 'USD plans; public languages are EN/ES/IT/PT-BR/FR — not India-specific',
+  },
+  {
+    id: 'flow-cap',
+    label: 'Message economics at 1,000',
+    description: 'Concrete message-line math, before subscription.',
+    topedge: '1,000 India marketing messages ≈ Meta’s own rate (0% platform markup)',
+    competitor:
+      '1,000 × India table rate $0.01888 ≈ $18.88 vs ~$11.80 at Meta $0.0118 — about $7.08 / 60% more on the message line',
+  },
+];
+
 /** TopEdge Ai vs Interakt — dedicated pairwise board. */
 export const INTERAKT_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
   {
@@ -982,6 +1053,14 @@ export function pairwiseMatrix(
       competitor: cell,
     }));
   }
+  if (competitor === 'dondy') {
+    return DONDYY_PAIRWISE_MATRIX.map(({ label, description, topedge, competitor: cell }) => ({
+      label,
+      description,
+      topedge,
+      competitor: cell,
+    }));
+  }
   return LEGACY_COMPARE_FEATURE_MATRIX.map((row) => ({
     label: row.name,
     description: row.description,
@@ -1023,6 +1102,7 @@ function pairwiseForDuel(competitor: MatrixCompetitor): PairwiseFeatureRow[] {
   if (competitor === 'zoko') return ZOKO_PAIRWISE_MATRIX;
   if (competitor === 'getgabs') return GETGABS_PAIRWISE_MATRIX;
   if (competitor === 'kanal') return KANAL_PAIRWISE_MATRIX;
+  if (competitor === 'dondy') return DONDYY_PAIRWISE_MATRIX;
   return LEGACY_COMPARE_FEATURE_MATRIX.map((row) => ({
     id: row.id,
     label: row.name,

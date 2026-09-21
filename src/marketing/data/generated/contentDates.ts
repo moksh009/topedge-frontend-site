@@ -4,11 +4,11 @@
  */
 export const CONTENT_DATES = {
   /** Last edit of compare competitor data (+ feature matrix). */
-  compareTwoWay: '2026-09-20',
+  compareTwoWay: '2026-09-21',
   /** Last edit of 3-way compare page (+ feature matrix). */
-  compareThreeWay: '2026-09-20',
+  compareThreeWay: '2026-09-21',
   /** Last edit of blogPosts.ts (used as Article dateModified fallback). */
-  blogPosts: '2026-09-20',
+  blogPosts: '2026-09-21',
   /** Last edit of feature / product page content. */
   featurePages: '2026-09-20',
   /** Last edit of published plan catalog (pricing Offers). */

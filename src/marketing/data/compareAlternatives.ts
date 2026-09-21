@@ -68,4 +68,13 @@ export const COMPARE_ALTERNATIVES: AlternativeEntry[] = [
     logoAlt: 'Kanal logo',
     oneLiner: 'Global WhatsApp marketing from €89/mo with native Klaviyo integration.',
   },
+  {
+    slug: 'dondy',
+    name: 'Dondy',
+    href: '/compare/dondy',
+    logo: '/marketing/compare/compare-logo-dondy.svg',
+    logoAlt: 'Dondy logo',
+    oneLiner:
+      'Broad Shopify WhatsApp app (widget through Elite AI) whose published rate table sits about 60% above Meta marketing rates.',
+  },
 ];

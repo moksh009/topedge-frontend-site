@@ -62,9 +62,9 @@ https://www.topedgeai.com/*  https://topedgeai.com/:splat  301!
 /ai-caller  /features/ai-brain  301!
 /ai-chatbot  /features/live-chat  301!
 
-# Blog media + legacy plural
-/blog/:file.jpg  /blog-media/:file.jpg  301!
-/blog/:file.webp  /blog-media/:file.webp  301!
+# Do not add `/blog/:file.jpg` or `/blog/*.jpg`. Netlify treats the
+# extension as part of the placeholder and 301s every post to /blog-media/.
+# Legacy plural
 /blogs  /blog  301!
 /blogs/  /blog  301!
 /blogs/*  /blog  301!

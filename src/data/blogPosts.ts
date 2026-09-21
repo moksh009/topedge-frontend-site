@@ -1012,7 +1012,7 @@ export const blogPosts: BlogPost[] = [
 </ol>
 
 <h2>Where should you go next without another generic list?</h2>
-<p>Use the fair index at <a href="/compare/alternatives">/compare/alternatives</a>, then open only the pairwise boards you care about (WATI, AiSensy, Interakt, Bitespeed, Zoko, Getgabs, Kanal). For a pillar overview: <a href="/blog/best-whatsapp-automation-tools-shopify-india">best WhatsApp automation tools for Shopify India</a>.</p>
+<p>Use the fair index at <a href="/compare/alternatives">/compare/alternatives</a>, then open only the pairwise boards you care about (WATI, AiSensy, Interakt, Bitespeed, Zoko, Getgabs, Kanal, Dondy). For a pillar overview: <a href="/blog/best-whatsapp-automation-tools-shopify-india">best WhatsApp automation tools for Shopify India</a>.</p>
 
 <p class="mkt-blog-footnote">App Store prices, review counts, and plan names change. Re-check the vendor listing and pricing page the day you install.</p>
 <p>Build on <a href="/features/journeys">Journeys</a> when you are ready, or <a href="/contact">contact</a> for a walkthrough.</p>
@@ -1116,6 +1116,83 @@ export const blogPosts: BlogPost[] = [
 
 <p class="mkt-blog-footnote">Meta rate cards change. Confirm on Meta’s official WhatsApp pricing documentation before budgeting. TopEdge plan amounts: see <a href="/pricing">/pricing</a>.</p>
 <p>Next: <a href="/blog/how-to-choose-whatsapp-app-shopify-app-store">choose a Shopify WhatsApp app</a>, or start on <a href="/features/journeys">Journeys</a>.</p>
+`,
+  },
+  {
+    id: 17,
+    title: 'Dondy Alternative for Shopify India: The Meta Markup',
+    description:
+      'Dondy’s published WhatsApp rate table sits about 60% above Meta’s marketing rates. When that math matters for Shopify India — and when Dondy’s broader toolkit still fits.',
+    slug: 'dondy-alternative-shopify-india',
+    date: '2026-09-21',
+    readTime: '9 min',
+    category: 'Comparisons',
+    author: 'TopEdge',
+    image: '/marketing/features/unified-identity.png',
+    imageAlt: 'Shopify India operator comparing Dondy WhatsApp rates with Meta pass-through pricing',
+    keywords: [
+      'Dondy alternative',
+      'Dondy alternative Shopify',
+      'Dondy WhatsApp pricing',
+      'Dondy Meta markup',
+      'Shopify WhatsApp India',
+    ],
+    faqs: [
+      {
+        question: 'Does Dondy charge more than Meta’s own rate?',
+        answer:
+          'On the rate table at dondy.net/dondy-pricing, yes. India is listed at $0.01888 per message, which is 60% above $0.0118 (a commonly published Meta India marketing rate). Central & Eastern Europe is $0.1376 versus $0.086 — the same 60%. Confirm Meta’s current card, and note the Shopify listing’s “from $0.0158 (US)” does not match North America $0.04 on the website table.',
+      },
+      {
+        question: 'What do 1,000 India messages cost on Dondy’s card?',
+        answer:
+          '1,000 × $0.01888 is about $18.88, versus about $11.80 at a $0.0118 Meta marketing rate — roughly $7.08 more on the message line, before the $79.99 Power Automation or $159.99 Elite subscription. Those plans include 1,000 one-click messages every 30 days; confirm whether that allowance replaces the rate-card charge.',
+      },
+      {
+        question: 'When is TopEdge the better Dondy alternative for Shopify India?',
+        answer:
+          'When you want 0% Meta markup, flat INR plans, and native COD → prepaid. Keep Dondy if the free widget, Klaviyo, and Elite AI matter more than the rate-card markup.',
+      },
+    ],
+    content: `
+<p><strong>Dondy’s published rate table charges about 60% more than Meta’s marketing rate.</strong> On dondy.net (checked 21 Sep 2026) India is $0.01888 per message — 1.6× a $0.0118 Meta marketing rate — and Central & Eastern Europe is $0.1376 versus $0.086. Pick TopEdge if you want 0% markup, flat INR, and COD → prepaid. Full board: <a href="/compare/dondy">TopEdge vs Dondy</a>.</p>
+
+<h2>Why does the markup show up before the subscription?</h2>
+<p>Automations are not on the free widget. Shopify’s listing puts cart recovery and campaigns on Power Automation at $79.99/mo, and the AI sales/support agent on Elite at $159.99/mo. The country rate card is a second bill. At the India table rate, 1,000 messages are about $18.88, versus about $11.80 if Meta bills $0.0118 — roughly $7.08 extra on the message line, before that subscription. Power and Elite also include 1,000 one-click messages every 30 days; confirm whether that bucket is exempt from the rate card.</p>
+<p>Two surfaces disagree, so do not freeze one number. The App Store says Power rates “start from $0.0158 (US).” The website table lists North America at $0.04. Use <a href="https://www.dondy.net/dondy-pricing" rel="noopener noreferrer" target="_blank">dondy.net/dondy-pricing</a> for country rows and the <a href="https://apps.shopify.com/dondy-marketing-ai" rel="noopener noreferrer" target="_blank">Shopify listing</a> for plan names. Meta’s own card changes — re-check it before you budget. Dondy’s table does not split marketing vs utility.</p>
+
+<h2>What is Dondy genuinely good at?</h2>
+<p>Do not shop for a thinner clone. Dondy ships a free floating widget, Klaviyo in Works with, review-app hooks, campaigns, and a multi-agent inbox on Elite. The Shopify listing showed 4.9★ from 821 reviews on 21 Sep 2026 (that count moves). Public languages are English, Spanish, Italian, Portuguese (Brazil), and French — a global app, not an India-first one. COD verification is listed; that is not the same as a native COD → prepaid journey.</p>
+
+<h2>When is TopEdge the India-shaped alternative?</h2>
+<p>When finance needs Meta pass-through at 0% and a published INR plan (Launch ₹1,999 · Growth ₹3,999 · Scale ₹6,499), and ops needs COD → prepaid, warranty, and unified identity in the core stack. Keep Dondy if the widget, Klaviyo, and Elite AI are the product you actually want and the rate card is acceptable.</p>
+<p>Scorecard, 1,000-message math, and footnotes: <a href="/compare/dondy">TopEdge vs Dondy</a>. Other tools: <a href="/compare/alternatives">alternatives</a>.</p>
+
+<h2>What should you verify the day you buy?</h2>
+<ol>
+<li>India row on Dondy’s rate table, against Meta’s current India marketing and utility rates</li>
+<li>Whether the included 1,000 one-click messages offset that table</li>
+<li>Which tier unlocks automation vs AI (Power vs Elite)</li>
+<li>A live COD order if RTO is the problem you are solving</li>
+</ol>
+
+<div class="mkt-blog-faq">
+<details open>
+<summary>Does Dondy charge more than Meta’s own rate?</summary>
+<p>On the rate table at dondy.net/dondy-pricing, yes. India is listed at $0.01888 per message, which is 60% above $0.0118 (a commonly published Meta India marketing rate). Central &amp; Eastern Europe is $0.1376 versus $0.086 — the same 60%. Confirm Meta’s current card, and note the Shopify listing’s “from $0.0158 (US)” does not match North America $0.04 on the website table.</p>
+</details>
+<details>
+<summary>What do 1,000 India messages cost on Dondy’s card?</summary>
+<p>1,000 × $0.01888 is about $18.88, versus about $11.80 at a $0.0118 Meta marketing rate — roughly $7.08 more on the message line, before the $79.99 Power Automation or $159.99 Elite subscription. Those plans include 1,000 one-click messages every 30 days; confirm whether that allowance replaces the rate-card charge.</p>
+</details>
+<details>
+<summary>When is TopEdge the better Dondy alternative for Shopify India?</summary>
+<p>When you want 0% Meta markup, flat INR plans, and native COD → prepaid. Keep Dondy if the free widget, Klaviyo, and Elite AI matter more than the rate-card markup.</p>
+</details>
+</div>
+
+<p class="mkt-blog-footnote">Figures checked 21 Sep 2026 on dondy.net/dondy-pricing and apps.shopify.com/dondy-marketing-ai. The website also lists an Advanced $14.99 tier that the App Store listing does not. Re-check both before purchase.</p>
+<p>Related: <a href="/blog/whatsapp-business-api-pricing-india">WhatsApp API pricing in India</a>, <a href="/pricing">TopEdge pricing</a>.</p>
 `,
   },
 ];
