@@ -13,6 +13,8 @@ type DemoProductImageFrameProps = {
   alt: string;
   glow?: DemoImageGlow;
   className?: string;
+  /** Optional PNG/JPEG fallback when src is webp */
+  fallback?: string;
 };
 
 /**
@@ -23,22 +25,29 @@ export default function DemoProductImageFrame({
   alt,
   glow = 'violet',
   className,
+  fallback,
 }: DemoProductImageFrameProps) {
+  const isWebp = /\.webp(\?|$)/i.test(src);
+
   return (
     <div
       className={['demo-video-glow', 'demo-video-glow--still', className].filter(Boolean).join(' ')}
       data-glow={glow}
     >
       <div className="demo-video-glow__frame is-ready">
-        <img
-          className="demo-video-glow__el demo-video-glow__still"
-          src={src}
-          alt={alt}
-          width={1920}
-          height={1080}
-          loading="lazy"
-          decoding="async"
-        />
+        <picture>
+          {isWebp ? <source type="image/webp" srcSet={src} /> : null}
+          <img
+            className="demo-video-glow__el demo-video-glow__still"
+            src={fallback || src}
+            alt={alt}
+            width={1400}
+            height={780}
+            loading="lazy"
+            decoding="async"
+            fetchPriority="low"
+          />
+        </picture>
       </div>
     </div>
   );

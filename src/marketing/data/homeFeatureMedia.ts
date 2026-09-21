@@ -51,13 +51,16 @@ export const FEATURE_VIDEOS = {
 /** Feature moments that use a still instead of video. */
 export const FEATURE_IMAGES = {
   campaigns: {
-    src: '/campaignn.png?v=20260917a',
+    src: '/campaignn.webp?v=20260921lcp',
+    fallback: '/campaignn.png?v=20260921lcp',
   },
   unifiedIdentity: {
-    src: '/leaadd.png?v=20260917c',
+    src: '/leaadd.webp?v=20260921lcp',
+    fallback: '/leaadd.png?v=20260921lcp',
   },
   pixel: {
-    src: '/marketing/features/pixel-tracking.png',
+    src: '/website-pixel.webp?v=20260921lcp',
+    fallback: '/website-pixel.png?v=20260921lcp',
   },
 } as const;
 
@@ -67,20 +70,23 @@ export const CRM_BENTO = {
     titleLead: 'Orders &',
     titleAccent: 'care',
     body: 'Shipments, warranty, and supplier follow-ups, without leaving WhatsApp.',
-    image: '/1.png?v=1',
+    image: '/1.webp?v=20260921lcp',
+    imageFallback: '/1.png?v=20260921lcp',
   },
   profiles: {
     id: 'profiles',
     titleLead: 'Customer',
     titleAccent: 'profiles',
     body: 'Live carts, values, and recovery status in one working table.',
-    image: '/2.png?v=1',
+    image: '/2.webp?v=20260921lcp',
+    imageFallback: '/2.png?v=20260921lcp',
   },
   stock: {
     id: 'stock',
     titleLead: 'Live',
     titleAccent: 'stock',
     body: 'SKU availability and low-stock signals synced from Shopify.',
-    image: '/3.png?v=1',
+    image: '/3.webp?v=20260921lcp',
+    imageFallback: '/3.png?v=20260921lcp',
   },
 } as const;

@@ -14,15 +14,19 @@ function BentoTile({ tile }: { tile: Tile }) {
   return (
     <article className={`home-crm__tile home-crm__tile--${tile.id}`} data-tile={tile.id}>
       <div className="home-crm__tile-visual">
-        <img
-          className="home-crm__tile-img"
-          src={tile.image}
-          alt={`TopEdge ${tile.titleLead} ${tile.titleAccent} product screenshot`}
-          width={3200}
-          height={3200}
-          loading="eager"
-          decoding="async"
-        />
+        <picture>
+          <source type="image/webp" srcSet={tile.image} />
+          <img
+            className="home-crm__tile-img"
+            src={tile.imageFallback}
+            alt={`TopEdge ${tile.titleLead} ${tile.titleAccent} product screenshot`}
+            width={1400}
+            height={1400}
+            loading="lazy"
+            decoding="async"
+            fetchPriority="low"
+          />
+        </picture>
       </div>
       <div className="home-crm__tile-body">
         <TileTitle lead={tile.titleLead} accent={tile.titleAccent} />

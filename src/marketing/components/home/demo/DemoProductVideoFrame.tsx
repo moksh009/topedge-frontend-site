@@ -19,9 +19,18 @@ type DemoProductVideoFrameProps = {
   className?: string;
 };
 
+function prefersReducedMotion() {
+  return typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
+
+function isNarrowViewport() {
+  return typeof window !== 'undefined' && window.matchMedia('(max-width: 900px)').matches;
+}
+
 /**
  * Frameless product demo video, poster first, muted loop.
- * Always restarts from 0 when it enters the viewport so users never land mid-clip.
+ * Mobile: poster until tap (avoids multi-MB mp4 on Slow 4G / PSI).
+ * Desktop: load + play when ~in view.
  */
 export default function DemoProductVideoFrame({
   src,
@@ -35,6 +44,7 @@ export default function DemoProductVideoFrame({
   const videoRef = useRef<HTMLVideoElement>(null);
   const [activeSrc, setActiveSrc] = useState<string | undefined>(priority ? src : undefined);
   const [ready, setReady] = useState(false);
+  const [needsTap, setNeedsTap] = useState(false);
   const wasVisible = useRef(false);
 
   useEffect(() => {
@@ -43,6 +53,18 @@ export default function DemoProductVideoFrame({
 
     if (priority) {
       setActiveSrc(src);
+      setNeedsTap(false);
+      return;
+    }
+
+    if (prefersReducedMotion()) {
+      setNeedsTap(false);
+      return;
+    }
+
+    // Phones: keep poster only until the shopper asks to play.
+    if (isNarrowViewport()) {
+      setNeedsTap(true);
       return;
     }
 
@@ -53,7 +75,7 @@ export default function DemoProductVideoFrame({
           io.disconnect();
         }
       },
-      { rootMargin: '240px 0px', threshold: 0.01 }
+      { rootMargin: '80px 0px', threshold: 0.15 },
     );
     io.observe(wrap);
     return () => io.disconnect();
@@ -64,8 +86,7 @@ export default function DemoProductVideoFrame({
     const video = videoRef.current;
     if (!wrap || !video || !activeSrc) return;
 
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduced) {
+    if (prefersReducedMotion()) {
       video.pause();
       return;
     }
@@ -87,11 +108,10 @@ export default function DemoProductVideoFrame({
     const observer = new IntersectionObserver(
       ([entry]) => {
         const visible = Boolean(
-          entry?.isIntersecting && (entry.intersectionRatio ?? 0) >= 0.35
+          entry?.isIntersecting && (entry.intersectionRatio ?? 0) >= 0.35,
         );
 
         if (visible && !wasVisible.current) {
-          // Just entered view → always start from the beginning
           playFromStart();
         } else if (!visible && wasVisible.current) {
           video.pause();
@@ -99,14 +119,13 @@ export default function DemoProductVideoFrame({
 
         wasVisible.current = visible;
       },
-      { threshold: [0, 0.35, 0.55], rootMargin: '40px 0px' }
+      { threshold: [0, 0.35, 0.55], rootMargin: '0px' },
     );
 
     observer.observe(wrap);
 
     const onVisibility = () => {
       if (document.hidden) {
-        // Pause only, keep wasVisible so we can resume when the tab returns
         video.pause();
         return;
       }
@@ -125,6 +144,11 @@ export default function DemoProductVideoFrame({
     };
   }, [activeSrc]);
 
+  const startFromTap = () => {
+    setNeedsTap(false);
+    setActiveSrc(src);
+  };
+
   return (
     <div
       ref={hostRef}
@@ -137,29 +161,41 @@ export default function DemoProductVideoFrame({
             className="demo-video-glow__poster"
             src={poster}
             alt=""
-            width={1920}
-            height={1080}
+            width={1280}
+            height={720}
             decoding="async"
             loading={priority ? 'eager' : 'lazy'}
-            fetchPriority={priority ? 'high' : 'auto'}
+            fetchPriority={priority ? 'high' : 'low'}
           />
         ) : null}
-        <video
-          ref={videoRef}
-          className="demo-video-glow__el"
-          src={activeSrc}
-          poster={poster}
-          muted
-          loop
-          playsInline
-          preload={priority ? 'metadata' : 'none'}
-          aria-label={title}
-          tabIndex={-1}
-          disablePictureInPicture
-          controls={false}
-          onLoadedData={() => setReady(true)}
-          onCanPlay={() => setReady(true)}
-        />
+        {needsTap && !activeSrc ? (
+          <button
+            type="button"
+            className="demo-video-glow__play"
+            onClick={startFromTap}
+            aria-label={`Play ${title}`}
+          >
+            Play demo
+          </button>
+        ) : null}
+        {activeSrc ? (
+          <video
+            ref={videoRef}
+            className="demo-video-glow__el"
+            src={activeSrc}
+            poster={poster}
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            aria-label={title}
+            tabIndex={-1}
+            disablePictureInPicture
+            controls={false}
+            onLoadedData={() => setReady(true)}
+            onCanPlay={() => setReady(true)}
+          />
+        ) : null}
       </div>
     </div>
   );

@@ -64,12 +64,23 @@ export default defineConfig(({ mode }) => {
         '@': path.resolve(__dirname, './src'),
       },
     },
-    build: {
+      build: {
       outDir: 'dist',
       assetsDir: 'assets',
       sourcemap: false,
       minify: 'terser',
       chunkSizeWarningLimit: 1000,
+      // Do not modulepreload firebase/charts/heavy on every route — homepage never needs them.
+      modulePreload: {
+        resolveDependencies(filename, deps) {
+          return deps.filter(
+            (d) =>
+              !d.includes('firebase') &&
+              !d.includes('charts') &&
+              !d.includes('heavy'),
+          );
+        },
+      },
       terserOptions: {
         compress: {
           drop_console: mode === 'production',

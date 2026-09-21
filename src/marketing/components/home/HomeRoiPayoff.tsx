@@ -62,11 +62,13 @@ function MiniChart({
   variant,
   activeIndex,
   onActiveChange,
+  interactive = true,
 }: {
   series: readonly { month: string; value: number }[];
   variant: 'before' | 'after';
   activeIndex: number;
   onActiveChange: (index: number) => void;
+  interactive?: boolean;
 }) {
   const active = series[activeIndex] ?? series[series.length - 1];
 
@@ -84,18 +86,25 @@ function MiniChart({
         {series.map((point, i) => {
           const height = Math.max(10, Math.round((point.value / CHART_MAX) * 100));
           const isActive = i === activeIndex;
+          const className = [
+            'home-roi__bar',
+            variant === 'before' ? 'is-wire' : '',
+            isActive ? 'is-hot' : '',
+          ]
+            .filter(Boolean)
+            .join(' ');
+          const style = { height: `${height}%` };
+
+          if (!interactive) {
+            return <span key={point.month} className={className} style={style} />;
+          }
+
           return (
             <button
               key={point.month}
               type="button"
-              className={[
-                'home-roi__bar',
-                variant === 'before' ? 'is-wire' : '',
-                isActive ? 'is-hot' : '',
-              ]
-                .filter(Boolean)
-                .join(' ')}
-              style={{ height: `${height}%` }}
+              className={className}
+              style={style}
               aria-label={`${point.month}: ${formatInr(point.value)}`}
               aria-pressed={isActive}
               onPointerDown={(e) => e.stopPropagation()}
@@ -124,10 +133,12 @@ function PaneBody({
   variant,
   activeIndex,
   onActiveChange,
+  interactive = true,
 }: {
   variant: 'before' | 'after';
   activeIndex: number;
   onActiveChange: (index: number) => void;
+  interactive?: boolean;
 }) {
   if (variant === 'before') {
     return (
@@ -142,6 +153,7 @@ function PaneBody({
           variant="before"
           activeIndex={activeIndex}
           onActiveChange={onActiveChange}
+          interactive={interactive}
         />
       </div>
     );
@@ -164,6 +176,7 @@ function PaneBody({
         variant="after"
         activeIndex={activeIndex}
         onActiveChange={onActiveChange}
+        interactive={interactive}
       />
     </div>
   );
@@ -300,27 +313,38 @@ export default function HomeRoiPayoff() {
               beginDrag(e.clientX);
             }}
           >
-            {/* Always-on blurred peeks, fill the empty half */}
-            <div className="home-roi__ghost home-roi__ghost--before" aria-hidden>
+            {/* Decorative peeks only — no focusable controls inside aria-hidden */}
+            <div className="home-roi__ghost home-roi__ghost--before" aria-hidden="true">
               <span className="home-roi__badge home-roi__badge--before">
                 <Code2 className="h-3.5 w-3.5" strokeWidth={2} />
                 Without TopEdge
               </span>
-              <PaneBody variant="before" activeIndex={beforeBar} onActiveChange={setBeforeBar} />
+              <PaneBody
+                variant="before"
+                activeIndex={beforeBar}
+                onActiveChange={setBeforeBar}
+                interactive={false}
+              />
             </div>
-            <div className="home-roi__ghost home-roi__ghost--after" aria-hidden>
+            <div className="home-roi__ghost home-roi__ghost--after" aria-hidden="true">
               <span className="home-roi__badge home-roi__badge--after">
                 <img
-                  src="/brand-mark.png"
+                  src="/brand-mark-56.png"
                   alt=""
                   width={16}
                   height={16}
                   className="home-roi__badge-logo"
                   decoding="async"
+                  loading="lazy"
                 />
                 with TopEdge AI
               </span>
-              <PaneBody variant="after" activeIndex={afterBar} onActiveChange={setAfterBar} />
+              <PaneBody
+                variant="after"
+                activeIndex={afterBar}
+                onActiveChange={setAfterBar}
+                interactive={false}
+              />
             </div>
 
             {/* Sharp clipped panes */}
@@ -333,7 +357,12 @@ export default function HomeRoiPayoff() {
                 <Code2 className="h-3.5 w-3.5" strokeWidth={2} />
                 Without TopEdge
               </span>
-              <PaneBody variant="before" activeIndex={beforeBar} onActiveChange={setBeforeBar} />
+              <PaneBody
+                variant="before"
+                activeIndex={beforeBar}
+                onActiveChange={setBeforeBar}
+                interactive={reveal <= 96}
+              />
             </div>
 
             <div
@@ -343,19 +372,25 @@ export default function HomeRoiPayoff() {
             >
               <span className="home-roi__badge home-roi__badge--after">
                 <img
-                  src="/brand-mark.png"
+                  src="/brand-mark-56.png"
                   alt="TopEdge AI"
                   width={16}
                   height={16}
                   className="home-roi__badge-logo"
                   decoding="async"
+                  loading="lazy"
                 />
                 with TopEdge AI
               </span>
-              <PaneBody variant="after" activeIndex={afterBar} onActiveChange={setAfterBar} />
+              <PaneBody
+                variant="after"
+                activeIndex={afterBar}
+                onActiveChange={setAfterBar}
+                interactive={reveal >= 4}
+              />
             </div>
 
-            <div className="home-roi__divider" style={{ left: `${dividerLeft}%` }} aria-hidden>
+            <div className="home-roi__divider" style={{ left: `${dividerLeft}%` }}>
               <button
                 type="button"
                 className="home-roi__handle"
@@ -372,7 +407,7 @@ export default function HomeRoiPayoff() {
                   beginDrag(e.clientX);
                 }}
               >
-                <span className="home-roi__handle-icon" aria-hidden>
+                <span className="home-roi__handle-icon" aria-hidden="true">
                   ‹ ›
                 </span>
               </button>

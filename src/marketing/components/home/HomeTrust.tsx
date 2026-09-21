@@ -23,7 +23,8 @@ const logos = [
 
 /** Trusted-logo marquee, white marks only, no wordmark duplicates */
 export default function HomeTrust({ onStage = false }: { onStage?: boolean }) {
-  const track = [...logos, ...logos, ...logos, ...logos];
+  // Two copies are enough for seamless marquee CSS; four bloated the DOM.
+  const track = [...logos, ...logos];
 
   return (
     <div
