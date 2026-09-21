@@ -77,4 +77,13 @@ export const COMPARE_ALTERNATIVES: AlternativeEntry[] = [
     oneLiner:
       'Broad Shopify WhatsApp app (widget through Elite AI) whose published rate table sits about 60% above Meta marketing rates.',
   },
+  {
+    slug: 'updatrr',
+    name: 'Updatrr',
+    href: '/compare/updatrr',
+    logo: '/marketing/compare/compare-logo-updatrr.svg',
+    logoAlt: 'Updatrr logo',
+    oneLiner:
+      'Shopify-only WhatsApp automation with 7-day trial from ~$19.99; strong on Shopify event triggers, lighter on identity/warranty.',
+  },
 ];

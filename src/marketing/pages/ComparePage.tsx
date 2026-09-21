@@ -22,7 +22,7 @@ import '../styles/compare.css';
 type Props = { competitor?: string };
 
 /** Lean capability-board pages — no paraphrased extras. */
-const VERBATIM_ONLY = new Set(['wati', 'aisensy', 'bitespeed', 'interakt']);
+const VERBATIM_ONLY = new Set(['wati', 'aisensy', 'bitespeed', 'interakt', 'updatrr']);
 
 function brandLabel(text: string) {
   return text.replace(/\bTopEdge\b(?! AI)/g, 'TopEdge AI');

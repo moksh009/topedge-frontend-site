@@ -52,3 +52,13 @@ Last refreshed: **2026-09-21**
 1. Each key URL should have **≥3 inbound** contextual links from its cluster.
 2. New posts: within 2 weeks, link from ≥3 existing pages.
 3. Do **not** dump competitor names in the site footer.
+
+## Inbound hygiene pass (2026-09-21)
+
+| Key URL | Before | After (target) | Notes |
+|---|---|---|---|
+| `/blog/dondy-alternative-shopify-india` | 0 | ≥3 | Linked from compare/dondy related, best-tools, choose-app, Meta pricing blog |
+| `/features/chat-rules` | 2 | ≥3 | Linked from flow-builder, live-chat, intent-detection, instagram related |
+| `/blog/how-to-choose-whatsapp-app-shopify-app-store` | 2 | ≥3 | Linked from opt-in related + existing alternatives/Meta blogs |
+
+Re-count after deploy with a repo grep of `href` targets; footer still excludes competitor dumps.

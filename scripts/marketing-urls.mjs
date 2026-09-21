@@ -35,6 +35,7 @@ export const COMPARE_SLUGS = [
   'getgabs',
   'kanal',
   'dondy',
+  'updatrr',
   'alternatives',
 ];
 

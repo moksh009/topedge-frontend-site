@@ -30,7 +30,8 @@ Status: `idea` → `outlined` → `drafting` → `fact-check` → `published` �
 | 2026-09-20 | `how-to-choose-whatsapp-app-shopify-app-store` | published | Phase 3 batch |
 | 2026-09-20 | `whatsapp-business-api-pricing-india` | published | Phase 3 batch |
 | 2026-09-21 | `dondy-alternative-shopify-india` | published | GEO baseline; links `/compare/dondy` |
-| Next 1–2 weeks | _(pick from backlog)_ | idea | Prefer one refresh or one new gap, not five |
+| 2026-09-21 | AEO deepen: journeys + COD blog + best-tools pillar | refresh | Phase C3 — answer-first + FAQ + cluster links |
+| 2026-10 (week 1–2) | Prefer deepen thin URL or one question-bank gap | idea | From question-bank #4 Meta pricing or #8 inbox if needed |
 
 ---
 
@@ -51,6 +52,8 @@ Status: `idea` → `outlined` → `drafting` → `fact-check` → `published` �
 | C10 | Free-to-install WhatsApp apps: what is still gated | buyer guide | P2 | idea | Getgabs price-gap theme | |
 | C11 | COD → prepaid on WhatsApp: playbook refresh | playbook | P3 | idea | Existing COD posts | Only if product/docs changed |
 | C12 | Warranty + WhatsApp post-purchase | feature | P3 | idea | Differentiator vs most apps | Wait for stronger case proof |
+| D4-2 | Meta pricing India deepen (if citation flat) | refresh | P1 | idea | Phase D4 glance | Trigger after Oct 1 if D1/D2 all-N |
+| D4-5 | Free-to-install WhatsApp apps buyer guide | buyer guide | P2 | idea | Phase D4 / Getgabs pattern | Same as C10 — keep one ID |
 
 ---
 

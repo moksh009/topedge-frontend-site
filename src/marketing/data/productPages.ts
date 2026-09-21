@@ -58,6 +58,13 @@ export type ProductPage = {
   title: string;
   titleAccent: string;
   subtitle: string;
+  /**
+   * AEO: 30–50 word direct answer under the hero (what it is + who it’s for).
+   * Keep factual — no invented pricing or competitor claims.
+   */
+  answerFirst?: string;
+  /** Visible FAQ + FAQPage schema when set (must match on-page Q&A). */
+  faqs?: { question: string; answer: string }[];
   seoTitle: string;
   seoDescription: string;
   keywords: string;
@@ -114,6 +121,20 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     titleAccent: 'know Shopify',
     subtitle:
       'Look up orders, update addresses, and hand off to Live Chat.\nShopify sync built for India D2C WhatsApp support.',
+    answerFirst:
+      'TopEdge Flow Builder is a Shopify-aware WhatsApp chatbot canvas for India D2C. Look up orders, update addresses, and hand off to Live Chat with order context—OAuth sync and webhooks, not a generic script bot.',
+    faqs: [
+      {
+        question: 'How is Flow Builder different from Journeys?',
+        answer:
+          'Journeys run event-driven sequences (cart, COD, shipping). Flow Builder handles conversational trees—order lookup, address updates, and Live Chat handoff—while still reading live Shopify data.',
+      },
+      {
+        question: 'Can flows hand off to a human with order context?',
+        answer:
+          'Yes. Escalate into Live Chat so agents see the same Shopify order beside the thread, and takeover pauses automation on that chat.',
+      },
+    ],
     seoTitle: 'WhatsApp Flow Builder for Shopify India | TopEdge',
     seoDescription:
       'Shopify WhatsApp flow builder: OAuth, order webhooks, Shopify tools on the canvas, and Live Chat handoff with order context.',
@@ -223,8 +244,9 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     relatedAccent: 'recovery + CRM',
     related: [
       { label: 'Cart recovery journeys', href: '/features/journeys#abandoned-cart' },
-      { label: 'Audience campaigns', href: '/features/campaigns' },
-      { label: 'Audience CRM', href: '/features/audience-crm' },
+      { label: 'Live Chat handoff', href: '/features/live-chat' },
+      { label: 'Intent detection', href: '/features/intent-detection' },
+      { label: 'Chat rules', href: '/features/chat-rules' },
     ],
     ctaTitle: 'Build your first Shopify-aware WhatsApp flow',
     ctaSub: 'Draft on a canvas that already speaks orders, SKUs, and Live Chat handoff.',
@@ -239,6 +261,20 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     titleAccent: 'on your storefront',
     subtitle:
       'Capture consented WhatsApp numbers on your storefront.\nThen run campaigns and journeys from one list.',
+    answerFirst:
+      'TopEdge Opt-in Tools capture consented WhatsApp numbers on your Shopify storefront—popup, spin wheel, and chat widget—so campaigns and journeys message only subscribers who opted in, with consent timestamps in Audience CRM.',
+    faqs: [
+      {
+        question: 'Where do opted-in numbers go?',
+        answer:
+          'Into a WhatsApp-ready subscriber list with name, phone, consent, source tool, and timestamp—filterable and openable in Customer 360 / Audience CRM.',
+      },
+      {
+        question: 'Can I run journeys only to consented shoppers?',
+        answer:
+          'Yes. Use the consented list as the audience for campaigns and journey eligibility so Meta marketing sends stay tied to real opt-in.',
+      },
+    ],
     seoTitle: 'WhatsApp Opt-in Tools for Shopify India | TopEdge',
     seoDescription:
       'Capture WhatsApp numbers on Shopify with popup, spin wheel, and chat widget, then message only consented subscribers.',
@@ -338,6 +374,7 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
       { label: 'Audience campaigns', href: '/features/campaigns' },
       { label: 'Audience CRM', href: '/features/audience-crm' },
       { label: 'WhatsApp journeys', href: '/features/journeys' },
+      { label: 'Choose a WhatsApp app', href: '/blog/how-to-choose-whatsapp-app-shopify-app-store' },
     ],
     ctaTitle: 'Turn Shopify traffic into WhatsApp revenue',
     ctaSub: 'Five opt-in tools, one consented list, Meta-safe campaigns that attribute ₹.',
@@ -352,6 +389,20 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     titleAccent: 'that attribute revenue',
     subtitle:
       'Segment shoppers, send Meta-approved templates, and measure revenue.\nProfit after fees, not vanity send counts.',
+    answerFirst:
+      'TopEdge Campaigns send Meta-approved WhatsApp templates to Shopify behavior segments for India D2C. Frequency caps protect quality rating, and reporting focuses on revenue after Meta fees—not vanity send counts.',
+    faqs: [
+      {
+        question: 'Do campaigns require approved Meta templates?',
+        answer:
+          'Yes. Marketing and utility templates must be APPROVED in Meta Manager before a campaign can send, matching Cloud API rules.',
+      },
+      {
+        question: 'How do you measure campaign success?',
+        answer:
+          'Attribute clicks and orders back to the send, then read net-of-Meta ₹ where available—so finance sees profit, not only delivery counts.',
+      },
+    ],
     seoTitle: 'WhatsApp Campaigns for Shopify India | Meta-Safe Sends',
     seoDescription:
       'WhatsApp audience campaigns for Shopify India D2C: behavior segments, Meta-approved templates, frequency capping, and net-of-Meta ₹ reporting.',
@@ -462,8 +513,9 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     relatedAccent: 'CRM + pixel',
     related: [
       { label: 'Audience CRM', href: '/features/audience-crm' },
-      { label: 'Cart recovery', href: '/features/journeys#abandoned-cart' },
-      { label: 'Flow Builder', href: '/features/flow-builder' },
+      { label: 'Meta Manager', href: '/features/meta-manager' },
+      { label: 'Opt-in tools', href: '/features/opt-in-tools' },
+      { label: 'API pricing India', href: '/blog/whatsapp-business-api-pricing-india' },
     ],
     ctaTitle: 'Launch a Meta-safe WhatsApp campaign',
     ctaSub: 'Segment, approve, send, and measure revenue against Shopify orders, after Meta fees.',
@@ -478,6 +530,20 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     titleAccent: 'chats, orders & care',
     subtitle:
       'One timeline for WhatsApp chats, Shopify orders, and care.\nScore leads and build segments in-product.',
+    answerFirst:
+      'TopEdge Audience CRM unifies WhatsApp chats, Shopify orders, and care on one shopper timeline for India D2C. Score leads, build in-product segments, and keep unlimited profiles available for campaigns and journeys.',
+    faqs: [
+      {
+        question: 'What shows on a contact timeline?',
+        answer:
+          'Orders, WhatsApp threads, campaign touches, tags, and opt-in state—so growth and support share one customer record.',
+      },
+      {
+        question: 'Can segments feed campaigns and journeys?',
+        answer:
+          'Yes. Build segments from purchase and engagement signals, then use them in Campaigns or journey eligibility without exporting CSVs.',
+      },
+    ],
     seoTitle: 'WhatsApp Audience CRM for Shopify India | Segments',
     seoDescription:
       'WhatsApp Audience CRM for Shopify India D2C: unified contact timeline, purchase-based lead scoring, in-product segments, and unlimited profiles on every plan.',
@@ -590,6 +656,7 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
       { label: 'Audience campaigns', href: '/features/campaigns' },
       { label: 'Cart recovery', href: '/features/journeys#abandoned-cart' },
       { label: 'COD journeys', href: '/features/journeys' },
+      { label: 'Opt-in tools', href: '/features/opt-in-tools' },
     ],
     ctaTitle: 'Run WhatsApp from one customer record',
     ctaSub: 'Unlimited profiles, real scores, and segments that feed journeys, without another CRM seat.',
@@ -604,6 +671,30 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     titleAccent: 'sell & support',
     subtitle:
       'Abandoned cart, COD confirm, and shipping on a visual canvas.\nMeta-approved templates, recovered ₹, not vanity sends.',
+    answerFirst:
+      'TopEdge Journeys is a visual WhatsApp automation builder for Shopify India D2C. Trigger abandoned checkout, COD confirmation, and shipping updates with Meta-approved templates, branch by payment method, and attribute recovered revenue in ₹—without engineering tickets.',
+    faqs: [
+      {
+        question: 'What is a WhatsApp journey for Shopify?',
+        answer:
+          'A journey is an event-driven WhatsApp sequence tied to Shopify data—abandoned checkout, order created, COD pending, or fulfillment—so each shopper gets the next message based on real store state, not a static broadcast list.',
+      },
+      {
+        question: 'How does TopEdge recover abandoned carts on WhatsApp?',
+        answer:
+          'Checkout-abandoned events start a Meta-gated sequence (typically 2–3 steps) with live line items and a checkout link. You can prioritize high-AOV carts and measure recovered ₹ per journey, not only sends.',
+      },
+      {
+        question: 'Can Journeys run COD confirmation before warehouse release?',
+        answer:
+          'Yes. Condition on payment method = COD, send a confirm / reschedule / cancel utility template, and only release pick/pack after a clear confirm—or follow your hold/cancel SOP on silence.',
+      },
+      {
+        question: 'Do journeys send before Meta templates are approved?',
+        answer:
+          'No. TopEdge gates live sends on APPROVED templates so drafts and rejected copy cannot go out and damage quality rating.',
+      },
+    ],
     seoTitle: 'WhatsApp Cart Recovery & COD Journeys for Shopify India | TopEdge',
     seoDescription:
       'Visual WhatsApp journey builder for Shopify India D2C: abandoned cart recovery, COD confirmation, Meta approval gating, and recovered-revenue attribution in ₹.',
@@ -633,9 +724,9 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
         detail: 'Attribution per journey, not vanity send counts',
       },
     ],
-    bentoTitle: 'The journey',
-    bentoAccent: 'engine',
-    bentoSub: 'A real builder with Meta gates and Shopify triggers, cart, COD, and shipping without custom code.',
+    bentoTitle: 'What powers the',
+    bentoAccent: 'journey engine?',
+    bentoSub: 'A real builder with Meta gates and Shopify triggers—cart, COD, and shipping without custom code.',
     bentos: [
       {
         titleLead: 'Drag-and-drop',
@@ -662,10 +753,10 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
         span: 'third',
       },
     ],
-    showcasesTitle: 'Journey',
-    showcasesAccent: 'use-cases',
+    showcasesTitle: 'Which journeys',
+    showcasesAccent: 'ship first?',
     showcasesSub:
-      'Abandoned cart, conditional COD/prepaid routes, and return-visit retargeting, one canvas, Meta-safe by default.',
+      'Abandoned cart, conditional COD/prepaid routes, and return-visit retargeting—one canvas, Meta-safe by default.',
     showcases: [
       {
         anchor: 'abandoned-cart',
@@ -693,12 +784,12 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
       },
     ],
 
-    stepsTitle: 'How a journey',
-    stepsAccent: 'ships',
+    stepsTitle: 'How does a journey',
+    stepsAccent: 'go live?',
     steps: [
       {
         title: 'Start from a Shopify event',
-        body: 'Checkout abandoned, order created, fulfillment, or COD pending, triggered off store webhooks, not a delayed batch.',
+        body: 'Checkout abandoned, order created, fulfillment, or COD pending—triggered off store webhooks, not a delayed batch.',
       },
       {
         title: 'Use a template or branch paths',
@@ -706,19 +797,20 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
       },
       {
         title: 'Gate on Meta approval',
-        body: 'Attach only APPROVED templates, drafts stay blocked so quality rating stays protected.',
+        body: 'Attach only APPROVED templates; drafts stay blocked so quality rating stays protected.',
       },
       {
         title: 'Publish and read recovered ₹',
         body: 'Watch sent → clicked → paid per journey, then tighten the steps that leak recovery revenue.',
       },
     ],
-    relatedTitle: 'Works with',
-    relatedAccent: 'store + inbox',
+    relatedTitle: 'Related in this',
+    relatedAccent: 'cluster',
     related: [
-      { label: 'Tracking pixel', href: '/features/analytics' },
-      { label: 'COD → Prepaid', href: '/features/journeys' },
-      { label: 'Audience CRM', href: '/features/audience-crm' },
+      { label: 'Cart recovery playbook', href: '/blog/whatsapp-abandoned-cart-recovery-shopify' },
+      { label: 'COD confirmation & RTO', href: '/blog/cod-confirmation-whatsapp-reduce-rto-shopify' },
+      { label: 'Meta templates', href: '/features/meta-manager' },
+      { label: 'Pricing', href: '/pricing' },
     ],
     ctaTitle: 'Build your first WhatsApp journey',
     ctaSub: 'Cart recovery, COD confirm, Meta gates, recovered ₹ you can show finance.',
@@ -733,6 +825,20 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     titleAccent: 'matched to WhatsApp',
     subtitle:
       'One-click Shopify embed for views, carts, and checkout.\nFeed journeys with consent-aware site intent.',
+    answerFirst:
+      'TopEdge Tracking Pixel is a one-click Shopify theme embed that captures product views, carts, and checkout intent, then matches events to WhatsApp numbers so Journeys and campaigns can fire while interest is still warm.',
+    faqs: [
+      {
+        question: 'Do I need a developer to install the pixel?',
+        answer:
+          'No. Enable the theme app embed from Shopify settings—no manual snippet paste for the standard install.',
+      },
+      {
+        question: 'How does the pixel help cart recovery?',
+        answer:
+          'Browse and cart events feed journey triggers and audiences (for example viewed 3×, never bought) when a WhatsApp number is already known or later attached at checkout.',
+      },
+    ],
     seoTitle: 'Shopify WhatsApp Tracking Pixel | TopEdge',
     seoDescription:
       'Shopify tracking pixel: theme embed, product and cart intent matched to WhatsApp, consent-aware events, and pixel health.',
@@ -845,6 +951,7 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
       { label: 'Cart recovery', href: '/features/journeys#abandoned-cart' },
       { label: 'Return & retarget', href: '/features/journeys#return-retarget' },
       { label: 'Audience campaigns', href: '/features/campaigns' },
+      { label: 'Cart recovery playbook', href: '/blog/whatsapp-abandoned-cart-recovery-shopify' },
     ],
     ctaTitle: 'Turn site intent into WhatsApp revenue',
     ctaSub: 'Theme embed, consent-aware events, and journeys that fire on real browse behavior.',
@@ -859,6 +966,25 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     titleAccent: 'order context',
     subtitle:
       'Reply with Shopify order context in one WhatsApp inbox.\nTake over from AI anytime, release when you are done.',
+    answerFirst:
+      'TopEdge Live Chat is a shared WhatsApp (and Instagram) inbox for Shopify India teams. Agents see order, COD, and cart context beside the thread, take over to pause automation, and reply free-text inside the 24h window or with Meta-approved templates outside it.',
+    faqs: [
+      {
+        question: 'Can agents see Shopify orders inside WhatsApp?',
+        answer:
+          'Yes. The contact panel shows order context next to the thread so agents do not ask for an order ID the system already knows—critical for COD disputes and WISMO.',
+      },
+      {
+        question: 'What happens when an agent takes over from AI?',
+        answer:
+          'Take control pauses Flow Builder and AI on that thread until the agent releases. Automation resumes on the next inbound after release.',
+      },
+      {
+        question: 'When can agents free-text vs use templates?',
+        answer:
+          'Inside 24 hours of the customer’s last message, free text is allowed. Outside that window, use a Meta-approved utility or marketing template.',
+      },
+    ],
     seoTitle: 'WhatsApp Shared Inbox for Shopify India | TopEdge',
     seoDescription:
       'WhatsApp and Instagram inbox for Shopify. Agents see the order, confirm COD, recover carts, and pause AI on takeover.',
@@ -889,9 +1015,9 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
         detail: 'Orders, tags, opt-in, jump to Audience',
       },
     ],
-    bentoTitle: 'Inbox built for',
-    bentoAccent: 'Shopify ops',
-    bentoSub: 'List left, thread center, contact panel right, agents answer with cart, COD, and order context.',
+    bentoTitle: 'Who is Live Chat',
+    bentoAccent: 'for?',
+    bentoSub: 'List left, thread center, contact panel right—agents answer with cart, COD, and order context.',
     bentos: [
       {
         titleLead: 'Thread +',
@@ -944,8 +1070,8 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
         imageLabel: 'Live Chat filters, assigned, open, needs help for Shopify support teams',
       },
     ],
-    stepsTitle: 'How a reply',
-    stepsAccent: 'gets done',
+    stepsTitle: 'How does a reply',
+    stepsAccent: 'get done?',
     steps: [
       {
         title: 'Open the thread',
@@ -964,12 +1090,13 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
         body: 'Use Customer 360 for orders and tags, then resolve the ticket or route to a teammate.',
       },
     ],
-    relatedTitle: 'Works with',
-    relatedAccent: 'AI + flows',
+    relatedTitle: 'Related in this',
+    relatedAccent: 'cluster',
     related: [
-      { label: 'AI Brain', href: '/features/ai-brain' },
-      { label: 'Flow Builder', href: '/features/flow-builder' },
+      { label: 'Shared inbox playbook', href: '/blog/whatsapp-shared-inbox-shopify-order-context' },
+      { label: 'AI Brain (BYOK)', href: '/features/ai-brain' },
       { label: 'Chat rules', href: '/features/chat-rules' },
+      { label: 'Journeys', href: '/features/journeys' },
     ],
     ctaTitle: 'Put support next to the Shopify order',
     ctaSub: 'Connect WhatsApp, publish a flow, and answer with order context. Takeover pauses AI instantly.',
@@ -984,6 +1111,25 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     titleAccent: 'own API keys',
     subtitle:
       'Bring your own OpenAI or Claude keys.\nGround replies in catalog and policies, takeover pauses AI.',
+    answerFirst:
+      'TopEdge AI Brain is bring-your-own-key WhatsApp AI for Shopify India. Connect OpenAI, Claude, or Gemini, ground replies in store knowledge and policies, route with Intent Detect, and pause AI instantly when Live Chat takes over—so spend stays on your provider bill.',
+    faqs: [
+      {
+        question: 'What is BYOK AI Brain on WhatsApp for Shopify?',
+        answer:
+          'BYOK means you bring your own OpenAI, Claude, or Gemini API key. TopEdge grounds replies in catalog and policy knowledge, while tokens and model spend stay on your provider account.',
+      },
+      {
+        question: 'Does Live Chat takeover stop the AI?',
+        answer:
+          'Yes. When an agent takes control, AI and Flow Builder pause on that thread until release—so humans and bots never talk over each other.',
+      },
+      {
+        question: 'Can AI invent prices or stock?',
+        answer:
+          'It should not. Load store knowledge and policies first, keep Quick FAQs for rigid answers, and escalate disputes to Live Chat with order context.',
+      },
+    ],
     seoTitle: 'WhatsApp AI for Shopify India | BYOK | TopEdge',
     seoDescription:
       'Bring your own OpenAI or Claude key. Ground WhatsApp replies in store knowledge, route with Intent Detect, and pause AI on takeover.',
@@ -995,9 +1141,9 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
       alt: 'TopEdge AI Brain, WhatsApp AI on your own OpenAI or Claude API keys for Shopify',
       glow: 'violet',
     },
-    bentoTitle: 'Intelligence',
-    bentoAccent: 'you control',
-    bentoSub: 'Knowledge grounds answers. Persona sets voice. Bring your own key (OpenAI, Claude, or Gemini), spend stays on your provider bill.',
+    bentoTitle: 'What does AI Brain',
+    bentoAccent: 'control?',
+    bentoSub: 'Knowledge grounds answers. Persona sets voice. Bring your own key (OpenAI, Claude, or Gemini)—spend stays on your provider bill.',
     bentos: [
       {
         titleLead: 'Store',
@@ -1050,8 +1196,8 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
         imageLabel: 'Intent Detect live routing into Flow Builder or Live Chat for WhatsApp',
       },
     ],
-    stepsTitle: 'How the brain',
-    stepsAccent: 'goes live',
+    stepsTitle: 'How does the brain',
+    stepsAccent: 'go live?',
     steps: [
       {
         title: 'Add your key',
@@ -1070,9 +1216,10 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
         body: 'Powers Live Chat fallback and Flow AI nodes, Live Chat takeover pauses AI instantly.',
       },
     ],
-    relatedTitle: 'Works with',
-    relatedAccent: 'inbox + flows',
+    relatedTitle: 'Related in this',
+    relatedAccent: 'cluster',
     related: [
+      { label: 'AI chatbot playbook', href: '/blog/ai-whatsapp-chatbot-for-shopify-india' },
       { label: 'Intent detection', href: '/features/intent-detection' },
       { label: 'Live Chat', href: '/features/live-chat' },
       { label: 'Flow Builder', href: '/features/flow-builder' },
@@ -1090,6 +1237,25 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     titleAccent: 'before anything sends',
     subtitle:
       'Templates, Blueprints, catalog, and QR in one place.\nOnly APPROVED copy ever reaches Journeys and campaigns.',
+    answerFirst:
+      'TopEdge Meta Manager is where Shopify India teams submit, track, and approve WhatsApp Cloud API templates. Only APPROVED utility and marketing copy reaches Journeys and campaigns—plus blueprints for cart/COD, catalog sync, and wa.me QR.',
+    faqs: [
+      {
+        question: 'Why gate WhatsApp journeys on Meta approval?',
+        answer:
+          'Sending unapproved templates risks rejects and quality rating damage. Meta Manager keeps draft/pending/approved status visible and blocks live sends until Meta greens the template.',
+      },
+      {
+        question: 'What template categories matter for Shopify India?',
+        answer:
+          'Utility covers transactional COD, order, and shipping messages. Marketing covers promos and cart recovery offers. Keep categories honest—Meta reviews content against the chosen category.',
+      },
+      {
+        question: 'Where do approved templates get used?',
+        answer:
+          'Pick APPROVED templates in Journeys, Flow Builder, Campaigns, and Live Chat composer when outside the 24h customer care window.',
+      },
+    ],
     seoTitle: 'Meta WhatsApp Templates for Shopify India | Approvals',
     seoDescription:
       'Submit, track, and approve Meta WhatsApp templates for Shopify India, utility and marketing categories, Journey blueprints for cart and COD, catalog and wa.me QR.',
@@ -1175,8 +1341,8 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
         imageLabel: 'WhatsApp catalog import and wa.me QR code download for Shopify',
       },
     ],
-    stepsTitle: 'How a template',
-    stepsAccent: 'goes Approved',
+    stepsTitle: 'How does a template',
+    stepsAccent: 'get Approved?',
     steps: [
       {
         title: 'Create in Library',
@@ -1195,12 +1361,13 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
         body: 'Pick Approved templates in Journeys, Flow Builder, or Campaigns, never silent sends on rejected rows.',
       },
     ],
-    relatedTitle: 'Works with',
-    relatedAccent: 'sends',
+    relatedTitle: 'Related in this',
+    relatedAccent: 'cluster',
     related: [
-      { label: 'Audience campaigns', href: '/features/campaigns' },
+      { label: 'Meta templates guide', href: '/blog/meta-whatsapp-cloud-api-shopify-templates' },
+      { label: 'API pricing India', href: '/blog/whatsapp-business-api-pricing-india' },
       { label: 'WhatsApp journeys', href: '/features/journeys' },
-      { label: 'Cart recovery', href: '/features/journeys#abandoned-cart' },
+      { label: 'Campaigns', href: '/features/campaigns' },
     ],
     ctaTitle: 'Own every Meta approval',
     ctaSub: 'Submit templates, sync status, and only blast what Meta already greenlit.',
@@ -1215,6 +1382,20 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     titleAccent: 'to the right people',
     subtitle:
       'Route COD, refunds, and VIP chats to the right people.\nKeep Live Chat calm when volume spikes.',
+    answerFirst:
+      'TopEdge Chat Rules auto-route WhatsApp conversations for Shopify India teams—COD, refunds, and VIP queues—so the right people own the thread while Live Chat stays calm when volume spikes.',
+    faqs: [
+      {
+        question: 'What can chat rules match on?',
+        answer:
+          'Keywords and intent signals (for example COD, refund, VIP). Matched chats assign to the right queue or teammate before a human digs through the full inbox.',
+      },
+      {
+        question: 'Do rules work with AI takeover?',
+        answer:
+          'Yes. Routing lands the chat correctly; Live Chat takeover still pauses AI/flows when an agent takes control.',
+      },
+    ],
     seoTitle: 'WhatsApp Chat Rules for Shopify India | Auto-Route',
     seoDescription:
       'Route WhatsApp conversations for Shopify India teams, keyword and intent rules for COD, refunds, and VIP assignment. Works with Live Chat takeover that pauses AI.',
@@ -1324,8 +1505,9 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     relatedAccent: 'inbox + AI',
     related: [
       { label: 'Live Chat', href: '/features/live-chat' },
-      { label: 'AI Brain', href: '/features/ai-brain' },
-      { label: 'Audience CRM', href: '/features/audience-crm' },
+      { label: 'Intent detection', href: '/features/intent-detection' },
+      { label: 'COD confirmation', href: '/blog/cod-confirmation-whatsapp-reduce-rto-shopify' },
+      { label: 'Shared inbox playbook', href: '/blog/whatsapp-shared-inbox-shopify-order-context' },
     ],
     ctaTitle: 'Keep Live Chat calm at peak',
     ctaSub: 'Route COD and VIP correctly, then let agents finish with Shopify order context.',
@@ -1340,6 +1522,20 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     titleAccent: '→ DM',
     subtitle:
       'Turn comments and story mentions into Instagram or WhatsApp DMs.\nContinue in Live Chat with Shopify context.',
+    answerFirst:
+      'TopEdge Instagram automation turns comments and story mentions into Instagram or WhatsApp DMs for Shopify brands, then continues the conversation in Live Chat with order context—built for drops and price questions while interest is hot.',
+    faqs: [
+      {
+        question: 'Can Instagram chats continue on WhatsApp?',
+        answer:
+          'Yes. Comment-to-DM can land on Instagram or WhatsApp depending on your setup, then agents continue in the shared Live Chat inbox.',
+      },
+      {
+        question: 'Who is IG automation for?',
+        answer:
+          'Shopify D2C teams running drop launches, price Q&A in comments, and story mentions that should become sales or support threads fast.',
+      },
+    ],
     seoTitle: 'Instagram to WhatsApp Automation for Shopify | Comment-to-DM',
     seoDescription:
       'Turn Instagram comments and stories into WhatsApp DMs for Shopify India, comment-to-DM automation for drops, price questions, and Live Chat handoff.',
@@ -1449,8 +1645,9 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     relatedAccent: 'inbox + Meta',
     related: [
       { label: 'Live Chat', href: '/features/live-chat' },
-      { label: 'Meta Manager', href: '/features/meta-manager' },
-      { label: 'Audience campaigns', href: '/features/campaigns' },
+      { label: 'Opt-in tools', href: '/features/opt-in-tools' },
+      { label: 'Campaigns', href: '/features/campaigns' },
+      { label: 'Chat rules', href: '/features/chat-rules' },
     ],
     ctaTitle: 'Turn IG comments into conversations',
     ctaSub: 'Automate the first DM, then close in Live Chat with Shopify context.',
@@ -1465,6 +1662,20 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     titleAccent: 'workspace',
     subtitle:
       'Warranty records tied to Shopify orders in one hub.\nAssign, track, and close, no spreadsheet chase.',
+    answerFirst:
+      'TopEdge Warranty is a digital warranty workspace for Shopify India brands. Tie claims to orders, assign teammates, and track status in one hub—beside WhatsApp Live Chat—instead of chasing spreadsheets.',
+    faqs: [
+      {
+        question: 'Can warranty tickets sit next to WhatsApp?',
+        answer:
+          'Yes. Ops assign and close warranty work in-product while continuing customer care in Live Chat with the same order context.',
+      },
+      {
+        question: 'Who is warranty for?',
+        answer:
+          'India D2C brands that sell products needing post-purchase warranty tracking without a separate spreadsheet workflow.',
+      },
+    ],
     seoTitle: 'Digital Warranty for Shopify India | Assign & Track',
     seoDescription:
       'Warranty workspace for Shopify India brands: hub list with status badges, unassigned queue, and assign to orders or teammates beside WhatsApp Live Chat.',
@@ -1529,9 +1740,10 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     relatedTitle: 'Works with',
     relatedAccent: 'CRM + Meta',
     related: [
-      { label: 'Audience CRM', href: '/features/audience-crm' },
-      { label: 'Meta Manager', href: '/features/meta-manager' },
       { label: 'Live Chat', href: '/features/live-chat' },
+      { label: 'Audience CRM', href: '/features/audience-crm' },
+      { label: 'Profit & costs', href: '/features/profit-loss' },
+      { label: 'Customers', href: '/customers' },
     ],
     ctaTitle: 'Run warranty without a spreadsheet',
     ctaSub: 'Hub list, unassigned queue, and manual assign, tied to Shopify orders.',
@@ -1546,6 +1758,20 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     titleAccent: 'what did I keep?',
     subtitle:
       'India-aware P&L with COGS, COD, RTO, fees, and ads.\nSee net profit, not vanity revenue.',
+    answerFirst:
+      'TopEdge Profit & costs is India-aware Shopify P&L for D2C: COGS, packaging, payment fees, COD/RTO, and ads in a cost waterfall so you see net profit in ₹—not vanity revenue.',
+    faqs: [
+      {
+        question: 'What costs does the P&L include?',
+        answer:
+          'Product COGS, packaging, payment fees, COD/RTO leakage, and marketing—assembled into net profit after Indian D2C realities.',
+      },
+      {
+        question: 'Is this WhatsApp messaging?',
+        answer:
+          'No. It is unit-economics analytics that sits beside WhatsApp growth so teams do not optimize send volume while losing money on COD returns.',
+      },
+    ],
     seoTitle: 'Shopify P&L Analytics India | COGS, COD & Net Profit',
     seoDescription:
       'TopEdge Profit & costs for Shopify India D2C: COGS, packaging, payment fees, COD RTO, marketing, true net profit with a cost waterfall and product margins in ₹.',
@@ -1635,9 +1861,10 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     relatedTitle: 'Works with',
     relatedAccent: 'growth',
     related: [
-      { label: 'Audience campaigns', href: '/features/campaigns' },
+      { label: 'COD confirmation', href: '/blog/cod-confirmation-whatsapp-reduce-rto-shopify' },
       { label: 'Cart recovery', href: '/features/journeys#abandoned-cart' },
       { label: 'Audience CRM', href: '/features/audience-crm' },
+      { label: 'Pricing', href: '/pricing' },
     ],
     ctaTitle: 'See what you kept after costs',
     ctaSub: 'India-aware P&L, COGS, COD, RTO, ads, honest net ₹, not vanity revenue.',
@@ -1652,6 +1879,20 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     titleAccent: 'what they mean',
     subtitle:
       'Detect shipping, returns, COD, and human handoff intent.\nRoute flows before you spend AI tokens.',
+    answerFirst:
+      'TopEdge Intent Detection routes WhatsApp chats by meaning—shipping, returns, COD, handoff—before you spend AI tokens. Train real phrases (including Hinglish), then start a Flow, reply, assign, or escalate with confidence.',
+    faqs: [
+      {
+        question: 'Does intent detection replace AI Brain?',
+        answer:
+          'No. It sits in front: cheap phrase matching routes obvious intents; AI Brain handles harder questions when a model call is worth it.',
+      },
+      {
+        question: 'Can intents escalate to Live Chat?',
+        answer:
+          'Yes. Configure handoff intents to assign humans, and Live Chat takeover still pauses bots on that thread.',
+      },
+    ],
     seoTitle: 'WhatsApp Intent Detection for Shopify India | TopEdge',
     seoDescription:
       'Route shipping, returns, COD, and handoff on WhatsApp before you spend AI tokens. Works with AI Brain and Live Chat.',
@@ -1745,6 +1986,7 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
       { label: 'AI Brain', href: '/features/ai-brain' },
       { label: 'Flow Builder', href: '/features/flow-builder' },
       { label: 'Live Chat', href: '/features/live-chat' },
+      { label: 'Chat rules', href: '/features/chat-rules' },
     ],
     ctaTitle: 'Route WhatsApp by intent, save AI for hard questions',
     ctaSub: 'Match shipping, returns, and COD phrases first. Pair with AI Brain when shoppers need catalog answers.',

@@ -5,6 +5,7 @@ import {
   INTERAKT_PAIRWISE_MATRIX,
   DONDYY_PAIRWISE_MATRIX,
   KANAL_PAIRWISE_MATRIX,
+  UPDATRR_PAIRWISE_MATRIX,
   WATI_PAIRWISE_MATRIX,
   ZOKO_PAIRWISE_MATRIX,
 } from './compareFeatureMatrix';
@@ -1394,8 +1395,117 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
       },
     ],
     related: [
+      { label: 'Dondy alternative (markup)', href: '/blog/dondy-alternative-shopify-india' },
+      { label: 'Best WhatsApp tools India', href: '/blog/best-whatsapp-automation-tools-shopify-india' },
       { label: 'Alternatives index', href: '/compare/alternatives' },
-      { label: 'vs Kanal', href: '/compare/kanal' },
+      { label: 'vs Updatrr', href: '/compare/updatrr' },
+      { label: 'API pricing India', href: '/blog/whatsapp-business-api-pricing-india' },
+      { label: 'TopEdge pricing', href: '/pricing' },
+    ],
+  },
+
+  updatrr: {
+    slug: 'updatrr',
+    name: 'Updatrr',
+    shortName: 'Updatrr',
+    website: 'https://updatrr.com/',
+    logo: '/marketing/compare/compare-logo-updatrr.svg',
+    logoAlt: 'Updatrr logo',
+    accent: '#ea580c',
+    brandTag: 'Shopify-only WhatsApp automation',
+    title: 'TopEdge vs Updatrr (2026) | Web WhatsApp Growth OS vs Shopify App',
+    description:
+      'Compare TopEdge vs Updatrr: web-based vs Shopify-only, BYOK AI vs per-conversation AI, visitor identity pixel, unified identity, warranty, and unlimited flows.',
+    keywords:
+      'TopEdge vs Updatrr, Updatrr alternative India, Updatrr WhatsApp Shopify, Updatrr pricing, TopEdge vs Updatrr COD prepaid, Updatrr AI conversation cost',
+    h1: 'TopEdge vs Updatrr',
+    subtitle: 'TopEdge AI vs Updatrr for Shopify WhatsApp ecommerce.',
+    answerFirst:
+      'Pick TopEdge AI for a web-based WhatsApp growth OS with BYOK AI (~₹0.10–₹0.30 / response), visitor identity pixel, unified identity, warranty automation, in-chat order edits, and unlimited flows. Pick Updatrr if you want a Shopify-only app with a 7-day trial from ~$19.99 and native COD confirmation tied to Shopify events.',
+    whoForTopEdge:
+      'You want platform-independent CRM identity, pre-checkout capture, BYOK AI costs, warranty + order modification, and unlimited flow execution on every plan.',
+    whoForCompetitor:
+      'You are Shopify-only and prefer Updatrr’s native abandoned-checkout / COD reminder stack with Meta fees billed alongside the app subscription.',
+    positioning:
+      'Updatrr is a Shopify-only WhatsApp automation app. TopEdge is a web-based WhatsApp growth OS that still connects Shopify and third-party checkouts. The gap shows up in AI cost model, identity resolution, pixel capture, warranty, and self-serve order edits.',
+    differentiators: [
+      {
+        title: 'Web-based, not Shopify-locked',
+        body: 'TopEdge runs as web software with Shopify and 3rd-party checkout support. Updatrr works only on Shopify.',
+      },
+      {
+        title: 'BYOK AI vs per-conversation AI',
+        body: 'TopEdge BYOK + RAG is ~₹0.10–₹0.30 per response. Updatrr uses per-conversation / plan-based AI fees (~₹4.50 per AI conversation).',
+      },
+      {
+        title: 'Identity before and after checkout',
+        body: 'Visitor identity pixel + native dedupe and identity resolution. Updatrr relies on Shopify abandoned checkout and default contact sync.',
+      },
+      {
+        title: 'Warranty and in-chat order edits',
+        body: 'Built-in warranty batches and fulfillment-locked order modification. Updatrr does not support those as native self-serve automation.',
+      },
+    ],
+    matrix: UPDATRR_PAIRWISE_MATRIX.map(({ label, description, topedge, competitor }) => ({
+      label,
+      description,
+      topedge,
+      competitor,
+    })),
+    matrixNote:
+      'Capability board uses TopEdge product positioning vs publicly described Updatrr Shopify-app patterns. Confirm live plan limits, AI fees, and Meta billing on updatrr.com and apps.shopify.com/prizma-updatrr before purchase.',
+    researchAsOf: 'Sep 2026',
+    competitorPlans: [
+      {
+        name: 'Growth',
+        price: 'from $19.99/mo',
+        note: '7-day free trial · ~₹1,900 · Meta fees alongside app',
+        highlights: ['Abandoned cart reminders', 'COD confirmation', 'Broadcasts', 'Brand WhatsApp number'],
+        popular: true,
+      },
+      {
+        name: 'Pro',
+        price: 'from $39.99/mo',
+        note: 'No-code chatbot · WhatsApp commerce',
+        highlights: ['Abandoned browse', 'Review / repeat purchase', 'Team inbox', 'Conversion tracking'],
+      },
+      {
+        name: 'Pro AI',
+        price: 'from $99.99/mo',
+        note: 'AI chatbot + voice calling',
+        highlights: ['AI chatbot with handover', 'AI voice calling', 'Mobile apps', 'Premium support'],
+      },
+    ],
+    topedgePlansNote:
+      'TopEdge: 14-day free trial, then plans from ~₹1,800/mo with BYOK AI, unlimited flow execution, and 0% WhatsApp API platform markup — Meta billed on your Meta Business Account.',
+    pricingCaveat:
+      'Updatrr public pricing (Shopify App Store / updatrr.com) commonly lists Growth from $19.99/mo (~₹1,900) with a 7-day free trial; site INR cards may show Growth ~₹1,799/mo. Meta conversation fees apply alongside the subscription. Verify live before purchase.',
+    faqs: [
+      {
+        question: 'Is Updatrr only for Shopify?',
+        answer:
+          'Yes — Updatrr works only on Shopify. TopEdge is web-based software with Shopify and third-party checkout compatibility (e.g. GoKwik, Razorpay).',
+      },
+      {
+        question: 'How do AI message costs compare?',
+        answer:
+          'TopEdge uses Bring Your Own Key (BYOK) with a built-in RAG pipeline (est. ~₹0.10–₹0.30 per AI response depending on model). Updatrr uses a per-conversation pricing model (est. ~₹4.50 per AI conversation / plan-based usage fees).',
+      },
+      {
+        question: 'Does Updatrr support warranty or in-chat order edits?',
+        answer:
+          'Not as native self-serve automation on the public feature set used for this board. TopEdge includes automated warranty batches on the unified profile and in-chat order modification with fulfillment/time locks.',
+      },
+      {
+        question: 'Who should pick TopEdge over Updatrr?',
+        answer:
+          'Teams that want web-based software, visitor identity pixel, unified identity + dedupe, BYOK AI economics, warranty, journey builder with dedupe enrollment, and unlimited flow execution. Pick Updatrr if Shopify-only native abandoned-checkout / COD reminders are enough.',
+      },
+    ],
+    related: [
+      { label: 'All comparisons', href: '/compare' },
+      { label: 'Alternatives index', href: '/compare/alternatives' },
+      { label: 'vs Dondy', href: '/compare/dondy' },
       { label: 'vs Bitespeed', href: '/compare/bitespeed' },
       { label: 'vs Zoko', href: '/compare/zoko' },
       { label: 'TopEdge pricing', href: '/pricing' },

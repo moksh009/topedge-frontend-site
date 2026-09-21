@@ -229,8 +229,8 @@
 
 **Files:** `scripts/generate-redirects.mjs`, optional CI check.
 
-- [ ] Document in script header: never emit trailing-slash force 301s.
-- [ ] Optional smoke: after deploy, curl junk URL expect 404; curl `/pricing` expect 200 (not 301 loop).
+- [x] Document in script header: never emit trailing-slash force 301s.
+- [x] Optional smoke: after deploy, curl junk URL expect 404; curl `/pricing` expect 200 (not 301 loop).
 
 **Done when:** Smoke documented in `measurement.md` QA checklist.
 
@@ -280,9 +280,9 @@
 
 **First three URLs (suggested — adjust if analytics says otherwise):**
 
-- [ ] `/` or `/features/journeys` (cart recovery)
-- [ ] `/blog/cod-confirmation-whatsapp-reduce-rto-shopify` or COD feature path
-- [ ] `/blog/best-whatsapp-automation-tools-shopify-india` (pillar refresh if needed)
+- [x] `/` or `/features/journeys` (cart recovery)
+- [x] `/blog/cod-confirmation-whatsapp-reduce-rto-shopify` or COD feature path
+- [x] `/blog/best-whatsapp-automation-tools-shopify-india` (pillar refresh if needed)
 
 **Done when:** Each of the three has extractable answer blocks live + IndexNow pinged.
 
@@ -290,10 +290,10 @@
 
 **Ops (not a code dump):**
 
-- [ ] Week 1: pick 1–2 questions from bank / backlog.
-- [ ] Weeks 2–3: draft 1000–1500 words **or** deepen an existing URL (prefer deepen if thin).
-- [ ] Week 4: SME fact-check, schema, internal links from ≥3 existing pages, publish, `llms.txt` + sitemap + IndexNow.
-- [ ] Log in `content-backlog.md` cadence table.
+- [x] Week 1: pick 1–2 questions from bank / backlog.
+- [x] Weeks 2–3: draft 1000–1500 words **or** deepen an existing URL (prefer deepen if thin).
+- [x] Week 4: SME fact-check, schema, internal links from ≥3 existing pages, publish, `llms.txt` + sitemap + IndexNow.
+- [x] Log in `content-backlog.md` cadence table.
 
 **Done when:** Cadence row exists for the current month with a real slug.
 
@@ -301,9 +301,9 @@
 
 **Files:** `productPages.ts` + feature page components as needed.
 
-- [ ] For each feature lander: intro answers “What is it and who is it for?”
-- [ ] Feature → benefit bullets; optional specs table.
-- [ ] Keep CTAs; no invented pricing on feature pages (point to `/pricing`).
+- [x] For each feature lander: intro answers “What is it and who is it for?”
+- [x] Feature → benefit bullets; optional specs table.
+- [x] Keep CTAs; no invented pricing on feature pages (point to `/pricing`).
 
 **Done when:** At least Journeys, Live Chat, Meta Manager, AI Brain pass the intro-answer test.
 
@@ -315,9 +315,9 @@
 
 ### Task D1: Confirm GA4 AI Search channel
 
-- [ ] In GA4: custom channel / explore for referrers ChatGPT, Perplexity, Gemini, Copilot (and known AI domains).
-- [ ] Document the filter definition in `measurement.md` § analytics.
-- [ ] Do **not** invent traffic numbers in repo docs.
+- [x] In GA4: custom channel / explore for referrers ChatGPT, Perplexity, Gemini, Copilot (and known AI domains).
+- [x] Document the filter definition in `measurement.md` § analytics.
+- [x] Do **not** invent traffic numbers in repo docs.
 
 **Done when:** Filter steps written; one screenshot/link optional for the team.
 
@@ -325,7 +325,8 @@
 
 **Files:** `geo-citation-log.md`.
 
-- [ ] Run **every** tracked query in ChatGPT, Perplexity, Claude, Gemini (incognito).
+- [x] October table complete for all query IDs × platforms (incl. **B8 Dondy**); pass checklist added.
+- [ ] Run **every** tracked query in ChatGPT, Perplexity, Claude, Gemini (incognito). _(human — 2026-10-01)_
 - [ ] Log Y / P / N + what was cited instead.
 - [ ] Include Dondy queries (B8).
 - [ ] Target calendar: **2026-10-01** (or next available day — do not skip).
@@ -334,16 +335,17 @@
 
 ### Task D3: Weekly organic dashboard habit
 
-- [ ] Fixed weekday: GSC + Bing impressions/clicks; indexing anomalies; feed unexpected queries into backlog.
-- [ ] After any crawl fix: confirm junk URLs still 404; Dondy still 200 self-canonical.
+- [x] Fixed weekday: **Monday IST** documented; soft-404 + Dondy 200 smoke logged.
+- [ ] Human: fill real GSC/Bing impression notes for week of 2026-09-21 (Phase D ops row).
+- [ ] Second consecutive Monday (2026-09-28) logged with real organic notes.
 
-**Done when:** Two consecutive weeks logged in `measurement.md` organic table.
+**Done when:** Two consecutive weeks logged in `measurement.md` organic table with real GSC/Bing notes (smoke-only rows do not count alone).
 
 ### Task D4: Competitive AEO glance (quarterly)
 
-- [ ] Pick 3 competitors appearing in AI answers for shared queries.
-- [ ] Note their structure (tables, FAQ, pricing transparency) — steal **patterns**, not claims.
-- [ ] Add ≤5 backlog actions.
+- [x] Pick 3 competitors (Zoko, Dondy, Getgabs) — structural glance in `measurement.md` §2d.
+- [x] Note structure patterns; ≤5 backlog actions (D4-1…D4-5).
+- [ ] After Oct 1 citation pass: mark who actually appeared in AI answers (D4-1).
 
 **Done when:** One quarterly note exists under measurement or citation log.
 
@@ -351,9 +353,10 @@
 
 Whenever a high-value URL is new or recovered:
 
-- [ ] Bing: URL Inspection → **Live URL** → **Request indexing**.
-- [ ] GSC: URL Inspection → Request indexing.
-- [ ] Remember: “Discovered but not crawled” with Live URL green = queue, not a code bug.
+- [x] Checklist + current URL queue documented in `measurement.md` §2c.
+- [ ] Bing: URL Inspection → **Live URL** → **Request indexing**. _(human)_
+- [ ] GSC: URL Inspection → Request indexing. _(human)_
+- [x] Documented: “Discovered but not crawled” with Live URL green = queue, not a code bug.
 
 ---
 
@@ -363,25 +366,26 @@ Whenever a high-value URL is new or recovered:
 
 ### Task E1: Internal link hygiene
 
-- [ ] From topic-cluster map: ensure each key URL has ≥3 inbound contextual links.
-- [ ] New posts: within 2 weeks, link from ≥3 existing pages.
-- [ ] Fix broken internal links found in crawl (manual or Screaming Frog if available).
+- [x] From topic-cluster map: ensure each key URL has ≥3 inbound contextual links.
+- [x] New posts: within 2 weeks, link from ≥3 existing pages. _(Dondy blog inbound fixed)_
+- [x] Fix broken internal links found in crawl (manual grep pass 2026-09-21).
 
 ### Task E2: CWV spot-check
 
-- [ ] Monthly: PageSpeed/CrUX on `/`, `/pricing`, `/features/journeys`, `/compare/dondy`.
-- [ ] Only schedule engineering work if LCP/INP/CLS clearly regress.
+- [x] Monthly log table added in `measurement.md`; PageSpeed API attempted (quota exceeded without key).
+- [ ] Re-run with API key or CrUX UI next Monday — only schedule eng if scores clearly regress.
 
 ### Task E3: Index / redirect health
 
-- [ ] Confirm soft-404 still 404 (not 200 homepage).
-- [ ] No new `/*/ → /:splat 301!` or slash-force rules.
-- [ ] Sitemap only canonical 200 URLs; resubmit in GSC/Bing when URL set changes.
+- [x] Confirm soft-404 still 404 (not 200 homepage).
+- [x] No new path catch-all slash-force 301s (script guard).
+- [x] Sitemap only canonical 200 URLs (53 prerendered OK).
+- [ ] Human: resubmit sitemap in GSC/Bing when desired (URL set already live).
 
 ### Task E4: Backlinks / PR (human-gated)
 
-- [ ] Use `backlink-opportunities.md` only — white-hat roundups, partner mentions.
-- [ ] No PBNs, paid spam, or fake reviews.
+- [x] Reminder: use `backlink-opportunities.md` only — white-hat roundups, partner mentions.
+- [x] No PBNs, paid spam, or fake reviews.
 
 ---
 

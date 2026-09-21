@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import MarketingSEO from '../components/MarketingSEO';
 import MarketingPage from '../components/MarketingPage';
 import MarketingCtaBand from '../components/MarketingCtaBand';
@@ -109,6 +109,8 @@ function ProductFeatureView({ page }: { page: ProductPage }) {
   const location = useLocation();
   const fullTitle = `${page.title} ${page.titleAccent}`.replace(/\s+/g, ' ').trim();
   const hasShowcases = Boolean(page.showcases?.length);
+  const hasFaqs = Boolean(page.faqs?.length);
+  const hasRelated = Boolean(page.related?.length);
   const modifiedIso = featurePagesModifiedIso();
 
   useEffect(() => {
@@ -128,6 +130,7 @@ function ProductFeatureView({ page }: { page: ProductPage }) {
         keywords={page.keywords}
         path={page.path}
         noSuffix
+        faqSchema={page.faqs}
         jsonLd={[
           organizationJsonLd(),
           webPageJsonLd({
@@ -158,6 +161,9 @@ function ProductFeatureView({ page }: { page: ProductPage }) {
               </span>
             ))}
           </p>
+          {page.answerFirst ? (
+            <p className="mkt-pf__answer">{page.answerFirst}</p>
+          ) : null}
           <div className="mkt-pf__trust">
             <HomeTrust onStage />
           </div>
@@ -211,7 +217,7 @@ function ProductFeatureView({ page }: { page: ProductPage }) {
         ) : null}
 
         <section
-          className="mkt-pf__section mkt-pf__section--last mkt-pf__section--steps"
+          className={`mkt-pf__section mkt-pf__section--steps${!(hasFaqs || hasRelated) ? ' mkt-pf__section--last' : ''}`}
           aria-labelledby="mkt-pf-steps"
         >
           <div className="mkt-pf__head">
@@ -233,6 +239,44 @@ function ProductFeatureView({ page }: { page: ProductPage }) {
             ))}
           </ol>
         </section>
+
+        {hasFaqs ? (
+          <section className="mkt-pf__section mkt-pf__section--faq" aria-labelledby="mkt-pf-faq">
+            <div className="mkt-pf__head">
+              <h2 id="mkt-pf-faq" className="mkt-pf__head-title">
+                Common <span>questions</span>
+              </h2>
+            </div>
+            <div className="mkt-pf__faq">
+              {page.faqs!.map((f) => (
+                <details key={f.question} className="mkt-pf__faq-item">
+                  <summary>{f.question}</summary>
+                  <p>{f.answer}</p>
+                </details>
+              ))}
+            </div>
+          </section>
+        ) : null}
+
+        {hasRelated ? (
+          <section
+            className={`mkt-pf__section mkt-pf__section--related${hasFaqs ? '' : ''} mkt-pf__section--last`}
+            aria-labelledby="mkt-pf-related"
+          >
+            <div className="mkt-pf__head">
+              <h2 id="mkt-pf-related" className="mkt-pf__head-title">
+                {page.relatedTitle} <span>{page.relatedAccent}</span>
+              </h2>
+            </div>
+            <div className="mkt-pf__related">
+              {page.related.map((r) => (
+                <Link key={r.href} to={r.href} className="mkt-pf__related-link">
+                  {r.label}
+                </Link>
+              ))}
+            </div>
+          </section>
+        ) : null}
 
         <MarketingCtaBand
           title={page.ctaTitle}

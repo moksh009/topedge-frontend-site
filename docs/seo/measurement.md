@@ -25,20 +25,26 @@ Related trackers (same `docs/seo/` folder — do not invent a second tooling hom
 - **Bing Webmaster Tools** — same query watch; Bing also matters because it partially feeds ChatGPT/Copilot retrieval
 - **IndexNow** (Bing / Yandex / Seznam / Naver) — ping when URLs are added or fixed. Key at `/db2d3b12e5f047e48445607a75862b1f.txt`. Submit after deploy: `npm run indexnow -- --dondy` or `--changed`. **Google does not use IndexNow** — still use GSC URL Inspection for Google. Setup: [Bing IndexNow get started](https://www.bing.com/indexnow/getstarted)
 
-### Weekly habit (pick a fixed weekday)
+### Weekly habit (**fixed: Monday IST**)
+
+Lock this weekday so the habit survives. Skip a Monday → do Tuesday; do not invent two weeks of silence.
 
 1. Open GSC → Performance → filter or scan the [tracked query list](./geo-citation-log.md#tracked-query-list).
-2. Note: impressions, clicks, average position for any query that moved ± meaningfully.
-3. Check Indexing: is “Discovered — not indexed” still clearing after the Phase 1 sitemap / redirect fix?
+2. Note: impressions, clicks, average position for any query that moved ± meaningfully (**real GSC numbers only**).
+3. Check Indexing: “Discovered — not indexed” / soft-404 regressions.
 4. Repeat the same query glance in Bing Webmaster Tools.
-5. **Impressions for queries a page was not built for** → add a row to [`content-backlog.md`](./content-backlog.md) (new post or new compare), do not leave them in chat memory.
+5. Run soft-404 smoke (§4) after any crawl/redirect deploy.
+6. **Impressions for queries a page was not built for** → add a row to [`content-backlog.md`](./content-backlog.md).
+7. Glance GA4 AI referrals (§2b) — one line if non-zero.
 
 ### Organic check log (brief)
 
 | Week of | GSC note (1–2 lines) | Bing note | Indexing / discovered-not-indexed | Fed backlog? |
 |---|---|---|---|---|
 | 2026-09-21 | Phase A+B meta gate live | Deployed fail-closed prerender budgets + schema; OG image alt/dims; blog article times; soft-404; CCBot + GoogleOther in robots; `npm run seo:audit`. Topic clusters + question bank docs. IndexNow `--changed`. **Manual still owed:** Bing/GSC Request indexing for Dondy URLs. | Confirm Live URL green for Dondy; start citation baseline Oct 1 | Phase C3 AEO rewrites next |
-| | | | | |
+| 2026-09-21 (pm) | Phase B4+C ship | Soft-404/redirect smoke documented; compare Product→SoftwareApplication+image; AEO on journeys/COD/best-tools + Live Chat/Meta Manager/AI Brain answerFirst+FAQ; IndexNow after deploy | Re-request GSC for `/compare/dondy` (Merchant listings); Bing Live URL→Request indexing for Dondy pair | C4 cadence row logged |
+| 2026-09-21 (Phase D ops) | _Fill real GSC impressions when you open Search Console (same Monday)_ | _Fill Bing glance_ | Live smoke: junk URL **404**; `/pricing` **200**; `/compare/dondy` **200** self-canonical + `SoftwareApplication`; `/features/journeys` **200**. IndexNow already pinged AEO set. | Phase D runbooks live; citation pass still Oct 1 |
+| 2026-09-28 | _Second consecutive Monday — required for D3 done_ | | Soft-404 smoke again | |
 
 ---
 
@@ -53,6 +59,102 @@ Full process + log tables live in [`geo-citation-log.md`](./geo-citation-log.md)
 3. Log: TopEdge cited? (Y/N/partial), what was cited instead, notes (incl. competitor facts without formal citation).
 4. **Monthly**, same day of month. Consistent monthly > sporadic weekly that dies after six weeks.
 5. Keep “nothing changed” rows — flat trendlines are decisions, not nulls.
+
+**What you do on Oct 1 (or next free day — do not skip):**
+
+1. Open [`geo-citation-log.md`](./geo-citation-log.md) → section **2026-10 — baseline**.
+2. Four private windows: ChatGPT, Perplexity, Claude, Gemini.
+3. For each query ID (A1…E5), paste the query **verbatim** into each AI.
+4. Fill the empty row: `Y` / `P` / `N`, who got cited instead, one-line note.
+5. Expect mostly `N` on the first pass — that **is** the baseline, not a failure.
+6. After the table is filled, update the monthly review row in §3 below.
+
+Do **not** invent citation results in this repo. Code/AEO work does not replace this pass.
+
+---
+
+## 2b. GA4 — AI Search / AI chat referral filter
+
+> Goal: see traffic that arrived from AI products (ChatGPT, Perplexity, etc.), separate from Google organic.  
+> Do **not** invent session counts in this file — only document how to build the view.
+
+### Domains to include (session source / referrer)
+
+| Product | Typical hostname patterns (match contains) |
+|---|---|
+| ChatGPT | `chatgpt.com`, `chat.openai.com` |
+| Perplexity | `perplexity.ai` |
+| Gemini | `gemini.google.com`, `bard.google.com` |
+| Copilot | `copilot.microsoft.com`, `bing.com` (optional — noisy; prefer Copilot host only) |
+| Claude | `claude.ai` |
+
+### Setup (GA4 UI)
+
+1. Open **GA4** → **Admin** → **Data display** → **Channel groups** (or use an **Exploration** if you prefer not to edit the default channel group).
+2. **Option A — Custom channel group (recommended)**  
+   - Duplicate Default Channel Group → name it `TopEdge + AI referrals`.  
+   - Add channel **AI Chat / Answer engines** with rule:  
+     `Session source` **matches regex**  
+     `chatgpt\.com|chat\.openai\.com|perplexity\.ai|gemini\.google\.com|bard\.google\.com|claude\.ai|copilot\.microsoft\.com`  
+   - Place this channel **above** Referral so AI hosts are not lumped into generic Referral.
+3. **Option B — Exploration (no channel edit)**  
+   - Explore → Free form → dimension `Session source` + `Session medium`.  
+   - Filter: Session source matches regex (same pattern as above).  
+   - Metric: Sessions, Engaged sessions, Key events (trial / contact if configured).
+4. Save a bookmark/note: “AI referrals — weekly glance with organic GSC.”
+5. First time you see non-zero AI sessions, log the week in the organic table above (1 line only — real numbers from GA4, never guessed).
+
+**Done when:** Someone on the team can open GA4 and show AI vs organic without rebuilding the filter from memory.
+
+---
+
+## 2c. Manual indexing queue (Phase D5)
+
+Whenever a high-value URL is **new**, **recovered**, or **schema-fixed**:
+
+1. **Bing** — URL Inspection → **Live URL** (confirm fetch OK) → **Request indexing**.
+2. **GSC** — URL Inspection → Request indexing (Google ignores IndexNow).
+3. If Bing Index tab says “Discovered but not crawled” but Live URL is green → **queue**, not a code bug. Re-request once; do not thrash.
+
+### Current queue (request when you have 5 minutes)
+
+| URL | Why | GSC | Bing Live→Request | IndexNow |
+|---|---|---|---|---|
+| `https://topedgeai.com/compare/dondy` | Merchant listings schema fix (Product→SoftwareApplication+image) | [ ] | [ ] | done |
+| `https://topedgeai.com/blog/dondy-alternative-shopify-india` | New GEO URL; Bing crawl queue | [ ] | [ ] | done |
+| `https://topedgeai.com/features/journeys` | AEO rewrite | [ ] | [ ] | done |
+| `https://topedgeai.com/blog/cod-confirmation-whatsapp-reduce-rto-shopify` | AEO rewrite | [ ] | [ ] | done |
+| `https://topedgeai.com/blog/best-whatsapp-automation-tools-shopify-india` | Pillar refresh | [ ] | [ ] | done |
+| `https://topedgeai.com/features/live-chat` | AEO answerFirst+FAQ | [ ] | [ ] | done |
+| `https://topedgeai.com/features/ai-brain` | AEO answerFirst+FAQ | [ ] | [ ] | done |
+| `https://topedgeai.com/features/meta-manager` | AEO answerFirst+FAQ | [ ] | [ ] | done |
+
+Tick boxes in this file after you click Request indexing (do not invent “indexed” status).
+
+---
+
+## 2d. Competitive AEO glance — Q4 2026 (Phase D4)
+
+> **Structural** glance from vendor-public pages + our verify-live compare research.  
+> **Not** an AI citation claim — confirm who actually appears in answers on the Oct 1 citation pass, then revise this note.
+
+| Competitor | Patterns worth stealing (structure only) | Patterns to avoid | TopEdge response |
+|---|---|---|---|
+| **Zoko** | Clear India commerce positioning; COD called out publicly | Conversation metering opacity in festival weeks | Keep flat INR + COD → prepaid journeys explicit on compare + pricing |
+| **Dondy** | Transparent (if aggressive) rate table on marketing site | Published Meta markup ~60% above card | Keep “0% platform markup” + link Meta pricing blog; maintain `/compare/dondy` table |
+| **Getgabs** | Aggressive entry / free-install framing | Depth gated by tier | Alternatives blog already covers; do not race sticker price in hero |
+
+### Backlog actions from this glance (≤5)
+
+| ID | Action | Priority | Status |
+|---|---|---|---|
+| D4-1 | After Oct 1 pass: replace this table’s “who appears in AI” column with real platforms | P0 | waiting citation |
+| D4-2 | Deepen Meta pricing India blog if D1–D2 stay all-N after Oct | P1 | idea |
+| D4-3 | Ensure `/compare/dondy` + alternative blog stay internally linked from pillar (≥3 inbound) | P1 | mostly live — verify E1 |
+| D4-4 | Quarterly: re-check Zoko/Dondy/Getgabs pricing pages (verify-live) before any claim refresh | P1 | calendar Nov |
+| D4-5 | If Getgabs dominates cheap-entry AI answers, refresh free-to-install buyer guide (C10) | P2 | idea |
+
+Logged also in [`content-backlog.md`](./content-backlog.md) as D4-* notes where content work is needed.
 
 ---
 
@@ -86,6 +188,36 @@ Each month, after the citation pass:
 - [ ] Category E (branded) checked for **factual accuracy** once any citations appear
 - [ ] No paid GEO tooling purchased before manual process has proven to be the bottleneck
 
+### Redirect / soft-404 smoke (after every redirect or prerender deploy)
+
+Run from any machine (expect **HTTP 404** on junk, **HTTP 200** on `/pricing`, never a 301 loop):
+
+```bash
+curl -sI "https://topedgeai.com/this-is-not-a-real-page-xyz" | tr -d '\r' | head -1
+# → HTTP/2 404
+curl -sI "https://topedgeai.com/pricing" | tr -d '\r' | head -5
+# → HTTP/2 200 (Location must NOT bounce /pricing → /pricing)
+curl -sI "https://topedgeai.com/compare/dondy" | tr -d '\r' | head -1
+# → HTTP/2 200
+```
+
+**Never** add path catch-all slash-strip force 301s to `public/_redirects` — Netlify Pretty URLs self-loop. Guard lives in `scripts/generate-redirects.mjs`.
+
+### CWV spot-check log (Phase E2)
+
+| Date | URL | Tool | Perf / LCP / INP / CLS | Action |
+|---|---|---|---|---|
+| 2026-09-21 | `/`, `/pricing`, `/features/journeys`, `/compare/dondy` | PageSpeed API mobile | Quota exceeded (no API key) — **re-run with key or CrUX** next Monday | No eng work scheduled without numbers |
+| | | | | |
+
+**Rule:** Only open an engineering ticket if LCP/INP/CLS clearly regress vs prior month. Document real scores here—never invent.
+
+### Index / redirect health (Phase E3)
+
+| Date | Junk → 404 | `/pricing` 200 | Force slash-301 absent | Sitemap sample OK | Notes |
+|---|---|---|---|---|---|
+| 2026-09-21 | yes | yes | yes (script guard) | 53 URLs | Soft-404 + Dondy self-canonical verified live |
+
 ---
 
 ## 5. Roadmap status after Phase 6
@@ -97,6 +229,6 @@ Each month, after the citation pass:
 | 3 Content engine | Built — **ongoing cadence** |
 | 4 GEO/AEO content layer | Built |
 | 5 Backlinks / digital PR | Week 1 trackers live — **ongoing human-gated** |
-| 6 Measurement | **This hub + citation log** — ongoing |
+| 6 Measurement | **Phase D+E ops live** — all feature landers have `answerFirst`; inbound hygiene fixed; CWV re-run owed with PageSpeed key; citation baseline **2026-10-01** |
 
 Ongoing forever: Phase 3 cadence + Phase 6 measurement (+ Phase 5 outreach as capacity allows).

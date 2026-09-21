@@ -11,7 +11,8 @@ export type MatrixCompetitor =
   | 'zoko'
   | 'getgabs'
   | 'kanal'
-  | 'dondy';
+  | 'dondy'
+  | 'updatrr';
 
 export type CompareFeatureRow = {
   id: string;
@@ -892,6 +893,141 @@ export const DONDYY_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
   },
 ];
 
+/** TopEdge Ai vs Updatrr — verbatim board. */
+export const UPDATRR_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
+  {
+    id: 'subscription',
+    label: 'Subscription Model',
+    topedge: '14 Days free trial, then starts from ~₹1,800',
+    competitor: '7 Days free trial, then starts from ~$19.99 (₹1,900)',
+  },
+  {
+    id: 'website-platform',
+    label: 'Website Platform',
+    description:
+      'Shows whether the software works on website or is dependent on platform like Shopify.',
+    topedge: 'Web-based Software',
+    competitor: 'Works only on Shopify',
+  },
+  {
+    id: 'template-markup',
+    label: 'WhatsApp API Template Message Markup %',
+    description:
+      'How messaging usage is billed and whether the platform applies hidden markup fees on top of standard Meta conversation rates.',
+    topedge:
+      '0% WhatsApp API platform markup (Meta API Billing directly on your Meta Business Account)',
+    competitor:
+      '0% platform markup (pay the direct fees billed by Meta alongside your chosen Updatrr software subscription.)',
+  },
+  {
+    id: 'ai-llm',
+    label: 'AI Message Costs & LLM Architecture',
+    description:
+      'Enterprise LLM integration framework allowing brands to deploy generative customer support with flexible AI model selection and transparent messaging costs.',
+    topedge:
+      'Bring Your Own Key (BYOK) architecture with built-in RAG pipeline (est. ~₹0.10-₹0.30 per AI response depending on selected AI model)',
+    competitor:
+      'Per-conversation pricing model (est. ~₹4.50 per AI conversation / plan-based usage fees)',
+  },
+  {
+    id: 'store-pixel',
+    label: 'E-commerce Tracking Pixel',
+    description:
+      'Store pixel that identifies visitor contact information and tracks product views, visitor activity and checkout sessions without shopper store account sign-in.',
+    topedge: '1-Click Install Visitor Identity Pixel for advanced pre-checkout capture',
+    competitor: 'Relies on standard Shopify abandoned checkout triggers.',
+  },
+  {
+    id: 'unified-identity',
+    label: 'Unified Customer Identity',
+    description:
+      'Independent CRM engine that automatically merges multiple orders, alternate phone numbers, and emails of same buyer into one master buyer profile.',
+    topedge:
+      'Native Built-in Identity Resolution Engine (Operates independently of e-commerce platform constraints)',
+    competitor:
+      'Standard sync (Relies entirely on Shopify’s default customer data structure and account tracking)',
+  },
+  {
+    id: 'intent-routing',
+    label: 'Intent Routing Engine (Algorithmic)',
+    description:
+      'Real-time message intent recognition that dynamically channels user inquiries to targeted automation chat flow without requiring Ai usage.',
+    topedge: 'Native algorithmic intent detection & chat flow routing',
+    competitor: 'Rule/keyword-based triggers heavily tied to Shopify events',
+  },
+  {
+    id: 'lead-dedupe',
+    label: 'Duplicate Lead Filter (Lead Deduplication)',
+    description:
+      'Intelligent CRM cleaning engine that detects when a single buyer uses multiple phone numbers across different orders, ensuring marketing broadcasts are sent only once, eliminating wasted marketing budget.',
+    topedge: 'Native auto-deduplication system',
+    competitor:
+      "Standard contact sync (Managed via Shopify's default contact management system)",
+  },
+  {
+    id: 'cod-prepaid',
+    label: 'COD to Prepaid Conversion Funnel',
+    description:
+      'Post-checkout automated messaging sequences designed to verify Cash-on-Delivery (COD) orders and convert them to prepaid status.',
+    topedge:
+      'Native integration for Shopify and 3rd-party checkout compatible (e.g. GoKwik, Razorpay, etc.)',
+    competitor: 'Native.',
+  },
+  {
+    id: 'warranty',
+    label: 'Order Warranty Management Automation',
+    description:
+      'Systemized post-purchase warranty assignment that auto-assign warranty batches and attaches duration logs directly to individual customer profiles.',
+    topedge:
+      'Built-in automated warranty batch creation linked directly to the unified customer profile',
+    competitor: 'Not supported',
+  },
+  {
+    id: 'order-mod',
+    label: 'In-Chat Order Modification (Self-Service Automation)',
+    description:
+      'Automated WhatsApp chat flow allowing buyers to edit shipping addresses or cancel orders securely before dispatch.',
+    topedge: 'Native order modification backed by fulfillment status and time locks',
+    competitor:
+      'Not supported, Order modifications generally require routing to a live agent',
+  },
+  {
+    id: 'journey-builder',
+    label: 'Customer Marketing Journey Builder',
+    description:
+      'Visual automation canvas to construct multi-stage post-purchase retention sequences personalised for customers.',
+    topedge:
+      'Advanced multi-stage journey builder integrated with deduplication enrollment filters',
+    competitor:
+      'Standard automated sequences (Drip campaigns and abandoned cart reminders triggered by Shopify events only)',
+  },
+  {
+    id: 'flow-cap',
+    label: 'Chatbot Session & Flow Execution Limits',
+    description:
+      'Operational execution limits placed on automated chat triggers and monthly flow executions by the platform.',
+    topedge: 'Unlimited flow execution included across all subscription plans',
+    competitor: 'Not mentioned Execution tier limits on subscription plans',
+  },
+  {
+    id: 'ecommerce-analytics',
+    label: 'E-commerce Growth Analytics & Revenue Tracking',
+    description:
+      'Complete retention dashboard providing accurate visibility into Average Order Value (AOV), Customer Lifetime Value (LTV), Geographic purchase density, and future revenue projections.',
+    topedge: 'Native Advance E-commerce Intelligence Dashboard',
+    competitor: 'Standard e-commerce analytics.',
+  },
+  {
+    id: 'flow-builder',
+    label: 'Visual No-Code Chatbot Builder',
+    description:
+      'Node-by-node workflow canvas equipped with advanced developer controls for building custom support and automated marketing flows.',
+    topedge: 'Advanced drag-and-drop chatbot builder unlocked on all subscription plans',
+    competitor:
+      'Standard visual flow builder tied to Shopify event triggers and plan subscription tiers',
+  },
+];
+
 /** TopEdge Ai vs Interakt — dedicated pairwise board. */
 export const INTERAKT_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
   {
@@ -1061,6 +1197,14 @@ export function pairwiseMatrix(
       competitor: cell,
     }));
   }
+  if (competitor === 'updatrr') {
+    return UPDATRR_PAIRWISE_MATRIX.map(({ label, description, topedge, competitor: cell }) => ({
+      label,
+      description,
+      topedge,
+      competitor: cell,
+    }));
+  }
   return LEGACY_COMPARE_FEATURE_MATRIX.map((row) => ({
     label: row.name,
     description: row.description,
@@ -1103,6 +1247,7 @@ function pairwiseForDuel(competitor: MatrixCompetitor): PairwiseFeatureRow[] {
   if (competitor === 'getgabs') return GETGABS_PAIRWISE_MATRIX;
   if (competitor === 'kanal') return KANAL_PAIRWISE_MATRIX;
   if (competitor === 'dondy') return DONDYY_PAIRWISE_MATRIX;
+  if (competitor === 'updatrr') return UPDATRR_PAIRWISE_MATRIX;
   return LEGACY_COMPARE_FEATURE_MATRIX.map((row) => ({
     id: row.id,
     label: row.name,

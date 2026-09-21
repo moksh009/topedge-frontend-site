@@ -69,7 +69,7 @@ Pulled from Phases 1–4 builds (not generic filler).
 | ID | Query |
 |---|---|
 | A5 | best whatsapp automation for d2c india |
-| B8 | bitespeed alternative india |
+| B9 | bitespeed alternative india |
 | C5 | shopify whatsapp automation checklist |
 | D4 | whatsapp template markup india |
 
@@ -95,7 +95,14 @@ Pulled from Phases 1–4 builds (not generic filler).
 
 ### 2026-10 — baseline (first full pass)
 
-_Status: **owed**. Fill on first monthly run._
+_Status: **owed — run on 2026-10-01** (or next free day). Do not invent Y/P/N in git._
+
+**Pass checklist (print or keep open):**
+1. [ ] Incognito / private for all four platforms
+2. [ ] Queries pasted **verbatim** from the ID list (no coaching)
+3. [ ] Include **B8** (Dondy) — four platforms
+4. [ ] Fill every `—` cell; leave Notes blank only if truly nothing to say
+5. [ ] Update month roll-up + [`measurement.md`](./measurement.md) §3 monthly review row
 
 | Date | ID | Query | Platform | TopEdge? | What was cited instead | Notes |
 |---|---|---|---|---|---|---|
@@ -143,6 +150,10 @@ _Status: **owed**. Fill on first monthly run._
 | | B7 | kanal whatsapp alternative | Perplexity | — | | |
 | | B7 | kanal whatsapp alternative | Claude | — | | |
 | | B7 | kanal whatsapp alternative | Gemini | — | | |
+| | B8 | dondy alternative shopify india | ChatGPT | — | | Expect `/compare/dondy` or Dondy blog |
+| | B8 | dondy alternative shopify india | Perplexity | — | | |
+| | B8 | dondy alternative shopify india | Claude | — | | |
+| | B8 | dondy alternative shopify india | Gemini | — | | |
 | | C1 | how to reduce RTO with whatsapp cod confirmation | ChatGPT | — | | |
 | | C1 | how to reduce RTO with whatsapp cod confirmation | Perplexity | — | | |
 | | C1 | how to reduce RTO with whatsapp cod confirmation | Claude | — | | |

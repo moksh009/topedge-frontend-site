@@ -18,7 +18,7 @@ export const CONTENT_DATES = {
 export const BLOG_DATES_BY_SLUG = {
   "whatsapp-abandoned-cart-recovery-shopify": "2026-09-01",
   "shopify-whatsapp-automation-what-to-automate-first": "2026-09-02",
-  "cod-confirmation-whatsapp-reduce-rto-shopify": "2026-09-03",
+  "cod-confirmation-whatsapp-reduce-rto-shopify": "2026-09-21",
   "ecommerce-automation-whatsapp-vs-email-india": "2026-09-04",
   "meta-whatsapp-cloud-api-shopify-templates": "2026-09-05",
   "whatsapp-shared-inbox-shopify-order-context": "2026-09-06",

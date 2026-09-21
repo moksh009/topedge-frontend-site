@@ -4,10 +4,14 @@
  * Soft-404: unknown URLs must NOT fall through to homepage index.html.
  * SPA client routes (login/signup/docs/admin/dev) still get index.html.
  *
- * Do NOT emit trailing-slash force redirects here. With Netlify Pretty URLs /
- * flat .html, `/path/ → /path 301!` matches slashless `/path` too and
- * 301-loops every marketing URL onto itself (ERR_TOO_MANY_REDIRECTS).
- * Slashless canonicals + sitemap locs remain the SEO signal.
+ * NEVER emit trailing-slash force redirects (Netlify Pretty URLs + flat .html).
+ * Patterns like "star-slash → :splat 301!" match slashless paths too and
+ * 301-loop every marketing URL onto itself (ERR_TOO_MANY_REDIRECTS).
+ * Slashless canonicals + sitemap locs are the SEO signal.
+ *
+ * After deploy smoke (see docs/seo/measurement.md § redirect/soft-404):
+ *   curl -sI https://topedgeai.com/this-is-not-a-real-page-xyz → HTTP 404
+ *   curl -sI https://topedgeai.com/pricing → HTTP 200 (not a 301 loop)
  *
  * Markers: BEGIN GENERATED … END GENERATED
  */
@@ -59,6 +63,13 @@ function main() {
   }
 
   const next = `${head}\n\n${buildGeneratedBlock()}\n`;
+  // Fail closed: never write path catch-all slash-strip force 301s (line-anchored;
+  // ignore comments that document the ban).
+  if (/^\/\*\/\s+\/:splat\s+301!/m.test(next) || /^\/\*\s+\/:splat\s+301!/m.test(next)) {
+    throw new Error(
+      'Refusing to write trailing-slash force 301s into _redirects (Netlify self-loop risk).',
+    );
+  }
   fs.writeFileSync(redirectsPath, next, 'utf8');
   console.log(`✅ Updated ${redirectsPath} (SPA shells + soft-404; no slash 301s)`);
 }

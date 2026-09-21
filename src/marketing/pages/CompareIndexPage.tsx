@@ -22,7 +22,7 @@ const FEATURED = [
   {
     href: '/compare/alternatives',
     title: 'WhatsApp automation alternatives',
-    body: 'Fair one-line index: WATI, AiSensy, Interakt, Bitespeed, Zoko, Getgabs, Kanal, Dondy.',
+    body: 'Fair one-line index: WATI, AiSensy, Interakt, Bitespeed, Zoko, Getgabs, Kanal, Dondy, Updatrr.',
     logos: [
       { src: '/logo.png', alt: 'TopEdge AI' },
       { src: '/marketing/compare/compare-logo-zoko.svg', alt: 'Zoko' },
@@ -33,7 +33,17 @@ const FEATURED = [
 ];
 
 export default function CompareIndexPage() {
-  const order = ['wati', 'aisensy', 'interakt', 'bitespeed', 'zoko', 'getgabs', 'kanal', 'dondy'];
+  const order = [
+    'wati',
+    'aisensy',
+    'interakt',
+    'bitespeed',
+    'zoko',
+    'getgabs',
+    'kanal',
+    'dondy',
+    'updatrr',
+  ];
   const bySlug = Object.fromEntries(allCompareCompetitors().map((c) => [c.slug, c]));
   const competitors = order.map((slug) => bySlug[slug]).filter(Boolean);
 

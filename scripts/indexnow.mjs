@@ -27,15 +27,29 @@ const KEY = 'db2d3b12e5f047e48445607a75862b1f';
 const KEY_LOCATION = `${SITE}/${KEY}.txt`;
 const ENDPOINT = 'https://api.indexnow.org/indexnow';
 
-/** URLs added/updated in the Phase 2–Dondy window + blog-media redirect fix (Sep 2026). */
+/** URLs refreshed in Phase E feature AEO + link hygiene (Sep 2026). */
 const CHANGED_RECENT = [
+  '/features/flow-builder',
+  '/features/opt-in-tools',
+  '/features/campaigns',
+  '/features/audience-crm',
+  '/features/analytics',
+  '/features/chat-rules',
+  '/features/instagram',
+  '/features/warranty',
+  '/features/profit-loss',
+  '/features/intent-detection',
+  '/features/journeys',
+  '/features/live-chat',
+  '/features/ai-brain',
+  '/features/meta-manager',
   '/compare/dondy',
-  '/compare',
-  '/compare/alternatives',
-  '/compare/zoko',
-  '/compare/getgabs',
-  '/compare/kanal',
-  ...getSitemapPaths().filter((p) => p.startsWith('/blog/')),
+  '/compare/updatrr',
+  '/blog/dondy-alternative-shopify-india',
+  '/blog/best-whatsapp-automation-tools-shopify-india',
+  '/blog/how-to-choose-whatsapp-app-shopify-app-store',
+  '/blog/whatsapp-business-api-pricing-india',
+  '/blog/cod-confirmation-whatsapp-reduce-rto-shopify',
 ];
 
 const DONDYY = ['/compare/dondy', '/blog/dondy-alternative-shopify-india'];
