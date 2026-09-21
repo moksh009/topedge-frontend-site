@@ -7,7 +7,7 @@ import type { BlogPost } from '../types/blog';
 export const blogPosts: BlogPost[] = [
   {
     id: 1,
-    title: 'Shopify Abandoned Cart Recovery: How to Recover Lost Sales Using WhatsApp',
+    title: 'Shopify Abandoned Cart Recovery with WhatsApp',
     description:
       'Learn Shopify abandoned cart recovery with WhatsApp: cart vs checkout, message timing, opt-in rules, workflows, and what to look for in recovery tools.',
     slug: 'whatsapp-abandoned-cart-recovery-shopify',
@@ -1569,7 +1569,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     id: 18,
-    title: 'WhatsApp Automation for Shopify: The Complete Guide for Ecommerce Stores',
+    title: 'WhatsApp Automation for Shopify: Complete Guide',
     description:
       'WhatsApp automation for Shopify explained: how store events connect to Meta Cloud API, opt-in, templates, journeys, inbox, and what to automate first.',
     slug: 'whatsapp-automation-for-shopify',
@@ -1883,7 +1883,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     id: 19,
-    title: 'AI Chatbot for Shopify: How AI Can Automate Ecommerce Customer Support & Sales',
+    title: 'AI Chatbot for Shopify: Support and Sales Guide',
     description:
       'What an AI chatbot for Shopify actually does: catalog answers, order lookups, sales assist, human handover rules, and how to avoid invented prices or stock.',
     slug: 'ai-chatbot-for-shopify',
