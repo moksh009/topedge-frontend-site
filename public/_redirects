@@ -52,6 +52,7 @@ https://www.topedgeai.com/*  https://topedgeai.com/:splat  301!
 /services  /features  301!
 /booking  /contact  301!
 /testimonials  /customers  301!
+/testimonials/  /customers  301!
 /agency  /customers  301!
 /agency/  /customers  301!
 /security  /features  301!
@@ -69,6 +70,13 @@ https://www.topedgeai.com/*  https://topedgeai.com/:splat  301!
 /blogs/  /blog  301!
 /blogs/*  /blog  301!
 /blog/agencies-whatsapp-automation-multi-brand-shopify  /blog  301!
+
+# Retired thin / off-topic posts (GSC: Crawled – currently not indexed → 404)
+# 301 to closest live hub so Google stops treating soft-404 stubs as candidates.
+/blog/topedge-ai-banking-solutions-automation-security-2024  /blog  301!
+/blog/topedge-ai-banking-solutions-automation-security-2024/  /blog  301!
+/blog/evolution-of-ai-business-communication  /blog/ai-whatsapp-chatbot-for-shopify-india  301!
+/blog/evolution-of-ai-business-communication/  /blog/ai-whatsapp-chatbot-for-shopify-india  301!
 
 # BEGIN GENERATED — do not edit (scripts/generate-redirects.mjs)
 # Client-only SPA shells (must stay above the 404 catch-all)

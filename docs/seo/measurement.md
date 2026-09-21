@@ -122,14 +122,25 @@ Whenever a high-value URL is **new**, **recovered**, or **schema-fixed**:
 |---|---|---|---|---|
 | `https://topedgeai.com/compare/dondy` | Merchant listings schema fix (Product→SoftwareApplication+image) | [ ] | [ ] | done |
 | `https://topedgeai.com/blog/dondy-alternative-shopify-india` | New GEO URL; Bing crawl queue | [ ] | [ ] | done |
-| `https://topedgeai.com/features/journeys` | AEO rewrite | [ ] | [ ] | done |
+| `https://topedgeai.com/features/journeys` | AEO rewrite + Discovered-not-indexed | [ ] | [ ] | done |
+| `https://topedgeai.com/pricing` | Discovered-not-indexed (Priority 1) | [ ] | [ ] | |
+| `https://topedgeai.com/shopify-whatsapp-integration` | Discovered-not-indexed | [ ] | [ ] | |
+| `https://topedgeai.com/features/live-chat` | GSC listed under redirect but live **200** — Inspect → Request indexing | [ ] | [ ] | done |
+| `https://topedgeai.com/blog/whatsapp-abandoned-cart-recovery-shopify` | Same — live **200** self-canonical; Request indexing after deploy of rewrite | [ ] | [ ] | |
 | `https://topedgeai.com/blog/cod-confirmation-whatsapp-reduce-rto-shopify` | AEO rewrite | [ ] | [ ] | done |
 | `https://topedgeai.com/blog/best-whatsapp-automation-tools-shopify-india` | Pillar refresh | [ ] | [ ] | done |
-| `https://topedgeai.com/features/live-chat` | AEO answerFirst+FAQ | [ ] | [ ] | done |
 | `https://topedgeai.com/features/ai-brain` | AEO answerFirst+FAQ | [ ] | [ ] | done |
 | `https://topedgeai.com/features/meta-manager` | AEO answerFirst+FAQ | [ ] | [ ] | done |
 
-Tick boxes in this file after you click Request indexing (do not invent “indexed” status).
+### GSC bucket triage (2026-09-21)
+
+| Bucket | Action |
+|---|---|
+| **403** `https://api.topedgeai.com/` | API root is not a marketing page. Add `robots.txt` Disallow `/` on **api** host (or `X-Robots-Tag: noindex` on `/`). Then GSC → Validate fix. Do **not** request indexing. |
+| **Page with redirect** `http://…` / `www.` / `dash…/docs` | Expected host/docs redirects — leave. |
+| **Page with redirect** `/blog/whatsapp-abandoned-cart-recovery-shopify`, `/features/live-chat` | Live now **200** + self-canonical. Stale GSC; Inspect Live URL → Request indexing. Validation already started. |
+| **Crawled not indexed** old banking / evolution blogs | Were **404**; redirects added → `/blog` and `/blog/ai-whatsapp-chatbot-for-shopify-india`. Deploy `_redirects`, then Validate. |
+| **Crawled not indexed** `/testimonials` | Already 301 → `/customers`. Leave; will leave this bucket after recrawl. |
 
 ---
 
