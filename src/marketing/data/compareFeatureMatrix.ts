@@ -1028,105 +1028,126 @@ export const UPDATRR_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
   },
 ];
 
-/** TopEdge Ai vs Interakt — dedicated pairwise board. */
+/** TopEdge Ai vs Interakt — verbatim board. */
 export const INTERAKT_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
   {
+    id: 'subscription',
+    label: 'Subscription Model',
+    topedge: '14 Days free trial, then starts from ~₹1,800',
+    competitor:
+      '14 Days free trial, then starts from ~₹2,799 (plan which includes WhatsApp channel)',
+  },
+  {
     id: 'template-markup',
-    label: 'WhatsApp Template Message Markup %',
-    description: 'What you pay above Meta’s base WhatsApp conversation rates.',
-    topedge: '0% markup, billing direct on Meta',
-    competitor: 'Shopify App sub + Meta conversation charges (FB actuals)',
+    label: 'WhatsApp API Message Markup',
+    description:
+      'Direct Meta conversation rate card vs. platform per-message delivery markups for WhatsApp marketing campaigns.',
+    topedge:
+      '0% WhatsApp API platform markup (Direct Meta API Billing on your Meta Business Account)',
+    competitor: 'Platform usage charges applied on top of base Meta conversation rates',
   },
   {
     id: 'ai-llm',
-    label: 'AI LLM Integration / AI Messages',
-    description: 'How AI replies are powered and what they cost per conversation.',
-    topedge: 'BYOK & built-in RAG pipeline, optimised token usage est. ₹0.2-₹0.3 / message',
-    competitor: 'AI Agents on Enterprise App (~$99) or ~$74.99 add-on on Growth/Advanced',
-  },
-  {
-    id: 'intent-routing',
-    label: 'Intent Routing Engine',
-    description:
-      'Algorithm detects chat message intent and routes chatbot flow accordingly (no AI used) for better chat support.',
-    topedge: 'Native algorithmic intent detection & routing',
-    competitor: 'Chatbot / rule-based automation + AI agents on higher tiers',
-  },
-  {
-    id: 'unified-identity',
-    label: 'Unified Customer Identity',
-    description:
-      'Auto-merges multiple orders, contact numbers, and emails for a single customer into one unified profile.',
-    topedge: 'Native built-in',
-    competitor: 'Standard Shopify + WhatsApp contact records',
-  },
-  {
-    id: 'lead-dedupe',
-    label: 'Duplicate Lead Prevention / Lead Deduplication',
-    description: 'Stop the same shopper from flooding CRM as multiple leads.',
-    topedge: 'Native, auto-deduplication',
-    competitor: 'Standard contact / CRM handling',
+    label: 'Generative AI Message Costs & LLM Architecture',
+    topedge:
+      'Bring Your Own Key (BYOK) architecture with built-in RAG pipeline (est. ~₹0.10-₹0.30 per AI response, depending on selected AI model)',
+    competitor:
+      'Paid add-on module for WhatsApp AI Agents , per-message AI usage cost ₹0.50/ message applied after a small allowance of 100 free messages',
   },
   {
     id: 'store-pixel',
-    label: 'Store Tracking Pixel',
+    label: 'E-commerce Visitor Identity Pixel',
     description:
-      'Pixel captures visitor identity (contact no., email) plus products viewed, product visitors, and abandoned checkout sessions.',
-    topedge: '1-click install pixel',
-    competitor: 'WhatsApp number popup / widget capture',
+      '1-click store pixel that identifies visitor contact information and tracks product views, visitor activiy and checkout sessions without shopper store signin required.',
+    topedge: '1-Click Install Visitor Identity Pixel',
+    competitor: 'Standard post-checkout webhook integration and custom event tracking',
+  },
+  {
+    id: 'intent-routing',
+    label: 'Algorithmic Chat Intent Routing',
+    description:
+      'Real-time message intent recognition that dynamically channels user inquiries to targeted automation chat flows without AI token consumption.',
+    topedge: 'Native intent detection & chat flow routing',
+    competitor: 'Rule and keyword-based linear flows on standard plans',
+  },
+  {
+    id: 'unified-identity',
+    label: 'Unified Customer Identity (Identity Resolution CRM)',
+    description:
+      'Merges multiple orders, alternate phone numbers, and email addresses of same buyer into a single master buyer profile.',
+    topedge: "Native, Auto-merges customer's alternative contact numbers and emails .",
+    competitor:
+      'Standard contact management where each unique phone number acts as an isolated contact record',
+  },
+  {
+    id: 'lead-dedupe',
+    label: 'Lead Deduplication',
+    description:
+      'Intelligent CRM cleaning engine that detects when a single buyer uses multiple phone numbers across different orders, ensuring marketing broadcasts are sent only once, eliminating wasted marketing budget.',
+    topedge: 'Native auto-deduplication system',
+    competitor: 'Standard contact list management and basic tagging',
   },
   {
     id: 'cod-prepaid',
-    label: 'Cash On Delivery → Prepaid Funnel Builder',
-    description: 'Convert COD risk into prepaid checkouts from WhatsApp.',
-    topedge: 'Shopify-native checkout (GoKwik & other checkout partners compatible)',
-    competitor: 'WhatsApp Pay COD → prepaid (Razorpay / PayU), documented',
+    label: 'COD to Prepaid Order Conversion Funnel',
+    description:
+      'Automated post-checkout messaging sequences designed to convert cash-on-delivery orders to prepaid status across custom checkout stacks.',
+    topedge:
+      'Shopify-native checkout integration (compatible with 3rd-party checkout stacks like GoKwik, Razorpay, etc...)',
+    competitor:
+      'Supported natively but locked behind the Advanced Shopify integration on higher-tier plans',
   },
   {
     id: 'ecommerce-analytics',
-    label: 'E-commerce Analytics',
+    label: 'E-commerce Growth Analytics',
     description:
-      'Accurate metrics: AOV, LTV, campaign revenue, most-sold products by city, upcoming months revenue projection, and other scale metrics brands need.',
-    topedge: 'Native built-in',
-    competitor: 'Analytics & reports on Growth+ App tiers',
+      'Complete retention dashboard providing accurate visibility into AOV, customer LTV, Geographic product understanding, and future revenue projections.',
+    topedge: 'Native E-commerce Intelligence Dashboard',
+    competitor: 'Standard analytics',
   },
   {
     id: 'warranty',
-    label: 'Order Warranty Management',
+    label: 'Order Warranty Management Automation',
     description:
-      'Automated warranty assignment and warranty batches per product; each unified profile stores warranty duration for every past order.',
-    topedge: 'Built-in automated warranty batches tied to unified customer profile',
-    competitor: 'Not found in public feature set, external CRM',
+      'Systemized warranty assignment that auto-generates warranty batches and attaches duration logs to individual customer profiles.',
+    topedge:
+      'Built-in automated warranty batch creation linked to unified customer profiles',
+    competitor: 'Requires external CRM tools or custom integration setup via webhooks',
   },
   {
     id: 'order-mod',
-    label: 'Order Modification via WhatsApp',
+    label: 'Order Modifications Chat flow',
     description:
-      'Customers can cancel orders or change shipping address with time-based and fulfillment-status locks.',
-    topedge: 'Yes, with security layer',
-    competitor: 'Order updates / Order Management AI on higher tiers',
+      'Automated WhatsApp chat flow allowing buyers to edit shipping addresses or cancel orders with fulfillment status-locked security controls.',
+    topedge: 'Native order modification backed by fulfillment status and time locks',
+    competitor: 'Standard trigger-based workflow setups',
   },
   {
     id: 'journey-builder',
-    label: 'Customer Marketing Journey Builder',
+    label: 'Customer Lifecycle Marketing Journey Builder',
     description:
-      'Turn one-time buyers into loyal repeat customers with a high-converting post-purchase messaging framework in the journey builder.',
-    topedge: 'Journey builder with deduplication enrollment',
-    competitor: 'Automated notifications, winbacks & workflow builder',
+      'Visual automation canvas to construct multi-stage post-purchase retention sequences with built-in deduplication filters.',
+    topedge: 'Advanced multi-stage journey builder with deduplication enrollment filters',
+    competitor:
+      'Standard sequential campaigns with basic post-reply flows and auto-replies',
   },
   {
     id: 'flow-builder',
-    label: 'Linear Chatbot Flow Builder',
-    description: 'Design chatbot flows node-to-node with a visual builder.',
+    label: 'Visual No-Code Chatbot Builder',
+    description:
+      'Node-to-node workflow builder equipped with advanced developer canvas controls.',
     topedge: 'Advanced drag-and-drop node builder unlocked on all plans',
-    competitor: 'Basic linear on Growth · Advanced branching / API on Advanced+',
+    competitor:
+      'Basic linear chatbot builder on lower tiers; branched chatbots require the higher plan.',
   },
   {
     id: 'flow-cap',
-    label: 'Chatflow Execution Cap',
-    description: 'How many chatbot / flow runs you get before hitting plan limits.',
-    topedge: 'Unlimited flow execution on all plans',
-    competitor: 'Plan / API rate limits (e.g. ~600 msg/min on Advanced App)',
+    label: 'Chatbot Session & Flow Execution Limits',
+    description:
+      'Operational execution limits placed on automated chat triggers and monthly flow executions.',
+    topedge: 'Unlimited flow execution included across all subscription plans',
+    competitor:
+      'Account limits for custom fields, custom events, and tags are capped based on your specific pricing tier',
   },
 ];
 
