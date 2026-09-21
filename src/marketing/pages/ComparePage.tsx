@@ -11,9 +11,8 @@ import {
   type CompareScoreRow,
 } from '../data/compareCompetitors';
 import { planDuelFeatures, type MatrixCompetitor } from '../data/compareFeatureMatrix';
-import { breadcrumbJsonLd, organizationJsonLd, webPageJsonLd } from '../data/pageSeo';
+import { breadcrumbJsonLd, organizationJsonLd, softwareApplicationJsonLd, webPageJsonLd } from '../data/pageSeo';
 import { SITE_URL } from '../data/marketingSeo';
-import { catalogMonthlyOffersJsonLd } from '../lib/billingCatalog';
 import {
   compareTwoWayModifiedIso,
   updatedKicker,
@@ -40,18 +39,6 @@ function ScoreEdge({ edge, competitorName }: { edge: CompareScoreRow['edge']; co
   const mod =
     edge === 'TopEdge' ? 'is-te' : edge === 'Competitor' ? 'is-comp' : edge === 'Even' ? 'is-even' : 'is-trade';
   return <span className={`mkt-cmp__edge ${mod}`}>{label}</span>;
-}
-
-function topedgeOfferJsonLd() {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'Product',
-    name: 'TopEdge',
-    description:
-      'Shopify-native WhatsApp growth OS for India D2C, cart recovery, COD workflows, Meta-gated journeys, and order-aware inbox.',
-    brand: { '@type': 'Brand', name: 'TopEdge' },
-    offers: catalogMonthlyOffersJsonLd(undefined, { url: `${SITE_URL}/pricing` }),
-  };
 }
 
 
@@ -101,7 +88,7 @@ export default function ComparePage({ competitor: competitorProp }: Props) {
             { name: 'Compare', path: '/compare' },
             { name: data.name, path },
           ]),
-          topedgeOfferJsonLd(),
+          softwareApplicationJsonLd(),
         ]}
       />
       <MarketingPage className="mkt-cmp">
