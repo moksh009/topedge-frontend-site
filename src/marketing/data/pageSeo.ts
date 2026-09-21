@@ -1,5 +1,12 @@
 import { SITE_URL } from './marketingSeo';
-import { catalogMonthlyOffersJsonLd, TRIAL } from '../lib/billingCatalog';
+import {
+  catalogMonthlyOffersJsonLd,
+  digitalOfferMerchantFields,
+  offerPriceValidUntil,
+  TRIAL,
+} from '../lib/billingCatalog';
+import { testimonials } from './home';
+import { OG_IMAGE_HEIGHT, OG_IMAGE_WIDTH, OG_IMAGE_ALT_DEFAULT } from './seoContracts';
 
 /** Core commercial keywords TopEdge should compete for (natural use in titles/descriptions). */
 export const CORE_KEYWORDS = [
@@ -318,29 +325,67 @@ export function organizationJsonLd() {
   };
 }
 
+/** Visible customer quotes on home/customers — no invented star ratings. */
+function softwareApplicationReviewsJsonLd() {
+  return testimonials.map((t) => ({
+    '@type': 'Review' as const,
+    author: {
+      '@type': 'Person' as const,
+      name: t.name,
+      jobTitle: t.role,
+    },
+    reviewBody: t.quote,
+    itemReviewed: {
+      '@type': 'SoftwareApplication' as const,
+      name: 'TopEdge',
+    },
+  }));
+}
+
 export function softwareApplicationJsonLd() {
+  const imageUrl = `${SITE_URL}/og-image.png`;
+  const pricingUrl = `${SITE_URL}/pricing`;
+  const merchant = digitalOfferMerchantFields('INR');
   return {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
     name: 'TopEdge',
+    alternateName: 'TopEdge AI',
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'Web',
     url: SITE_URL,
-    image: `${SITE_URL}/og-image.png`,
+    image: [
+      {
+        '@type': 'ImageObject',
+        url: imageUrl,
+        contentUrl: imageUrl,
+        width: OG_IMAGE_WIDTH,
+        height: OG_IMAGE_HEIGHT,
+        caption: OG_IMAGE_ALT_DEFAULT,
+      },
+    ],
+    screenshot: imageUrl,
     description:
       'WhatsApp automation for Shopify: abandoned cart recovery, COD confirmations, Live Chat, journeys, and Meta Cloud API campaigns for Indian ecommerce.',
+    brand: {
+      '@type': 'Brand',
+      name: 'TopEdge',
+    },
     offers: [
       {
         '@type': 'Offer',
         name: 'Free trial',
         price: '0',
         priceCurrency: 'INR',
+        priceValidUntil: offerPriceValidUntil(),
         description: `${TRIAL.days}-day free trial`,
-        url: `${SITE_URL}/pricing`,
+        url: pricingUrl,
         availability: 'https://schema.org/InStock',
+        ...merchant,
       },
-      ...catalogMonthlyOffersJsonLd(undefined, { url: `${SITE_URL}/pricing` }),
+      ...catalogMonthlyOffersJsonLd(undefined, { url: pricingUrl }),
     ],
+    review: softwareApplicationReviewsJsonLd(),
     featureList: [
       'WhatsApp cart recovery',
       'Shopify integration',
@@ -394,10 +439,14 @@ export function webPageJsonLd(opts: {
         }
       : {}),
     isPartOf: { '@type': 'WebSite', name: 'TopEdge', url: SITE_URL },
+    // Full SoftwareApplication (with image) lives on home/pricing/compare via
+    // softwareApplicationJsonLd(). Keep about as Organization so Merchant
+    // listings never validate a nested SoftwareApplication missing image.
     about: {
-      '@type': 'SoftwareApplication',
+      '@type': 'Organization',
       name: 'TopEdge',
-      applicationCategory: 'BusinessApplication',
+      url: SITE_URL,
+      logo: `${SITE_URL}/og-image.png`,
     },
   };
 }

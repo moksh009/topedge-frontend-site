@@ -42,7 +42,15 @@ export default function HomeTrust({ onStage = false }: { onStage?: boolean }) {
               rel={logo.href === '#' ? undefined : 'noopener noreferrer'}
               aria-label={logo.name}
             >
-              <img src={logo.src} alt={logo.name} />
+              <img
+                src={logo.src}
+                alt={logo.name}
+                width={120}
+                height={32}
+                loading="lazy"
+                decoding="async"
+                fetchPriority="low"
+              />
             </a>
           ))}
         </div>

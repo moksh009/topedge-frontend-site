@@ -70,7 +70,7 @@ export default function Blog() {
 
         <div className="mkt-blog-index__grid">
           {featured ? (
-            <Reveal>
+            <Reveal className="mkt-blog-index__featured">
               <article className="mkt-blog-card is-featured">
                 <Link to={`/blog/${featured.slug}`} className="mkt-blog-card__link">
                   <div className="mkt-blog-card__media">

@@ -306,7 +306,49 @@ export function offerPriceValidUntil(from = new Date()): string {
 }
 
 /**
- * Schema.org Offer[] for SoftwareApplication / Product — sourced from the catalog
+ * Digital SaaS offers still trigger Google Merchant listings checks when price is present.
+ * Cloud access = ₹0 shipping, same-day delivery, no physical return (terms cover billing).
+ */
+export function digitalOfferMerchantFields(currency = 'INR') {
+  return {
+    shippingDetails: {
+      '@type': 'OfferShippingDetails' as const,
+      shippingRate: {
+        '@type': 'MonetaryAmount' as const,
+        value: '0',
+        currency,
+      },
+      shippingDestination: {
+        '@type': 'DefinedRegion' as const,
+        addressCountry: 'IN',
+      },
+      deliveryTime: {
+        '@type': 'ShippingDeliveryTime' as const,
+        handlingTime: {
+          '@type': 'QuantitativeValue' as const,
+          minValue: 0,
+          maxValue: 0,
+          unitCode: 'DAY',
+        },
+        transitTime: {
+          '@type': 'QuantitativeValue' as const,
+          minValue: 0,
+          maxValue: 0,
+          unitCode: 'DAY',
+        },
+      },
+    },
+    hasMerchantReturnPolicy: {
+      '@type': 'MerchantReturnPolicy' as const,
+      applicableCountry: 'IN',
+      returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
+      merchantReturnLink: 'https://topedgeai.com/terms#billing-shopify',
+    },
+  };
+}
+
+/**
+ * Schema.org Offer[] for SoftwareApplication — sourced from the catalog
  * (FALLBACK_CATALOG when called at module load; pass live catalog when available).
  */
 export function catalogMonthlyOffersJsonLd(
@@ -314,18 +356,21 @@ export function catalogMonthlyOffersJsonLd(
   opts?: { url?: string },
 ) {
   const url = opts?.url || 'https://topedgeai.com/pricing';
+  const currency = catalog.currency || 'INR';
   const validUntil = offerPriceValidUntil();
+  const merchant = digitalOfferMerchantFields(currency);
   return catalog.plans
     .filter((p) => PUBLIC_PLANS.has(p.slug))
     .map((p) => ({
       '@type': 'Offer' as const,
       name: p.displayName,
       price: inrAmountFromLabel(p.monthlyPriceLabel),
-      priceCurrency: catalog.currency || 'INR',
+      priceCurrency: currency,
       priceValidUntil: validUntil,
       url,
       availability: 'https://schema.org/InStock',
       description: `${p.ordersPerCycle} orders / cycle · ${p.campaignEmailSendsPerCycle.toLocaleString('en-IN')} campaign sends · billed monthly`,
+      ...merchant,
     }));
 }
 

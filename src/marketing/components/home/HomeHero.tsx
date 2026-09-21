@@ -26,14 +26,18 @@ export default function HomeHero() {
                   <span className="home-hero__title-line">Growth Suite</span>
                 </span>
                 <span className="home-hero__title-brand">
-                  <img
-                    src="/brand-mark.png"
-                    alt="TopEdge AI"
-                    width={28}
-                    height={28}
-                    className="home-hero__title-mark"
-                    decoding="async"
-                  />
+                  <picture>
+                    <source type="image/webp" srcSet="/brand-mark-56.webp" />
+                    <img
+                      src="/brand-mark-56.png"
+                      alt="TopEdge AI"
+                      width={28}
+                      height={28}
+                      className="home-hero__title-mark"
+                      decoding="async"
+                      fetchPriority="low"
+                    />
+                  </picture>
                   <span className="home-hero__title-name">
                     TopEdge <span>AI</span>
                   </span>
@@ -62,6 +66,7 @@ export default function HomeHero() {
                     height={18}
                     className="home-hero__shopify-logo"
                     decoding="async"
+                    fetchPriority="low"
                   />
                 </a>
               </div>
@@ -73,14 +78,19 @@ export default function HomeHero() {
 
             <div className="home-hero__shot">
               <picture>
-                <source type="image/webp" srcSet="/herooo-immage-2400.webp?v=2" />
+                <source
+                  type="image/webp"
+                  srcSet="/herooo-immage-800.webp?v=3 800w, /herooo-immage-1200.webp?v=3 1200w, /herooo-immage-1600.webp?v=3 1600w, /herooo-immage-2400.webp?v=3 2398w"
+                  sizes="(max-width: 960px) 92vw, min(1040px, 92vw)"
+                />
                 <img
-                  src="/herooo-immage.png"
-                  srcSet="/herooo-immage.png 1x, /herooo-immage.png 2x"
+                  src="/herooo-immage-1200.png"
                   alt="TopEdge dashboard: WhatsApp commerce workspace"
-                  width={2398}
-                  height={1216}
+                  width={1200}
+                  height={606}
+                  sizes="(max-width: 960px) 92vw, min(1040px, 92vw)"
                   decoding="async"
+                  loading="eager"
                   fetchPriority="high"
                 />
               </picture>

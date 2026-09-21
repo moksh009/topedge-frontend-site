@@ -100,6 +100,13 @@
   transform-origin: center center;
 }
 
+/* Mobile: skip 94KB mesh — CSS atmosphere is enough; frees bandwidth for LCP shot */
+@media (max-width: 900px) {
+  .home-hero__mesh-fill {
+    background-image: none;
+  }
+}
+
 /* Keep ask menu unclipped when open; ripple still clips itself */
 .home-hero__board.is-menu-open {
   overflow: visible;

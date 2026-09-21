@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { Suspense, lazy, useEffect } from 'react';
 import '../marketing/styles/home.css';
 import MarketingSEO from '../marketing/components/MarketingSEO';
 import { OG_IMAGES } from '../marketing/data/marketingSeo';
@@ -11,11 +11,13 @@ import {
 } from '../marketing/data/pageSeo';
 import MarketingPage from '../marketing/components/MarketingPage';
 import HomeHero from '../marketing/components/home/HomeHero';
-import HomeStickyStories from '../marketing/components/home/HomeStickyStories';
-import HomeCrmSurface from '../marketing/components/home/HomeCrmSurface';
-import HomeRoiPayoff from '../marketing/components/home/HomeRoiPayoff';
-import HomeTestimonials from '../marketing/components/home/HomeTestimonials';
-import HomeClose from '../marketing/components/home/HomeClose';
+
+/** Below-fold sections — keep out of the critical homepage JS path for LCP. */
+const HomeStickyStories = lazy(() => import('../marketing/components/home/HomeStickyStories'));
+const HomeCrmSurface = lazy(() => import('../marketing/components/home/HomeCrmSurface'));
+const HomeRoiPayoff = lazy(() => import('../marketing/components/home/HomeRoiPayoff'));
+const HomeTestimonials = lazy(() => import('../marketing/components/home/HomeTestimonials'));
+const HomeClose = lazy(() => import('../marketing/components/home/HomeClose'));
 
 /**
  * Homepage: normal scrollable sections (sticky overlap / chaos zoom removed).
@@ -48,17 +50,26 @@ export default function Home() {
         noSuffix
         faqSchema={faqs}
         jsonLd={[organizationJsonLd(), softwareApplicationJsonLd(), websiteJsonLd()]}
+        preloadLcpImage={{
+          href: '/herooo-immage-800.webp?v=3',
+          imagesrcset:
+            '/herooo-immage-800.webp?v=3 800w, /herooo-immage-1200.webp?v=3 1200w, /herooo-immage-1600.webp?v=3 1600w, /herooo-immage-2400.webp?v=3 2398w',
+          imagesizes: '(max-width: 960px) 92vw, min(1040px, 92vw)',
+          type: 'image/webp',
+        }}
       />
 
       <MarketingPage className="home-page !bg-white">
         <div className="home-hero-stage">
           <HomeHero />
         </div>
-        <HomeStickyStories />
-        <HomeCrmSurface />
-        <HomeRoiPayoff />
-        <HomeTestimonials />
-        <HomeClose />
+        <Suspense fallback={null}>
+          <HomeStickyStories />
+          <HomeCrmSurface />
+          <HomeRoiPayoff />
+          <HomeTestimonials />
+          <HomeClose />
+        </Suspense>
       </MarketingPage>
     </>
   );

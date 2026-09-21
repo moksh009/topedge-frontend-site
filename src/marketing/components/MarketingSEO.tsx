@@ -25,6 +25,16 @@ type MarketingSEOProps = {
   /** ISO-8601 dates for og:type=article */
   articlePublished?: string;
   articleModified?: string;
+  /**
+   * Homepage LCP: responsive preload for the hero product shot.
+   * Only set on `/` — prerender embeds it in dist/index.html for first paint.
+   */
+  preloadLcpImage?: {
+    href: string;
+    imagesrcset: string;
+    imagesizes: string;
+    type?: string;
+  };
 };
 
 /** Absolute canonical. Homepage uses trailing slash to match sitemap.xml. */
@@ -48,6 +58,7 @@ export default function MarketingSEO({
   type = 'website',
   articlePublished,
   articleModified,
+  preloadLcpImage,
 }: MarketingSEOProps) {
   const fullTitle = noSuffix ? title : title.includes('TopEdge') ? title : `${title} | TopEdge`;
   const url = canonicalUrlForPath(path);
@@ -80,6 +91,17 @@ export default function MarketingSEO({
       <meta name="description" content={description} />
       {keywords ? <meta name="keywords" content={keywords} /> : null}
       <link rel="canonical" href={url} />
+      {preloadLcpImage ? (
+        <link
+          rel="preload"
+          as="image"
+          type={preloadLcpImage.type || 'image/webp'}
+          href={preloadLcpImage.href}
+          imageSrcSet={preloadLcpImage.imagesrcset}
+          imageSizes={preloadLcpImage.imagesizes}
+          {...{ fetchpriority: 'high' }}
+        />
+      ) : null}
       <meta name="robots" content={robots} />
       <meta property="og:type" content={type} />
       <meta property="og:site_name" content="TopEdge" />

@@ -44,6 +44,7 @@ Lock this weekday so the habit survives. Skip a Monday → do Tuesday; do not in
 | 2026-09-21 | Phase A+B meta gate live | Deployed fail-closed prerender budgets + schema; OG image alt/dims; blog article times; soft-404; CCBot + GoogleOther in robots; `npm run seo:audit`. Topic clusters + question bank docs. IndexNow `--changed`. **Manual still owed:** Bing/GSC Request indexing for Dondy URLs. | Confirm Live URL green for Dondy; start citation baseline Oct 1 | Phase C3 AEO rewrites next |
 | 2026-09-21 (pm) | Phase B4+C ship | Soft-404/redirect smoke documented; compare Product→SoftwareApplication+image; AEO on journeys/COD/best-tools + Live Chat/Meta Manager/AI Brain answerFirst+FAQ; IndexNow after deploy | Re-request GSC for `/compare/dondy` (Merchant listings); Bing Live URL→Request indexing for Dondy pair | C4 cadence row logged |
 | 2026-09-21 (Phase D ops) | _Fill real GSC impressions when you open Search Console (same Monday)_ | _Fill Bing glance_ | Live smoke: junk URL **404**; `/pricing` **200**; `/compare/dondy` **200** self-canonical + `SoftwareApplication`; `/features/journeys` **200**. IndexNow already pinged AEO set. | Phase D runbooks live; citation pass still Oct 1 |
+| 2026-09-21 (LCP) | GSC mobile LCP >4s on `/` (4.4s, 13 URLs) | Root cause: wrong preload (`hero-mesh` vs product shot), 6000px/2.2MB PNG fallback, 311KB brand-mark in H1, below-fold JS on critical path. Fix: responsive webp 800–2400 + preload imagesrcset; 1200 PNG fallback; tiny brand; lazy below-fold; skip mesh on mobile | After deploy: PageSpeed mobile `/`; GSC CWV validate when ready | |
 | 2026-09-28 | _Second consecutive Monday — required for D3 done_ | | Soft-404 smoke again | |
 
 ---
@@ -120,7 +121,7 @@ Whenever a high-value URL is **new**, **recovered**, or **schema-fixed**:
 
 | URL | Why | GSC | Bing Live→Request | IndexNow |
 |---|---|---|---|---|
-| `https://topedgeai.com/compare/dondy` | Merchant listings schema fix (Product→SoftwareApplication+image) | [ ] | [ ] | done |
+| `https://topedgeai.com/compare/dondy` | Merchant listings schema fix (image + Offer shipping/return; no fake aggregateRating) | [ ] after deploy | [ ] | code done — re-validate in GSC |
 | `https://topedgeai.com/blog/dondy-alternative-shopify-india` | New GEO URL; Bing crawl queue | [ ] | [ ] | done |
 | `https://topedgeai.com/features/journeys` | AEO rewrite + Discovered-not-indexed | [ ] | [ ] | done |
 | `https://topedgeai.com/pricing` | Discovered-not-indexed (Priority 1) | [ ] | [ ] | |
