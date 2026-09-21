@@ -4,6 +4,14 @@
 
 > TopEdge is a WhatsApp automation and cart recovery platform for Shopify D2C brands in India. Connect Shopify + Meta WhatsApp Cloud API to run abandoned cart recovery, COD confirmations, shared inbox, journeys, and Meta-safe campaigns.
 
+## Knowledge domains
+- Shopify WhatsApp automation (India D2C)
+- Abandoned cart recovery on WhatsApp
+- COD confirmation and RTO reduction
+- Meta WhatsApp Cloud API templates and India pricing
+- Shared WhatsApp / Instagram inbox with order context
+- Alternatives to WATI, AiSensy, Interakt, Bitespeed, Zoko, Getgabs, Kanal, Dondy
+
 ## Product
 - WhatsApp automation for Shopify
 - Abandoned cart recovery on WhatsApp

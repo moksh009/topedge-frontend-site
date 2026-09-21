@@ -1,71 +1,95 @@
-# SEO / GEO / AEO Meta System Implementation Plan
+# TopEdge SEO / AEO / GEO / LLM Optimization Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use `superpowers:subagent-driven-development` (recommended) or `superpowers:executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+>
+> **Execute one phase at a time.** Do not skip ahead. Mark checkboxes as you finish. Do not commit unless the user asks.
 
-**Goal:** Make every indexable marketing URL emit a complete, unique, self-consistent SEO/GEO/AEO head (meta + Open Graph + Twitter + JSON-LD + visible answer content) from one source of truth, with a build gate so regressions cannot ship.
+**Goal:** Make TopEdge the trusted, extractable knowledge source for Shopify WhatsApp automation in India across Google/Bing **and** AI answer engines (ChatGPT, Perplexity, Gemini, Copilot) — with a fail-closed meta/schema system, answer-first content, topic clusters, entity signals, and a repeatable measurement cadence.
 
-**Architecture:** Do **not** hand-author `<meta>` tags inside each page JSX or static HTML for marketing routes. All marketing pages already go through `MarketingSEO` (`src/marketing/components/MarketingSEO.tsx`). Copy and schema live in typed data (`pageSeo.ts`, `productPages.ts`, `compareCompetitors.ts`, `blogPosts.ts`). Prerender (`scripts/prerender-marketing.mjs`) owns the “one title / one description / one self-canonical / one h1” gate. This plan hardens that contract, fills remaining gaps, and adds length + schema-type checks.
+**Architecture:** One marketing SEO SSOT (`MarketingSEO` + typed page data + prerender asserts). Content follows Q&A / extractable blocks (AEO + GEO). Crawler access + `llms.txt` + IndexNow (LLM/GEO discovery). Measurement stays in `docs/seo/` (organic ≠ citation). External playbook reference: [ThatWare SEO/AEO/GEO/LLM guide](https://thatware.co/seo-aeo-geo-llm-optimization-ultimate-guide-deliverables-checklist/).
 
-**Tech Stack:** React, `react-helmet-async`, Vite + Netlify prerender (Playwright), `scripts/marketing-urls.mjs` sitemap/prerender list, IndexNow (`scripts/indexnow.mjs`), `public/llms.txt` + `public/robots.txt`
+**Tech Stack:** React, `react-helmet-async`, Vite + Netlify prerender (Playwright), `scripts/marketing-urls.mjs`, IndexNow, `public/llms.txt` + `public/robots.txt`, `docs/seo/*` trackers.
 
 ## Global Constraints
 
-- **SSOT:** Marketing routes use `MarketingSEO` only. Never reintroduce homepage canonical/description into `index.html`.
-- **One of each:** Exactly 1 `<title>`, 1 `meta[name=description]`, 1 `link[rel=canonical]`, 1 `<h1>` per prerendered URL.
-- **Self-canonical:** Canonical = page URL (`/` → `https://topedgeai.com/`; all other paths slashless).
-- **Snippet budgets:** Title ≤ 60 chars preferred (hard fail > 65). Description 120–160 chars preferred (hard fail < 70 or > 165).
-- **Locale:** `html lang="en-IN"`, `og:locale=en_IN`.
-- **Images:** Open Graph / Twitter images must be absolute HTTPS **PNG or JPEG** (not SVG). Default: `https://topedgeai.com/og-image.png`.
-- **FAQ rule:** Emit `FAQPage` JSON-LD only when the same Q&A is visible in HTML (never schema-only FAQs).
-- **Lean compare pages:** `wati`, `aisensy`, `bitespeed`, `interakt` stay lean (no invented FAQ). Non-lean: `zoko`, `getgabs`, `kanal`, `dondy`, 3-way, alternatives as appropriate.
-- **Footer:** Do not add Zoko / Getgabs / Kanal / Dondy / alternatives to the site footer.
-- **Sourcing:** Compare/blog numbers must stay verify-live against competitor pricing / Shopify listings.
+- **SSOT head:** Marketing routes use `MarketingSEO` only. Never put homepage canonical/description back into `index.html`.
+- **One of each:** Exactly 1 `<title>`, 1 description, 1 self-canonical, 1 `<h1>` per prerendered URL.
+- **Self-canonical:** `/` → `https://topedgeai.com/`; all other paths **slashless**.
+- **Snippet budgets:** Title ≤ 60 preferred (hard fail > 65). Description 120–160 preferred (hard fail < 70 or > 165).
+- **Locale:** `html lang="en-IN"`, `og:locale=en_IN`. No fake `hreflang` (no Hindi pages).
+- **Images:** OG/Twitter absolute HTTPS **PNG/JPEG** (not SVG). Default `https://topedgeai.com/og-image.png`.
+- **FAQ rule:** `FAQPage` JSON-LD only when the same Q&A is **visible in HTML**.
+- **Lean compares:** `wati`, `aisensy`, `bitespeed`, `interakt` stay lean (no invented FAQ). Non-lean: `zoko`, `getgabs`, `kanal`, `dondy`, 3-way, alternatives as appropriate.
+- **Footer:** Do **not** add Zoko / Getgabs / Kanal / Dondy / alternatives to the site footer.
+- **Sourcing:** Compare/blog numbers must stay verify-live. No fake reports, invented stats, or schema-only claims.
+- **Netlify redirects:** Never add catch-all trailing-slash force `301!` (self-loops with Pretty URLs). Soft-404 = `/* → /404.html 404` only.
+- **IndexNow ≠ Google:** After meta/URL deploys, `npm run indexnow -- --changed`. Google still needs GSC URL Inspection.
 - **Do not commit** unless the user asks.
-- **After deploys that change URLs/meta:** `npm run indexnow -- --changed` (or `--sitemap` only when many URLs truly changed).
+- **Do not buy** paid GEO tools until ≥3 months of manual citation logging.
 
 ---
 
-## Current state (2026-09-21 live audit — do not re-fix)
+## Four pillars (ThatWare → TopEdge mapping)
 
-| Layer | Status |
+| Pillar | Meaning | TopEdge application |
+|---|---|---|
+| **SEO** | Crawl, index, rank, technical health | Prerender HTML, sitemap, soft-404, CWV, internal links, GSC/Bing |
+| **AEO** | Win direct answers / snippets / PAA | Answer-first blocks, FAQ in HTML, question H2s, concise definitions |
+| **GEO** | Be extractable & citable by generative engines | Topic clusters, tables, quotable facts, entity clarity, citation log |
+| **LLM** | Let models access & trust the site | AI bots in `robots.txt`, `llms.txt`, IndexNow, no soft-404 homepage hijack |
+
+**Common ThatWare mistakes we explicitly avoid**
+
+1. Treating GEO as “more keywords” — we optimize extractable knowledge, not stuffing.
+2. Poor structure — every key page needs modular sections + direct answers.
+3. Blocking AI crawlers — keep Allow rules; expand missing bots carefully.
+4. Missing entity signals — TopEdge / founders / Shopify / Meta Cloud API named clearly + Organization `sameAs`.
+
+---
+
+## Live baseline (2026-09-21) — do not re-fix unless regression
+
+### Done (shipped)
+
+| Area | Evidence |
 |---|---|
-| Duplicate homepage canonical on every page | **Fixed** (shell stripped; prerender sanitize + assert) |
-| Self-canonical + single description | **Live** on sampled marketing URLs |
-| `en-IN` + PNG OG default | **Live** |
-| Organization / WebPage / BreadcrumbList | Present on most marketing pages |
-| BlogPosting | All 17 blog posts |
-| FAQPage | Home + pricing FAQs + non-lean compares + some blogs; **3-way now has FAQ** |
-| IndexNow key + submit script | Live |
-| `llms.txt` / AI bots in `robots.txt` | Live |
+| Duplicate homepage canonical on all pages | Fixed (shell stripped; prerender sanitize + assert) |
+| Soft-404 | Junk URLs → **HTTP 404** + `noindex` (`404.html`), not homepage |
+| Self-canonical + single description | Live on marketing URLs |
+| `en-IN` + PNG OG default | Live |
+| Schema baseline | Organization / WebPage / BreadcrumbList; BlogPosting on blogs; FAQPage on home/pricing/non-lean compares/some blogs; Product/Offer where catalog helper used |
+| IndexNow | Key live; `npm run indexnow` |
+| `llms.txt` | Product, keywords, key URLs, citation guidance, contact |
+| AI bots in `robots.txt` | GPTBot, ChatGPT-User, OAI-SearchBot, ClaudeBot, anthropic-ai, PerplexityBot, Google-Extended, Googlebot, Bingbot, Applebot-Extended |
+| Compare + blog GEO set | 8 pairwise + alternatives + 3-way; 17 blogs incl. Dondy; pillar table includes Dondy |
+| Truthful sitemap `lastmod` | From content-dates + blog `updated` |
+| Measurement ops | `docs/seo/measurement.md`, `geo-citation-log.md`, `content-backlog.md`, `backlink-opportunities.md` |
 
-**Remaining gaps this plan closes:**
+### Partial / remaining
 
-1. No automated **title/description length** gate (only uniqueness + self-canonical today).
-2. Missing **OG/Twitter image width/height/alt** and article-specific meta on blogs.
-3. **Page-type schema contract** not encoded as a checklist in code (easy to miss WebPage on a new page).
-4. Legal HTML is static (fine) but outside prerender assert — needs a tiny static-head check.
-5. Optional GEO polish: `llms.txt` last-updated discipline + optional visual breadcrumbs (layout change — gated).
-6. Keywords meta is low-value for Google but kept for consistency; do not treat as ranking lever.
+| Gap | Why it matters (ThatWare) | Plan phase |
+|---|---|---|
+| No automated title/desc **length** gate | CTR + SERP truncation; build regressions | Phase A |
+| No page-type **schema contract** in code | Easy to ship a page without WebPage/BlogPosting | Phase A |
+| Missing `og:image` width/height/alt; blog `article:*` times | Richer previews; article freshness signals | Phase A |
+| Legal static pages outside prerender assert | Soft gaps on `/privacy` `/terms` | Phase A |
+| `robots.txt` missing **CCBot** / **GoogleOther** (guide lists them) | Broader LLM training/crawl access | Phase B |
+| Organization `sameAs` / entity directory completeness | Knowledge-graph / entity recognition | Phase B |
+| Answer-first / Q&A structure uneven across feature pages | AEO extraction | Phase C |
+| Topic-cluster map not explicit as ops artifact | GEO topical authority | Phase C |
+| GA4 “AI Search” channel not confirmed in this repo | Attribution of AI referrals | Phase D |
+| First full citation baseline still owed (Oct 2026) | GEO measurement | Phase D |
+| Bing “Discovered but not crawled” on new URLs | Queue — needs Live URL + Request indexing | Phase D (manual) |
 
----
+### Explicitly out of scope (unless user reopens)
 
-## Best approach (decision — lock this)
-
-### Do this
-
-1. **One component** (`MarketingSEO`) emits the head for every marketing route.
-2. **Page data owns the strings** (title, description, keywords, image, faqs, jsonLd extras).
-3. **Page-type presets** define required schema bundles (home vs feature vs compare vs blog).
-4. **Prerender fail-closed** if uniqueness / self-canonical / length / required schema fails.
-5. **IndexNow + GSC** for discovery; IndexNow does not replace Google URL Inspection.
-
-### Do not do this
-
-- Paste unique `<Helmet>` meta blocks into every page component by hand.
-- Put marketing SEO back into `index.html`.
-- Invent FAQPage / stats for lean compare pages.
-- Add dozens of low-value meta tags (`revisit-after`, stuffed keywords, fake `geo.position`, etc.).
-- Ship SVG as the primary `og:image`.
+- Visual breadcrumb UI redesign (schema already present).
+- Per-URL unique OG artwork.
+- FAQ invention on lean WATI/AiSensy/Bitespeed/Interakt pages.
+- Reddit spam / review-farming / paid link schemes.
+- WordPress-style `/products` `/wp-admin` checklist items (not this stack).
+- Trailing-slash force `301!` sitewide (Netlify self-loop).
+- Hindi locale / fake multilingual.
 
 ---
 
@@ -73,204 +97,334 @@
 
 | File | Responsibility |
 |---|---|
-| `src/marketing/components/MarketingSEO.tsx` | Emits title, description, canonical, robots, OG, Twitter, FAQPage, optional extras |
-| `src/marketing/data/pageSeo.ts` | `PAGE_SEO`, JSON-LD helpers, length helpers |
-| `src/marketing/data/productPages.ts` | Feature lander `seoTitle` / `seoDescription` |
-| `src/marketing/data/compareCompetitors.ts` | Compare titles/descriptions/faqs |
-| `src/data/blogPosts.ts` | Blog title/description/faqs |
-| `scripts/prerender-marketing.mjs` | Sanitize shell tags + hard SEO asserts |
-| `scripts/seo-head-audit.mjs` *(new)* | Reusable length + schema contract checks (callable from prerender) |
-| `public/privacy.html`, `public/terms.html` | Static legal heads (no React) |
-| `public/llms.txt`, `public/robots.txt` | GEO crawler discovery |
-| `docs/seo/measurement.md` | Human QA notes after ship |
+| `src/marketing/components/MarketingSEO.tsx` | Head + optional FAQPage + article metas |
+| `src/marketing/data/pageSeo.ts` | `PAGE_SEO`, JSON-LD helpers |
+| `src/marketing/data/seoContracts.ts` *(new)* | Length helpers + page-type schema map |
+| `src/marketing/data/productPages.ts` | Feature lander SEO strings |
+| `src/marketing/data/compareCompetitors.ts` | Compare SEO + FAQs + related links |
+| `src/data/blogPosts.ts` | Blog SEO + FAQs + answer-first content |
+| `scripts/prerender-marketing.mjs` | Sanitize + fail-closed head QA |
+| `scripts/seo-head-audit.mjs` *(new)* | Parse title/desc/canonical/h1/schema |
+| `scripts/seo-static-head-audit.mjs` *(new)* | Legal HTML heads |
+| `scripts/generate-redirects.mjs` | SPA shells + soft-404 footer only |
+| `scripts/generate-sitemap.mjs` | Truthful lastmod |
+| `scripts/indexnow.mjs` | Bing/Yandex/etc URL ping |
+| `public/robots.txt`, `public/llms.txt` | LLM crawl + machine site map |
+| `docs/seo/measurement.md` | Weekly organic + deploy notes |
+| `docs/seo/geo-citation-log.md` | Monthly AI citation tests |
+| `docs/seo/content-backlog.md` | Topic cluster / post queue |
+| `docs/seo/topic-clusters.md` *(new)* | Pillar ↔ cluster map (Phase C) |
 
 ---
 
-## Page-type SEO contracts
+## Phase A — Meta / schema system (fail-closed)
 
-### A. Universal (every indexable marketing URL)
+> Closes the original meta-system plan. **Do this before content rewrites.**
 
-Required in HTML:
+### Task A1: Encode length + schema helpers
 
-- [ ] `html[lang=en-IN]`
-- [ ] Exactly one `<title>` (≤ 65 chars)
-- [ ] Exactly one `meta[name=description]` (70–165 chars)
-- [ ] Exactly one self-canonical
-- [ ] `meta[name=robots]` indexable (or `noindex` only on 404/auth handoffs)
-- [ ] `og:type`, `og:url`, `og:title`, `og:description`, `og:image` (PNG/JPEG absolute)
-- [ ] `twitter:card=summary_large_image` + title/description/image/url
-- [ ] Exactly one `<h1>` whose text matches the page intent (not the nav brand alone)
+**Files:** Create `src/marketing/data/seoContracts.ts`; optional re-export from `pageSeo.ts`; create `scripts/seo-contracts.selftest.mjs`.
 
-### B. Homepage `/`
+- [x] Add `assertSnippetBudgets(title, description)` → `{ ok, errors }` (title 15–65, description 70–165).
+- [x] Add `PAGE_TYPE_SCHEMA` required `@type` sets: `home`, `pricing`, `feature`, `compare`, `blog`, `legal`, `notFound`.
+- [x] Self-test with known good/bad strings: `node scripts/seo-contracts.selftest.mjs`.
 
-- [ ] `SoftwareApplication` + `Organization` + `WebSite` (+ FAQPage if homepage FAQs exist)
-- [ ] Answer-first hero subhead stays in HTML
+**Done when:** Self-test passes; no live page copy changed yet.
 
-### C. Pricing `/pricing`
+### Task A2: Wire budgets into prerender fail-closed gate
 
-- [ ] `SoftwareApplication` offers from `billingCatalog` / `catalogMonthlyOffersJsonLd` (SSOT — no third price list)
-- [ ] Visible pricing FAQ + FAQPage
+**Files:** `scripts/seo-head-audit.mjs`, `scripts/prerender-marketing.mjs`.
 
-### D. Feature / product pages `/features/*`
+- [x] After sanitize: uniqueness, self-canonical, snippet budgets, required schema types for route.
+- [x] Fail build on any offending prerendered route (clear path + reason).
+- [x] `/404` must require `noindex` (already asserted); must **not** require indexable schema bundle.
 
-- [ ] `Organization` + `WebPage` (`dateModified` from content-dates) + `BreadcrumbList`
-- [ ] Title/description from `productPages` or `FEATURE_SEO` only (one path)
+**Done when:** Intentionally overlong title would fail prerender with a readable message.
 
-### E. Compare hub + pairwise + 3-way + alternatives
+### Task A3: Harden `MarketingSEO` head completeness
 
-- [ ] `Organization` + `WebPage` + `BreadcrumbList`
-- [ ] Real `<table>` for boards (not div grids)
-- [ ] Non-lean pages: visible FAQ + FAQPage
-- [ ] Product/Offer schema only when using catalog offers helper (already on compares)
+**Files:** `MarketingSEO.tsx`.
 
-### F. Blog posts `/blog/:slug`
+- [x] `og:image:alt` (default India WhatsApp line; override prop).
+- [x] `og:image:width` / `height` only after measuring real `og-image.png` (do not invent).
+- [x] For `type === 'article'`: optional `article:published_time` / `article:modified_time` props.
 
-- [ ] `BlogPosting` with `datePublished` / `dateModified` via content-dates helpers
-- [ ] `og:type=article`
-- [ ] Optional: `article:published_time` / `article:modified_time` meta (Task 3)
-- [ ] FAQPage only when `post.faqs` exist **and** answers visible in HTML
+**Done when:** Homepage shows image alt; blog can receive article times (wired in A5).
 
-### G. Legal `/privacy`, `/terms`
+### Task A4: Bring every data-owned title/description into budget
 
-- [ ] Static HTML heads stay complete (canonical, description, OG, Twitter)
-- [ ] Included in sitemap; checked by static audit script
+**Files:** `pageSeo.ts`, `productPages.ts`, `compareCompetitors.ts`, `blogPosts.ts`, compare page SEO if inline.
 
----
+- [x] Print offenders; shorten meaning-preserving only; no invented competitor claims.
+- [x] `npm run build:netlify` green with length gate on.
 
-### Task 1: Encode length + schema helpers (no page copy changes yet)
+**Done when:** Spot-check `/compare/dondy`, `/about`, `/features/ai-brain`, longest blog title.
 
-**Files:**
-- Create: `src/marketing/data/seoContracts.ts`
-- Modify: `src/marketing/data/pageSeo.ts` (re-export helpers if useful)
+### Task A5: Blog article meta + BlogPosting parity
 
-- [ ] Add `assertSnippetBudgets(title, description)` returning `{ ok, errors }` with limits: title 15–65, description 70–165.
-- [ ] Add `PAGE_TYPE_SCHEMA` map documenting required `@type` strings per path pattern (`home`, `pricing`, `feature`, `compare`, `blog`, `legal`).
-- [ ] Add unit-less Node test via `node --test` **or** a tiny `scripts/seo-contracts.selftest.mjs` that imports the helpers and asserts known good/bad strings.
-- [ ] Run self-test: `node scripts/seo-contracts.selftest.mjs` (or equivalent) — must pass.
+**Files:** `BlogPost.tsx`, `MarketingSEO.tsx`.
 
-**Done when:** Helpers exist and self-test passes without changing live pages.
+- [x] Pass published/modified ISO into `MarketingSEO`.
+- [x] `BlogPosting.url` / `mainEntityOfPage.@id` use `canonicalUrlForPath`.
+- [x] FAQ answers remain visible when `faqs` set.
 
----
+**Done when:** Curl one post → `og:type=article`, article times, single canonical, BlogPosting ± FAQPage.
 
-### Task 2: Wire budgets into prerender fail-closed gate
+### Task A6: Static legal audit + `seo:audit` script
 
-**Files:**
-- Modify: `scripts/prerender-marketing.mjs`
-- Create: `scripts/seo-head-audit.mjs` (shared parse of title/desc/canonical/h1/schema types)
+**Files:** `privacy.html` / `terms.html` if needed; `scripts/seo-static-head-audit.mjs`; `package.json` `"seo:audit"`.
 
-- [ ] After `sanitizePrerenderHtml`, run audit:
-  - uniqueness (title/desc/canonical/h1 counts)
-  - self-canonical match
-  - snippet budgets
-  - required schema types for that route’s page type
-- [ ] Fail the build (`exitCode = 1`) if any prerendered route fails (already fail-closed for uniqueness; extend for length + schema).
-- [ ] Run locally: `npm run build:netlify` — expect either all green or a clear list of offending routes (fix copy in Task 4 if build fails).
+- [x] Assert legal: 1 title, 1 description, 1 canonical, twitter/og PNG, `lang=en-IN`.
+- [x] Wire `npm run seo:audit` for dist/public checks.
+- [x] Note in `measurement.md`: run after meta deploys.
 
-**Done when:** A deliberately too-long title in a throwaway branch would fail prerender with a readable message.
+**Done when:** `npm run seo:audit` passes post-build.
+
+### Task A7: Ship Phase A + re-signal
+
+- [x] Deploy prod (`netlify deploy --prod --dir=dist --no-build` after local `build:netlify`, or full deploy with Node 22).
+- [x] Curl: `/`, `/pricing`, `/compare/dondy`, `/blog/dondy-alternative-shopify-india`, `/privacy`, junk URL (expect 404+noindex).
+- [x] `npm run indexnow -- --sitemap` (or `--changed`).
+- [ ] Manual: Bing + GSC URL Inspection for Dondy URLs + homepage if still misclassified.
+
+**Done when:** Live samples pass; IndexNow 200/202; measurement note updated.
 
 ---
 
-### Task 3: Harden `MarketingSEO` head completeness (all pages inherit)
+## Phase B — LLM / crawler / entity foundation
 
-**Files:**
-- Modify: `src/marketing/components/MarketingSEO.tsx`
+> ThatWare Steps 1.1–1.3 adapted to Netlify/Vite (not WordPress).
 
-- [ ] Add `og:image:alt` (default `"TopEdge — WhatsApp automation for Shopify India"`; allow override prop).
-- [ ] Add `og:image:width` / `og:image:height` only if we know real dimensions of `og-image.png` (measure once with `sips` / `file`; do not invent).
-- [ ] For `type === 'article'`, emit:
-  - `meta property="article:published_time"` and `article:modified_time` when caller passes ISO dates (new optional props).
-- [ ] Keep `prioritizeSeoTags` and `canonicalUrlForPath` unchanged in behavior.
-- [ ] Do **not** add `meta keywords` emphasis; leave optional as today.
+### Task B1: Expand AI crawler Allow list (careful)
 
-**Done when:** Homepage and one blog post HTML show the new OG image alt; blog shows article times when wired in Task 5.
+**Files:** `public/robots.txt` (sync root `robots.txt` copy).
 
----
+- [x] Add explicit Allow for **CCBot** and **GoogleOther** (guide checklist).
+- [x] Keep all existing Disallows for `/admin`, `/login`, `/signup`, `/docs`, community private paths.
+- [x] Verify live `https://topedgeai.com/robots.txt` 200; no accidental Disallow of `/blog` `/compare` `/features`.
 
-### Task 4: Bring every data-owned title/description into budget
+**Done when:** View-source/curl shows new UA blocks; marketing paths still Allow.
 
-**Files:**
-- `src/marketing/data/pageSeo.ts`
-- `src/marketing/data/productPages.ts` (`seoTitle` / `seoDescription`)
-- `src/marketing/data/compareCompetitors.ts`
-- `src/marketing/pages/CompareIndexPage.tsx` / `CompareAlternativesPage.tsx` / `CompareThreeWayPage.tsx` if titles live inline
-- `src/data/blogPosts.ts` (titles must fit with `| TopEdge` suffix used in `BlogPost.tsx`)
+### Task B2: Organization entity + `sameAs`
 
-- [ ] Run a one-off Node script (or extend self-test) that prints any string over budget.
-- [ ] Shorten only the offenders — keep meaning and India/Shopify keywords; do not invent competitor claims.
-- [ ] Re-run prerender / `npm run build:netlify` until 0 SEO head failures.
+**Files:** Organization JSON-LD helper (likely `pageSeo.ts` / home schema), `/about` content if needed.
 
-**Done when:** Build passes with length gate on; spot-check `/compare/dondy`, `/about`, `/features/ai-brain`, longest blog title.
+- [x] Inventory official profiles (LinkedIn company, Product Hunt, Shopify App Store listing if live, Crunchbase if exists — **only real URLs**).
+- [x] Add `Organization.sameAs` array; logo absolute HTTPS.
+- [x] Ensure founders named on `/about` match any Person mentions (E-E-A-T).
 
----
+**Done when:** Homepage Organization JSON-LD validates mentally against live URLs; no invented profiles.
 
-### Task 5: Blog article meta + BlogPosting parity
+### Task B3: `llms.txt` discipline
 
-**Files:**
-- Modify: `src/pages/BlogPost.tsx`
-- Modify: `MarketingSEO.tsx` (consume published/modified props from Task 3)
+**Files:** `public/llms.txt`.
 
-- [ ] Pass `articlePublished` / `articleModified` ISO from existing `articleDatePublishedIso` / `articleDateModifiedIso` into `MarketingSEO`.
-- [ ] Ensure `BlogPosting.url` and `mainEntityOfPage.@id` use `canonicalUrlForPath`.
-- [ ] Confirm FAQ answers remain in HTML when `faqs` set (existing `mkt-blog-faq` / fallback block).
+- [x] Keep `Last updated:` accurate on each meaningful content ship.
+- [x] Ensure every sitemap compare + Phase 3/4 alternative blogs remain listed.
+- [x] Optional: short “Knowledge domains” section (Shopify WhatsApp, COD/RTO, Meta Cloud API, India D2C) — factual, not fluff.
 
-**Done when:** Curl one post: `og:type=article`, article time metas present, single canonical, BlogPosting + optional FAQPage.
+**Done when:** `llms.txt` matches live URL inventory.
+
+### Task B4: Soft-404 + redirect regression guard
+
+**Files:** `scripts/generate-redirects.mjs`, optional CI check.
+
+- [ ] Document in script header: never emit trailing-slash force 301s.
+- [ ] Optional smoke: after deploy, curl junk URL expect 404; curl `/pricing` expect 200 (not 301 loop).
+
+**Done when:** Smoke documented in `measurement.md` QA checklist.
 
 ---
 
-### Task 6: Static legal head audit + robots/llms hygiene
+## Phase C — AEO content + GEO topic clusters
 
-**Files:**
-- Modify: `public/privacy.html`, `public/terms.html` only if audit finds gaps
-- Create: `scripts/seo-static-head-audit.mjs`
-- Modify: `package.json` (`"seo:audit": "node scripts/seo-head-audit.mjs && node scripts/seo-static-head-audit.mjs"`)
-- Modify: `docs/seo/measurement.md` (one line: run `npm run seo:audit` after meta deploys)
+> ThatWare Steps 2–3 + content architecture. Use `content-backlog.md`; one page at a time.
 
-- [ ] Assert privacy/terms: 1 title, 1 description, 1 canonical, twitter:url, og:image PNG, lang=en-IN.
-- [ ] Confirm `robots.txt` still allows GPTBot / ClaudeBot / PerplexityBot / OAI-SearchBot / Google-Extended.
-- [ ] Confirm `llms.txt` lists all compare boards + Phase 3/Dondy blogs and contact email `team@topedgeai.com`.
+### Task C1: Write topic-cluster map
 
-**Done when:** `npm run seo:audit` passes against `dist/` after build (or against `public/` for legal + live curl optional).
+**Files:** Create `docs/seo/topic-clusters.md`.
+
+- [x] Define pillars (suggested):
+  1. WhatsApp cart recovery / journeys
+  2. COD confirmation / RTO
+  3. Meta Cloud API / templates / pricing India
+  4. Shared inbox / Live Chat
+  5. Alternatives / comparisons (WATI…Dondy)
+  6. Choosing a Shopify WhatsApp app
+- [x] Map each existing `/features/*`, `/blog/*`, `/compare/*` URL into a cluster.
+- [x] Flag orphan pages (<3 inbound internal links) for Phase C3.
+
+**Done when:** Map reviewed once; backlog IDs reference cluster IDs.
+
+### Task C2: Customer-question bank (30 → top 10)
+
+**Files:** `docs/seo/content-backlog.md` or new `docs/seo/question-bank.md`.
+
+- [x] Seed from: GSC queries (export), sales objections, support themes, existing FAQs, geo-citation query list.
+- [x] Tag funnel (TOFU/MOFU/BOFU) + business impact.
+- [x] Select top 10 for AEO optimization this quarter.
+
+**Done when:** Top 10 approved in the doc (status column).
+
+### Task C3: AEO rewrite pattern (apply to 3 quick-win pages first)
+
+**Pattern (lock this):**
+
+1. H1 = topic (SEO-clear).
+2. Opening **30–50 word direct answer**.
+3. H2s as questions where natural.
+4. 2–3 sentence direct answer under each H2, then supporting context.
+5. Real `<table>` for comparisons; bullets for steps.
+6. Visible FAQ (3–5) only if truthful; then FAQPage schema.
+7. 2–4 contextual internal links into the cluster (not footer dumps).
+
+**First three URLs (suggested — adjust if analytics says otherwise):**
+
+- [ ] `/` or `/features/journeys` (cart recovery)
+- [ ] `/blog/cod-confirmation-whatsapp-reduce-rto-shopify` or COD feature path
+- [ ] `/blog/best-whatsapp-automation-tools-shopify-india` (pillar refresh if needed)
+
+**Done when:** Each of the three has extractable answer blocks live + IndexNow pinged.
+
+### Task C4: Ongoing monthly content rhythm
+
+**Ops (not a code dump):**
+
+- [ ] Week 1: pick 1–2 questions from bank / backlog.
+- [ ] Weeks 2–3: draft 1000–1500 words **or** deepen an existing URL (prefer deepen if thin).
+- [ ] Week 4: SME fact-check, schema, internal links from ≥3 existing pages, publish, `llms.txt` + sitemap + IndexNow.
+- [ ] Log in `content-backlog.md` cadence table.
+
+**Done when:** Cadence row exists for the current month with a real slug.
+
+### Task C5: Product/feature page AEO pass (batch)
+
+**Files:** `productPages.ts` + feature page components as needed.
+
+- [ ] For each feature lander: intro answers “What is it and who is it for?”
+- [ ] Feature → benefit bullets; optional specs table.
+- [ ] Keep CTAs; no invented pricing on feature pages (point to `/pricing`).
+
+**Done when:** At least Journeys, Live Chat, Meta Manager, AI Brain pass the intro-answer test.
 
 ---
 
-### Task 7: Ship + re-signal search engines
+## Phase D — Measurement, citations, competitive GEO
 
-- [ ] `netlify deploy --prod` with message describing meta-system gate.
-- [ ] Curl sample set: `/`, `/pricing`, `/compare/dondy`, `/blog/dondy-alternative-shopify-india`, `/privacy` — verify budgets + self-canonical + PNG OG.
-- [ ] `npm run indexnow -- --sitemap` (meta changed site-wide).
-- [ ] User action (cannot automate): Bing URL Inspection + GSC URL Inspection for `/compare/dondy` and homepage to clear prior “alternate of /” classification.
+> ThatWare reporting framework — already sketched in `measurement.md`; make it operational.
 
-**Done when:** Live samples pass; IndexNow returns 200/202; measurement note updated.
+### Task D1: Confirm GA4 AI Search channel
+
+- [ ] In GA4: custom channel / explore for referrers ChatGPT, Perplexity, Gemini, Copilot (and known AI domains).
+- [ ] Document the filter definition in `measurement.md` § analytics.
+- [ ] Do **not** invent traffic numbers in repo docs.
+
+**Done when:** Filter steps written; one screenshot/link optional for the team.
+
+### Task D2: First full monthly citation baseline
+
+**Files:** `geo-citation-log.md`.
+
+- [ ] Run **every** tracked query in ChatGPT, Perplexity, Claude, Gemini (incognito).
+- [ ] Log Y / P / N + what was cited instead.
+- [ ] Include Dondy queries (B8).
+- [ ] Target calendar: **2026-10-01** (or next available day — do not skip).
+
+**Done when:** October row filled for all queries × platforms.
+
+### Task D3: Weekly organic dashboard habit
+
+- [ ] Fixed weekday: GSC + Bing impressions/clicks; indexing anomalies; feed unexpected queries into backlog.
+- [ ] After any crawl fix: confirm junk URLs still 404; Dondy still 200 self-canonical.
+
+**Done when:** Two consecutive weeks logged in `measurement.md` organic table.
+
+### Task D4: Competitive AEO glance (quarterly)
+
+- [ ] Pick 3 competitors appearing in AI answers for shared queries.
+- [ ] Note their structure (tables, FAQ, pricing transparency) — steal **patterns**, not claims.
+- [ ] Add ≤5 backlog actions.
+
+**Done when:** One quarterly note exists under measurement or citation log.
+
+### Task D5: Manual indexing queue (ongoing)
+
+Whenever a high-value URL is new or recovered:
+
+- [ ] Bing: URL Inspection → **Live URL** → **Request indexing**.
+- [ ] GSC: URL Inspection → Request indexing.
+- [ ] Remember: “Discovered but not crawled” with Live URL green = queue, not a code bug.
 
 ---
 
-## Explicitly out of scope (unless user reopens)
+## Phase E — Technical SEO maintenance (recurring)
 
-- Visual breadcrumb UI on every page (schema BreadcrumbList already exists; UI is a design change).
-- Per-URL unique OG artwork (nice later; PNG default is enough for indexing).
-- Adding FAQ blocks to lean WATI/AiSensy/Bitespeed/Interakt pages.
-- Buying paid GEO tools.
-- Hindi hreflang (no Hindi pages exist; do not fake `hreflang`).
+> ThatWare Step 5 adapted; do not boil the ocean.
+
+### Task E1: Internal link hygiene
+
+- [ ] From topic-cluster map: ensure each key URL has ≥3 inbound contextual links.
+- [ ] New posts: within 2 weeks, link from ≥3 existing pages.
+- [ ] Fix broken internal links found in crawl (manual or Screaming Frog if available).
+
+### Task E2: CWV spot-check
+
+- [ ] Monthly: PageSpeed/CrUX on `/`, `/pricing`, `/features/journeys`, `/compare/dondy`.
+- [ ] Only schedule engineering work if LCP/INP/CLS clearly regress.
+
+### Task E3: Index / redirect health
+
+- [ ] Confirm soft-404 still 404 (not 200 homepage).
+- [ ] No new `/*/ → /:splat 301!` or slash-force rules.
+- [ ] Sitemap only canonical 200 URLs; resubmit in GSC/Bing when URL set changes.
+
+### Task E4: Backlinks / PR (human-gated)
+
+- [ ] Use `backlink-opportunities.md` only — white-hat roundups, partner mentions.
+- [ ] No PBNs, paid spam, or fake reviews.
 
 ---
 
-## Verification matrix (final acceptance)
+## Execution order (lock)
 
-| Check | How |
-|---|---|
-| No duplicate canonical/description | Prerender assert + live curl |
-| Self-canonical | Assert href equals expected URL |
-| Snippet budgets | Prerender length gate |
-| Schema by page type | Prerender required `@type` set |
-| FAQ visible if FAQPage | Grep HTML for question text |
-| Compare tables | Grep `<table` on `/compare/*` |
-| GEO files | `llms.txt` 200; robots AI allows |
-| Bing/Google | Manual re-inspect after deploy |
+```
+A1 → A2 → A3 → A4 → A5 → A6 → A7
+        ↓
+       B1 → B2 → B3 → B4
+        ↓
+       C1 → C2 → C3 → C4 (ongoing) → C5
+        ↓
+       D1 → D2 → D3 (ongoing) → D4 (quarterly) → D5 (as needed)
+        ↓
+       E1–E4 (recurring, parallel after C starts)
+```
+
+**Rule:** Finish Phase A ship (A7) before large content rewrites in C3, so length/schema gates catch regressions.
 
 ---
 
-## Execution order
+## Verification matrix (program acceptance)
 
-1 → 2 → 3 → 4 → 5 → 6 → 7
+| Check | How | Pillar |
+|---|---|---|
+| No duplicate canonical/description | Prerender assert + live curl | SEO |
+| Self-canonical | Assert href | SEO |
+| Soft-404 | Junk URL → 404 + noindex | SEO/LLM |
+| Snippet budgets | Prerender length gate | SEO |
+| Schema by page type | Prerender required `@type` | SEO/AEO |
+| FAQ visible if FAQPage | Grep question text in HTML | AEO |
+| Compare real `<table>` | Grep on `/compare/*` | GEO |
+| AI bots + llms.txt | Curl robots + llms | LLM |
+| IndexNow | Script 200 after deploys | LLM |
+| Citation baseline | `geo-citation-log.md` filled | GEO |
+| Organic weekly | `measurement.md` rows | SEO |
+| Manual Bing/GSC request | Human after high-value ships | SEO |
 
-Tasks 3 and 4 can partially overlap after Task 2 exists, but do not deploy until Task 4 clears the length gate.
+---
+
+## Sources
+
+- Playbook: [ThatWare — Ultimate Guide to LLM SEO, AEO, GEO](https://thatware.co/seo-aeo-geo-llm-optimization-ultimate-guide-deliverables-checklist/) (full guide + deliverables checklist; adapt WP items to this Netlify stack).
+- Bing: [Webmaster Guidelines](https://www.bing.com/webmasters/help/webmaster-guidelines-30fba23a), [URL Inspection](https://www.bing.com/webmasters/help/url-inspection-55a30305).
+- Google: [Page indexing report](https://support.google.com/webmasters/answer/7440203).
+- TopEdge ops: `docs/seo/measurement.md`, `geo-citation-log.md`, `content-backlog.md`.

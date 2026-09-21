@@ -1,16 +1,19 @@
 /**
- * Keep public/_redirects trailing-slash + SPA/404 footer in sync with marketing-urls.
+ * Keep public/_redirects SPA/404 footer in sync with marketing-urls.
  *
- * - Slashless canonicals: /path/ to /path with 301 force (never use a catch-all splat slash rule)
- * - Soft-404: unknown URLs must NOT fall through to homepage index.html
- * - SPA client routes (login/signup/docs/admin/dev) still get index.html
+ * Soft-404: unknown URLs must NOT fall through to homepage index.html.
+ * SPA client routes (login/signup/docs/admin/dev) still get index.html.
+ *
+ * Do NOT emit trailing-slash force redirects here. With Netlify Pretty URLs /
+ * flat .html, `/path/ → /path 301!` matches slashless `/path` too and
+ * 301-loops every marketing URL onto itself (ERR_TOO_MANY_REDIRECTS).
+ * Slashless canonicals + sitemap locs remain the SEO signal.
  *
  * Markers: BEGIN GENERATED … END GENERATED
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { getMarketingPrerenderPaths, getSitemapPaths } from './marketing-urls.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const redirectsPath = path.resolve(__dirname, '../public/_redirects');
@@ -19,29 +22,19 @@ const BEGIN = '# BEGIN GENERATED — do not edit (scripts/generate-redirects.mjs
 const END = '# END GENERATED';
 
 function buildGeneratedBlock() {
-  const paths = [...new Set([...getMarketingPrerenderPaths(), ...getSitemapPaths()])].filter(
-    (p) => p !== '/',
-  );
-
-  const slashLines = paths
-    .map((p) => `${p}/  ${p}  301!`)
-    .sort((a, b) => a.localeCompare(b));
-
   return `${BEGIN}
-# Trailing slash → slashless (Pretty URLs off / flat .html)
-${slashLines.join('\n')}
-
 # Client-only SPA shells (must stay above the 404 catch-all)
 /login  /index.html  200
-/login/  /login  301!
+/login/  /index.html  200
 /signup  /index.html  200
-/signup/  /signup  301!
+/signup/  /index.html  200
 /docs  /index.html  200
-/docs/  /docs  301!
+/docs/  /index.html  200
 /admin/*  /index.html  200
 /dev/*  /index.html  200
 
 # Soft-404: unknown paths get noindex 404.html — never homepage SEO
+# (Do not add trailing-slash force 301s — they self-loop with Pretty URLs.)
 /*  /404.html  404
 ${END}
 `;
@@ -59,7 +52,6 @@ function main() {
   if (beginIdx !== -1 && endIdx !== -1 && endIdx > beginIdx) {
     head = raw.slice(0, beginIdx).replace(/\s+$/, '');
   } else {
-    // Strip legacy SPA catch-all if regenerating from scratch
     head = raw
       .replace(/\n# SPA fallback[\s\S]*$/m, '')
       .replace(/\n\/\*  \/index\.html  200\s*$/m, '')
@@ -68,7 +60,7 @@ function main() {
 
   const next = `${head}\n\n${buildGeneratedBlock()}\n`;
   fs.writeFileSync(redirectsPath, next, 'utf8');
-  console.log(`✅ Updated ${redirectsPath} (trailing-slash + soft-404 footer)`);
+  console.log(`✅ Updated ${redirectsPath} (SPA shells + soft-404; no slash 301s)`);
 }
 
 main();

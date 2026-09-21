@@ -1,5 +1,10 @@
 import { Helmet } from 'react-helmet-async';
 import { SITE_URL } from '../data/marketingSeo';
+import {
+  OG_IMAGE_ALT_DEFAULT,
+  OG_IMAGE_HEIGHT,
+  OG_IMAGE_WIDTH,
+} from '../data/seoContracts';
 
 type FaqItem = { question: string; answer: string };
 
@@ -8,6 +13,7 @@ type MarketingSEOProps = {
   description: string;
   path: string;
   image?: string;
+  imageAlt?: string;
   keywords?: string;
   noSuffix?: boolean;
   /** Soft-404 / auth handoff pages — keep out of the index */
@@ -16,6 +22,9 @@ type MarketingSEOProps = {
   /** Extra JSON-LD objects (Organization, SoftwareApplication, etc.) */
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
   type?: 'website' | 'article';
+  /** ISO-8601 dates for og:type=article */
+  articlePublished?: string;
+  articleModified?: string;
 };
 
 /** Absolute canonical. Homepage uses trailing slash to match sitemap.xml. */
@@ -30,12 +39,15 @@ export default function MarketingSEO({
   description,
   path,
   image = `${SITE_URL}/og-image.png`,
+  imageAlt = OG_IMAGE_ALT_DEFAULT,
   keywords,
   noSuffix = false,
   noIndex = false,
   faqSchema,
   jsonLd,
   type = 'website',
+  articlePublished,
+  articleModified,
 }: MarketingSEOProps) {
   const fullTitle = noSuffix ? title : title.includes('TopEdge') ? title : `${title} | TopEdge`;
   const url = canonicalUrlForPath(path);
@@ -76,11 +88,21 @@ export default function MarketingSEO({
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
+      <meta property="og:image:alt" content={imageAlt} />
+      <meta property="og:image:width" content={String(OG_IMAGE_WIDTH)} />
+      <meta property="og:image:height" content={String(OG_IMAGE_HEIGHT)} />
+      {type === 'article' && articlePublished ? (
+        <meta property="article:published_time" content={articlePublished} />
+      ) : null}
+      {type === 'article' && articleModified ? (
+        <meta property="article:modified_time" content={articleModified} />
+      ) : null}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:url" content={url} />
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={image} />
+      <meta name="twitter:image:alt" content={imageAlt} />
       {schemas.map((schema, i) => (
         <script key={i} type="application/ld+json">
           {JSON.stringify(schema)}

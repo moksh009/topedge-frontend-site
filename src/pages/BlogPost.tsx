@@ -50,9 +50,12 @@ export default function BlogPost() {
         description={post.description}
         keywords={post.keywords?.join(', ')}
         image={imageAbs}
+        imageAlt={post.imageAlt || post.title}
         path={`/blog/${post.slug}`}
         type="article"
         noSuffix
+        articlePublished={datePublished}
+        articleModified={dateModified}
         faqSchema={post.faqs}
         jsonLd={[
           breadcrumbJsonLd([

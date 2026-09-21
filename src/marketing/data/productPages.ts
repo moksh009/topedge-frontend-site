@@ -352,9 +352,9 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     titleAccent: 'that attribute revenue',
     subtitle:
       'Segment shoppers, send Meta-approved templates, and measure revenue.\nProfit after fees, not vanity send counts.',
-    seoTitle: 'WhatsApp Marketing Campaigns for Shopify India | Meta-Safe Broadcasts',
+    seoTitle: 'WhatsApp Campaigns for Shopify India | Meta-Safe Sends',
     seoDescription:
-      'WhatsApp audience campaigns for Shopify India D2C: behavior segments, Meta-approved templates, frequency capping, lead scoring, and net-of-Meta ₹ reporting.',
+      'WhatsApp audience campaigns for Shopify India D2C: behavior segments, Meta-approved templates, frequency capping, and net-of-Meta ₹ reporting.',
     keywords:
       'WhatsApp marketing Shopify India, WhatsApp broadcast ecommerce, Meta template campaigns India, WhatsApp campaign ROI Shopify',
     hero: {
@@ -478,7 +478,7 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     titleAccent: 'chats, orders & care',
     subtitle:
       'One timeline for WhatsApp chats, Shopify orders, and care.\nScore leads and build segments in-product.',
-    seoTitle: 'WhatsApp Audience CRM for Shopify India | Segments & Lead Scoring',
+    seoTitle: 'WhatsApp Audience CRM for Shopify India | Segments',
     seoDescription:
       'WhatsApp Audience CRM for Shopify India D2C: unified contact timeline, purchase-based lead scoring, in-product segments, and unlimited profiles on every plan.',
     keywords:
@@ -1090,7 +1090,7 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     titleAccent: 'before anything sends',
     subtitle:
       'Templates, Blueprints, catalog, and QR in one place.\nOnly APPROVED copy ever reaches Journeys and campaigns.',
-    seoTitle: 'Meta WhatsApp Template Manager for Shopify India | Cloud API Approval',
+    seoTitle: 'Meta WhatsApp Templates for Shopify India | Approvals',
     seoDescription:
       'Submit, track, and approve Meta WhatsApp templates for Shopify India, utility and marketing categories, Journey blueprints for cart and COD, catalog and wa.me QR.',
     keywords:
@@ -1215,7 +1215,7 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     titleAccent: 'to the right people',
     subtitle:
       'Route COD, refunds, and VIP chats to the right people.\nKeep Live Chat calm when volume spikes.',
-    seoTitle: 'WhatsApp Chat Rules for Shopify India | Auto-Route COD & Support',
+    seoTitle: 'WhatsApp Chat Rules for Shopify India | Auto-Route',
     seoDescription:
       'Route WhatsApp conversations for Shopify India teams, keyword and intent rules for COD, refunds, and VIP assignment. Works with Live Chat takeover that pauses AI.',
     keywords:
@@ -1465,9 +1465,9 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     titleAccent: 'workspace',
     subtitle:
       'Warranty records tied to Shopify orders in one hub.\nAssign, track, and close, no spreadsheet chase.',
-    seoTitle: 'Digital Warranty for Shopify India | Assign & Track Aftercare',
+    seoTitle: 'Digital Warranty for Shopify India | Assign & Track',
     seoDescription:
-      'Warranty workspace for Shopify India brands, hub list with status badges, unassigned queue, and manual assign to orders or teammates. Works beside WhatsApp Live Chat.',
+      'Warranty workspace for Shopify India brands: hub list with status badges, unassigned queue, and assign to orders or teammates beside WhatsApp Live Chat.',
     keywords:
       'digital warranty Shopify India, product warranty ecommerce, warranty assignment Shopify, WhatsApp warranty aftercare D2C',
     hero: {
@@ -1546,7 +1546,7 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     titleAccent: 'what did I keep?',
     subtitle:
       'India-aware P&L with COGS, COD, RTO, fees, and ads.\nSee net profit, not vanity revenue.',
-    seoTitle: 'Shopify P&L Analytics India | COGS, COD, RTO & True Net Profit',
+    seoTitle: 'Shopify P&L Analytics India | COGS, COD & Net Profit',
     seoDescription:
       'TopEdge Profit & costs for Shopify India D2C: COGS, packaging, payment fees, COD RTO, marketing, true net profit with a cost waterfall and product margins in ₹.',
     keywords:

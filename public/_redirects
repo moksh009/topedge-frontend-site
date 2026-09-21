@@ -71,72 +71,18 @@ https://www.topedgeai.com/*  https://topedgeai.com/:splat  301!
 /blog/agencies-whatsapp-automation-multi-brand-shopify  /blog  301!
 
 # BEGIN GENERATED — do not edit (scripts/generate-redirects.mjs)
-# Trailing slash → slashless (Pretty URLs off / flat .html)
-/404/  /404  301!
-/about/  /about  301!
-/blog/  /blog  301!
-/blog/ai-whatsapp-chatbot-for-shopify-india/  /blog/ai-whatsapp-chatbot-for-shopify-india  301!
-/blog/best-whatsapp-automation-tools-shopify-india/  /blog/best-whatsapp-automation-tools-shopify-india  301!
-/blog/cod-confirmation-whatsapp-reduce-rto-shopify/  /blog/cod-confirmation-whatsapp-reduce-rto-shopify  301!
-/blog/dondy-alternative-shopify-india/  /blog/dondy-alternative-shopify-india  301!
-/blog/ecommerce-automation-whatsapp-vs-email-india/  /blog/ecommerce-automation-whatsapp-vs-email-india  301!
-/blog/getgabs-alternative-shopify-whatsapp/  /blog/getgabs-alternative-shopify-whatsapp  301!
-/blog/how-to-choose-whatsapp-app-shopify-app-store/  /blog/how-to-choose-whatsapp-app-shopify-app-store  301!
-/blog/how-to-reduce-rto-with-whatsapp-cod-confirmation/  /blog/how-to-reduce-rto-with-whatsapp-cod-confirmation  301!
-/blog/kanal-whatsapp-alternative-shopify/  /blog/kanal-whatsapp-alternative-shopify  301!
-/blog/meta-whatsapp-cloud-api-shopify-templates/  /blog/meta-whatsapp-cloud-api-shopify-templates  301!
-/blog/shopify-automation-checklist-whatsapp-cart-recovery/  /blog/shopify-automation-checklist-whatsapp-cart-recovery  301!
-/blog/shopify-whatsapp-automation-what-to-automate-first/  /blog/shopify-whatsapp-automation-what-to-automate-first  301!
-/blog/what-is-ecommerce-automation-shopify-whatsapp/  /blog/what-is-ecommerce-automation-shopify-whatsapp  301!
-/blog/whatsapp-abandoned-cart-recovery-shopify/  /blog/whatsapp-abandoned-cart-recovery-shopify  301!
-/blog/whatsapp-business-api-pricing-india/  /blog/whatsapp-business-api-pricing-india  301!
-/blog/whatsapp-shared-inbox-shopify-order-context/  /blog/whatsapp-shared-inbox-shopify-order-context  301!
-/blog/zoko-alternative-shopify-india/  /blog/zoko-alternative-shopify-india  301!
-/compare/  /compare  301!
-/compare/aisensy/  /compare/aisensy  301!
-/compare/alternatives/  /compare/alternatives  301!
-/compare/bitespeed/  /compare/bitespeed  301!
-/compare/dondy/  /compare/dondy  301!
-/compare/getgabs/  /compare/getgabs  301!
-/compare/interakt/  /compare/interakt  301!
-/compare/kanal/  /compare/kanal  301!
-/compare/topedge-vs-wati-vs-aisensy/  /compare/topedge-vs-wati-vs-aisensy  301!
-/compare/wati/  /compare/wati  301!
-/compare/zoko/  /compare/zoko  301!
-/contact/  /contact  301!
-/customers/  /customers  301!
-/features/  /features  301!
-/features/ai-brain/  /features/ai-brain  301!
-/features/analytics/  /features/analytics  301!
-/features/audience-crm/  /features/audience-crm  301!
-/features/campaigns/  /features/campaigns  301!
-/features/chat-rules/  /features/chat-rules  301!
-/features/flow-builder/  /features/flow-builder  301!
-/features/instagram/  /features/instagram  301!
-/features/intent-detection/  /features/intent-detection  301!
-/features/journeys/  /features/journeys  301!
-/features/live-chat/  /features/live-chat  301!
-/features/meta-manager/  /features/meta-manager  301!
-/features/opt-in-tools/  /features/opt-in-tools  301!
-/features/profit-loss/  /features/profit-loss  301!
-/features/warranty/  /features/warranty  301!
-/integrations/  /integrations  301!
-/pricing/  /pricing  301!
-/privacy/  /privacy  301!
-/shopify-whatsapp-integration/  /shopify-whatsapp-integration  301!
-/terms/  /terms  301!
-
 # Client-only SPA shells (must stay above the 404 catch-all)
 /login  /index.html  200
-/login/  /login  301!
+/login/  /index.html  200
 /signup  /index.html  200
-/signup/  /signup  301!
+/signup/  /index.html  200
 /docs  /index.html  200
-/docs/  /docs  301!
+/docs/  /index.html  200
 /admin/*  /index.html  200
 /dev/*  /index.html  200
 
 # Soft-404: unknown paths get noindex 404.html — never homepage SEO
+# (Do not add trailing-slash force 301s — they self-loop with Pretty URLs.)
 /*  /404.html  404
 # END GENERATED
 

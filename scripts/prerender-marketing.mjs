@@ -10,6 +10,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
+import { auditPrerenderHead } from './seo-head-audit.mjs';
 import { getMarketingPrerenderPaths, NOT_FOUND_PRERENDER_PATH } from './marketing-urls.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -138,38 +139,7 @@ function sanitizePrerenderHtml(html) {
 }
 
 function assertSingleSeoHead(html, route) {
-  const canons = [...html.matchAll(/<link\b[^>]*\brel=["']canonical["'][^>]*>/gi)];
-  const descs = [...html.matchAll(/<meta\b[^>]*\bname=["']description["'][^>]*>/gi)];
-  const titles = [...html.matchAll(/<title\b[^>]*>/gi)];
-  const h1s = [...html.matchAll(/<h1\b/gi)];
-  const problems = [];
-  const isNotFound = route === NOT_FOUND_PRERENDER_PATH;
-
-  if (canons.length !== 1) problems.push(`canonical×${canons.length}`);
-  if (descs.length !== 1) problems.push(`description×${descs.length}`);
-  if (titles.length !== 1) problems.push(`title×${titles.length}`);
-  if (h1s.length !== 1) problems.push(`h1×${h1s.length}`);
-
-  if (isNotFound) {
-    if (!/name=["']robots["'][^>]*content=["'][^"']*noindex/i.test(html)) {
-      problems.push('missing-noindex');
-    }
-  }
-
-  if (canons.length === 1) {
-    const href = canons[0][0].match(/href=["']([^"']+)["']/i)?.[1] || '';
-    const expected =
-      route === '/' ? 'https://topedgeai.com/' : `https://topedgeai.com${route}`;
-    const homeOk =
-      route === '/' && (href === 'https://topedgeai.com/' || href === 'https://topedgeai.com');
-    if (route === '/') {
-      if (!homeOk) problems.push(`canonical-href=${href}`);
-    } else if (href !== expected) {
-      problems.push(`canonical-href=${href} (want ${expected})`);
-    }
-  }
-
-  return problems;
+  return auditPrerenderHead(html, route).problems;
 }
 
 async function main() {

@@ -37,7 +37,7 @@ Related trackers (same `docs/seo/` folder — do not invent a second tooling hom
 
 | Week of | GSC note (1–2 lines) | Bing note | Indexing / discovered-not-indexed | Fed backlog? |
 |---|---|---|---|---|
-| 2026-09-21 | Setup — Phase 6 live; soft-404 + slash 301s shipped | IndexNow live. **Bing “Discovered but not crawled”** on `/compare/dondy` is queue state after discovery (page already 200 + self-canonical). Site fix shipped: unknown URLs now `404`+`noindex` (no homepage hijack), trailing-slash → slashless `301`, truthful sitemap `lastmod`, stronger Dondy internal links. **You still must** open Bing URL Inspection → **Live URL** → **Request indexing**, and GSC URL Inspection for the same URLs. Guidelines: [Bing Webmaster Guidelines](https://www.bing.com/webmasters/help/webmaster-guidelines-30fba23a), [URL Inspection](https://www.bing.com/webmasters/help/url-inspection-55a30305), [Google Page indexing](https://support.google.com/webmasters/answer/7440203). | Re-inspect `/compare/dondy` after Request indexing; confirm junk URLs return HTTP 404 | — |
+| 2026-09-21 | Phase A+B meta gate live | Deployed fail-closed prerender budgets + schema; OG image alt/dims; blog article times; soft-404; CCBot + GoogleOther in robots; `npm run seo:audit`. Topic clusters + question bank docs. IndexNow `--changed`. **Manual still owed:** Bing/GSC Request indexing for Dondy URLs. | Confirm Live URL green for Dondy; start citation baseline Oct 1 | Phase C3 AEO rewrites next |
 | | | | | |
 
 ---
@@ -78,6 +78,7 @@ Each month, after the citation pass:
 ## 4. QA checklist (Phase 6)
 
 - [ ] GSC + Bing checked on a real recurring weekly cadence (not “set up once”)
+- [ ] After meta/URL deploys: `npm run seo:audit` locally post-build; `npm run indexnow -- --changed`
 - [ ] Full query list run across ChatGPT, Perplexity, Claude, Gemini in fresh/incognito
 - [ ] Monthly cadence holds for **≥3 months** before calling it established
 - [ ] Citation log lives in [`geo-citation-log.md`](./geo-citation-log.md) (durable), not chat threads
