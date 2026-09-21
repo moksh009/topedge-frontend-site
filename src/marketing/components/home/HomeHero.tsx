@@ -84,7 +84,7 @@ export default function HomeHero() {
                   sizes="(max-width: 960px) 92vw, min(1040px, 92vw)"
                 />
                 <img
-                  src="/herooo-immage-1200.png"
+                  src="/herooo-immage-800.webp?v=3"
                   alt="TopEdge dashboard: WhatsApp commerce workspace"
                   width={1200}
                   height={606}

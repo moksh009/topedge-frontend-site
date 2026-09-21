@@ -17,7 +17,7 @@ type Story = {
   glow: Glow;
 } & (
   | { kind: 'video'; video: DemoVideo }
-  | { kind: 'image'; image: { src: string; fallback?: string } }
+  | { kind: 'image'; image: { src: string } }
   | { kind: 'pixel' }
 );
 
@@ -140,7 +140,6 @@ function FeatureMoment({ story }: { story: Story }) {
           ) : (
             <DemoProductImageFrame
               src={story.image.src}
-              fallback={'fallback' in story.image ? story.image.fallback : undefined}
               alt={title}
               glow={story.glow}
             />

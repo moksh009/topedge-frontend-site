@@ -135,6 +135,22 @@ function sanitizePrerenderHtml(html) {
     (full, a = '', b = '') => (/data-rh=/i.test(`${a}${b}`) ? full : ''),
   );
 
+  // Google Fonts: Playwright often fires onload during prerender, leaving a
+  // render-blocking stylesheet in the saved HTML. Force the print→all pattern
+  // and keep a single copy.
+  let fontHref = '';
+  out = out.replace(/<link\b[^>]*>/gi, (tag) => {
+    if (!/fonts\.googleapis\.com\/css2/i.test(tag)) return tag;
+    if (/rel=["']preload["']/i.test(tag)) return '';
+    const m = tag.match(/href=["']([^"']+)["']/i);
+    if (m) fontHref = m[1].replace(/&amp;/g, '&');
+    return '';
+  });
+  if (fontHref) {
+    const nonBlocking = `<link rel="stylesheet" href="${fontHref.replace(/&/g, '&amp;')}" media="print" onload="this.media='all'">`;
+    out = out.replace(/<\/head>/i, `${nonBlocking}\n</head>`);
+  }
+
   return out;
 }
 

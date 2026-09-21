@@ -1,4 +1,4 @@
-import { Suspense, lazy, useEffect } from 'react';
+import { Suspense, lazy, useEffect, useState } from 'react';
 import '../marketing/styles/home.css';
 import MarketingSEO from '../marketing/components/MarketingSEO';
 import { OG_IMAGES } from '../marketing/data/marketingSeo';
@@ -20,10 +20,14 @@ const HomeTestimonials = lazy(() => import('../marketing/components/home/HomeTes
 const HomeClose = lazy(() => import('../marketing/components/home/HomeClose'));
 
 /**
- * Homepage: normal scrollable sections (sticky overlap / chaos zoom removed).
+ * Homepage: hero is critical for LCP.
+ * Below-fold mounts only after client hydration so prerender HTML does not
+ * inject StickyStories / demo-video CSS + modulepreloads into <head>
+ * (PSI render-blocking on live /).
  */
 export default function Home() {
   const seo = PAGE_SEO.home;
+  const [belowFoldReady, setBelowFoldReady] = useState(false);
 
   // Land at top once on mount, do not re-run when Lenis attaches (that felt like scroll fighting).
   useEffect(() => {
@@ -36,6 +40,7 @@ export default function Home() {
     window.scrollTo(0, 0);
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
+    setBelowFoldReady(true);
     return undefined;
   }, []);
 
@@ -63,13 +68,15 @@ export default function Home() {
         <div className="home-hero-stage">
           <HomeHero />
         </div>
-        <Suspense fallback={null}>
-          <HomeStickyStories />
-          <HomeCrmSurface />
-          <HomeRoiPayoff />
-          <HomeTestimonials />
-          <HomeClose />
-        </Suspense>
+        {belowFoldReady ? (
+          <Suspense fallback={null}>
+            <HomeStickyStories />
+            <HomeCrmSurface />
+            <HomeRoiPayoff />
+            <HomeTestimonials />
+            <HomeClose />
+          </Suspense>
+        ) : null}
       </MarketingPage>
     </>
   );

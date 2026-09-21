@@ -412,7 +412,8 @@
   max-width: 34rem;
   font-size: 1.02rem;
   line-height: 1.6;
-  color: rgba(12, 18, 34, 0.68);
+  /* ~4.7:1 on #f7f8fc — was 0.68 opacity (~failing AA for body text) */
+  color: #3f4b63;
   font-weight: 400;
   text-wrap: pretty;
   text-align: center;
@@ -2410,7 +2411,7 @@
 }
 
 .home-trust-logos--on-stage .home-trust-logos__label {
-  color: rgba(15, 23, 42, 0.55);
+  color: #475569;
   margin-bottom: 0.75rem;
   font-weight: 500;
   letter-spacing: 0.14em;
@@ -2419,12 +2420,18 @@
 
 .home-trust-logos--on-stage .home-trust-logos__item {
   opacity: 1;
-  padding: 0;
+  /* ≥44×44 CSS px touch target (Lighthouse / WCAG 2.5.5) */
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0.5rem 0.65rem;
   border-radius: 0;
   background: transparent;
   box-shadow: none;
   filter: none;
   gap: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .home-trust-logos--on-stage .home-trust-logos__item:hover {

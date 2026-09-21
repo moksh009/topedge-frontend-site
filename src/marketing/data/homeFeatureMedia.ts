@@ -52,15 +52,12 @@ export const FEATURE_VIDEOS = {
 export const FEATURE_IMAGES = {
   campaigns: {
     src: '/campaignn.webp?v=20260921lcp',
-    fallback: '/campaignn.png?v=20260921lcp',
   },
   unifiedIdentity: {
     src: '/leaadd.webp?v=20260921lcp',
-    fallback: '/leaadd.png?v=20260921lcp',
   },
   pixel: {
     src: '/website-pixel.webp?v=20260921lcp',
-    fallback: '/website-pixel.png?v=20260921lcp',
   },
 } as const;
 
@@ -71,7 +68,6 @@ export const CRM_BENTO = {
     titleAccent: 'care',
     body: 'Shipments, warranty, and supplier follow-ups, without leaving WhatsApp.',
     image: '/1.webp?v=20260921lcp',
-    imageFallback: '/1.png?v=20260921lcp',
   },
   profiles: {
     id: 'profiles',
@@ -79,7 +75,6 @@ export const CRM_BENTO = {
     titleAccent: 'profiles',
     body: 'Live carts, values, and recovery status in one working table.',
     image: '/2.webp?v=20260921lcp',
-    imageFallback: '/2.png?v=20260921lcp',
   },
   stock: {
     id: 'stock',
@@ -87,6 +82,5 @@ export const CRM_BENTO = {
     titleAccent: 'stock',
     body: 'SKU availability and low-stock signals synced from Shopify.',
     image: '/3.webp?v=20260921lcp',
-    imageFallback: '/3.png?v=20260921lcp',
   },
 } as const;

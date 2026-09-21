@@ -13,41 +13,35 @@ type DemoProductImageFrameProps = {
   alt: string;
   glow?: DemoImageGlow;
   className?: string;
-  /** Optional PNG/JPEG fallback when src is webp */
-  fallback?: string;
 };
 
 /**
  * Same frameless glow chrome as demo videos, but a static product still.
+ * WebP-only (all evergreen browsers): avoids dual PNG+WebP downloads that
+ * PSI flags under "Improve image delivery".
  */
 export default function DemoProductImageFrame({
   src,
   alt,
   glow = 'violet',
   className,
-  fallback,
 }: DemoProductImageFrameProps) {
-  const isWebp = /\.webp(\?|$)/i.test(src);
-
   return (
     <div
       className={['demo-video-glow', 'demo-video-glow--still', className].filter(Boolean).join(' ')}
       data-glow={glow}
     >
       <div className="demo-video-glow__frame is-ready">
-        <picture>
-          {isWebp ? <source type="image/webp" srcSet={src} /> : null}
-          <img
-            className="demo-video-glow__el demo-video-glow__still"
-            src={fallback || src}
-            alt={alt}
-            width={1400}
-            height={780}
-            loading="lazy"
-            decoding="async"
-            fetchPriority="low"
-          />
-        </picture>
+        <img
+          className="demo-video-glow__el demo-video-glow__still"
+          src={src}
+          alt={alt}
+          width={1400}
+          height={780}
+          loading="lazy"
+          decoding="async"
+          fetchPriority="low"
+        />
       </div>
     </div>
   );
