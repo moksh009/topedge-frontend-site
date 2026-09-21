@@ -20,7 +20,7 @@ Last refreshed: **2026-09-21**
 
 ### T1 — Cart recovery / Journeys
 - Pillar: `/features/journeys`
-- Support: `/blog/whatsapp-abandoned-cart-recovery-shopify`, `/blog/shopify-whatsapp-automation-what-to-automate-first`, `/blog/shopify-automation-checklist-whatsapp-cart-recovery`, `/features/flow-builder`, `/features/campaigns`
+- Support: `/blog/whatsapp-abandoned-cart-recovery-shopify`, `/blog/whatsapp-automation-for-shopify`, `/blog/shopify-whatsapp-automation-what-to-automate-first`, `/blog/shopify-automation-checklist-whatsapp-cart-recovery`, `/features/flow-builder`, `/features/campaigns`
 - Commercial: `/pricing`, `/`
 
 ### T2 — COD / RTO
@@ -35,7 +35,7 @@ Last refreshed: **2026-09-21**
 
 ### T4 — Inbox / Live Chat
 - Pillar: `/features/live-chat`
-- Support: `/blog/whatsapp-shared-inbox-shopify-order-context`, `/features/ai-brain`, `/features/intent-detection`, `/features/chat-rules`
+- Support: `/blog/whatsapp-shared-inbox-shopify-order-context`, `/blog/ai-chatbot-for-shopify`, `/blog/ai-whatsapp-chatbot-for-shopify-india`, `/features/ai-brain`, `/features/intent-detection`, `/features/chat-rules`
 - Commercial: `/pricing`
 
 ### T5 — Alternatives / comparisons

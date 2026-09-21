@@ -65,6 +65,9 @@ dondy-alternative
 - /compare/updatrr, TopEdge vs Updatrr
 - /compare/topedge-vs-wati-vs-aisensy, 3-way board
 - /blog/best-whatsapp-automation-tools-shopify-india, Best WhatsApp automation tools for Shopify India (pillar)
+- /blog/whatsapp-abandoned-cart-recovery-shopify, Shopify abandoned cart recovery with WhatsApp
+- /blog/whatsapp-automation-for-shopify, WhatsApp automation for Shopify (complete guide)
+- /blog/ai-chatbot-for-shopify, AI chatbot for Shopify (support & sales)
 - /blog/zoko-alternative-shopify-india, Zoko alternative for Shopify India
 - /blog/getgabs-alternative-shopify-whatsapp, Getgabs alternative (depth vs cheap entry)
 - /blog/kanal-whatsapp-alternative-shopify, Kanal WhatsApp alternative for India

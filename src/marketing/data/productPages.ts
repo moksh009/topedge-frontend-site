@@ -1219,7 +1219,8 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     relatedTitle: 'Related in this',
     relatedAccent: 'cluster',
     related: [
-      { label: 'AI chatbot playbook', href: '/blog/ai-whatsapp-chatbot-for-shopify-india' },
+      { label: 'AI chatbot for Shopify', href: '/blog/ai-chatbot-for-shopify' },
+      { label: 'AI chatbot playbook (India WhatsApp)', href: '/blog/ai-whatsapp-chatbot-for-shopify-india' },
       { label: 'Intent detection', href: '/features/intent-detection' },
       { label: 'Live Chat', href: '/features/live-chat' },
       { label: 'Flow Builder', href: '/features/flow-builder' },

@@ -16,7 +16,7 @@ export const CONTENT_DATES = {
 } as const;
 
 export const BLOG_DATES_BY_SLUG = {
-  "whatsapp-abandoned-cart-recovery-shopify": "2026-09-01",
+  "whatsapp-abandoned-cart-recovery-shopify": "2026-09-21",
   "shopify-whatsapp-automation-what-to-automate-first": "2026-09-02",
   "cod-confirmation-whatsapp-reduce-rto-shopify": "2026-09-21",
   "ecommerce-automation-whatsapp-vs-email-india": "2026-09-04",
@@ -32,7 +32,9 @@ export const BLOG_DATES_BY_SLUG = {
   "kanal-whatsapp-alternative-shopify": "2026-09-20",
   "how-to-choose-whatsapp-app-shopify-app-store": "2026-09-20",
   "whatsapp-business-api-pricing-india": "2026-09-20",
-  "dondy-alternative-shopify-india": "2026-09-21"
+  "dondy-alternative-shopify-india": "2026-09-21",
+  "whatsapp-automation-for-shopify": "2026-09-21",
+  "ai-chatbot-for-shopify": "2026-09-21"
 } as const;
 
 export type ContentDateKey = keyof typeof CONTENT_DATES;

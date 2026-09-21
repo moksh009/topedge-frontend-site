@@ -31,6 +31,9 @@ Status: `idea` → `outlined` → `drafting` → `fact-check` → `published` �
 | 2026-09-20 | `whatsapp-business-api-pricing-india` | published | Phase 3 batch |
 | 2026-09-21 | `dondy-alternative-shopify-india` | published | GEO baseline; links `/compare/dondy` |
 | 2026-09-21 | AEO deepen: journeys + COD blog + best-tools pillar | refresh | Phase C3 — answer-first + FAQ + cluster links |
+| 2026-09-21 | `whatsapp-abandoned-cart-recovery-shopify` | refresh | Full GEO/AEO rewrite: cart vs checkout, WhatsApp opt-in/templates, FAQs + schema; primary keyword Shopify abandoned cart recovery |
+| 2026-09-21 | `whatsapp-automation-for-shopify` | published | Article 2 pillar: WhatsApp automation for Shopify complete guide; links cart recovery + checklist + what-to-automate-first |
+| 2026-09-21 | `ai-chatbot-for-shopify` | published | Article 3 pillar: AI chatbot for Shopify support & sales; links AI Brain, automation guide, India WhatsApp AI post |
 | 2026-10 (week 1–2) | Prefer deepen thin URL or one question-bank gap | idea | From question-bank #4 Meta pricing or #8 inbox if needed |
 
 ---

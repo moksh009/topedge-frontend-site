@@ -172,6 +172,7 @@ export const SEO_TOPICS: Record<string, SeoTopic> = {
       { label: 'Integrations overview', href: '/integrations' },
       { label: 'Shopify connection feature', href: '/integrations' },
       { label: 'Meta template manager', href: '/features/meta-manager' },
+      { label: 'WhatsApp automation for Shopify', href: '/blog/whatsapp-automation-for-shopify' },
       { label: 'What to automate first', href: '/blog/shopify-whatsapp-automation-what-to-automate-first' },
     ],
   },
