@@ -151,6 +151,20 @@ function sanitizePrerenderHtml(html) {
     out = out.replace(/<\/head>/i, `${nonBlocking}\n</head>`);
   }
 
+  // Hoist LCP image preload to the top of <head> so it is not stuck behind
+  // CSS/modulepreload discovered during the SPA render.
+  let lcpPreload = '';
+  out = out.replace(/<link\b[^>]*>/gi, (tag) => {
+    if (!/rel=["']preload["']/i.test(tag)) return tag;
+    if (!/as=["']image["']/i.test(tag)) return tag;
+    if (!/herooo-immage/i.test(tag)) return tag;
+    lcpPreload = tag;
+    return '';
+  });
+  if (lcpPreload) {
+    out = out.replace(/<head([^>]*)>/i, `<head$1>\n    ${lcpPreload}`);
+  }
+
   return out;
 }
 
@@ -195,6 +209,12 @@ async function main() {
     await waitForServer(BASE);
     const browser = await launchBrowser();
     const page = await browser.newPage();
+    // Must run before any document script: Home keeps below-fold unmounted while
+    // this flag is set, so saved HTML matches first client paint (no hydration
+    // mismatch) and does not pull StickyStories CSS/modulepreloads into <head>.
+    await page.addInitScript(() => {
+      window.__TOPEDGE_PRERENDER__ = true;
+    });
 
     let ok = 0;
     let fail = 0;

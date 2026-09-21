@@ -21,9 +21,10 @@ const HomeClose = lazy(() => import('../marketing/components/home/HomeClose'));
 
 /**
  * Homepage: hero is critical for LCP.
- * Below-fold mounts only after client hydration so prerender HTML does not
- * inject StickyStories / demo-video CSS + modulepreloads into <head>
- * (PSI render-blocking on live /).
+ * Below-fold mounts only after real-browser hydration. Prerender sets
+ * window.__TOPEDGE_PRERENDER__ so useEffect never flips ready — otherwise
+ * Playwright runs effects, saves full HTML, and the client hydrates with
+ * ready=false → mismatch → full remount → LCP regresses (lab ~3s → 4.8s).
  */
 export default function Home() {
   const seo = PAGE_SEO.home;
@@ -40,7 +41,12 @@ export default function Home() {
     window.scrollTo(0, 0);
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
-    setBelowFoldReady(true);
+    const isPrerender = Boolean(
+      (window as Window & { __TOPEDGE_PRERENDER__?: boolean }).__TOPEDGE_PRERENDER__,
+    );
+    if (!isPrerender) {
+      setBelowFoldReady(true);
+    }
     return undefined;
   }, []);
 
