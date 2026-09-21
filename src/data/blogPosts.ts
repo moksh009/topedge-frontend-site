@@ -7,7 +7,7 @@ import type { BlogPost } from '../types/blog';
 export const blogPosts: BlogPost[] = [
   {
     id: 1,
-    title: 'WhatsApp Abandoned Cart Recovery for Shopify: A Practical Playbook',
+    title: 'WhatsApp Abandoned Cart Recovery for Shopify',
     description:
       'How Indian D2C brands recover abandoned carts on WhatsApp—timing windows, Meta templates, COD quirks, checkout links, and measuring recovery ₹ on Shopify.',
     slug: 'whatsapp-abandoned-cart-recovery-shopify',
@@ -72,7 +72,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     id: 2,
-    title: 'Shopify WhatsApp Automation: What to Automate First in 2026',
+    title: 'Shopify WhatsApp: What to Automate First',
     description:
       'Prioritize Shopify WhatsApp automation that pays: abandoned cart, COD confirmation, order updates, then campaigns—a rollout order for Indian D2C ecommerce.',
     slug: 'shopify-whatsapp-automation-what-to-automate-first',
@@ -136,7 +136,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     id: 3,
-    title: 'COD Confirmation on WhatsApp: Reduce RTO for Shopify India',
+    title: 'COD Confirmation on WhatsApp to Reduce RTO',
     description:
       'Use WhatsApp COD confirmation flows to reduce RTO on Shopify—utility templates, timing, confirm/reschedule/cancel paths, and operator takeover for Indian D2C.',
     slug: 'cod-confirmation-whatsapp-reduce-rto-shopify',
@@ -188,7 +188,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     id: 4,
-    title: 'Ecommerce Automation on WhatsApp vs Email: What Wins for D2C India',
+    title: 'WhatsApp vs Email Automation for D2C India',
     description:
       'Compare WhatsApp ecommerce automation vs email for cart recovery, order updates, and campaigns—when to use each channel on Shopify in India.',
     slug: 'ecommerce-automation-whatsapp-vs-email-india',
@@ -248,7 +248,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     id: 5,
-    title: 'Meta WhatsApp Cloud API for Shopify Brands: Templates Without the Headache',
+    title: 'Meta WhatsApp Cloud API Templates for Shopify',
     description:
       'A plain-English guide to Meta WhatsApp Cloud API templates for Shopify ecommerce—categories, approval tips, journey gating, and transparent rates.',
     slug: 'meta-whatsapp-cloud-api-shopify-templates',
@@ -313,7 +313,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     id: 6,
-    title: 'WhatsApp Shared Inbox for Shopify: Support That Sees the Order',
+    title: 'WhatsApp Shared Inbox with Shopify Orders',
     description:
       'Why ecommerce teams need a WhatsApp shared inbox with Shopify order context—assignment, AI handoff, tags, and Instagram in one place.',
     slug: 'whatsapp-shared-inbox-shopify-order-context',
@@ -372,7 +372,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     id: 7,
-    title: 'Shopify Automation Checklist: Cart Recovery, Campaigns & Inbox in 15 Minutes',
+    title: 'Shopify WhatsApp Automation Checklist',
     description:
       'A fast Shopify automation checklist to connect WhatsApp, approve Meta templates, publish cart recovery, turn on COD paths, and open a shared inbox.',
     slug: 'shopify-automation-checklist-whatsapp-cart-recovery',
@@ -748,7 +748,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     id: 11,
-    title: 'AI WhatsApp Chatbot for Shopify India: Catalog-Grounded Answers',
+    title: 'AI WhatsApp Chatbot for Shopify India',
     description:
       'What a good AI WhatsApp chatbot for Shopify looks like in India—live SKUs, ₹ prices, COD FAQs, Meta-safe behavior, and clean handoff to humans.',
     slug: 'ai-whatsapp-chatbot-for-shopify-india',
@@ -861,7 +861,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     id: 13,
-    title: 'Getgabs Alternative: When Cheap WhatsApp Entry Is Not Enough',
+    title: 'Getgabs Alternative for Shopify WhatsApp',
     description:
       'Getgabs wins on entry price. Here is when Shopify India teams outgrow free-to-install WhatsApp apps—and how to evaluate depth without a defensive price argument.',
     slug: 'getgabs-alternative-shopify-whatsapp',
@@ -1020,7 +1020,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     id: 16,
-    title: 'WhatsApp Business API / Meta Cloud API Pricing in India (2026)',
+    title: 'WhatsApp Business API Pricing in India',
     description:
       'What Meta charges for WhatsApp Cloud API conversations in India, how categories work, and why 0% platform markup matters when you compare Shopify WhatsApp apps.',
     slug: 'whatsapp-business-api-pricing-india',

@@ -1,7 +1,7 @@
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
-import MarketingSEO from '../marketing/components/MarketingSEO';
+import MarketingSEO, { canonicalUrlForPath } from '../marketing/components/MarketingSEO';
 import MarketingPage from '../marketing/components/MarketingPage';
 import { SITE_URL } from '../marketing/data/marketingSeo';
 import { breadcrumbJsonLd } from '../marketing/data/pageSeo';
@@ -35,7 +35,7 @@ export default function BlogPost() {
     return <Navigate to="/blog" replace />;
   }
 
-  const canonical = `${SITE_URL}/blog/${post.slug}`;
+  const canonical = canonicalUrlForPath(`/blog/${post.slug}`);
   const related = allBlogPosts
     .filter((p) => p.slug !== post.slug && isMarketingBlogPost(p))
     .slice(0, 3);
@@ -46,7 +46,7 @@ export default function BlogPost() {
   return (
     <>
       <MarketingSEO
-        title={`${post.title} | TopEdge Blog`}
+        title={`${post.title} | TopEdge`}
         description={post.description}
         keywords={post.keywords?.join(', ')}
         image={imageAbs}
@@ -80,6 +80,7 @@ export default function BlogPost() {
               logo: { '@type': 'ImageObject', url: `${SITE_URL}/brand-mark.png` },
             },
             mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
+            url: canonical,
             keywords: post.keywords?.join(', '),
           })}
         </script>

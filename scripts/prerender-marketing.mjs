@@ -106,6 +106,65 @@ function killProcessTree(child) {
   }
 }
 
+/**
+ * Drop shell SEO that is not owned by react-helmet-async (no data-rh).
+ * Prevents Bing/GSC seeing homepage canonical + page canonical on the same URL.
+ */
+function sanitizePrerenderHtml(html) {
+  let out = html;
+
+  const dropUnlessRh = (tag) => (/data-rh=/i.test(tag) ? tag : '');
+
+  out = out.replace(/<link\b[^>]*\brel=["']canonical["'][^>]*>/gi, dropUnlessRh);
+  out = out.replace(/<meta\b[^>]*\bname=["']description["'][^>]*>/gi, dropUnlessRh);
+  out = out.replace(/<meta\b[^>]*\bname=["']keywords["'][^>]*>/gi, dropUnlessRh);
+  out = out.replace(/<meta\b[^>]*\bname=["']robots["'][^>]*>/gi, dropUnlessRh);
+  out = out.replace(/<meta\b[^>]*\bproperty=["']og:[^"']+["'][^>]*>/gi, dropUnlessRh);
+  out = out.replace(/<meta\b[^>]*\bname=["']twitter:[^"']+["'][^>]*>/gi, dropUnlessRh);
+
+  // Static title from index.html shell (no data-rh) when Helmet already wrote one
+  const hasRhTitle = /<title[^>]*data-rh=/i.test(out);
+  if (hasRhTitle) {
+    out = out.replace(/<title\b(?![^>]*data-rh=)[^>]*>[\s\S]*?<\/title>/gi, '');
+  }
+
+  // Static JSON-LD in the Vite shell (no data-rh) — Helmet owns schema
+  out = out.replace(
+    /<script\b([^>]*)\btype=["']application\/ld\+json["']([^>]*)>[\s\S]*?<\/script>/gi,
+    (full, a = '', b = '') => (/data-rh=/i.test(`${a}${b}`) ? full : ''),
+  );
+
+  return out;
+}
+
+function assertSingleSeoHead(html, route) {
+  const canons = [...html.matchAll(/<link\b[^>]*\brel=["']canonical["'][^>]*>/gi)];
+  const descs = [...html.matchAll(/<meta\b[^>]*\bname=["']description["'][^>]*>/gi)];
+  const titles = [...html.matchAll(/<title\b[^>]*>/gi)];
+  const h1s = [...html.matchAll(/<h1\b/gi)];
+  const problems = [];
+
+  if (canons.length !== 1) problems.push(`canonical×${canons.length}`);
+  if (descs.length !== 1) problems.push(`description×${descs.length}`);
+  if (titles.length !== 1) problems.push(`title×${titles.length}`);
+  if (h1s.length !== 1) problems.push(`h1×${h1s.length}`);
+
+  if (canons.length === 1) {
+    const href = canons[0][0].match(/href=["']([^"']+)["']/i)?.[1] || '';
+    const expected =
+      route === '/' ? 'https://topedgeai.com/' : `https://topedgeai.com${route}`;
+    const homeOk =
+      route === '/' && (href === 'https://topedgeai.com/' || href === 'https://topedgeai.com');
+    if (route === '/') {
+      if (!homeOk) problems.push(`canonical-href=${href}`);
+    } else if (href !== expected) {
+      problems.push(`canonical-href=${href} (want ${expected})`);
+    }
+  }
+
+  return problems;
+}
+
 async function main() {
   if (!fs.existsSync(path.join(dist, 'index.html'))) {
     throw new Error('dist/index.html missing — run vite build first');
@@ -153,9 +212,24 @@ async function main() {
         // `load` is enough for Helmet/meta; `networkidle` can hang on analytics/websockets.
         await page.goto(url, { waitUntil: 'load', timeout: 45000 });
         await page.waitForSelector('h1', { timeout: 20000 });
-        // Let Helmet flush title/meta/JSON-LD
-        await sleep(100);
-        const html = await page.content();
+        // Wait until this route's self-canonical is in the DOM (Helmet can lag past first paint).
+        const expectCanon =
+          route === '/' ? 'https://topedgeai.com/' : `https://topedgeai.com${route}`;
+        await page.waitForFunction(
+          (href) => {
+            const links = [...document.querySelectorAll('link[rel="canonical"]')];
+            return links.some((l) => l.getAttribute('href') === href);
+          },
+          expectCanon,
+          { timeout: 15000 },
+        );
+        await page.waitForFunction(
+          () => document.querySelectorAll('meta[name="description"]').length >= 1,
+          { timeout: 10000 },
+        );
+        await sleep(50);
+        const raw = await page.content();
+        const html = sanitizePrerenderHtml(raw);
 
         const out = outPathFor(route);
         fs.mkdirSync(path.dirname(out), { recursive: true });
@@ -163,8 +237,14 @@ async function main() {
 
         const hasH1 = /<h1[\s>]/i.test(html);
         const hasLd = /application\/ld\+json/i.test(html);
-        console.log(`  ✓ ${route}  (h1=${hasH1 ? 'yes' : 'no'}, ld=${hasLd ? 'yes' : 'no'})`);
-        ok += 1;
+        const headProblems = assertSingleSeoHead(html, route);
+        if (headProblems.length) {
+          fail += 1;
+          console.error(`  ✗ ${route}: SEO head ${headProblems.join(', ')}`);
+        } else {
+          console.log(`  ✓ ${route}  (h1=${hasH1 ? 'yes' : 'no'}, ld=${hasLd ? 'yes' : 'no'}, head=clean)`);
+          ok += 1;
+        }
       } catch (err) {
         fail += 1;
         console.error(`  ✗ ${route}: ${err.message}`);
@@ -173,7 +253,7 @@ async function main() {
 
     await browser.close();
     console.log(`\n✅ Prerender done: ${ok} ok, ${fail} failed`);
-    if (fail > 0 && ok === 0) {
+    if (fail > 0) {
       exitCode = 1;
     }
   } catch (err) {

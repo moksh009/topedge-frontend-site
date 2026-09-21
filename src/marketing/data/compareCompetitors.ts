@@ -115,7 +115,7 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
     brandTag: 'WhatsApp BSP',
     title: 'TopEdge vs WATI (2026) | WhatsApp Ecommerce Growth OS',
     description:
-      'Compare TopEdge vs WATI: 0% Meta template markup, BYOK AI, intent routing, unified customer identity, COD → prepaid, warranty, and unlimited chatflows for Shopify India brands.',
+      'Compare TopEdge vs WATI: 0% Meta markup, BYOK AI, unified identity, COD to prepaid, and unlimited chatflows for Shopify India.',
     keywords:
       'TopEdge vs WATI, WATI alternative India, WhatsApp template markup, COD to prepaid WhatsApp, unified customer identity WhatsApp, intent routing chatbot, WATI vs TopEdge Shopify',
     h1: 'TopEdge vs WATI',
@@ -319,7 +319,7 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
     brandTag: 'Shopify WhatsApp app',
     title: 'TopEdge vs Interakt (2026) | Shopify WhatsApp Growth OS',
     description:
-      'Compare TopEdge vs Interakt: Meta billing, BYOK AI vs App-tier AI agents, COD → prepaid on WhatsApp Pay, unified identity, warranty, and unlimited flows vs Shopify App rate limits.',
+      'Compare TopEdge vs Interakt: Meta billing, BYOK AI, COD to prepaid, unified identity, and unlimited flows vs Shopify App rate limits.',
     keywords:
       'TopEdge vs Interakt, Interakt alternative Shopify, Interakt vs TopEdge, WhatsApp marketing Shopify India, abandoned cart WhatsApp Interakt, COD confirmation WhatsApp, Interakt pricing',
     h1: 'TopEdge vs Interakt',
@@ -714,7 +714,7 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
     brandTag: 'India WhatsApp commerce',
     title: 'TopEdge vs Zoko (2026) | Flat Order Plans vs Conversation Metering',
     description:
-      'Compare TopEdge vs Zoko for Shopify WhatsApp: flat INR order-volume plans vs Zoko base fee plus per-conversation metering, COD flows, AI add-ons, and India commerce hooks.',
+      'Compare TopEdge vs Zoko: flat INR order plans vs Zoko’s base fee plus per-conversation metering, COD flows, and India commerce hooks.',
     keywords:
       'TopEdge vs Zoko, Zoko alternative Shopify, Zoko pricing conversations, Shopify WhatsApp India Zoko, Zoko vs TopEdge',
     h1: 'TopEdge vs Zoko',
@@ -1232,7 +1232,7 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
     brandTag: 'WhatsApp widget + USD automation',
     title: 'TopEdge vs Dondy (2026) | 0% Meta Markup vs ~60% Rate Card',
     description:
-      'Compare TopEdge vs Dondy: Dondy’s published WhatsApp rate table is about 60% above Meta marketing rates (India $0.01888/message). TopEdge is 0% markup, flat INR, and native COD → prepaid.',
+      'Compare TopEdge vs Dondy: Dondy’s India rate is $0.01888/message (~60% above Meta). TopEdge is 0% markup, flat INR, and native COD to prepaid.',
     keywords:
       'TopEdge vs Dondy, Dondy alternative Shopify, Dondy WhatsApp markup, Dondy pricing India, Dondy vs TopEdge',
     h1: 'TopEdge vs Dondy',

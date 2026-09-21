@@ -114,9 +114,9 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     titleAccent: 'know Shopify',
     subtitle:
       'Look up orders, update addresses, and hand off to Live Chat.\nShopify sync built for India D2C WhatsApp support.',
-    seoTitle: 'WhatsApp Flow Builder for Shopify India | Chatbot with Order Tools',
+    seoTitle: 'WhatsApp Flow Builder for Shopify India | TopEdge',
     seoDescription:
-      'Shopify-native WhatsApp flow builder for Indian D2C: OAuth connect, real-time order webhooks, Shopify tools on the canvas, and Live Chat handoff with order context.',
+      'Shopify WhatsApp flow builder: OAuth, order webhooks, Shopify tools on the canvas, and Live Chat handoff with order context.',
     keywords:
       'WhatsApp flow builder Shopify, WhatsApp chatbot India D2C, Shopify WhatsApp OAuth, ecommerce WhatsApp automation India',
     hero: {
@@ -239,9 +239,9 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     titleAccent: 'on your storefront',
     subtitle:
       'Capture consented WhatsApp numbers on your storefront.\nThen run campaigns and journeys from one list.',
-    seoTitle: 'WhatsApp Opt-in Tools for Shopify India | Popup, Spin Wheel & Widget',
+    seoTitle: 'WhatsApp Opt-in Tools for Shopify India | TopEdge',
     seoDescription:
-      'Capture WhatsApp numbers on Shopify India with Pulse Drop, welcome popup, spin-to-win, mystery discount, and chat widget, then send Meta-safe campaigns and journeys to consented subscribers.',
+      'Capture WhatsApp numbers on Shopify with popup, spin wheel, and chat widget, then message only consented subscribers.',
     keywords:
       'WhatsApp opt-in Shopify India, WhatsApp popup Shopify, spin to win WhatsApp, WhatsApp widget Shopify, WhatsApp subscriber list D2C',
     hero: {
@@ -733,9 +733,9 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     titleAccent: 'matched to WhatsApp',
     subtitle:
       'One-click Shopify embed for views, carts, and checkout.\nFeed journeys with consent-aware site intent.',
-    seoTitle: 'Shopify WhatsApp Tracking Pixel | Website Intent for Cart Recovery',
+    seoTitle: 'Shopify WhatsApp Tracking Pixel | TopEdge',
     seoDescription:
-      'TopEdge tracking pixel for Shopify India: theme app embed, product and cart intent matched to WhatsApp numbers, consent-aware firing, and pixel health for journey ROI.',
+      'Shopify tracking pixel: theme embed, product and cart intent matched to WhatsApp, consent-aware events, and pixel health.',
     keywords:
       'WhatsApp tracking pixel Shopify, website intent WhatsApp India, Shopify theme app embed tracking, cart recovery analytics WhatsApp',
     hero: {
@@ -859,9 +859,9 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     titleAccent: 'order context',
     subtitle:
       'Reply with Shopify order context in one WhatsApp inbox.\nTake over from AI anytime, release when you are done.',
-    seoTitle: 'WhatsApp Shared Inbox for Shopify India | Live Chat with Order Context',
+    seoTitle: 'WhatsApp Shared Inbox for Shopify India | TopEdge',
     seoDescription:
-      'Unified WhatsApp and Instagram inbox for Shopify India. Agents see order context, confirm COD, recover carts, and pause AI on takeover without leaving the thread.',
+      'WhatsApp and Instagram inbox for Shopify. Agents see the order, confirm COD, recover carts, and pause AI on takeover.',
     keywords:
       'WhatsApp shared inbox Shopify India, ecommerce live chat WhatsApp, WhatsApp customer support Shopify, Live Chat takeover pauses AI',
     hero: {
@@ -984,9 +984,9 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     titleAccent: 'own API keys',
     subtitle:
       'Bring your own OpenAI or Claude keys.\nGround replies in catalog and policies, takeover pauses AI.',
-    seoTitle: 'WhatsApp AI for Shopify India | BYOK OpenAI or Claude, TopEdge AI Brain',
+    seoTitle: 'WhatsApp AI for Shopify India | BYOK | TopEdge',
     seoDescription:
-      'TopEdge AI Brain for Shopify India: bring your own OpenAI or Claude key, ground WhatsApp replies in store knowledge, route with Intent Detect, and pause AI on Live Chat takeover.',
+      'Bring your own OpenAI or Claude key. Ground WhatsApp replies in store knowledge, route with Intent Detect, and pause AI on takeover.',
     keywords:
       'WhatsApp AI Shopify India, BYOK OpenAI Claude ecommerce, store knowledge WhatsApp bot, WhatsApp AI own API keys D2C',
     hero: {
@@ -1652,9 +1652,9 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     titleAccent: 'what they mean',
     subtitle:
       'Detect shipping, returns, COD, and human handoff intent.\nRoute flows before you spend AI tokens.',
-    seoTitle: 'WhatsApp Intent Detection for Shopify India | Route Without AI Waste',
+    seoTitle: 'WhatsApp Intent Detection for Shopify India | TopEdge',
     seoDescription:
-      'Detect WhatsApp message intent for Shopify India D2C, route shipping, returns, COD, and handoff without burning OpenAI/Claude tokens on every message. Works with AI Brain and Live Chat.',
+      'Route shipping, returns, COD, and handoff on WhatsApp before you spend AI tokens. Works with AI Brain and Live Chat.',
     keywords:
       'WhatsApp intent detection Shopify, chatbot intent routing India, COD WhatsApp intent, ecommerce chat intent D2C, save AI tokens WhatsApp',
     hero: {

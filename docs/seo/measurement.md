@@ -37,7 +37,7 @@ Related trackers (same `docs/seo/` folder — do not invent a second tooling hom
 
 | Week of | GSC note (1–2 lines) | Bing note | Indexing / discovered-not-indexed | Fed backlog? |
 |---|---|---|---|---|
-| 2026-09-21 | Setup — Phase 6 live; first full weekly pass still owed | Same | Watch Phase 1 fix continue to clear | — |
+| 2026-09-21 | Setup — Phase 6 live; first full weekly pass still owed | IndexNow live; **Bing flagged duplicate canonical→homepage on /compare/dondy** — fixed site-wide (index.html shell + prerender sanitize) | Watch Phase 1 fix continue to clear; re-inspect /compare/dondy after deploy | — |
 | | | | | |
 
 ---

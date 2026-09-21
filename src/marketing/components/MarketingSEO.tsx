@@ -18,11 +18,18 @@ type MarketingSEOProps = {
   type?: 'website' | 'article';
 };
 
+/** Absolute canonical. Homepage uses trailing slash to match sitemap.xml. */
+export function canonicalUrlForPath(path: string): string {
+  if (!path || path === '/') return `${SITE_URL}/`;
+  const clean = path.startsWith('/') ? path : `/${path}`;
+  return `${SITE_URL}${clean.replace(/\/$/, '')}`;
+}
+
 export default function MarketingSEO({
   title,
   description,
   path,
-  image = `${SITE_URL}/og/og-default.svg`,
+  image = `${SITE_URL}/og-image.png`,
   keywords,
   noSuffix = false,
   noIndex = false,
@@ -31,7 +38,10 @@ export default function MarketingSEO({
   type = 'website',
 }: MarketingSEOProps) {
   const fullTitle = noSuffix ? title : title.includes('TopEdge') ? title : `${title} | TopEdge`;
-  const url = `${SITE_URL}${path === '/' ? '' : path}`;
+  const url = canonicalUrlForPath(path);
+  const robots = noIndex
+    ? 'noindex, nofollow'
+    : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
 
   const schemas: Record<string, unknown>[] = [];
 
@@ -52,19 +62,13 @@ export default function MarketingSEO({
   }
 
   return (
-    <Helmet>
+    <Helmet prioritizeSeoTags>
+      <html lang="en-IN" />
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
       {keywords ? <meta name="keywords" content={keywords} /> : null}
       <link rel="canonical" href={url} />
-      <meta
-        name="robots"
-        content={
-          noIndex
-            ? 'noindex, nofollow'
-            : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
-        }
-      />
+      <meta name="robots" content={robots} />
       <meta property="og:type" content={type} />
       <meta property="og:site_name" content="TopEdge" />
       <meta property="og:locale" content="en_IN" />
@@ -73,6 +77,7 @@ export default function MarketingSEO({
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
       <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:url" content={url} />
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={image} />

@@ -3,6 +3,7 @@ import MarketingSEO from '../components/MarketingSEO';
 import MarketingPage from '../components/MarketingPage';
 import MarketingCtaBand from '../components/MarketingCtaBand';
 import CompareStatus from '../components/compare/CompareStatus';
+import CompareFaq from '../components/compare/CompareFaq';
 import { THREE_WAY_FEATURE_MATRIX } from '../data/compareFeatureMatrix';
 import { breadcrumbJsonLd, organizationJsonLd, webPageJsonLd } from '../data/pageSeo';
 import {
@@ -13,9 +14,27 @@ import '../styles/compare.css';
 
 const PATH = '/compare/topedge-vs-wati-vs-aisensy';
 
-const TITLE = 'TopEdge vs WATI vs AiSensy (2026) | WhatsApp Ecommerce Comparison';
+const TITLE = 'TopEdge vs WATI vs AiSensy (2026) | WhatsApp Comparison';
 const DESCRIPTION =
-  'Three-way comparison: TopEdge vs WATI vs AiSensy on WhatsApp template markup, AI costs, intent routing, unified identity, COD → prepaid, analytics, warranty, journeys, and chatflow limits.';
+  'TopEdge vs WATI vs AiSensy: template markup, AI cost, COD to prepaid, identity, warranty, and chatflow limits.';
+
+const THREE_WAY_FAQS = [
+  {
+    question: 'How does TopEdge differ from WATI and AiSensy on Meta markup?',
+    answer:
+      'TopEdge publishes 0% platform markup on Meta pass-through. WATI and AiSensy are compared on the same board for template markup, AI cost, and plan limits. Open the pairwise pages for the sourced numbers.',
+  },
+  {
+    question: 'Who should pick TopEdge in this three-way shortlist?',
+    answer:
+      'Shopify India teams that want flat INR plans, native COD to prepaid, unified identity, and unlimited flows without a Meta markup layer.',
+  },
+  {
+    question: 'When do WATI or AiSensy still fit?',
+    answer:
+      'When you need a broad WhatsApp BSP or campaign suite and can accept usage fees, credits, or flow caps. Use the pairwise boards before you decide.',
+  },
+];
 
 const LOGO_WATI = '/marketing/compare/compare-logo-wati.png';
 const LOGO_AISENSY = '/marketing/compare/compare-logo-aisensy.png';
@@ -31,6 +50,7 @@ export default function CompareThreeWayPage() {
         keywords="TopEdge vs WATI vs AiSensy, WhatsApp automation comparison India, WATI vs AiSensy vs TopEdge, WhatsApp template markup, COD prepaid WhatsApp comparison"
         path={PATH}
         noSuffix
+        faqSchema={THREE_WAY_FAQS}
         jsonLd={[
           organizationJsonLd(),
           webPageJsonLd({
@@ -152,6 +172,15 @@ export default function CompareThreeWayPage() {
             <Link to="/compare">All comparisons</Link>
             <Link to="/pricing">TopEdge AI pricing</Link>
           </nav>
+        </section>
+
+        <section className="mkt-cmp__block mkt-cmp__block--faq" aria-labelledby="cmp-faq">
+          <div className="mkt-cmp__block-head">
+            <h2 id="cmp-faq">
+              Common <span className="mkt-cmp__hl">questions</span>
+            </h2>
+          </div>
+          <CompareFaq items={THREE_WAY_FAQS} />
         </section>
 
         <MarketingCtaBand

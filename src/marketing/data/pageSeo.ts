@@ -46,7 +46,7 @@ export const PAGE_SEO = {
   features: {
     title: 'Shopify WhatsApp Features | Journeys, AI, Pixel & Profit',
     description:
-      'Explore TopEdge for Shopify India: WhatsApp journeys, Live Chat, AI Brain, Flow Builder, tracking pixel, opt-in tools, Profit & costs, campaigns, Instagram, and Meta templates.',
+      'Shopify WhatsApp features: journeys, Live Chat, AI Brain, Flow Builder, pixel, opt-in, campaigns, Instagram, and Meta templates.',
     keywords:
       'Shopify WhatsApp features, WhatsApp journeys India, AI Brain BYOK Shopify, tracking pixel WhatsApp, WhatsApp opt-in Shopify, Profit and costs ecommerce, Live Chat Shopify WhatsApp',
     path: '/features',
@@ -68,9 +68,9 @@ export const PAGE_SEO = {
     path: '/customers',
   },
   compare: {
-    title: 'TopEdge vs WATI, AiSensy, Interakt & Bitespeed | Shopify WhatsApp India',
+    title: 'TopEdge vs WATI, AiSensy & More | Shopify WhatsApp',
     description:
-      'Compare TopEdge vs WATI, AiSensy, Interakt, and Bitespeed for Shopify WhatsApp automation in India, Meta markup, AI cost, COD → prepaid, unified identity, INR pricing, and chatflow limits.',
+      'Compare TopEdge with WATI, AiSensy, Interakt, and Bitespeed: Meta markup, COD to prepaid, INR pricing, and chatflow limits.',
     keywords:
       'TopEdge vs WATI, TopEdge vs AiSensy, TopEdge vs WATI vs AiSensy, TopEdge vs Interakt, TopEdge vs Bitespeed, WhatsApp template markup, COD prepaid WhatsApp comparison, WATI alternative India, AiSensy alternative Shopify',
     path: '/compare',
@@ -78,15 +78,15 @@ export const PAGE_SEO = {
   blog: {
     title: 'WhatsApp Shopify Playbooks | Cart Recovery, COD & Meta Templates',
     description:
-      'Operator playbooks for WhatsApp automation on Shopify India: abandoned cart recovery, COD confirmation to cut RTO, Meta Cloud API templates, shared inbox, and catalog-grounded AI.',
+      'Playbooks for WhatsApp on Shopify India: cart recovery, COD to cut RTO, Meta templates, shared inbox, and catalog-grounded AI.',
     keywords:
       'WhatsApp Shopify playbooks, abandoned cart recovery WhatsApp India, COD confirmation WhatsApp, Meta WhatsApp templates Shopify, ecommerce automation blog India, WhatsApp shared inbox Shopify',
     path: '/blog',
   },
   about: {
-    title: 'About TopEdge AI | Founders Moksh Patel & Smit Tilva | Shopify WhatsApp India',
+    title: 'About TopEdge AI | Moksh Patel & Smit Tilva',
     description:
-      'Meet TopEdge AI, the WhatsApp growth OS for Shopify India founded by Moksh Patel and Smit Tilva. Built for cart recovery, COD confirmation, Meta templates, and brands like Delitech Smart Home and Apex Light.',
+      'TopEdge AI is the WhatsApp growth OS for Shopify India, founded by Moksh Patel and Smit Tilva. Cart recovery, COD, and Meta templates.',
     keywords:
       'About TopEdge AI, Moksh Patel TopEdge, Smit Tilva TopEdge, WhatsApp Shopify platform India, ecommerce automation company Ahmedabad, Delitech Smart Home WhatsApp, Apex Light Shopify WhatsApp',
     path: '/about',

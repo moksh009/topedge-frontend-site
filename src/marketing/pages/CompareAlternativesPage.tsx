@@ -9,9 +9,9 @@ import { compareTwoWayModifiedIso, updatedKicker } from '../data/contentDates';
 import '../styles/compare.css';
 
 const PATH = '/compare/alternatives';
-const TITLE = 'WhatsApp Automation Alternatives for Shopify | TopEdge Compare Index';
+const TITLE = 'WhatsApp Alternatives for Shopify | TopEdge Compare';
 const DESCRIPTION =
-  'Fair index of WhatsApp automation alternatives for Shopify: WATI, AiSensy, Interakt, Bitespeed, Zoko, Getgabs, and Kanal — one factual line each, with full TopEdge comparisons.';
+  'Fair index of Shopify WhatsApp alternatives: WATI, AiSensy, Interakt, Bitespeed, Zoko, Getgabs, Kanal, and Dondy, with full TopEdge comparisons.';
 
 export default function CompareAlternativesPage() {
   const modifiedIso = compareTwoWayModifiedIso();
