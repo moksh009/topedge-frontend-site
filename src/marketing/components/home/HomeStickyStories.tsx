@@ -131,6 +131,7 @@ function FeatureMoment({ story }: { story: Story }) {
           {story.kind === 'video' ? (
             <DemoProductVideoFrame
               src={story.video.src}
+              mobileSrc={story.video.mobileSrc}
               poster={story.video.poster}
               glow={story.glow}
               title={`${title} preview`}

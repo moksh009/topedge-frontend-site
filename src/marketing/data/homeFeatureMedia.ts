@@ -5,11 +5,14 @@
 export type DemoVideo = {
   src: string;
   poster: string;
+  /** Smaller encode for phones; when set, mobile autoplays in-view (no Play tap). */
+  mobileSrc?: string;
 };
 
 const CART: DemoVideo = {
   src: '/marketing/demos/cart-recovery.mp4',
   poster: '/marketing/demos/cart-recovery-poster.jpg',
+  mobileSrc: '/marketing/demos/cart-recovery-mobile.mp4',
 };
 
 const COD: DemoVideo = {

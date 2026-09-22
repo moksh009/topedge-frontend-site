@@ -11,6 +11,8 @@ export type DemoVideoGlow =
 
 type DemoProductVideoFrameProps = {
   src: string;
+  /** Optional compressed source for narrow viewports (autoplay in-view). */
+  mobileSrc?: string;
   poster?: string;
   title?: string;
   glow?: DemoVideoGlow;
@@ -38,11 +40,13 @@ function tryPlay(video: HTMLVideoElement) {
 
 /**
  * Frameless product demo video, poster first, muted loop.
- * Mobile: poster until tap (avoids multi-MB mp4 on Slow 4G / PSI).
+ * Mobile default: poster until tap (large mp4s).
+ * Mobile + mobileSrc: load compressed file when in view (no Play button).
  * Desktop: load + play when ~in view.
  */
 export default function DemoProductVideoFrame({
   src,
+  mobileSrc,
   poster,
   title = 'Product demo video',
   glow = 'violet',
@@ -51,7 +55,11 @@ export default function DemoProductVideoFrame({
 }: DemoProductVideoFrameProps) {
   const hostRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [activeSrc, setActiveSrc] = useState<string | undefined>(priority ? src : undefined);
+  const narrow = isNarrowViewport();
+  const playSrc = narrow && mobileSrc ? mobileSrc : src;
+  const mobileAutoplay = Boolean(narrow && mobileSrc);
+
+  const [activeSrc, setActiveSrc] = useState<string | undefined>(priority ? playSrc : undefined);
   const [ready, setReady] = useState(false);
   const [needsTap, setNeedsTap] = useState(false);
   /** Set on Play demo click — play as soon as the element can, not only via IO. */
@@ -63,7 +71,7 @@ export default function DemoProductVideoFrame({
     if (!wrap) return;
 
     if (priority) {
-      setActiveSrc(src);
+      setActiveSrc(playSrc);
       setNeedsTap(false);
       return;
     }
@@ -73,16 +81,17 @@ export default function DemoProductVideoFrame({
       return;
     }
 
-    // Phones: keep poster only until the shopper asks to play.
-    if (isNarrowViewport()) {
+    // Phones without a mobile encode: poster until tap.
+    if (isNarrowViewport() && !mobileSrc) {
       setNeedsTap(true);
       return;
     }
 
+    // Desktop, or mobile with compressed mobileSrc: load when near view.
     const io = new IntersectionObserver(
       ([entry]) => {
         if (entry?.isIntersecting) {
-          setActiveSrc(src);
+          setActiveSrc(playSrc);
           io.disconnect();
         }
       },
@@ -90,7 +99,7 @@ export default function DemoProductVideoFrame({
     );
     io.observe(wrap);
     return () => io.disconnect();
-  }, [src, priority]);
+  }, [playSrc, priority, mobileSrc]);
 
   useEffect(() => {
     const wrap = hostRef.current;
@@ -166,7 +175,7 @@ export default function DemoProductVideoFrame({
   const startFromTap = () => {
     playAfterLoad.current = true;
     setNeedsTap(false);
-    setActiveSrc(src);
+    setActiveSrc(playSrc);
   };
 
   return (
@@ -174,6 +183,7 @@ export default function DemoProductVideoFrame({
       ref={hostRef}
       className={['demo-video-glow', className].filter(Boolean).join(' ')}
       data-glow={glow}
+      data-mobile-autoplay={mobileAutoplay ? 'true' : undefined}
     >
       <div className={`demo-video-glow__frame${ready ? ' is-ready' : ''}`}>
         {poster ? (
