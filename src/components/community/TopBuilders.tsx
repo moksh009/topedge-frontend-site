@@ -157,7 +157,11 @@ export default function TopBuilders() {
               >
                 <div className={`w-16 h-16 rounded-full mx-auto mb-2 overflow-hidden ${ring}`}>
                   {t.profile.photoURL ? (
-                    <img src={t.profile.photoURL} className="w-full h-full object-cover" />
+                    <img
+                      src={t.profile.photoURL}
+                      alt={t.profile.fullName || 'Builder'}
+                      className="w-full h-full object-cover"
+                    />
                   ) : (
                     <div className="w-full h-full bg-slate-100 flex items-center justify-center">
                       <User className="w-6 h-6 text-slate-400" />

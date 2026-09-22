@@ -167,11 +167,11 @@ export default function ComparePage({ competitor: competitorProp }: Props) {
                     Capability
                   </th>
                   <th scope="col" className="mkt-cmp__board-col is-te">
-                    <img src="/logo.png" alt="" width={18} height={18} />
+                    <img src="/logo.png" alt="" width={18} height={18} aria-hidden />
                     TopEdge AI
                   </th>
                   <th scope="col" className="mkt-cmp__board-col">
-                    <img src={data.logo} alt="" width={18} height={18} />
+                    <img src={data.logo} alt="" width={18} height={18} aria-hidden />
                     {data.name}
                   </th>
                 </tr>
@@ -187,14 +187,14 @@ export default function ComparePage({ competitor: competitorProp }: Props) {
                     </th>
                     <td className="mkt-cmp__board-cell is-te">
                       <span className="mkt-cmp__cell-brand">
-                        <img src="/logo.png" alt="" width={16} height={16} />
+                        <img src="/logo.png" alt="" width={16} height={16} aria-hidden />
                         TopEdge AI
                       </span>
                       <CompareStatus value={row.topedge} />
                     </td>
                     <td className="mkt-cmp__board-cell">
                       <span className="mkt-cmp__cell-brand">
-                        <img src={data.logo} alt="" width={16} height={16} />
+                        <img src={data.logo} alt="" width={16} height={16} aria-hidden />
                         {data.name}
                       </span>
                       <CompareStatus value={row.competitor} />
@@ -283,14 +283,14 @@ export default function ComparePage({ competitor: competitorProp }: Props) {
                   </th>
                   <th scope="col" className="mkt-cmp__duel-brand is-te">
                     <span className="mkt-cmp__duel-brand-top">
-                      <img src="/logo.png" alt="" width={20} height={20} />
+                      <img src="/logo.png" alt="" width={20} height={20} aria-hidden />
                       <strong>TopEdge AI</strong>
                     </span>
                     <span className="mkt-cmp__duel-plan">{teBest.name}</span>
                   </th>
                   <th scope="col" className="mkt-cmp__duel-brand">
                     <span className="mkt-cmp__duel-brand-top">
-                      <img src={data.logo} alt="" width={20} height={20} />
+                      <img src={data.logo} alt="" width={20} height={20} aria-hidden />
                       <strong>{data.name}</strong>
                     </span>
                     <span className="mkt-cmp__duel-plan">{compBest.name}</span>

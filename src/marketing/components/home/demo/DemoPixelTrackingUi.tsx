@@ -157,6 +157,7 @@ export default function DemoPixelTrackingUi({ className }: { className?: string 
                     height={48}
                     loading="lazy"
                     decoding="async"
+                    aria-hidden
                   />
                   <div className="demo-pixel__row-main">
                     <p className="demo-pixel__row-action">{row.action}</p>
@@ -185,7 +186,7 @@ export default function DemoPixelTrackingUi({ className }: { className?: string 
                 <img
                   className="demo-pixel__india-img"
                   src="/marketing/features/india-outline.png?v=4"
-                  alt=""
+                  alt="India visitor activity map"
                   width={420}
                   height={560}
                   loading="lazy"

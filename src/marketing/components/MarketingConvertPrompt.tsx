@@ -247,6 +247,7 @@ export default function MarketingConvertPrompt() {
               height={16}
               className="mkt-convert__wa-icon"
               decoding="async"
+              aria-hidden
             />
             WhatsApp us
           </a>

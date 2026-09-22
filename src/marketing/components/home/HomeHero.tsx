@@ -29,6 +29,7 @@ export default function HomeHero() {
                 height={720}
                 decoding="async"
                 fetchPriority="low"
+                aria-hidden
               />
             </picture>
           </div>

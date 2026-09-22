@@ -175,7 +175,7 @@ export default function BlogPost() {
                     <div className="mkt-blog-related__thumb">
                       <img
                         src={r.image}
-                        alt=""
+                        alt={r.imageAlt || r.title}
                         width={400}
                         height={225}
                         loading="lazy"

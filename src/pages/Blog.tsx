@@ -54,7 +54,7 @@ export default function Blog() {
       <MarketingPage className="mkt-blog-index">
         <header className="mkt-blog-index__hero">
           <p className="mkt-blog-index__brand">
-            <img src="/brand-mark.png" alt="" width={22} height={22} decoding="async" />
+            <img src="/brand-mark.png" alt="TopEdge AI" width={22} height={22} decoding="async" />
             <span>
               TopEdge <span>AI</span> playbooks
             </span>

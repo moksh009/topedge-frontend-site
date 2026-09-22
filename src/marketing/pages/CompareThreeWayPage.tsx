@@ -117,15 +117,15 @@ export default function CompareThreeWayPage() {
                     Feature
                   </th>
                   <th scope="col" className="mkt-cmp__triple-col is-te">
-                    <img src="/logo.png" alt="" width={18} height={18} />
+                    <img src="/logo.png" alt="" width={18} height={18} aria-hidden />
                     TopEdge AI
                   </th>
                   <th scope="col" className="mkt-cmp__triple-col">
-                    <img src={LOGO_WATI} alt="" width={18} height={18} />
+                    <img src={LOGO_WATI} alt="" width={18} height={18} aria-hidden />
                     WATI
                   </th>
                   <th scope="col" className="mkt-cmp__triple-col">
-                    <img src={LOGO_AISENSY} alt="" width={18} height={18} />
+                    <img src={LOGO_AISENSY} alt="" width={18} height={18} aria-hidden />
                     AiSensy
                   </th>
                 </tr>
@@ -141,21 +141,21 @@ export default function CompareThreeWayPage() {
                     </th>
                     <td className="mkt-cmp__triple-cell is-te">
                       <span className="mkt-cmp__cell-brand">
-                        <img src="/logo.png" alt="" width={16} height={16} />
+                        <img src="/logo.png" alt="" width={16} height={16} aria-hidden />
                         TopEdge AI
                       </span>
                       <CompareStatus value={row.topedge} />
                     </td>
                     <td className="mkt-cmp__triple-cell">
                       <span className="mkt-cmp__cell-brand">
-                        <img src={LOGO_WATI} alt="" width={16} height={16} />
+                        <img src={LOGO_WATI} alt="" width={16} height={16} aria-hidden />
                         WATI
                       </span>
                       <CompareStatus value={row.wati} />
                     </td>
                     <td className="mkt-cmp__triple-cell">
                       <span className="mkt-cmp__cell-brand">
-                        <img src={LOGO_AISENSY} alt="" width={16} height={16} />
+                        <img src={LOGO_AISENSY} alt="" width={16} height={16} aria-hidden />
                         AiSensy
                       </span>
                       <CompareStatus value={row.aisensy} />

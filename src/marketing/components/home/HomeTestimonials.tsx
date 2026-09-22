@@ -168,7 +168,7 @@ function TestimonialCard({
           <img
             className="home-voices__avatar"
             src={item.avatar}
-            alt=""
+            alt={`Portrait of ${item.name}`}
             width={40}
             height={40}
             loading="lazy"

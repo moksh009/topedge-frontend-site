@@ -30,7 +30,7 @@ export default function SignupRedirect() {
       </Helmet>
       <img
         src="/topedge-loader.gif"
-        alt=""
+        alt="Opening TopEdge signup"
         width={96}
         height={96}
         className="mkt-auth-redirect__logo"

@@ -336,6 +336,7 @@ export default function HomeRoiPayoff() {
                   className="home-roi__badge-logo"
                   decoding="async"
                   loading="lazy"
+                  aria-hidden
                 />
                 with TopEdge AI
               </span>

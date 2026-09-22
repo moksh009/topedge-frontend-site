@@ -123,7 +123,7 @@ export default function About() {
       <MarketingPage className="mkt-about">
         <header className="mkt-about__hero">
           <p className="mkt-about__brand">
-            <img src="/brand-mark.png" alt="" width={26} height={26} decoding="async" />
+            <img src="/brand-mark.png" alt="TopEdge AI" width={26} height={26} decoding="async" />
             <span>
               TopEdge <span>AI</span>
             </span>

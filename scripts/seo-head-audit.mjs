@@ -157,6 +157,41 @@ function auditMerchantProductImage(html) {
 }
 
 /**
+ * Bing Webmaster + Google treat empty/missing img alt as SEO issues.
+ * Decorative images must set aria-hidden (or role=presentation) with alt="".
+ * Content images must have non-empty alt text.
+ * @param {string} html
+ * @returns {string[]}
+ */
+function auditImageAlts(html) {
+  const problems = [];
+  const tags = [...html.matchAll(/<img\b[^>]*>/gi)].map((m) => m[0]);
+  for (const tag of tags) {
+    const decorative =
+      /\baria-hidden(?:\s*=\s*(["']?)(?:true)?\1)?/i.test(tag) ||
+      /\brole\s*=\s*["']presentation["']/i.test(tag) ||
+      /\brole\s*=\s*["']none["']/i.test(tag);
+
+    const altMatch = tag.match(/\balt\s*=\s*(["'])(.*?)\1/i);
+    if (!altMatch) {
+      // JSX-prerendered HTML should always serialize alt=
+      problems.push('img-missing-alt');
+      continue;
+    }
+    const alt = altMatch[2].trim();
+    if (!alt && !decorative) {
+      problems.push('img-empty-alt');
+    }
+  }
+  // Cap noise: report once per type with counts
+  const counts = problems.reduce((acc, p) => {
+    acc[p] = (acc[p] || 0) + 1;
+    return acc;
+  }, {});
+  return Object.entries(counts).map(([k, n]) => `${k}×${n}`);
+}
+
+/**
  * @param {string} html
  * @param {string} route prerender path e.g. /pricing
  * @returns {{ ok: boolean, problems: string[] }}
@@ -212,6 +247,11 @@ export function auditPrerenderHead(html, route) {
 
     // Merchant listings: Product / SoftwareApplication with Offers must expose image.
     for (const issue of auditMerchantProductImage(html)) {
+      problems.push(issue);
+    }
+
+    // Bing Webmaster + GSC: content images need non-empty alt (decorative: aria-hidden).
+    for (const issue of auditImageAlts(html)) {
       problems.push(issue);
     }
 

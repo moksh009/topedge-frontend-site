@@ -231,6 +231,7 @@ export default function DemoProductVideoFrame({
             decoding="async"
             loading={priority ? 'eager' : 'lazy'}
             fetchPriority={priority ? 'high' : 'low'}
+            aria-hidden
           />
         ) : null}
         {needsTap && !activeSrc ? (

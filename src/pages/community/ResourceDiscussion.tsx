@@ -101,7 +101,11 @@ export default function ResourceDiscussion({ resourceId }: { resourceId: string 
         <div className="flex flex-col items-center">
             <div className="w-8 h-8 rounded-full bg-slate-100 shrink-0 overflow-hidden border border-slate-200">
                 {comment.userPhoto ? (
-                    <img src={comment.userPhoto} className="w-full h-full object-cover" />
+                    <img
+                      src={comment.userPhoto}
+                      alt={comment.userName || 'Commenter'}
+                      className="w-full h-full object-cover"
+                    />
                 ) : (
                     <div className="w-full h-full flex items-center justify-center text-[10px] font-bold text-slate-400">
                         {comment.userName.charAt(0)}
@@ -193,7 +197,11 @@ export default function ResourceDiscussion({ resourceId }: { resourceId: string 
         {user ? (
             <div className="flex gap-3">
                 <div className="w-8 h-8 rounded-full bg-slate-100 shrink-0 overflow-hidden">
-                    <img src={user.photoURL || `https://ui-avatars.com/api/?name=${user.displayName}`} className="w-full h-full object-cover" />
+                    <img
+                      src={user.photoURL || `https://ui-avatars.com/api/?name=${user.displayName}`}
+                      alt={user.displayName || 'You'}
+                      className="w-full h-full object-cover"
+                    />
                 </div>
                 <form onSubmit={(e) => { e.preventDefault(); handleSubmit(null, text); }} className="flex-1 relative">
                     <textarea

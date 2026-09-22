@@ -84,7 +84,7 @@ export default function CompareAlternativesPage() {
               <li key={a.slug}>
                 <Link to={a.href} className="mkt-cmp-alt__row">
                   <span className="mkt-cmp-alt__brand">
-                    <img src={a.logo} alt="" width={28} height={28} decoding="async" />
+                    <img src={a.logo} alt={`${a.name} logo`} width={28} height={28} decoding="async" />
                     <strong>{a.name}</strong>
                   </span>
                   <span className="mkt-cmp-alt__line">{a.oneLiner}</span>
