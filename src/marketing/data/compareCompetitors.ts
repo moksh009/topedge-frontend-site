@@ -1523,9 +1523,9 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
     logoAlt: 'Gupshup logo',
     accent: '#00a651',
     brandTag: 'Enterprise WhatsApp CPaaS',
-    title: 'TopEdge vs Gupshup (2026) | Flat INR Shopify OS vs Pay-as-you-go CPaaS',
+    title: 'TopEdge vs Gupshup (2026) | Flat INR vs Pay-as-you-go CPaaS',
     description:
-      'Compare TopEdge vs Gupshup: flat INR SaaS + 0% Meta markup + native COD → prepaid vs Gupshup’s pay-as-you-go CPaaS with platform message fees and Conversation Studio upgrades.',
+      'Compare TopEdge vs Gupshup: flat INR, 0% Meta markup, and COD → prepaid vs pay-as-you-go CPaaS with template fees and Conversation Studio.',
     keywords:
       'TopEdge vs Gupshup, Gupshup alternative Shopify India, Gupshup WhatsApp markup, Gupshup vs TopEdge, Gupshup Conversation Studio, Gupshup COD prepaid',
     h1: 'TopEdge vs Gupshup',
