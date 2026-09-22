@@ -27,6 +27,15 @@ function isNarrowViewport() {
   return typeof window !== 'undefined' && window.matchMedia('(max-width: 900px)').matches;
 }
 
+function tryPlay(video: HTMLVideoElement) {
+  const play = video.play();
+  if (play && typeof play.catch === 'function') {
+    play.catch(() => {
+      /* Autoplay blocked until gesture; muted should usually succeed */
+    });
+  }
+}
+
 /**
  * Frameless product demo video, poster first, muted loop.
  * Mobile: poster until tap (avoids multi-MB mp4 on Slow 4G / PSI).
@@ -45,6 +54,8 @@ export default function DemoProductVideoFrame({
   const [activeSrc, setActiveSrc] = useState<string | undefined>(priority ? src : undefined);
   const [ready, setReady] = useState(false);
   const [needsTap, setNeedsTap] = useState(false);
+  /** Set on Play demo click — play as soon as the element can, not only via IO. */
+  const playAfterLoad = useRef(false);
   const wasVisible = useRef(false);
 
   useEffect(() => {
@@ -97,13 +108,22 @@ export default function DemoProductVideoFrame({
       } catch {
         /* ignore seek errors before metadata */
       }
-      const play = video.play();
-      if (play && typeof play.catch === 'function') {
-        play.catch(() => {
-          /* Autoplay blocked until gesture, already muted */
-        });
-      }
+      tryPlay(video);
     };
+
+    // Tap-to-play: start as soon as media is ready (gesture already happened).
+    if (playAfterLoad.current) {
+      const onReady = () => {
+        playFromStart();
+        wasVisible.current = true;
+      };
+      if (video.readyState >= 2) {
+        onReady();
+      } else {
+        video.addEventListener('loadeddata', onReady, { once: true });
+        video.addEventListener('canplay', onReady, { once: true });
+      }
+    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -130,8 +150,7 @@ export default function DemoProductVideoFrame({
         return;
       }
       if (wasVisible.current && video.paused) {
-        const play = video.play();
-        if (play && typeof play.catch === 'function') play.catch(() => {});
+        tryPlay(video);
       }
     };
     document.addEventListener('visibilitychange', onVisibility);
@@ -145,6 +164,7 @@ export default function DemoProductVideoFrame({
   }, [activeSrc]);
 
   const startFromTap = () => {
+    playAfterLoad.current = true;
     setNeedsTap(false);
     setActiveSrc(src);
   };
@@ -187,7 +207,7 @@ export default function DemoProductVideoFrame({
             muted
             loop
             playsInline
-            preload="metadata"
+            preload="auto"
             aria-label={title}
             tabIndex={-1}
             disablePictureInPicture

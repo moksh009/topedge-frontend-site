@@ -235,6 +235,9 @@
   font: 600 0.875rem/1.2 Inter, system-ui, sans-serif;
   letter-spacing: 0.01em;
   cursor: pointer;
+  /* Parent glow shell is pointer-events:none for Lenis — re-enable for the CTA */
+  pointer-events: auto;
+  touch-action: manipulation;
   backdrop-filter: blur(8px);
   box-shadow: 0 8px 24px rgba(15, 23, 42, 0.28);
 }
