@@ -18,26 +18,31 @@ const CART: DemoVideo = {
 const COD: DemoVideo = {
   src: '/marketing/demos/cod-prepaid11.mp4?v=20260918a',
   poster: '/marketing/demos/cod-prepaid-poster.jpg?v=20260918a',
+  mobileSrc: '/marketing/demos/cod-prepaid-mobile.mp4',
 };
 
 const FLOW: DemoVideo = {
   src: '/marketing/demos/flowwww1.mp4?v=20260918a',
   poster: '/marketing/demos/flow-builder-poster.jpg?v=20260918a',
+  mobileSrc: '/marketing/demos/flow-builder-mobile.mp4',
 };
 
 const INTENT: DemoVideo = {
   src: '/marketing/demos/intentt.mp4?v=20260918a',
   poster: '/marketing/demos/intent-poster.jpg?v=20260918a',
+  mobileSrc: '/marketing/demos/intent-mobile.mp4',
 };
 
 const OPTIN: DemoVideo = {
   src: '/marketing/demos/opt-in.mp4?v=20260918a',
   poster: '/marketing/demos/optin-popup-poster.jpg?v=20260918a',
+  mobileSrc: '/marketing/demos/opt-in-mobile.mp4',
 };
 
 const SEGMENT: DemoVideo = {
   src: '/marketing/demos/segment.mp4',
   poster: '/marketing/demos/segment-poster.jpg',
+  mobileSrc: '/marketing/demos/segment-mobile.mp4',
 };
 
 /** Feature moments, video demos. */

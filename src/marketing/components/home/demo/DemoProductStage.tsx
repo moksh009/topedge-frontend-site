@@ -10,6 +10,7 @@ export default function DemoProductStage() {
   return (
     <DemoProductVideoFrame
       src={demo.src}
+      mobileSrc={demo.mobileSrc}
       poster={demo.poster}
       title="TopEdge cart recovery demo"
       glow="violet"

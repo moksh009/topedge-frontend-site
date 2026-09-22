@@ -20,7 +20,7 @@ export type ProductPageId =
   | 'intent-detection';
 
 export type ProductHeroMedia =
-  | { kind: 'video'; src: string; poster: string; label: string; glow?: ProductGlow }
+  | { kind: 'video'; src: string; poster: string; mobileSrc?: string; label: string; glow?: ProductGlow }
   | { kind: 'image'; src: string; alt: string; glow?: ProductGlow };
 
 export type ProductGlow = 'violet' | 'emerald' | 'sky' | 'amber' | 'rose' | 'indigo';
@@ -94,21 +94,25 @@ export type ProductPage = {
 const CART_VIDEO = {
   src: '/marketing/demos/cart-recovery.mp4',
   poster: '/marketing/demos/cart-recovery-poster.jpg',
+  mobileSrc: '/marketing/demos/cart-recovery-mobile.mp4',
 } as const;
 
 const COD_VIDEO = {
   src: '/marketing/demos/cod-prepaid11.mp4?v=20260918a',
   poster: '/marketing/demos/cod-prepaid-poster.jpg?v=20260918a',
+  mobileSrc: '/marketing/demos/cod-prepaid-mobile.mp4',
 } as const;
 
 const FLOW_VIDEO = {
   src: '/marketing/demos/flowwww1.mp4?v=20260918a',
   poster: '/marketing/demos/flow-builder-poster.jpg?v=20260918a',
+  mobileSrc: '/marketing/demos/flow-builder-mobile.mp4',
 } as const;
 
 const OPTIN_VIDEO = {
   src: '/marketing/demos/opt-in.mp4?v=20260918a',
   poster: '/marketing/demos/optin-popup-poster.jpg?v=20260918a',
+  mobileSrc: '/marketing/demos/opt-in-mobile.mp4',
 } as const;
 
 export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
@@ -1903,6 +1907,7 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
       kind: 'video',
       src: '/marketing/demos/intentt.mp4?v=20260918a',
       poster: '/marketing/demos/intent-poster.jpg?v=20260918a',
+      mobileSrc: '/marketing/demos/intent-mobile.mp4',
       label: 'Intent detection routing WhatsApp chats for Shopify India',
       glow: 'sky',
     },

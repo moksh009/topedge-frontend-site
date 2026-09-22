@@ -170,6 +170,7 @@ function ProductFeatureView({ page }: { page: ProductPage }) {
             {page.hero.kind === 'video' ? (
               <DemoProductVideoFrame
                 src={page.hero.src}
+                mobileSrc={page.hero.mobileSrc}
                 poster={page.hero.poster}
                 glow={page.hero.glow ?? 'violet'}
                 title={page.hero.label}

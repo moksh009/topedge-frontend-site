@@ -32,36 +32,43 @@ export type ProductDemoId =
 export type ProductDemoAsset = {
   src: string;
   poster: string;
+  mobileSrc?: string;
 };
 
 const CART: ProductDemoAsset = {
   src: '/marketing/demos/cart-recovery.mp4',
   poster: '/marketing/demos/cart-recovery-poster.jpg',
+  mobileSrc: '/marketing/demos/cart-recovery-mobile.mp4',
 };
 
 const COD: ProductDemoAsset = {
   src: '/marketing/demos/cod-prepaid11.mp4?v=20260918a',
   poster: '/marketing/demos/cod-prepaid-poster.jpg?v=20260918a',
+  mobileSrc: '/marketing/demos/cod-prepaid-mobile.mp4',
 };
 
 const FLOW: ProductDemoAsset = {
   src: '/marketing/demos/flowwww1.mp4?v=20260918a',
   poster: '/marketing/demos/flow-builder-poster.jpg?v=20260918a',
+  mobileSrc: '/marketing/demos/flow-builder-mobile.mp4',
 };
 
 const OPTIN: ProductDemoAsset = {
   src: '/marketing/demos/opt-in.mp4?v=20260918a',
   poster: '/marketing/demos/optin-popup-poster.jpg?v=20260918a',
+  mobileSrc: '/marketing/demos/opt-in-mobile.mp4',
 };
 
 const INTENT: ProductDemoAsset = {
   src: '/marketing/demos/intentt.mp4?v=20260918a',
   poster: '/marketing/demos/intent-poster.jpg?v=20260918a',
+  mobileSrc: '/marketing/demos/intent-mobile.mp4',
 };
 
 const SEGMENT: ProductDemoAsset = {
   src: '/marketing/demos/segment.mp4',
   poster: '/marketing/demos/segment-poster.jpg',
+  mobileSrc: '/marketing/demos/segment-mobile.mp4',
 };
 
 /** Route / SEO slug aliases → catalog ids */

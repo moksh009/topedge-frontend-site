@@ -11,7 +11,7 @@ export type DemoVideoGlow =
 
 type DemoProductVideoFrameProps = {
   src: string;
-  /** Optional compressed source for narrow viewports (autoplay in-view). */
+  /** Compressed source for narrow viewports — enables in-view autoplay on mobile. */
   mobileSrc?: string;
   poster?: string;
   title?: string;
@@ -33,16 +33,15 @@ function tryPlay(video: HTMLVideoElement) {
   const play = video.play();
   if (play && typeof play.catch === 'function') {
     play.catch(() => {
-      /* Autoplay blocked until gesture; muted should usually succeed */
+      /* muted + playsInline should usually succeed */
     });
   }
 }
 
 /**
  * Frameless product demo video, poster first, muted loop.
- * Mobile default: poster until tap (large mp4s).
- * Mobile + mobileSrc: load compressed file when in view (no Play button).
- * Desktop: load + play when ~in view.
+ * Mobile + mobileSrc / desktop: load when near view, autoplay, pause off-screen, resume on return.
+ * Mobile without mobileSrc: poster until tap (legacy large files).
  */
 export default function DemoProductVideoFrame({
   src,
@@ -55,39 +54,60 @@ export default function DemoProductVideoFrame({
 }: DemoProductVideoFrameProps) {
   const hostRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const narrow = isNarrowViewport();
-  const playSrc = narrow && mobileSrc ? mobileSrc : src;
-  const mobileAutoplay = Boolean(narrow && mobileSrc);
-
-  const [activeSrc, setActiveSrc] = useState<string | undefined>(priority ? playSrc : undefined);
+  const [playSrc, setPlaySrc] = useState(() =>
+    typeof window !== 'undefined' && isNarrowViewport() && mobileSrc ? mobileSrc : src,
+  );
+  const [activeSrc, setActiveSrc] = useState<string | undefined>(() =>
+    priority
+      ? typeof window !== 'undefined' && isNarrowViewport() && mobileSrc
+        ? mobileSrc
+        : src
+      : undefined,
+  );
   const [ready, setReady] = useState(false);
   const [needsTap, setNeedsTap] = useState(false);
-  /** Set on Play demo click — play as soon as the element can, not only via IO. */
   const playAfterLoad = useRef(false);
   const wasVisible = useRef(false);
+  const startedOnce = useRef(false);
+
+  // Pick mobile vs desktop source after mount (and on resize).
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 900px)');
+    const apply = () => {
+      const next = mq.matches && mobileSrc ? mobileSrc : src;
+      setPlaySrc(next);
+    };
+    apply();
+    mq.addEventListener('change', apply);
+    return () => mq.removeEventListener('change', apply);
+  }, [src, mobileSrc]);
 
   useEffect(() => {
     const wrap = hostRef.current;
     if (!wrap) return;
 
+    setReady(false);
+    setActiveSrc(undefined);
+    setNeedsTap(false);
+    playAfterLoad.current = false;
+    wasVisible.current = false;
+    startedOnce.current = false;
+
     if (priority) {
       setActiveSrc(playSrc);
-      setNeedsTap(false);
       return;
     }
 
     if (prefersReducedMotion()) {
-      setNeedsTap(false);
       return;
     }
 
-    // Phones without a mobile encode: poster until tap.
+    // Legacy: large desktop file only — require tap on phones.
     if (isNarrowViewport() && !mobileSrc) {
       setNeedsTap(true);
       return;
     }
 
-    // Desktop, or mobile with compressed mobileSrc: load when near view.
     const io = new IntersectionObserver(
       ([entry]) => {
         if (entry?.isIntersecting) {
@@ -95,7 +115,7 @@ export default function DemoProductVideoFrame({
           io.disconnect();
         }
       },
-      { rootMargin: '80px 0px', threshold: 0.15 },
+      { rootMargin: '120px 0px', threshold: 0.1 },
     );
     io.observe(wrap);
     return () => io.disconnect();
@@ -111,24 +131,31 @@ export default function DemoProductVideoFrame({
       return;
     }
 
-    const playFromStart = () => {
+    const startFresh = () => {
       try {
         video.currentTime = 0;
       } catch {
-        /* ignore seek errors before metadata */
+        /* ignore */
       }
       tryPlay(video);
+      startedOnce.current = true;
     };
 
-    // Tap-to-play: start as soon as media is ready (gesture already happened).
+    const resumeOrStart = () => {
+      if (startedOnce.current) {
+        tryPlay(video);
+      } else {
+        startFresh();
+      }
+    };
+
     if (playAfterLoad.current) {
       const onReady = () => {
-        playFromStart();
+        startFresh();
         wasVisible.current = true;
       };
-      if (video.readyState >= 2) {
-        onReady();
-      } else {
+      if (video.readyState >= 2) onReady();
+      else {
         video.addEventListener('loadeddata', onReady, { once: true });
         video.addEventListener('canplay', onReady, { once: true });
       }
@@ -137,21 +164,30 @@ export default function DemoProductVideoFrame({
     const observer = new IntersectionObserver(
       ([entry]) => {
         const visible = Boolean(
-          entry?.isIntersecting && (entry.intersectionRatio ?? 0) >= 0.35,
+          entry?.isIntersecting && (entry.intersectionRatio ?? 0) >= 0.25,
         );
 
         if (visible && !wasVisible.current) {
-          playFromStart();
+          resumeOrStart();
         } else if (!visible && wasVisible.current) {
           video.pause();
         }
 
         wasVisible.current = visible;
       },
-      { threshold: [0, 0.35, 0.55], rootMargin: '0px' },
+      { threshold: [0, 0.25, 0.5], rootMargin: '0px' },
     );
 
     observer.observe(wrap);
+
+    // If already mostly visible when src attaches, kick off without waiting for a transition.
+    const rect = wrap.getBoundingClientRect();
+    const vh = window.innerHeight || 1;
+    const visiblePx = Math.min(rect.bottom, vh) - Math.max(rect.top, 0);
+    if (visiblePx / Math.min(rect.height, vh) >= 0.25) {
+      resumeOrStart();
+      wasVisible.current = true;
+    }
 
     const onVisibility = () => {
       if (document.hidden) {
@@ -183,7 +219,6 @@ export default function DemoProductVideoFrame({
       ref={hostRef}
       className={['demo-video-glow', className].filter(Boolean).join(' ')}
       data-glow={glow}
-      data-mobile-autoplay={mobileAutoplay ? 'true' : undefined}
     >
       <div className={`demo-video-glow__frame${ready ? ' is-ready' : ''}`}>
         {poster ? (
