@@ -3188,7 +3188,7 @@
   }
 }
 
-/* iPhone SE / short portrait — drop title a bit below the nav */
+/* iPhone SE / short portrait — drop title a bit below the nav; slightly larger type */
 @media (max-width: 400px) and (max-height: 720px) {
   .home-hero__board {
     padding-top: max(5.15rem, calc(env(safe-area-inset-top, 0px) + 4.25rem));
@@ -3196,6 +3196,10 @@
 
   .home-hero__copy {
     padding-top: 2.65rem;
+  }
+
+  .home-hero__title {
+    font-size: clamp(1.55rem, 6.4vw, 1.85rem);
   }
 }
 
