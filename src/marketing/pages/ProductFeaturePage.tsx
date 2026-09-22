@@ -161,9 +161,6 @@ function ProductFeatureView({ page }: { page: ProductPage }) {
               </span>
             ))}
           </p>
-          {page.answerFirst ? (
-            <p className="mkt-pf__answer">{page.answerFirst}</p>
-          ) : null}
           <div className="mkt-pf__trust">
             <HomeTrust onStage />
           </div>
