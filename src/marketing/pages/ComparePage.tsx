@@ -20,8 +20,19 @@ import '../styles/compare.css';
 
 type Props = { competitor?: string };
 
-/** Lean capability-board pages — no paraphrased extras. */
-const VERBATIM_ONLY = new Set(['wati', 'aisensy', 'bitespeed', 'interakt', 'updatrr']);
+/** Lean capability-board pages — table only (no scorecard / pricing duel / FAQ copy). */
+const VERBATIM_ONLY = new Set([
+  'wati',
+  'aisensy',
+  'bitespeed',
+  'interakt',
+  'updatrr',
+  'zoko',
+  'getgabs',
+  'kanal',
+  'dondy',
+  'gupshup',
+]);
 
 function brandLabel(text: string) {
   return text.replace(/\bTopEdge\b(?! AI)/g, 'TopEdge AI');
@@ -52,7 +63,10 @@ export default function ComparePage({ competitor: competitorProp }: Props) {
 
   const path = `/compare/${data.slug}`;
   const lean = VERBATIM_ONLY.has(data.slug);
-  const faqSchema = lean ? undefined : data.faqs.map((f) => ({ question: f.question, answer: f.answer }));
+  const faqSchema =
+    lean || !data.faqs?.length
+      ? undefined
+      : data.faqs.map((f) => ({ question: f.question, answer: f.answer }));
   const hasScorecard = !lean && Boolean(data.scorecard?.length);
   const hasDeepDives = !lean && Boolean(data.deepDives?.length);
   const boardWide = data.matrix.some(
@@ -60,8 +74,8 @@ export default function ComparePage({ competitor: competitorProp }: Props) {
       (typeof row.topedge === 'string' && !['yes', 'no', 'partial'].includes(row.topedge)) ||
       (typeof row.competitor === 'string' && !['yes', 'no', 'partial'].includes(row.competitor)),
   );
-  const teBest = pickBestPlan(TOPEDGE_PLANS_SUMMARY);
-  const compBest = pickBestPlan(data.competitorPlans);
+  const teBest = !lean && data.competitorPlans?.length ? pickBestPlan(TOPEDGE_PLANS_SUMMARY) : null;
+  const compBest = !lean && data.competitorPlans?.length ? pickBestPlan(data.competitorPlans) : null;
   const duelFeatures = lean ? [] : planDuelFeatures(data.slug as MatrixCompetitor);
   const modifiedIso = compareTwoWayModifiedIso();
 
@@ -123,7 +137,7 @@ export default function ComparePage({ competitor: competitorProp }: Props) {
           </h1>
         </header>
 
-        {!lean ? (
+        {!lean && data.whoForTopEdge && data.whoForCompetitor ? (
           <section className="mkt-cmp__block" aria-label="Who it's for">
             <div className="mkt-cmp__pick">
               <article className="mkt-cmp__pick-col is-te">
@@ -145,10 +159,12 @@ export default function ComparePage({ competitor: competitorProp }: Props) {
                 <p className="mkt-cmp__pick-body">{data.whoForCompetitor}</p>
               </article>
             </div>
-            <details className="mkt-cmp__verdict">
-              <summary>Quick verdict</summary>
-              <p>{data.answerFirst}</p>
-            </details>
+            {data.answerFirst ? (
+              <details className="mkt-cmp__verdict">
+                <summary>Quick verdict</summary>
+                <p>{data.answerFirst}</p>
+              </details>
+            ) : null}
           </section>
         ) : null}
 
@@ -267,7 +283,7 @@ export default function ComparePage({ competitor: competitorProp }: Props) {
           </section>
         ) : null}
 
-        {!lean ? (
+        {!lean && teBest && compBest ? (
           <section className="mkt-cmp__block" aria-labelledby="cmp-price">
             <div className="mkt-cmp__block-head">
               <h2 id="cmp-price">
@@ -357,11 +373,11 @@ export default function ComparePage({ competitor: competitorProp }: Props) {
                 {data.name} pricing
               </a>
             </div>
-            <p className="mkt-cmp__fine">{data.pricingCaveat}</p>
+            {data.pricingCaveat ? <p className="mkt-cmp__fine">{data.pricingCaveat}</p> : null}
           </section>
         ) : null}
 
-        {!lean ? (
+        {!lean && data.differentiators?.length ? (
           <section className="mkt-cmp__block" aria-labelledby="cmp-why">
             <div className="mkt-cmp__block-head">
               <h2 id="cmp-why">
@@ -385,7 +401,7 @@ export default function ComparePage({ competitor: competitorProp }: Props) {
         ) : null}
 
         <section className="mkt-cmp__block mkt-cmp__block--faq" aria-labelledby="cmp-faq">
-          {!lean ? (
+          {!lean && data.faqs?.length ? (
             <>
               <div className="mkt-cmp__block-head">
                 <h2 id="cmp-faq">
