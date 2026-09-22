@@ -43,6 +43,15 @@ Important notes:
 - [WhatsApp abandoned cart recovery for Shopify](https://topedgeai.com/blog/whatsapp-abandoned-cart-recovery-shopify)
 - [WhatsApp automation for Shopify](https://topedgeai.com/blog/whatsapp-automation-for-shopify)
 - [AI chatbot for Shopify](https://topedgeai.com/blog/ai-chatbot-for-shopify)
+- [What to automate first on Shopify WhatsApp](https://topedgeai.com/blog/shopify-whatsapp-automation-what-to-automate-first)
+- [COD confirmation on WhatsApp to reduce RTO](https://topedgeai.com/blog/cod-confirmation-whatsapp-reduce-rto-shopify)
+- [WhatsApp vs email automation for D2C India](https://topedgeai.com/blog/ecommerce-automation-whatsapp-vs-email-india)
+- [Meta WhatsApp Cloud API templates for Shopify](https://topedgeai.com/blog/meta-whatsapp-cloud-api-shopify-templates)
+- [WhatsApp shared inbox with Shopify order context](https://topedgeai.com/blog/whatsapp-shared-inbox-shopify-order-context)
+- [Shopify WhatsApp automation checklist](https://topedgeai.com/blog/shopify-automation-checklist-whatsapp-cart-recovery)
+- [How to reduce RTO with WhatsApp COD confirmation](https://topedgeai.com/blog/how-to-reduce-rto-with-whatsapp-cod-confirmation)
+- [What is ecommerce automation on Shopify WhatsApp](https://topedgeai.com/blog/what-is-ecommerce-automation-shopify-whatsapp)
+- [AI WhatsApp chatbot for Shopify India](https://topedgeai.com/blog/ai-whatsapp-chatbot-for-shopify-india)
 - [Blog index](https://topedgeai.com/blog): Playbooks and GEO guides
 
 ## Optional

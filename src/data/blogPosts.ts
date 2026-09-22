@@ -363,6 +363,7 @@ export const blogPosts: BlogPost[] = [
       'Prioritize Shopify WhatsApp automation that pays: abandoned cart, COD confirmation, order updates, then campaigns—a rollout order for Indian D2C ecommerce.',
     slug: 'shopify-whatsapp-automation-what-to-automate-first',
     date: '2026-09-02',
+    updated: '2026-09-22',
     readTime: '11 min',
     category: 'Ecommerce automation',
     author: 'TopEdge',
@@ -374,6 +375,28 @@ export const blogPosts: BlogPost[] = [
       'ecommerce automation India',
       'WhatsApp for Shopify',
       'what to automate first Shopify',
+    ],
+    faqs: [
+      {
+        question: 'What should I automate first on Shopify WhatsApp?',
+        answer:
+          'Start with abandoned cart recovery, then COD confirmation, then order/shipping updates. Campaigns and heavy AI come after transactional paths are stable and Meta templates are APPROVED.',
+      },
+      {
+        question: 'Why not start with marketing campaigns?',
+        answer:
+          'Marketing templates need clean opt-in and a quality rating you have already earned. Cart and COD journeys prove Shopify sync, template gating, and inbox handoff before you scale broadcasts.',
+      },
+      {
+        question: 'What do I need before publishing the first journey?',
+        answer:
+          'Shopify OAuth with carts/orders/catalog, WhatsApp Cloud API connected, and APPROVED utility templates for cart, COD, and shipping. Draft or PENDING templates should never send to customers.',
+      },
+      {
+        question: 'How long until automation shows revenue?',
+        answer:
+          'Most stores can connect Shopify and Meta in a day; Meta template review is the usual wait. A gated cart sequence plus COD confirmation is a realistic first 14-day goal once templates clear.',
+      },
     ],
     content: `
 <p><strong>Shopify WhatsApp automation</strong> is not “send more broadcasts.” It is wiring store events—carts, orders, COD flags, fulfillments—to Meta-approved WhatsApp messages and a shared inbox your team can trust. Brands that automate in the wrong order burn template quality and support capacity before revenue shows up. For the full operating-system view, read <a href="/blog/whatsapp-automation-for-shopify">WhatsApp automation for Shopify</a>.</p>
@@ -615,6 +638,7 @@ export const blogPosts: BlogPost[] = [
       'A plain-English guide to Meta WhatsApp Cloud API templates for Shopify ecommerce—categories, approval tips, journey gating, and transparent rates.',
     slug: 'meta-whatsapp-cloud-api-shopify-templates',
     date: '2026-09-05',
+    updated: '2026-09-22',
     readTime: '13 min',
     category: 'Meta',
     author: 'TopEdge',
@@ -626,6 +650,28 @@ export const blogPosts: BlogPost[] = [
       'WhatsApp template approval',
       'Shopify WhatsApp integration',
       'WhatsApp utility templates',
+    ],
+    faqs: [
+      {
+        question: 'What are Meta WhatsApp Cloud API templates?',
+        answer:
+          'Pre-approved message formats Meta requires for most business-initiated WhatsApp sends outside the customer care window. Categories (utility, marketing, service) affect rates and what copy is allowed.',
+      },
+      {
+        question: 'Can I send cart recovery before a template is APPROVED?',
+        answer:
+          'No. Gate every journey until the template status is APPROVED. Draft or PENDING templates must never blast customers—quality rating and account risk are not worth a temporary shortcut.',
+      },
+      {
+        question: 'Which category should COD confirmation use?',
+        answer:
+          'Most COD confirmation flows aim for utility when the message is truly transactional (order facts, confirm/reschedule/cancel). Do not stuff a marketing pitch into a utility shell—reviewers and quality signals notice.',
+      },
+      {
+        question: 'How do Shopify variables work in templates?',
+        answer:
+          'Variables must match live Shopify fields at send time (name, order #, items, amount, checkout link). Hard-coded prices or broken links fail delivery or destroy trust even when the template itself was approved.',
+      },
     ],
     content: `
 <p>Meta’s WhatsApp Cloud API is the backbone of serious <strong>WhatsApp automation for Shopify</strong>. Brands that skip template discipline get quality rating hits or blocks; brands that treat approvals as product work scale cart recovery and COD confirmation cleanly.</p>
@@ -1008,6 +1054,7 @@ export const blogPosts: BlogPost[] = [
       'Step-by-step: reduce RTO on Shopify with WhatsApp COD confirmation—timing, utility templates, reply paths, warehouse SOP, and operator takeover.',
     slug: 'how-to-reduce-rto-with-whatsapp-cod-confirmation',
     date: '2026-09-09',
+    updated: '2026-09-22',
     readTime: '13 min',
     category: 'COD',
     author: 'TopEdge',
@@ -1019,6 +1066,28 @@ export const blogPosts: BlogPost[] = [
       'Shopify RTO',
       'Cash on Delivery confirmation',
       'RTO reduction India',
+    ],
+    faqs: [
+      {
+        question: 'How do you reduce RTO with WhatsApp COD confirmation?',
+        answer:
+          'Confirm buyer intent on WhatsApp before pack/ship. Show order number and ₹ total from Shopify, offer confirm / reschedule / cancel, and escalate silence or disputes to Live Chat. Confirmed COD ships; everything else follows a written hold policy.',
+      },
+      {
+        question: 'When should the first COD confirmation message send?',
+        answer:
+          'Within minutes of checkout while intent is warm, using an APPROVED utility template. If there is no reply, one reminder in roughly 6–12 hours, then apply your hold/cancel SOP consistently across shifts.',
+      },
+      {
+        question: 'What if the warehouse packs before confirmation?',
+        answer:
+          'You lose the margin protection. Warehouse SOP should not pick COD orders until confirmation state is green—or you will confirm after reverse-logistics cost is already locked in.',
+      },
+      {
+        question: 'Which metrics prove COD confirmation is working?',
+        answer:
+          'Confirmation rate, ship rate of confirmed COD, RTO % before/after, and reverse logistics cost saved. Message opens are a leading indicator only—finance cares about orders that do not come back.',
+      },
     ],
     content: `
 <p><strong>How do you reduce RTO with WhatsApp COD confirmation?</strong> Confirm buyer intent on WhatsApp before you pack Cash on Delivery orders. Show order number and ₹ amount from Shopify, offer YES / reschedule / cancel, and escalate silence or confusion to Live Chat. Confirmation is cheaper than shipping twice.</p>

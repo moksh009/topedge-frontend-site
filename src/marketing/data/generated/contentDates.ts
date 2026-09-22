@@ -17,14 +17,14 @@ export const CONTENT_DATES = {
 
 export const BLOG_DATES_BY_SLUG = {
   "whatsapp-abandoned-cart-recovery-shopify": "2026-09-21",
-  "shopify-whatsapp-automation-what-to-automate-first": "2026-09-02",
+  "shopify-whatsapp-automation-what-to-automate-first": "2026-09-22",
   "cod-confirmation-whatsapp-reduce-rto-shopify": "2026-09-21",
   "ecommerce-automation-whatsapp-vs-email-india": "2026-09-04",
-  "meta-whatsapp-cloud-api-shopify-templates": "2026-09-05",
+  "meta-whatsapp-cloud-api-shopify-templates": "2026-09-22",
   "whatsapp-shared-inbox-shopify-order-context": "2026-09-06",
   "shopify-automation-checklist-whatsapp-cart-recovery": "2026-09-07",
   "best-whatsapp-automation-tools-shopify-india": "2026-09-21",
-  "how-to-reduce-rto-with-whatsapp-cod-confirmation": "2026-09-09",
+  "how-to-reduce-rto-with-whatsapp-cod-confirmation": "2026-09-22",
   "what-is-ecommerce-automation-shopify-whatsapp": "2026-09-10",
   "ai-whatsapp-chatbot-for-shopify-india": "2026-09-11",
   "zoko-alternative-shopify-india": "2026-09-20",

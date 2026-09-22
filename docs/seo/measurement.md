@@ -45,6 +45,7 @@ Lock this weekday so the habit survives. Skip a Monday → do Tuesday; do not in
 | 2026-09-21 (pm) | Phase B4+C ship | Soft-404/redirect smoke documented; compare Product→SoftwareApplication+image; AEO on journeys/COD/best-tools + Live Chat/Meta Manager/AI Brain answerFirst+FAQ; IndexNow after deploy | Re-request GSC for `/compare/dondy` (Merchant listings); Bing Live URL→Request indexing for Dondy pair | C4 cadence row logged |
 | 2026-09-21 (Phase D ops) | _Fill real GSC impressions when you open Search Console (same Monday)_ | _Fill Bing glance_ | Live smoke: junk URL **404**; `/pricing` **200**; `/compare/dondy` **200** self-canonical + `SoftwareApplication`; `/features/journeys` **200**. IndexNow already pinged AEO set. | Phase D runbooks live; citation pass still Oct 1 |
 | 2026-09-21 (LCP) | GSC mobile LCP >4s on `/` (4.4s, 13 URLs) | Root cause: wrong preload (`hero-mesh` vs product shot), 6000px/2.2MB PNG fallback, 311KB brand-mark in H1, below-fold JS on critical path. Fix: responsive webp 800–2400 + preload imagesrcset; 1200 PNG fallback; tiny brand; lazy below-fold; skip mesh on mobile | After deploy: PageSpeed mobile `/`; GSC CWV validate when ready | |
+| 2026-09-22 | Housekeeping: llms.txt +3 FAQs on older posts; sitemap note fixed to 57 | | Live: `/blog/*` **200**; `/blog-media/*` soft-**404** (no leftover 301). **Human owed:** GSC Page indexing glance for `/blog/*` + `/blog-media/*` from the ~9h Sep 21 IST window window | |
 | 2026-09-28 | _Second consecutive Monday — required for D3 done_ | | Soft-404 smoke again | |
 
 ---
@@ -142,6 +143,7 @@ Whenever a high-value URL is **new**, **recovered**, or **schema-fixed**:
 | **Page with redirect** `/blog/whatsapp-abandoned-cart-recovery-shopify`, `/features/live-chat` | Live now **200** + self-canonical. Stale GSC; Inspect Live URL → Request indexing. Validation already started. |
 | **Crawled not indexed** old banking / evolution blogs | Were **404**; redirects added → `/blog` and `/blog/ai-whatsapp-chatbot-for-shopify-india`. Deploy `_redirects`, then Validate. |
 | **Crawled not indexed** `/testimonials` | Already 301 → `/customers`. Leave; will leave this bucket after recrawl. |
+| **blog-media ~9h window (21 Sep IST)** | Live today: `/blog/*` **200**, `/blog-media/*` soft-**404**. Open GSC → Page indexing; filter `/blog-media` and “Page with redirect” for `/blog/`. If anything still points at `/blog-media/…`, Inspect the real `/blog/…` URL → Request indexing once. Bing: same glance. |
 
 ---
 
@@ -228,7 +230,7 @@ curl -sI "https://topedgeai.com/compare/dondy" | tr -d '\r' | head -1
 
 | Date | Junk → 404 | `/pricing` 200 | Force slash-301 absent | Sitemap sample OK | Notes |
 |---|---|---|---|---|---|
-| 2026-09-21 | yes | yes | yes (script guard) | 53 URLs | Soft-404 + Dondy self-canonical verified live |
+| 2026-09-21 | yes | yes | yes (script guard) | 57 URLs | Soft-404 + Dondy self-canonical verified live |
 
 ---
 
