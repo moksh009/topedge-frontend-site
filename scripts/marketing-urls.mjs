@@ -44,6 +44,7 @@ export const TOPIC_SLUGS = ['shopify-whatsapp-integration'];
 export const BLOG_SLUGS = [
   'whatsapp-abandoned-cart-recovery-shopify',
   'whatsapp-automation-for-shopify',
+  'best-whatsapp-apps-for-shopify',
   'shopify-whatsapp-automation-what-to-automate-first',
   'cod-confirmation-whatsapp-reduce-rto-shopify',
   'ecommerce-automation-whatsapp-vs-email-india',

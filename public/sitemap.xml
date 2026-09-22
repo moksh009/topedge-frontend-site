@@ -1,42 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://topedgeai.com/</loc><lastmod>2026-09-21</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://topedgeai.com/pricing</loc><lastmod>2026-09-20</lastmod><changefreq>monthly</changefreq><priority>0.95</priority></url>
-  <url><loc>https://topedgeai.com/features</loc><lastmod>2026-09-21</lastmod><changefreq>monthly</changefreq><priority>0.95</priority></url>
-  <url><loc>https://topedgeai.com/integrations</loc><lastmod>2026-09-21</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://topedgeai.com/customers</loc><lastmod>2026-09-21</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://topedgeai.com/compare</loc><lastmod>2026-09-21</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://topedgeai.com/compare/topedge-vs-wati-vs-aisensy</loc><lastmod>2026-09-21</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
-  <url><loc>https://topedgeai.com/about</loc><lastmod>2026-09-21</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://topedgeai.com/contact</loc><lastmod>2026-09-21</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://topedgeai.com/blog</loc><lastmod>2026-09-21</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://topedgeai.com/features/journeys</loc><lastmod>2026-09-21</lastmod><changefreq>monthly</changefreq><priority>0.95</priority></url>
-  <url><loc>https://topedgeai.com/features/live-chat</loc><lastmod>2026-09-21</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
-  <url><loc>https://topedgeai.com/features/flow-builder</loc><lastmod>2026-09-21</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
-  <url><loc>https://topedgeai.com/features/ai-brain</loc><lastmod>2026-09-21</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
-  <url><loc>https://topedgeai.com/features/campaigns</loc><lastmod>2026-09-21</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
-  <url><loc>https://topedgeai.com/features/instagram</loc><lastmod>2026-09-21</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
-  <url><loc>https://topedgeai.com/features/analytics</loc><lastmod>2026-09-21</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
-  <url><loc>https://topedgeai.com/features/meta-manager</loc><lastmod>2026-09-21</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
-  <url><loc>https://topedgeai.com/features/audience-crm</loc><lastmod>2026-09-21</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
-  <url><loc>https://topedgeai.com/features/chat-rules</loc><lastmod>2026-09-21</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
-  <url><loc>https://topedgeai.com/features/warranty</loc><lastmod>2026-09-21</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
-  <url><loc>https://topedgeai.com/features/opt-in-tools</loc><lastmod>2026-09-21</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
-  <url><loc>https://topedgeai.com/features/profit-loss</loc><lastmod>2026-09-21</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
-  <url><loc>https://topedgeai.com/features/intent-detection</loc><lastmod>2026-09-21</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
-  <url><loc>https://topedgeai.com/compare/wati</loc><lastmod>2026-09-21</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
-  <url><loc>https://topedgeai.com/compare/aisensy</loc><lastmod>2026-09-21</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
-  <url><loc>https://topedgeai.com/compare/interakt</loc><lastmod>2026-09-21</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
-  <url><loc>https://topedgeai.com/compare/bitespeed</loc><lastmod>2026-09-21</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
-  <url><loc>https://topedgeai.com/compare/zoko</loc><lastmod>2026-09-21</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
-  <url><loc>https://topedgeai.com/compare/getgabs</loc><lastmod>2026-09-21</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
-  <url><loc>https://topedgeai.com/compare/kanal</loc><lastmod>2026-09-21</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
-  <url><loc>https://topedgeai.com/compare/dondy</loc><lastmod>2026-09-21</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
-  <url><loc>https://topedgeai.com/compare/updatrr</loc><lastmod>2026-09-21</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
-  <url><loc>https://topedgeai.com/compare/alternatives</loc><lastmod>2026-09-21</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
-  <url><loc>https://topedgeai.com/shopify-whatsapp-integration</loc><lastmod>2026-09-21</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://topedgeai.com/</loc><lastmod>2026-09-22</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://topedgeai.com/pricing</loc><lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.95</priority></url>
+  <url><loc>https://topedgeai.com/features</loc><lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.95</priority></url>
+  <url><loc>https://topedgeai.com/integrations</loc><lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://topedgeai.com/customers</loc><lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://topedgeai.com/compare</loc><lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://topedgeai.com/compare/topedge-vs-wati-vs-aisensy</loc><lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://topedgeai.com/about</loc><lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://topedgeai.com/contact</loc><lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://topedgeai.com/blog</loc><lastmod>2026-09-22</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://topedgeai.com/features/journeys</loc><lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.95</priority></url>
+  <url><loc>https://topedgeai.com/features/live-chat</loc><lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://topedgeai.com/features/flow-builder</loc><lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://topedgeai.com/features/ai-brain</loc><lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://topedgeai.com/features/campaigns</loc><lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://topedgeai.com/features/instagram</loc><lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://topedgeai.com/features/analytics</loc><lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://topedgeai.com/features/meta-manager</loc><lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://topedgeai.com/features/audience-crm</loc><lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://topedgeai.com/features/chat-rules</loc><lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://topedgeai.com/features/warranty</loc><lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://topedgeai.com/features/opt-in-tools</loc><lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://topedgeai.com/features/profit-loss</loc><lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://topedgeai.com/features/intent-detection</loc><lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://topedgeai.com/compare/wati</loc><lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://topedgeai.com/compare/aisensy</loc><lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://topedgeai.com/compare/interakt</loc><lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://topedgeai.com/compare/bitespeed</loc><lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://topedgeai.com/compare/zoko</loc><lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://topedgeai.com/compare/getgabs</loc><lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://topedgeai.com/compare/kanal</loc><lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://topedgeai.com/compare/dondy</loc><lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://topedgeai.com/compare/updatrr</loc><lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://topedgeai.com/compare/alternatives</loc><lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://topedgeai.com/shopify-whatsapp-integration</loc><lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://topedgeai.com/blog/whatsapp-abandoned-cart-recovery-shopify</loc><lastmod>2026-09-21</lastmod><changefreq>monthly</changefreq><priority>0.95</priority></url>
-  <url><loc>https://topedgeai.com/blog/whatsapp-automation-for-shopify</loc><lastmod>2026-09-21</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://topedgeai.com/blog/whatsapp-automation-for-shopify</loc><lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://topedgeai.com/blog/best-whatsapp-apps-for-shopify</loc><lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
   <url><loc>https://topedgeai.com/blog/shopify-whatsapp-automation-what-to-automate-first</loc><lastmod>2026-09-02</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
   <url><loc>https://topedgeai.com/blog/cod-confirmation-whatsapp-reduce-rto-shopify</loc><lastmod>2026-09-21</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
   <url><loc>https://topedgeai.com/blog/ecommerce-automation-whatsapp-vs-email-india</loc><lastmod>2026-09-04</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
@@ -54,6 +55,6 @@
   <url><loc>https://topedgeai.com/blog/how-to-choose-whatsapp-app-shopify-app-store</loc><lastmod>2026-09-20</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
   <url><loc>https://topedgeai.com/blog/whatsapp-business-api-pricing-india</loc><lastmod>2026-09-20</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
   <url><loc>https://topedgeai.com/blog/dondy-alternative-shopify-india</loc><lastmod>2026-09-21</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
-  <url><loc>https://topedgeai.com/privacy</loc><lastmod>2026-09-21</lastmod><changefreq>monthly</changefreq><priority>0.3</priority></url>
-  <url><loc>https://topedgeai.com/terms</loc><lastmod>2026-09-21</lastmod><changefreq>monthly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://topedgeai.com/privacy</loc><lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://topedgeai.com/terms</loc><lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.3</priority></url>
 </urlset>

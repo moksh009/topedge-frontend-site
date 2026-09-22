@@ -21,7 +21,7 @@ Last refreshed: **2026-09-21**
 ### T1 — Cart recovery / Journeys
 - Pillar: `/features/journeys`
 - Support: `/blog/whatsapp-abandoned-cart-recovery-shopify`, `/blog/whatsapp-automation-for-shopify`, `/blog/shopify-whatsapp-automation-what-to-automate-first`, `/blog/shopify-automation-checklist-whatsapp-cart-recovery`, `/features/flow-builder`, `/features/campaigns`
-- Commercial: `/pricing`, `/`
+- Commercial: `/pricing`, `/`, `/blog/best-whatsapp-apps-for-shopify`
 
 ### T2 — COD / RTO
 - Pillar: `/blog/cod-confirmation-whatsapp-reduce-rto-shopify`
@@ -39,8 +39,9 @@ Last refreshed: **2026-09-21**
 - Commercial: `/pricing`
 
 ### T5 — Alternatives / comparisons
-- Pillar: `/compare` · `/blog/best-whatsapp-automation-tools-shopify-india`
-- Pairwise: `/compare/wati`, `/aisensy`, `/interakt`, `/bitespeed`, `/zoko`, `/getgabs`, `/kanal`, `/dondy`
+- Pillar: `/compare` · `/compare/alternatives`
+- Support: `/blog/best-whatsapp-apps-for-shopify`, `/blog/best-whatsapp-automation-tools-shopify-india`, `/blog/how-to-choose-whatsapp-app-shopify-app-store`
+- Pairwise: `/compare/wati`, `/aisensy`, `/interakt`, `/bitespeed`, `/zoko`, `/getgabs`, `/kanal`, `/dondy`, `/updatrr`
 - Alternatives posts: zoko / getgabs / kanal / dondy blogs
 - Index: `/compare/alternatives`, 3-way board
 
