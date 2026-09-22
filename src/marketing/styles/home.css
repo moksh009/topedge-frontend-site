@@ -4182,32 +4182,32 @@
   }
 
   .home-sticky--moments .home-sticky__static {
-    gap: 5.5rem;
+    gap: 3rem;
     /* Tighter sides so product cards read larger on phone */
-    padding: 1.75rem 0.45rem 3.5rem;
+    padding: 1.75rem 0.45rem 2.75rem;
   }
 
   .home-sticky--moments-static .home-sticky__static {
-    gap: 5.5rem;
-    padding: 1.75rem 0.45rem 3.75rem;
+    gap: 3rem;
+    padding: 1.75rem 0.45rem 3rem;
   }
 
   .home-sticky--moments-flow .home-sticky__moment {
-    padding-top: 1.5rem;
-    padding-bottom: 0.85rem;
+    padding-top: 1.15rem;
+    padding-bottom: 0.35rem;
   }
 
   .home-sticky--moments-flow .home-sticky__moment + .home-sticky__moment {
-    padding-top: 2.75rem;
+    padding-top: 1.5rem;
   }
 
   .home-sticky--moments-flow .home-sticky__stage {
-    gap: 1.85rem;
+    gap: 1.35rem;
   }
 
   .home-sticky__static {
-    gap: 4.5rem;
-    padding: 2rem 0.45rem 4rem;
+    gap: 3rem;
+    padding: 2rem 0.45rem 3rem;
   }
 
   .home-sticky__static-block {
@@ -5824,11 +5824,11 @@
   }
 
   .home-sticky--moments-flow .home-sticky__moment + .home-sticky__moment {
-    padding-top: 3.25rem;
+    padding-top: 1.65rem;
   }
 
   .home-sticky--moments-flow .home-sticky__stage {
-    gap: 1.65rem;
+    gap: 1.25rem;
   }
 
   .home-sticky__moment-scene .demo-video-glow__frame {
