@@ -2,6 +2,7 @@ import { ArrowRight } from 'lucide-react';
 import { PrimaryButton } from '../ui';
 import HeroRippleBackground from '../effects/HeroRippleBackground';
 import HomeTrust from './HomeTrust';
+import BrandMark from '../BrandMark';
 
 const SHOPIFY_APP_URL = 'https://apps.shopify.com/';
 
@@ -43,18 +44,12 @@ export default function HomeHero() {
                   <span className="home-hero__title-line">Growth Suite</span>
                 </span>
                 <span className="home-hero__title-brand">
-                  <picture>
-                    <source type="image/webp" srcSet="/brand-mark-56.webp" />
-                    <img
-                      src="/brand-mark-56.png"
-                      alt="TopEdge AI"
-                      width={28}
-                      height={28}
-                      className="home-hero__title-mark"
-                      decoding="async"
-                      fetchPriority="low"
-                    />
-                  </picture>
+                  <BrandMark
+                    className="home-hero__title-mark"
+                    width={28}
+                    height={28}
+                    size="sm"
+                  />
                   <span className="home-hero__title-name">
                     TopEdge <span>AI</span>
                   </span>

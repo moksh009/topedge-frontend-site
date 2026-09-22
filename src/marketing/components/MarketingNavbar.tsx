@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useLenis } from 'lenis/react';
+import BrandMark from './BrandMark';
 
 type NavIcon = ComponentType<LucideProps>;
 
@@ -177,18 +178,12 @@ export default function MarketingNavbar() {
         >
           <div className="mkt-nav__bar">
             <Link to="/" className="mkt-nav__brand" onClick={() => setOpen(false)}>
-              <picture>
-                <source type="image/webp" srcSet="/brand-mark-56.webp" />
-                <img
-                  src="/brand-mark-56.png"
-                  alt="TopEdge AI"
-                  width={40}
-                  height={40}
-                  className="mkt-nav__brand-mark"
-                  decoding="async"
-                  fetchPriority="low"
-                />
-              </picture>
+              <BrandMark
+                className="mkt-nav__brand-mark"
+                width={40}
+                height={40}
+                size="md"
+              />
               <span className="mkt-nav__brand-text">
                 TopEdge <span>AI</span>
               </span>
