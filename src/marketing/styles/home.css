@@ -4126,11 +4126,6 @@
   max-width: 32rem;
   margin: 0.95rem auto 0;
   text-align: center;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  overflow: hidden;
   font-size: 1.0625rem;
   line-height: 1.55;
   color: #64748b;
@@ -4275,11 +4270,6 @@
     width: 100%;
     padding-inline: 0.2rem;
     margin: 0 auto;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    line-clamp: 3;
-    overflow: hidden;
   }
 
   .home-sticky--static .home-sticky__title {
@@ -4288,11 +4278,6 @@
   }
 
   .home-sticky--static .home-sticky__body {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-    overflow: hidden;
     max-width: 34rem;
     margin: 1rem auto 0;
     font-size: 0.95rem;
@@ -4357,11 +4342,6 @@
     gap: 0.55rem;
   }
 
-  .home-sticky__body {
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-  }
-
   .home-sticky--static .home-sticky__title {
     font-size: clamp(1.35rem, 5.5vw, 1.7rem);
     max-width: none;
@@ -4369,11 +4349,6 @@
   }
 
   .home-sticky--static .home-sticky__body {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-    overflow: hidden;
     max-width: 34rem;
     font-size: 0.975rem;
     line-height: 1.55;
@@ -4393,8 +4368,6 @@
   }
 
   .home-sticky__body {
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
     font-size: 0.8125rem;
     line-height: 1.4;
     max-width: 19.5rem;
