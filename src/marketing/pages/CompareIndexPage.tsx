@@ -22,11 +22,11 @@ const FEATURED = [
   {
     href: '/compare/alternatives',
     title: 'WhatsApp automation alternatives',
-    body: 'Fair one-line index: WATI, AiSensy, Interakt, Bitespeed, Zoko, Getgabs, Kanal, Dondy, Updatrr.',
+    body: 'Fair one-line index: WATI, AiSensy, Interakt, Bitespeed, Zoko, Getgabs, Kanal, Dondy, Updatrr, Gupshup.',
     logos: [
       { src: '/logo.png', alt: 'TopEdge AI' },
       { src: '/marketing/compare/compare-logo-zoko.svg', alt: 'Zoko' },
-      { src: '/marketing/compare/compare-logo-kanal.svg', alt: 'Kanal' },
+      { src: '/marketing/compare/compare-logo-gupshup.svg', alt: 'Gupshup' },
     ],
     badge: 'Index',
   },
@@ -43,6 +43,7 @@ export default function CompareIndexPage() {
     'kanal',
     'dondy',
     'updatrr',
+    'gupshup',
   ];
   const bySlug = Object.fromEntries(allCompareCompetitors().map((c) => [c.slug, c]));
   const competitors = order.map((slug) => bySlug[slug]).filter(Boolean);

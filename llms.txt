@@ -34,6 +34,7 @@ Important notes:
 - [TopEdge vs Kanal](https://topedgeai.com/compare/kanal)
 - [TopEdge vs Dondy](https://topedgeai.com/compare/dondy)
 - [TopEdge vs Updatrr](https://topedgeai.com/compare/updatrr)
+- [TopEdge vs Gupshup](https://topedgeai.com/compare/gupshup)
 - [TopEdge vs WATI vs AiSensy](https://topedgeai.com/compare/topedge-vs-wati-vs-aisensy): Three-way board
 
 ## Guides

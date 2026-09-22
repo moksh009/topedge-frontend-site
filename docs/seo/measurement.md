@@ -230,7 +230,7 @@ curl -sI "https://topedgeai.com/compare/dondy" | tr -d '\r' | head -1
 
 | Date | Junk → 404 | `/pricing` 200 | Force slash-301 absent | Sitemap sample OK | Notes |
 |---|---|---|---|---|---|
-| 2026-09-21 | yes | yes | yes (script guard) | 57 URLs | Soft-404 + Dondy self-canonical verified live |
+| 2026-09-21 | yes | yes | yes (script guard) | 58 URLs | Soft-404 + Dondy self-canonical verified live; Gupshup compare added Sep 22 |
 
 ---
 

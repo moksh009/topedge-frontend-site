@@ -76,9 +76,9 @@ export const PAGE_SEO = {
   compare: {
     title: 'TopEdge vs WATI, AiSensy, Zoko & More | WhatsApp',
     description:
-      'Compare TopEdge with WATI, AiSensy, Interakt, Bitespeed, Zoko, Getgabs, Kanal, Dondy, and Updatrr for Shopify WhatsApp India brands.',
+      'Compare TopEdge with WATI, AiSensy, Interakt, Bitespeed, Zoko, Getgabs, Kanal, Dondy, Updatrr, and Gupshup for Shopify WhatsApp India brands.',
     keywords:
-      'TopEdge vs WATI, TopEdge vs AiSensy, TopEdge vs Zoko, TopEdge vs Dondy, TopEdge vs Updatrr, TopEdge vs Interakt, TopEdge vs Bitespeed, WhatsApp template markup, COD prepaid WhatsApp comparison, WATI alternative India',
+      'TopEdge vs WATI, TopEdge vs AiSensy, TopEdge vs Zoko, TopEdge vs Dondy, TopEdge vs Updatrr, TopEdge vs Gupshup, TopEdge vs Interakt, TopEdge vs Bitespeed, WhatsApp template markup, COD prepaid WhatsApp comparison, WATI alternative India',
     path: '/compare',
   },
   blog: {

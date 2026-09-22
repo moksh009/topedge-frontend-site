@@ -41,7 +41,7 @@ Last refreshed: **2026-09-21**
 ### T5 — Alternatives / comparisons
 - Pillar: `/compare` · `/compare/alternatives`
 - Support: `/blog/best-whatsapp-apps-for-shopify`, `/blog/best-whatsapp-automation-tools-shopify-india`, `/blog/how-to-choose-whatsapp-app-shopify-app-store`
-- Pairwise: `/compare/wati`, `/aisensy`, `/interakt`, `/bitespeed`, `/zoko`, `/getgabs`, `/kanal`, `/dondy`, `/updatrr`
+- Pairwise: `/compare/wati`, `/aisensy`, `/interakt`, `/bitespeed`, `/zoko`, `/getgabs`, `/kanal`, `/dondy`, `/updatrr`, `/gupshup`
 - Alternatives posts: zoko / getgabs / kanal / dondy blogs
 - Index: `/compare/alternatives`, 3-way board
 

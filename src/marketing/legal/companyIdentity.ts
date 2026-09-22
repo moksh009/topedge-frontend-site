@@ -14,6 +14,9 @@ export const COMPANY_ADDRESS_LINES = [
   'Gujarat 380051 India',
 ] as const;
 
+/** Single-line address for legal body copy */
+export const COMPANY_ADDRESS_ONE_LINE = COMPANY_ADDRESS_LINES.join(' ');
+
 export const COMPANY_EMAIL = 'team@topedgeai.com';
 export const COMPANY_PHONE = '+91 93130 45439';
 /** Digits only for wa.me / tel links */

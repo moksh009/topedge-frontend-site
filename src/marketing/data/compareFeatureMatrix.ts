@@ -12,7 +12,8 @@ export type MatrixCompetitor =
   | 'getgabs'
   | 'kanal'
   | 'dondy'
-  | 'updatrr';
+  | 'updatrr'
+  | 'gupshup';
 
 export type CompareFeatureRow = {
   id: string;
@@ -1045,6 +1046,109 @@ export const UPDATRR_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
   },
 ];
 
+/** TopEdge Ai vs Gupshup — board from operator matrix; verify Gupshup live (pay-as-you-go / enterprise quotes). */
+export const GUPSHUP_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
+  {
+    id: 'subscription',
+    label: 'Subscription Model',
+    description:
+      'Baseline platform entry cost, billing structure, and trial availability for e-commerce businesses looking to adopt the software.',
+    topedge: '14-day free trial, with accessible SaaS plans starting from ~₹1,800/month',
+    competitor:
+      'Pay-as-you-go model with no fixed entry-level SaaS tiers or public free trial (verify live / sales quote)',
+  },
+  {
+    id: 'template-markup',
+    label: 'WhatsApp API Message Markup & Billing Infrastructure',
+    description:
+      'How messaging usage is billed and whether the platform applies hidden markup fees on top of standard Meta conversation rates.',
+    topedge:
+      '0% WhatsApp API platform markup (Direct Meta API Billing on your Meta Business Account)',
+    competitor:
+      'Applies a platform processing markup (Gupshup Fee) on every single template message sent — confirm current fee card live',
+  },
+  {
+    id: 'opt-in-widgets',
+    label: 'Opt-In Widget Builder & Website Popups',
+    description:
+      'Customizable interactive website widgets, sticky opt-in bars designed to capture visitor information, Website Offer Popup builder, WhatsApp opt-in consent collector (e.g., Spin-the-Wheel popups, offer banner popups), etc.',
+    topedge:
+      'Advanced, full customization unlocked across all subscription plans natively within the platform',
+    competitor: 'Standard API opt-in links; advanced website popups not natively available',
+  },
+  {
+    id: 'ai-llm',
+    label: 'Generative AI Message Costs',
+    description:
+      'Enterprise LLM integration framework allowing brands to deploy generative customer support with flexible AI model selection and transparent messaging costs.',
+    topedge:
+      'Bring Your Own Key (BYOK) architecture with built-in RAG pipeline (est. ~₹0.10-₹0.30 per AI response, depending on selected AI model), available on all plans',
+    competitor:
+      'Requires premium Auto Bot Builder modules, with AI usage costs bundled into enterprise contracts rather than transparent API key passthroughs (verify live)',
+  },
+  {
+    id: 'unified-identity',
+    label: 'Unified Customer Identity (Identity Resolution CRM)',
+    description:
+      'Independent CRM engine that automatically merges multiple orders, alternative contact numbers, and emails of one buyer into a single master buyer profile.',
+    topedge:
+      'Native Identity Resolution Engine (Operates independently to auto-merge a buyer’s multiple contact numbers and emails into one master record)',
+    competitor: 'Not native; requires external CRM integrations',
+  },
+  {
+    id: 'store-pixel',
+    label: 'E-commerce Visitor Identity Pixel',
+    description:
+      '1-click store pixel that identifies visitor contacts, tracks product views, visitor activity and checkout sessions prior to account creation.',
+    topedge: '1-Click Easy to Implement Visitor Identity Pixel',
+    competitor: 'Not native; relies on basic Shopify app event triggers',
+  },
+  {
+    id: 'cod-prepaid',
+    label: 'COD to Prepaid Order Conversion Funnel',
+    description:
+      'Automated post-checkout messaging sequences designed to convert cash-on-delivery (COD) orders to prepaid which decrease the RTO.',
+    topedge:
+      'Native integration for Shopify, compatible with 3rd-party checkout stacks (GoKwik, Razorpay, etc.)',
+    competitor:
+      'Requires custom developer integration or 3rd-party middleware (like n8n) to map payment links',
+  },
+  {
+    id: 'lead-dedupe',
+    label: 'Lead Deduplication',
+    description:
+      'Automated CRM cleaning mechanism that prevents duplicate broadcast delivery by detecting when a single buyer uses multiple phone numbers across different orders, ensuring messages are sent only once and eliminating wasted marketing budget.',
+    topedge: 'Native auto-deduplication system ensuring single delivery to unified profiles',
+    competitor: 'Standard list management',
+  },
+  {
+    id: 'ecommerce-analytics',
+    label: 'E-commerce Growth Analytics & Revenue Tracking',
+    description:
+      'Complete retention dashboard providing accurate visibility into Average Order Value (AOV), Customer Lifetime Value (LTV), Geographic purchase analytics, future revenue projections, and more.',
+    topedge: 'Native E-commerce Intelligence Dashboard built specifically for D2C revenue metrics',
+    competitor: 'Standard messaging / campaign analytics (D2C revenue depth verify live)',
+  },
+  {
+    id: 'flow-builder',
+    label: 'Visual No-Code Chatbot Builder',
+    description:
+      'Node-by-node No-code Chatbot builder equipped with advanced developer canvas controls for building customer support and marketing logic.',
+    topedge: 'Advanced, all drag-and-drop nodes unlocked on all subscription plans',
+    competitor:
+      'Basic chatbot configurations; advanced branching logic and custom flows require upgrading to their premium Conversation Studio module (verify live)',
+  },
+  {
+    id: 'flow-cap',
+    label: 'Chatbot Trigger & Flow Execution Limits',
+    description:
+      'Monthly caps or volume limits placed on automated flow executions, chat trigger responses, and active chatbot sessions.',
+    topedge:
+      'Unlimited flow executions and trigger responses included across all subscription plans (Zero session caps or flow throttling)',
+    competitor: 'Flow executions and API triggers are billed on a pay-per-use enterprise model',
+  },
+];
+
 /** TopEdge Ai vs Interakt — verbatim board. */
 export const INTERAKT_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
   {
@@ -1243,6 +1347,14 @@ export function pairwiseMatrix(
       competitor: cell,
     }));
   }
+  if (competitor === 'gupshup') {
+    return GUPSHUP_PAIRWISE_MATRIX.map(({ label, description, topedge, competitor: cell }) => ({
+      label,
+      description,
+      topedge,
+      competitor: cell,
+    }));
+  }
   return LEGACY_COMPARE_FEATURE_MATRIX.map((row) => ({
     label: row.name,
     description: row.description,
@@ -1286,6 +1398,7 @@ function pairwiseForDuel(competitor: MatrixCompetitor): PairwiseFeatureRow[] {
   if (competitor === 'kanal') return KANAL_PAIRWISE_MATRIX;
   if (competitor === 'dondy') return DONDYY_PAIRWISE_MATRIX;
   if (competitor === 'updatrr') return UPDATRR_PAIRWISE_MATRIX;
+  if (competitor === 'gupshup') return GUPSHUP_PAIRWISE_MATRIX;
   return LEGACY_COMPARE_FEATURE_MATRIX.map((row) => ({
     id: row.id,
     label: row.name,

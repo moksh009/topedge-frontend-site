@@ -86,4 +86,13 @@ export const COMPARE_ALTERNATIVES: AlternativeEntry[] = [
     oneLiner:
       'Shopify-only WhatsApp automation with 7-day trial from ~$19.99; strong on Shopify event triggers, lighter on identity/warranty.',
   },
+  {
+    slug: 'gupshup',
+    name: 'Gupshup',
+    href: '/compare/gupshup',
+    logo: '/marketing/compare/compare-logo-gupshup.svg',
+    logoAlt: 'Gupshup logo',
+    oneLiner:
+      'Enterprise WhatsApp CPaaS on pay-as-you-go; platform fee on templates and advanced flows often gated behind Conversation Studio / enterprise modules.',
+  },
 ];

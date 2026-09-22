@@ -2,6 +2,7 @@ import {
   AISENSY_PAIRWISE_MATRIX,
   BITESPEED_PAIRWISE_MATRIX,
   GETGABS_PAIRWISE_MATRIX,
+  GUPSHUP_PAIRWISE_MATRIX,
   INTERAKT_PAIRWISE_MATRIX,
   DONDYY_PAIRWISE_MATRIX,
   KANAL_PAIRWISE_MATRIX,
@@ -1509,6 +1510,185 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
       { label: 'vs Dondy', href: '/compare/dondy' },
       { label: 'vs Bitespeed', href: '/compare/bitespeed' },
       { label: 'vs Zoko', href: '/compare/zoko' },
+      { label: 'TopEdge pricing', href: '/pricing' },
+    ],
+  },
+
+  gupshup: {
+    slug: 'gupshup',
+    name: 'Gupshup',
+    shortName: 'Gupshup',
+    website: 'https://www.gupshup.io/',
+    logo: '/marketing/compare/compare-logo-gupshup.svg',
+    logoAlt: 'Gupshup logo',
+    accent: '#00a651',
+    brandTag: 'Enterprise WhatsApp CPaaS',
+    title: 'TopEdge vs Gupshup (2026) | Flat INR Shopify OS vs Pay-as-you-go CPaaS',
+    description:
+      'Compare TopEdge vs Gupshup: flat INR SaaS + 0% Meta markup + native COD → prepaid vs Gupshup’s pay-as-you-go CPaaS with platform message fees and Conversation Studio upgrades.',
+    keywords:
+      'TopEdge vs Gupshup, Gupshup alternative Shopify India, Gupshup WhatsApp markup, Gupshup vs TopEdge, Gupshup Conversation Studio, Gupshup COD prepaid',
+    h1: 'TopEdge vs Gupshup',
+    subtitle: 'TopEdge AI vs Gupshup for Shopify WhatsApp ecommerce.',
+    answerFirst:
+      'Pick TopEdge AI for a flat INR Shopify growth OS with a 14-day trial from ~₹1,800/mo, 0% Meta markup, BYOK AI, opt-in widgets, visitor pixel, unified identity, and native COD → prepaid. Pick Gupshup if you want enterprise CPaaS / pay-as-you-go messaging infrastructure and are fine budgeting a Gupshup fee on templates plus Conversation Studio for advanced flows.',
+    whoForTopEdge:
+      'You want transparent Meta pass-through, INR SaaS, and Shopify India journeys (cart, COD → prepaid, identity) without enterprise middleware.',
+    whoForCompetitor:
+      'You need a large CPaaS footprint, pay-as-you-go message volume, and enterprise contracts—and can staff developers or Conversation Studio for ecommerce funnels.',
+    positioning:
+      'Gupshup is a messaging CPaaS with usage-based economics and premium flow modules. TopEdge is a Shopify India WhatsApp growth OS: flat plans, 0% markup, and ecommerce-native journeys on every tier.',
+    researchAsOf: 'Sep 2026',
+    differentiators: [
+      {
+        title: 'SaaS trial vs pay-as-you-go entry',
+        body: 'TopEdge publishes a 14-day free trial and INR plans from ~₹1,800/mo. Gupshup’s public motion is usage-based with no fixed entry-level SaaS floor or public free trial on the same model—confirm with their live pricing or sales quote.',
+      },
+      {
+        title: '0% Meta markup vs Gupshup fee on templates',
+        body: 'TopEdge bills Meta on your Meta Business Account at 0% platform markup. Gupshup applies a platform processing fee on template messages—model that fee separately from Meta’s rate card before festival volume.',
+      },
+      {
+        title: 'Native COD → prepaid vs custom middleware',
+        body: 'TopEdge ships COD → prepaid on Shopify and GoKwik / Razorpay-compatible stacks. On Gupshup, payment-link mapping for the same funnel typically needs custom work or tools like n8n.',
+      },
+      {
+        title: 'Builder unlocked vs Conversation Studio upsell',
+        body: 'TopEdge unlocks the visual journey / chatbot canvas on all plans with unlimited flow execution. Advanced Gupshup branching is commonly tied to Conversation Studio / premium bot modules—verify the live module list.',
+      },
+    ],
+    matrix: GUPSHUP_PAIRWISE_MATRIX.map(({ label, description, topedge, competitor }) => ({
+      label,
+      description,
+      topedge,
+      competitor,
+    })),
+    matrixNote:
+      'Board compiled Sep 2026 from TopEdge product positioning vs publicly described Gupshup CPaaS / Conversation Studio / Auto Bot patterns. Gupshup enterprise quotes and fee cards move—verify messaging fees, AI packaging, and module gates on gupshup.io (and any regional sales deck) before purchase.',
+    scorecard: [
+      {
+        area: 'Entry model',
+        topedge: '14-day trial · INR SaaS from ~₹1,800/mo',
+        competitor: 'Pay-as-you-go / enterprise quote',
+        edge: 'TopEdge',
+      },
+      {
+        area: 'Meta / template economics',
+        topedge: '0% platform markup · Meta on your MBA',
+        competitor: 'Gupshup fee on template messages',
+        edge: 'TopEdge',
+      },
+      {
+        area: 'COD → prepaid',
+        topedge: 'Native Shopify + checkout stacks',
+        competitor: 'Custom / middleware (e.g. n8n)',
+        edge: 'TopEdge',
+      },
+      {
+        area: 'Opt-in widgets & popups',
+        topedge: 'Native on all plans',
+        competitor: 'API opt-in links; advanced popups not native',
+        edge: 'TopEdge',
+      },
+      {
+        area: 'AI cost transparency',
+        topedge: 'BYOK + RAG ~₹0.10–₹0.30 / response',
+        competitor: 'Bundled into premium / enterprise modules',
+        edge: 'TopEdge',
+      },
+      {
+        area: 'Identity + dedupe',
+        topedge: 'Native resolution + auto-dedupe',
+        competitor: 'External CRM / standard lists',
+        edge: 'TopEdge',
+      },
+      {
+        area: 'Flow builder depth',
+        topedge: 'Full canvas on all plans · unlimited runs',
+        competitor: 'Basic free; advanced via Conversation Studio',
+        edge: 'TopEdge',
+      },
+      {
+        area: 'CPaaS / global messaging scale',
+        topedge: 'Shopify India growth OS',
+        competitor: 'Enterprise messaging CPaaS footprint',
+        edge: 'Competitor',
+      },
+      {
+        area: 'Visitor identity pixel',
+        topedge: '1-click store pixel',
+        competitor: 'Shopify/app event triggers',
+        edge: 'TopEdge',
+      },
+    ],
+    deepDives: [
+      {
+        title: 'Is Gupshup “cheaper” than TopEdge?',
+        body: 'Not on sticker alone. Gupshup avoids a fixed SaaS floor but adds a processing fee on templates and meters advanced flows. TopEdge’s bill is INR subscription + Meta pass-through + optional BYOK AI. Run your peak template volume through both models before deciding.',
+      },
+      {
+        title: 'Where Gupshup still fits',
+        body: 'If you already buy enterprise messaging, need multi-country CPaaS capacity, or have developers to wire COD payment links and CRM merges, Gupshup remains a serious infrastructure choice. TopEdge competes on Shopify India operating system depth—not on replacing every CPaaS use case.',
+      },
+      {
+        title: 'Conversation Studio vs Journeys',
+        body: 'Gupshup’s advanced branching is commonly packaged in Conversation Studio / Auto Bot Builder. TopEdge ships the visual builder and unlimited flow execution on Launch / Growth / Scale. Confirm Gupshup’s current module names and gates live—product packaging changes.',
+      },
+    ],
+    competitorPlans: [
+      {
+        name: 'Pay-as-you-go',
+        price: 'Usage-based',
+        note: 'No public entry SaaS floor · verify fee card',
+        highlights: ['Template + API messaging', 'Gupshup fee on templates', 'Enterprise onboarding typical'],
+      },
+      {
+        name: 'Conversation Studio',
+        price: 'Premium module',
+        note: 'Advanced flows / branching · verify packaging',
+        highlights: ['Custom flow canvas', 'Bot upgrades beyond basic', 'Often gated from base API'],
+        popular: true,
+      },
+      {
+        name: 'Enterprise / Auto Bot',
+        price: 'Custom contract',
+        note: 'AI usage often bundled · not BYOK passthrough',
+        highlights: ['Auto Bot Builder modules', 'Contract AI packaging', 'Sales-quoted volume'],
+      },
+    ],
+    topedgePlansNote:
+      'TopEdge: 14-day free trial, then Launch / Growth / Scale from ~₹1,800/mo with 0% WhatsApp API platform markup, BYOK AI, opt-in widgets, visitor pixel, and unlimited flow execution.',
+    pricingCaveat:
+      'Gupshup (Sep 2026 research snapshot): public motion is pay-as-you-go / enterprise with a platform fee on template messages and premium modules (Conversation Studio, Auto Bot Builder) rather than a flat INR Shopify SaaS card. Confirm messaging fees, trial availability, and module gates on gupshup.io or via sales before purchase.',
+    faqs: [
+      {
+        question: 'Does Gupshup mark up WhatsApp template messages?',
+        answer:
+          'On the positioning used for this board, yes—Gupshup applies a platform processing fee on template messages in addition to Meta’s rates. TopEdge keeps 0% platform markup with Meta billed on your Meta Business Account. Always re-check Gupshup’s live fee card.',
+      },
+      {
+        question: 'Is there a public Gupshup free trial like TopEdge?',
+        answer:
+          'TopEdge publishes a 14-day free trial and INR plans from ~₹1,800/mo. Gupshup’s common public model is pay-as-you-go / enterprise without the same fixed entry SaaS trial—confirm with their site or sales.',
+      },
+      {
+        question: 'Can Gupshup run COD → prepaid without developers?',
+        answer:
+          'Not as a native Shopify India journey on the public patterns used here. Mapping payment links usually needs custom integration or middleware such as n8n. TopEdge ships COD → prepaid natively with Shopify and compatible checkouts (e.g. GoKwik, Razorpay).',
+      },
+      {
+        question: 'Who should pick TopEdge over Gupshup?',
+        answer:
+          'Shopify India teams that want flat INR, 0% Meta markup, opt-in widgets, visitor pixel, unified identity + dedupe, BYOK AI transparency, and unlimited flows without Conversation Studio upsells. Pick Gupshup for enterprise CPaaS scale when you already buy messaging infrastructure and can staff integrations.',
+      },
+    ],
+    related: [
+      { label: 'All comparisons', href: '/compare' },
+      { label: 'Alternatives index', href: '/compare/alternatives' },
+      { label: 'vs WATI', href: '/compare/wati' },
+      { label: 'vs AiSensy', href: '/compare/aisensy' },
+      { label: 'vs Dondy', href: '/compare/dondy' },
+      { label: 'API pricing India', href: '/blog/whatsapp-business-api-pricing-india' },
       { label: 'TopEdge pricing', href: '/pricing' },
     ],
   },
