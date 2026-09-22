@@ -95,6 +95,67 @@ function extractSchemaTypes(html) {
   return types;
 }
 
+function schemaTypeList(node) {
+  const t = node?.['@type'];
+  if (!t) return [];
+  return (Array.isArray(t) ? t : [t]).map(String);
+}
+
+function hasImageField(node) {
+  const img = node?.image;
+  if (!img) return false;
+  if (typeof img === 'string' && img.trim()) return true;
+  if (Array.isArray(img)) {
+    return img.some((entry) => {
+      if (typeof entry === 'string' && entry.trim()) return true;
+      if (entry && typeof entry === 'object') {
+        return Boolean(entry.url || entry.contentUrl);
+      }
+      return false;
+    });
+  }
+  if (typeof img === 'object') return Boolean(img.url || img.contentUrl);
+  return false;
+}
+
+/**
+ * Google Merchant listings require Product.image when Offers carry a price.
+ * SoftwareApplication with offers is coerced to Product in Search Console.
+ * @param {string} html
+ * @returns {string[]}
+ */
+function auditMerchantProductImage(html) {
+  const problems = [];
+  const scripts = [
+    ...html.matchAll(
+      /<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi,
+    ),
+  ];
+  for (const s of scripts) {
+    try {
+      const data = JSON.parse(s[1]);
+      const walk = (node) => {
+        if (!node || typeof node !== 'object') return;
+        if (Array.isArray(node)) {
+          node.forEach(walk);
+          return;
+        }
+        const types = schemaTypeList(node);
+        const isSellable =
+          types.includes('Product') || types.includes('SoftwareApplication');
+        if (isSellable && node.offers != null && !hasImageField(node)) {
+          problems.push('merchant-product-missing-image');
+        }
+        for (const v of Object.values(node)) walk(v);
+      };
+      walk(data);
+    } catch {
+      /* ignore */
+    }
+  }
+  return problems;
+}
+
 /**
  * @param {string} html
  * @param {string} route prerender path e.g. /pricing
@@ -147,6 +208,11 @@ export function auditPrerenderHead(html, route) {
           problems.push(`missing-schema:${need}`);
         }
       }
+    }
+
+    // Merchant listings: Product / SoftwareApplication with Offers must expose image.
+    for (const issue of auditMerchantProductImage(html)) {
+      problems.push(issue);
     }
 
     // GEO/AEO: OG image should be PNG/JPEG absolute

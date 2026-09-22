@@ -369,6 +369,7 @@ export function catalogMonthlyOffersJsonLd(
       priceValidUntil: validUntil,
       url,
       availability: 'https://schema.org/InStock',
+      itemCondition: 'https://schema.org/NewCondition' as const,
       description: `${p.ordersPerCycle} orders / cycle · ${p.campaignEmailSendsPerCycle.toLocaleString('en-IN')} campaign sends · billed monthly`,
       ...merchant,
     }));

@@ -11,8 +11,7 @@ import {
   type CompareScoreRow,
 } from '../data/compareCompetitors';
 import { planDuelFeatures, type MatrixCompetitor } from '../data/compareFeatureMatrix';
-import { breadcrumbJsonLd, organizationJsonLd, softwareApplicationJsonLd, webPageJsonLd } from '../data/pageSeo';
-import { SITE_URL } from '../data/marketingSeo';
+import { breadcrumbJsonLd, organizationJsonLd, webPageJsonLd } from '../data/pageSeo';
 import {
   compareTwoWayModifiedIso,
   updatedKicker,
@@ -88,7 +87,9 @@ export default function ComparePage({ competitor: competitorProp }: Props) {
             { name: 'Compare', path: '/compare' },
             { name: data.name, path },
           ]),
-          softwareApplicationJsonLd(),
+          // No Product / SoftwareApplication+offers here — compare URLs are not
+          // purchase pages; priced Offers trigger Google Merchant listings and
+          // previously failed URL Inspection with Missing field "image".
         ]}
       />
       <MarketingPage className="mkt-cmp">

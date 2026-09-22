@@ -6,7 +6,6 @@ import {
   TRIAL,
 } from '../lib/billingCatalog';
 import { testimonials } from './home';
-import { OG_IMAGE_HEIGHT, OG_IMAGE_WIDTH, OG_IMAGE_ALT_DEFAULT } from './seoContracts';
 
 /** Core commercial keywords TopEdge should compete for (natural use in titles/descriptions). */
 export const CORE_KEYWORDS = [
@@ -342,28 +341,26 @@ function softwareApplicationReviewsJsonLd() {
   }));
 }
 
+/**
+ * Shared commercial schema for home / pricing / SEO topic pages.
+ * Google Merchant listings coerce SoftwareApplication+Offer → Product and
+ * require a crawlable `image` URL (plain string is the most reliable shape).
+ */
 export function softwareApplicationJsonLd() {
   const imageUrl = `${SITE_URL}/og-image.png`;
   const pricingUrl = `${SITE_URL}/pricing`;
   const merchant = digitalOfferMerchantFields('INR');
   return {
     '@context': 'https://schema.org',
-    '@type': 'SoftwareApplication',
+    // Dual type: keeps SoftwareApplication semantics while satisfying Product
+    // merchant-listing validators that require `image` on Product.
+    '@type': ['SoftwareApplication', 'Product'],
     name: 'TopEdge',
     alternateName: 'TopEdge AI',
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'Web',
     url: SITE_URL,
-    image: [
-      {
-        '@type': 'ImageObject',
-        url: imageUrl,
-        contentUrl: imageUrl,
-        width: OG_IMAGE_WIDTH,
-        height: OG_IMAGE_HEIGHT,
-        caption: OG_IMAGE_ALT_DEFAULT,
-      },
-    ],
+    image: [imageUrl],
     screenshot: imageUrl,
     description:
       'WhatsApp automation for Shopify: abandoned cart recovery, COD confirmations, Live Chat, journeys, and Meta Cloud API campaigns for Indian ecommerce.',
@@ -381,6 +378,7 @@ export function softwareApplicationJsonLd() {
         description: `${TRIAL.days}-day free trial`,
         url: pricingUrl,
         availability: 'https://schema.org/InStock',
+        itemCondition: 'https://schema.org/NewCondition',
         ...merchant,
       },
       ...catalogMonthlyOffersJsonLd(undefined, { url: pricingUrl }),
@@ -439,9 +437,10 @@ export function webPageJsonLd(opts: {
         }
       : {}),
     isPartOf: { '@type': 'WebSite', name: 'TopEdge', url: SITE_URL },
-    // Full SoftwareApplication (with image) lives on home/pricing/compare via
-    // softwareApplicationJsonLd(). Keep about as Organization so Merchant
-    // listings never validate a nested SoftwareApplication missing image.
+    // Full SoftwareApplication+Product (with image + merchant offer fields) lives
+    // on home/pricing/SEO topics via softwareApplicationJsonLd(). Compare pages
+    // intentionally omit priced Offers so Merchant listings do not apply.
+    // Keep about as Organization so nested schemas never lack required image.
     about: {
       '@type': 'Organization',
       name: 'TopEdge',

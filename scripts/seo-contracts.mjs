@@ -25,6 +25,7 @@ export const PAGE_TYPE_SCHEMA = {
   home: ['Organization', 'SoftwareApplication'],
   pricing: ['SoftwareApplication', 'FAQPage'],
   feature: ['WebPage', 'BreadcrumbList'],
+  /** Compare = editorial; no Product/offers (Merchant listings). */
   compare: ['WebPage', 'BreadcrumbList'],
   blog: ['BlogPosting'],
   legal: [],
