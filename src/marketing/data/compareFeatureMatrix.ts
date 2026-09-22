@@ -511,105 +511,122 @@ export const AISENSY_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
   },
 ];
 
-/** TopEdge Ai vs Bitespeed — dedicated pairwise board. */
+/** TopEdge Ai vs Bitespeed — verbatim board. */
 export const BITESPEED_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
   {
+    id: 'subscription',
+    label: 'Subscription Model',
+    topedge: '14 Days free trial, then starts from ~₹1,800',
+    competitor:
+      'Requires stores to generate a minimum of ₹5,00,000 MRR to qualify for onboarding, with baseline plans starting at ~₹15,000/month',
+  },
+  {
     id: 'template-markup',
-    label: 'WhatsApp Template Message Markup %',
-    description: 'What you pay above Meta’s base WhatsApp conversation rates.',
-    topedge: '0% markup, billing direct on Meta',
-    competitor: 'Meta conversation fees on top of USD plan, verify live',
+    label: 'WhatsApp API Template Message Markup',
+    description:
+      'How messaging usage is billed and whether the platform applies hidden markup fees on top of standard Meta conversation rates.',
+    topedge:
+      '0% WhatsApp API platform markup (Direct Meta API Billing on your Meta Business Account)',
+    competitor:
+      'Platform usage charges and conversation markup fees applied on top of base Meta conversation rates',
   },
   {
     id: 'ai-llm',
-    label: 'AI LLM Integration / AI Messages',
-    description: 'How AI replies are powered and what they cost per conversation.',
-    topedge: 'BYOK & built-in RAG pipeline, optimised token usage est. ₹0.2-₹0.3 / message',
-    competitor: 'AI chatbot & AI marketing agent ~$100/mo add-ons each (1k then ~$0.05)',
-  },
-  {
-    id: 'intent-routing',
-    label: 'Intent Routing Engine',
+    label: 'Generative AI Support Engine & Custom LLM Integration',
     description:
-      'Algorithm detects chat message intent and routes chatbot flow accordingly (no AI used) for better chat support.',
-    topedge: 'Native algorithmic intent detection & routing',
-    competitor: 'AI agents / chatbot flows (often add-on)',
+      'Enterprise LLM integration framework allowing brands to deploy generative customer support with flexible AI model selection and zero feature paywalls.',
+    topedge:
+      'Bring Your Own Key (BYOK) architecture with built-in RAG pipeline (est. ~₹0.10-₹0.30 per AI response, depending on selected AI model), available on all plans',
+    competitor: 'No official information found.',
   },
   {
     id: 'unified-identity',
-    label: 'Unified Customer Identity',
+    label: 'Unified Customer Identity (Identity Resolution CRM)',
     description:
-      'Auto-merges multiple orders, contact numbers, and emails for a single customer into one unified profile.',
-    topedge: 'Native built-in',
-    competitor: 'Omnichannel profiles, verify merge depth live',
+      'Independent CRM engine that automatically stitches fragmented orders, multiple contact numbers, and emails into a single master buyer profile.',
+    topedge:
+      "Native Identity Resolution Engine (Operates independently to auto-merge a buyer's multiple contact numbers and emails into one master record)",
+    competitor:
+      "Standard sync (Primarily relies on Shopify’s default customer data structure)",
   },
   {
     id: 'lead-dedupe',
-    label: 'Duplicate Lead Prevention / Lead Deduplication',
-    description: 'Stop the same shopper from flooding CRM as multiple leads.',
-    topedge: 'Native, auto-deduplication',
-    competitor: 'Segmentation & CRM, verify auto-dedupe live',
+    label: 'Lead Deduplication',
+    description:
+      'Automated CRM cleaning mechanism that prevents duplicate broadcast delivery and eliminates wasted marketing budget on duplicate contacts. Intelligent CRM cleaning engine that detects when a single buyer uses multiple phone numbers across different orders, ensuring marketing broadcasts are sent only once, eliminating wasted marketing budget.',
+    topedge:
+      'Native cross-channel auto-deduplication system (Prevents sending duplicate marketing messages to the same person if they use multiple contact numbers)',
+    competitor:
+      'Standard list segmentation (Relies on basic tag management and list filtering)',
   },
   {
     id: 'store-pixel',
-    label: 'Store Tracking Pixel',
+    label: 'Visitor Identity Pixel',
     description:
-      'Pixel captures visitor identity (contact no., email) plus products viewed, product visitors, and abandoned checkout sessions.',
-    topedge: '1-click install pixel',
-    competitor: 'Popups & spin-the-wheel widgets, full pixel depth not verified',
+      'Store pixel that identifies visitor contacts and tracks product views, visitor activity & checkout sessions prior to account creation.',
+    topedge: '1-Click to Install',
+    competitor:
+      'Relies primarily on interactive opt-in widgets (e.g., Spin-the-wheel pop-ups) and standard Shopify abandoned checkout webhooks for data capture',
   },
   {
-    id: 'cod-prepaid',
-    label: 'Cash On Delivery → Prepaid Funnel Builder',
-    description: 'Convert COD risk into prepaid checkouts from WhatsApp.',
-    topedge: 'Shopify-native checkout (GoKwik & other checkout partners compatible)',
-    competitor: 'COD confirmation / COD → prepaid supported',
-  },
-  {
-    id: 'ecommerce-analytics',
-    label: 'E-commerce Analytics',
+    id: 'optin-widgets',
+    label: 'Opt-In Widget Builder & Website Popups builder',
     description:
-      'Accurate metrics: AOV, LTV, campaign revenue, most-sold products by city, upcoming months revenue projection, and other scale metrics brands need.',
-    topedge: 'Native built-in',
-    competitor: 'Campaign & recovery analytics (omnichannel)',
-  },
-  {
-    id: 'warranty',
-    label: 'Order Warranty Management',
-    description:
-      'Automated warranty assignment and warranty batches per product; each unified profile stores warranty duration for every past order.',
-    topedge: 'Built-in automated warranty batches tied to unified customer profile',
-    competitor: 'Not found in public feature set',
+      'Customizable interactive website widgets, sticky opt-in bars designed to capture visitor information, Website Offer Popup builder and WhatsApp opt-in consent collector. (e.g. such as Spin-the-Wheel popups, offer banner popups, etc...)',
+    topedge: 'Advance, unlocked across all subscription plans',
+    competitor: 'Standard.',
   },
   {
     id: 'order-mod',
-    label: 'Order Modification via WhatsApp',
+    label: 'Chat Order Modifications',
     description:
-      'Customers can cancel orders or change shipping address with time-based and fulfillment-status locks.',
-    topedge: 'Yes, with security layer',
-    competitor: 'Order updates & support automation',
+      'Automated WhatsApp self-service flow allowing buyers to edit shipping addresses or cancel orders securely before dispatch.',
+    topedge:
+      'Native, Order modification backed by fulfillment status and time locks (Fully automated without live agents)',
+    competitor: 'Standard.',
   },
   {
-    id: 'journey-builder',
-    label: 'Customer Marketing Journey Builder',
+    id: 'cod-prepaid',
+    label: 'COD to Prepaid Order Conversion Funnel',
     description:
-      'Turn one-time buyers into loyal repeat customers with a high-converting post-purchase messaging framework in the journey builder.',
-    topedge: 'Journey builder with deduplication enrollment',
-    competitor: 'Automation flows + AI marketing agents (add-on)',
+      'Automated post-checkout messaging sequences designed to convert cash-on-delivery (COD) orders to prepaid status.',
+    topedge:
+      'Flexible Native integration for Shopify and 3rd-party checkout stacks (GoKwik, Razorpay, etc.)',
+    competitor: 'Native',
   },
   {
-    id: 'flow-builder',
-    label: 'Linear Chatbot Flow Builder',
-    description: 'Design chatbot flows node-to-node with a visual builder.',
-    topedge: 'Advanced drag-and-drop node builder unlocked on all plans',
-    competitor: 'Chatbots included; AI chatbot depth often add-on',
+    id: 'warranty',
+    label: 'Automated Order Warranty Management',
+    description:
+      'Systemized warranty assignment that auto-generates warranty batches and attaches duration logs directly to individual customer profiles.',
+    topedge:
+      'Built-in automated warranty batch creation linked directly to the unified customer profile',
+    competitor: 'Not natively supported',
+  },
+  {
+    id: 'ecommerce-analytics',
+    label: 'E-commerce Growth Analytics & Revenue Tracking',
+    description:
+      'Complete retention dashboard providing accurate visibility into Average Order Value (AOV), Customer Lifetime Value (LTV), Geographic purchase density, future revenue projections, many more...',
+    topedge: 'Native Detailed E-commerce Intelligence Dashboard',
+    competitor: 'Standard',
+  },
+  {
+    id: 'intent-routing',
+    label: 'Algorithmic Chat Intent Routing Engine',
+    description:
+      'Real-time message intent recognition that dynamically channels user inquiries to targeted automation chat flows without burning any AI tokens.',
+    topedge: 'Native, Intent detection &  Chat flow routing',
+    competitor:
+      'Rule-based chat routing relying on predefined template triggers and live-agent handoffs',
   },
   {
     id: 'flow-cap',
-    label: 'Chatflow Execution Cap',
-    description: 'How many chatbot / flow runs you get before hitting plan limits.',
-    topedge: 'Unlimited flow execution on all plans',
-    competitor: 'Conversation & AI conversation meters on plans / add-ons',
+    label: 'Chatbot Session & Flow Execution Limits',
+    description:
+      'Operational execution limits placed on automated chat triggers and monthly flow executions.',
+    topedge: 'Unlimited flow execution included across all subscription plans',
+    competitor: 'No official information found',
   },
 ];
 
@@ -959,7 +976,7 @@ export const UPDATRR_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
     id: 'lead-dedupe',
     label: 'Duplicate Lead Filter (Lead Deduplication)',
     description:
-      'Intelligent CRM cleaning engine that detects when a single buyer uses multiple phone numbers across different orders, ensuring marketing broadcasts are sent only once, eliminating wasted marketing budget.',
+      'Automated CRM cleaning mechanism that prevents duplicate broadcast delivery and eliminates wasted marketing budget on duplicate contacts. Intelligent CRM cleaning engine that detects when a single buyer uses multiple phone numbers across different orders, ensuring marketing broadcasts are sent only once, eliminating wasted marketing budget.',
     topedge: 'Native auto-deduplication system',
     competitor:
       "Standard contact sync (Managed via Shopify's default contact management system)",
@@ -1083,7 +1100,7 @@ export const INTERAKT_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
     id: 'lead-dedupe',
     label: 'Lead Deduplication',
     description:
-      'Intelligent CRM cleaning engine that detects when a single buyer uses multiple phone numbers across different orders, ensuring marketing broadcasts are sent only once, eliminating wasted marketing budget.',
+      'Automated CRM cleaning mechanism that prevents duplicate broadcast delivery and eliminates wasted marketing budget on duplicate contacts. Intelligent CRM cleaning engine that detects when a single buyer uses multiple phone numbers across different orders, ensuring marketing broadcasts are sent only once, eliminating wasted marketing budget.',
     topedge: 'Native auto-deduplication system',
     competitor: 'Standard contact list management and basic tagging',
   },
