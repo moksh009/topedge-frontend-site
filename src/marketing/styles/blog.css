@@ -502,6 +502,40 @@
   color: #334155;
 }
 
+.mkt-blog-prose .mkt-blog-toc {
+  margin: 0 0 2rem;
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--mkt-border);
+  border-radius: 14px;
+  background: #fff;
+}
+
+.mkt-blog-prose .mkt-blog-toc p {
+  margin: 0 0 0.5rem;
+  font-size: 0.9rem;
+  color: #0c1222;
+}
+
+.mkt-blog-prose .mkt-blog-toc ol {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.mkt-blog-prose .mkt-blog-toc li {
+  margin: 0.35rem 0;
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.mkt-blog-prose .mkt-blog-toc a {
+  color: var(--mkt-violet, #7c3aed);
+  text-decoration: none;
+}
+
+.mkt-blog-prose .mkt-blog-toc a:hover {
+  text-decoration: underline;
+}
+
 .mkt-blog-prose .mkt-blog-table-wrap {
   margin: 1.25rem 0 0.75rem;
   overflow-x: auto;

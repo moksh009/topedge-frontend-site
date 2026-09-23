@@ -63,6 +63,7 @@ export const BLOG_SLUGS = [
   'how-to-choose-whatsapp-app-shopify-app-store',
   'whatsapp-business-api-pricing-india',
   'dondy-alternative-shopify-india',
+  'organic-vs-paid-ecommerce-marketing-2026',
 ];
 
 /** Soft-404 shell — prerendered to dist/404.html (Netlify 404 document). Not in sitemap. */

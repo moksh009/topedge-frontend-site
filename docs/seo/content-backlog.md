@@ -36,6 +36,7 @@ Status: `idea` → `outlined` → `drafting` → `fact-check` → `published` �
 | 2026-09-22 | `whatsapp-automation-for-shopify` | refresh | Full lifecycle rewrite (event→WhatsApp→action); India section; links cart recovery + best apps |
 | 2026-09-22 | `best-whatsapp-apps-for-shopify` | published | Commercial buyer’s guide (not India-only); 4 app types + comparison table; cluster with pillar + cart recovery |
 | 2026-09-21 | `ai-chatbot-for-shopify` | published | Article 3 pillar: AI chatbot for Shopify support & sales; links AI Brain, automation guide, India WhatsApp AI post |
+| 2026-09-23 | `organic-vs-paid-ecommerce-marketing-2026` | published | Asset-First Hybrid Framework; organic vs paid playbook + TopEdge recovery; FAQs + TOC |
 | 2026-10 (week 1–2) | Prefer deepen thin URL or one question-bank gap | idea | From question-bank #4 Meta pricing or #8 inbox if needed |
 
 ---
