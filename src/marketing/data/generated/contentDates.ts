@@ -8,7 +8,7 @@ export const CONTENT_DATES = {
   /** Last edit of 3-way compare page (+ feature matrix). */
   compareThreeWay: '2026-09-22',
   /** Last edit of blogPosts.ts (used as Article dateModified fallback). */
-  blogPosts: '2026-09-23',
+  blogPosts: '2026-09-25',
   /** Last edit of feature / product page content. */
   featurePages: '2026-09-22',
   /** Last edit of published plan catalog (pricing Offers). */
@@ -36,7 +36,8 @@ export const BLOG_DATES_BY_SLUG = {
   "whatsapp-automation-for-shopify": "2026-09-22",
   "ai-chatbot-for-shopify": "2026-09-21",
   "best-whatsapp-apps-for-shopify": "2026-09-22",
-  "organic-vs-paid-ecommerce-marketing-2026": "2026-09-23"
+  "organic-vs-paid-ecommerce-marketing-2026": "2026-09-23",
+  "cod-rto-benchmark-india-2026": "2026-09-25"
 } as const;
 
 export type ContentDateKey = keyof typeof CONTENT_DATES;
