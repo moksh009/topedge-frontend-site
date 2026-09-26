@@ -10,6 +10,7 @@
  *   npm run indexnow -- https://topedgeai.com/compare/dondy
  *   npm run indexnow -- --dondy
  *   npm run indexnow -- --changed
+ *   npm run indexnow -- --phase-e
  *   npm run indexnow -- --sitemap   # only when many URLs truly changed
  *
  * Deploy the key file BEFORE the first submit (public/<key>.txt → site root).
@@ -27,8 +28,18 @@ const KEY = 'db2d3b12e5f047e48445607a75862b1f';
 const KEY_LOCATION = `${SITE}/${KEY}.txt`;
 const ENDPOINT = 'https://api.indexnow.org/indexnow';
 
-/** URLs refreshed in Phase E feature AEO + link hygiene (Sep 2026). */
+/**
+ * URLs refreshed 26 Sep 2026: homepage FAQ + full prerender, blog index, and
+ * every post (em dash sweep, always-open FAQs, topical related links).
+ */
 const CHANGED_RECENT = [
+  '/',
+  '/blog',
+  ...getSitemapPaths().filter((p) => p.startsWith('/blog/')),
+];
+
+/** URLs refreshed in Phase E feature AEO + link hygiene (Sep 2026). */
+const CHANGED_PHASE_E = [
   '/features/flow-builder',
   '/features/opt-in-tools',
   '/features/campaigns',
@@ -111,6 +122,7 @@ async function main() {
   let paths = [];
   if (flags.has('dondy')) paths = DONDYY;
   else if (flags.has('changed')) paths = CHANGED_RECENT;
+  else if (flags.has('phase-e')) paths = CHANGED_PHASE_E;
   else if (flags.has('sitemap')) paths = getSitemapPaths();
   else if (cliUrls.length) paths = cliUrls;
   else {
@@ -118,6 +130,7 @@ async function main() {
   npm run indexnow -- <url> [url...]
   npm run indexnow -- --dondy
   npm run indexnow -- --changed
+  npm run indexnow -- --phase-e
   npm run indexnow -- --sitemap`);
     process.exit(1);
   }

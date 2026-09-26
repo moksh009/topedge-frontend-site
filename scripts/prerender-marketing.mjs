@@ -168,6 +168,45 @@ function sanitizePrerenderHtml(html) {
   return out;
 }
 
+/**
+ * Homepage below-fold sections are lazy chunks. Their CSS/modulepreload links
+ * must not become render-blocking in the saved HTML (LCP), so anything added to
+ * <head> after the hero-only snapshot is made non-blocking or dropped. The
+ * client re-imports those chunks itself when the sections mount.
+ */
+function deferLinksAddedAfter(html, baselineHrefs) {
+  const baseline = new Set(baselineHrefs);
+  const seen = new Set();
+  return html.replace(/<link\b[^>]*>/gi, (tag) => {
+    const href = tag.match(/\bhref=["']([^"']+)["']/i)?.[1];
+    if (!href) return tag;
+    // Vite's preload helper re-adds shared chunks already linked in <head>.
+    if (/\brel=["'](?:modulepreload|stylesheet)["']/i.test(tag)) {
+      if (seen.has(href)) return '';
+      seen.add(href);
+    }
+    if (baseline.has(href)) return tag;
+    if (/\brel=["']modulepreload["']/i.test(tag)) return '';
+    if (/\brel=["']stylesheet["']/i.test(tag) && !/\bmedia=/i.test(tag)) {
+      return tag.replace(/<link\b/i, `<link media="print" onload="this.media='all'"`);
+    }
+    return tag;
+  });
+}
+
+const HOME_BELOW_FOLD_EVENT = 'topedge:prerender-below-fold';
+
+async function renderHomeBelowFold(page) {
+  const baselineHrefs = await page.evaluate(() =>
+    [...document.head.querySelectorAll('link[href]')].map((l) => l.getAttribute('href')),
+  );
+  await page.evaluate((evt) => window.dispatchEvent(new Event(evt)), HOME_BELOW_FOLD_EVENT);
+  await page.waitForSelector('.home-qa', { timeout: 20000 });
+  await page.waitForSelector('.mkt-cta', { timeout: 20000 });
+  await sleep(150);
+  return baselineHrefs;
+}
+
 function assertSingleSeoHead(html, route) {
   return auditPrerenderHead(html, route).problems;
 }
@@ -218,6 +257,7 @@ async function main() {
 
     let ok = 0;
     let fail = 0;
+    let homeHtml = null;
 
     for (const route of paths) {
       const url = `${BASE}${route === '/' ? '/' : route}`;
@@ -240,13 +280,22 @@ async function main() {
           () => document.querySelectorAll('meta[name="description"]').length >= 1,
           { timeout: 10000 },
         );
+        const homeBaseline = route === '/' ? await renderHomeBelowFold(page) : null;
         await sleep(50);
         const raw = await page.content();
-        const html = sanitizePrerenderHtml(raw);
+        let html = sanitizePrerenderHtml(raw);
+        if (homeBaseline) html = deferLinksAddedAfter(html, homeBaseline);
 
         const out = outPathFor(route);
-        fs.mkdirSync(path.dirname(out), { recursive: true });
-        fs.writeFileSync(out, html, 'utf8');
+        if (route === '/') {
+          // dist/index.html is also the SPA shell the preview server falls back
+          // to for every later route; writing it now would leak the homepage's
+          // below-fold <head> links into all other pages.
+          homeHtml = html;
+        } else {
+          fs.mkdirSync(path.dirname(out), { recursive: true });
+          fs.writeFileSync(out, html, 'utf8');
+        }
 
         const hasH1 = /<h1[\s>]/i.test(html);
         const hasLd = /application\/ld\+json/i.test(html);
@@ -265,6 +314,7 @@ async function main() {
     }
 
     await browser.close();
+    if (homeHtml) fs.writeFileSync(outPathFor('/'), homeHtml, 'utf8');
     console.log(`\n✅ Prerender done: ${ok} ok, ${fail} failed`);
     if (fail > 0) {
       exitCode = 1;

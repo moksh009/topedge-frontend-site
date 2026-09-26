@@ -1,5 +1,6 @@
+import type { CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, CalendarCheck, FileSearch, Receipt } from 'lucide-react';
 import MarketingSEO from '../components/MarketingSEO';
 import { PAGE_SEO, organizationJsonLd, breadcrumbJsonLd, webPageJsonLd } from '../data/pageSeo';
 import MarketingPage from '../components/MarketingPage';
@@ -17,7 +18,8 @@ const FEATURED = [
       { src: '/marketing/compare/compare-logo-wati.png', alt: 'WATI' },
       { src: '/marketing/compare/compare-logo-aisensy.png', alt: 'AiSensy' },
     ],
-    badge: '3-way',
+    badge: '3-way board',
+    tone: 'violet',
   },
   {
     href: '/compare/alternatives',
@@ -29,24 +31,55 @@ const FEATURED = [
       { src: '/marketing/compare/compare-logo-gupshup.svg', alt: 'Gupshup' },
     ],
     badge: 'Index',
+    tone: 'sky',
   },
+] as const;
+
+const ORDER = [
+  'wati',
+  'aisensy',
+  'interakt',
+  'bitespeed',
+  'zoko',
+  'getgabs',
+  'kanal',
+  'dondy',
+  'updatrr',
+  'gupshup',
 ];
 
+function latestResearchStamp(stamps: (string | undefined)[]): string | null {
+  const counts = new Map<string, number>();
+  for (const s of stamps) if (s) counts.set(s, (counts.get(s) ?? 0) + 1);
+  let best: string | null = null;
+  for (const [s, n] of counts) if (!best || n > (counts.get(best) ?? 0)) best = s;
+  return best;
+}
+
 export default function CompareIndexPage() {
-  const order = [
-    'wati',
-    'aisensy',
-    'interakt',
-    'bitespeed',
-    'zoko',
-    'getgabs',
-    'kanal',
-    'dondy',
-    'updatrr',
-    'gupshup',
-  ];
   const bySlug = Object.fromEntries(allCompareCompetitors().map((c) => [c.slug, c]));
-  const competitors = order.map((slug) => bySlug[slug]).filter(Boolean);
+  const competitors = ORDER.map((slug) => bySlug[slug]).filter(Boolean);
+  const researchAsOf = latestResearchStamp(competitors.map((c) => c.researchAsOf));
+
+  const method = [
+    {
+      icon: CalendarCheck,
+      title: 'Dated research',
+      body: researchAsOf
+        ? `Every board shows when it was checked. Current boards: ${researchAsOf}.`
+        : 'Every board shows when it was checked.',
+    },
+    {
+      icon: FileSearch,
+      title: 'Sources noted',
+      body: "Pricing comes from each vendor's public pages and Shopify App Store listings. Confirm live before you buy.",
+    },
+    {
+      icon: Receipt,
+      title: 'Meta markup called out',
+      body: "Each board shows how a tool prices Meta's WhatsApp template rate, separately from its plan.",
+    },
+  ];
 
   return (
     <>
@@ -69,9 +102,9 @@ export default function CompareIndexPage() {
           ]),
         ]}
       />
-      <MarketingPage className="mkt-cmp">
-        <header className="mkt-cmp__arena">
-          <p className="mkt-cmp__kicker">Comparison</p>
+      <MarketingPage className="mkt-cmp mkt-cmpx">
+        <header className="mkt-cmp__arena mkt-cmpx__hero">
+          <p className="mkt-cmpx__eyebrow">Comparison</p>
           <h1 className="mkt-cmp__h1">
             <span className="mkt-cmp__h1-brand">
               <img
@@ -89,53 +122,86 @@ export default function CompareIndexPage() {
             <span className="mkt-cmp__h1-vs">vs</span>
             <span className="mkt-cmp__h1-rest">WhatsApp tools</span>
           </h1>
+          <p className="mkt-cmpx__sub">
+            Side-by-side boards on Meta markup, AI cost, COD → prepaid, and Shopify depth, built
+            for Indian D2C brands choosing a WhatsApp platform.
+          </p>
+          <ul className="mkt-cmpx__chips" aria-label="How these boards are built">
+            {researchAsOf ? <li>Checked {researchAsOf}</li> : null}
+            <li>Public sources</li>
+            <li>Meta markup per tool</li>
+          </ul>
         </header>
 
-        <section className="mkt-cmp__block" aria-label="Featured comparison">
-          <div className="mkt-cmp-index__featured">
+        <section className="mkt-cmp__block mkt-cmpx__block" aria-labelledby="mkt-cmpx-featured">
+          <h2 id="mkt-cmpx-featured" className="sr-only">
+            Featured comparisons
+          </h2>
+          <div className="mkt-cmpx__featured">
             {FEATURED.map((f) => (
-              <Link key={f.href} to={f.href} className="mkt-cmp-index__card mkt-cmp-index__card--wide">
-                {f.badge ? <span className="mkt-cmp-index__badge">{f.badge}</span> : null}
-                <div className="mkt-cmp-index__card-top">
-                  {f.logos.map((logo, i) => (
-                    <span key={logo.src} className="mkt-cmp-index__logo-stack">
-                      {i > 0 ? <span className="mkt-cmp-index__vs">vs</span> : null}
-                      <img src={logo.src} alt={logo.alt} width={32} height={32} />
-                    </span>
-                  ))}
+              <Link key={f.href} to={f.href} className={`mkt-cmpx-feat mkt-cmpx-feat--${f.tone}`}>
+                <div className="mkt-cmpx-feat__top">
+                  <span className="mkt-cmpx-feat__logos">
+                    {f.logos.map((logo) => (
+                      <img key={logo.src} src={logo.src} alt={logo.alt} width={48} height={48} />
+                    ))}
+                  </span>
+                  <span className="mkt-cmpx-feat__badge">{f.badge}</span>
                 </div>
-                <h2>{f.title}</h2>
+                <h3>{f.title}</h3>
                 <p>{f.body}</p>
-                <span className="mkt-cmp-index__card-cta">
+                <span className="mkt-cmpx-feat__cta">
                   Open board
-                  <ArrowRight className="h-3.5 w-3.5" aria-hidden />
+                  <ArrowRight size={15} aria-hidden />
                 </span>
               </Link>
             ))}
           </div>
         </section>
 
-        <section className="mkt-cmp__block" aria-label="Comparisons">
-          <div className="mkt-cmp__block-head">
-            <h2>
-              Pairwise <span className="mkt-cmp__hl">boards</span>
+        <section className="mkt-cmp__block mkt-cmpx__block" aria-labelledby="mkt-cmpx-pairs">
+          <div className="mkt-cmpx__head">
+            <h2 id="mkt-cmpx-pairs">
+              Head-to-head <span className="mkt-cmp__hl">boards</span>
+            </h2>
+            <p>Pick the tool you are evaluating. Each board compares it with TopEdge AI row by row.</p>
+          </div>
+          <div className="mkt-cmpx__grid">
+            {competitors.map((c) => (
+              <Link
+                key={c.slug}
+                to={`/compare/${c.slug}`}
+                className="mkt-cmpx-card"
+                style={{ '--accent': c.accent } as CSSProperties}
+              >
+                <span className="mkt-cmpx-card__logo">
+                  <img src={c.logo} alt={c.logoAlt} width={40} height={40} />
+                </span>
+                <ArrowUpRight className="mkt-cmpx-card__arrow" size={18} aria-hidden />
+                <h3>
+                  <span className="mkt-cmpx-card__pre">TopEdge AI vs</span> {c.name}
+                </h3>
+                <p>{c.brandTag || 'WhatsApp platform'}</p>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        <section className="mkt-cmp__block mkt-cmpx__block" aria-labelledby="mkt-cmpx-method">
+          <div className="mkt-cmpx__head">
+            <h2 id="mkt-cmpx-method">
+              How we <span className="mkt-cmp__hl">compare</span>
             </h2>
           </div>
-          <div className="mkt-cmp-index__grid">
-            {competitors.map((c) => (
-              <Link key={c.slug} to={`/compare/${c.slug}`} className="mkt-cmp-index__card">
-                <div className="mkt-cmp-index__card-top">
-                  <img src="/logo.png" alt="TopEdge AI" width={32} height={32} />
-                  <span className="mkt-cmp-index__vs">vs</span>
-                  <img src={c.logo} alt={c.logoAlt} width={32} height={32} />
-                </div>
-                <h2>TopEdge AI vs {c.name}</h2>
-                <p>{c.brandTag || 'WhatsApp platform'}</p>
-                <span className="mkt-cmp-index__card-cta">
-                  Compare
-                  <ArrowRight className="h-3.5 w-3.5" aria-hidden />
+          <div className="mkt-cmpx__method">
+            {method.map((m) => (
+              <div key={m.title} className="mkt-cmpx-method">
+                <span className="mkt-cmpx-method__icon">
+                  <m.icon size={18} strokeWidth={2} aria-hidden />
                 </span>
-              </Link>
+                <h3>{m.title}</h3>
+                <p>{m.body}</p>
+              </div>
             ))}
           </div>
         </section>

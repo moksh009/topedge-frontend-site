@@ -8,7 +8,7 @@ const root = path.resolve(__dirname, '..');
 const out = path.resolve(__dirname, '../public/sitemap.xml');
 const SITE = 'https://topedgeai.com';
 
-/** @type {{ compareTwoWay: string, compareThreeWay: string, blogPosts: string, featurePages: string, pricing: string, blogBySlug?: Record<string, string> }} */
+/** @type {{ compareTwoWay: string, compareThreeWay: string, blogPosts: string, featurePages: string, pricing: string, home?: string, blogBySlug?: Record<string, string> }} */
 function loadContentDates() {
   const jsonPath = path.join(root, 'src/marketing/data/generated/contentDates.json');
   if (fs.existsSync(jsonPath)) {
@@ -39,6 +39,7 @@ const priorityFor = (p) => {
 };
 
 function lastmodFor(p) {
+  if (p === '/') return dates.home || dates.featurePages;
   if (p === '/pricing') return dates.pricing;
   if (p === '/privacy' || p === '/terms') return dates.featurePages;
   if (p === '/compare/topedge-vs-wati-vs-aisensy') return dates.compareThreeWay;

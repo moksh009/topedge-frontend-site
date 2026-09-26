@@ -3008,7 +3008,7 @@ export const blogPosts: BlogPost[] = [
       {
         question: 'What is a good RTO rate for an Indian D2C brand?',
         answer:
-          "Unicommerce's own data shows top-performing brands holding RTO around 21% even in festive season, against a ~39% ecosystem average (410M+ shipments, 6,000+ brands). Getting close to that 21% mark puts you ahead of most of the market.",
+          "Unicommerce/Shipway data shows brands that improved verification and courier selection at around 21% RTO in February 2026, against roughly 39% across the network at the November 2025 festive peak (410M+ shipments, 6,000+ brands). Getting close to that 21% mark puts you ahead of most of the market.",
       },
       {
         question: 'What is the average RTO percentage for COD orders in India?',
@@ -3029,11 +3029,6 @@ export const blogPosts: BlogPost[] = [
         question: 'Does WhatsApp COD confirmation actually reduce RTO?',
         answer:
           "Unicommerce names order verification before dispatch as one of the three levers separating top-performing brands from the rest. WhatsApp is a practical, high-response channel for that verification, but we haven't found independently verified data isolating WhatsApp's effect on its own versus other verification channels.",
-      },
-      {
-        question: 'How much does one RTO order cost a Shopify brand?',
-        answer:
-          '[TOPEDGE RATE: Moksh to supply, if available; otherwise cut this question rather than guess]',
       },
       {
         question: 'Should I turn off COD to cut RTO?',
@@ -3116,14 +3111,14 @@ export const blogPosts: BlogPost[] = [
 <p>Most COD returns trace back to impulse or fake orders, unreachable buyers, bad addresses, and delivery slow enough for intent to cool. For the full picture, read our <a href="/blog/how-to-reduce-rto-with-whatsapp-cod-confirmation">breakdown of why RTO spikes on COD</a>.</p>
 <h2 id="the-fix">The fix, in brief</h2>
 <p>Confirm intent before pick and pack. Send one approved WhatsApp utility template with the order number and ₹ total, branch on confirm / reschedule / cancel, send one reminder, then apply a written hold-or-cancel policy. The cost is friction: some genuine buyers will never reply, and your policy decides whether you lose them or ship the risk.</p>
-<p>The direct cost is per message: [TOPEDGE RATE: Moksh to supply: cost per WhatsApp utility-template conversation]. Meta's own rates are in our <a href="/blog/whatsapp-business-api-pricing-india">WhatsApp Business API pricing guide for India</a>.</p>
+<p>The direct cost is Meta's per-message fee for each utility template, plus your WhatsApp platform's plan. Meta's current India rates are in our <a href="/blog/whatsapp-business-api-pricing-india">WhatsApp Business API pricing guide for India</a>.</p>
 <p>The setup detail lives in two playbooks: <a href="/blog/cod-confirmation-whatsapp-reduce-rto-shopify">WhatsApp COD confirmation setup for Shopify</a> and the <a href="/blog/how-to-reduce-rto-with-whatsapp-cod-confirmation">step-by-step RTO reduction playbook</a>. Build the flow with <a href="/features/journeys">COD confirmation journeys</a>, then <a href="/features/profit-loss">measure your own RTO %</a> against the benchmarks above.</p>
 
 <h2 id="faq">Common questions</h2>
 <div class="mkt-blog-faq">
 <details>
 <summary>What is a good RTO rate for an Indian D2C brand?</summary>
-<p>Unicommerce's own data shows top-performing brands holding RTO around 21% even in festive season, against a ~39% ecosystem average (410M+ shipments, 6,000+ brands). Getting close to that 21% mark puts you ahead of most of the market.</p>
+<p>Unicommerce/Shipway data shows brands that improved verification and courier selection at around 21% RTO in February 2026, against roughly 39% across the network at the November 2025 festive peak (410M+ shipments, 6,000+ brands). Getting close to that 21% mark puts you ahead of most of the market.</p>
 </details>
 <details>
 <summary>What is the average RTO percentage for COD orders in India?</summary>
@@ -3140,10 +3135,6 @@ export const blogPosts: BlogPost[] = [
 <details>
 <summary>Does WhatsApp COD confirmation actually reduce RTO?</summary>
 <p>Unicommerce names order verification before dispatch as one of the three levers separating top-performing brands from the rest. WhatsApp is a practical, high-response channel for that verification, but we haven't found independently verified data isolating WhatsApp's effect on its own versus other verification channels.</p>
-</details>
-<details>
-<summary>How much does one RTO order cost a Shopify brand?</summary>
-<p>[TOPEDGE RATE: Moksh to supply, if available; otherwise cut this question rather than guess]</p>
 </details>
 <details>
 <summary>Should I turn off COD to cut RTO?</summary>

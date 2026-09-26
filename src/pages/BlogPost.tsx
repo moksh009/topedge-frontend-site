@@ -7,7 +7,7 @@ import MarketingPage from '../marketing/components/MarketingPage';
 import { SITE_URL } from '../marketing/data/marketingSeo';
 import { breadcrumbJsonLd } from '../marketing/data/pageSeo';
 import { blogPosts } from '../data/blogPosts';
-import { filterMarketingBlogPosts, isMarketingBlogPost } from '../marketing/data/blog';
+import { filterMarketingBlogPosts, relatedBlogPosts } from '../marketing/data/blog';
 import type { BlogPost as BlogPostModel } from '../types/blog';
 import { DASH_SIGNUP } from '../marketing/routes';
 import {
@@ -45,9 +45,7 @@ export default function BlogPost() {
   }
 
   const canonical = canonicalUrlForPath(`/blog/${post.slug}`);
-  const related = allBlogPosts
-    .filter((p) => p.slug !== post.slug && isMarketingBlogPost(p))
-    .slice(0, 3);
+  const related = relatedBlogPosts(post, allBlogPosts);
   const imageAbs = post.image.startsWith('http') ? post.image : `${SITE_URL}${post.image}`;
   const datePublished = articleDatePublishedIso(post.date);
   const dateModified = articleDateModifiedIso({ updated: post.updated });

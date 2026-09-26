@@ -17,15 +17,19 @@ const HomeStickyStories = lazy(() => import('../marketing/components/home/HomeSt
 const HomeCrmSurface = lazy(() => import('../marketing/components/home/HomeCrmSurface'));
 const HomeRoiPayoff = lazy(() => import('../marketing/components/home/HomeRoiPayoff'));
 const HomeTestimonials = lazy(() => import('../marketing/components/home/HomeTestimonials'));
+const HomeFaq = lazy(() => import('../marketing/components/home/HomeFaq'));
 const HomeClose = lazy(() => import('../marketing/components/home/HomeClose'));
 
 /**
  * Homepage: hero is critical for LCP.
- * Below-fold mounts only after real-browser hydration. Prerender sets
- * window.__TOPEDGE_PRERENDER__ so useEffect never flips ready — otherwise
- * Playwright runs effects, saves full HTML, and the client hydrates with
- * ready=false → mismatch → full remount → LCP regresses (lab ~3s → 4.8s).
+ * Below-fold mounts only after the first client paint. Prerender sets
+ * window.__TOPEDGE_PRERENDER__ so the effect does not flip ready on its own;
+ * the prerender script dispatches PRERENDER_BELOW_FOLD_EVENT after snapshotting
+ * <head>, so crawlers get the full page while the below-fold CSS it pulls in
+ * is written as non-blocking (see scripts/prerender-marketing.mjs).
  */
+const PRERENDER_BELOW_FOLD_EVENT = 'topedge:prerender-below-fold';
+
 export default function Home() {
   const seo = PAGE_SEO.home;
   const [belowFoldReady, setBelowFoldReady] = useState(false);
@@ -46,8 +50,11 @@ export default function Home() {
     );
     if (!isPrerender) {
       setBelowFoldReady(true);
+      return undefined;
     }
-    return undefined;
+    const reveal = () => setBelowFoldReady(true);
+    window.addEventListener(PRERENDER_BELOW_FOLD_EVENT, reveal, { once: true });
+    return () => window.removeEventListener(PRERENDER_BELOW_FOLD_EVENT, reveal);
   }, []);
 
   return (
@@ -80,6 +87,7 @@ export default function Home() {
             <HomeCrmSurface />
             <HomeRoiPayoff />
             <HomeTestimonials />
+            <HomeFaq />
             <HomeClose />
           </Suspense>
         ) : null}

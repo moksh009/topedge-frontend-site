@@ -1,10 +1,12 @@
 /**
  * Build-time last-edit dates for schema dateModified + sitemap lastmod.
- * Source of truth = file mtime of content modules + per-post `updated`/`date` in blogPosts.ts.
+ * Source of truth = last git commit date of content modules (mtime if uncommitted
+ * or no history) + per-post `updated`/`date` in blogPosts.ts.
  *
  * Run: node scripts/generate-content-dates.mjs
  * Wired into build:netlify / sitemap generation.
  */
+import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -15,13 +17,39 @@ const outDir = path.join(root, 'src/marketing/data/generated');
 const outFile = path.join(outDir, 'contentDates.ts');
 const outJson = path.join(outDir, 'contentDates.json');
 
+function git(args) {
+  try {
+    return execFileSync('git', args, { cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], timeout: 60000 }).trim();
+  } catch {
+    return '';
+  }
+}
+
+/**
+ * A fresh CI checkout stamps every file with the clone time, so mtime alone
+ * makes every sitemap lastmod equal the deploy date. Prefer the file's last
+ * commit date; history must be complete for that to mean anything.
+ */
+const gitReady = (() => {
+  if (git(['rev-parse', '--is-inside-work-tree']) !== 'true') return false;
+  if (git(['rev-parse', '--is-shallow-repository']) === 'true') {
+    git(['fetch', '--unshallow', '--quiet']);
+    return git(['rev-parse', '--is-shallow-repository']) === 'false';
+  }
+  return true;
+})();
+
 function isoDateFromMtime(relPath) {
   const abs = path.join(root, relPath);
   if (!fs.existsSync(abs)) {
     throw new Error(`Missing content file for dates: ${relPath}`);
   }
-  const mtime = fs.statSync(abs).mtime;
-  return mtime.toISOString().slice(0, 10);
+  const mtime = fs.statSync(abs).mtime.toISOString().slice(0, 10);
+  if (!gitReady) return mtime;
+  const dirty = git(['status', '--porcelain', '--', relPath]) !== '';
+  const committed = git(['log', '-1', '--format=%cs', '--', relPath]);
+  if (dirty || !/^\d{4}-\d{2}-\d{2}$/.test(committed)) return mtime;
+  return committed;
 }
 
 function maxIso(...dates) {
@@ -56,6 +84,10 @@ const billingCatalog = isoDateFromMtime('src/marketing/lib/billingCatalog.ts');
 const compareTwoWay = maxIso(compareCompetitors, compareFeatureMatrix);
 const compareThreeWay = maxIso(compareThreeWayPage, compareFeatureMatrix);
 const featurePages = maxIso(features, productPages);
+const home = maxIso(
+  isoDateFromMtime('src/marketing/data/home.ts'),
+  isoDateFromMtime('src/pages/Home.tsx'),
+);
 const blogBySlug = blogDatesBySlug();
 for (const [slug, d] of Object.entries(blogBySlug)) {
   if (!d) blogBySlug[slug] = blogPosts;
@@ -67,6 +99,7 @@ const payload = {
   blogPosts,
   featurePages,
   pricing: billingCatalog,
+  home,
   blogBySlug,
 };
 
