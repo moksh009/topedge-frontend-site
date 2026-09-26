@@ -46,7 +46,7 @@ const CommunitySEO: React.FC<CommunitySEOProps> = ({
       {/* Standard Metadata */}
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
-      <link rel="canonical" href={fullUrl} />
+      <meta name="robots" content="noindex, follow" />
       
       {/* Open Graph / Facebook */}
       <meta property="og:type" content={type} />

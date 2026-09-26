@@ -5,16 +5,8 @@ Allow: /
 Disallow: /admin/
 Disallow: /private/
 Disallow: /api/
-Disallow: /community/admin/
-Disallow: /community/login
-Disallow: /community/signup
-Disallow: /community/settings
-Disallow: /community/dashboard
-Disallow: /community/approve-access
 Disallow: /dev/
-Disallow: /signup
-Disallow: /login
-Disallow: /docs
+# /signup, /login, /docs and /community/* stay crawlable so bots can read their noindex meta tag
 
 Allow: /blog/
 Allow: /features/

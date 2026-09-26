@@ -117,8 +117,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             <meta name="twitter:title" content={pageTitle} />
             <meta name="twitter:description" content={pageDescription} />
             <meta name="twitter:image" content="https://topedgeai.com/og/og-default.svg" />
-            <link rel="canonical" href="https://topedgeai.com" />
-            <meta name="robots" content="index, follow" />
+            {!isCommunityRoute && <link rel="canonical" href="https://topedgeai.com" />}
+            <meta name="robots" content={isCommunityRoute ? 'noindex, follow' : 'index, follow'} />
           </>
         )}
         <meta name="theme-color" content="#7C3AED" />
@@ -265,7 +265,7 @@ const AnimatedRoutes = () => {
   const location = useLocation();
 
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence mode="wait" initial={false}>
       <motion.div
         key={location.pathname}
         initial={{ opacity: 0 }}

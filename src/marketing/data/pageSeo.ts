@@ -1,7 +1,6 @@
 import { SITE_URL } from './marketingSeo';
 import {
-  catalogMonthlyOffersJsonLd,
-  digitalOfferMerchantFields,
+  catalogDefaultCycleOffersJsonLd,
   offerPriceValidUntil,
   TRIAL,
 } from '../lib/billingCatalog';
@@ -345,11 +344,11 @@ function softwareApplicationReviewsJsonLd() {
  * Shared commercial schema for home / pricing / SEO topic pages.
  * Google Merchant listings coerce SoftwareApplication+Offer → Product and
  * require a crawlable `image` URL (plain string is the most reliable shape).
+ * `withReviews` only on pages that visibly render the testimonials.
  */
-export function softwareApplicationJsonLd() {
+export function softwareApplicationJsonLd(opts?: { withReviews?: boolean }) {
   const imageUrl = `${SITE_URL}/og-image.png`;
   const pricingUrl = `${SITE_URL}/pricing`;
-  const merchant = digitalOfferMerchantFields('INR');
   return {
     '@context': 'https://schema.org',
     // Dual type: keeps SoftwareApplication semantics while satisfying Product
@@ -379,11 +378,10 @@ export function softwareApplicationJsonLd() {
         url: pricingUrl,
         availability: 'https://schema.org/InStock',
         itemCondition: 'https://schema.org/NewCondition',
-        ...merchant,
       },
-      ...catalogMonthlyOffersJsonLd(undefined, { url: pricingUrl }),
+      ...catalogDefaultCycleOffersJsonLd(undefined, { url: pricingUrl }),
     ],
-    review: softwareApplicationReviewsJsonLd(),
+    ...(opts?.withReviews ? { review: softwareApplicationReviewsJsonLd() } : {}),
     featureList: [
       'WhatsApp cart recovery',
       'Shopify integration',

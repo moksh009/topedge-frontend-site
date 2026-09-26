@@ -306,73 +306,38 @@ export function offerPriceValidUntil(from = new Date()): string {
 }
 
 /**
- * Digital SaaS offers still trigger Google Merchant listings checks when price is present.
- * Cloud access = ₹0 shipping, same-day delivery, no physical return (terms cover billing).
- */
-export function digitalOfferMerchantFields(currency = 'INR') {
-  return {
-    shippingDetails: {
-      '@type': 'OfferShippingDetails' as const,
-      shippingRate: {
-        '@type': 'MonetaryAmount' as const,
-        value: '0',
-        currency,
-      },
-      shippingDestination: {
-        '@type': 'DefinedRegion' as const,
-        addressCountry: 'IN',
-      },
-      deliveryTime: {
-        '@type': 'ShippingDeliveryTime' as const,
-        handlingTime: {
-          '@type': 'QuantitativeValue' as const,
-          minValue: 0,
-          maxValue: 0,
-          unitCode: 'DAY',
-        },
-        transitTime: {
-          '@type': 'QuantitativeValue' as const,
-          minValue: 0,
-          maxValue: 0,
-          unitCode: 'DAY',
-        },
-      },
-    },
-    hasMerchantReturnPolicy: {
-      '@type': 'MerchantReturnPolicy' as const,
-      applicableCountry: 'IN',
-      returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
-      merchantReturnLink: 'https://topedgeai.com/terms#billing-shopify',
-    },
-  };
-}
-
-/**
  * Schema.org Offer[] for SoftwareApplication — sourced from the catalog
  * (FALLBACK_CATALOG when called at module load; pass live catalog when available).
+ * Prices follow the pricing page's default cycle so markup matches what is visible.
  */
-export function catalogMonthlyOffersJsonLd(
+export function catalogDefaultCycleOffersJsonLd(
   catalog: BillingCatalog = FALLBACK_CATALOG,
   opts?: { url?: string },
 ) {
   const url = opts?.url || 'https://topedgeai.com/pricing';
   const currency = catalog.currency || 'INR';
   const validUntil = offerPriceValidUntil();
-  const merchant = digitalOfferMerchantFields(currency);
+  const cycle = cycleKey(catalog.defaultCycle);
   return catalog.plans
     .filter((p) => PUBLIC_PLANS.has(p.slug))
-    .map((p) => ({
-      '@type': 'Offer' as const,
-      name: p.displayName,
-      price: inrAmountFromLabel(p.monthlyPriceLabel),
-      priceCurrency: currency,
-      priceValidUntil: validUntil,
-      url,
-      availability: 'https://schema.org/InStock',
-      itemCondition: 'https://schema.org/NewCondition' as const,
-      description: `${p.ordersPerCycle} orders / cycle · ${p.campaignEmailSendsPerCycle.toLocaleString('en-IN')} campaign sends · billed monthly`,
-      ...merchant,
-    }));
+    .map((p) => {
+      const pricing = planPricing(p, cycle);
+      const billing =
+        cycle === 'monthly'
+          ? 'billed monthly'
+          : `${pricing.effectiveMonthlyLabel}/month, billed ${cycle} (${pricing.billedLabel})`;
+      return {
+        '@type': 'Offer' as const,
+        name: p.displayName,
+        price: inrAmountFromLabel(pricing.effectiveMonthlyLabel),
+        priceCurrency: currency,
+        priceValidUntil: validUntil,
+        url,
+        availability: 'https://schema.org/InStock',
+        itemCondition: 'https://schema.org/NewCondition' as const,
+        description: `${p.ordersPerCycle} orders / cycle · ${p.campaignEmailSendsPerCycle.toLocaleString('en-IN')} campaign sends · ${billing}`,
+      };
+    });
 }
 
 export async function fetchBillingCatalog(): Promise<BillingCatalog> {

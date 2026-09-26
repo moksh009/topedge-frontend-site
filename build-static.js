@@ -28,6 +28,25 @@ html = html.replace(/name="twitter:title" content=".*?"/g, `name="twitter:title"
 html = html.replace(/name="twitter:description" content=".*?"/g, `name="twitter:description" content="${META.description}"`);
 html = html.replace(/name="twitter:image" content=".*?"/g, `name="twitter:image" content="${META.image}"`);
 
+html = html.replace(/<title>.*?<\/title>/, (m) => `${m}\n    <meta name="robots" content="noindex, follow" />`);
+
 fs.writeFileSync(communityPath, html);
 
 console.log("✅ dist/community.html created");
+
+// Client-only redirects to dash.topedgeai.com: crawlable, never indexed.
+// Must run before prerender, while dist/index.html is still the bare SPA shell.
+const APP_SHELLS = {
+  signup: 'Opening signup | TopEdge',
+  login: 'Signing in | TopEdge',
+  docs: 'Docs | TopEdge',
+};
+const bareShell = fs.readFileSync(indexPath, 'utf8');
+for (const [name, title] of Object.entries(APP_SHELLS)) {
+  const shell = bareShell.replace(
+    /<title>.*?<\/title>/,
+    `<title>${title}</title>\n    <meta name="robots" content="noindex, follow" />`,
+  );
+  fs.writeFileSync(path.join(distPath, `${name}.html`), shell);
+  console.log(`✅ dist/${name}.html created (noindex, follow)`);
+}

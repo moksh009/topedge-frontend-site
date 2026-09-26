@@ -11,7 +11,7 @@ export default function DocsRedirect() {
     <>
       <Helmet>
         <title>Docs | TopEdge</title>
-        <meta name="robots" content="noindex, nofollow" />
+        <meta name="robots" content="noindex, follow" />
       </Helmet>
       <p className="sr-only">Redirecting to documentation…</p>
     </>

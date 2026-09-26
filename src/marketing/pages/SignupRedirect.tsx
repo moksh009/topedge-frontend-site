@@ -25,8 +25,7 @@ export default function SignupRedirect() {
     <main className="mkt-auth-redirect" aria-busy="true" aria-live="polite">
       <Helmet>
         <title>Opening signup | TopEdge</title>
-        <meta name="robots" content="noindex, nofollow" />
-        <link rel="canonical" href="https://topedgeai.com/signup" />
+        <meta name="robots" content="noindex, follow" />
       </Helmet>
       <img
         src="/topedge-loader.gif"
