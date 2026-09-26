@@ -63,6 +63,26 @@ function staticVerdicts(root: HTMLElement) {
   });
 }
 
+/** FAQ answers stay visible in the served HTML (answer engines don't expand accordions). */
+function staticFaqs(root: HTMLElement) {
+  const doc = root.ownerDocument;
+  root.querySelectorAll('.mkt-blog-faq details').forEach((details) => {
+    const item = doc.createElement('div');
+    item.className = 'mkt-blog-faq__item';
+    for (const child of [...details.childNodes]) {
+      if (child.nodeName === 'SUMMARY') {
+        const q = doc.createElement('h3');
+        q.className = 'mkt-blog-faq__q';
+        q.append(...child.childNodes);
+        item.append(q);
+      } else {
+        item.append(child);
+      }
+    }
+    details.replaceWith(item);
+  });
+}
+
 const DENSE_TABLE_MIN_COLS = 4;
 
 function prepareTables(root: HTMLElement) {
@@ -96,6 +116,7 @@ export function enhanceBlogHtml(html: string): string {
   if (!root) return html;
 
   staticVerdicts(root);
+  staticFaqs(root);
   wrapNumericRanges(root);
   prepareTables(root);
 

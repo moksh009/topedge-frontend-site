@@ -145,8 +145,8 @@ export default function BlogPost() {
                 </h2>
                 <div className="mkt-blog-faq">
                   {post.faqs.map((f) => (
-                    <details key={f.question} open>
-                      <summary>{f.question}</summary>
+                    <div key={f.question} className="mkt-blog-faq__item">
+                      <h3 className="mkt-blog-faq__q">{f.question}</h3>
                       <p>
                         {splitNumericRanges(f.answer).map((part, i) =>
                           part.range ? (
@@ -158,7 +158,7 @@ export default function BlogPost() {
                           ),
                         )}
                       </p>
-                    </details>
+                    </div>
                   ))}
                 </div>
               </section>
