@@ -1,3 +1,4 @@
+import { useLayoutEffect, useMemo, useRef } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
@@ -13,6 +14,7 @@ import {
   articleDateModifiedIso,
   articleDatePublishedIso,
 } from '../marketing/data/contentDates';
+import { bindBlogTables, enhanceBlogHtml, splitNumericRanges } from '../marketing/lib/blogHtml';
 import '../marketing/styles/blog.css';
 
 const allBlogPosts = filterMarketingBlogPosts([...blogPosts] as BlogPostModel[]);
@@ -30,6 +32,13 @@ function formatDate(date: string) {
 export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
   const post = allBlogPosts.find((p) => p.slug === slug);
+  const contentHtml = useMemo(() => enhanceBlogHtml(post?.content || ''), [post?.content]);
+  const proseRef = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    if (!proseRef.current) return undefined;
+    return bindBlogTables(proseRef.current);
+  }, [contentHtml]);
 
   if (!post) {
     return <Navigate to="/blog" replace />;
@@ -124,8 +133,9 @@ export default function BlogPost() {
         <div className="marketing-container">
           <div className="mkt-blog-body-wrap">
             <div
+              ref={proseRef}
               className="mkt-blog-prose"
-              dangerouslySetInnerHTML={{ __html: post.content || '' }}
+              dangerouslySetInnerHTML={{ __html: contentHtml }}
             />
 
             {post.faqs?.length && !(post.content || '').includes('mkt-blog-faq') ? (
@@ -137,7 +147,17 @@ export default function BlogPost() {
                   {post.faqs.map((f) => (
                     <details key={f.question} open>
                       <summary>{f.question}</summary>
-                      <p>{f.answer}</p>
+                      <p>
+                        {splitNumericRanges(f.answer).map((part, i) =>
+                          part.range ? (
+                            <span key={i} className="mkt-nowrap">
+                              {part.text}
+                            </span>
+                          ) : (
+                            part.text
+                          ),
+                        )}
+                      </p>
                     </details>
                   ))}
                 </div>
