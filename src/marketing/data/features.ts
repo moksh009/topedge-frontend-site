@@ -34,7 +34,7 @@ export const MARKETING_FEATURES: MarketingFeature[] = [
     slug: 'live-chat',
     scene: 'inbox',
     title: 'Every thread beside the order it belongs to',
-    body: 'WhatsApp and Instagram in one inbox. Customer 360 shows order #, COD status, LTV, and cart history ,  agents never tab-switch to Shopify admin.',
+    body: 'WhatsApp and Instagram in one inbox. Customer 360 shows order #, COD status, LTV, and cart history, so agents never tab-switch to Shopify admin.',
     bullets: [
       'Assign, tag, and hand off to humans',
       'AI replies pause on takeover',
@@ -50,8 +50,8 @@ export const MARKETING_FEATURES: MarketingFeature[] = [
   {
     slug: 'flow-builder',
     scene: 'flow-builder',
-    title: 'Describe the bot ,  AI drafts the flow canvas',
-    body: 'Fill a short AI form (niche, tone, goals). TopEdge generates a WhatsApp flow you can edit node-by-node ,  menus, conditions, catalog sends, human handoff.',
+    title: 'Describe the bot, AI drafts the flow canvas',
+    body: 'Fill a short AI form (niche, tone, goals). TopEdge generates a WhatsApp flow you can edit node-by-node: menus, conditions, catalog sends, human handoff.',
     bullets: [
       'AI form → editable flow',
       'Menus, conditions, handoff',
@@ -99,7 +99,7 @@ export const MARKETING_FEATURES: MarketingFeature[] = [
     slug: 'instagram',
     scene: 'instagram',
     title: 'Comment or story → DM, without leaving Instagram',
-    body: 'Auto-reply to comments and story mentions with a WhatsApp or IG DM. Capture interest while it’s hot ,  then continue in Live Chat.',
+    body: 'Auto-reply to comments and story mentions with a WhatsApp or IG DM. Capture interest while it’s hot, then continue in Live Chat.',
     bullets: [
       'Comment-to-DM rules',
       'Story reply triggers',
@@ -131,7 +131,7 @@ export const MARKETING_FEATURES: MarketingFeature[] = [
     slug: 'meta-manager',
     scene: 'meta-manager',
     title: 'You approve every template before anything sends',
-    body: 'Create, sync, and track WhatsApp template status with Meta. Catalog and QR live here too ,  nothing broadcasts until approval lands.',
+    body: 'Create, sync, and track WhatsApp template status with Meta. Catalog and QR live here too. Nothing broadcasts until approval lands.',
     bullets: [
       'Library + status sync',
       'Catalog & QR tools',
@@ -164,7 +164,7 @@ export const MARKETING_FEATURES: MarketingFeature[] = [
     slug: 'chat-rules',
     scene: 'inbox',
     title: 'Route the right conversations to the right people',
-    body: 'Smart rules for assignment, COD keywords, and escalation ,  so Live Chat stays calm when volume spikes.',
+    body: 'Smart rules for assignment, COD keywords, and escalation, so Live Chat stays calm when volume spikes.',
     bullets: [
       'Keyword and intent routing',
       'Assign to ops or sales',

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { ArrowUpRight, BookOpen, IndianRupee, LayoutGrid, Users } from 'lucide-react';
 import MarketingSEO from '../components/MarketingSEO';
 import MarketingPage from '../components/MarketingPage';
 import MarketingCtaBand from '../components/MarketingCtaBand';
@@ -21,6 +22,13 @@ import '../styles/product-feature.css';
 type Props = {
   pageId: ProductPageId;
 };
+
+function relatedKind(href: string) {
+  if (href.startsWith('/blog')) return { label: 'Guide', icon: <BookOpen size={17} aria-hidden /> };
+  if (href.startsWith('/features')) return { label: 'Feature', icon: <LayoutGrid size={17} aria-hidden /> };
+  if (href.startsWith('/pricing')) return { label: 'Pricing', icon: <IndianRupee size={17} aria-hidden /> };
+  return { label: 'Explore', icon: <Users size={17} aria-hidden /> };
+}
 
 function ShotFrame({
   src,
@@ -247,10 +255,10 @@ function ProductFeatureView({ page }: { page: ProductPage }) {
             </div>
             <div className="mkt-pf__faq">
               {page.faqs!.map((f) => (
-                <details key={f.question} className="mkt-pf__faq-item">
-                  <summary>{f.question}</summary>
+                <div key={f.question} className="mkt-pf__faq-item">
+                  <h3>{f.question}</h3>
                   <p>{f.answer}</p>
-                </details>
+                </div>
               ))}
             </div>
           </section>
@@ -266,12 +274,20 @@ function ProductFeatureView({ page }: { page: ProductPage }) {
                 {page.relatedTitle} <span>{page.relatedAccent}</span>
               </h2>
             </div>
-            <div className="mkt-pf__related">
-              {page.related.map((r) => (
-                <Link key={r.href} to={r.href} className="mkt-pf__related-link">
-                  {r.label}
-                </Link>
-              ))}
+            <div className="mkt-pf__rel">
+              {page.related.map((r) => {
+                const kind = relatedKind(r.href);
+                return (
+                  <Link key={r.href} to={r.href} className="mkt-pf__rel-card">
+                    <span className="mkt-pf__rel-icon">{kind.icon}</span>
+                    <span className="mkt-pf__rel-text">
+                      <span className="mkt-pf__rel-kind">{kind.label}</span>
+                      <span className="mkt-pf__rel-label">{r.label}</span>
+                    </span>
+                    <ArrowUpRight className="mkt-pf__rel-arrow" size={16} aria-hidden />
+                  </Link>
+                );
+              })}
             </div>
           </section>
         ) : null}
