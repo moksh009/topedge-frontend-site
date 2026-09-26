@@ -808,8 +808,8 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
         body: 'Watch sent → clicked → paid per journey, then tighten the steps that leak recovery revenue.',
       },
     ],
-    relatedTitle: 'Works with the rest of',
-    relatedAccent: 'TopEdge',
+    relatedTitle: 'Related in this',
+    relatedAccent: 'cluster',
     related: [
       { label: 'Cart recovery playbook', href: '/blog/whatsapp-abandoned-cart-recovery-shopify' },
       { label: 'COD confirmation & RTO', href: '/blog/cod-confirmation-whatsapp-reduce-rto-shopify' },
@@ -1094,8 +1094,8 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
         body: 'Use Customer 360 for orders and tags, then resolve the ticket or route to a teammate.',
       },
     ],
-    relatedTitle: 'Works with the rest of',
-    relatedAccent: 'TopEdge',
+    relatedTitle: 'Related in this',
+    relatedAccent: 'cluster',
     related: [
       { label: 'Shared inbox playbook', href: '/blog/whatsapp-shared-inbox-shopify-order-context' },
       { label: 'AI Brain (BYOK)', href: '/features/ai-brain' },
@@ -1220,8 +1220,8 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
         body: 'Powers Live Chat fallback and Flow AI nodes, Live Chat takeover pauses AI instantly.',
       },
     ],
-    relatedTitle: 'Works with the rest of',
-    relatedAccent: 'TopEdge',
+    relatedTitle: 'Related in this',
+    relatedAccent: 'cluster',
     related: [
       { label: 'AI chatbot for Shopify', href: '/blog/ai-chatbot-for-shopify' },
       { label: 'AI chatbot playbook (India WhatsApp)', href: '/blog/ai-whatsapp-chatbot-for-shopify-india' },
@@ -1366,8 +1366,8 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
         body: 'Pick Approved templates in Journeys, Flow Builder, or Campaigns, never silent sends on rejected rows.',
       },
     ],
-    relatedTitle: 'Works with the rest of',
-    relatedAccent: 'TopEdge',
+    relatedTitle: 'Related in this',
+    relatedAccent: 'cluster',
     related: [
       { label: 'Meta templates guide', href: '/blog/meta-whatsapp-cloud-api-shopify-templates' },
       { label: 'API pricing India', href: '/blog/whatsapp-business-api-pricing-india' },
