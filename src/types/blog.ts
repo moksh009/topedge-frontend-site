@@ -9,7 +9,10 @@ export interface BlogPost {
   readTime: string;
   category: string;
   author: string;
+  /** PNG/JPG: also used for og:image and schema, where WebP support is uneven. */
   image: string;
+  /** Lighter WebP rendition of `image` for on-page display. */
+  imageWebp?: string;
   imageAlt?: string;
   content?: string;
   keywords?: string[];

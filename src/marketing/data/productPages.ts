@@ -770,7 +770,7 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
         title: 'Abandoned',
         titleAccent: 'Cart',
         body: 'A pre-built 3-step WhatsApp recovery sequence with Meta-approved templates. Capture carts in real time, chase high-AOV leads first, and read recovered ₹, pairs with Tracking Pixel when you want browse intent too.',
-        image: '/journey-sub-feature/10.png',
+        image: '/journey-sub-feature/10.webp',
         imageLabel: 'Abandoned cart recovery journey, 3-step WhatsApp sequence for Shopify India',
       },
       {
@@ -778,7 +778,7 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
         title: 'Conditional',
         titleAccent: 'routes',
         body: 'One trigger, multiple paths. Branch when payment method, order state, or shopper response differs, so COD, prepaid, and quiet leads each get a different next step.',
-        image: '/journey-sub-feature/11.png',
+        image: '/journey-sub-feature/11.webp',
         imageLabel: 'Conditional WhatsApp journey routes for COD vs prepaid on Shopify',
       },
       {
@@ -1319,7 +1319,7 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
         titleLead: 'Catalog',
         titleAccent: '& QR',
         body: 'Import from Meta or Shopify, refresh after catalog changes, and download wa.me QR for storefront or ads.',
-        image: '/marketing/features/shopify-whatsapp.png',
+        image: '/marketing/features/shopify-whatsapp.webp',
         imageAlt: 'Shopify WhatsApp product catalog import and wa.me QR download',
         span: 'third',
       },

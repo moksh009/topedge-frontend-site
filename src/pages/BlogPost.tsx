@@ -116,14 +116,17 @@ export default function BlogPost() {
               </div>
             </div>
             <div className="mkt-blog-cover-img">
-              <img
-                src={post.image}
-                alt={post.imageAlt || post.title}
-                width={1200}
-                height={675}
-                loading="eager"
-                decoding="async"
-              />
+              <picture>
+                {post.imageWebp ? <source type="image/webp" srcSet={post.imageWebp} /> : null}
+                <img
+                  src={post.image}
+                  alt={post.imageAlt || post.title}
+                  width={1200}
+                  height={675}
+                  loading="eager"
+                  decoding="async"
+                />
+              </picture>
             </div>
           </div>
         </header>
@@ -191,14 +194,17 @@ export default function BlogPost() {
                 {related.map((r) => (
                   <Link key={r.slug} to={`/blog/${r.slug}`} className="mkt-blog-related__card">
                     <div className="mkt-blog-related__thumb">
-                      <img
-                        src={r.image}
-                        alt={r.imageAlt || r.title}
-                        width={400}
-                        height={225}
-                        loading="lazy"
-                        decoding="async"
-                      />
+                      <picture>
+                        {r.imageWebp ? <source type="image/webp" srcSet={r.imageWebp} /> : null}
+                        <img
+                          src={r.image}
+                          alt={r.imageAlt || r.title}
+                          width={400}
+                          height={225}
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </picture>
                     </div>
                     <div className="mkt-blog-related__card-body">
                       <span className="mkt-blog-related__card-cat">{r.category}</span>

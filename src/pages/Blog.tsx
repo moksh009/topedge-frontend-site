@@ -74,14 +74,19 @@ export default function Blog() {
               <article className="mkt-blog-card is-featured">
                 <Link to={`/blog/${featured.slug}`} className="mkt-blog-card__link">
                   <div className="mkt-blog-card__media">
-                    <img
-                      src={featured.image}
-                      alt={featured.imageAlt || featured.title}
-                      width={960}
-                      height={600}
-                      loading="eager"
-                      decoding="async"
-                    />
+                    <picture>
+                      {featured.imageWebp ? (
+                        <source type="image/webp" srcSet={featured.imageWebp} />
+                      ) : null}
+                      <img
+                        src={featured.image}
+                        alt={featured.imageAlt || featured.title}
+                        width={960}
+                        height={600}
+                        loading="eager"
+                        decoding="async"
+                      />
+                    </picture>
                     <span className="mkt-blog-card__cat">{featured.category}</span>
                   </div>
                   <div className="mkt-blog-card__body">
@@ -103,14 +108,17 @@ export default function Blog() {
               <article className="mkt-blog-card">
                 <Link to={`/blog/${post.slug}`} className="mkt-blog-card__link">
                   <div className="mkt-blog-card__media">
-                    <img
-                      src={post.image}
-                      alt={post.imageAlt || post.title}
-                      width={640}
-                      height={400}
-                      loading="lazy"
-                      decoding="async"
-                    />
+                    <picture>
+                      {post.imageWebp ? <source type="image/webp" srcSet={post.imageWebp} /> : null}
+                      <img
+                        src={post.image}
+                        alt={post.imageAlt || post.title}
+                        width={640}
+                        height={400}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </picture>
                     <span className="mkt-blog-card__cat">{post.category}</span>
                   </div>
                   <div className="mkt-blog-card__body">

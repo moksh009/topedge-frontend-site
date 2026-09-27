@@ -368,6 +368,7 @@ export const blogPosts: BlogPost[] = [
     category: 'Ecommerce automation',
     author: 'TopEdge',
     image: '/marketing/features/shopify-whatsapp.png',
+    imageWebp: '/marketing/features/shopify-whatsapp.webp',
     imageAlt: 'Shopify connected to WhatsApp automation for Indian D2C brands',
     keywords: [
       'Shopify WhatsApp automation',
@@ -1474,6 +1475,7 @@ export const blogPosts: BlogPost[] = [
     category: 'Meta',
     author: 'TopEdge',
     image: '/marketing/features/shopify-whatsapp.png',
+    imageWebp: '/marketing/features/shopify-whatsapp.webp',
     imageAlt: 'Meta WhatsApp Cloud API pricing categories for Indian Shopify brands',
     keywords: [
       'WhatsApp Business API pricing India',
@@ -1652,6 +1654,7 @@ export const blogPosts: BlogPost[] = [
     category: 'Ecommerce automation',
     author: 'TopEdge',
     image: '/marketing/features/shopify-whatsapp.png',
+    imageWebp: '/marketing/features/shopify-whatsapp.webp',
     imageAlt:
       'Shopify event flowing into WhatsApp automation for cart, COD, order updates, and support',
     keywords: [
