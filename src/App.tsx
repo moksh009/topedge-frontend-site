@@ -5,8 +5,6 @@ import { Toaster } from 'react-hot-toast';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider } from './contexts/ThemeContext';
 import MarketingNavbar from './marketing/components/MarketingNavbar';
-import CommunityNavbar from './components/community/layout/CommunityNavbar';
-import Footer from './components/Footer';
 import MarketingFooter from './marketing/components/MarketingFooter';
 import MarketingConvertPrompt from './marketing/components/MarketingConvertPrompt';
 import MarketingSmoothScroll, {
@@ -17,6 +15,8 @@ import MarketingPageLoader from './marketing/components/MarketingPageLoader';
 import MetaPixel from './components/MetaPixel';
 import Home from './pages/Home';
 
+const CommunityNavbar = React.lazy(() => import('./components/community/layout/CommunityNavbar'));
+const Footer = React.lazy(() => import('./components/Footer'));
 const About = React.lazy(() => import('./pages/About'));
 const Contact = React.lazy(() => import('./pages/Contact'));
 const Pricing = React.lazy(() => import('./marketing/pages/PricingPage'));
@@ -133,7 +133,11 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           <MarketingNavbar />
         </motion.div>
       )}
-      {isCommunityRoute && !isAuthPage && <CommunityNavbar />}
+      {isCommunityRoute && !isAuthPage && (
+        <React.Suspense fallback={null}>
+          <CommunityNavbar />
+        </React.Suspense>
+      )}
 
       {isCommunityRoute ? (
         <>
@@ -147,7 +151,11 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         </div>
       )}
 
-      {isCommunityRoute && !isAuthPage && <Footer />}
+      {isCommunityRoute && !isAuthPage && (
+        <React.Suspense fallback={null}>
+          <Footer />
+        </React.Suspense>
+      )}
     </div>
   );
 };
