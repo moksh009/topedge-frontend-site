@@ -44,11 +44,13 @@ export function canonicalUrlForPath(path: string): string {
   return `${SITE_URL}${clean.replace(/\/$/, '')}`;
 }
 
+const DEFAULT_OG_IMAGE = `${SITE_URL}/og-share.jpg`;
+
 export default function MarketingSEO({
   title,
   description,
   path,
-  image = `${SITE_URL}/og-image.png`,
+  image = DEFAULT_OG_IMAGE,
   imageAlt = OG_IMAGE_ALT_DEFAULT,
   keywords,
   noSuffix = false,
@@ -111,8 +113,12 @@ export default function MarketingSEO({
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
       <meta property="og:image:alt" content={imageAlt} />
-      <meta property="og:image:width" content={String(OG_IMAGE_WIDTH)} />
-      <meta property="og:image:height" content={String(OG_IMAGE_HEIGHT)} />
+      {image === DEFAULT_OG_IMAGE ? (
+        <meta property="og:image:width" content={String(OG_IMAGE_WIDTH)} />
+      ) : null}
+      {image === DEFAULT_OG_IMAGE ? (
+        <meta property="og:image:height" content={String(OG_IMAGE_HEIGHT)} />
+      ) : null}
       {type === 'article' && articlePublished ? (
         <meta property="article:published_time" content={articlePublished} />
       ) : null}

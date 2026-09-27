@@ -115,12 +115,12 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             <meta property="og:url" content="https://topedgeai.com/" />
             <meta property="og:title" content={pageTitle} />
             <meta property="og:description" content={pageDescription} />
-            <meta property="og:image" content="https://topedgeai.com/og/og-default.svg" />
+            <meta property="og:image" content="https://topedgeai.com/og-share.jpg" />
             <meta name="twitter:card" content="summary_large_image" />
             <meta name="twitter:url" content="https://topedgeai.com/" />
             <meta name="twitter:title" content={pageTitle} />
             <meta name="twitter:description" content={pageDescription} />
-            <meta name="twitter:image" content="https://topedgeai.com/og/og-default.svg" />
+            <meta name="twitter:image" content="https://topedgeai.com/og-share.jpg" />
             {!isNoindexRoute && <link rel="canonical" href="https://topedgeai.com" />}
             <meta name="robots" content={isNoindexRoute ? 'noindex, follow' : 'index, follow'} />
           </>

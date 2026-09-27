@@ -53,10 +53,10 @@ for (const row of FILES) {
   if (!budgets.ok) problems.push(...budgets.errors);
 
   if (!/twitter:url/i.test(html)) problems.push('missing twitter:url');
-  if (!/og:image["'][^>]*content=["']https:\/\/topedgeai\.com\/og-image\.png/i.test(html) &&
-      !/content=["']https:\/\/topedgeai\.com\/og-image\.png["'][^>]*property=["']og:image/i.test(html)) {
+  if (!/og:image["'][^>]*content=["']https:\/\/topedgeai\.com\/og-share\.jpg/i.test(html) &&
+      !/content=["']https:\/\/topedgeai\.com\/og-share\.jpg["'][^>]*property=["']og:image/i.test(html)) {
     // softer check
-    if (!/og-image\.png/i.test(html)) problems.push('missing og PNG');
+    if (!/og-share\.jpg/i.test(html)) problems.push('missing og share image');
   }
 
   if (problems.length) {
