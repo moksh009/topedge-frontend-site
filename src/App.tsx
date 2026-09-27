@@ -69,6 +69,10 @@ const ApproveAccess = React.lazy(() => import('./pages/community/ApproveAccess')
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
   const isCommunityRoute = location.pathname.startsWith('/community');
+  const isNoindexRoute =
+    isCommunityRoute ||
+    location.pathname.startsWith('/admin') ||
+    location.pathname.startsWith('/dev');
   const isAuthPage =
     location.pathname === '/community/login' || location.pathname === '/community/signup';
   const marketing = isMarketingRoute(location.pathname);
@@ -117,8 +121,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             <meta name="twitter:title" content={pageTitle} />
             <meta name="twitter:description" content={pageDescription} />
             <meta name="twitter:image" content="https://topedgeai.com/og/og-default.svg" />
-            {!isCommunityRoute && <link rel="canonical" href="https://topedgeai.com" />}
-            <meta name="robots" content={isCommunityRoute ? 'noindex, follow' : 'index, follow'} />
+            {!isNoindexRoute && <link rel="canonical" href="https://topedgeai.com" />}
+            <meta name="robots" content={isNoindexRoute ? 'noindex, follow' : 'index, follow'} />
           </>
         )}
         <meta name="theme-color" content="#7C3AED" />

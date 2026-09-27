@@ -2,11 +2,7 @@
 User-agent: *
 Allow: /
 
-Disallow: /admin/
-Disallow: /private/
-Disallow: /api/
-Disallow: /dev/
-# /signup, /login, /docs and /community/* stay crawlable so bots can read their noindex meta tag
+# /signup, /login, /docs, /community/*, /admin/* and /dev/* stay crawlable so bots can read their noindex meta tag
 
 Allow: /blog/
 Allow: /features/

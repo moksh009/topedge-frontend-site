@@ -87,8 +87,8 @@ https://www.topedgeai.com/*  https://topedgeai.com/:splat  301!
 /signup/  /signup.html  200
 /docs  /docs.html  200
 /docs/  /docs.html  200
-/admin/*  /index.html  200
-/dev/*  /index.html  200
+/admin/*  /admin.html  200
+/dev/*  /dev.html  200
 
 # Soft-404: unknown paths get noindex 404.html — never homepage SEO
 # (Do not add trailing-slash force 301s — they self-loop with Pretty URLs.)

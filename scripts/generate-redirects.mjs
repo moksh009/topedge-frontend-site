@@ -2,8 +2,8 @@
  * Keep public/_redirects SPA/404 footer in sync with marketing-urls.
  *
  * Soft-404: unknown URLs must NOT fall through to homepage index.html.
- * SPA client routes (admin/dev) still get index.html; login/signup/docs get
- * their own noindex shells written by build-static.js.
+ * SPA client routes (login/signup/docs/admin/dev) get their own noindex shells
+ * written by build-static.js, never the homepage prerender.
  *
  * NEVER emit trailing-slash force redirects (Netlify Pretty URLs + flat .html).
  * Patterns like "star-slash → :splat 301!" match slashless paths too and
@@ -36,8 +36,8 @@ function buildGeneratedBlock() {
 /signup/  /signup.html  200
 /docs  /docs.html  200
 /docs/  /docs.html  200
-/admin/*  /index.html  200
-/dev/*  /index.html  200
+/admin/*  /admin.html  200
+/dev/*  /dev.html  200
 
 # Soft-404: unknown paths get noindex 404.html — never homepage SEO
 # (Do not add trailing-slash force 301s — they self-loop with Pretty URLs.)

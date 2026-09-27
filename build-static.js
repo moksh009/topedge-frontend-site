@@ -40,6 +40,8 @@ const APP_SHELLS = {
   signup: 'Opening signup | TopEdge',
   login: 'Signing in | TopEdge',
   docs: 'Docs | TopEdge',
+  admin: 'Admin | TopEdge',
+  dev: 'TopEdge',
 };
 const bareShell = fs.readFileSync(indexPath, 'utf8');
 for (const [name, title] of Object.entries(APP_SHELLS)) {
