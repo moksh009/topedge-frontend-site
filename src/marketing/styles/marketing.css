@@ -619,6 +619,50 @@ body::-webkit-scrollbar {
   margin-right: auto;
   padding-top: 0;
   transform-origin: top center;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(12px) scale(0.96);
+  pointer-events: none;
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease,
+    visibility 0s linear 0.18s;
+}
+
+.mkt-nav__mega.is-open {
+  visibility: visible;
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+  transition:
+    opacity 0.24s ease,
+    transform 0.34s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0s;
+}
+
+.mkt-nav__mega-links > li {
+  opacity: 0;
+  transform: translateY(6px);
+  transition:
+    opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mkt-nav__mega.is-open .mkt-nav__mega-links > li {
+  opacity: 1;
+  transform: none;
+  transition-delay: calc(0.04s + var(--mega-i, 0) * 0.02s);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mkt-nav__mega,
+  .mkt-nav__mega.is-open,
+  .mkt-nav__mega-links > li,
+  .mkt-nav__mega.is-open .mkt-nav__mega-links > li {
+    transform: none;
+    transition-duration: 0.12s;
+    transition-delay: 0s;
+  }
 }
 
 .mkt-nav__mega-card {

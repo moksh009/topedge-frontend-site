@@ -831,7 +831,7 @@ export const blogPosts: BlogPost[] = [
 
 <h2>Open the shared inbox the same day</h2>
 <ul>
-<li>Routing rules: sales hours vs after-hours</li>
+<li><a href="/features/chat-rules">Routing rules</a>: sales hours vs after-hours</li>
 <li>Macros for COD and shipping</li>
 <li>AI FAQ on, purchase-risk intents off until you trust grounding: <a href="/features/ai-brain">AI Brain</a></li>
 <li>Team trained to pause automation on takeover: <a href="/features/live-chat">Live Chat</a></li>
@@ -1336,7 +1336,7 @@ export const blogPosts: BlogPost[] = [
 <li>COD confirmation vs a real COD → prepaid conversion path</li>
 <li>Shared inbox agent seats and routing</li>
 <li>AI crawl / auto-trigger meters</li>
-<li>Warranty, unified identity, visual journeys with Meta gating</li>
+<li><a href="/features/warranty">Warranty</a>, unified identity, visual journeys with Meta gating</li>
 </ul>
 <p>If your pain is only “send a cart nudge and an order update,” staying on a low-cost app is rational. If your pain is RTO, claims, or identity sprawl, price shopping alone steers you wrong.</p>
 
@@ -1808,10 +1808,10 @@ export const blogPosts: BlogPost[] = [
 <p>Post-purchase sequences for replenishment or complementary SKUs, only to consented numbers, with frequency caps and recent-purchase suppression.</p>
 
 <h3>9. Win-Back Campaigns</h3>
-<p>Segment lapsed buyers; Meta-safe marketing templates; stop when they reorder or opt out. Campaigns come after transactional quality is stable.</p>
+<p><a href="/features/audience-crm">Segment lapsed buyers</a>; Meta-safe marketing templates; stop when they reorder or opt out. Campaigns come after transactional quality is stable.</p>
 
 <h3>10. Instagram-to-WhatsApp Conversations</h3>
-<p>Comment / story / mention interest → continue in WhatsApp or DM inbox with the same customer identity. Useful for drops and social commerce, not a substitute for order utilities.</p>
+<p><a href="/features/instagram">Comment / story / mention interest</a> → continue in WhatsApp or DM inbox with the same customer identity. Useful for drops and social commerce, not a substitute for order utilities.</p>
 
 <p>Sane rollout for most stores: cart recovery → COD confirm (if you sell COD) → order/shipping updates → support automation → campaigns. Why that order: <a href="/blog/shopify-whatsapp-automation-what-to-automate-first">what to automate first</a>. Checklist: <a href="/blog/shopify-automation-checklist-whatsapp-cart-recovery">Shopify WhatsApp automation checklist</a>.</p>
 
@@ -2908,7 +2908,7 @@ export const blogPosts: BlogPost[] = [
 <h2 id="golden-axe-topedge">The Golden Axe: Fixing Leaky Funnels with TopEdge AI</h2>
 <p>Phase 3 is the ultimate test of your brand. If you run paid ads and organic content but see zero order growth, you have one of two problems: either your product needs iteration, or your website is not convincing visitors to buy.</p>
 <p>Before you spend money driving traffic, you must know exactly what visitors are doing on your site. This is where <strong>TopEdge AI</strong> becomes mandatory.</p>
-<p>By installing the Topedge AI tracking pixel, you gain deep analytics into visitor activity. You will see exactly which products get the most views and precisely where visitors are dropping off in your funnel. (Product surface: <a href="/features/opt-in-tools">Opt-in tools</a> and <a href="/features/journeys">Journeys</a>.)</p>
+<p>By installing the <a href="/features/analytics">Topedge AI tracking pixel</a>, you gain deep analytics into visitor activity. You will see exactly which products get the most views and precisely where visitors are dropping off in your funnel. (Product surface: <a href="/features/opt-in-tools">Opt-in tools</a> and <a href="/features/journeys">Journeys</a>.)</p>
 <p>More importantly, TopEdge AI turns lost traffic into automated revenue. Follow-ups are the <strong>golden axe</strong> to mine more revenue out of your existing market:</p>
 <ul>
 <li><strong>Abandoned Cart WhatsApp Follow-ups:</strong> Design and automate personalized WhatsApp messages to users who left items in their cart, capturing the highest-conversion demographic. Playbook: <a href="/blog/whatsapp-abandoned-cart-recovery-shopify">Shopify abandoned cart recovery with WhatsApp</a>.</li>

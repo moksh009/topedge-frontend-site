@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, type ComponentType } from 'react';
+import { useState, useEffect, useRef, type ComponentType, type CSSProperties } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import {
@@ -77,7 +77,6 @@ const primaryLinks = [
 ] as const;
 
 const easeSoft = [0.16, 1, 0.3, 1] as const;
-const softSpring = { type: 'spring' as const, stiffness: 420, damping: 34, mass: 0.85 };
 
 export default function MarketingNavbar() {
   const [open, setOpen] = useState(false);
@@ -211,54 +210,39 @@ export default function MarketingNavbar() {
                   <ChevronDown className={cn('mkt-nav__chev', productOpen && 'is-open')} aria-hidden />
                 </button>
 
-                <AnimatePresence mode="sync">
-                  {productOpen ? (
-                    <motion.div
-                      key="product-mega"
-                      className="mkt-nav__mega"
-                      initial={reduceMotion ? false : { opacity: 0, y: 12, scale: 0.96 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={reduceMotion ? undefined : { opacity: 0, y: 8, scale: 0.98 }}
-                      transition={reduceMotion ? { duration: 0.12 } : softSpring}
-                      onMouseEnter={openProduct}
-                      onMouseLeave={scheduleCloseProduct}
-                    >
-                      <div className="mkt-nav__mega-card">
-                        <div className="mkt-nav__mega-cols">
-                          {productColumns.map((col) => (
-                            <div key={col.id} className="mkt-nav__mega-col">
-                              <ul className="mkt-nav__mega-links">
-                                {col.items.map((item, itemIndex) => {
-                                  const Icon = item.icon;
-                                  return (
-                                    <li key={item.label}>
-                                      <motion.div
-                                        initial={reduceMotion ? false : { opacity: 0, y: 6 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        transition={{
-                                          delay: reduceMotion ? 0 : 0.04 + itemIndex * 0.02,
-                                          duration: 0.28,
-                                          ease: easeSoft,
-                                        }}
-                                      >
-                                        <Link to={item.href} className="mkt-nav__mega-link">
-                                          <span className="mkt-nav__mega-link-icon" aria-hidden>
-                                            <Icon strokeWidth={1.6} absoluteStrokeWidth={false} />
-                                          </span>
-                                          <span className="mkt-nav__mega-link-label">{item.label}</span>
-                                        </Link>
-                                      </motion.div>
-                                    </li>
-                                  );
-                                })}
-                              </ul>
-                            </div>
-                          ))}
+                {/* Always mounted so every feature link is in the prerendered HTML; visibility is CSS-only. */}
+                <div
+                  className={cn('mkt-nav__mega', productOpen && 'is-open')}
+                  onMouseEnter={openProduct}
+                  onMouseLeave={scheduleCloseProduct}
+                >
+                  <div className="mkt-nav__mega-card">
+                    <div className="mkt-nav__mega-cols">
+                      {productColumns.map((col) => (
+                        <div key={col.id} className="mkt-nav__mega-col">
+                          <ul className="mkt-nav__mega-links">
+                            {col.items.map((item, itemIndex) => {
+                              const Icon = item.icon;
+                              return (
+                                <li
+                                  key={item.label}
+                                  style={{ '--mega-i': itemIndex } as CSSProperties}
+                                >
+                                  <Link to={item.href} className="mkt-nav__mega-link">
+                                    <span className="mkt-nav__mega-link-icon" aria-hidden>
+                                      <Icon strokeWidth={1.6} absoluteStrokeWidth={false} />
+                                    </span>
+                                    <span className="mkt-nav__mega-link-label">{item.label}</span>
+                                  </Link>
+                                </li>
+                              );
+                            })}
+                          </ul>
                         </div>
-                      </div>
-                    </motion.div>
-                  ) : null}
-                </AnimatePresence>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </div>
 
               {primaryLinks.map((l) => (
