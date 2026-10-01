@@ -287,11 +287,14 @@ export function organizationJsonLd() {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'TopEdge',
-    alternateName: 'TopEdge AI',
+    alternateName: ['TopEdge', 'TopEdge AI'],
     url: SITE_URL,
     logo: `${SITE_URL}/og-image.png`,
     description:
       'WhatsApp automation and cart recovery platform for Shopify ecommerce brands in India.',
+    // Separates this entity from the edge-AI hardware companies that share the name.
+    disambiguatingDescription:
+      'TopEdge AI is a WhatsApp automation platform for Shopify D2C brands in India, based in Ahmedabad, Gujarat. It is not related to edge-AI hardware or other products with a similar name.',
     foundingDate: '2024',
     founder: [
       {
