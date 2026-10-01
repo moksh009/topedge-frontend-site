@@ -6,8 +6,8 @@
  * in public/llms.txt. If it drifts from the live API, crawlers are served stale prices.
  *
  * Exit codes:
- *   0  prices match (limit/flag drift is reported as a warning only)
- *   1  at least one price differs
+ *   0  prices, limits, plan names and feature flags all match
+ *   1  at least one of those differs
  *   0  live API unreachable — reported loudly, but an API outage is not price drift
  *      and must not block an unrelated deploy. Set STRICT_CATALOG_DRIFT=1 to fail.
  *
@@ -57,25 +57,25 @@ try {
 }
 
 const liveBySlug = new Map(live.plans.map((p) => [p.slug, p]));
-const priceErrors = [];
+const errors = [];
 const warnings = [];
 
 for (const slug of PUBLIC_PLANS) {
   const fb = FALLBACK_CATALOG.plans.find((p) => p.slug === slug);
   const lv = liveBySlug.get(slug);
   if (!fb) {
-    priceErrors.push(`${slug}: missing from FALLBACK_CATALOG`);
+    errors.push(`${slug}: missing from FALLBACK_CATALOG`);
     continue;
   }
   if (!lv) {
-    priceErrors.push(`${slug}: missing from the live catalog`);
+    errors.push(`${slug}: missing from the live catalog`);
     continue;
   }
 
   // --- prices: hard failure -------------------------------------------------
   for (const key of ['monthlyPriceLabel', 'quarterlyPriceLabel', 'yearlyPriceLabel']) {
     if (label(fb[key]) !== label(lv[key])) {
-      priceErrors.push(`${slug}.${key}: fallback ${label(fb[key])} vs live ${label(lv[key])}`);
+      errors.push(`${slug}.${key}: fallback ${label(fb[key])} vs live ${label(lv[key])}`);
     }
   }
   for (const cycle of CYCLES) {
@@ -83,17 +83,26 @@ for (const slug of PUBLIC_PLANS) {
     const lvp = lv.pricing?.[cycle];
     for (const key of ['effectiveMonthlyLabel', 'billedLabel', 'perDayLabel', 'saveLabel']) {
       if (label(fbp?.[key]) !== label(lvp?.[key])) {
-        priceErrors.push(
+        errors.push(
           `${slug}.pricing.${cycle}.${key}: fallback ${label(fbp?.[key])} vs live ${label(lvp?.[key])}`,
         );
       }
     }
   }
 
-  // --- limits and feature flags: loud warning ------------------------------
+  // --- plan name: fatal ------------------------------------------------------
+  // check-llms-pricing.mjs keys its llms.txt table rows on displayName, so a
+  // rename that only lands live would silently desync llms.txt from the site.
+  if (label(fb.displayName) !== label(lv.displayName)) {
+    errors.push(`${slug}.displayName: fallback ${label(fb.displayName)} vs live ${label(lv.displayName)}`);
+  }
+
+  // --- limits and feature flags: fatal --------------------------------------
+  // These are rendered as prose in the plain-text plan summary and hardcoded in
+  // public/llms.txt, so drift here publishes a false capability or limit claim.
   for (const key of ['ordersPerCycle', 'campaignEmailSendsPerCycle']) {
     if (Number(fb[key]) !== Number(lv[key])) {
-      warnings.push(`${slug}.${key}: fallback ${label(fb[key])} vs live ${label(lv[key])}`);
+      errors.push(`${slug}.${key}: fallback ${label(fb[key])} vs live ${label(lv[key])}`);
     }
   }
   const flagKeys = new Set([
@@ -102,7 +111,7 @@ for (const slug of PUBLIC_PLANS) {
   ]);
   for (const key of flagKeys) {
     if (label(fb.features?.[key]) !== label(lv.features?.[key])) {
-      warnings.push(
+      errors.push(
         `${slug}.features.${key}: fallback ${label(fb.features?.[key])} vs live ${label(lv.features?.[key])}`,
       );
     }
@@ -123,14 +132,14 @@ if (warnings.length) {
   console.warn('');
 }
 
-if (priceErrors.length) {
-  console.error(`\n✖ catalog drift check FAILED — ${priceErrors.length} price mismatch(es):`);
-  for (const e of priceErrors) console.error(`   · ${e}`);
+if (errors.length) {
+  console.error(`\n✖ catalog drift check FAILED — ${errors.length} mismatch(es) vs the live catalog:`);
+  for (const e of errors) console.error(`   · ${e}`);
   console.error(`\n  Update FALLBACK_CATALOG in src/marketing/lib/billingCatalog.ts to match`);
   console.error(`  ${CATALOG_URL}, then re-run. Prerendered HTML and public/llms.txt`);
   console.error(`  both ship these numbers to crawlers.\n`);
   process.exit(1);
 }
 
-console.log(`✓ catalog drift check passed — FALLBACK_CATALOG prices match ${CATALOG_URL}`);
+console.log(`✓ catalog drift check passed — FALLBACK_CATALOG prices, limits, plan names and feature flags all match ${CATALOG_URL}`);
 if (warnings.length) console.log(`  (with ${warnings.length} non-price warning(s) above)`);

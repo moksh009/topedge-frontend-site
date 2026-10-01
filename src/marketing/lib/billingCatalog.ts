@@ -19,6 +19,7 @@ export type CatalogPlanFeatures = {
   journeyCodPrepaid: boolean;
   dispatchPriority: string;
   metaAdsAudiencePush: boolean;
+  gstInvoices: boolean;
 };
 
 export type CatalogPlan = {
@@ -151,9 +152,10 @@ export const FALLBACK_CATALOG: BillingCatalog = {
       yearlyPriceLabel: '₹19,188',
       features: {
         journeyBranch: false,
-        journeyCodPrepaid: true,
+        journeyCodPrepaid: false,
         dispatchPriority: 'standard',
         metaAdsAudiencePush: false,
+        gstInvoices: true,
       },
       pricing: {
         monthly: cyclePricing('₹1,999', '₹1,999', '₹67', null, false),
@@ -175,6 +177,7 @@ export const FALLBACK_CATALOG: BillingCatalog = {
         journeyCodPrepaid: true,
         dispatchPriority: 'priority',
         metaAdsAudiencePush: false,
+        gstInvoices: true,
       },
       pricing: {
         monthly: cyclePricing('₹3,999', '₹3,999', '₹133', null, false),
@@ -196,6 +199,7 @@ export const FALLBACK_CATALOG: BillingCatalog = {
         journeyCodPrepaid: true,
         dispatchPriority: 'highest',
         metaAdsAudiencePush: false,
+        gstInvoices: true,
       },
       pricing: {
         monthly: cyclePricing('₹6,499', '₹6,499', '₹217', null, false),
@@ -282,6 +286,7 @@ function asPlan(raw: CatalogPlan): CatalogPlan {
       journeyCodPrepaid: !!raw.features?.journeyCodPrepaid,
       dispatchPriority: raw.features?.dispatchPriority || 'standard',
       metaAdsAudiencePush: !!raw.features?.metaAdsAudiencePush,
+      gstInvoices: !!raw.features?.gstInvoices,
     },
     pricing: {
       monthly: asPricing(pricingRaw.monthly),
