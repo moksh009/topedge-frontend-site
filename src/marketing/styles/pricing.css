@@ -569,6 +569,9 @@
 .mkt-plan__billing-note {
   margin: 0.4rem 0 0;
   width: 100%;
+  /* Two lines reserved: the note wraps on narrow cards, and the slot is kept at
+     a constant height so the cycle toggle never reflows the grid. */
+  min-height: 2.9em;
   font-size: 0.75rem;
   font-weight: 450;
   line-height: 1.45;

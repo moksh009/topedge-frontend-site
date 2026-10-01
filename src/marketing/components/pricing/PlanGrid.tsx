@@ -174,9 +174,13 @@ function PlanCard({
       {pricing.showPerDay || cycle === 'monthly' ? (
         <PerDayBadge label={pricing.perDayLabel} replayKey={`${slug}-${cycle}-day`} />
       ) : null}
-      {!compact && cycle !== 'monthly' ? (
+      {/* Always rendered, blank on monthly: the slot reserves its own height so
+          switching billing cycle does not shift the grid and everything below it. */}
+      {!compact ? (
         <p className="mkt-plan__billing-note">
-          {`billed ${cycle} (${pricing.billedLabel}/${cycleNoun(cycle)}) · ${plan.monthlyPriceLabel}/mo month-to-month`}
+          {cycle === 'monthly'
+            ? '\u00a0'
+            : `billed ${cycle} (${pricing.billedLabel}/${cycleNoun(cycle)}) · ${plan.monthlyPriceLabel}/mo month-to-month`}
         </p>
       ) : null}
       <p className="mkt-plan__blurb">{planBlurb(slug)}</p>
