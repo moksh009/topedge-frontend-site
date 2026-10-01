@@ -38,7 +38,7 @@ async function fetchLive(url) {
   }
 }
 
-const { FALLBACK_CATALOG, CATALOG_URL } = await loadBillingCatalog();
+const { FALLBACK_CATALOG, CATALOG_URL, inrAmountFromLabel } = await loadBillingCatalog();
 
 let live;
 try {
@@ -80,11 +80,36 @@ for (const slug of PUBLIC_PLANS) {
   }
   for (const cycle of CYCLES) {
     const fbp = fb.pricing?.[cycle];
-    const lvp = lv.pricing?.[cycle];
+    // The live payload may name the yearly block `annual`; asPlan normalises this
+    // for the app, but this script reads the raw JSON.
+    const lvp = cycle === 'yearly' ? lv.pricing?.yearly || lv.pricing?.annual : lv.pricing?.[cycle];
     for (const key of ['effectiveMonthlyLabel', 'billedLabel', 'perDayLabel', 'saveLabel']) {
       if (label(fbp?.[key]) !== label(lvp?.[key])) {
         errors.push(
           `${slug}.pricing.${cycle}.${key}: fallback ${label(fbp?.[key])} vs live ${label(lvp?.[key])}`,
+        );
+      }
+    }
+  }
+
+  // --- display label vs the authoritative paise field: fatal -----------------
+  // The API returns both a rendered label and the amount actually charged, in
+  // paise. The site renders the label; billing charges the field. If they ever
+  // disagree the page advertises a price nobody is charged.
+  for (const cycle of CYCLES) {
+    const lvp = cycle === 'yearly' ? lv.pricing?.yearly || lv.pricing?.annual : lv.pricing?.[cycle];
+    if (!lvp) continue;
+    for (const [labelKey, paiseKey] of [
+      ['effectiveMonthlyLabel', 'effectiveMonthlyInr'],
+      ['billedLabel', 'billedInr'],
+    ]) {
+      if (lvp[labelKey] === undefined || lvp[paiseKey] === undefined) continue;
+      const fromLabel = Math.round(Number(inrAmountFromLabel(lvp[labelKey])) * 100);
+      if (Number.isNaN(fromLabel)) continue;
+      if (fromLabel !== Number(lvp[paiseKey])) {
+        errors.push(
+          `${slug}.pricing.${cycle}: live ${labelKey} ${lvp[labelKey]} = ${fromLabel} paise, ` +
+            `but ${paiseKey} is ${lvp[paiseKey]} — the displayed price is not the charged price`,
         );
       }
     }

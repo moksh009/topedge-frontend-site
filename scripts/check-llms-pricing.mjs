@@ -76,7 +76,20 @@ for (const slug of PUBLIC_PLANS) {
   });
 }
 
-// Prose lines that carry numbers must stay sourced too.
+// Reverse check: every row in the table must be a plan we actually sell. Without
+// this, an invented `| Enterprise | ₹99,999/mo | ... |` row passes unvalidated.
+const known = new Set(
+  FALLBACK_CATALOG.plans
+    .filter((p) => PUBLIC_PLANS.includes(p.slug))
+    .map((p) => p.displayName.toLowerCase()),
+);
+for (const name of rows.keys()) {
+  if (!known.has(name)) {
+    errors.push(`table row "${name}" is not a public plan — remove it or add the plan to the catalog`);
+  }
+}
+
+// Prose lines that carry numbers or capability claims must stay sourced too.
 const trialLine = `a ${TRIAL.days}-day free trial: ${TRIAL.orders} orders, ${TRIAL.sends} campaign + email sends`;
 if (!section.includes(trialLine)) {
   errors.push(`trial line missing or stale — expected to contain: "${trialLine}"`);
@@ -85,11 +98,29 @@ if (!section.includes(GST_FOOTNOTE)) {
   errors.push(`GST line missing or stale — expected to contain: "${GST_FOOTNOTE}"`);
 }
 
-// Meta per-message rates must NOT be quoted as numbers here.
-const rate = section.match(/₹\s?0?\.\d+/);
+// The two claims this whole check exists to protect.
+const branchPlans = FALLBACK_CATALOG.plans
+  .filter((p) => PUBLIC_PLANS.includes(p.slug) && p.features.journeyBranch)
+  .map((p) => p.displayName);
+const branchClaim = `Journey Branch is on ${branchPlans.join(' and ')} only.`;
+if (!section.includes(branchClaim)) {
+  errors.push(`Journey Branch claim missing or stale — expected: "${branchClaim}"`);
+}
+const MARKUP_CLAIM = 'passed through at 0% markup';
+if (!section.includes(MARKUP_CLAIM)) {
+  errors.push(`Meta pass-through claim missing — expected to contain: "${MARKUP_CLAIM}"`);
+}
+
+// Meta per-message rates must NOT be quoted as numbers ANYWHERE in llms.txt —
+// the "Important notes" preamble sits above the first `##` and already discusses
+// Meta charges, so scanning only the Pricing block left it unguarded. Plan prices
+// never carry paise, so any decimal money amount is a per-message rate.
+const MONEY_WITH_PAISE =
+  /(?:₹|Rs\.?|INR)\s*\d+\.\d+|\b\d+\.\d+\s*(?:₹|Rs\.?|INR)\b/i;
+const rate = text.match(MONEY_WITH_PAISE);
 if (rate) {
   errors.push(
-    `a Meta per-message rate (${rate[0]}) is quoted in the pricing section — ` +
+    `a per-message rate (${rate[0].trim()}) is quoted in llms.txt — ` +
       `say "Meta's published per-message rates, passed through at 0% markup" instead`,
   );
 }

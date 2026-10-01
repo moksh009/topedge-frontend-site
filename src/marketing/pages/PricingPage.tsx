@@ -45,15 +45,22 @@ export default function PricingPage() {
     const isPrerender = Boolean(
       (window as Window & { __TOPEDGE_PRERENDER__?: boolean }).__TOPEDGE_PRERENDER__,
     );
-    fetchBillingCatalog().then((live) => {
-      if (!alive) return;
-      setCatalog(live);
-      setCycle(live.defaultCycle || 'yearly');
+    fetchBillingCatalog()
+      .then((live) => {
+        if (!alive) return;
+        setCatalog(live);
+        setCycle(live.defaultCycle || 'yearly');
       // fetchBillingCatalog swallows errors and hands back FALLBACK_CATALOG, so a
       // resolved catalog still marked 'fallback' *is* the failure signal. Never
       // surface it during prerender: that HTML is what crawlers read.
-      setCatalogFetchFailed(!isPrerender && live.source === 'fallback');
-    });
+        setCatalogFetchFailed(!isPrerender && live.source === 'fallback');
+      })
+      // fetchBillingCatalog already swallows its own errors, so this only guards
+      // against an unexpected throw in the setState path above.
+      .catch(() => {
+        if (!alive) return;
+        setCatalogFetchFailed(!isPrerender);
+      });
     return () => {
       alive = false;
     };
@@ -143,8 +150,10 @@ export default function PricingPage() {
               cannot drift from the cards above, and it stays in the DOM at every
               breakpoint for crawlers and LLMs that do not run the cycle toggle.
             */}
-            <section className="mkt-pricing__plan-text" aria-label="Plan summary">
-              <h2 className="mkt-pricing__plan-text-head">Plan summary</h2>
+            <section className="mkt-pricing__plan-text" aria-labelledby="plan-summary-head">
+              <h2 className="mkt-pricing__plan-text-head" id="plan-summary-head">
+                Plan summary
+              </h2>
               <div className="mkt-pricing__text-table-wrap">
                 <table className="mkt-pricing__text-table">
                   <thead>
@@ -188,7 +197,7 @@ export default function PricingPage() {
                 ))}
               </ul>
               <p className="mkt-pricing__plan-text-note">
-                Every plan includes a {TRIAL.days}-day free trial. {GST_FOOTNOTE} Meta WhatsApp
+                Every plan includes a {catalog.trialDays || TRIAL.days}-day free trial. {GST_FOOTNOTE} Meta WhatsApp
                 Cloud API messaging is billed separately at Meta&rsquo;s published per-message
                 rates, passed through at 0% markup.
               </p>

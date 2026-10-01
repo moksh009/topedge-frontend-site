@@ -297,9 +297,15 @@ function asPlan(raw: CatalogPlan): CatalogPlan {
   };
 }
 
-/** Digits-only INR amount from a display label like ₹1,999. */
+/**
+ * Numeric INR amount from a display label like ₹1,999 or ₹1,999.50.
+ * Strips the symbol and thousands separators but keeps a decimal point — a
+ * digits-only strip would turn ₹1,999.50 into the Offer price 199950.
+ */
 export function inrAmountFromLabel(label: string): string {
-  return String(label || '').replace(/[^\d]/g, '');
+  const cleaned = String(label || '').replace(/[^\d.]/g, '');
+  const [whole, ...rest] = cleaned.split('.');
+  return rest.length ? `${whole}.${rest.join('')}` : whole;
 }
 
 /** priceValidUntil ~1 year out (schema freshness); recomputed at call time. */
