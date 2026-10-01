@@ -7,6 +7,7 @@ import {
   COMPANY_EMAIL,
   COMPANY_PHONE,
   COMPANY_PHONE_E164,
+  COMPANY_SHOPIFY_APP_URL,
   COMPANY_SOCIAL,
   COMPANY_WHATSAPP_URL,
 } from '../legal/companyIdentity';
@@ -262,7 +263,7 @@ export default function MarketingFooter() {
             <li>
               <a
                 className="mkt-foot__partner"
-                href="https://apps.shopify.com/"
+                href={COMPANY_SHOPIFY_APP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Shopify Available on App Store"

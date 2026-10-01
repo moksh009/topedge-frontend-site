@@ -1,4 +1,5 @@
 import { SITE_URL } from './marketingSeo';
+import { COMPANY_LEGAL_NAME, COMPANY_SHOPIFY_APP_URL } from '../legal/companyIdentity';
 import {
   catalogDefaultCycleOffersJsonLd,
   offerPriceValidUntil,
@@ -287,7 +288,9 @@ export function organizationJsonLd() {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'TopEdge',
-    alternateName: ['TopEdge', 'TopEdge AI'],
+    // 'TopEdge' is already `name`; these are the two aliases that actually differ
+    // — the brand spelling and the legal entity name used on the Shopify listing.
+    alternateName: ['TopEdge AI', COMPANY_LEGAL_NAME],
     url: SITE_URL,
     logo: `${SITE_URL}/og-image.png`,
     description:
@@ -314,6 +317,7 @@ export function organizationJsonLd() {
       'https://www.linkedin.com/company/topedgeai',
       'https://www.instagram.com/topedge_ai/',
       'https://www.youtube.com/@topedge_ai',
+      COMPANY_SHOPIFY_APP_URL,
     ],
     contactPoint: {
       '@type': 'ContactPoint',

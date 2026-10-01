@@ -4,7 +4,9 @@ import HeroRippleBackground from '../effects/HeroRippleBackground';
 import HomeTrust from './HomeTrust';
 import BrandMark from '../BrandMark';
 
-const SHOPIFY_APP_URL = 'https://apps.shopify.com/';
+import { COMPANY_SHOPIFY_APP_URL } from '../../legal/companyIdentity';
+
+const SHOPIFY_APP_URL = COMPANY_SHOPIFY_APP_URL;
 
 /**
  * Homepage hero, headline + CTAs + trusted-by, product shot flush to section bottom.

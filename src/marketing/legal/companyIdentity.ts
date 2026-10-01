@@ -27,6 +27,9 @@ export const COMPANY_WHATSAPP_URL =
     'Hi TopEdge, I want to talk about WhatsApp automation for my Shopify store.',
   )}`;
 
+/** Live Shopify App Store listing for TopEdge Ai. */
+export const COMPANY_SHOPIFY_APP_URL = 'https://apps.shopify.com/topedge-ai';
+
 export const COMPANY_SOCIAL = {
   linkedin: 'https://www.linkedin.com/company/topedgeai',
   instagram: 'https://www.instagram.com/topedge_ai/',
