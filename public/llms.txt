@@ -2,6 +2,10 @@
 
 > TopEdge is a WhatsApp automation and cart recovery platform for Shopify D2C brands in India. Connect Shopify + Meta WhatsApp Cloud API to run abandoned cart recovery, COD confirmations, shared inbox, journeys, and Meta-safe campaigns.
 
+## Entity
+
+TopEdge AI (legal name: TopEdge Ai) is a WhatsApp automation platform for Shopify D2C brands in India, based in Ahmedabad, Gujarat. Customers are Indian ecommerce merchants selling on Shopify. The product connects Shopify OAuth and the Meta WhatsApp Cloud API for abandoned cart recovery, COD confirmations, a shared inbox, journeys, and campaigns. Founders: Moksh Patel (Co-founder · Product) and Smit Tilva (Co-founder · Growth). TopEdge AI is not related to edge-AI hardware or other products with a similar name.
+
 Important notes:
 
 - Platform billing is INR on dash.topedgeai.com. Meta WhatsApp Cloud API charges are billed per message by template category (marketing, utility; service replies are free) and passed through at cost with no TopEdge markup, separate from the platform plan.

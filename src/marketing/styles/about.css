@@ -362,3 +362,26 @@
 .mkt-about__brand-link:hover {
   opacity: 0.85;
 }
+
+/* Plain-text entity paragraph, directly under the hero. */
+.mkt-about__entity {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 2rem var(--mkt-gutter, 1.5rem) 0;
+}
+
+.mkt-about__entity-para {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.75;
+  color: #475569;
+}
+
+@media (max-width: 600px) {
+  .mkt-about__entity {
+    padding-top: 1.5rem;
+  }
+  .mkt-about__entity-para {
+    font-size: 0.9375rem;
+  }
+}

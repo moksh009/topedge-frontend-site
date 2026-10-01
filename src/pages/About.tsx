@@ -144,6 +144,21 @@ export default function About() {
           </div>
         </header>
 
+        {/*
+          Plain-text entity paragraph. States what TopEdge AI is, where it operates,
+          and what it is not, so search and LLMs can separate this entity from the
+          unrelated hardware companies that share the name.
+        */}
+        <section className="mkt-about__entity" aria-label="About TopEdge AI">
+          <p className="mkt-about__entity-para">
+            TopEdge AI is a WhatsApp automation platform for Shopify D2C brands in India, based in
+            Ahmedabad, Gujarat. It helps Indian ecommerce stores automate abandoned cart recovery,
+            COD confirmations, Live Chat, and Meta WhatsApp campaigns through a native Shopify and
+            Meta WhatsApp Cloud API integration. TopEdge AI is not related to edge-AI hardware or
+            other products with a similar name.
+          </p>
+        </section>
+
         <section className="mkt-about__section" aria-labelledby="about-why">
           <Reveal>
             <p className="mkt-about__eyebrow">Why TopEdge</p>
