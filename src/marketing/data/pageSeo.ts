@@ -377,7 +377,6 @@ export function softwareApplicationJsonLd(opts?: { withReviews?: boolean }) {
         description: `${TRIAL.days}-day free trial`,
         url: pricingUrl,
         availability: 'https://schema.org/InStock',
-        itemCondition: 'https://schema.org/NewCondition',
       },
       ...catalogDefaultCycleOffersJsonLd(undefined, { url: pricingUrl }),
     ],

@@ -308,7 +308,12 @@ export function offerPriceValidUntil(from = new Date()): string {
 /**
  * Schema.org Offer[] for SoftwareApplication — sourced from the catalog
  * (FALLBACK_CATALOG when called at module load; pass live catalog when available).
- * Prices follow the pricing page's default cycle so markup matches what is visible.
+ *
+ * Two Offers per plan, one per billing period we actually sell. `price` is the
+ * amount charged for ONE period (monthly ₹1,999 → 1999, yearly ₹19,188 → 19188),
+ * never the /mo equivalent, so the UnitPriceSpecification's billingDuration and
+ * unitCode describe the same number. No itemCondition: this is a subscription,
+ * not a physical good.
  */
 export function catalogDefaultCycleOffersJsonLd(
   catalog: BillingCatalog = FALLBACK_CATALOG,
@@ -317,27 +322,55 @@ export function catalogDefaultCycleOffersJsonLd(
   const url = opts?.url || 'https://topedgeai.com/pricing';
   const currency = catalog.currency || 'INR';
   const validUntil = offerPriceValidUntil();
-  const cycle = cycleKey(catalog.defaultCycle);
-  return catalog.plans
-    .filter((p) => PUBLIC_PLANS.has(p.slug))
-    .map((p) => {
-      const pricing = planPricing(p, cycle);
-      const billing =
-        cycle === 'monthly'
-          ? 'billed monthly'
-          : `${pricing.effectiveMonthlyLabel}/month, billed ${cycle} (${pricing.billedLabel})`;
-      return {
+
+  const periods: Array<{
+    cycle: BillingCycle;
+    billingDuration: 'P1M' | 'P1Y';
+    unitCode: 'MON' | 'ANN';
+    label: (plan: CatalogPlan) => string;
+  }> = [
+    {
+      cycle: 'monthly',
+      billingDuration: 'P1M',
+      unitCode: 'MON',
+      label: () => 'billed monthly',
+    },
+    {
+      cycle: 'yearly',
+      billingDuration: 'P1Y',
+      unitCode: 'ANN',
+      label: (plan) =>
+        `billed yearly (${planPricing(plan, 'yearly').effectiveMonthlyLabel}/mo equivalent)`,
+    },
+  ];
+
+  const offers: object[] = [];
+  for (const plan of catalog.plans.filter((p) => PUBLIC_PLANS.has(p.slug))) {
+    for (const period of periods) {
+      const pricing = planPricing(plan, period.cycle);
+      const price = inrAmountFromLabel(pricing.billedLabel);
+      const billing = period.label(plan);
+      offers.push({
         '@type': 'Offer' as const,
-        name: p.displayName,
-        price: inrAmountFromLabel(pricing.effectiveMonthlyLabel),
+        name: `${plan.displayName}, ${billing}`,
+        price,
         priceCurrency: currency,
         priceValidUntil: validUntil,
         url,
         availability: 'https://schema.org/InStock',
-        itemCondition: 'https://schema.org/NewCondition' as const,
-        description: `${p.ordersPerCycle} orders / cycle · ${p.campaignEmailSendsPerCycle.toLocaleString('en-IN')} campaign sends · ${billing}`,
-      };
-    });
+        priceSpecification: {
+          '@type': 'UnitPriceSpecification' as const,
+          price,
+          priceCurrency: currency,
+          billingDuration: period.billingDuration,
+          billingIncrement: 1,
+          unitCode: period.unitCode,
+        },
+        description: `${Number(plan.ordersPerCycle).toLocaleString('en-IN')} orders / month · ${Number(plan.campaignEmailSendsPerCycle).toLocaleString('en-IN')} campaign + email sends / month · ${billing}`,
+      });
+    }
+  }
+  return offers;
 }
 
 export async function fetchBillingCatalog(): Promise<BillingCatalog> {
