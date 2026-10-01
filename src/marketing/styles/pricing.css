@@ -566,6 +566,17 @@
   color: inherit;
 }
 
+.mkt-plan__billing-note {
+  margin: 0.4rem 0 0;
+  width: 100%;
+  font-size: 0.75rem;
+  font-weight: 450;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  color: #64748b;
+  text-align: left;
+}
+
 .mkt-plan__blurb {
   margin: 0.65rem 0 0;
   width: 100%;

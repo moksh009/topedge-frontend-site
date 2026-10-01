@@ -10,6 +10,7 @@ import {
   planBlurb,
   planFeatureKicker,
   planPricing,
+  cycleNoun,
 } from '../../lib/billingCatalog';
 import PriceRoll from './PriceRoll';
 
@@ -172,6 +173,11 @@ function PlanCard({
       </div>
       {pricing.showPerDay || cycle === 'monthly' ? (
         <PerDayBadge label={pricing.perDayLabel} replayKey={`${slug}-${cycle}-day`} />
+      ) : null}
+      {!compact && cycle !== 'monthly' ? (
+        <p className="mkt-plan__billing-note">
+          {`billed ${cycle} (${pricing.billedLabel}/${cycleNoun(cycle)}) · ${plan.monthlyPriceLabel}/mo month-to-month`}
+        </p>
       ) : null}
       <p className="mkt-plan__blurb">{planBlurb(slug)}</p>
       {!compact ? (
