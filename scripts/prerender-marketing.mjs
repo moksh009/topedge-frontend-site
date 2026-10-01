@@ -12,6 +12,7 @@ import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
 import { auditPrerenderHead } from './seo-head-audit.mjs';
 import { getMarketingPrerenderPaths, NOT_FOUND_PRERENDER_PATH } from './marketing-urls.mjs';
+import { resolveViteEnv } from './load-billing-catalog.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
@@ -292,13 +293,19 @@ async function main() {
     // Serve the live catalog to the page from Node, so prerendered pricing HTML
     // carries real prices instead of the FALLBACK_CATALOG seed. Mirrors how
     // billingCatalog.ts resolves CATALOG_URL from the same env vars Vite reads.
+    // Resolved exactly as Vite resolved it for the bundle being prerendered, from
+    // the same .env files — matching on path suffix alone would let a staging
+    // build intercept its staging request and answer it with production data.
+    const viteEnv = resolveViteEnv();
     const catalogUrl =
-      process.env.VITE_BILLING_CATALOG_URL ||
-      process.env.NEXT_PUBLIC_BILLING_CATALOG_URL ||
+      viteEnv.VITE_BILLING_CATALOG_URL ||
+      viteEnv.NEXT_PUBLIC_BILLING_CATALOG_URL ||
       'https://api.topedgeai.com/api/billing/catalog';
+    const catalogTarget = new URL(catalogUrl);
     const liveCatalogBody = await fetchLiveCatalog(catalogUrl);
+    let catalogFulfilled = false;
     await page.route(
-      (url) => url.href.split('?')[0].endsWith('/api/billing/catalog'),
+      (url) => url.origin === catalogTarget.origin && url.pathname === catalogTarget.pathname,
       async (route) => {
         if (!liveCatalogBody) return route.continue();
         await route.fulfill({
@@ -307,6 +314,7 @@ async function main() {
           headers: { 'access-control-allow-origin': '*' },
           body: liveCatalogBody,
         });
+        catalogFulfilled = true;
       },
     );
 
@@ -335,6 +343,20 @@ async function main() {
           () => document.querySelectorAll('meta[name="description"]').length >= 1,
           { timeout: 10000 },
         );
+        // /pricing renders catalog values into the saved HTML. Without this the
+        // snapshot races the intercepted fetch and can bake in the bundled
+        // FALLBACK_CATALOG seed instead, silently and with no warning.
+        if (route === '/pricing' && liveCatalogBody) {
+          const deadline = Date.now() + 10000;
+          while (!catalogFulfilled && Date.now() < deadline) await sleep(50);
+          if (!catalogFulfilled) {
+            console.warn(
+              `  ⚠️  ${route}: live catalog was never requested; HTML keeps the bundled fallback`,
+            );
+          } else {
+            await sleep(150); // let React re-render with the live catalog
+          }
+        }
         const homeBaseline = route === '/' ? await renderHomeBelowFold(page) : null;
         await sleep(50);
         const raw = await page.content();
