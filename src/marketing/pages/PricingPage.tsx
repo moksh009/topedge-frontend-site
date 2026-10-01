@@ -23,7 +23,10 @@ import {
   BillingCycle,
   FALLBACK_CATALOG,
   GST_FOOTNOTE,
+  TRIAL,
+  dispatchLabel,
   fetchBillingCatalog,
+  planPricing,
 } from '../lib/billingCatalog';
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -134,6 +137,62 @@ export default function PricingPage() {
             </div>
 
             <IncludedFeatures items={catalog.universalFeatures} />
+
+            {/*
+              Plain-text plan summary. Every value is read from the catalog, so it
+              cannot drift from the cards above, and it stays in the DOM at every
+              breakpoint for crawlers and LLMs that do not run the cycle toggle.
+            */}
+            <section className="mkt-pricing__plan-text" aria-label="Plan summary">
+              <h2 className="mkt-pricing__plan-text-head">Plan summary</h2>
+              <div className="mkt-pricing__text-table-wrap">
+                <table className="mkt-pricing__text-table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Plan</th>
+                      <th scope="col">Monthly</th>
+                      <th scope="col">Yearly (per month)</th>
+                      <th scope="col">Orders / month</th>
+                      <th scope="col">Journey Branch</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {catalog.plans.map((p) => (
+                      <tr key={p.slug}>
+                        <th scope="row">{p.displayName}</th>
+                        <td data-label="Monthly">{p.monthlyPriceLabel}/mo</td>
+                        <td data-label="Yearly (per month)">
+                          {planPricing(p, 'yearly').effectiveMonthlyLabel}/mo ({p.yearlyPriceLabel}
+                          /yr)
+                        </td>
+                        <td data-label="Orders / month">
+                          {Number(p.ordersPerCycle).toLocaleString('en-IN')}
+                        </td>
+                        <td data-label="Journey Branch">
+                          {p.features.journeyBranch ? 'Yes' : 'No — Growth and Scale only'}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <ul className="mkt-pricing__plan-text-list">
+                {catalog.plans.map((p) => (
+                  <li key={p.slug}>
+                    <strong>{p.displayName}:</strong>{' '}
+                    {Number(p.campaignEmailSendsPerCycle).toLocaleString('en-IN')} campaign + email
+                    sends / month · COD → prepaid:{' '}
+                    {p.features.journeyCodPrepaid ? 'Yes' : 'No'} ·{' '}
+                    {dispatchLabel(p.features.dispatchPriority)}
+                  </li>
+                ))}
+              </ul>
+              <p className="mkt-pricing__plan-text-note">
+                Every plan includes a {TRIAL.days}-day free trial. {GST_FOOTNOTE} Meta WhatsApp
+                Cloud API messaging is billed separately at Meta&rsquo;s published per-message
+                rates, passed through at 0% markup.
+              </p>
+            </section>
 
             <FeatureMatrix plans={catalog.plans} cycle={cycle} />
 

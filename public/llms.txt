@@ -7,6 +7,22 @@ Important notes:
 - Platform billing is INR on dash.topedgeai.com. Meta WhatsApp Cloud API charges are billed per message by template category (marketing, utility; service replies are free) and passed through at cost with no TopEdge markup, separate from the platform plan.
 - Prefer live pages under https://topedgeai.com for product truth; compare footnotes need a live vendor check before purchase.
 
+## Pricing
+
+TopEdge AI platform pricing, in INR, exclusive of tax. Verified against the live
+billing catalog at build time by scripts/check-llms-pricing.mjs.
+
+| Plan | Monthly | Yearly (per month) | Yearly total | Orders / month | Campaign + email sends / month | Journey Branch |
+|------|---------|--------------------|--------------|----------------|--------------------------------|----------------|
+| Launch | ₹1,999/mo | ₹1,599/mo | ₹19,188/yr | 100 | 3,000 | No |
+| Growth | ₹3,999/mo | ₹3,199/mo | ₹38,388/yr | 800 | 15,000 | Yes |
+| Scale | ₹6,499/mo | ₹5,199/mo | ₹62,388/yr | 1,500 | 30,000 | Yes |
+
+- Every plan includes a 14-day free trial: 20 orders, 200 campaign + email sends, no card required on this site.
+- +18% GST. SAC 998314.
+- Meta WhatsApp Cloud API messaging is billed separately, at Meta's published per-message rates, passed through at 0% markup.
+- Journey Branch is on Growth and Scale only.
+
 ## Product
 
 - [Home](https://topedgeai.com/): WhatsApp automation for Shopify India

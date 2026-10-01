@@ -95,12 +95,6 @@ export const TRIAL = {
 
 export const GST_FOOTNOTE = '+18% GST. SAC 998314.';
 
-export const META_MESSAGE_RATES = [
-  { category: 'Marketing', rate: '~₹0.88', note: 'Promos & cart recovery' },
-  { category: 'Utility', rate: '~₹0.125', note: 'Order updates' },
-  { category: 'Service', rate: 'Free', note: '24h user replies' },
-] as const;
-
 const UNIVERSAL: string[] = [
   'Live Chat',
   'Customer CRM',

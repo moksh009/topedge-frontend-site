@@ -18,11 +18,15 @@ export const PRICING_FAQS = [
   },
   {
     q: 'Are Meta fees included?',
-    a: 'No. Meta Cloud API is pass-through only (marketing ~₹0.88, utility ~₹0.125, service free). We don’t markup conversations.',
+    a: 'No. Meta Cloud API messaging is pass-through only, at Meta’s published per-message rates, passed through at 0% markup. We don’t markup conversations.',
   },
   {
     q: 'Can I cancel anytime?',
     a: 'Yes. Cancel in the dashboard at period end. Access continues until the cycle finishes.',
+  },
+  {
+    q: 'Which plans include Journey Branch?',
+    a: 'Journey Branch — routing a WhatsApp journey down a different path based on a condition — is available on Growth and Scale only. Launch does not include it.',
   },
 ];
 

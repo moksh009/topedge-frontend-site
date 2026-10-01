@@ -679,7 +679,7 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     subtitle:
       'Abandoned cart, COD confirm, and shipping on a visual canvas.\nMeta-approved templates, recovered ₹, not vanity sends.',
     answerFirst:
-      'TopEdge Journeys is a visual WhatsApp automation builder for Shopify India D2C. Trigger abandoned checkout, COD confirmation, and shipping updates with Meta-approved templates, branch by payment method, and attribute recovered revenue in ₹—without engineering tickets.',
+      'TopEdge Journeys is a visual WhatsApp automation builder for Shopify India D2C. Trigger abandoned checkout, COD confirmation, and shipping updates with Meta-approved templates, branch by payment method, and attribute recovered revenue in ₹—without engineering tickets. Journey Branch is on Growth and Scale.',
     faqs: [
       {
         question: 'What is a WhatsApp journey for Shopify?',

@@ -1952,3 +1952,133 @@
     flex-direction: column;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Plain-text plan summary (crawler / LLM readable, rendered from the catalog)
+   --------------------------------------------------------------------------- */
+.mkt-pricing__plan-text {
+  margin: 2.5rem 0 0;
+}
+
+.mkt-pricing__plan-text-head {
+  margin: 0 0 0.85rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #0f172a;
+}
+
+/* Scroll container, so a narrow screen never forces the page itself sideways. */
+.mkt-pricing__text-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.mkt-pricing__text-table {
+  width: 100%;
+  min-width: 34rem;
+  border-collapse: collapse;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: #475569;
+}
+
+.mkt-pricing__text-table th,
+.mkt-pricing__text-table td {
+  padding: 0.5rem 0.7rem;
+  border: 1px solid #e5e7eb;
+  text-align: left;
+  vertical-align: top;
+}
+
+.mkt-pricing__text-table thead th {
+  font-weight: 600;
+  color: #0f172a;
+  background: #f8fafc;
+  white-space: nowrap;
+}
+
+.mkt-pricing__text-table tbody th {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.mkt-pricing__plan-text-list {
+  margin: 0.85rem 0 0;
+  padding: 0 0 0 1.1rem;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: #475569;
+}
+
+.mkt-pricing__plan-text-list strong {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.mkt-pricing__plan-text-note {
+  margin: 0.85rem 0 0;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: #64748b;
+}
+
+/* Below 600px the 5 columns cannot fit, and side-scrolling hid the Journey
+   Branch column entirely. Stack each row into label/value pairs instead: same
+   table markup for crawlers, no horizontal scroll, nothing cut off. */
+@media (max-width: 600px) {
+  .mkt-pricing__plan-text {
+    margin-top: 2rem;
+  }
+
+  .mkt-pricing__text-table {
+    min-width: 0;
+    font-size: 0.8125rem;
+  }
+
+  .mkt-pricing__text-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .mkt-pricing__text-table tbody tr {
+    display: block;
+    margin-bottom: 0.7rem;
+    border: 1px solid #e5e7eb;
+  }
+
+  .mkt-pricing__text-table tbody th {
+    display: block;
+    padding: 0.5rem 0.7rem;
+    border: 0;
+    border-bottom: 1px solid #e5e7eb;
+    background: #f8fafc;
+  }
+
+  .mkt-pricing__text-table tbody td {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.45rem 0.7rem;
+    border: 0;
+    text-align: right;
+  }
+
+  .mkt-pricing__text-table tbody td + td {
+    border-top: 1px solid #f1f5f9;
+  }
+
+  .mkt-pricing__text-table tbody td::before {
+    content: attr(data-label);
+    flex: 0 0 auto;
+    font-weight: 600;
+    color: #0f172a;
+    text-align: left;
+  }
+}
