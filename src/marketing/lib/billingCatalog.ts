@@ -132,7 +132,12 @@ function cyclePricing(
   return { effectiveMonthlyLabel, billedLabel, perDayLabel, saveLabel, showPerDay };
 }
 
-/** Used when the catalog API is down. Label as “Prices as of Aug 2026”. */
+/**
+ * Used when the catalog API is down, and as the pre-fetch seed on first render.
+ * Kept price-accurate against the live catalog by scripts/check-catalog-drift.mjs,
+ * which fails the build on price drift. Because it is also the seed, `source:
+ * 'fallback'` alone does NOT mean a fetch failed — see PricingPage.
+ */
 export const FALLBACK_CATALOG: BillingCatalog = {
   currency: 'INR',
   trialDays: 14,

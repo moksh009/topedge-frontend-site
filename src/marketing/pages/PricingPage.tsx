@@ -31,14 +31,25 @@ const ease = [0.22, 1, 0.36, 1] as const;
 export default function PricingPage() {
   const [catalog, setCatalog] = useState<BillingCatalog>(FALLBACK_CATALOG);
   const [cycle, setCycle] = useState<BillingCycle>('yearly');
+  // Only ever true after a real client-side fetch came back without live data.
+  // Starts false so the note can never reach prerendered / server HTML, where
+  // `catalog` is still the un-fetched FALLBACK_CATALOG seed.
+  const [catalogFetchFailed, setCatalogFetchFailed] = useState(false);
   const reduceMotion = useReducedMotion();
 
   useEffect(() => {
     let alive = true;
+    const isPrerender = Boolean(
+      (window as Window & { __TOPEDGE_PRERENDER__?: boolean }).__TOPEDGE_PRERENDER__,
+    );
     fetchBillingCatalog().then((live) => {
       if (!alive) return;
       setCatalog(live);
       setCycle(live.defaultCycle || 'yearly');
+      // fetchBillingCatalog swallows errors and hands back FALLBACK_CATALOG, so a
+      // resolved catalog still marked 'fallback' *is* the failure signal. Never
+      // surface it during prerender: that HTML is what crawlers read.
+      setCatalogFetchFailed(!isPrerender && live.source === 'fallback');
     });
     return () => {
       alive = false;
@@ -115,8 +126,10 @@ export default function PricingPage() {
             <PlanGrid plans={catalog.plans} cycle={cycle} />
             <div className="mkt-pricing__footnote">
               <p className="mkt-gst">{GST_FOOTNOTE} Prices are exclusive of tax.</p>
-              {catalog.source === 'fallback' ? (
-                <p className="mkt-fallback">Prices as of Aug 2026 · live catalog unavailable</p>
+              {catalogFetchFailed ? (
+                <p className="mkt-fallback">
+                  Live pricing is unavailable right now · showing our last published prices
+                </p>
               ) : null}
             </div>
 

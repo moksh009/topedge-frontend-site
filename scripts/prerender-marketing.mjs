@@ -20,6 +20,40 @@ const PORT = Number(process.env.PRERENDER_PORT || 4179);
 const BASE = `http://127.0.0.1:${PORT}`;
 const viteBin = path.join(root, 'node_modules', 'vite', 'bin', 'vite.js');
 
+/**
+ * Fetch the live billing catalog from Node, with NO Origin header.
+ *
+ * The API 403s browser origins it does not know, and the prerender preview server
+ * runs on http://127.0.0.1:<PORT>, so the page's own fetch can never succeed here
+ * (verified: OPTIONS and GET both return 403 for that Origin, while a no-Origin
+ * server-side GET returns 200). Returns the raw JSON text, or null to leave the
+ * page on its bundled FALLBACK_CATALOG seed.
+ */
+async function fetchLiveCatalog(url) {
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), 20000);
+  try {
+    const res = await fetch(url, { signal: ctrl.signal, headers: { Accept: 'application/json' } });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const text = await res.text();
+    const json = JSON.parse(text);
+    if (!json?.plans?.length) throw new Error('empty catalog');
+    console.log(`   \u21b3 live catalog fetched for prerender (${json.plans.length} plans)`);
+    return text;
+  } catch (err) {
+    console.warn('');
+    console.warn('\u26a0\ufe0f  \u26a0\ufe0f  \u26a0\ufe0f   PRERENDER COULD NOT FETCH THE LIVE CATALOG   \u26a0\ufe0f  \u26a0\ufe0f  \u26a0\ufe0f');
+    console.warn(`   ${url}`);
+    console.warn(`   ${err.message}`);
+    console.warn('   Prerendered pricing HTML will fall back to the bundled FALLBACK_CATALOG.');
+    console.warn('   Run `node scripts/check-catalog-drift.mjs` to confirm those prices are current.');
+    console.warn('');
+    return null;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
 }
@@ -254,6 +288,27 @@ async function main() {
     await page.addInitScript(() => {
       window.__TOPEDGE_PRERENDER__ = true;
     });
+
+    // Serve the live catalog to the page from Node, so prerendered pricing HTML
+    // carries real prices instead of the FALLBACK_CATALOG seed. Mirrors how
+    // billingCatalog.ts resolves CATALOG_URL from the same env vars Vite reads.
+    const catalogUrl =
+      process.env.VITE_BILLING_CATALOG_URL ||
+      process.env.NEXT_PUBLIC_BILLING_CATALOG_URL ||
+      'https://api.topedgeai.com/api/billing/catalog';
+    const liveCatalogBody = await fetchLiveCatalog(catalogUrl);
+    await page.route(
+      (url) => url.href.split('?')[0].endsWith('/api/billing/catalog'),
+      async (route) => {
+        if (!liveCatalogBody) return route.continue();
+        await route.fulfill({
+          status: 200,
+          contentType: 'application/json',
+          headers: { 'access-control-allow-origin': '*' },
+          body: liveCatalogBody,
+        });
+      },
+    );
 
     let ok = 0;
     let fail = 0;
