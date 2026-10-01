@@ -126,7 +126,7 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     subtitle:
       'Look up orders, update addresses, and hand off to Live Chat.\nShopify sync built for India D2C WhatsApp support.',
     answerFirst:
-      'TopEdge Flow Builder is a Shopify-aware WhatsApp chatbot canvas for India D2C. Look up orders, update addresses, and hand off to Live Chat with order context—OAuth sync and webhooks, not a generic script bot.',
+      'TopEdge Flow Builder is a Shopify-aware WhatsApp automation flow builder for India D2C. Look up orders, update addresses, and hand off to Live Chat with order context—OAuth sync and webhooks, not a generic script bot.',
     faqs: [
       {
         question: 'How is Flow Builder different from Journeys?',

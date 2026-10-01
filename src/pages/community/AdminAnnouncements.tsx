@@ -163,7 +163,7 @@ const AdminAnnouncements = () => {
                 value={formData.title}
                 onChange={handleChange}
                 className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-slate-900 font-medium placeholder:text-slate-400 focus:bg-white focus:ring-4 focus:ring-slate-100 focus:border-slate-300 outline-none transition-all"
-                placeholder="e.g. Introducing Voice Agents 2.0"
+                placeholder="e.g. Introducing Journey Branch 2.0"
               />
             </div>
 

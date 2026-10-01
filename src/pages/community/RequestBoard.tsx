@@ -537,7 +537,7 @@ export default function RequestBoard() {
                       value={form.title}
                       onChange={e => setForm({ ...form, title: e.target.value })}
                       className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all font-bold text-slate-900 placeholder:font-normal placeholder:text-slate-400"
-                      placeholder="e.g. AI Voice Agent for Dental Clinic"
+                      placeholder="e.g. WhatsApp cart recovery for apparel stores"
                       required
                     />
                   </div>
