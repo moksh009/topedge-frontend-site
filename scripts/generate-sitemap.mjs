@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { getSitemapPaths } from './marketing-urls.mjs';
+import { loadDocsRegistry } from './load-docs-content.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
@@ -28,8 +29,18 @@ function loadContentDates() {
 
 const dates = loadContentDates();
 
+/**
+ * Docs carry their own `updated` date per article, so lastmod is the real edit
+ * date rather than a file mtime shared across the whole group.
+ */
+const { DOC_ARTICLES, docPathFor } = await loadDocsRegistry();
+const docDates = new Map(DOC_ARTICLES.map((a) => [docPathFor(a.slug), a.updated]));
+
 const priorityFor = (p) => {
   if (p === '/') return '1.0';
+  // Docs hub ranks with the other hubs; individual pages sit just under blog posts.
+  if (p === '/docs') return '0.9';
+  if (p.startsWith('/docs/')) return '0.8';
   if (p === '/pricing' || p === '/features' || p.includes('journeys') || p.includes('cart-recovery'))
     return '0.95';
   if (p === '/privacy' || p === '/terms') return '0.3';
@@ -39,6 +50,7 @@ const priorityFor = (p) => {
 };
 
 function lastmodFor(p) {
+  if (docDates.has(p)) return docDates.get(p);
   if (p === '/') return dates.home || dates.featurePages;
   if (p === '/pricing') return dates.pricing;
   if (p === '/privacy' || p === '/terms') return dates.featurePages;
@@ -62,7 +74,7 @@ const paths = getSitemapPaths();
 const urls = paths
   .map((p) => {
     const loc = p === '/' ? `${SITE}/` : `${SITE}${p}`;
-    const changefreq = p === '/' || p === '/blog' ? 'weekly' : 'monthly';
+    const changefreq = p === '/' || p === '/blog' || p === '/docs' ? 'weekly' : 'monthly';
     return `  <url><loc>${loc}</loc><lastmod>${lastmodFor(p)}</lastmod><changefreq>${changefreq}</changefreq><priority>${priorityFor(p)}</priority></url>`;
   })
   .join('\n');

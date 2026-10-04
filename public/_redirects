@@ -20,6 +20,26 @@ https://www.topedgeai.com/*  https://topedgeai.com/:splat  301!
 # Community shell
 /community/*  /community.html  200!
 
+# Legacy dashboard doc paths → the public documentation.
+# dash.topedgeai.com/docs/* was noindexed, but these paths appear in older
+# support replies and in-app links, so they resolve rather than 404.
+/docs/setup  /docs/connect-whatsapp  301!
+/docs/flow-builder  /docs/reference/flow-builder  301!
+/docs/live-chat  /docs/reference/live-chat  301!
+/docs/leads-orders  /docs/reference/orders  301!
+/docs/shopify-automation  /docs/reference/journeys  301!
+/docs/audience-hub  /docs/reference/audience-crm  301!
+/docs/compliance  /docs/reference/opt-in-tools  301!
+/docs/templates  /docs/reference/meta-manager  301!
+/docs/campaigns  /docs/reference/campaigns  301!
+/docs/intelligence-hub  /docs/reference/ai-brain  301!
+/docs/ecommerce  /docs/reference/commerce  301!
+/docs/analytics  /docs/reference/analytics  301!
+/docs/settings  /docs/reference/settings-billing  301!
+/docs/cart-leads  /docs/reference/store-growth  301!
+/docs/warranty-hub  /docs/reference/warranty-hub  301!
+/docs/system-admin  /docs  301!
+
 # Feature aliases → canonical hubs
 /features/shopify  /integrations  301!
 /features/shopify/  /integrations  301!
@@ -80,13 +100,12 @@ https://www.topedgeai.com/*  https://topedgeai.com/:splat  301!
 
 # BEGIN GENERATED — do not edit (scripts/generate-redirects.mjs)
 # Client-only SPA shells (must stay above the 404 catch-all)
-# login/signup/docs: noindex shells from build-static.js (never the homepage prerender)
+# login/signup: noindex shells from build-static.js (never the homepage prerender)
+# /docs is NOT here — it is prerendered, indexable HTML (see marketing-urls.mjs).
 /login  /login.html  200
 /login/  /login.html  200
 /signup  /signup.html  200
 /signup/  /signup.html  200
-/docs  /docs.html  200
-/docs/  /docs.html  200
 /admin/*  /admin.html  200
 /dev/*  /dev.html  200
 

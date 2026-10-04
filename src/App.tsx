@@ -26,7 +26,7 @@ const IntegrationsPage = React.lazy(() => import('./marketing/pages/Integrations
 const CustomersPage = React.lazy(() => import('./marketing/pages/CustomersPage'));
 const SignupRedirect = React.lazy(() => import('./marketing/pages/SignupRedirect'));
 const LoginRedirect = React.lazy(() => import('./marketing/pages/LoginRedirect'));
-const DocsRedirect = React.lazy(() => import('./marketing/pages/DocsRedirect'));
+const DocsPage = React.lazy(() => import('./marketing/pages/DocsPage'));
 const Blog = React.lazy(() => import('./pages/Blog'));
 const BlogPost = React.lazy(() => import('./pages/BlogPost'));
 const TermsPage = React.lazy(() => import('./marketing/pages/TermsPage'));
@@ -307,7 +307,8 @@ const AnimatedRoutes = () => {
           />
           <Route path="/signup" element={<SignupRedirect />} />
           <Route path="/login" element={<LoginRedirect />} />
-          <Route path="/docs" element={<DocsRedirect />} />
+          <Route path="/docs" element={<DocsPage />} />
+          <Route path="/docs/*" element={<DocsPage />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<TermsPage />} />

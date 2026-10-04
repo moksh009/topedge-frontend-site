@@ -35,11 +35,12 @@ fs.writeFileSync(communityPath, html);
 console.log("✅ dist/community.html created");
 
 // Client-only redirects to dash.topedgeai.com: crawlable, never indexed.
+// `docs` is deliberately absent — documentation is prerendered and indexable, so a
+// noindex shell here would overwrite dist/docs.html and deindex the whole set.
 // Must run before prerender, while dist/index.html is still the bare SPA shell.
 const APP_SHELLS = {
   signup: 'Opening signup | TopEdge',
   login: 'Signing in | TopEdge',
-  docs: 'Docs | TopEdge',
   admin: 'Admin | TopEdge',
   dev: 'TopEdge',
 };

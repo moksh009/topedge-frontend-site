@@ -73,6 +73,7 @@ const productColumns: NavColumn[] = [
 
 const primaryLinks = [
   { label: 'Pricing', href: '/pricing' },
+  { label: 'Docs', href: '/docs' },
   { label: 'Customers', href: '/customers' },
 ] as const;
 

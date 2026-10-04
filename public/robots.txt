@@ -2,8 +2,21 @@
 User-agent: *
 Allow: /
 
-# /signup, /login, /docs, /community/*, /admin/* and /dev/* stay crawlable so bots can read their noindex meta tag
+Disallow: /admin/
+Disallow: /private/
+Disallow: /api/
+Disallow: /community/admin/
+Disallow: /community/login
+Disallow: /community/signup
+Disallow: /community/settings
+Disallow: /community/dashboard
+Disallow: /community/approve-access
+Disallow: /dev/
+Disallow: /signup
+Disallow: /login
 
+Allow: /docs
+Allow: /docs/
 Allow: /blog/
 Allow: /features/
 Allow: /pricing/

@@ -13,4 +13,3 @@ export function isMarketingRoute(pathname: string): boolean {
 }
 
 export { DASH_SIGNUP, DASH_LOGIN, DASH_ORIGIN } from './lib/billingCatalog';
-export const DASH_DOCS = 'https://dash.topedgeai.com/docs';

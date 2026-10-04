@@ -28,6 +28,8 @@ export const PAGE_TYPE_SCHEMA = {
   /** Compare = editorial; no Product/offers (Merchant listings). */
   compare: ['WebPage', 'BreadcrumbList'],
   blog: ['BlogPosting'],
+  /** Documentation — TechArticle + breadcrumbs; HowTo/FAQPage are per-page extras. */
+  docs: ['TechArticle', 'BreadcrumbList'],
   legal: [],
   notFound: [],
   /** Marketing hubs — budgets + uniqueness only */
@@ -40,6 +42,7 @@ export function pageTypeForPath(route) {
   if (route === '/') return 'home';
   if (route === '/pricing') return 'pricing';
   if (route === '/privacy' || route === '/terms') return 'legal';
+  if (route === '/docs' || route.startsWith('/docs/')) return 'docs';
   if (route.startsWith('/blog/') && route !== '/blog') return 'blog';
   if (route.startsWith('/features/') || route === '/features') return 'feature';
   if (route.startsWith('/compare')) return 'compare';

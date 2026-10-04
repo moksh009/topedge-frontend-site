@@ -37,6 +37,17 @@ const columns: { title: string; links: FootLink[] }[] = [
     ],
   },
   {
+    title: 'Docs',
+    links: [
+      { label: 'Documentation', href: '/docs' },
+      { label: 'Quickstart', href: '/docs/quickstart' },
+      { label: 'Cart recovery', href: '/docs/guides/abandoned-cart-recovery' },
+      { label: 'COD confirmation', href: '/docs/guides/cod-confirmation' },
+      { label: 'Order updates', href: '/docs/guides/order-status-updates' },
+      { label: 'Troubleshooting', href: '/docs/troubleshooting' },
+    ],
+  },
+  {
     title: 'Compare',
     links: [
       { label: 'TopEdge vs WATI', href: '/compare/wati' },
