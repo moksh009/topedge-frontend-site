@@ -8,7 +8,7 @@ export const CONTENT_DATES = {
   /** Last edit of 3-way compare page (+ feature matrix). */
   compareThreeWay: '2026-09-22',
   /** Last edit of blogPosts.ts (used as Article dateModified fallback). */
-  blogPosts: '2026-09-27',
+  blogPosts: '2026-10-04',
   /** Last edit of feature / product page content. */
   featurePages: '2026-10-01',
   /** Last edit of published plan catalog (pricing Offers). */
@@ -17,27 +17,31 @@ export const CONTENT_DATES = {
 
 export const BLOG_DATES_BY_SLUG = {
   "whatsapp-abandoned-cart-recovery-shopify": "2026-09-21",
-  "shopify-whatsapp-automation-what-to-automate-first": "2026-09-22",
+  "shopify-whatsapp-automation-what-to-automate-first": "2026-10-04",
   "cod-confirmation-whatsapp-reduce-rto-shopify": "2026-09-21",
-  "ecommerce-automation-whatsapp-vs-email-india": "2026-09-04",
+  "ecommerce-automation-whatsapp-vs-email-india": "2026-10-04",
   "meta-whatsapp-cloud-api-shopify-templates": "2026-09-22",
-  "whatsapp-shared-inbox-shopify-order-context": "2026-09-06",
-  "shopify-automation-checklist-whatsapp-cart-recovery": "2026-09-07",
-  "best-whatsapp-automation-tools-shopify-india": "2026-09-21",
+  "whatsapp-shared-inbox-shopify-order-context": "2026-10-04",
+  "shopify-automation-checklist-whatsapp-cart-recovery": "2026-10-04",
+  "best-whatsapp-automation-tools-shopify-india": "2026-10-04",
   "how-to-reduce-rto-with-whatsapp-cod-confirmation": "2026-09-22",
-  "what-is-ecommerce-automation-shopify-whatsapp": "2026-09-10",
-  "ai-whatsapp-chatbot-for-shopify-india": "2026-09-11",
-  "zoko-alternative-shopify-india": "2026-09-20",
-  "getgabs-alternative-shopify-whatsapp": "2026-09-20",
-  "kanal-whatsapp-alternative-shopify": "2026-09-20",
-  "how-to-choose-whatsapp-app-shopify-app-store": "2026-09-20",
+  "what-is-ecommerce-automation-shopify-whatsapp": "2026-10-04",
+  "ai-whatsapp-chatbot-for-shopify-india": "2026-10-04",
+  "zoko-alternative-shopify-india": "2026-10-04",
+  "getgabs-alternative-shopify-whatsapp": "2026-10-04",
+  "kanal-whatsapp-alternative-shopify": "2026-10-04",
+  "how-to-choose-whatsapp-app-shopify-app-store": "2026-10-04",
   "whatsapp-business-api-pricing-india": "2026-09-20",
   "dondy-alternative-shopify-india": "2026-09-21",
   "whatsapp-automation-for-shopify": "2026-09-22",
   "ai-chatbot-for-shopify": "2026-09-21",
   "best-whatsapp-apps-for-shopify": "2026-09-22",
-  "organic-vs-paid-ecommerce-marketing-2026": "2026-09-23",
-  "cod-rto-benchmark-india-2026": "2026-09-25"
+  "organic-vs-paid-ecommerce-marketing-2026": "2026-10-04",
+  "cod-rto-benchmark-india-2026": "2026-10-04",
+  "profitable-ecommerce-business-india": "2026-10-04",
+  "how-to-automate-ecommerce-store-india": "2026-10-04",
+  "organic-ecommerce-leads-short-form-video": "2026-10-04",
+  "trending-products-to-sell-online-india-2026": "2026-10-04"
 } as const;
 
 export type ContentDateKey = keyof typeof CONTENT_DATES;

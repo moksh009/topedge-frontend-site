@@ -11,6 +11,7 @@
  *   npm run indexnow -- --dondy
  *   npm run indexnow -- --changed
  *   npm run indexnow -- --phase-e
+ *   npm run indexnow -- --oct-content   # Oct 2026 blogs + docs
  *   npm run indexnow -- --sitemap   # only when many URLs truly changed
  *
  * Deploy the key file BEFORE the first submit (public/<key>.txt → site root).
@@ -18,7 +19,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { getSitemapPaths } from './marketing-urls.mjs';
+import { DOC_PATHS, getSitemapPaths } from './marketing-urls.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
@@ -61,6 +62,33 @@ const CHANGED_PHASE_E = [
   '/blog/how-to-choose-whatsapp-app-shopify-app-store',
   '/blog/whatsapp-business-api-pricing-india',
   '/blog/cod-confirmation-whatsapp-reduce-rto-shopify',
+];
+
+/**
+ * Oct 2026 content drop: four new top-of-funnel guides, the blog index that now
+ * lists them, FAQPage markup added to nine existing posts, and the new public
+ * documentation set. Submit after the deploy is live, not before.
+ */
+const CHANGED_OCT_CONTENT = [
+  '/blog',
+  '/blog/profitable-ecommerce-business-india',
+  '/blog/how-to-automate-ecommerce-store-india',
+  '/blog/organic-ecommerce-leads-short-form-video',
+  '/blog/trending-products-to-sell-online-india-2026',
+  '/blog/ecommerce-automation-whatsapp-vs-email-india',
+  '/blog/whatsapp-shared-inbox-shopify-order-context',
+  '/blog/shopify-automation-checklist-whatsapp-cart-recovery',
+  '/blog/what-is-ecommerce-automation-shopify-whatsapp',
+  '/blog/ai-whatsapp-chatbot-for-shopify-india',
+  '/blog/zoko-alternative-shopify-india',
+  '/blog/getgabs-alternative-shopify-whatsapp',
+  '/blog/kanal-whatsapp-alternative-shopify',
+  '/blog/how-to-choose-whatsapp-app-shopify-app-store',
+  '/blog/cod-rto-benchmark-india-2026',
+  '/blog/organic-vs-paid-ecommerce-marketing-2026',
+  '/blog/shopify-whatsapp-automation-what-to-automate-first',
+  '/blog/best-whatsapp-automation-tools-shopify-india',
+  ...DOC_PATHS,
 ];
 
 const DONDYY = ['/compare/dondy', '/blog/dondy-alternative-shopify-india'];
@@ -123,6 +151,7 @@ async function main() {
   if (flags.has('dondy')) paths = DONDYY;
   else if (flags.has('changed')) paths = CHANGED_RECENT;
   else if (flags.has('phase-e')) paths = CHANGED_PHASE_E;
+  else if (flags.has('oct-content')) paths = CHANGED_OCT_CONTENT;
   else if (flags.has('sitemap')) paths = getSitemapPaths();
   else if (cliUrls.length) paths = cliUrls;
   else {

@@ -73,6 +73,10 @@ export const BLOG_SLUGS = [
   'dondy-alternative-shopify-india',
   'organic-vs-paid-ecommerce-marketing-2026',
   'cod-rto-benchmark-india-2026',
+  'profitable-ecommerce-business-india',
+  'how-to-automate-ecommerce-store-india',
+  'organic-ecommerce-leads-short-form-video',
+  'trending-products-to-sell-online-india-2026',
 ];
 
 /** Soft-404 shell — prerendered to dist/404.html (Netlify 404 document). Not in sitemap. */
