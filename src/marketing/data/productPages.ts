@@ -702,9 +702,9 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
           'No. TopEdge gates live sends on APPROVED templates so drafts and rejected copy cannot go out and damage quality rating.',
       },
     ],
-    seoTitle: 'WhatsApp Cart Recovery & COD Journeys for Shopify India | TopEdge',
+    seoTitle: 'WhatsApp Cart Recovery & COD Flows for Shopify | TopEdge',
     seoDescription:
-      'Visual WhatsApp journey builder for Shopify India D2C: abandoned cart recovery, COD confirmation, Meta approval gating, and recovered-revenue attribution in ₹.',
+      'Build WhatsApp journeys for abandoned carts and COD confirmation in a visual editor. Meta approval gating, recovered revenue tracked in ₹. Try free.',
     keywords:
       'WhatsApp cart recovery Shopify India, abandoned cart WhatsApp, COD confirmation WhatsApp, Shopify journey automation, Meta template approval journeys',
     hero: {
@@ -815,6 +815,7 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     relatedAccent: 'cluster',
     related: [
       { label: 'Cart recovery playbook', href: '/blog/whatsapp-abandoned-cart-recovery-shopify' },
+      { label: 'COD confirmation on WhatsApp', href: '/features/cod-confirmation' },
       { label: 'COD confirmation & RTO', href: '/blog/cod-confirmation-whatsapp-reduce-rto-shopify' },
       { label: 'Meta templates', href: '/features/meta-manager' },
       { label: 'Pricing', href: '/pricing' },

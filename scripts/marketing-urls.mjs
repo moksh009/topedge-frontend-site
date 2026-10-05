@@ -32,6 +32,8 @@ export const FEATURE_SLUGS = [
   'opt-in-tools',
   'profit-loss',
   'intent-detection',
+  // Dedicated page (src/marketing/pages/CodConfirmationPage.tsx), not in MARKETING_FEATURES.
+  'cod-confirmation',
 ];
 
 export const COMPARE_SLUGS = [

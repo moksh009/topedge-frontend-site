@@ -30,6 +30,7 @@ const columns: { title: string; links: FootLink[] }[] = [
     links: [
       { label: 'Pricing', href: '/pricing' },
       { label: 'Journey', href: '/features/journeys' },
+      { label: 'COD confirmation', href: '/features/cod-confirmation' },
       { label: 'Opt-in tools', href: '/features/opt-in-tools' },
       { label: 'Audience Campaigns', href: '/features/campaigns' },
       { label: 'Profit & costs', href: '/features/profit-loss' },

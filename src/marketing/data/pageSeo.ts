@@ -33,18 +33,18 @@ export type PageSeoEntry = {
 
 export const PAGE_SEO = {
   home: {
-    title: 'TopEdge AI: WhatsApp Automation for Shopify India',
+    title: 'Shopify WhatsApp COD Confirmation & Cart Recovery | TopEdge',
     description:
-      'WhatsApp automation for Shopify: abandoned cart recovery, COD confirmations, Live Chat with order context, and ecommerce journeys. Built for Indian D2C brands.',
+      'Confirm COD orders and recover abandoned carts on WhatsApp for Shopify. 14-day free trial, no card. Plans from ₹1,999/mo + GST. Built for Indian D2C.',
     keywords:
       'WhatsApp automation, Shopify automation, ecommerce automation, cart recovery, abandoned cart WhatsApp, WhatsApp for Shopify India, COD WhatsApp, D2C automation',
     path: '/',
     noSuffix: true,
   },
   pricing: {
-    title: 'TopEdge AI Pricing: Shopify WhatsApp Automation (₹)',
+    title: 'TopEdge Pricing: From ₹1,999/mo, 14-Day Free Trial',
     description:
-      'Transparent pricing for Shopify WhatsApp automation, cart recovery, journeys, Live Chat, and Meta Cloud API pass-through. 14-day free trial. GST invoices included.',
+      'Launch ₹1,999, Growth ₹3,999, Scale ₹6,499 a month + GST. Yearly saves 20%. Meta fees are billed by Meta at 0% markup. GST invoices, no card for trial.',
     keywords:
       'WhatsApp automation pricing, Shopify WhatsApp pricing, ecommerce automation cost India, cart recovery software pricing',
     path: '/pricing',
@@ -66,9 +66,9 @@ export const PAGE_SEO = {
     path: '/integrations',
   },
   customers: {
-    title: 'Shopify Brands on WhatsApp Automation | Stories',
+    title: 'Indian Shopify Brands Using TopEdge | Customer Stories',
     description:
-      'See how Indian D2C brands use TopEdge for WhatsApp cart recovery, COD flows, shared inbox, and Meta-safe ecommerce campaigns on Shopify.',
+      'Customer stories from Indian D2C brands running WhatsApp cart recovery and COD flows with TopEdge on Shopify.',
     keywords:
       'WhatsApp marketing Shopify case study, cart recovery results India, D2C WhatsApp automation',
     path: '/customers',

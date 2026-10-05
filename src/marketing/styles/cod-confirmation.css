@@ -1,0 +1,295 @@
+/* /features/cod-confirmation — extends the shared .mkt-pf product-page system.
+   Tokens come from marketing.css (:root --mkt-*) and product-feature.css (.mkt-pf --pf-*). */
+
+.mkt-cod__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.65rem;
+  margin-top: 1.4rem;
+}
+
+.mkt-cod__micro {
+  margin: 0.8rem 0 0;
+  font-size: 0.8125rem;
+  color: var(--pf-muted);
+}
+
+/* ── Example WhatsApp message ─────────────────────────── */
+.mkt-cod__stage {
+  display: flex;
+  justify-content: center;
+  padding: 1.75rem 1.25rem 3rem;
+}
+
+.mkt-cod__phone {
+  margin: 0;
+  width: min(100%, 21rem);
+  border-radius: 24px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow:
+    0 0 0 1px rgba(15, 23, 42, 0.04),
+    0 8px 24px -8px rgba(15, 23, 42, 0.14),
+    0 28px 56px -24px rgba(76, 29, 149, 0.22);
+}
+
+.mkt-cod__phone-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.8rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #fff;
+  background: #128c7e;
+}
+
+.mkt-cod__phone-dot {
+  width: 1.65rem;
+  height: 1.65rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.mkt-cod__chat {
+  padding: 1.1rem 0.9rem 1.2rem;
+  background: #efeae2;
+}
+
+.mkt-cod__bubble {
+  position: relative;
+  max-width: 100%;
+  padding: 0.7rem 0.8rem 1.35rem;
+  border-radius: 4px 14px 14px 14px;
+  background: #fff;
+  box-shadow: 0 1px 1px rgba(15, 23, 42, 0.1);
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: var(--pf-ink);
+  text-align: left;
+}
+
+.mkt-cod__bubble p {
+  margin: 0;
+}
+
+.mkt-cod__bubble p + p {
+  margin-top: 0.5rem;
+}
+
+.mkt-cod__time {
+  position: absolute;
+  right: 0.65rem;
+  bottom: 0.4rem;
+  font-size: 0.6875rem;
+  color: var(--pf-soft);
+}
+
+.mkt-cod__replies {
+  display: grid;
+  gap: 0.4rem;
+  margin-top: 0.4rem;
+}
+
+.mkt-cod__reply {
+  display: block;
+  padding: 0.65rem 0.5rem;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 1px 1px rgba(15, 23, 42, 0.1);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-align: center;
+  color: #0b7a6e;
+}
+
+.mkt-cod__caption {
+  padding: 0.7rem 1rem 0.85rem;
+  font-size: 0.75rem;
+  text-align: center;
+  color: var(--pf-muted);
+  background: #fff;
+}
+
+/* ── Shared card shell ─────────────────────────────────── */
+.mkt-cod__card {
+  max-width: 44rem;
+  margin: 0 auto;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow:
+    0 0 0 1px rgba(15, 23, 42, 0.03),
+    0 2px 8px rgba(15, 23, 42, 0.05),
+    0 8px 24px -8px rgba(15, 23, 42, 0.1),
+    0 18px 40px -20px rgba(76, 29, 149, 0.08);
+}
+
+/* ── RTO maths ─────────────────────────────────────────── */
+.mkt-cod__maths {
+  padding: 1.5rem 1.4rem;
+  text-align: center;
+}
+
+.mkt-cod__maths-line {
+  margin: 0;
+  font-size: clamp(0.95rem, 2.4vw, 1.1rem);
+  line-height: 1.6;
+  color: var(--pf-ink);
+}
+
+.mkt-cod__maths-line + .mkt-cod__maths-line {
+  margin-top: 0.45rem;
+}
+
+.mkt-cod__maths-line span {
+  white-space: nowrap;
+}
+
+.mkt-cod__maths-line strong {
+  font-weight: 600;
+  color: #5b21b6;
+}
+
+.mkt-cod__note {
+  margin: 1.05rem 0 0;
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: var(--pf-muted);
+}
+
+.mkt-cod__note a,
+.mkt-cod__foot a {
+  color: var(--pf-violet);
+  font-weight: 500;
+}
+
+/* ── Plans table ───────────────────────────────────────── */
+.mkt-cod__table-wrap {
+  overflow-x: auto;
+}
+
+.mkt-cod__table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.mkt-cod__table th,
+.mkt-cod__table td {
+  padding: 0.95rem 1rem;
+  text-align: center;
+  border-bottom: 1px solid var(--pf-line);
+  color: var(--pf-ink);
+}
+
+.mkt-cod__table thead th {
+  font-weight: 600;
+  color: #5b21b6;
+}
+
+.mkt-cod__table tbody th {
+  text-align: left;
+  font-weight: 500;
+}
+
+.mkt-cod__table tbody tr:last-child th,
+.mkt-cod__table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.mkt-cod__row-note {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--pf-muted);
+}
+
+.mkt-cod__price-row td,
+.mkt-cod__price-row th {
+  background: var(--pf-wash);
+}
+
+.mkt-cod__mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mkt-cod__mark.is-on {
+  color: #0f9d6a;
+}
+
+.mkt-cod__mark.is-off {
+  color: #b8c0cc;
+}
+
+.mkt-cod__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.mkt-cod__foot {
+  max-width: 44rem;
+  margin: 0.9rem auto 0;
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  text-align: center;
+  color: var(--pf-muted);
+}
+
+/* ── Honest limits ─────────────────────────────────────── */
+.mkt-cod__limits {
+  list-style: none;
+  padding: 0.5rem 1.4rem;
+}
+
+.mkt-cod__limits li {
+  position: relative;
+  padding: 0.85rem 0 0.85rem 1.35rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--pf-ink);
+  border-bottom: 1px solid var(--pf-line);
+}
+
+.mkt-cod__limits li:last-child {
+  border-bottom: 0;
+}
+
+.mkt-cod__limits li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 1.35rem;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: var(--pf-violet);
+}
+
+@media (max-width: 640px) {
+  .mkt-cod__stage {
+    padding-bottom: 2.25rem;
+  }
+
+  .mkt-cod__table {
+    font-size: 0.8125rem;
+  }
+
+  .mkt-cod__table th,
+  .mkt-cod__table td {
+    padding: 0.75rem 0.4rem;
+  }
+
+  .mkt-cod__table tbody th {
+    width: 38%;
+    padding-left: 0.75rem;
+  }
+}

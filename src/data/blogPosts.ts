@@ -7,9 +7,9 @@ import type { BlogPost } from '../types/blog';
 export const blogPosts: BlogPost[] = [
   {
     id: 1,
-    title: 'Shopify Abandoned Cart Recovery with WhatsApp',
+    title: 'WhatsApp Abandoned Cart Recovery for Shopify',
     description:
-      'Learn Shopify abandoned cart recovery with WhatsApp: cart vs checkout, message timing, opt-in rules, workflows, and what to look for in recovery tools.',
+      'WhatsApp abandoned cart recovery for Shopify: cart vs checkout, message timing, templates, opt-in rules and what to look for in a recovery tool.',
     slug: 'whatsapp-abandoned-cart-recovery-shopify',
     date: '2026-09-01',
     updated: '2026-09-21',
@@ -447,9 +447,9 @@ export const blogPosts: BlogPost[] = [
   },
   {
     id: 3,
-    title: 'COD Confirmation on WhatsApp to Reduce RTO',
+    title: 'COD Confirmation on WhatsApp for Shopify',
     description:
-      'Use WhatsApp COD confirmation flows to reduce RTO on Shopify: utility templates, timing, confirm/reschedule/cancel paths, and operator takeover for Indian D2C.',
+      'Step-by-step COD confirmation on WhatsApp for Shopify India: when to send, template wording, no-reply handling, human takeover and the metrics to track.',
     slug: 'cod-confirmation-whatsapp-reduce-rto-shopify',
     date: '2026-09-03',
     updated: '2026-09-21',
@@ -570,7 +570,7 @@ export const blogPosts: BlogPost[] = [
 </details>
 </div>
 
-<p>Ship this with <a href="/features/journeys">COD confirmation journeys</a>, keep templates clean in <a href="/features/meta-manager">Meta Manager</a>, and see how other brands operate on <a href="/customers">customers</a>. Questions? <a href="/contact">Contact us</a> or review <a href="/pricing">pricing</a>.</p>
+<p>Ship this with <a href="/features/cod-confirmation">COD confirmation journeys</a>, keep templates clean in <a href="/features/meta-manager">Meta Manager</a>, and see how other brands operate on <a href="/customers">customers</a>. Questions? <a href="/contact">Contact us</a> or review <a href="/pricing">pricing</a>.</p>
 
 <p>See the full 2026 India RTO benchmark data → <a href="/blog/cod-rto-benchmark-india-2026">COD &amp; RTO in Indian D2C: the 2026 benchmark report</a>.</p>
 `,
@@ -1142,9 +1142,9 @@ export const blogPosts: BlogPost[] = [
   },
   {
     id: 9,
-    title: 'How to Reduce RTO with WhatsApp COD Confirmation',
+    title: 'How to Reduce RTO on Shopify COD Orders',
     description:
-      'Step-by-step: reduce RTO on Shopify with WhatsApp COD confirmation: timing, utility templates, reply paths, warehouse SOP, and operator takeover.',
+      'How to reduce RTO on Indian Shopify stores: why COD orders come back, a practical WhatsApp confirmation flow, reminder timing and what to measure.',
     slug: 'how-to-reduce-rto-with-whatsapp-cod-confirmation',
     date: '2026-09-09',
     updated: '2026-09-22',
@@ -1398,9 +1398,9 @@ export const blogPosts: BlogPost[] = [
   },
   {
     id: 12,
-    title: 'Looking for a Zoko Alternative for Shopify India?',
+    title: 'Zoko Alternative for Shopify India (2026)',
     description:
-      'When Zoko’s conversation metering and festival bill spikes become the problem: and what to check before switching to another Shopify WhatsApp stack.',
+      'Why Shopify India teams look for a Zoko alternative, what to require in a replacement (COD, templates, Meta billing) and how to test a switch in a day.',
     slug: 'zoko-alternative-shopify-india',
     date: '2026-09-20',
     updated: '2026-10-04',
@@ -1704,9 +1704,9 @@ export const blogPosts: BlogPost[] = [
   },
   {
     id: 16,
-    title: 'WhatsApp Business API Pricing in India',
+    title: 'WhatsApp Business API Pricing India (2026)',
     description:
-      'What Meta charges for WhatsApp Cloud API conversations in India, how categories work, and why 0% platform markup matters when you compare Shopify WhatsApp apps.',
+      'Why WhatsApp API pricing in India is two bills: Meta per-message charges plus your platform fee. Where apps add cost on top and how to forecast spend.',
     slug: 'whatsapp-business-api-pricing-india',
     date: '2026-09-20',
     readTime: '11 min',
@@ -2589,7 +2589,7 @@ export const blogPosts: BlogPost[] = [
     id: 20,
     title: 'Best WhatsApp Apps for Shopify in 2026',
     description:
-      'Best WhatsApp apps for Shopify in 2026: chat, cart recovery, marketing, and full automation platforms compared by use case: not a thin TopEdge-only ranking.',
+      'Best WhatsApp apps for Shopify in 2026, compared by job: cart recovery, COD, shared inbox and marketing. Pricing, Meta costs and who each type suits.',
     slug: 'best-whatsapp-apps-for-shopify',
     date: '2026-09-22',
     updated: '2026-09-22',
@@ -3356,7 +3356,7 @@ export const blogPosts: BlogPost[] = [
 <h2 id="the-fix">The fix, in brief</h2>
 <p>Confirm intent before pick and pack. Send one approved WhatsApp utility template with the order number and ₹ total, branch on confirm / reschedule / cancel, send one reminder, then apply a written hold-or-cancel policy. The cost is friction: some genuine buyers will never reply, and your policy decides whether you lose them or ship the risk.</p>
 <p>The direct cost is Meta's per-message fee for each utility template, plus your WhatsApp platform's plan. Meta's current India rates are in our <a href="/blog/whatsapp-business-api-pricing-india">WhatsApp Business API pricing guide for India</a>.</p>
-<p>The setup detail lives in two playbooks: <a href="/blog/cod-confirmation-whatsapp-reduce-rto-shopify">WhatsApp COD confirmation setup for Shopify</a> and the <a href="/blog/how-to-reduce-rto-with-whatsapp-cod-confirmation">step-by-step RTO reduction playbook</a>. Build the flow with <a href="/features/journeys">COD confirmation journeys</a>, then <a href="/features/profit-loss">measure your own RTO %</a> against the benchmarks above.</p>
+<p>The setup detail lives in two playbooks: <a href="/blog/cod-confirmation-whatsapp-reduce-rto-shopify">WhatsApp COD confirmation setup for Shopify</a> and the <a href="/blog/how-to-reduce-rto-with-whatsapp-cod-confirmation">step-by-step RTO reduction playbook</a>. Build the flow with <a href="/features/cod-confirmation">COD confirmation journeys</a>, then <a href="/features/profit-loss">measure your own RTO %</a> against the benchmarks above.</p>
 
 <h2 id="faq">Common questions</h2>
 <div class="mkt-blog-faq">
@@ -3389,7 +3389,7 @@ export const blogPosts: BlogPost[] = [
 <p class="mkt-blog-footnote">The 2026 India ecommerce RTO rate figures in this report come from Unicommerce/Shipway data across 410M+ shipments and 6,000+ brands, as reported by Apparel Resources and in Unicommerce’s April 2026 investor newsletter. They are not TopEdge merchant data. The ~39% figure is the November 2025 festive peak across the network; the ~21% figure is improved brands in February 2026: different months and different cohorts, so read the gap as directional, not as a controlled before-and-after. Neither is a forecast or guarantee for your store.</p>
 
 <p>RTO is one line in a bigger P&amp;L. To see where it sits against product cost, shipping, acquisition cost and platform fees, work through <a href="/blog/profitable-ecommerce-business-india">how to run a profitable ecommerce business in India</a>, which breaks down realistic net margins by category.</p>
-<p>Benchmark yourself, then act: <a href="/features/journeys">set up COD confirmation journeys</a>, <a href="/features/profit-loss">measure your own RTO % in Profit &amp; costs</a>, compare plans on <a href="/pricing">TopEdge pricing</a>, or <a href="/signup">start free on your Shopify store</a>.</p>
+<p>Benchmark yourself, then act: <a href="/features/cod-confirmation">set up COD confirmation journeys</a>, <a href="/features/profit-loss">measure your own RTO % in Profit &amp; costs</a>, compare plans on <a href="/pricing">TopEdge pricing</a>, or <a href="/signup">start free on your Shopify store</a>.</p>
 `,
   },
   {

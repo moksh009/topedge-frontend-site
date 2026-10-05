@@ -22,6 +22,7 @@ const Contact = React.lazy(() => import('./pages/Contact'));
 const Pricing = React.lazy(() => import('./marketing/pages/PricingPage'));
 const FeaturesPage = React.lazy(() => import('./marketing/pages/FeaturesPage'));
 const FeatureDetailPage = React.lazy(() => import('./marketing/pages/FeatureDetailPage'));
+const CodConfirmationPage = React.lazy(() => import('./marketing/pages/CodConfirmationPage'));
 const IntegrationsPage = React.lazy(() => import('./marketing/pages/IntegrationsPage'));
 const CustomersPage = React.lazy(() => import('./marketing/pages/CustomersPage'));
 const SignupRedirect = React.lazy(() => import('./marketing/pages/SignupRedirect'));
@@ -292,6 +293,7 @@ const AnimatedRoutes = () => {
           <Route path="/contact" element={<Contact />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/features" element={<FeaturesPage />} />
+          <Route path="/features/cod-confirmation" element={<CodConfirmationPage />} />
           <Route path="/features/:slug" element={<FeatureDetailPage />} />
           <Route path="/integrations" element={<IntegrationsPage />} />
           <Route path="/customers" element={<CustomersPage />} />

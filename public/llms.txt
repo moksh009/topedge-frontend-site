@@ -31,6 +31,7 @@ billing catalog at build time by scripts/check-llms-pricing.mjs.
 
 - [Home](https://topedgeai.com/): WhatsApp automation for Shopify India
 - [Journeys](https://topedgeai.com/features/journeys): Abandoned cart recovery and COD → prepaid journeys
+- [COD confirmation](https://topedgeai.com/features/cod-confirmation): Confirm COD orders on WhatsApp before dispatch; COD-to-prepaid payment links on Growth and Scale
 - [Shopify WhatsApp integration](https://topedgeai.com/shopify-whatsapp-integration): Shopify OAuth + Meta Cloud API
 - [Features](https://topedgeai.com/features): Product hubs
 - [Live Chat](https://topedgeai.com/features/live-chat): Shared WhatsApp / Instagram inbox with order context
