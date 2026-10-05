@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { DASH_SIGNUP } from '../lib/billingCatalog';
+import { attributionQuery } from '../lib/attribution';
 import '../styles/auth-redirect.css';
 
 const ALLOWED_PLANS = new Set(['launch', 'growth', 'scale']);
@@ -18,6 +19,10 @@ export default function SignupRedirect() {
     if (ALLOWED_PLANS.has(plan)) out.set('plan', plan);
     if (ALLOWED_CYCLES.has(cycle)) out.set('cycle', cycle === 'annual' ? 'yearly' : cycle);
     out.set('from', 'www');
+    // Ad attribution captured on this or an earlier page (see lib/attribution.ts).
+    for (const [k, v] of Object.entries(attributionQuery())) out.set(k, v);
+    const lp = String(incoming.get('lp') || '').replace(/[<>"'`]/g, '').slice(0, 200);
+    if (lp && !out.has('lp')) out.set('lp', lp);
     window.location.replace(`${DASH_SIGNUP}?${out.toString()}`);
   }, [location.search]);
 

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
 import './marketing/styles/marketing.css'
+import { captureAttribution } from './marketing/lib/attribution'
 
 // Marketing site defaults to light, never flash OS dark / body #000 on refresh
 const initializeTheme = () => {
@@ -13,6 +14,7 @@ const initializeTheme = () => {
 }
 
 initializeTheme()
+captureAttribution()
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

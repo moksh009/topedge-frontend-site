@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WhatsApp COD Confirmation for Shopify | TopEdge</title>
+<meta name="description" content="Confirm COD orders on WhatsApp before you ship them. Fewer fake orders and returned parcels for Indian Shopify stores. 14-day free trial, no card.">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#7C3AED">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon.png">
+<style>:root{--violet:#7c3aed;--violet-hover:#6d28d9;--ink:#0c1222;--muted:#5b6677;--line:#eef0f4;--wash:#f8f6ff;--chip-bg:#e4d4ff;--chip-ink:#5b21b6;--ok:#0f9d6a;--font:-apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display','Inter',system-ui,'Segoe UI',Roboto,sans-serif}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font-family:var(--font);color:var(--ink);background:#fff;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:var(--violet)}
+h1,h2,h3,p,ul,ol,figure{margin:0}
+.wrap{width:min(100% - 2.5rem,68rem);margin:0 auto}
+.narrow{width:min(100% - 2.5rem,44rem);margin:0 auto}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+/* header: logo only, not a link */
+.top{padding:1.1rem 0}
+.brand{display:inline-flex;align-items:center;gap:.55rem;font-size:1rem;font-weight:500;letter-spacing:-.01em}
+.brand img{display:block;width:28px;height:28px}
+.brand span span{color:var(--violet)}
+/* hero */
+.hero{position:relative;text-align:center;padding:0 0 3.25rem;background:radial-gradient(60rem 28rem at 85% -10%,#e7d9ff 0,transparent 60%),radial-gradient(44rem 24rem at 5% 0,#dbeafe 0,transparent 62%),radial-gradient(40rem 22rem at 55% 110%,#fde7f3 0,transparent 60%),#f7f8fc}
+.hero h1{margin:1.6rem auto 0;max-width:54rem;font-size:clamp(2rem,6.4vw,3.1rem);font-weight:400;letter-spacing:-.034em;line-height:1.12;text-wrap:balance}
+.chip{color:var(--chip-ink);background:var(--chip-bg);border-radius:.45em;padding:.04em .24em .08em;white-space:nowrap}
+.sub{margin:1rem auto 0;max-width:34rem;font-size:clamp(1rem,2.4vw,1.15rem);color:var(--muted);text-wrap:balance}
+.cta-row{margin-top:1.6rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:2.875rem;padding:0 1.6rem;border-radius:9999px;background:var(--violet);color:#fff;font:inherit;font-size:1rem;font-weight:500;text-decoration:none;transition:background .2s}
+.btn:hover,.btn:focus-visible{background:var(--violet-hover)}
+.btn:focus-visible{outline:3px solid #c4b5fd;outline-offset:2px}
+.micro{margin-top:.8rem;font-size:.875rem;color:var(--muted)}
+/* sections */
+section{padding:3.25rem 0}
+.alt{background:var(--wash)}
+.head{text-align:center;margin-bottom:1.9rem}
+.head h2{font-size:clamp(1.4rem,3.6vw,1.9rem);font-weight:400;letter-spacing:-.03em;line-height:1.25}
+.head p{margin:.6rem auto 0;max-width:34rem;color:var(--muted);font-size:.95rem}
+.card{border-radius:20px;background:#fff;box-shadow:0 0 0 1px rgba(15,23,42,.03),0 2px 8px rgba(15,23,42,.05),0 8px 24px -8px rgba(15,23,42,.1),0 18px 40px -20px rgba(76,29,149,.08)}
+/* how it works + example message */
+.how{display:grid;gap:2rem;align-items:center}
+.steps{list-style:none;padding:0;counter-reset:s;border-top:1px solid var(--line)}
+.steps li{counter-increment:s;display:grid;grid-template-columns:2.4rem 1fr;gap:.9rem;padding:1.15rem 0;border-bottom:1px solid var(--line)}
+.steps li:before{content:'0' counter(s);font-size:.8rem;font-weight:600;color:var(--violet);padding-top:.15rem}
+.steps strong{display:block;font-weight:500;font-size:1rem}
+.steps span{display:block;margin-top:.2rem;font-size:.9rem;color:var(--muted)}
+.phone{width:min(100%,20rem);margin:0 auto;border-radius:24px;overflow:hidden;background:#fff;box-shadow:0 0 0 1px rgba(15,23,42,.04),0 8px 24px -8px rgba(15,23,42,.14),0 28px 56px -24px rgba(76,29,149,.22)}
+.pbar{display:flex;align-items:center;gap:.6rem;padding:.8rem 1rem;font-size:.9rem;font-weight:500;color:#fff;background:#0b7a6e}
+.pbar i{width:1.65rem;height:1.65rem;border-radius:50%;background:rgba(255,255,255,.28)}
+.chat{padding:1.1rem .9rem 1.2rem;background:#efeae2}
+.bubble{position:relative;padding:.7rem .8rem 1.35rem;border-radius:4px 14px 14px 14px;background:#fff;box-shadow:0 1px 1px rgba(15,23,42,.1);font-size:.9rem;line-height:1.45}
+.bubble p+p{margin-top:.5rem}
+.bubble time{position:absolute;right:.65rem;bottom:.4rem;font-size:.7rem;color:#6b7686}
+.rep{display:grid;gap:.4rem;margin-top:.4rem}
+.rep span{display:block;padding:.7rem .5rem;border-radius:12px;background:#fff;box-shadow:0 1px 1px rgba(15,23,42,.1);font-size:.9rem;font-weight:500;text-align:center;color:#0b7a6e}
+.pcap{padding:.7rem 1rem .85rem;font-size:.78rem;text-align:center;color:var(--muted);background:#fff}
+/* cost */
+.costs{display:grid;gap:.9rem}
+.cost{padding:1.2rem 1.3rem}
+.cost strong{display:block;font-weight:500}
+.cost span{display:block;margin-top:.2rem;font-size:.9rem;color:var(--muted)}
+.costnote{margin-top:1.2rem;text-align:center;font-size:.95rem;color:var(--ink)}
+/* pricing */
+.plans{display:grid;gap:1rem}
+.plan{padding:1.5rem 1.4rem;text-align:left}
+.plan.em{box-shadow:0 0 0 2px var(--violet),0 18px 40px -20px rgba(76,29,149,.25)}
+.plan h3{font-size:1rem;font-weight:600;color:var(--chip-ink)}
+.price{margin-top:.6rem;font-size:2.1rem;font-weight:500;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.price small{font-size:.9rem;font-weight:400;color:var(--muted);letter-spacing:0}
+.yearly{margin-top:.3rem;font-size:.85rem;color:var(--muted)}
+.plan ul{list-style:none;padding:0;margin-top:1rem;border-top:1px solid var(--line)}
+.plan li{position:relative;padding:.6rem 0 0 1.4rem;font-size:.9rem}
+.plan li:before{content:'';position:absolute;left:.1rem;top:1.05rem;width:.7rem;height:.38rem;border-left:2px solid var(--ok);border-bottom:2px solid var(--ok);transform:rotate(-45deg)}
+.foot-note{margin-top:1.1rem;text-align:center;font-size:.85rem;color:var(--muted)}
+.mid-cta{margin-top:1.8rem;text-align:center}
+/* faq */
+details{border:1px solid var(--line);border-radius:12px;background:#fff;padding:0 1rem}
+details+details{margin-top:.65rem}
+summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:3rem;padding:.6rem 0;font-weight:500}
+summary::-webkit-details-marker{display:none}
+summary:after{content:'+';font-size:1.3rem;font-weight:400;color:var(--violet);line-height:1}
+details[open] summary:after{content:'\2212'}
+details p{padding:0 0 1rem;font-size:.92rem;color:var(--muted)}
+/* final cta + footer */
+.final{text-align:center;background:radial-gradient(48rem 20rem at 50% 110%,#e7d9ff 0,transparent 65%),#f7f8fc}
+.final h2{font-size:clamp(1.5rem,4vw,2.1rem);font-weight:400;letter-spacing:-.03em;line-height:1.2;text-wrap:balance}
+.foot{padding:1.6rem 0 2.2rem;text-align:center;font-size:.82rem;color:var(--muted)}
+.foot p+p{margin-top:.5rem}
+.foot a{color:var(--muted)}
+@media(min-width:760px){
+ .costs{grid-template-columns:repeat(3,1fr)}
+ .plans{grid-template-columns:repeat(3,1fr)}
+}
+@media(min-width:900px){
+ .how{grid-template-columns:1.1fr .9fr;gap:3.5rem}
+ .hero{padding-bottom:4rem}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <div class="top"><div class="brand"><img src="/brand-mark-56.webp" width="28" height="28" alt=""><span>TopEdge <span>AI</span></span></div></div>
+    <h1>Confirm COD orders on WhatsApp <span class="chip">before you ship them</span></h1>
+    <p class="sub">Fewer fake orders. Fewer returned parcels. Built for Indian Shopify stores.</p>
+    <div class="cta-row"><a class="btn" data-cta href="/signup?lp=cod-confirmation">Start free trial</a></div>
+    <p class="micro">14 days. 20 free orders. No card.</p>
+  </div>
+</header>
+
+<main>
+<section>
+  <div class="wrap how">
+    <div>
+      <div class="head" style="text-align:left;margin-bottom:1rem"><h2>How it works</h2></div>
+      <ol class="steps">
+        <li><div><strong>A COD order is placed</strong><span>Shopify tells TopEdge as soon as the order is created.</span></div></li>
+        <li><div><strong>The buyer gets a WhatsApp message</strong><span>They tap Confirm or Cancel, using a Meta-approved template.</span></div></li>
+        <li><div><strong>You ship what they confirm</strong><span>No-reply orders can be followed up or held, as per your flow.</span></div></li>
+      </ol>
+    </div>
+    <figure class="phone">
+      <div class="pbar"><i></i>Your store</div>
+      <div class="chat">
+        <div class="bubble"><p>Hi Priya, we received your order <strong>#1042</strong> (Cash on Delivery, ₹1,499).</p><p>Please confirm it so we can ship it today.</p><time>10:42</time></div>
+        <div class="rep" aria-hidden="true"><span>Confirm order</span><span>Cancel order</span></div>
+      </div>
+      <figcaption class="pcap">Example message. Your approved Meta template may differ.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <div class="head"><h2>What a returned COD order costs</h2><p>You pay three times and make no sale.</p></div>
+    <div class="costs">
+      <div class="card cost"><strong>Shipping out</strong><span>The courier is paid to take the parcel to the buyer.</span></div>
+      <div class="card cost"><strong>Shipping back</strong><span>And paid again when the parcel returns to you.</span></div>
+      <div class="card cost"><strong>Packaging and handling</strong><span>Plus the time spent packing, receiving and restocking it.</span></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="head"><h2>Pricing</h2><p>Basic COD confirmation is on every plan.</p></div>
+    <div class="plans">
+      <div class="card plan">
+        <h3>Launch</h3>
+        <p class="price">₹1,999 <small>/ month + 18% GST</small></p>
+        <p class="yearly">₹1,599 / month if billed yearly</p>
+        <ul><li>Basic COD confirmation</li></ul>
+      </div>
+      <div class="card plan em">
+        <h3>Growth</h3>
+        <p class="price">₹3,999 <small>/ month + 18% GST</small></p>
+        <p class="yearly">₹3,199 / month if billed yearly</p>
+        <ul><li>Basic COD confirmation</li><li>COD to prepaid payment links</li></ul>
+      </div>
+      <div class="card plan">
+        <h3>Scale</h3>
+        <p class="price">₹6,499 <small>/ month + 18% GST</small></p>
+        <p class="yearly">₹5,199 / month if billed yearly</p>
+        <ul><li>Basic COD confirmation</li><li>COD to prepaid payment links</li></ul>
+      </div>
+    </div>
+    <p class="foot-note">Meta&rsquo;s WhatsApp message fees are billed by Meta directly on your own account. TopEdge adds 0% markup. GST invoices issued.</p>
+    <div class="mid-cta"><a class="btn" data-cta href="/signup?lp=cod-confirmation">Start free trial</a><p class="micro">14 days. 20 free orders. No card.</p></div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="narrow">
+    <div class="head"><h2>Questions</h2></div>
+    <details><summary>How much does it cost?</summary><p>Plans start at ₹1,999 a month + 18% GST, or ₹1,599 a month if billed yearly. Meta charges its own per-message WhatsApp fees directly on your Meta account, and TopEdge adds 0% markup.</p></details>
+    <details><summary>What happens if the customer does not reply?</summary><p>You decide. Send one follow-up, then hold the order, call the buyer or dispatch anyway, as per the rule you set in your flow.</p></details>
+    <details><summary>Do WhatsApp templates need Meta approval?</summary><p>Yes. Every message template must be approved by Meta before it can send, and TopEdge will not send a template that is not approved yet.</p></details>
+    <details><summary>Which plan has COD to prepaid?</summary><p>Growth and Scale only. It sends a WhatsApp payment link created from a Shopify draft invoice. Launch includes basic COD confirmation.</p></details>
+  </div>
+</section>
+
+<section class="final">
+  <div class="wrap">
+    <h2>Ship only the COD orders buyers confirm</h2>
+    <div class="cta-row"><a class="btn" data-cta href="/signup?lp=cod-confirmation">Start free trial</a></div>
+    <p class="micro">14 days. 20 free orders. No card.</p>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <p>Meta&rsquo;s WhatsApp message fees are billed by Meta directly on your own account. TopEdge adds 0% markup.</p>
+    <p><a href="/privacy" target="_blank" rel="noopener">Privacy</a> &middot; <a href="/terms" target="_blank" rel="noopener">Terms</a> &middot; &copy; 2026 TopEdge AI</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var SLUG='cod-confirmation';
+  var KEYS=['gclid','gbraid','wbraid','utm_source','utm_medium','utm_campaign','utm_term','utm_content'];
+  var d={},n=0,s=null;
+  try{
+    var p=new URLSearchParams(location.search);
+    KEYS.forEach(function(k){var v=p.get(k);if(v){d[k]=v.slice(0,200);n++;}});
+    if(n){
+      d.lp=SLUG;d.ts=new Date().toISOString();s=JSON.stringify(d);
+      try{localStorage.setItem('te_attr',s);}catch(e){}
+      document.cookie='te_attr='+encodeURIComponent(s)+'; max-age=7776000; path=/; domain=.topedgeai.com; SameSite=Lax';
+    }else{
+      try{s=localStorage.getItem('te_attr');}catch(e){}
+    }
+    var o=s?JSON.parse(s):{};
+    var q=KEYS.filter(function(k){return o[k];}).map(function(k){return k+'='+encodeURIComponent(o[k]);});
+    q.push('lp='+encodeURIComponent(SLUG));
+    var href='/signup?'+q.join('&');
+    document.querySelectorAll('a[data-cta]').forEach(function(a){
+      a.href=href;
+      a.addEventListener('click',function(){if(window.gtag)window.gtag('event','cta_click',{page:location.pathname});});
+    });
+  }catch(e){}
+})();
+</script>
+</body>
+</html>
