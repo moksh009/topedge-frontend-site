@@ -19,7 +19,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { loadBillingCatalog } from './load-billing-catalog.mjs';
+import { loadBillingCatalog, resolveViteEnv } from './load-billing-catalog.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
@@ -84,6 +84,19 @@ const PAGES = [
   },
 ];
 
+// GA4 is optional: with no VITE_GA_MEASUREMENT_ID the page makes no analytics request at all.
+// When set, gtag.js loads only after the window `load` event, so it cannot delay first paint.
+const gaId = String(resolveViteEnv().VITE_GA_MEASUREMENT_ID || '').trim();
+const analytics = /^G-[A-Z0-9]{4,}$/.test(gaId)
+  ? `<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}window.gtag=gtag;
+gtag('consent','default',{analytics_storage:'granted',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});
+gtag('js',new Date());gtag('config','${gaId}');
+addEventListener('load',function(){var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=${gaId}';document.head.appendChild(s)});
+</script>
+`
+  : '';
+
 const css = fs.readFileSync(path.join(lpDir, 'base.css'), 'utf8').trim();
 const attribution = fs.readFileSync(path.join(lpDir, 'attribution.js'), 'utf8').trim();
 
@@ -108,7 +121,7 @@ for (const page of PAGES) {
 </head>
 <body>
 ${body}
-<script>
+${analytics}<script>
 ${attribution.replaceAll('{{SLUG}}', page.slug)}
 </script>
 </body>

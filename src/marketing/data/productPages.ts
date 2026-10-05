@@ -674,8 +674,8 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     path: '/features/journeys',
     featureSlug: 'journeys',
     eyebrow: 'Journey',
-    title: 'Visual journeys that',
-    titleAccent: 'sell & support',
+    title: 'Build WhatsApp journeys for cart recovery and',
+    titleAccent: 'COD confirmation',
     subtitle:
       'Abandoned cart, COD confirm, and shipping on a visual canvas.\nMeta-approved templates, recovered ₹, not vanity sends.',
     answerFirst:

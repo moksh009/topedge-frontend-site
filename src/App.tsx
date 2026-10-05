@@ -13,6 +13,7 @@ import MarketingSmoothScroll, {
 import { isMarketingRoute } from './marketing/routes';
 import MarketingPageLoader from './marketing/components/MarketingPageLoader';
 import MetaPixel from './components/MetaPixel';
+import Analytics from './marketing/components/Analytics';
 import Home from './pages/Home';
 
 const CommunityNavbar = React.lazy(() => import('./components/community/layout/CommunityNavbar'));
@@ -260,6 +261,7 @@ const App: React.FC = () => {
               <MarketingSmoothScroll>
                 <SmoothScrollToTop />
                 <MetaPixel />
+                <Analytics />
                 <Layout>
                   <React.Suspense fallback={<MarketingPageLoader />}>
                     <RouteOutlet />

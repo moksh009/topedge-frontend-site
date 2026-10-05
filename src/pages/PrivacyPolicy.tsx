@@ -346,6 +346,12 @@ export default function PrivacyPolicy() {
             Analytics or marketing cookies (if enabled on our sites) will be disclosed and, where required, consented.
           </p>
           <p>
+            When you arrive from a Google ad or another campaign link, we store the click identifier (for example gclid)
+            and campaign tags (utm_source, utm_campaign and similar) in a first-party cookie and in your browser&apos;s local
+            storage for up to 90 days, and pass them to our signup page. We use them only to measure which campaigns lead to
+            signups. They do not contain your name or contact details.
+          </p>
+          <p>
             Storefront opt-in widgets and the TopEdge pixel set first-party identifiers (e.g. visitor id) on your domain
             as configured by you. You must disclose those technologies in your store privacy notice.
           </p>

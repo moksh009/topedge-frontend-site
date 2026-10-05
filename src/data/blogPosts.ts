@@ -1217,7 +1217,7 @@ export const blogPosts: BlogPost[] = [
 <li>Shipping updates after confirmation to reduce doorstep refusals</li>
 </ul>
 
-<p>Build this on <a href="/features/journeys">Journeys</a>, wire Shopify via <a href="/shopify-whatsapp-integration">Shopify WhatsApp integration</a>, and review <a href="/pricing">pricing</a>. See outcomes on <a href="/customers">customers</a> or <a href="/contact">contact</a> the team.</p>
+<p>Start with the <a href="/features/cod-confirmation">WhatsApp COD confirmation feature</a>, build the rest on <a href="/features/journeys">Journeys</a>, wire Shopify via <a href="/shopify-whatsapp-integration">Shopify WhatsApp integration</a>, and review <a href="/pricing">pricing</a>. See outcomes on <a href="/customers">customers</a> or <a href="/contact">contact</a> the team.</p>
 
 <p>See the full 2026 India RTO benchmark data → <a href="/blog/cod-rto-benchmark-india-2026">COD &amp; RTO in Indian D2C: the 2026 benchmark report</a>.</p>
 `,

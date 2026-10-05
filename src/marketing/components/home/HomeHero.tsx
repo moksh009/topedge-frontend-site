@@ -40,12 +40,7 @@ export default function HomeHero() {
 
           <div className="home-hero__layout">
             <div className="home-hero__copy">
-              <h1 className="home-hero__title">
-                <span className="home-hero__title-text">
-                  <span className="home-hero__title-line">Shopify D2C </span>
-                  <br className="home-hero__title-br" />
-                  <span className="home-hero__title-line">Growth Suite</span>
-                </span>
+              <h1 className="home-hero__title home-hero__title--job">
                 <span className="home-hero__title-brand">
                   <BrandMark
                     className="home-hero__title-mark"
@@ -56,11 +51,14 @@ export default function HomeHero() {
                   <span className="home-hero__title-name">
                     TopEdge <span>AI</span>
                   </span>
+                </span>{' '}
+                <span className="home-hero__title-text home-hero__title-text--job">
+                  confirms your COD orders and wins back abandoned carts on WhatsApp
                 </span>
               </h1>
               <p className="home-hero__sub">
-                TopEdge AI recovers abandoned carts, confirms COD, and runs Live Chat with Shopify
-                order context on WhatsApp—typically live in about fifteen minutes.
+                Live Chat with Shopify order context, Meta-approved journeys, and a 14-day free
+                trial—typically live in about fifteen minutes.
               </p>
               <div className="home-hero__actions">
                 <PrimaryButton to="/signup">
