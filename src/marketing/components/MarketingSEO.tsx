@@ -62,7 +62,7 @@ export default function MarketingSEO({
   articleModified,
   preloadLcpImage,
 }: MarketingSEOProps) {
-  const fullTitle = noSuffix ? title : title.includes('TopEdge') ? title : `${title} | TopEdge`;
+  const fullTitle = noSuffix ? title : title.includes('TopEdge') ? title : `TopEdge AI: ${title}`;
   const url = canonicalUrlForPath(path);
   const robots = noIndex
     ? 'noindex, nofollow'

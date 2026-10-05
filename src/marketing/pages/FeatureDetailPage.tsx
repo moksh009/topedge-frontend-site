@@ -48,7 +48,7 @@ export default function FeatureDetailPage() {
   return (
     <>
       <MarketingSEO
-        title={featureSeo?.title ?? `${feature.title} | TopEdge`}
+        title={featureSeo?.title ?? `TopEdge AI: ${feature.title}`}
         description={featureSeo?.description ?? feature.body}
         keywords={featureSeo?.keywords}
         path={`/features/${feature.slug}`}

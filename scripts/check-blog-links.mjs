@@ -39,9 +39,9 @@ async function loadBlogPosts() {
   }
 }
 
-/** Mirrors BlogPost.tsx, which renders `${post.title} | TopEdge` with noSuffix. */
+/** Mirrors BlogPost.tsx, which renders `TopEdge AI: ${post.title}` with noSuffix. */
 function renderedTitle(title) {
-  return `${title} | TopEdge`;
+  return `TopEdge AI: ${title}`;
 }
 
 const posts = await loadBlogPosts();

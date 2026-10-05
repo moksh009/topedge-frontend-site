@@ -78,7 +78,7 @@ const faqHtml = FAQS.map((f) => `    <details><summary>${esc(f.q)}</summary><p>$
 const PAGES = [
   {
     slug: 'cod-confirmation',
-    title: 'WhatsApp COD Confirmation for Shopify | TopEdge',
+    title: 'TopEdge AI: WhatsApp COD Confirmation for Shopify',
     description:
       'Confirm COD orders on WhatsApp before you ship them. Fewer fake orders and returned parcels for Indian Shopify stores. 14-day free trial, no card.',
   },

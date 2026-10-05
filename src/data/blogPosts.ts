@@ -940,7 +940,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     id: 8,
-    title: 'Best WhatsApp Automation Tools for Shopify India (2026)',
+    title: 'Best WhatsApp Automation for Shopify India (2026)',
     description:
       'Direct answer plus a comparison table of WhatsApp automation tools for Shopify India: WATI, AiSensy, Interakt, Bitespeed, Zoko, Getgabs, Kanal, Dondy, TopEdge.',
     slug: 'best-whatsapp-automation-tools-shopify-india',
@@ -1615,7 +1615,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     id: 15,
-    title: 'How to Choose a WhatsApp App from the Shopify App Store',
+    title: 'How to Choose a WhatsApp App on Shopify App Store',
     description:
       'Pre-install checklist: Meta markup, COD depth, conversation metering vs flat pricing, free-to-install vs gated features, and reviews that matter.',
     slug: 'how-to-choose-whatsapp-app-shopify-app-store',

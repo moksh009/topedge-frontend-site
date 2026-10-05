@@ -53,7 +53,7 @@ export default function BlogPost() {
   return (
     <>
       <MarketingSEO
-        title={`${post.title} | TopEdge`}
+        title={`TopEdge AI: ${post.title}`}
         description={post.description}
         keywords={post.keywords?.join(', ')}
         image={imageAbs}

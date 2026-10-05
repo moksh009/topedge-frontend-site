@@ -30,7 +30,7 @@ const DIAGRAMS = new Set([
 
 /** Mirrors the suffix rule in MarketingSEO so budgets match what ships. */
 function renderedTitle(title) {
-  return title.includes('TopEdge') ? title : `${title} | TopEdge`;
+  return title.includes('TopEdge') ? title : `TopEdge AI: ${title}`;
 }
 
 const LINK_RE = /\[[^\]]+\]\(([^)\s]+)\)/g;

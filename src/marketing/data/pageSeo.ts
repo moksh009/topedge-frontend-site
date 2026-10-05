@@ -33,7 +33,7 @@ export type PageSeoEntry = {
 
 export const PAGE_SEO = {
   home: {
-    title: 'Shopify WhatsApp COD Confirmation & Cart Recovery | TopEdge',
+    title: 'TopEdge AI: WhatsApp COD Confirmation & Cart Recovery',
     description:
       'Confirm COD orders and recover abandoned carts on WhatsApp for Shopify. 14-day free trial, no card. Plans from ₹1,999/mo + GST. Built for Indian D2C.',
     keywords:
@@ -42,7 +42,7 @@ export const PAGE_SEO = {
     noSuffix: true,
   },
   pricing: {
-    title: 'TopEdge Pricing: From ₹1,999/mo, 14-Day Free Trial',
+    title: 'TopEdge AI Pricing: From ₹1,999/mo, 14-Day Free Trial',
     description:
       'Launch ₹1,999, Growth ₹3,999, Scale ₹6,499 a month + GST. Yearly saves 20%. Meta fees are billed by Meta at 0% markup. GST invoices, no card for trial.',
     keywords:
@@ -66,7 +66,7 @@ export const PAGE_SEO = {
     path: '/integrations',
   },
   customers: {
-    title: 'Indian Shopify Brands Using TopEdge | Customer Stories',
+    title: 'TopEdge AI: Indian Shopify Brands & Customer Stories',
     description:
       'Customer stories from Indian D2C brands running WhatsApp cart recovery and COD flows with TopEdge on Shopify.',
     keywords:
@@ -90,7 +90,7 @@ export const PAGE_SEO = {
     path: '/blog',
   },
   about: {
-    title: 'About TopEdge AI – Shopify WhatsApp Platform, India',
+    title: 'TopEdge AI: About the Shopify WhatsApp Platform, India',
     description:
       'TopEdge AI is the WhatsApp growth OS for Shopify India, founded by Moksh Patel and Smit Tilva. Cart recovery, COD, and Meta templates.',
     keywords:
@@ -98,7 +98,7 @@ export const PAGE_SEO = {
     path: '/about',
   },
   contact: {
-    title: 'Contact TopEdge | Shopify WhatsApp Automation & Cart Recovery',
+    title: 'TopEdge AI: Contact Us for Shopify WhatsApp Automation',
     description:
       'Talk to us about WhatsApp automation, abandoned cart recovery, COD flows, or fully managed setup for your Shopify store in India.',
     keywords:
