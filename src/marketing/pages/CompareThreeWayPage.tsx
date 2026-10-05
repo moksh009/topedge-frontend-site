@@ -14,7 +14,7 @@ import '../styles/compare.css';
 
 const PATH = '/compare/topedge-vs-wati-vs-aisensy';
 
-const TITLE = 'TopEdge vs WATI vs AiSensy (2026) | WhatsApp Comparison';
+const TITLE = 'TopEdge AI vs WATI vs AiSensy (2026) | WhatsApp Comparison';
 const DESCRIPTION =
   'TopEdge vs WATI vs AiSensy: template markup, AI cost, COD to prepaid, identity, warranty, and chatflow limits.';
 

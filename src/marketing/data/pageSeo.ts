@@ -74,7 +74,7 @@ export const PAGE_SEO = {
     path: '/customers',
   },
   compare: {
-    title: 'TopEdge vs WATI, AiSensy, Zoko & More | WhatsApp',
+    title: 'TopEdge AI vs WATI, AiSensy, Zoko & More | WhatsApp',
     description:
       'Compare TopEdge with WATI, AiSensy, Interakt, Bitespeed, Zoko, Getgabs, Kanal, Dondy, Updatrr, and Gupshup for Shopify WhatsApp India brands.',
     keywords:

@@ -113,7 +113,7 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
     logoAlt: 'WATI logo',
     accent: '#0d9488',
     brandTag: 'WhatsApp BSP',
-    title: 'TopEdge vs WATI (2026) | WhatsApp Ecommerce Growth OS',
+    title: 'TopEdge AI vs WATI (2026) | WhatsApp Ecommerce Growth OS',
     description:
       'Compare TopEdge vs WATI: 0% Meta markup, BYOK AI, unified identity, COD to prepaid, and unlimited chatflows for Shopify India.',
     keywords:
@@ -147,7 +147,7 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
     logoAlt: 'AiSensy logo',
     accent: '#0f766e',
     brandTag: 'WhatsApp marketing platform',
-    title: 'TopEdge vs AiSensy (2026) | WhatsApp Ecommerce Shopify',
+    title: 'TopEdge AI vs AiSensy (2026) | WhatsApp Ecommerce Shopify',
     description:
       'Compare TopEdge vs AiSensy on Meta markup, AI fees, intent routing, unified identity, COD → prepaid, and chatflow limits.',
     keywords:
@@ -181,7 +181,7 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
     logoAlt: 'Interakt logo',
     accent: '#7c3aed',
     brandTag: 'Shopify WhatsApp app',
-    title: 'TopEdge vs Interakt (2026) | Shopify WhatsApp Growth OS',
+    title: 'TopEdge AI vs Interakt (2026) | Shopify WhatsApp Growth OS',
     description:
       'Compare TopEdge vs Interakt: Meta billing, BYOK AI, COD to prepaid, unified identity, and unlimited flows vs Shopify App rate limits.',
     keywords:
@@ -216,7 +216,7 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
     logoAlt: 'Bitespeed logo',
     accent: '#ea580c',
     brandTag: 'AI-agent omnichannel OS',
-    title: 'TopEdge vs Bitespeed (2026) | Shopify WhatsApp INR Plans',
+    title: 'TopEdge AI vs Bitespeed (2026) | Shopify WhatsApp INR Plans',
     description:
       'Compare TopEdge vs Bitespeed: Meta economics, AI included vs ~$100 add-ons, cart recovery, COD, and INR plans vs USD floors.',
     keywords:
@@ -252,7 +252,7 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
     logoAlt: 'Zoko logo',
     accent: '#2563eb',
     brandTag: 'India WhatsApp commerce',
-    title: 'TopEdge vs Zoko (2026) | Flat INR vs Conversation Meters',
+    title: 'TopEdge AI vs Zoko (2026) | Flat INR vs Conversation Meters',
     description:
       'Compare TopEdge vs Zoko: flat INR order plans vs Zoko’s base fee plus per-conversation metering, COD flows, and India commerce hooks.',
     keywords:
@@ -287,7 +287,7 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
     logoAlt: 'Getgabs logo',
     accent: '#16a34a',
     brandTag: 'Low-cost WhatsApp entry',
-    title: 'TopEdge vs Getgabs (2026) | Cheap Entry vs Native Depth',
+    title: 'TopEdge AI vs Getgabs (2026) | Cheap Entry vs Native Depth',
     description:
       'Compare TopEdge vs Getgabs: free-to-install / low USD entry vs TopEdge’s COD → prepaid, warranty, unified identity, and visual journeys included on INR plans.',
     keywords:
@@ -322,7 +322,7 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
     logoAlt: 'Kanal logo',
     accent: '#7c3aed',
     brandTag: 'Global WhatsApp + Klaviyo',
-    title: 'TopEdge vs Kanal (2026) | INR India vs EUR Global WA',
+    title: 'TopEdge AI vs Kanal (2026) | INR India vs EUR Global WA',
     description:
       'Compare TopEdge vs Kanal: flat INR India COD workflows vs Kanal Pro from €89/mo, Klaviyo, and global WhatsApp for Shopify.',
     keywords:
@@ -357,7 +357,7 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
     logoAlt: 'Dondy logo',
     accent: '#0f766e',
     brandTag: 'WhatsApp widget + USD automation',
-    title: 'TopEdge vs Dondy (2026) | 0% Meta Markup vs ~60% Rate Card',
+    title: 'TopEdge AI vs Dondy (2026) | 0% Meta Markup vs ~60% Rate Card',
     description:
       'Compare TopEdge vs Dondy: Dondy’s India rate is $0.01888/message (~60% above Meta). TopEdge is 0% markup, flat INR, and native COD to prepaid.',
     keywords:
@@ -392,7 +392,7 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
     logoAlt: 'Updatrr logo',
     accent: '#ea580c',
     brandTag: 'Shopify-only WhatsApp automation',
-    title: 'TopEdge vs Updatrr (2026) | Web WhatsApp Growth OS vs Shopify App',
+    title: 'TopEdge AI vs Updatrr (2026) | Web Growth OS vs Shopify App',
     description:
       'Compare TopEdge vs Updatrr: web-based vs Shopify-only, BYOK AI vs per-conversation AI, visitor identity pixel, unified identity, warranty, and unlimited flows.',
     keywords:
@@ -427,7 +427,7 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
     logoAlt: 'Gupshup logo',
     accent: '#00a651',
     brandTag: 'Enterprise WhatsApp CPaaS',
-    title: 'TopEdge vs Gupshup (2026) | Flat INR vs Pay-as-you-go CPaaS',
+    title: 'TopEdge AI vs Gupshup (2026) | Flat INR vs Pay-as-you-go CPaaS',
     description:
       'Compare TopEdge vs Gupshup: flat INR, 0% Meta markup, and COD → prepaid vs pay-as-you-go CPaaS with template fees and Conversation Studio.',
     keywords:
