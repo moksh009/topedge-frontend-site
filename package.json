@@ -14,6 +14,7 @@
     "redirects": "node scripts/generate-redirects.mjs",
     "content:dates": "node scripts/generate-content-dates.mjs",
     "lp": "node scripts/generate-landing-pages.mjs",
+    "check:lp": "node scripts/check-landing-pages.mjs",
     "check:catalog-drift": "node scripts/check-catalog-drift.mjs",
     "check:llms-pricing": "node scripts/check-llms-pricing.mjs",
     "check:pricing": "node scripts/check-catalog-drift.mjs && node scripts/check-llms-pricing.mjs",

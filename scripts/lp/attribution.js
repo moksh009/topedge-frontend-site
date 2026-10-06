@@ -16,9 +16,17 @@
     var q=KEYS.filter(function(k){return o[k];}).map(function(k){return k+'='+encodeURIComponent(o[k]);});
     q.push('lp='+encodeURIComponent(SLUG));
     var href='/signup?'+q.join('&');
+    // Only the trial links carry attribution into signup. The Shopify link goes to the App Store as is.
+    document.querySelectorAll('a[data-cta="trial"]').forEach(function(a){a.href=href;});
+  }catch(e){}
+  // Two measurable paths: the primary trial CTA and the secondary Shopify install click.
+  try{
     document.querySelectorAll('a[data-cta]').forEach(function(a){
-      a.href=href;
-      a.addEventListener('click',function(){if(window.gtag)window.gtag('event','cta_click',{page:location.pathname});});
+      a.addEventListener('click',function(){
+        if(!window.gtag)return;
+        if(a.getAttribute('data-cta')==='shopify')window.gtag('event','shopify_install_click',{page:location.pathname});
+        else window.gtag('event','cta_click',{page:location.pathname,cta:'trial'});
+      });
     });
   }catch(e){}
 })();

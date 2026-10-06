@@ -44,7 +44,7 @@ Sections follow the plan, in order:
 6. **Proof:** three verbatim quotes with name, source and date (6 Oct 2026), the three logos, and "Launched on the Shopify App Store · 30 September 2026".
 7. **Why TopEdge:** four cards, no competitor names, inline SVG icons.
 8. **Pricing:** monthly/yearly toggle (yearly selected), Growth emphasised, Growth first on mobile via CSS `order`, 0% markup line, repeat CTA. Both prices are in the HTML; the toggle swaps visibility with a class, so the page works with the default state before JS runs.
-9. **FAQ:** seven questions, single-open, first open on load, using native `<details name="faq">`. Existing four answers are kept where already accurate and the plan's wording is applied; COD-to-prepaid text stays catalog-derived.
+9. **FAQ:** six questions (the plan lists six; its "seven" is a miscount), single-open, first open on load, using native `<details name="faq">`. Existing four answers are kept where already accurate and the plan's wording is applied; COD-to-prepaid text stays catalog-derived.
 10. **Final CTA:** gradient, heading, button, microcopy.
 11. **Footer** (existing) and **sticky mobile bar:** below 760px, shown once the hero CTA row leaves the viewport, `env(safe-area-inset-bottom)` padding, hidden while an input has focus, bottom padding on `body` so the footer is not covered.
 
@@ -52,14 +52,19 @@ Sections follow the plan, in order:
 `utm_content` maps to one of three headline/sub pairs (`loss` default, `speed`, `rto`). The match is a lookup in a table the generator serialises into the page; unknown or missing values keep the default text that is already in the HTML. The swap runs from an inline script placed directly after the hero text so it executes before first paint.
 
 ### Tracking
-`attribution.js` keeps its behaviour and adds a second event: clicks on `a[data-cta="shopify"]` send `gtag('event','shopify_install_click')`; trial clicks keep `cta_click` with `cta: 'trial'`. The Shopify link also receives the stored UTM parameters. No consent bar is added: the existing default denies `ad_storage`, `ad_user_data` and `ad_personalization`, and no ads tag is installed. If an Ads conversion tag is added later, a consent bar becomes required (see Open items).
+`attribution.js` keeps its behaviour and adds a second event: clicks on `a[data-cta="shopify"]` send `gtag('event','shopify_install_click')`; trial clicks keep `cta_click` with `cta: 'trial'`. Only trial links receive the stored UTM and click-id parameters; the Shopify link goes to the App Store unchanged so click ids are not passed to a third party. No consent bar is added: the existing default denies `ad_storage`, `ad_user_data` and `ad_personalization`, and no ads tag is installed. If an Ads conversion tag is added later, a consent bar becomes required (see Open items).
+
+## Notes from the build
+- The plan's second headline option was corrupted in the pasted text. The `speed` variant uses "Confirm COD Orders on WhatsApp Before You Ship"; edit `HERO_VARIANTS` in the generator if the intended wording differs.
+- Verbatim Trustpilot quote 1 contains an em dash. It is kept exactly as published; the checker exempts `<blockquote>` content from the em dash rule.
+- `utm_content` selects a variant when it starts with `loss`, `speed` or `rto` (for example `rto-brand`).
 
 ## Out of scope
 The hero video; the TrustBox embed (needs IDs); consent bar; any change to React pages or routing.
 
 ## Testing
 Repo has no JS test runner, so verification is a node script:
-`scripts/check-landing-pages.mjs` (`npm run check:lp`) reads the generated HTML and asserts: size budget, noindex, no em dashes, no competitor names, the three quotes verbatim, plan prices equal `FALLBACK_CATALOG`, Launch has no prepaid text, Growth and Scale do, `TRIAL` numbers appear, 7 FAQs with exactly one `open`, both CTA kinds present, no external script or stylesheet. Browser checks with Playwright (installed): 360px and 1280px screenshots, H1 at most 3 lines on mobile, sticky bar behaviour, toggle, hero variant swap by `?utm_content=`.
+`scripts/check-landing-pages.mjs` (`npm run check:lp`) reads the generated HTML and asserts: size budget, noindex, no em dashes, no competitor names, the three quotes verbatim, plan prices equal `FALLBACK_CATALOG`, Launch has no prepaid text, Growth and Scale do, `TRIAL` numbers appear, 6 FAQs with exactly one `open`, both CTA kinds present, no external script or stylesheet. Browser checks with Playwright (installed): 360px and 1280px screenshots, H1 at most 3 lines on mobile, sticky bar behaviour, toggle, hero variant swap by `?utm_content=`.
 
 ## Open items for the owner
 1. **Trustpilot TrustBox:** needs the template ID and business unit ID. Until supplied the page shows a link to `trustpilot.com/review/topedgeai.com` and no score. The TrustBox also needs an external script, which the page contract currently forbids, so it would have to be injected after `load`, like gtag.

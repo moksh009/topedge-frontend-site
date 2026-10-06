@@ -17,27 +17,38 @@ h1,h2,h3,p,ul,ol,figure{margin:0}
 .wrap{width:min(100% - 2.5rem,68rem);margin:0 auto}
 .narrow{width:min(100% - 2.5rem,44rem);margin:0 auto}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-/* header: logo only, not a link */
-.top{padding:1.1rem 0}
+/* nav: transparent over the hero, solid once scrolled */
+.nav{position:sticky;top:0;z-index:20;background:transparent;transition:background .2s,box-shadow .2s}
+.nav.is-solid{background:rgba(255,255,255,.96);box-shadow:0 1px 0 var(--line)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;min-height:3.75rem}
+.nav-r{display:flex;align-items:center;gap:1.1rem}
+.nav-link{font-size:.95rem;font-weight:500;color:#475569;text-decoration:none;padding:.75rem .2rem}
+.nav-link:hover{color:var(--violet)}
 .brand{display:inline-flex;align-items:center;gap:.55rem;font-size:1rem;font-weight:500;letter-spacing:-.01em}
 .brand img{display:block;width:28px;height:28px}
 .brand span span{color:var(--violet)}
 /* hero */
-.hero{position:relative;text-align:center;padding:0 0 3.25rem;background:radial-gradient(60rem 28rem at 85% -10%,#e7d9ff 0,transparent 60%),radial-gradient(44rem 24rem at 5% 0,#dbeafe 0,transparent 62%),radial-gradient(40rem 22rem at 55% 110%,#fde7f3 0,transparent 60%),#f7f8fc}
-.hero h1{margin:1.6rem auto 0;max-width:54rem;font-size:clamp(2rem,6.4vw,3.1rem);font-weight:400;letter-spacing:-.034em;line-height:1.12;text-wrap:balance}
+.hero{position:relative;margin-top:-3.75rem;padding:5.75rem 0 3rem;background:radial-gradient(60rem 28rem at 85% -10%,#e7d9ff 0,transparent 60%),radial-gradient(44rem 24rem at 5% 0,#dbeafe 0,transparent 62%),radial-gradient(40rem 22rem at 55% 110%,#fde7f3 0,transparent 60%),#f7f8fc}
+.hero-grid{display:grid;gap:2.5rem;align-items:center}
+.eyebrow{font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--violet)}
+.hero h1{margin:.8rem 0 0;font-size:clamp(1.65rem,5.2vw,2.9rem);font-weight:400;letter-spacing:-.034em;line-height:1.12;text-wrap:balance}
 .chip{color:var(--chip-ink);background:var(--chip-bg);border-radius:.45em;padding:.04em .24em .08em;white-space:nowrap}
-.sub{margin:1rem auto 0;max-width:34rem;font-size:clamp(1rem,2.4vw,1.15rem);color:var(--muted);text-wrap:balance}
-.cta-row{margin-top:1.6rem}
-.btn{display:inline-flex;align-items:center;justify-content:center;min-height:2.875rem;padding:0 1.6rem;border-radius:9999px;background:var(--violet);color:#fff;font:inherit;font-size:1rem;font-weight:500;text-decoration:none;transition:background .2s}
+.sub{margin:1rem 0 0;max-width:34rem;font-size:clamp(1rem,2.4vw,1.15rem);color:var(--muted)}
+.cta-row{margin-top:1.6rem;display:flex;flex-wrap:wrap;gap:.75rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:3rem;padding:0 1.6rem;border-radius:9999px;background:var(--violet);color:#fff;font:inherit;font-size:1rem;font-weight:500;text-decoration:none;transition:background .2s}
 .btn:hover,.btn:focus-visible{background:var(--violet-hover)}
 .btn:focus-visible{outline:3px solid #c4b5fd;outline-offset:2px}
+.btn-sm{min-height:2.5rem;padding:0 1.1rem;font-size:.9rem}
+.btn-out{background:transparent;color:var(--violet);box-shadow:inset 0 0 0 1.5px #c4b5fd}
+.btn-out:hover,.btn-out:focus-visible{background:#f3edff}
 .micro{margin-top:.8rem;font-size:.875rem;color:var(--muted)}
 /* sections */
-section{padding:3.25rem 0}
+section{padding:3.5rem 0}
 .alt{background:var(--wash)}
 .head{text-align:center;margin-bottom:1.9rem}
 .head h2{font-size:clamp(1.4rem,3.6vw,1.9rem);font-weight:400;letter-spacing:-.03em;line-height:1.25}
-.head p{margin:.6rem auto 0;max-width:34rem;color:var(--muted);font-size:.95rem}
+.head p{margin:.6rem auto 0;max-width:36rem;color:var(--muted);font-size:1rem}
+.eyebrow-s{margin:0 auto .5rem!important;font-size:.72rem!important;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#b45309!important}
 .card{border-radius:20px;background:#fff;box-shadow:0 0 0 1px rgba(15,23,42,.03),0 2px 8px rgba(15,23,42,.05),0 8px 24px -8px rgba(15,23,42,.1),0 18px 40px -20px rgba(76,29,149,.08)}
 /* how it works + example message */
 .how{display:grid;gap:2rem;align-items:center}
@@ -45,7 +56,7 @@ section{padding:3.25rem 0}
 .steps li{counter-increment:s;display:grid;grid-template-columns:2.4rem 1fr;gap:.9rem;padding:1.15rem 0;border-bottom:1px solid var(--line)}
 .steps li:before{content:'0' counter(s);font-size:.8rem;font-weight:600;color:var(--violet);padding-top:.15rem}
 .steps strong{display:block;font-weight:500;font-size:1rem}
-.steps span{display:block;margin-top:.2rem;font-size:.9rem;color:var(--muted)}
+.steps span{display:block;margin-top:.2rem;font-size:1rem;color:var(--muted)}
 .phone{width:min(100%,20rem);margin:0 auto;border-radius:24px;overflow:hidden;background:#fff;box-shadow:0 0 0 1px rgba(15,23,42,.04),0 8px 24px -8px rgba(15,23,42,.14),0 28px 56px -24px rgba(76,29,149,.22)}
 .pbar{display:flex;align-items:center;gap:.6rem;padding:.8rem 1rem;font-size:.9rem;font-weight:500;color:#fff;background:#0b7a6e}
 .pbar i{width:1.65rem;height:1.65rem;border-radius:50%;background:rgba(255,255,255,.28)}
@@ -58,10 +69,11 @@ section{padding:3.25rem 0}
 .pcap{padding:.7rem 1rem .85rem;font-size:.78rem;text-align:center;color:var(--muted);background:#fff}
 /* cost */
 .costs{display:grid;gap:.9rem}
-.cost{padding:1.2rem 1.3rem}
+.problem{background:#fffaf3}
+.cost{padding:1.2rem 1.3rem;background:#fff4e5;box-shadow:0 0 0 1px #fcd9a8,0 6px 18px -10px rgba(180,83,9,.25)}
 .cost strong{display:block;font-weight:500}
-.cost span{display:block;margin-top:.2rem;font-size:.9rem;color:var(--muted)}
-.costnote{margin-top:1.2rem;text-align:center;font-size:.95rem;color:var(--ink)}
+.cost span{display:block;margin-top:.2rem;font-size:1rem;color:var(--muted)}
+.costnote{margin:1.6rem auto 0;max-width:44rem;text-align:center;font-size:1.05rem;color:var(--ink)}
 /* pricing */
 .plans{display:grid;gap:1rem}
 .plan{padding:1.5rem 1.4rem;text-align:left}
@@ -71,7 +83,7 @@ section{padding:3.25rem 0}
 .price small{font-size:.9rem;font-weight:400;color:var(--muted);letter-spacing:0}
 .yearly{margin-top:.3rem;font-size:.85rem;color:var(--muted)}
 .plan ul{list-style:none;padding:0;margin-top:1rem;border-top:1px solid var(--line)}
-.plan li{position:relative;padding:.6rem 0 0 1.4rem;font-size:.9rem}
+.plan li{position:relative;padding:.6rem 0 0 1.4rem;font-size:1rem}
 .plan li:before{content:'';position:absolute;left:.1rem;top:1.05rem;width:.7rem;height:.38rem;border-left:2px solid var(--ok);border-bottom:2px solid var(--ok);transform:rotate(-45deg)}
 .foot-note{margin-top:1.1rem;text-align:center;font-size:.85rem;color:var(--muted)}
 .mid-cta{margin-top:1.8rem;text-align:center}
@@ -82,109 +94,268 @@ summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-c
 summary::-webkit-details-marker{display:none}
 summary:after{content:'+';font-size:1.3rem;font-weight:400;color:var(--violet);line-height:1}
 details[open] summary:after{content:'\2212'}
-details p{padding:0 0 1rem;font-size:.92rem;color:var(--muted)}
+details p{padding:0 0 1rem;font-size:1rem;color:var(--muted)}
+/* hero phone, how-it-works emphasis */
+.hero-vis .phone{margin:0 auto}
+.hero-vis .done{display:none}
+.done{margin-top:.5rem;padding:.55rem;border-radius:12px;background:#dcf8c6;text-align:center;font-size:.9rem;font-weight:500;color:#0b7a6e;transition:opacity .25s}
+.how-vis{display:grid;gap:1rem;justify-items:center}
+.how-cap{max-width:20rem;text-align:center;font-size:.9rem;color:var(--muted)}
+#how-phone[data-active] [data-hl]{opacity:.55;transition:opacity .25s,box-shadow .25s}
+#how-phone[data-active="1"] [data-hl=order]{opacity:1;background:#ede9fe;border-radius:4px;box-shadow:0 0 0 3px #ede9fe}
+#how-phone[data-active="2"] [data-hl=buttons]{opacity:1;box-shadow:0 0 0 2px #c4b5fd;border-radius:12px}
+#how-phone[data-active="3"] [data-hl=check]{opacity:1}
+#how-phone[data-active="1"] [data-hl=check],#how-phone[data-active="2"] [data-hl=check]{opacity:0}
+/* trust strip */
+.trust{background:var(--ink);color:#fff}
+.trust-in{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.9rem 2rem;padding:1.15rem 0}
+.trust-l{font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#94a3b8}
+.logos{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;align-items:center;gap:1rem 2rem}
+.logos img{display:block;height:28px;width:auto;max-width:9rem;object-fit:contain;opacity:.9}
+.trust-tp{font-size:.88rem;color:#cbd5e1}
+.trust-tp:hover{color:#fff}
+/* proof */
+.quotes{display:grid;gap:1rem}
+.quote{margin:0;padding:1.4rem 1.4rem 1.2rem}
+.quote p{font-size:1rem;line-height:1.55}
+.quote p:before{content:'\201C'}
+.quote p:after{content:'\201D'}
+.quote footer{margin-top:.9rem;font-size:.85rem;font-weight:500;color:var(--muted)}
+.q-note{margin-top:1rem;text-align:center;font-size:.82rem;color:var(--muted)}
+.proof-logos{margin-top:2.2rem;text-align:center}
+.proof-logos p{font-size:.95rem;color:var(--muted)}
+.logos-dark{justify-content:center;margin:1rem auto 0;padding:1rem 1.6rem;border-radius:16px;background:var(--ink);width:max-content;max-width:100%}
+.proof-logos small{display:block;margin-top:.9rem;font-size:.8rem;color:var(--muted)}
+/* why cards */
+.whys{display:grid;gap:1rem}
+.why{padding:1.5rem 1.4rem}
+.why svg{color:var(--violet)}
+.why h3{margin-top:.8rem;font-size:1.05rem;font-weight:500;line-height:1.3}
+.why p{margin-top:.45rem;font-size:1rem;color:var(--muted)}
+/* pricing toggle */
+.cycle{display:flex;justify-content:center;gap:.25rem;width:max-content;margin:0 auto 1.6rem;padding:.25rem;border-radius:9999px;background:#ede9fe}
+.cycle button{min-height:2.75rem;padding:0 1.3rem;border:0;border-radius:9999px;background:transparent;font:inherit;font-size:.95rem;font-weight:500;color:var(--chip-ink);cursor:pointer}
+.cycle button.on{background:var(--violet);color:#fff}
+.cycle button:focus-visible{outline:3px solid #c4b5fd;outline-offset:2px}
+#plans[data-cycle="yearly"] .p-monthly,#plans[data-cycle="monthly"] .p-yearly{display:none}
+.badge{display:inline-block;margin-top:.5rem;padding:.15rem .6rem;border-radius:9999px;background:var(--violet);color:#fff;font-size:.72rem;font-weight:600}
+.bill{margin-top:.3rem;font-size:.85rem;color:var(--muted)}
+.price .p-yearly,.price .p-monthly{display:inline}
+/* sticky mobile cta */
+.sticky{display:none}
 /* final cta + footer */
 .final{text-align:center;background:radial-gradient(48rem 20rem at 50% 110%,#e7d9ff 0,transparent 65%),#f7f8fc}
+.final .sub{margin:.9rem auto 0;text-align:center}
+.final .cta-row{justify-content:center}
 .final h2{font-size:clamp(1.5rem,4vw,2.1rem);font-weight:400;letter-spacing:-.03em;line-height:1.2;text-wrap:balance}
 .foot{padding:1.6rem 0 2.2rem;text-align:center;font-size:.82rem;color:var(--muted)}
 .foot p+p{margin-top:.5rem}
 .foot a{color:var(--muted)}
+@media(max-width:759px){
+ .btn-sm{min-height:3rem}
+ .nav-r{gap:.5rem}
+ .plan.em{order:-1}
+ .nav-how{display:none}
+ .cta-row .btn{flex:1 1 100%}
+ body{padding-bottom:5rem}
+ .sticky{display:block;position:fixed;left:0;right:0;bottom:0;z-index:30;padding:.7rem 1rem calc(.7rem + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);box-shadow:0 -1px 0 var(--line),0 -8px 24px -12px rgba(15,23,42,.2);transform:translateY(110%);transition:transform .2s}
+ .sticky.on{transform:none}
+ .sticky .btn{width:100%}
+}
 @media(min-width:760px){
  .costs{grid-template-columns:repeat(3,1fr)}
  .plans{grid-template-columns:repeat(3,1fr)}
+ .quotes{grid-template-columns:repeat(3,1fr)}
+ .whys{grid-template-columns:repeat(2,1fr)}
 }
 @media(min-width:900px){
  .how{grid-template-columns:1.1fr .9fr;gap:3.5rem}
- .hero{padding-bottom:4rem}
+ .hero-grid{grid-template-columns:55fr 45fr;gap:3rem}
+ .hero{padding:7rem 0 4.5rem}
+ section{padding:6rem 0}
+ .plan.em{transform:translateY(-.5rem)}
 }
-@media(prefers-reduced-motion:reduce){*{transition:none!important}}</style>
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}</style>
 </head>
 <body>
-<header class="hero">
-  <div class="wrap">
-    <div class="top"><div class="brand"><img src="/brand-mark-56.webp" width="28" height="28" alt=""><span>TopEdge <span>AI</span></span></div></div>
-    <h1>Confirm COD orders on WhatsApp <span class="chip">before you ship them</span></h1>
-    <p class="sub">Fewer fake orders. Fewer returned parcels. Built for Indian Shopify stores.</p>
-    <div class="cta-row"><a class="btn" data-cta href="/signup?lp=cod-confirmation">Start free trial</a></div>
-    <p class="micro">14 days. 20 free orders. No card.</p>
+<nav class="nav" id="nav" aria-label="Main">
+  <div class="wrap nav-in">
+    <div class="brand"><img src="/brand-mark-56.webp" width="28" height="28" alt=""><span>TopEdge <span>AI</span></span></div>
+    <div class="nav-r">
+      <a class="nav-link nav-how" href="#how">How it works</a>
+      <a class="nav-link" href="/login">Log in</a>
+      <a class="btn btn-sm" data-cta="trial" href="/signup?lp=cod-confirmation">Start free trial</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow">Built for Indian Shopify D2C brands</p>
+      <h1 id="hero-h1">Stop Paying Three Times for Orders Your Customers Never Wanted</h1>
+      <p class="sub" id="hero-sub">TopEdge sends an automatic WhatsApp confirmation the moment a COD order is placed. You only pack, ship, and chase courier costs for orders the buyer actually confirmed.</p>
+      <script>
+      (function(){try{var V={"loss":{"h1":"Stop Paying Three Times for Orders Your Customers Never Wanted","sub":"TopEdge sends an automatic WhatsApp confirmation the moment a COD order is placed. You only pack, ship, and chase courier costs for orders the buyer actually confirmed."},"speed":{"h1":"Confirm COD Orders on WhatsApp Before You Ship","sub":"TopEdge sends an automatic WhatsApp confirmation the moment a COD order is placed. The buyer taps Confirm or Cancel, and you ship what they confirm."},"rto":{"h1":"Cut RTO Before the Courier Even Picks Up","sub":"TopEdge sends an automatic WhatsApp confirmation the moment a COD order is placed, so fewer refused parcels make the trip in the first place."}};var c=(new URLSearchParams(location.search).get('utm_content')||'').toLowerCase();
+      for(var k in V){if(c.indexOf(k)===0){document.getElementById('hero-h1').textContent=V[k].h1;document.getElementById('hero-sub').textContent=V[k].sub;break}}}catch(e){}})();
+      </script>
+      <div class="cta-row" id="hero-cta">
+        <a class="btn" data-cta="trial" href="/signup?lp=cod-confirmation">Start free trial <span aria-hidden="true">&rarr;</span></a>
+        <a class="btn btn-out" data-cta="shopify" href="https://apps.shopify.com/topedge-ai" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V7a3 3 0 0 1 6 0v1"/></svg>Install on Shopify</a>
+      </div>
+      <p class="micro">14-day free trial · 20 free order confirmations · No credit card · Live in about 15 minutes</p>
+    </div>
+    <div class="hero-vis">
+      <figure class="phone" id="hero-phone">
+        <div class="pbar"><i></i>Your store</div>
+        <div class="chat" role="img" aria-label="Example WhatsApp message to a buyer: Hi Priya, we received your order #1042, Cash on Delivery, ₹1,499. Please confirm it so we can ship it today. Two buttons follow: Confirm order and Cancel order.">
+          <div class="bubble"><p>Hi Priya, we received your order <strong data-hl="order">#1042</strong> (Cash on Delivery, ₹1,499).</p><p>Please confirm it so we can ship it today.</p><time>10:42</time></div>
+          <div class="rep" data-hl="buttons"><span>Confirm order</span><span>Cancel order</span></div>
+          <div class="done" data-hl="check">✓ Confirmed</div>
+        </div>
+        <figcaption class="pcap">Example message. Your approved Meta template may differ.</figcaption>
+      </figure>
+    </div>
   </div>
 </header>
 
+<div class="trust">
+  <div class="wrap trust-in">
+    <p class="trust-l">Trusted by</p>
+    <ul class="logos">
+      <li><img src="/trust/choicesalon-white.png" alt="Choice Salon" height="28" loading="lazy"></li>
+      <li><img src="/trust/delitech-white.png" alt="Delitech" height="28" loading="lazy"></li>
+      <li><img src="/trust/apex-white.png" alt="Apex Light" height="28" loading="lazy"></li>
+    </ul>
+    <a class="trust-tp" href="https://www.trustpilot.com/review/topedgeai.com" target="_blank" rel="noopener">Read our reviews on Trustpilot</a>
+  </div>
+</div>
+
 <main>
-<section>
-  <div class="wrap how">
-    <div>
-      <div class="head" style="text-align:left;margin-bottom:1rem"><h2>How it works</h2></div>
-      <ol class="steps">
-        <li><div><strong>A COD order is placed</strong><span>Shopify tells TopEdge as soon as the order is created.</span></div></li>
-        <li><div><strong>The buyer gets a WhatsApp message</strong><span>They tap Confirm or Cancel, using a Meta-approved template.</span></div></li>
-        <li><div><strong>You ship what they confirm</strong><span>No-reply orders can be followed up or held, as per your flow.</span></div></li>
-      </ol>
+<section class="problem">
+  <div class="wrap">
+    <div class="head"><p class="eyebrow-s">The hidden cost</p><h2>A returned COD order doesn't cost you a sale. It costs you three payments.</h2><p>Every parcel a buyer refuses at the door is shipping fees out, shipping fees back, and packaging, paid before you've made a single rupee.</p></div>
+    <div class="costs">
+      <div class="card cost"><strong>Shipping out</strong><span>The courier is paid to carry the parcel to the buyer, whether they accept it or not.</span></div>
+      <div class="card cost"><strong>Shipping back</strong><span>Refused at the door? You pay the courier again to bring it back.</span></div>
+      <div class="card cost"><strong>Packaging &amp; handling</strong><span>Plus the packing materials, warehouse time, and restocking, for a sale that never happened.</span></div>
     </div>
-    <figure class="phone">
-      <div class="pbar"><i></i>Your store</div>
-      <div class="chat">
-        <div class="bubble"><p>Hi Priya, we received your order <strong>#1042</strong> (Cash on Delivery, ₹1,499).</p><p>Please confirm it so we can ship it today.</p><time>10:42</time></div>
-        <div class="rep" aria-hidden="true"><span>Confirm order</span><span>Cancel order</span></div>
+    <p class="costnote"><strong>TopEdge removes the guesswork. Buyers confirm on WhatsApp before you ship, so every parcel that leaves your warehouse is one the buyer actually wants.</strong></p>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <div class="head"><h2>Three steps. Zero code. Live in about 15 minutes.</h2></div>
+    <div class="how">
+      <ol class="steps">
+        <li data-step="1"><div><strong>A COD order is placed</strong><span>Shopify tells TopEdge the instant the order is created.</span></div></li>
+        <li data-step="2"><div><strong>The buyer gets a WhatsApp message</strong><span>A Meta-approved template. They tap Confirm or Cancel.</span></div></li>
+        <li data-step="3"><div><strong>You ship what they confirm</strong><span>No-reply orders get followed up automatically or held, your call.</span></div></li>
+      </ol>
+      <div class="how-vis">
+        <figure class="phone" id="how-phone">
+        <div class="pbar"><i></i>Your store</div>
+        <div class="chat" role="img" aria-label="Example WhatsApp message to a buyer: Hi Priya, we received your order #1042, Cash on Delivery, ₹1,499. Please confirm it so we can ship it today. Two buttons follow: Confirm order and Cancel order.">
+          <div class="bubble"><p>Hi Priya, we received your order <strong data-hl="order">#1042</strong> (Cash on Delivery, ₹1,499).</p><p>Please confirm it so we can ship it today.</p><time>10:42</time></div>
+          <div class="rep" data-hl="buttons"><span>Confirm order</span><span>Cancel order</span></div>
+          <div class="done" data-hl="check">✓ Confirmed</div>
+        </div>
+        <figcaption class="pcap">Example message. Your approved Meta template may differ.</figcaption>
+      </figure>
+        <p class="how-cap">Every message uses a template Meta has approved for your account, so nothing sends without your sign-off.</p>
       </div>
-      <figcaption class="pcap">Example message. Your approved Meta template may differ.</figcaption>
-    </figure>
+    </div>
   </div>
 </section>
 
 <section class="alt">
   <div class="wrap">
-    <div class="head"><h2>What a returned COD order costs</h2><p>You pay three times and make no sale.</p></div>
-    <div class="costs">
-      <div class="card cost"><strong>Shipping out</strong><span>The courier is paid to take the parcel to the buyer.</span></div>
-      <div class="card cost"><strong>Shipping back</strong><span>And paid again when the parcel returns to you.</span></div>
-      <div class="card cost"><strong>Packaging and handling</strong><span>Plus the time spent packing, receiving and restocking it.</span></div>
+    <div class="head"><h2>What real Shopify sellers say after switching</h2></div>
+    <div class="quotes">
+      <blockquote class="card quote"><p>The overall software experience is good — it's Indian software but feels like US Grade software quality.</p><footer>Tirth P., Trustpilot</footer></blockquote>
+      <blockquote class="card quote"><p>Topedge helped me a lot to solve issues with my ecomm business like abandoned cart followups, complete tracing of what a lead did and where it dropped off. Their support team is very helpful.</p><footer>Shubham P., Trustpilot</footer></blockquote>
+      <blockquote class="card quote"><p>In 2 days they built me everything... I'm on their ₹1,999 base plan, and mostly every feature is unlocked on every plan.</p><footer>Robin, Trustpilot</footer></blockquote>
+    </div>
+    <p class="q-note">Reviews quoted as published on <a href="https://www.trustpilot.com/review/topedgeai.com" target="_blank" rel="noopener">Trustpilot</a>, retrieved 6 October 2026.</p>
+    <div class="proof-logos">
+      <p>Shopify D2C brands already live on TopEdge</p>
+      <ul class="logos logos-dark">
+        <li><img src="/trust/choicesalon-white.png" alt="Choice Salon" height="26" loading="lazy"></li>
+        <li><img src="/trust/delitech-white.png" alt="Delitech" height="26" loading="lazy"></li>
+        <li><img src="/trust/apex-white.png" alt="Apex Light" height="26" loading="lazy"></li>
+      </ul>
+      <small>Launched on the Shopify App Store &middot; 30 September 2026</small>
     </div>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <div class="head"><h2>Pricing</h2><p>Basic COD confirmation is on every plan.</p></div>
-    <div class="plans">
+    <div class="head"><h2>Built different from the WhatsApp tools you've already tried</h2></div>
+    <div class="whys">
+      <div class="card why"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18M16 7.5c0-1.4-1.8-2.5-4-2.5s-4 1.1-4 2.5 1.8 2.5 4 2.5 4 1.1 4 2.5-1.8 2.5-4 2.5-4-1.1-4-2.5"/></svg><h3>You pay Meta. Not us, on top of Meta.</h3><p>WhatsApp message fees are billed directly to your own Meta Business account. TopEdge adds 0% markup, unlike platforms that charge a per-message fee on top of Meta's own rate.</p></div>
+      <div class="card why"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c.6-3.6 3.4-5.5 7-5.5s6.4 1.9 7 5.5"/></svg><h3>One buyer, one profile, even with three phone numbers.</h3><p>Orders, carts, and chats from the same person merge into a single profile automatically, instead of splitting into duplicate, disconnected leads.</p></div>
+      <div class="card why"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2.5"/><path d="M3 10.5h18M7 15h3"/></svg><h3>Turn hesitant COD buyers into paid-upfront customers.</h3><p>Send a payment link in the same WhatsApp thread, built natively for Shopify checkout, no manual mapping required.</p></div>
+      <div class="card why"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 8a6 6 0 0 0-10.5 1.5M7 16a6 6 0 0 0 10.5-1.5M17 4v4h-4M7 20v-4h4"/></svg><h3>Automate as much as you need. It is not metered.</h3><p>Flow automations run unlimited times on every plan. You are never rationed on how many times your own workflows can run.</p></div>
+    </div>
+    <p class="costnote">Everything above is live today, not on a roadmap.</p>
+  </div>
+</section>
+
+<section class="alt" id="pricing">
+  <div class="wrap">
+    <div class="head"><h2>Simple pricing. COD confirmation is on every plan.</h2><p>No setup fee. No hidden WhatsApp markup. Cancel anytime.</p></div>
+    <div class="cycle" role="tablist" aria-label="Billing cycle">
+      <button type="button" role="tab" aria-selected="false" data-cycle="monthly">Monthly</button>
+      <button type="button" role="tab" aria-selected="true" data-cycle="yearly" class="on">Yearly</button>
+    </div>
+    <div class="plans" id="plans" data-cycle="yearly">
       <div class="card plan">
         <h3>Launch</h3>
-        <p class="price">₹1,999 <small>/ month + 18% GST</small></p>
-        <p class="yearly">₹1,599 / month if billed yearly</p>
+        <p class="price"><span class="p-yearly">₹1,599</span><span class="p-monthly">₹1,999</span> <small>/ month</small></p>
+        <p class="bill p-yearly">Billed yearly at ₹19,188 + 18% GST</p>
+        <p class="bill p-monthly">Billed monthly + 18% GST</p>
         <ul><li>Basic COD confirmation</li></ul>
       </div>
       <div class="card plan em">
         <h3>Growth</h3>
-        <p class="price">₹3,999 <small>/ month + 18% GST</small></p>
-        <p class="yearly">₹3,199 / month if billed yearly</p>
+        <span class="badge">Most popular</span>
+        <p class="price"><span class="p-yearly">₹3,199</span><span class="p-monthly">₹3,999</span> <small>/ month</small></p>
+        <p class="bill p-yearly">Billed yearly at ₹38,388 + 18% GST</p>
+        <p class="bill p-monthly">Billed monthly + 18% GST</p>
         <ul><li>Basic COD confirmation</li><li>COD to prepaid payment links</li></ul>
       </div>
       <div class="card plan">
         <h3>Scale</h3>
-        <p class="price">₹6,499 <small>/ month + 18% GST</small></p>
-        <p class="yearly">₹5,199 / month if billed yearly</p>
-        <ul><li>Basic COD confirmation</li><li>COD to prepaid payment links</li></ul>
+        <p class="price"><span class="p-yearly">₹5,199</span><span class="p-monthly">₹6,499</span> <small>/ month</small></p>
+        <p class="bill p-yearly">Billed yearly at ₹62,388 + 18% GST</p>
+        <p class="bill p-monthly">Billed monthly + 18% GST</p>
+        <ul><li>Basic COD confirmation</li><li>COD to prepaid payment links</li><li>Highest dispatch priority</li></ul>
       </div>
     </div>
-    <p class="foot-note">Meta&rsquo;s WhatsApp message fees are billed by Meta directly on your own account. TopEdge adds 0% markup. GST invoices issued.</p>
-    <div class="mid-cta"><a class="btn" data-cta href="/signup?lp=cod-confirmation">Start free trial</a><p class="micro">14 days. 20 free orders. No card.</p></div>
+    <p class="foot-note">Meta&rsquo;s WhatsApp message fees are billed by Meta directly to your own Meta Business account. TopEdge adds 0% markup. GST invoices issued automatically.</p>
+    <div class="mid-cta"><a class="btn" data-cta="trial" href="/signup?lp=cod-confirmation">Start free trial <span aria-hidden="true">&rarr;</span></a><p class="micro">14-day free trial · 20 free order confirmations · No credit card · Live in about 15 minutes</p></div>
   </div>
 </section>
 
-<section class="alt">
+<section>
   <div class="narrow">
-    <div class="head"><h2>Questions</h2></div>
-    <details><summary>How much does it cost?</summary><p>Plans start at ₹1,999 a month + 18% GST, or ₹1,599 a month if billed yearly. Meta charges its own per-message WhatsApp fees directly on your Meta account, and TopEdge adds 0% markup.</p></details>
-    <details><summary>What happens if the customer does not reply?</summary><p>You decide. Send one follow-up, then hold the order, call the buyer or dispatch anyway, as per the rule you set in your flow.</p></details>
-    <details><summary>Do WhatsApp templates need Meta approval?</summary><p>Yes. Every message template must be approved by Meta before it can send, and TopEdge will not send a template that is not approved yet.</p></details>
-    <details><summary>Which plan has COD to prepaid?</summary><p>Growth and Scale only. It sends a WhatsApp payment link created from a Shopify draft invoice. Launch includes basic COD confirmation.</p></details>
+    <div class="head"><h2>Questions before you start</h2></div>
+    <details name="faq" open><summary>How much does it cost?</summary><p>Plans start at ₹1,999 a month + 18% GST, or ₹1,599 a month if billed yearly, and basic COD confirmation is included on every plan. Meta charges its own per-message WhatsApp fees directly on your Meta Business account, and TopEdge adds 0% markup.</p></details>
+    <details name="faq"><summary>What happens if the customer does not reply?</summary><p>You decide. Set an automatic follow-up reminder, or hold the order for manual review. Either way, nothing ships until you've chosen what to do with unconfirmed orders.</p></details>
+    <details name="faq"><summary>Do WhatsApp templates need Meta approval?</summary><p>Yes. Every message template must be approved by Meta before it can send, and TopEdge will not send a template that is not approved yet. This protects your WhatsApp number.</p></details>
+    <details name="faq"><summary>Which plan has COD to prepaid?</summary><p>Growth and Scale only. It sends a WhatsApp payment link created from a Shopify draft invoice, so a buyer can switch from Cash on Delivery to paying upfront. Launch includes basic COD confirmation.</p></details>
+    <details name="faq"><summary>Will this work with my existing Shopify checkout?</summary><p>Yes. TopEdge connects through Shopify's native order webhooks, so there are no theme edits and no checkout script changes, and you don't need a developer. Most stores are live in about 15 minutes.</p></details>
+    <details name="faq"><summary>Is my WhatsApp number safe to use for this?</summary><p>Yes. TopEdge only sends Meta-approved template messages through the official WhatsApp Cloud API, the same infrastructure Meta provides for business messaging. It is not a workaround.</p></details>
   </div>
 </section>
 
 <section class="final">
   <div class="wrap">
     <h2>Ship only the COD orders buyers confirm</h2>
-    <div class="cta-row"><a class="btn" data-cta href="/signup?lp=cod-confirmation">Start free trial</a></div>
+    <p class="sub">Start free. Connect Shopify, approve your WhatsApp template, and confirm your first order today.</p>
+    <div class="cta-row"><a class="btn" data-cta="trial" href="/signup?lp=cod-confirmation">Start free trial <span aria-hidden="true">&rarr;</span></a></div>
     <p class="micro">14 days. 20 free orders. No card.</p>
   </div>
 </section>
@@ -193,10 +364,64 @@ details p{padding:0 0 1rem;font-size:.92rem;color:var(--muted)}
 <footer class="foot">
   <div class="wrap">
     <p>Meta&rsquo;s WhatsApp message fees are billed by Meta directly on your own account. TopEdge adds 0% markup.</p>
+    <p>TopEdge Ai &middot; <a href="mailto:team@topedgeai.com">team@topedgeai.com</a></p>
     <p><a href="/privacy" target="_blank" rel="noopener">Privacy</a> &middot; <a href="/terms" target="_blank" rel="noopener">Terms</a> &middot; &copy; 2026 TopEdge AI</p>
   </div>
 </footer>
 
+<div class="sticky" id="sticky-cta"><a class="btn" data-cta="trial" href="/signup?lp=cod-confirmation">Start free trial <span aria-hidden="true">&rarr;</span></a></div>
+
+<script>
+(function(){
+  var d=document,w=window,$=function(s,r){return(r||d).querySelector(s)},$$=function(s,r){return Array.prototype.slice.call((r||d).querySelectorAll(s))};
+  var reduce=w.matchMedia&&w.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Nav: transparent over the hero, solid once scrolled.
+  var nav=$('#nav');
+  function onScroll(){nav.classList.toggle('is-solid',(w.scrollY||0)>8)}
+  onScroll();w.addEventListener('scroll',onScroll,{passive:true});
+
+  // How it works: highlight the part of the example message that matches the step in view.
+  // Under reduced motion nothing is dimmed, so every state stays visible.
+  var how=$('#how-phone');
+  if(how&&!reduce&&'IntersectionObserver' in w){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){if(e.isIntersecting)how.setAttribute('data-active',e.target.getAttribute('data-step'))});
+    },{rootMargin:'-40% 0px -40% 0px'});
+    $$('[data-step]').forEach(function(li){io.observe(li)});
+  }
+
+  // Pricing cycle toggle. Both prices are in the HTML, so the page reads correctly before this runs.
+  var plans=$('#plans');
+  $$('[data-cycle]',d).forEach(function(b){
+    if(b.tagName!=='BUTTON')return;
+    b.addEventListener('click',function(){
+      plans.setAttribute('data-cycle',b.getAttribute('data-cycle'));
+      $$('.cycle button').forEach(function(x){var on=x===b;x.classList.toggle('on',on);x.setAttribute('aria-selected',on?'true':'false')});
+    });
+  });
+
+  // FAQ: one open at a time (the name attribute does this natively; this covers older browsers).
+  $$('details[name="faq"]').forEach(function(el){
+    el.addEventListener('toggle',function(){
+      if(el.open)$$('details[name="faq"]').forEach(function(o){if(o!==el)o.open=false});
+    });
+  });
+
+  // Sticky mobile CTA: appears once the hero buttons have scrolled out above the viewport,
+  // and stays out of the way while a form field has focus.
+  var bar=$('#sticky-cta'),hero=$('#hero-cta'),past=false,typing=false;
+  function sync(){bar.classList.toggle('on',past&&!typing)}
+  if(hero&&'IntersectionObserver' in w){
+    new IntersectionObserver(function(es){
+      var e=es[0];past=!e.isIntersecting&&e.boundingClientRect.top<0;sync();
+    }).observe(hero);
+  }
+  var field=/^(INPUT|TEXTAREA|SELECT)$/;
+  d.addEventListener('focusin',function(e){if(field.test(e.target.tagName)){typing=true;sync()}});
+  d.addEventListener('focusout',function(e){if(field.test(e.target.tagName)){typing=false;sync()}});
+})();
+</script>
 <script>
 (function(){
   var SLUG='cod-confirmation';
@@ -216,9 +441,17 @@ details p{padding:0 0 1rem;font-size:.92rem;color:var(--muted)}
     var q=KEYS.filter(function(k){return o[k];}).map(function(k){return k+'='+encodeURIComponent(o[k]);});
     q.push('lp='+encodeURIComponent(SLUG));
     var href='/signup?'+q.join('&');
+    // Only the trial links carry attribution into signup. The Shopify link goes to the App Store as is.
+    document.querySelectorAll('a[data-cta="trial"]').forEach(function(a){a.href=href;});
+  }catch(e){}
+  // Two measurable paths: the primary trial CTA and the secondary Shopify install click.
+  try{
     document.querySelectorAll('a[data-cta]').forEach(function(a){
-      a.href=href;
-      a.addEventListener('click',function(){if(window.gtag)window.gtag('event','cta_click',{page:location.pathname});});
+      a.addEventListener('click',function(){
+        if(!window.gtag)return;
+        if(a.getAttribute('data-cta')==='shopify')window.gtag('event','shopify_install_click',{page:location.pathname});
+        else window.gtag('event','cta_click',{page:location.pathname,cta:'trial'});
+      });
     });
   }catch(e){}
 })();

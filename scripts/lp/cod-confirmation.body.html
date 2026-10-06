@@ -1,60 +1,125 @@
-<header class="hero">
-  <div class="wrap">
-    <div class="top"><div class="brand"><img src="/brand-mark-56.webp" width="28" height="28" alt=""><span>TopEdge <span>AI</span></span></div></div>
-    <h1>Confirm COD orders on WhatsApp <span class="chip">before you ship them</span></h1>
-    <p class="sub">Fewer fake orders. Fewer returned parcels. Built for Indian Shopify stores.</p>
-    <div class="cta-row"><a class="btn" data-cta href="/signup?lp={{SLUG}}">Start free trial</a></div>
-    <p class="micro">14 days. 20 free orders. No card.</p>
+<nav class="nav" id="nav" aria-label="Main">
+  <div class="wrap nav-in">
+    <div class="brand"><img src="/brand-mark-56.webp" width="28" height="28" alt=""><span>TopEdge <span>AI</span></span></div>
+    <div class="nav-r">
+      <a class="nav-link nav-how" href="#how">How it works</a>
+      <a class="nav-link" href="/login">Log in</a>
+      <a class="btn btn-sm" data-cta="trial" href="/signup?lp={{SLUG}}">Start free trial</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow">Built for Indian Shopify D2C brands</p>
+      <h1 id="hero-h1">{{HERO_H1}}</h1>
+      <p class="sub" id="hero-sub">{{HERO_SUB}}</p>
+      <script>
+      (function(){try{var V={{HERO_VARIANTS_JSON}};var c=(new URLSearchParams(location.search).get('utm_content')||'').toLowerCase();
+      for(var k in V){if(c.indexOf(k)===0){document.getElementById('hero-h1').textContent=V[k].h1;document.getElementById('hero-sub').textContent=V[k].sub;break}}}catch(e){}})();
+      </script>
+      <div class="cta-row" id="hero-cta">
+        <a class="btn" data-cta="trial" href="/signup?lp={{SLUG}}">Start free trial <span aria-hidden="true">&rarr;</span></a>
+        <a class="btn btn-out" data-cta="shopify" href="{{SHOPIFY_URL}}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V7a3 3 0 0 1 6 0v1"/></svg>Install on Shopify</a>
+      </div>
+      <p class="micro">{{TRIAL_MICRO}}</p>
+    </div>
+    <div class="hero-vis">
+      {{PHONE_HERO}}
+    </div>
   </div>
 </header>
 
+<div class="trust">
+  <div class="wrap trust-in">
+    <p class="trust-l">Trusted by</p>
+    <ul class="logos">
+      <li><img src="/trust/choicesalon-white.png" alt="Choice Salon" height="28" loading="lazy"></li>
+      <li><img src="/trust/delitech-white.png" alt="Delitech" height="28" loading="lazy"></li>
+      <li><img src="/trust/apex-white.png" alt="Apex Light" height="28" loading="lazy"></li>
+    </ul>
+    <a class="trust-tp" href="https://www.trustpilot.com/review/topedgeai.com" target="_blank" rel="noopener">Read our reviews on Trustpilot</a>
+  </div>
+</div>
+
 <main>
-<section>
-  <div class="wrap how">
-    <div>
-      <div class="head" style="text-align:left;margin-bottom:1rem"><h2>How it works</h2></div>
-      <ol class="steps">
-        <li><div><strong>A COD order is placed</strong><span>Shopify tells TopEdge as soon as the order is created.</span></div></li>
-        <li><div><strong>The buyer gets a WhatsApp message</strong><span>They tap Confirm or Cancel, using a Meta-approved template.</span></div></li>
-        <li><div><strong>You ship what they confirm</strong><span>No-reply orders can be followed up or held, as per your flow.</span></div></li>
-      </ol>
+<section class="problem">
+  <div class="wrap">
+    <div class="head"><p class="eyebrow-s">The hidden cost</p><h2>A returned COD order doesn't cost you a sale. It costs you three payments.</h2><p>Every parcel a buyer refuses at the door is shipping fees out, shipping fees back, and packaging, paid before you've made a single rupee.</p></div>
+    <div class="costs">
+      <div class="card cost"><strong>Shipping out</strong><span>The courier is paid to carry the parcel to the buyer, whether they accept it or not.</span></div>
+      <div class="card cost"><strong>Shipping back</strong><span>Refused at the door? You pay the courier again to bring it back.</span></div>
+      <div class="card cost"><strong>Packaging &amp; handling</strong><span>Plus the packing materials, warehouse time, and restocking, for a sale that never happened.</span></div>
     </div>
-    <figure class="phone">
-      <div class="pbar"><i></i>Your store</div>
-      <div class="chat">
-        <div class="bubble"><p>Hi Priya, we received your order <strong>#1042</strong> (Cash on Delivery, ₹1,499).</p><p>Please confirm it so we can ship it today.</p><time>10:42</time></div>
-        <div class="rep" aria-hidden="true"><span>Confirm order</span><span>Cancel order</span></div>
+    <p class="costnote"><strong>TopEdge removes the guesswork. Buyers confirm on WhatsApp before you ship, so every parcel that leaves your warehouse is one the buyer actually wants.</strong></p>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <div class="head"><h2>Three steps. Zero code. Live in about 15 minutes.</h2></div>
+    <div class="how">
+      <ol class="steps">
+        <li data-step="1"><div><strong>A COD order is placed</strong><span>Shopify tells TopEdge the instant the order is created.</span></div></li>
+        <li data-step="2"><div><strong>The buyer gets a WhatsApp message</strong><span>A Meta-approved template. They tap Confirm or Cancel.</span></div></li>
+        <li data-step="3"><div><strong>You ship what they confirm</strong><span>No-reply orders get followed up automatically or held, your call.</span></div></li>
+      </ol>
+      <div class="how-vis">
+        {{PHONE_HOW}}
+        <p class="how-cap">Every message uses a template Meta has approved for your account, so nothing sends without your sign-off.</p>
       </div>
-      <figcaption class="pcap">Example message. Your approved Meta template may differ.</figcaption>
-    </figure>
+    </div>
   </div>
 </section>
 
 <section class="alt">
   <div class="wrap">
-    <div class="head"><h2>What a returned COD order costs</h2><p>You pay three times and make no sale.</p></div>
-    <div class="costs">
-      <div class="card cost"><strong>Shipping out</strong><span>The courier is paid to take the parcel to the buyer.</span></div>
-      <div class="card cost"><strong>Shipping back</strong><span>And paid again when the parcel returns to you.</span></div>
-      <div class="card cost"><strong>Packaging and handling</strong><span>Plus the time spent packing, receiving and restocking it.</span></div>
+    <div class="head"><h2>What real Shopify sellers say after switching</h2></div>
+    <div class="quotes">
+{{QUOTES}}
+    </div>
+    <p class="q-note">Reviews quoted as published on <a href="https://www.trustpilot.com/review/topedgeai.com" target="_blank" rel="noopener">Trustpilot</a>, retrieved 6 October 2026.</p>
+    <div class="proof-logos">
+      <p>Shopify D2C brands already live on TopEdge</p>
+      <ul class="logos logos-dark">
+        <li><img src="/trust/choicesalon-white.png" alt="Choice Salon" height="26" loading="lazy"></li>
+        <li><img src="/trust/delitech-white.png" alt="Delitech" height="26" loading="lazy"></li>
+        <li><img src="/trust/apex-white.png" alt="Apex Light" height="26" loading="lazy"></li>
+      </ul>
+      <small>Launched on the Shopify App Store &middot; 30 September 2026</small>
     </div>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <div class="head"><h2>Pricing</h2><p>Basic COD confirmation is on every plan.</p></div>
-    <div class="plans">
+    <div class="head"><h2>Built different from the WhatsApp tools you've already tried</h2></div>
+    <div class="whys">
+{{WHY_CARDS}}
+    </div>
+    <p class="costnote">Everything above is live today, not on a roadmap.</p>
+  </div>
+</section>
+
+<section class="alt" id="pricing">
+  <div class="wrap">
+    <div class="head"><h2>Simple pricing. COD confirmation is on every plan.</h2><p>No setup fee. No hidden WhatsApp markup. Cancel anytime.</p></div>
+    <div class="cycle" role="tablist" aria-label="Billing cycle">
+      <button type="button" role="tab" aria-selected="false" data-cycle="monthly">Monthly</button>
+      <button type="button" role="tab" aria-selected="true" data-cycle="yearly" class="on">Yearly</button>
+    </div>
+    <div class="plans" id="plans" data-cycle="yearly">
 {{PLAN_CARDS}}
     </div>
-    <p class="foot-note">Meta&rsquo;s WhatsApp message fees are billed by Meta directly on your own account. TopEdge adds 0% markup. GST invoices issued.</p>
-    <div class="mid-cta"><a class="btn" data-cta href="/signup?lp={{SLUG}}">Start free trial</a><p class="micro">14 days. 20 free orders. No card.</p></div>
+    <p class="foot-note">Meta&rsquo;s WhatsApp message fees are billed by Meta directly to your own Meta Business account. TopEdge adds 0% markup. GST invoices issued automatically.</p>
+    <div class="mid-cta"><a class="btn" data-cta="trial" href="/signup?lp={{SLUG}}">Start free trial <span aria-hidden="true">&rarr;</span></a><p class="micro">{{TRIAL_MICRO}}</p></div>
   </div>
 </section>
 
-<section class="alt">
+<section>
   <div class="narrow">
-    <div class="head"><h2>Questions</h2></div>
+    <div class="head"><h2>Questions before you start</h2></div>
 {{FAQS}}
   </div>
 </section>
@@ -62,8 +127,9 @@
 <section class="final">
   <div class="wrap">
     <h2>Ship only the COD orders buyers confirm</h2>
-    <div class="cta-row"><a class="btn" data-cta href="/signup?lp={{SLUG}}">Start free trial</a></div>
-    <p class="micro">14 days. 20 free orders. No card.</p>
+    <p class="sub">Start free. Connect Shopify, approve your WhatsApp template, and confirm your first order today.</p>
+    <div class="cta-row"><a class="btn" data-cta="trial" href="/signup?lp={{SLUG}}">Start free trial <span aria-hidden="true">&rarr;</span></a></div>
+    <p class="micro">{{TRIAL_SHORT}}</p>
   </div>
 </section>
 </main>
@@ -71,6 +137,9 @@
 <footer class="foot">
   <div class="wrap">
     <p>Meta&rsquo;s WhatsApp message fees are billed by Meta directly on your own account. TopEdge adds 0% markup.</p>
+    <p>{{LEGAL_NAME}} &middot; <a href="mailto:{{COMPANY_EMAIL}}">{{COMPANY_EMAIL}}</a></p>
     <p><a href="/privacy" target="_blank" rel="noopener">Privacy</a> &middot; <a href="/terms" target="_blank" rel="noopener">Terms</a> &middot; &copy; 2026 TopEdge AI</p>
   </div>
 </footer>
+
+<div class="sticky" id="sticky-cta"><a class="btn" data-cta="trial" href="/signup?lp={{SLUG}}">Start free trial <span aria-hidden="true">&rarr;</span></a></div>
