@@ -85,7 +85,7 @@ Not "the build passed", but the actual assertions:
 | Extracted visible text | `Launch Plan ₹ 1 , 5 9 9 per month` | **`Launch Plan ₹ 1,599 per month, billed yearly`** |
 | `per month, billed yearly` | 0 | **3** (one per plan) |
 | bare `per month</span>` | 3 | **0** |
-| `mkt-price__ch--digit` spans | 15 | **0** |
+| `mkt-price__ch--digit` spans | 21 (counted on the live page) | **0** |
 | Month-to-month price still stated | yes | **yes** — `₹1,999/mo month-to-month` |
 
 Confirmed the plan grid renders on `/pricing` only — `dist/index.html` has no
