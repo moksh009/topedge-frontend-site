@@ -1,14 +1,4 @@
-<nav class="nav" id="nav" aria-label="Main">
-  <div class="wrap nav-in">
-    <div class="brand"><img src="/brand-mark-56.webp" width="28" height="28" alt=""><span>TopEdge <span>AI</span></span></div>
-    <div class="nav-r">
-      <a class="nav-link nav-how" href="#how">How it works</a>
-      <a class="nav-link nav-how" href="#pricing">Pricing</a>
-      <a class="nav-link" href="/login">Log in</a>
-      <a class="btn btn-sm" data-cta="trial" href="/signup?lp={{SLUG}}">Start free trial</a>
-    </div>
-  </div>
-</nav>
+{{NAV}}
 
 <header class="hero" id="hero">
   <div class="wrap hero-in">
@@ -36,30 +26,30 @@
     <div class="mq" aria-label="Brands running on TopEdge">
       <ul class="mq-track">{{TRUST_MARQUEE}}</ul>
     </div>
-    <a class="trust-tp" href="https://www.trustpilot.com/review/topedgeai.com" target="_blank" rel="noopener">Read our reviews on Trustpilot</a>
+    <a class="trust-tp" href="https://www.trustpilot.com/review/topedgeai.com" target="_blank" rel="noopener">Reviews on Trustpilot</a>
   </div>
 </div>
 
 <main>
 <section class="problem">
   <div class="wrap">
-    <div class="head"><p class="eyebrow-s">The hidden cost</p><h2>A returned COD order doesn't cost you a sale. It costs you three payments.</h2></div>
+    <div class="head"><p class="eyebrow-s">The hidden cost</p><h2>A refused COD parcel costs you three times.</h2></div>
     <div class="maths">
-      <p class="sum"><span>₹80 out</span> <i>+</i> <span>₹80 back</span> <i>+</i> <span>₹20 handling</span> <i>=</i> <strong>₹180 gone, per refused parcel</strong></p>
-      <p class="sum-note">Illustrative courier rates, not a customer result. At 50 refusals a month that is ₹9,000 you paid to ship something nobody wanted.</p>
+      <p class="sum"><span>₹80 out</span> <i>+</i> <span>₹80 back</span> <i>+</i> <span>₹20 handling</span> <i>=</i> <strong>₹180 gone</strong></p>
+      <p class="sum-note">Illustrative courier rates. At 50 refusals a month, ₹9,000 to ship what nobody wanted.</p>
     </div>
-    <p class="costnote"><strong>TopEdge asks the buyer to confirm on WhatsApp first, so every parcel that leaves your warehouse is one the buyer actually wants.</strong></p>
+    <p class="costnote">Ask first on WhatsApp, and every parcel that leaves your warehouse is one the buyer actually wants.</p>
   </div>
 </section>
 
 <section id="how">
   <div class="wrap">
-    <div class="head"><h2>Three steps. Zero code. Live in about 15 minutes.</h2></div>
+    <div class="head"><h2>Live in about 15 minutes.</h2></div>
     <div class="how">
       <ol class="steps">
-        <li data-step="1"><div><strong>A COD order is placed</strong><span>Shopify tells TopEdge the instant the order is created.</span></div></li>
-        <li data-step="2"><div><strong>The buyer gets a WhatsApp message</strong><span>A Meta-approved template. They tap Confirm or Cancel.</span></div></li>
-        <li data-step="3"><div><strong>You ship what they confirm</strong><span>No-reply orders get followed up automatically or held, your call.</span></div></li>
+        <li data-step="1"><div><strong>A COD order is placed</strong><span>Shopify tells TopEdge the instant it is created.</span></div></li>
+        <li data-step="2"><div><strong>The buyer gets a WhatsApp message</strong><span>They tap Confirm or Cancel.</span></div></li>
+        <li data-step="3"><div><strong>You ship what they confirm</strong><span>No reply? Follow up or hold. Your call.</span></div></li>
       </ol>
       <div class="how-vis">
         {{PHONE_HOW}}
@@ -80,32 +70,28 @@
 
 <section id="switch">
   <div class="wrap">
-    <div class="head"><p class="eyebrow-s">Why stores move</p><h2>You have probably been burned by a WhatsApp tool already.</h2></div>
+    <div class="head"><p class="eyebrow-s">If you have tried one before</p><h2>The four things that made you leave.</h2></div>
     <div class="sws">
-      <div class="sw-head" aria-hidden="true"><span>Most WhatsApp tools</span><span class="sw-head-us">TopEdge</span></div>
 {{SWITCH_ROWS}}
-    </div>
-    <div class="whys">
-{{WHY_CARDS}}
     </div>
   </div>
 </section>
 
 <section class="alt">
   <div class="wrap">
-    <div class="head"><h2>What real Shopify sellers say after switching</h2></div>
+    <div class="head"><h2>Sellers who already switched</h2></div>
     <div class="quotes">
 {{QUOTES}}
     </div>
-    <p class="q-note">Reviews quoted as published on <a href="https://www.trustpilot.com/review/topedgeai.com" target="_blank" rel="noopener">Trustpilot</a>, retrieved 6 October 2026.</p>
+    <p class="q-note">Quoted as published on <a href="https://www.trustpilot.com/review/topedgeai.com" target="_blank" rel="noopener">Trustpilot</a>, retrieved 6 October 2026.</p>
     <ul class="badges">{{BADGES}}</ul>
-    <p class="badge-note">Launched on the Shopify App Store &middot; 30 September 2026. Messages send on the official WhatsApp Cloud API, never a workaround.</p>
+    <p class="badge-note">Launched on the Shopify App Store &middot; 30 September 2026. Messages send on the official WhatsApp Cloud API.</p>
   </div>
 </section>
 
 <section id="pricing">
   <div class="wrap">
-    <div class="head"><h2>Simple pricing. COD confirmation is on every plan.</h2><p>No setup fee. No hidden WhatsApp markup. Cancel anytime.</p></div>
+    <div class="head"><h2>One plan covers the RTO you lose in a week.</h2><p>COD confirmation on every plan. No setup fee, no WhatsApp markup, cancel anytime.</p></div>
     <div class="cycle" role="tablist" aria-label="Billing cycle">
       <button type="button" role="tab" aria-selected="false" data-cycle="monthly">Monthly</button>
       <button type="button" role="tab" aria-selected="true" data-cycle="yearly" class="on">Yearly</button>
@@ -114,17 +100,17 @@
 {{PLAN_CARDS}}
     </div>
     <div class="incl">
-      <p class="incl-h">On every plan, whichever you pick</p>
+      <p class="incl-h">Included on every plan</p>
       <ul class="ticks two">{{INCLUDED_LIST}}</ul>
     </div>
-    <p class="foot-note">Meta&rsquo;s WhatsApp message fees are billed by Meta directly to your own Meta Business account. TopEdge adds 0% markup. GST invoices issued automatically.</p>
+    <p class="foot-note">Meta bills its own WhatsApp message fees to your Meta Business account. TopEdge adds 0% markup. GST invoices issued automatically.</p>
     <div class="mid-cta"><a class="btn" data-cta="trial" href="/signup?lp={{SLUG}}">Start free trial <span aria-hidden="true">&rarr;</span></a><p class="micro">{{TRIAL_MICRO}}</p></div>
   </div>
 </section>
 
 <section class="alt">
   <div class="narrow">
-    <div class="head"><h2>Questions before you start</h2></div>
+    <div class="head"><h2>Before you start</h2></div>
 {{FAQS}}
   </div>
 </section>
@@ -132,19 +118,13 @@
 <section class="final">
   <div class="wrap">
     <h2>Ship only the COD orders buyers confirm</h2>
-    <p class="sub">Start free. Connect Shopify, approve your WhatsApp template, and confirm your first order today.</p>
+    <p class="sub">Connect Shopify, approve one template, confirm your first order today.</p>
     <div class="cta-row"><a class="btn" data-cta="trial" href="/signup?lp={{SLUG}}">Start free trial <span aria-hidden="true">&rarr;</span></a></div>
     <p class="micro">{{TRIAL_SHORT}}</p>
   </div>
 </section>
 </main>
 
-<footer class="foot">
-  <div class="wrap">
-    <p>Meta&rsquo;s WhatsApp message fees are billed by Meta directly on your own account. TopEdge adds 0% markup.</p>
-    <p>{{LEGAL_NAME}} &middot; <a href="mailto:{{COMPANY_EMAIL}}">{{COMPANY_EMAIL}}</a></p>
-    <p><a href="/privacy" target="_blank" rel="noopener">Privacy</a> &middot; <a href="/terms" target="_blank" rel="noopener">Terms</a> &middot; &copy; 2026 TopEdge AI</p>
-  </div>
-</footer>
+{{FOOTER}}
 
 <div class="sticky" id="sticky-cta"><a class="btn" data-cta="trial" href="/signup?lp={{SLUG}}">Start free trial <span aria-hidden="true">&rarr;</span></a></div>

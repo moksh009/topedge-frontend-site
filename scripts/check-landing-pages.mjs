@@ -59,7 +59,16 @@ for (const name of ['WATI', 'AiSensy', 'Interakt', 'Releasit', 'EasySell', 'Dond
 must(!/★|\b[45]\.0\b/.test(withoutQuotes.replace(/<style>[\s\S]*?<\/style>/, '')), 'states a star rating or score');
 
 // --- Nav and hero ---
-must(/<nav[^>]*class="[^"]*\bnav\b/.test(html), 'missing nav');
+// The navbar and footer are ports of the site's own MarketingNavbar / MarketingFooter, so
+// an ad visitor lands on something that looks like the rest of topedgeai.com. These assert
+// the ported shell is present and that the footer still carries the details that make the
+// company checkable: a real address, a phone, and the platform badges.
+must(/<header[^>]*class="mkt-nav"/.test(html), 'missing the site navbar shell');
+must(/class="mkt-nav__capsule"/.test(html), 'navbar is not the site capsule');
+must(/<footer[^>]*class="mkt-foot"/.test(html), 'missing the site footer shell');
+must(/Prahladnagar/.test(html), 'footer is missing the registered address');
+must(/href="tel:\+\d{8,}"/.test(html), 'footer is missing a phone number');
+must(count(/class="mkt-foot__col"/g) >= 3, 'footer is missing the sitemap columns');
 must(/href="#how"[^>]*>How it works</.test(html), 'nav missing "How it works" anchor');
 must(/Log in</.test(html), 'nav missing "Log in"');
 must(/data-cta="trial"/.test(html), 'missing trial CTA');
@@ -84,7 +93,7 @@ for (const cost of ['out', 'back', 'handling']) {
   must(new RegExp(`₹\\d+\\s*${cost}\\b`, 'i').test(html), `problem section no longer prices "${cost}"`);
 }
 must(/Illustrative/i.test(html), 'the cost arithmetic must be marked illustrative, not a customer result');
-must(html.includes('so every parcel that leaves your warehouse is one the buyer actually wants'), 'missing problem closing line');
+must(html.includes('every parcel that leaves your warehouse is one the buyer actually wants'), 'missing problem closing line');
 must(count(/data-step="[123]"/g) === 3, 'expected 3 data-step items');
 must(html.includes('nothing sends without your sign-off'), 'missing Meta-approval caption');
 
@@ -117,8 +126,8 @@ for (const h of ['You pay Meta. Not us, on top of Meta.', 'One buyer, one profil
 // The switching section answers the objection this audience actually arrives with
 // (markup on messages, a price that moves, metered runs). It must do that without
 // naming anyone: the competitor-name rule above is the other half of this one.
-must(/Most WhatsApp tools/.test(html), 'missing the switching comparison');
-must(count(/class="sw-us"/g) >= 3, 'the comparison needs at least 3 answered objections');
+must(count(/class="sw-them"/g) >= 3, 'the switching section needs at least 3 objections raised');
+must(count(/class="sw-us"/g) === count(/class="sw-them"/g), 'every objection raised must be answered');
 
 // --- Pricing ---
 for (const p of FALLBACK_CATALOG.plans) {

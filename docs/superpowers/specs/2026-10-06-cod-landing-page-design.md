@@ -156,6 +156,39 @@ cost"`, since the markup they live in is now a design decision; screenshots must
 descriptive alt text, `loading="lazy"` and dimensions; the comparison must exist with at
 least three answered objections.
 
+## Revision 5 — site chrome, shorter copy (2026-10-07)
+
+Owner review of revision 4: the page wore its own navbar and footer, and the copy was still
+long. Three changes.
+
+**1. Site chrome.** The navbar and footer are now static ports of `MarketingNavbar` and
+`MarketingFooter`: the floating capsule (ghost over the hero on desktop, solid once scrolled
+past 40px, always solid below 1024px), and the full footer with the registered address,
+phone, WhatsApp, socials, sitemap, partner badges and legal bar. Three things are left out
+on purpose, and the guards keep them out:
+
+- The **mega menu**. Its fourteen feature links are the site's job. On a page bought by the
+  click, each one is a way to leave without signing up, so the two desktop links are in-page
+  anchors. Below 1024px the site opens a burger; there is no menu to open here, so that slot
+  carries the CTA instead and a phone always has a visible way to convert.
+- The **Compare column**. It names competitors, which this page may not do, and it would
+  send paid traffic shopping.
+- The **newsletter form**. A second thing to fill in competes with the one conversion this
+  page is paid for.
+
+**2. Copy cut.** Bullet lists under the showcase rows are gone: the screenshot is the
+argument. Headings, FAQ answers and the cost note are shorter. The pricing heading now
+anchors the plan against the loss the page just quantified ("one plan covers the RTO you
+lose in a week") rather than describing itself.
+
+**3. The duplicate section is gone.** Revision 4 shipped a four-row comparison table and a
+four-item "why" grid that made the same four claims twice. They are now one block: the
+objection struck through, the answer beneath it.
+
+Checker changes: nav and footer shells are asserted, along with the address, a phone link
+and the sitemap columns, so the chrome cannot silently drift back to a bespoke one. The
+comparison assertion now requires every objection raised to be answered.
+
 ## Testing
 Repo has no JS test runner, so verification is a node script:
 `scripts/check-landing-pages.mjs` (`npm run check:lp`) reads the generated HTML and asserts: size budget, noindex, no em dashes, no competitor names, the three quotes verbatim, plan prices equal `FALLBACK_CATALOG`, Launch has no prepaid text, Growth and Scale do, `TRIAL` numbers appear, 6 FAQs with exactly one `open`, both CTA kinds present, no external script or stylesheet. Browser checks with Playwright (installed): 360px and 1280px screenshots, H1 at most 3 lines on mobile, sticky bar behaviour, toggle, hero variant swap by `?utm_content=`.

@@ -40,9 +40,30 @@ function identity(name) {
   if (!m) throw new Error(`companyIdentity.ts: ${name} not found`);
   return m[1];
 }
+/** Same source, for the constants declared as an array or an object literal. */
+function identityList(name) {
+  const m = identitySrc.match(new RegExp(`export const ${name} = \\[([\\s\\S]*?)\\]`));
+  if (!m) throw new Error(`companyIdentity.ts: ${name} not found`);
+  return [...m[1].matchAll(/'([^']+)'/g)].map((x) => x[1]);
+}
+function identityMap(name) {
+  const m = identitySrc.match(new RegExp(`export const ${name} = \\{([\\s\\S]*?)\\}`));
+  if (!m) throw new Error(`companyIdentity.ts: ${name} not found`);
+  return Object.fromEntries([...m[1].matchAll(/(\w+):\s*'([^']+)'/g)].map((x) => [x[1], x[2]]));
+}
+
 const SHOPIFY_URL = identity('COMPANY_SHOPIFY_APP_URL');
 const LEGAL_NAME = identity('COMPANY_LEGAL_NAME');
 const COMPANY_EMAIL = identity('COMPANY_EMAIL');
+const COMPANY_PHONE = identity('COMPANY_PHONE');
+const COMPANY_PHONE_E164 = identity('COMPANY_PHONE_E164');
+// COMPANY_WHATSAPP_URL is built from a template literal in the source, so it is rebuilt
+// the same way here rather than read as a string. Throws if that shape ever changes.
+const WHATSAPP_MSG = (identitySrc.match(/COMPANY_WHATSAPP_URL =[\s\S]{0,120}?encodeURIComponent\(\s*'([^']+)'/) || [])[1];
+if (!WHATSAPP_MSG) throw new Error('companyIdentity.ts: COMPANY_WHATSAPP_URL message not found');
+const WHATSAPP_URL = `https://wa.me/${COMPANY_PHONE_E164}?text=${encodeURIComponent(WHATSAPP_MSG)}`;
+const ADDRESS_LINES = identityList('COMPANY_ADDRESS_LINES');
+const SOCIAL = identityMap('COMPANY_SOCIAL');
 
 const TRIAL_MICRO = `${TRIAL.days}-day free trial · ${TRIAL.orders} free order confirmations · No credit card · Live in about 15 minutes`;
 const TRIAL_SHORT = `${TRIAL.days} days. ${TRIAL.orders} free orders. No card.`;
@@ -82,79 +103,104 @@ const ICONS = {
   target: '<circle cx="12" cy="12" r="7.3"/><circle cx="12" cy="12" r="3.2"/><path d="M12 2.3v3M12 18.7v3M2.3 12h3M18.7 12h3"/>',
   shield: '<path d="M12 3.2 19 6v5.3c0 4.6-3 7.6-7 9.1-4-1.5-7-4.5-7-9.1V6Z"/><path d="M9 12.2l2 2 4-4.2"/>',
 };
-const WHY = [
-  { icon: 'coin', h: 'You pay Meta. Not us, on top of Meta.', p: "WhatsApp message fees are billed directly to your own Meta Business account. TopEdge adds 0% markup, unlike platforms that charge a per-message fee on top of Meta's own rate." },
-  { icon: 'user', h: 'One buyer, one profile, even with three phone numbers.', p: 'Orders, carts, and chats from the same person merge into a single profile automatically, instead of splitting into duplicate, disconnected leads.' },
-  { icon: 'card', h: 'Turn hesitant COD buyers into paid-upfront customers.', p: 'Send a payment link in the same WhatsApp thread, built natively for Shopify checkout, no manual mapping required.' },
-  { icon: 'loop', h: 'Automate as much as you need. It is not metered.', p: "Flow automations run unlimited times on every plan. You are never rationed on how many times your own workflows can run." },
+// Four claims this audience checks before paying, each paired with the experience they
+// arrived with. One block, not a comparison table plus a near-identical card grid saying
+// the same four things twice. Nothing here goes past what the site already supports: no
+// price-lock promise is made, because the business has not made one.
+const SWITCH = [
+  {
+    icon: 'coin',
+    them: 'A per-message fee stacked on top of Meta',
+    h: 'You pay Meta. Not us, on top of Meta.',
+    p: 'Messages are billed by Meta to your own account. TopEdge adds 0% markup.',
+  },
+  {
+    icon: 'loop',
+    them: 'Automation runs metered, then rationed',
+    h: 'Automate as much as you need. It is not metered.',
+    p: 'Flow automations run unlimited times on every plan.',
+  },
+  {
+    icon: 'user',
+    them: 'One buyer split across three contacts',
+    h: 'One buyer, one profile, even with three phone numbers.',
+    p: 'Orders, carts, and chats merge automatically.',
+  },
+  {
+    icon: 'card',
+    them: 'COD stays COD, and you carry the risk',
+    h: 'Turn hesitant COD buyers into paid-upfront customers.',
+    p: 'Send a payment link in the same thread, built for Shopify checkout.',
+  },
 ];
 
-// Three showcase rows, each a real screen from the product rather than an icon. Short
-// copy, three proof points, one image: the page has to be skimmable in one scroll.
+// Three real screens. One line each: the picture is the argument, not the caption.
 const SHOWCASE = [
   {
     eyebrow: 'Journeys',
-    h: 'Confirm the order, or turn it prepaid',
-    p: 'A COD order lands and the buyer gets a WhatsApp message in seconds. They confirm, cancel, or pay online instead.',
-    bullets: ['Confirm and Cancel buttons on an approved template', 'Payment link from a Shopify draft invoice', 'Revenue tracked per journey, not vanity sends'],
+    h: 'Confirm it, or turn it prepaid',
+    p: 'The buyer answers on WhatsApp in seconds. Confirm, cancel, or pay online instead.',
     img: '/lp/shots/journeys.webp',
     alt: 'TopEdge journeys list showing a COD to prepaid nudge and abandoned cart recovery with revenue, enrolments and open rate per journey.',
   },
   {
     eyebrow: 'Cart recovery',
     h: 'See the money leaving, then go get it',
-    p: 'Abandoned carts, open cart value, and what you actually recovered sit on one dashboard instead of in a weekly export.',
-    bullets: ['Cart value at risk, live', 'Recovery funnel from abandon to purchase', 'WhatsApp, Instagram, and email in one flow'],
+    p: 'Cart value at risk and what you actually recovered, on one dashboard.',
     img: '/lp/shots/recovery.webp',
     alt: 'TopEdge store growth dashboard showing cart value at risk, abandoned carts, recovery rate and a recovery funnel from abandoned to purchased.',
   },
   {
     eyebrow: 'No code',
-    h: 'Build the whole flow by dragging boxes',
-    p: 'Describe the bot, edit the canvas it drafts, then test before you publish. No developer, no theme edits, no checkout scripts.',
-    bullets: ['Menus, conditions, catalog sends, human handoff', 'Test runs before anything goes live', 'Live in about 15 minutes'],
+    h: 'Build the flow by dragging boxes',
+    p: 'No developer, no theme edits, no checkout scripts.',
     img: '/lp/shots/flow.webp',
     alt: 'TopEdge flow builder canvas with a flow entry node connected to a WhatsApp message node and an interactive button node.',
   },
 ];
 
-// The switching pain, in the merchant's own terms. No competitor is named anywhere on
-// this page; the left column is the experience, not a product.
-const SWITCH = [
-  { them: 'A per-message fee on top of what Meta already charges you', us: 'Meta bills your own account. TopEdge adds 0% markup.' },
-  { them: 'The quote goes up once you depend on it', us: 'Published plans, GST invoices, cancel anytime, no setup fee.' },
-  { them: 'Automation runs are metered and you get rationed', us: 'Flow automations run unlimited times on every plan.' },
-  { them: 'One buyer becomes three contacts and the history splits', us: 'Orders, carts, and chats merge into a single profile.' },
-];
-
-// Everything else the subscription carries, as one quick list rather than ten boxes.
+// Value stack beside the price, so the plan reads as a platform and not one feature.
 const INCLUDED = [
   'WhatsApp and Instagram in one inbox',
-  'Customer 360 beside every thread',
-  'Meta-approved broadcast campaigns',
-  'Segments, lead scores, and a real CRM',
-  'Shopify tracking pixel and intent signals',
-  'Template library synced with Meta',
-  'AI replies on your own OpenAI or Claude key',
-  'Opt-in tools, QR codes, and catalog sends',
+  'Abandoned cart recovery',
+  'Broadcast campaigns',
+  'Customer CRM and segments',
+  'Shopify tracking pixel',
+  'AI replies on your own key',
 ];
 
-// Credibility marks that already ship on the site footer, reused here because an ad
-// visitor has never heard of us and needs to see who vouches before they read a price.
+// Marks that already sit in the site footer. An ad visitor has never heard of us.
 const BADGES = [
   { src: '/badges/shopify-app-store.png?v=4', alt: 'Available on the Shopify App Store' },
   { src: '/badges/meta-business-partner.png?v=4', alt: 'Meta Business Partner' },
   { src: '/badges/whatsapp-cloud-api.png?v=5', alt: 'Built on the official WhatsApp Cloud API' },
 ];
 
-// The marquee repeats the list three times: two copies left a visible seam at 1440px
-// because four logos are narrower than the viewport. The CSS translates by -33.333%.
+// Three copies of four logos: two left a visible double at 1440px.
 const TRUST_LOGOS = [
   { src: '/trust/delitech-white.png', alt: 'Delitech' },
   { src: '/trust/apex-white.png', alt: 'Apex Light' },
   { src: '/trust/codeclinic-white.png', alt: 'code CLINIC' },
   { src: '/trust/choicesalon-white.png', alt: 'Choice Salon' },
 ];
+
+// The site footer, minus the two things an ad page should not carry: the Compare column
+// (this page may not name a competitor, and paid traffic should not be sent shopping) and
+// the newsletter form (a second form competes with the trial for the same click).
+const FOOT_COLUMNS = [
+  { title: 'Product', links: [['Pricing', '/pricing'], ['Journey', '/features/journeys'], ['COD confirmation', '/features/cod-confirmation'], ['Audience Campaigns', '/features/campaigns'], ['AI Brain', '/features/ai-brain']] },
+  { title: 'Docs', links: [['Documentation', '/docs'], ['Quickstart', '/docs/quickstart'], ['Cart recovery', '/docs/guides/abandoned-cart-recovery'], ['COD confirmation', '/docs/guides/cod-confirmation'], ['Troubleshooting', '/docs/troubleshooting']] },
+  { title: 'Company', links: [['About', '/about'], ['Customers', '/customers'], ['Blog', '/blog'], ['Contact', '/contact']] },
+];
+
+// Same brand fills the site footer uses. Instagram's real mark is a radial gradient;
+// a single mid-gradient magenta reads the same at 16px and costs no gradient def.
+const SOCIAL_FILL = { linkedin: '#0A66C2', instagram: '#d6249f', youtube: '#FF0000' };
+const SOCIAL_ICONS = {
+  linkedin: '<path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.73V1.73C24 .77 23.21 0 22.23 0z"/>',
+  instagram: '<path d="M12 2.16c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85C2.38 3.92 3.9 2.38 7.15 2.23 8.42 2.17 8.8 2.16 12 2.16zM12 0C8.74 0 8.33.01 7.05.07 2.7.27.27 2.69.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.2 4.36 2.62 6.78 6.98 6.98C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c4.35-.2 6.78-2.62 6.98-6.98.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95C23.73 2.7 21.31.27 16.95.07 15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-11.85a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/>',
+  youtube: '<path d="M23.5 6.2a3.02 3.02 0 0 0-2.12-2.14C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.38.56A3.02 3.02 0 0 0 .5 6.2 31.6 31.6 0 0 0 0 12a31.6 31.6 0 0 0 .5 5.8 3.02 3.02 0 0 0 2.12 2.14c1.88.56 9.38.56 9.38.56s7.5 0 9.38-.56a3.02 3.02 0 0 0 2.12-2.14A31.6 31.6 0 0 0 24 12a31.6 31.6 0 0 0-.5-5.8zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/>',
+};
 
 function yearly(p) {
   return p.pricing.yearly?.effectiveMonthlyLabel ?? p.monthlyPriceLabel;
@@ -187,27 +233,27 @@ const launch = byslug.launch;
 const FAQS = [
   {
     q: 'How much does it cost?',
-    a: `Plans start at ${launch.monthlyPriceLabel} a month + 18% GST, or ${yearly(launch)} a month if billed yearly, and basic COD confirmation is included on every plan. Meta charges its own per-message WhatsApp fees directly on your Meta Business account, and TopEdge adds 0% markup.`,
+    a: `From ${launch.monthlyPriceLabel} a month + 18% GST, or ${yearly(launch)} billed yearly. COD confirmation is on every plan. Meta bills its own per-message fees to your account and TopEdge adds 0% markup.`,
   },
   {
-    q: 'What happens if the customer does not reply?',
-    a: "You decide. Set an automatic follow-up reminder, or hold the order for manual review. Either way, nothing ships until you've chosen what to do with unconfirmed orders.",
+    q: 'What if the customer does not reply?',
+    a: 'You decide: auto follow-up, or hold the order for review. Nothing ships until you have set that rule.',
   },
   {
-    q: 'Do WhatsApp templates need Meta approval?',
-    a: 'Yes. Every message template must be approved by Meta before it can send, and TopEdge will not send a template that is not approved yet. This protects your WhatsApp number.',
+    q: 'Do templates need Meta approval?',
+    a: 'Yes, and TopEdge will not send one that is not approved yet. That is what protects your number.',
   },
   {
     q: 'Which plan has COD to prepaid?',
-    a: `${prepaidText} only. It sends a WhatsApp payment link created from a Shopify draft invoice, so a buyer can switch from Cash on Delivery to paying upfront. ${launch.displayName} includes basic COD confirmation.`,
+    a: `${prepaidText}. It sends a payment link built from a Shopify draft invoice, so the buyer can pay upfront instead. ${launch.displayName} covers basic COD confirmation.`,
   },
   {
-    q: 'Will this work with my existing Shopify checkout?',
-    a: "Yes. TopEdge connects through Shopify's native order webhooks, so there are no theme edits and no checkout script changes, and you don't need a developer. Most stores are live in about 15 minutes.",
+    q: 'Will it work with my checkout?',
+    a: 'Yes. It connects through Shopify order webhooks. No theme edits, no checkout scripts, no developer.',
   },
   {
-    q: 'Is my WhatsApp number safe to use for this?',
-    a: 'Yes. TopEdge only sends Meta-approved template messages through the official WhatsApp Cloud API, the same infrastructure Meta provides for business messaging. It is not a workaround.',
+    q: 'Is my WhatsApp number safe?',
+    a: 'Yes. Messages go through the official WhatsApp Cloud API on approved templates. It is not a workaround.',
   },
 ];
 
@@ -220,36 +266,31 @@ const quotesHtml = QUOTES.map(
 ).join('\n');
 
 function iconChip(name) {
-  return `<span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name]}</svg></span>`;
+  return `<span class="ic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name]}</svg></span>`;
 }
 
-const whyHtml = WHY.map(
-  (w) => `      <div class="why">${iconChip(w.icon)}<h3>${esc(w.h)}</h3><p>${esc(w.p)}</p></div>`,
-).join('\n');
-
-const showcaseHtml = SHOWCASE.map(
-  (s, i) => `      <div class="row${i % 2 ? ' flip' : ''}">
-        <div class="row-copy">
-          <p class="eyebrow">${esc(s.eyebrow)}</p>
-          <h3>${esc(s.h)}</h3>
-          <p class="row-p">${esc(s.p)}</p>
-          <ul class="ticks">${s.bullets.map((b) => `<li>${esc(b)}</li>`).join('')}</ul>
-        </div>
-        <img class="shot" src="${s.img}" width="1120" height="630" loading="lazy" decoding="async" alt="${esc(s.alt)}">
+const switchHtml = SWITCH.map(
+  (w) => `      <div class="sw">
+        <p class="sw-them">${esc(w.them)}</p>
+        <div class="sw-us">${iconChip(w.icon)}<div><h3>${esc(w.h)}</h3><p>${esc(w.p)}</p></div></div>
       </div>`,
 ).join('\n');
 
-const switchHtml = SWITCH.map(
-  (s) => `      <div class="sw">
-        <p class="sw-them"><span>Most WhatsApp tools</span>${esc(s.them)}</p>
-        <p class="sw-us"><span>TopEdge</span>${esc(s.us)}</p>
+const showcaseHtml = SHOWCASE.map(
+  (s2, i) => `      <div class="row${i % 2 ? ' flip' : ''}">
+        <div class="row-copy">
+          <p class="eyebrow">${esc(s2.eyebrow)}</p>
+          <h3>${esc(s2.h)}</h3>
+          <p class="row-p">${esc(s2.p)}</p>
+        </div>
+        <img class="shot" src="${s2.img}" width="1120" height="630" loading="lazy" decoding="async" alt="${esc(s2.alt)}">
       </div>`,
 ).join('\n');
 
 const includedHtml = INCLUDED.map((i) => `<li>${esc(i)}</li>`).join('');
 
 const badgesHtml = BADGES.map(
-  (b) => `<li><img src="${b.src}" alt="${esc(b.alt)}" height="40" loading="lazy" decoding="async"></li>`,
+  (b) => `<li><img src="${b.src}" alt="${esc(b.alt)}" height="46" loading="lazy" decoding="async"></li>`,
 ).join('');
 
 const marqueeHtml = [...TRUST_LOGOS, ...TRUST_LOGOS, ...TRUST_LOGOS]
@@ -258,6 +299,85 @@ const marqueeHtml = [...TRUST_LOGOS, ...TRUST_LOGOS, ...TRUST_LOGOS]
     return `<li${dupe ? ' aria-hidden="true"' : ''}><img src="${l.src}" alt="${dupe ? '' : esc(l.alt)}" height="26" loading="lazy" decoding="async"></li>`;
   })
   .join('');
+
+/**
+ * The site navbar, as a static capsule. Same shell as MarketingNavbar: floating, ghost
+ * over the hero and solid once scrolled on desktop, always solid on mobile. The mega
+ * menu is deliberately not ported. Its fourteen feature links are the site's job; on a
+ * page bought by the click, every one of them is a way to leave without signing up, so
+ * the two links here are in-page anchors instead.
+ */
+function navHtml(slug) {
+  return `<header class="mkt-nav" id="nav">
+  <div class="mkt-nav__shell">
+    <div class="mkt-nav__capsule" id="nav-capsule">
+      <div class="mkt-nav__bar">
+        <a class="mkt-nav__brand" href="/">
+          <img class="mkt-nav__brand-mark" src="/brand-mark-56.webp" width="40" height="40" alt="" decoding="async">
+          <span class="mkt-nav__brand-text">TopEdge <span>AI</span></span>
+        </a>
+        <nav class="mkt-nav__desktop" aria-label="Primary">
+          <a class="mkt-nav__link" href="#how">How it works</a>
+          <a class="mkt-nav__link" href="#pricing">Pricing</a>
+        </nav>
+        <div class="mkt-nav__actions">
+          <a class="mkt-nav__link" href="/login">Log in</a>
+          <a class="mkt-btn-primary" data-cta="trial" href="/signup?lp=${slug}">Start free</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>`;
+}
+
+/**
+ * The site footer, same structure and type scale as MarketingFooter: brand and real
+ * contact details, the sitemap, partner badges, legal bar. Two things are left out on
+ * purpose. The Compare column names competitors, which this page may not do and which
+ * would send paid traffic shopping. The newsletter form is a second thing to fill in,
+ * competing with the one conversion this page is paid for.
+ */
+function footHtml() {
+  const cols = FOOT_COLUMNS.map(
+    (c) => `        <div class="mkt-foot__col">
+          <p class="mkt-foot__capsule">${esc(c.title)}</p>
+          <ul class="mkt-foot__list">${c.links.map(([label, href]) => `<li><a class="mkt-foot__link" href="${href}">${esc(label)}</a></li>`).join('')}</ul>
+        </div>`,
+  ).join('\n');
+  const socials = Object.entries(SOCIAL)
+    .filter(([k]) => SOCIAL_ICONS[k])
+    .map(([k, href]) => `<li><a class="mkt-foot__social-btn" href="${esc(href)}" target="_blank" rel="noopener" aria-label="${k[0].toUpperCase() + k.slice(1)}"><svg viewBox="0 0 24 24" width="16" height="16" fill="${SOCIAL_FILL[k]}" aria-hidden="true">${SOCIAL_ICONS[k]}</svg></a></li>`)
+    .join('');
+  return `<footer class="mkt-foot" aria-label="Site footer">
+  <div class="mkt-foot__shell">
+    <div class="mkt-foot__top">
+      <div class="mkt-foot__brand">
+        <a class="mkt-foot__logo" href="/">
+          <img class="mkt-foot__logo-mark" src="/brand-mark-56.webp" width="28" height="28" alt="" decoding="async" loading="lazy">
+          <span class="mkt-foot__logo-text">TopEdge <span>AI</span></span>
+        </a>
+        <div class="mkt-foot__company-rows">
+          <p class="mkt-foot__company-row"><span class="mkt-foot__company-text">${ADDRESS_LINES.map(esc).join('<br>')}</span></p>
+          <p class="mkt-foot__company-row"><span class="mkt-foot__company-text"><a href="mailto:${esc(COMPANY_EMAIL)}">${esc(COMPANY_EMAIL)}</a></span></p>
+          <p class="mkt-foot__company-row"><span class="mkt-foot__company-text"><a href="tel:+${COMPANY_PHONE_E164}">${esc(COMPANY_PHONE)}</a><span class="mkt-foot__company-sep" aria-hidden="true">&middot;</span><a href="${esc(WHATSAPP_URL)}" target="_blank" rel="noopener">WhatsApp</a></span></p>
+        </div>
+        <ul class="mkt-foot__social-list">${socials}</ul>
+      </div>
+      <nav class="mkt-foot__sitemap" aria-label="Sitemap">
+${cols}
+      </nav>
+    </div>
+    <div class="mkt-foot__trust">
+      <p class="mkt-foot__trust-label">Trusted by platforms</p>
+      <ul class="mkt-foot__trust-list">${BADGES.map((b) => `<li><img src="${b.src}" alt="${esc(b.alt)}" loading="lazy" decoding="async"></li>`).join('')}</ul>
+    </div>
+    <div class="mkt-foot__legal">
+      <p>&copy; 2026 ${esc(LEGAL_NAME)}. Meta&rsquo;s WhatsApp fees are billed by Meta on your own account. TopEdge adds 0% markup.</p>
+      <div class="mkt-foot__legal-links"><a href="/privacy">Privacy</a><a href="/terms">Terms</a></div>
+    </div>
+  </div>
+</footer>`;
+}
 
 const PHONE_LABEL =
   'Example WhatsApp message to a buyer: Hi Priya, we received your order #1042, Cash on Delivery, ₹1,499. Please confirm it so we can ship it today. Two buttons follow: Confirm order and Cancel order.';
@@ -338,7 +458,8 @@ for (const page of PAGES) {
     PLAN_CARDS: planCards(),
     FAQS: faqHtml,
     QUOTES: quotesHtml,
-    WHY_CARDS: whyHtml,
+    NAV: navHtml(page.slug),
+    FOOTER: footHtml(),
     SHOWCASE_ROWS: showcaseHtml,
     SWITCH_ROWS: switchHtml,
     INCLUDED_LIST: includedHtml,

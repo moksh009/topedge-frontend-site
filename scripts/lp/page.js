@@ -2,9 +2,10 @@
   var d=document,w=window,$=function(s,r){return(r||d).querySelector(s)},$$=function(s,r){return Array.prototype.slice.call((r||d).querySelectorAll(s))};
   var reduce=w.matchMedia&&w.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Nav: transparent over the hero, solid once scrolled.
-  var nav=$('#nav');
-  function onScroll(){nav.classList.toggle('is-solid',(w.scrollY||0)>8)}
+  // Nav capsule: ghost over the hero, solid once scrolled, same 40px trip point the
+  // site navbar uses. Below 1024px the capsule is always solid, handled in CSS.
+  var cap=$('#nav-capsule');
+  function onScroll(){cap.classList.toggle('is-solid',(w.scrollY||0)>40)}
   onScroll();w.addEventListener('scroll',onScroll,{passive:true});
 
   // How it works: highlight the part of the example message that matches the step in view.
