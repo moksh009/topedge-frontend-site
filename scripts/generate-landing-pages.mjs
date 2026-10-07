@@ -286,6 +286,27 @@ function planCards(slug) {
 // anywhere: the published reviews give the text and the author, not the score each one
 // carried, and a star row is a score claim. Real stars need the TrustBox embed and the
 // business unit id (see Open items), or the per-review ratings from the owner.
+/**
+ * The real Trustpilot widget, which is the only honest way to show a star rating here.
+ * Trustpilot owns the score; the published review page gives the text and the author but
+ * not the rating each review carried, so a star row drawn by hand would be invented and a
+ * "rated X out of 5" line would be a number nobody can source. The widget renders both
+ * live, and keeps itself current.
+ *
+ * `businessUnitId` comes from the owner's Trustpilot Business account under
+ * Integrations > TrustBox; it cannot be read off the public page. While it is empty the
+ * verbatim cards below render on their own and no Trustpilot script is requested at all.
+ * Once it is set, the cards become the widget's fallback content: they are what shows
+ * before the script lands and if it never does, so the proof never disappears.
+ */
+const TRUSTPILOT = {
+  businessUnitId: '',
+  templateId: '53aa8912dec7e10d38f59f36',
+  locale: 'en-IN',
+  height: '350px',
+  reviewUrl: 'https://www.trustpilot.com/review/topedgeai.com',
+};
+
 const TP_STAR =
   '<svg viewBox="0 0 24 24" width="14" height="14" fill="#00b67a" aria-hidden="true"><path d="M12 1.6l3.1 7.2 7.8.6-5.9 5.1 1.8 7.6L12 18l-6.8 4.1 1.8-7.6L1.1 9.4l7.8-.6z"/></svg>';
 
@@ -300,13 +321,23 @@ const switchHtml = SWITCH.map(
       </div>`,
 ).join('\n');
 
-const quotesHtml = QUOTES.map(
+const quoteCardsHtml = QUOTES.map(
   (q) => `      <blockquote class="card quote">
         <p class="tp-mark">${TP_STAR}<span>Trustpilot</span></p>
         <p class="tp-text">${esc(q.text)}</p>
         <footer>${esc(q.author)}</footer>
       </blockquote>`,
 ).join('\n');
+
+const quotesHtml = TRUSTPILOT.businessUnitId
+  ? `    <div class="trustpilot-widget" data-locale="${TRUSTPILOT.locale}" data-template-id="${TRUSTPILOT.templateId}" data-businessunit-id="${esc(TRUSTPILOT.businessUnitId)}" data-style-height="${TRUSTPILOT.height}" data-style-width="100%" data-theme="light">
+      <div class="quotes">
+${quoteCardsHtml}
+      </div>
+    </div>`
+  : `    <div class="quotes">
+${quoteCardsHtml}
+    </div>`;
 
 const showcaseHtml = SHOWCASE.map(
   (s2) => `      <article class="bento">

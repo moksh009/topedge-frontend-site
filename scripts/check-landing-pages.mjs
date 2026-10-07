@@ -176,9 +176,11 @@ must(/target="_blank"/.test(wa) && /rel="noopener"/.test(wa), 'WhatsApp CTA must
 must(!/<details/.test(markup), 'the FAQ accordion is gone; do not reintroduce it without the spec');
 
 // --- Final CTA, sticky bar, tracking ---
-must(copy.includes('Ship only the COD orders buyers confirm'), 'missing final CTA heading');
+// The closing CTA band was removed; the WhatsApp handoff is the last section now.
+// What still has to hold is that a visitor is never far from a way to convert, so
+// count the entry points rather than assert one particular band exists.
 must(/id="sticky-cta"[^>]*>/.test(html), 'missing sticky mobile CTA');
-must(count(/data-cta="trial"/g) >= 5, 'expected the trial CTA in nav, hero, pricing, final CTA and sticky bar');
+must(count(/data-cta="trial"/g) >= 5, 'expected the trial CTA in nav, hero, the three plan cards, pricing and the sticky bar');
 must(/shopify_install_click/.test(html), 'missing Shopify click event');
 
 if (failures.length) {

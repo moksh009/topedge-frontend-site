@@ -267,12 +267,47 @@ the score each one carried, and a star row is a score claim we cannot support. `
 now also fails if two star glyphs ever end up adjacent. Real stars need the TrustBox embed
 with the business unit and template ids, or the per-review ratings (see Open items).
 
+## Revision 8 — the real TrustBox, a P&L as proof (2026-10-07)
+
+Owner review, with the Trustpilot carousel and Trustpilot's own attribution guidance as
+the reference.
+
+**The reference cannot be built by hand, so it is wired to the real widget.** The carousel
+in the reference shows a star row per review and "Rated 4.8 out of 5 based on 427 reviews";
+those are Trustpilot's demo numbers. Ours are unknown here: the published review page gives
+each review's text and author but not the rating it carried, and `trustpilot.com` is blocked
+by this environment's egress proxy, so there is no honest source for a score in this repo.
+Drawing the stars anyway would put a fabricated rating on the one page whose job is proving
+the company is real.
+
+So the page now carries the actual TrustBox. `TRUSTPILOT.businessUnitId` in the generator is
+the switch. Empty, which is how it ships today, and the three verbatim cards render alone
+and no Trustpilot script is requested. Set to the id from the owner's Trustpilot Business
+account (Integrations > TrustBox), and the cards become the widget's fallback content: they
+show until the script lands, and for good if it never does. Template `53aa8912dec7e10d38f59f36`
+is the Review Carousel from the reference. The bootstrap script is appended after window
+`load`, the same treatment the analytics tag gets, so nothing external touches first paint
+and no `<script src>` appears in the markup. The widget renders the stars, the TrustScore and
+the review count itself, always current, and it carries the "on Trustpilot" attribution that
+Trustpilot's brand guidance requires.
+
+**A P&L is the proof for the pricing objections.** The switching section was four lines of
+text. It now opens with a real profit-and-loss view from the product, cropped to the panels
+that put "Return losses (RTO)" and "WhatsApp messages" on the chart as their own lines, next
+to findings naming both. The claim under it is 0% markup; this is the screen where a merchant
+would catch us if it were false.
+
+**Also:** the closing CTA band is gone, so the WhatsApp handoff is the last section and the
+page ends on a person rather than a fourth repeat of the same button (eight trial entry
+points remain, which `check:lp` counts). The purple wash behind the product bento is gone.
+
 ## Testing
 Repo has no JS test runner, so verification is a node script:
 `scripts/check-landing-pages.mjs` (`npm run check:lp`) reads the generated HTML and asserts: size budget, noindex, no em dashes, no competitor names, the three quotes verbatim, plan prices equal `FALLBACK_CATALOG`, Launch has no prepaid text, Growth and Scale do, `TRIAL` numbers appear, 6 FAQs with exactly one `open`, both CTA kinds present, no external script or stylesheet. Browser checks with Playwright (installed): 360px and 1280px screenshots, H1 at most 3 lines on mobile, sticky bar behaviour, toggle, hero variant swap by `?utm_content=`.
 
 ## Open items for the owner
-1. **Trustpilot TrustBox:** needs the template ID and business unit ID. Until supplied the page shows a link to `trustpilot.com/review/topedgeai.com` and no score. The TrustBox also needs an external script, which the page contract currently forbids, so it would have to be injected after `load`, like gtag.
+1. **Trustpilot TrustBox:** the integration is built (revision 8); it needs the business unit ID from Trustpilot Business > Integrations > TrustBox pasted into `TRUSTPILOT.businessUnitId`. Until then no stars or score appear anywhere, by design.
+1. ~~Trustpilot TrustBox~~ (superseded, kept for history): needs the template ID and business unit ID. Until supplied the page shows a link to `trustpilot.com/review/topedgeai.com` and no score. The TrustBox also needs an external script, which the page contract currently forbids, so it would have to be injected after `load`, like gtag.
 2. **"No usage ceiling" card:** plans have order allowances (100, 800, 1,500 per cycle). The card is worded as flow runs being unmetered. Confirm that is accurate.
 3. **Consent bar** is required once an Ads conversion tag is installed.
 4. **Trustpilot rating** is not stated anywhere on the page because it cannot be hand-typed; the plan's "4.0 Great" appears only after the live widget exists.

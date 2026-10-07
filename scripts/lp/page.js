@@ -87,4 +87,19 @@
   var field=/^(INPUT|TEXTAREA|SELECT)$/;
   d.addEventListener('focusin',function(e){if(field.test(e.target.tagName)){typing=true;sync()}});
   d.addEventListener('focusout',function(e){if(field.test(e.target.tagName)){typing=false;sync()}});
+
+  // Trustpilot's TrustBox, loaded the same way the analytics tag is: after window
+  // `load`, so the page still paints with no external request on the critical path.
+  // The widget is only in the markup when a business unit id is configured, and the
+  // verbatim cards inside it are what shows until the script swaps them out, or for
+  // good if it never arrives.
+  var tp=$('.trustpilot-widget');
+  if(tp){
+    w.addEventListener('load',function(){
+      var s=d.createElement('script');
+      s.async=true;
+      s.src='https://widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js';
+      d.head.appendChild(s);
+    });
+  }
 })();
