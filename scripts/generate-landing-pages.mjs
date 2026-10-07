@@ -153,6 +153,14 @@ const whyHtml = WHY.map(
 const PHONE_LABEL =
   'Example WhatsApp message to a buyer: Hi Priya, we received your order #1042, Cash on Delivery, ₹1,499. Please confirm it so we can ship it today. Two buttons follow: Confirm order and Cancel order.';
 
+
+const VIDEO = {
+  lg: '/marketing/demos/topedge-launch.mp4',
+  sm: '/marketing/demos/topedge-launch-mobile.mp4',
+  poster: '/marketing/demos/topedge-launch-poster.webp',
+  label: 'TopEdge AI launch film: turning Shopify visitors into WhatsApp contacts and confirming COD orders before dispatch.',
+  caption: '70-second tour. Press play for sound.',
+};
 function phone(id) {
   return `<figure class="phone" id="${id}">
         <div class="pbar"><i></i>Your store</div>
@@ -162,6 +170,26 @@ function phone(id) {
           <div class="done" data-hl="check">✓ Confirmed</div>
         </div>
         <figcaption class="pcap">Example message. Your approved Meta template may differ.</figcaption>
+      </figure>`;
+}
+
+/**
+ * Hero launch film. The page contract is "instant paint", so this must cost
+ * nothing until someone asks for it: `preload="none"` means the browser fetches
+ * the poster and not a single byte of video until the viewer presses play.
+ * The source is chosen in page.js from one matchMedia check, so exactly ONE
+ * file is ever requested (a `media` attribute on <source> is not honoured
+ * inside <video>, and two <video> elements would download both).
+ */
+function heroVideo() {
+  return `<figure class="hero-film">
+        <video id="lv" class="film" controls playsinline preload="none"
+               poster="${VIDEO.poster}" width="1280" height="720"
+               data-lg="${VIDEO.lg}" data-sm="${VIDEO.sm}"
+               aria-label="${esc(VIDEO.label)}">
+          <p>Your browser cannot play this video. <a href="${VIDEO.lg}">Download it instead</a>.</p>
+        </video>
+        <figcaption class="fcap">${esc(VIDEO.caption)}</figcaption>
       </figure>`;
 }
 
@@ -200,7 +228,7 @@ for (const page of PAGES) {
     FAQS: faqHtml,
     QUOTES: quotesHtml,
     WHY_CARDS: whyHtml,
-    PHONE_HERO: phone('hero-phone'),
+    HERO_MEDIA: heroVideo(),
     PHONE_HOW: phone('how-phone'),
     SLUG: page.slug,
     SHOPIFY_URL,
@@ -240,12 +268,24 @@ ${attribution.replaceAll('{{SLUG}}', page.slug)}
   // Guardrails: fail the build rather than ship a page that breaks the ad-page contract.
   // Content assertions live in scripts/check-landing-pages.mjs (npm run check:lp).
   const bytes = Buffer.byteLength(html);
+  // Markup-shape rules read the document with inline <script> bodies removed:
+  // JS source is not markup, and a tag name inside a comment or string is not
+  // an element. Byte budget still measures the real, whole file.
+  const markup = html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, '');
   const problems = [];
   if (bytes > MAX_BYTES) problems.push(`${bytes} bytes exceeds the ${MAX_BYTES} byte budget`);
   if (!html.includes('<meta name="robots" content="noindex,nofollow">')) problems.push('missing noindex');
   if (/\{\{[A-Z0-9_]+\}\}/.test(html)) problems.push('unreplaced {{placeholder}}');
   if (/<script[^>]+src=|<link[^>]+rel="stylesheet"|fonts\.googleapis/.test(html)) problems.push('external script/stylesheet/font');
-  if (/<(video|iframe)\b/.test(html)) problems.push('video/iframe not allowed');
+  if (/<iframe\b/.test(markup)) problems.push('iframe not allowed');
+  // A hero film is allowed since 2026-10-07, but only on the terms that keep
+  // first paint instant: it must weigh nothing until someone presses play.
+  // check:lp asserts the rest (poster, playsinline, controls, aria-label).
+  for (const v of markup.match(/<video\b[^>]*>/g) || []) {
+    if (!/\bpreload="none"/.test(v)) problems.push('<video> without preload="none"');
+    if (/\bautoplay\b/.test(v)) problems.push('<video> must not autoplay');
+    if (!/\bposter="/.test(v)) problems.push('<video> without a poster');
+  }
   if (problems.length) {
     console.error(`✖ /lp/${page.slug}: ${problems.join('; ')}`);
     process.exit(1);

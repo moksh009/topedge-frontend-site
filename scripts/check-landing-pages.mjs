@@ -22,6 +22,10 @@ const must = (ok, msg) => {
 };
 const count = (re) => (html.match(re) || []).length;
 
+// Markup-shape rules read the document with inline <script> bodies removed: JS
+// source is not markup, and a tag name inside a comment or string is not an element.
+const markup = html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, '');
+
 // Em dashes are banned in our copy, but verbatim reviews are quoted exactly as written.
 const withoutQuotes = html.replace(/<blockquote[\s\S]*?<\/blockquote>/g, '');
 
@@ -30,7 +34,24 @@ must(Buffer.byteLength(html) <= 60 * 1024, 'exceeds the 60 KB budget');
 must(html.includes('<meta name="robots" content="noindex,nofollow">'), 'missing noindex');
 must(!/\{\{[A-Z0-9_]+\}\}/.test(html), 'unreplaced {{placeholder}}');
 must(!/<script[^>]+src=|<link[^>]+rel="stylesheet"|fonts\.googleapis/.test(html), 'external script/stylesheet/font');
-must(!/<(video|iframe)\b/.test(html), 'video/iframe present');
+must(!/<iframe\b/.test(markup), 'iframe present');
+// The hero film was out of scope in revision 2 of the spec and the contract
+// banned <video> outright. The owner pulled it into scope on 2026-10-07. The
+// ban is replaced by the constraints that actually protect first paint rather
+// than removed: a video may exist, but it must not cost anything before a
+// deliberate press of play, and it must not autoplay or carry sound on its own.
+const videos = markup.match(/<video\b[^>]*>/g) || [];
+must(videos.length <= 1, `expected at most 1 <video>, found ${videos.length}`);
+for (const v of videos) {
+  must(/\bpreload="none"/.test(v), '<video> must set preload="none" so it costs nothing until play');
+  must(/\bposter="\/[^"]+"/.test(v), '<video> must have a poster so the hero still paints instantly');
+  must(/\bplaysinline\b/.test(v), '<video> must be playsinline so iOS does not take over the screen');
+  must(/\bcontrols\b/.test(v), '<video> must expose controls');
+  must(!/\bautoplay\b/.test(v), '<video> must not autoplay');
+  must(!/\bsrc="/.test(v), '<video> must not hardcode src; page.js picks one source from data-lg/data-sm');
+  must(/\baria-label="[^"]{20,}"/.test(v), '<video> needs an aria-label describing the film');
+}
+must(!/<source\b/.test(markup), 'use data-lg/data-sm + page.js, not a source element (media= is ignored inside video)');
 must(!withoutQuotes.includes('—'), 'em dash outside a verbatim quote');
 for (const name of ['WATI', 'AiSensy', 'Interakt', 'Releasit', 'EasySell', 'Dondy', 'KwikEngage', 'WASP', 'Zoko']) {
   must(!new RegExp(`\\b${name}\\b`, 'i').test(html), `names competitor ${name}`);

@@ -60,7 +60,58 @@ Sections follow the plan, in order:
 - `utm_content` selects a variant when it starts with `loss`, `speed` or `rto` (for example `rto-brand`).
 
 ## Out of scope
-The hero video; the TrustBox embed (needs IDs); consent bar; any change to React pages or routing.
+The TrustBox embed (needs IDs); consent bar; any change to React pages or routing.
+
+## Revision 3 — the hero film (2026-10-07)
+
+The owner pulled the hero video into scope. Revision 2 listed it as out of scope and the
+page contract banned `<video>` outright, because the whole reason this page is static HTML
+is that React routes here measure 4-7s mobile LCP.
+
+**The ban is replaced, not removed.** A video is allowed only on the terms that keep first
+paint instant, and both guards enforce them:
+
+- `preload="none"` — the browser fetches the poster and **zero bytes of video** until the
+  viewer presses play. Page weight gain on load is the 36.5 KB poster, nothing else.
+- `poster` required — the hero still paints an image immediately, so LCP is unaffected.
+- `playsinline`, `controls`, a descriptive `aria-label`, **no `autoplay`**, at most one
+  `<video>`, and no hardcoded `src`.
+- Exactly one source is ever requested. `page.js` picks `data-lg` or `data-sm` from a single
+  `matchMedia('(max-width: 48rem)')` check. A `media` attribute on a `source` element is
+  **not** honoured inside `<video>`, and two `<video>` elements would fetch both files —
+  which is a live bug on `/features/journeys`, where the desktop and mobile videos both
+  download on mobile (6.1 MB of video on a phone; audit finding TE-006).
+
+Both guards now strip inline `<script>` bodies before applying markup-shape rules. JS source
+is not markup, and a tag name inside a comment is not an element.
+
+### Assets
+
+Source `topedge_launch_v2_1080p60_web.mp4`: 1920x1080, 60fps, 70s, 137.05 MB (15.4 Mbps).
+
+| File | Encode | Size | vs source |
+|---|---|---|---|
+| `topedge-launch.mp4` | H.264 high, CRF 23, preset slow, 1080p60, AAC 128k, faststart | **21.47 MB** | **-84.3%** |
+| `topedge-launch-mobile.mp4` | same at 1280x720 (lanczos), AAC 112k | **8.87 MB** | **-93.5%** |
+| `topedge-launch-poster.webp` | frame at 50s, 1280px, q82 | **36.5 KB** | — |
+
+Measured against the source, not asserted:
+
+| Encode | SSIM (all) | PSNR Y |
+|---|---|---|
+| CRF 20, 1080p60 (43.82 MB) | 0.999139 | 58.05 dB |
+| **CRF 23, 1080p60 (21.47 MB) — shipped** | **0.998996** | **57.37 dB** |
+| CRF 23, 720p vs 720p reference (8.87 MB) | 0.998797 | — |
+
+CRF 20 is half as efficient for 0.00014 SSIM and 0.68 dB, both far below a visible
+threshold — PSNR above ~45 dB is already considered visually lossless. CRF 23 ships.
+
+The poster is the 50s frame ("COD orders, confirmed before they ship"), chosen because it is
+the one moment in the film that matches this page's offer.
+
+The hero phone mockup is replaced by the film. The same mockup is still rendered in the
+"how it works" section (`PHONE_HOW`), so the WhatsApp confirm/cancel illustration and its
+`aria-label` are not lost.
 
 ## Testing
 Repo has no JS test runner, so verification is a node script:

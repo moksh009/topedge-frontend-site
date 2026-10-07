@@ -97,6 +97,9 @@ details[open] summary:after{content:'\2212'}
 details p{padding:0 0 1rem;font-size:1rem;color:var(--muted)}
 /* hero phone, how-it-works emphasis */
 .hero-vis .phone{margin:0 auto}
+.hero-film{margin:0;width:min(100%,34rem)}
+.hero-film .film{display:block;width:100%;height:auto;aspect-ratio:16/9;border-radius:18px;background:#ece7fa;box-shadow:0 0 0 1px rgba(15,23,42,.04),0 8px 24px -8px rgba(15,23,42,.14),0 28px 56px -24px rgba(76,29,149,.22)}
+.fcap{margin:.6rem 0 0;font-size:.78rem;text-align:center;color:var(--muted)}
 .hero-vis .done{display:none}
 .done{margin-top:.5rem;padding:.55rem;border-radius:12px;background:#dcf8c6;text-align:center;font-size:.9rem;font-weight:500;color:#0b7a6e;transition:opacity .25s}
 .how-vis{display:grid;gap:1rem;justify-items:center}
@@ -206,14 +209,14 @@ details p{padding:0 0 1rem;font-size:1rem;color:var(--muted)}
       <p class="micro">14-day free trial · 20 free order confirmations · No credit card · Live in about 15 minutes</p>
     </div>
     <div class="hero-vis">
-      <figure class="phone" id="hero-phone">
-        <div class="pbar"><i></i>Your store</div>
-        <div class="chat" role="img" aria-label="Example WhatsApp message to a buyer: Hi Priya, we received your order #1042, Cash on Delivery, ₹1,499. Please confirm it so we can ship it today. Two buttons follow: Confirm order and Cancel order.">
-          <div class="bubble"><p>Hi Priya, we received your order <strong data-hl="order">#1042</strong> (Cash on Delivery, ₹1,499).</p><p>Please confirm it so we can ship it today.</p><time>10:42</time></div>
-          <div class="rep" data-hl="buttons"><span>Confirm order</span><span>Cancel order</span></div>
-          <div class="done" data-hl="check">✓ Confirmed</div>
-        </div>
-        <figcaption class="pcap">Example message. Your approved Meta template may differ.</figcaption>
+      <figure class="hero-film">
+        <video id="lv" class="film" controls playsinline preload="none"
+               poster="/marketing/demos/topedge-launch-poster.webp" width="1280" height="720"
+               data-lg="/marketing/demos/topedge-launch.mp4" data-sm="/marketing/demos/topedge-launch-mobile.mp4"
+               aria-label="TopEdge AI launch film: turning Shopify visitors into WhatsApp contacts and confirming COD orders before dispatch.">
+          <p>Your browser cannot play this video. <a href="/marketing/demos/topedge-launch.mp4">Download it instead</a>.</p>
+        </video>
+        <figcaption class="fcap">70-second tour. Press play for sound.</figcaption>
       </figure>
     </div>
   </div>
@@ -389,6 +392,17 @@ details p{padding:0 0 1rem;font-size:1rem;color:var(--muted)}
       es.forEach(function(e){if(e.isIntersecting)how.setAttribute('data-active',e.target.getAttribute('data-step'))});
     },{rootMargin:'-40% 0px -40% 0px'});
     $$('[data-step]').forEach(function(li){io.observe(li)});
+  }
+
+  // Hero film: choose ONE source. preload="none" keeps it at zero bytes until
+  // the viewer presses play, so setting src here costs nothing. A media
+  // attribute on a source element is not honoured inside a video element, and
+  // two video elements would fetch both files, so one matchMedia check does it.
+  var film=$('#lv');
+  if(film){
+    var small=w.matchMedia&&w.matchMedia('(max-width: 48rem)').matches;
+    var src=(small?film.getAttribute('data-sm'):film.getAttribute('data-lg'))||film.getAttribute('data-lg');
+    if(src)film.src=src;
   }
 
   // Pricing cycle toggle. Both prices are in the HTML, so the page reads correctly before this runs.

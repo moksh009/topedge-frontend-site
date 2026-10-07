@@ -87,6 +87,9 @@ details[open] summary:after{content:'\2212'}
 details p{padding:0 0 1rem;font-size:1rem;color:var(--muted)}
 /* hero phone, how-it-works emphasis */
 .hero-vis .phone{margin:0 auto}
+.hero-film{margin:0;width:min(100%,34rem)}
+.hero-film .film{display:block;width:100%;height:auto;aspect-ratio:16/9;border-radius:18px;background:#ece7fa;box-shadow:0 0 0 1px rgba(15,23,42,.04),0 8px 24px -8px rgba(15,23,42,.14),0 28px 56px -24px rgba(76,29,149,.22)}
+.fcap{margin:.6rem 0 0;font-size:.78rem;text-align:center;color:var(--muted)}
 .hero-vis .done{display:none}
 .done{margin-top:.5rem;padding:.55rem;border-radius:12px;background:#dcf8c6;text-align:center;font-size:.9rem;font-weight:500;color:#0b7a6e;transition:opacity .25s}
 .how-vis{display:grid;gap:1rem;justify-items:center}
