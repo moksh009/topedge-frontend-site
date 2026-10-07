@@ -17,6 +17,17 @@
     $$('[data-step]').forEach(function(li){io.observe(li)});
   }
 
+  // Hero film: choose ONE source. preload="none" keeps it at zero bytes until
+  // the viewer presses play, so setting src here costs nothing. A media
+  // attribute on a source element is not honoured inside a video element, and
+  // two video elements would fetch both files, so one matchMedia check does it.
+  var film=$('#lv');
+  if(film){
+    var small=w.matchMedia&&w.matchMedia('(max-width: 48rem)').matches;
+    var src=(small?film.getAttribute('data-sm'):film.getAttribute('data-lg'))||film.getAttribute('data-lg');
+    if(src)film.src=src;
+  }
+
   // Pricing cycle toggle. Both prices are in the HTML, so the page reads correctly before this runs.
   var plans=$('#plans');
   $$('[data-cycle]',d).forEach(function(b){

@@ -67,7 +67,7 @@ export default function Home() {
         path={seo.path}
         noSuffix
         faqSchema={faqs}
-        jsonLd={[organizationJsonLd(), softwareApplicationJsonLd({ withReviews: true }), websiteJsonLd()]}
+        jsonLd={[organizationJsonLd(), softwareApplicationJsonLd(), websiteJsonLd()]}
         preloadLcpImage={{
           href: '/herooo-immage-800.webp?v=3',
           imagesrcset:

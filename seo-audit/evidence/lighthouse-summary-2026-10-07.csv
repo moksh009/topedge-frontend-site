@@ -1,0 +1,11 @@
+page,form_factor,fetch_time,perf,accessibility,seo,best_practices,LCP_ms,CLS,TBT_ms,FCP_ms,total_bytes_KB
+blog-cod-rto,desktop,2026-10-07T05:29:23.100Z,95,,,,1217,0,0,886,839
+blog-cod-rto,mobile,2026-10-07T05:29:37.832Z,75,96,100,100,4734,0,0,2896,1306
+docs-quickstart,desktop,2026-10-07T05:29:52.936Z,91,,,,1319,0,0,1274,692
+docs-quickstart,mobile,2026-10-07T05:30:07.317Z,77,97,100,100,4135,0,21,2528,688
+feature-journeys,desktop,2026-10-07T05:28:43.710Z,88,,,,1202,0.0002,0,1110,8960
+feature-journeys,mobile,2026-10-07T05:29:02.397Z,84,100,100,100,3587,0.0013,23,2140,10727
+home,desktop,2026-10-07T05:27:35.832Z,62,,,,1462,0.0004,681,1057,1860
+home,mobile,2026-10-07T05:27:55.321Z,80,93,100,100,4002,0.0005,73,2638,3576
+pricing,desktop,2026-10-07T05:28:13.254Z,89,,,,1352,0,0,1352,677
+pricing,mobile,2026-10-07T05:28:28.110Z,86,92,100,100,3229,0.0007,0,3229,673
