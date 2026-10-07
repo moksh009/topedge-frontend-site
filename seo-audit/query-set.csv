@@ -1,0 +1,53 @@
+id,query,intent,bucket,language,should_win_url,in_2026_09_30_baseline
+Q01,TopEdge AI,branded,brand,en,https://topedgeai.com/,yes
+Q02,What is TopEdge AI?,branded,brand,en,https://topedgeai.com/,yes
+Q03,TopEdge AI pricing,branded,pricing,en,https://topedgeai.com/pricing,yes
+Q04,TopEdge AI reviews,branded,trust,en,https://topedgeai.com/customers,yes
+Q05,Is TopEdge AI legit,branded,trust,en,https://topedgeai.com/about,no
+Q06,What does TopEdge AI do for Shopify stores?,branded,brand,en,https://topedgeai.com/shopify-whatsapp-integration,yes
+Q07,TopEdge AI vs WATI,comparison,compare,en,https://topedgeai.com/compare/wati,yes
+Q08,TopEdge AI vs AiSensy,comparison,compare,en,https://topedgeai.com/compare/aisensy,yes
+Q09,TopEdge AI vs Interakt,comparison,compare,en,https://topedgeai.com/compare/interakt,yes
+Q10,TopEdge vs WATI vs AiSensy,comparison,compare,en,https://topedgeai.com/compare/topedge-vs-wati-vs-aisensy,no
+Q11,best WhatsApp automation for Shopify India,category,category,en,https://topedgeai.com/,yes
+Q12,best WhatsApp marketing platform for D2C brands India,category,category,en,https://topedgeai.com/,yes
+Q13,WhatsApp automation Shopify app,category,category,en,https://topedgeai.com/shopify-whatsapp-integration,no
+Q14,Shopify WhatsApp integration India,category,category,en,https://topedgeai.com/shopify-whatsapp-integration,no
+Q15,best WhatsApp shared inbox for ecommerce,category,category,en,https://topedgeai.com/features/live-chat,no
+Q16,cheapest WhatsApp automation for small Shopify store India,category,pricing,en,https://topedgeai.com/pricing,yes
+Q17,WATI alternative,alternative,compare,en,https://topedgeai.com/compare/wati,yes
+Q18,AiSensy alternative,alternative,compare,en,https://topedgeai.com/compare/aisensy,yes
+Q19,Interakt alternative,alternative,compare,en,https://topedgeai.com/compare/interakt,yes
+Q20,Zoko alternative Shopify India,alternative,compare,en,https://topedgeai.com/blog/zoko-alternative-shopify-india,no
+Q21,Bitespeed alternative,alternative,compare,en,https://topedgeai.com/compare/bitespeed,no
+Q22,Gupshup alternative for Shopify,alternative,compare,en,https://topedgeai.com/compare/gupshup,no
+Q23,WhatsApp automation alternatives India,alternative,compare,en,https://topedgeai.com/compare/alternatives,no
+Q24,WhatsApp abandoned cart recovery Shopify,problem,solution,en,https://topedgeai.com/blog/whatsapp-abandoned-cart-recovery-shopify,yes
+Q25,how to reduce RTO on COD orders Shopify India,problem,solution,en,https://topedgeai.com/blog/how-to-reduce-rto-with-whatsapp-cod-confirmation,yes
+Q26,COD to prepaid WhatsApp Shopify,problem,solution,en,https://topedgeai.com/features/cod-confirmation,no
+Q27,how to confirm COD orders on WhatsApp before shipping,problem,solution,en,https://topedgeai.com/docs/guides/cod-confirmation,yes
+Q28,average RTO rate Indian ecommerce 2026,problem,data,en,https://topedgeai.com/blog/cod-rto-benchmark-india-2026,yes
+Q29,what is a good RTO rate for Indian D2C,problem,data,en,https://topedgeai.com/blog/cod-rto-benchmark-india-2026,yes
+Q30,WhatsApp vs email for abandoned cart recovery,problem,solution,en,https://topedgeai.com/blog/ecommerce-automation-whatsapp-vs-email-india,yes
+Q31,what is ecommerce automation,definition,definition,en,https://topedgeai.com/blog/what-is-ecommerce-automation-shopify-whatsapp,no
+Q32,what is WhatsApp Business API,definition,definition,en,https://topedgeai.com/blog/whatsapp-business-api-pricing-india,no
+Q33,what is a WhatsApp message template,definition,definition,en,https://topedgeai.com/docs/platform/message-templates,no
+Q34,what is the WhatsApp 24 hour service window,definition,definition,en,https://topedgeai.com/docs/platform/whatsapp-service-window,no
+Q35,WhatsApp Business API pricing India 2026,pricing,pricing,en,https://topedgeai.com/blog/whatsapp-business-api-pricing-india,yes
+Q36,WhatsApp marketing vs utility message cost India,pricing,pricing,en,https://topedgeai.com/docs/platform/conversation-pricing,no
+Q37,how much does WhatsApp automation cost for a Shopify store,pricing,pricing,en,https://topedgeai.com/pricing,yes
+Q38,how to start an ecommerce business in India,top-of-funnel,tof,en,https://topedgeai.com/blog/profitable-ecommerce-business-india,no
+Q39,how to make a Shopify store profitable India,top-of-funnel,tof,en,https://topedgeai.com/blog/profitable-ecommerce-business-india,no
+Q40,trending products to sell online India 2026,top-of-funnel,tof,en,https://topedgeai.com/blog/trending-products-to-sell-online-india-2026,no
+Q41,how to automate my ecommerce store India,top-of-funnel,tof,en,https://topedgeai.com/blog/how-to-automate-ecommerce-store-india,no
+Q42,get ecommerce leads from Instagram reels,top-of-funnel,tof,en,https://topedgeai.com/blog/organic-ecommerce-leads-short-form-video,no
+Q43,organic vs paid marketing for ecommerce 2026,top-of-funnel,tof,en,https://topedgeai.com/blog/organic-vs-paid-ecommerce-marketing-2026,no
+Q44,connect WhatsApp Cloud API to Shopify,docs,docs,en,https://topedgeai.com/docs/connect-whatsapp,no
+Q45,WhatsApp template rejected utility category,docs,docs,en,https://topedgeai.com/docs/troubleshooting,no
+Q46,how to build a WhatsApp flow for Shopify,docs,docs,en,https://topedgeai.com/docs/guides/build-your-first-flow,no
+Q47,WhatsApp broadcast limits and quotas,docs,docs,en,https://topedgeai.com/docs/platform/limits-and-quotas,no
+Q48,Shopify WhatsApp setup checklist go live,docs,docs,en,https://topedgeai.com/docs/go-live-checklist,no
+Q49,Shopify ke liye best WhatsApp automation tool kaunsa hai,category,category,hinglish,https://topedgeai.com/,no
+Q50,COD order confirm karne ka WhatsApp automation,problem,solution,hinglish,https://topedgeai.com/features/cod-confirmation,no
+Q51,RTO kaise kam kare Shopify COD India,problem,solution,hinglish,https://topedgeai.com/blog/how-to-reduce-rto-with-whatsapp-cod-confirmation,no
+Q52,WhatsApp cart recovery kaise setup kare Shopify,docs,docs,hinglish,https://topedgeai.com/docs/guides/abandoned-cart-recovery,no

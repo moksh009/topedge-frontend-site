@@ -76,14 +76,33 @@ export default function PriceRoll({
   size = 'lg',
   replayKey,
 }: PriceRollProps) {
+  const reduceMotion = useReducedMotion();
   const rollKey = replayKey ?? value;
   const prevRef = useRef({ key: rollKey, value });
   const prevValue = prevRef.current.value;
-  const shouldAnimate = prevRef.current.key !== rollKey;
+  const shouldAnimate = prevRef.current.key !== rollKey && !reduceMotion;
 
   useEffect(() => {
     prevRef.current = { key: rollKey, value };
   }, [rollKey, value]);
+
+  // Static render (first paint, which is what the prerenderer and every crawler
+  // sees, and anyone with prefers-reduced-motion). Emit the amount as ONE text
+  // node instead of one inline-block span per character: `.mkt-price__ch` is
+  // display:inline-block, so per-character spans make `innerText` and every
+  // HTML-to-text pipeline read "₹ 1 , 5 9 9" instead of "₹1,599". The currency
+  // mark keeps its own span because it is styled separately. See seo-audit/ TE-003.
+  if (!shouldAnimate) {
+    const currency = value.startsWith('₹') ? '₹' : '';
+    const amount = currency ? value.slice(1) : value;
+    return (
+      <span className={`mkt-price mkt-price--${size}`}>
+        {currency ? <span className="mkt-price__ch mkt-price__ch--inr">{currency}</span> : null}
+        {amount ? <span className="mkt-price__ch">{amount}</span> : null}
+        {suffix ? <span className="mkt-price__suffix">{suffix}</span> : null}
+      </span>
+    );
+  }
 
   let digitIndex = 0;
 

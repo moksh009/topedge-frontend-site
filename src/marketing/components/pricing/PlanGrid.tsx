@@ -169,7 +169,13 @@ function PlanCard({
             replayKey={`${slug}-${cycle}`}
           />
         </p>
-        <span className="mkt-plan__period">per month</span>
+        {/* The headline figure is the yearly-billing rate when the yearly cycle
+            is active, so "per month" alone misstates it. Five separate AI runs
+            (2026-09-30) quoted ₹1,599/₹3,199/₹5,199 as the month-to-month price.
+            See seo-audit/ TE-002. */}
+        <span className="mkt-plan__period">
+          {cycle === 'monthly' ? 'per month' : 'per month, billed yearly'}
+        </span>
       </div>
       {pricing.showPerDay || cycle === 'monthly' ? (
         <PerDayBadge label={pricing.perDayLabel} replayKey={`${slug}-${cycle}-day`} />

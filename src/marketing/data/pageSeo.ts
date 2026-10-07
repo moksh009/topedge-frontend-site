@@ -5,7 +5,6 @@ import {
   offerPriceValidUntil,
   TRIAL,
 } from '../lib/billingCatalog';
-import { testimonials } from './home';
 
 /** Core commercial keywords TopEdge should compete for (natural use in titles/descriptions). */
 export const CORE_KEYWORDS = [
@@ -330,30 +329,20 @@ export function organizationJsonLd() {
   };
 }
 
-/** Visible customer quotes on home/customers — no invented star ratings. */
-function softwareApplicationReviewsJsonLd() {
-  return testimonials.map((t) => ({
-    '@type': 'Review' as const,
-    author: {
-      '@type': 'Person' as const,
-      name: t.name,
-      jobTitle: t.role,
-    },
-    reviewBody: t.quote,
-    itemReviewed: {
-      '@type': 'SoftwareApplication' as const,
-      name: 'TopEdge',
-    },
-  }));
-}
-
 /**
  * Shared commercial schema for home / pricing / SEO topic pages.
  * Google Merchant listings coerce SoftwareApplication+Offer → Product and
  * require a crawlable `image` URL (plain string is the most reliable shape).
- * `withReviews` only on pages that visibly render the testimonials.
+ *
+ * No `review` nodes. Google's review-snippet policy makes a page ineligible for
+ * the star feature when "the entity that's being reviewed controls the reviews
+ * about itself", so self-serving Review markup can never earn a rich result —
+ * and the home testimonials rotate through a carousel, so only a subset is ever
+ * in the prerendered HTML, which breaks the requirement that marked-up review
+ * content be readily available on the marked-up page. The testimonials stay as
+ * visible page content; they are simply not marked up. See seo-audit/ TE-001.
  */
-export function softwareApplicationJsonLd(opts?: { withReviews?: boolean }) {
+export function softwareApplicationJsonLd() {
   const imageUrl = `${SITE_URL}/og-image.png`;
   const pricingUrl = `${SITE_URL}/pricing`;
   return {
@@ -387,7 +376,6 @@ export function softwareApplicationJsonLd(opts?: { withReviews?: boolean }) {
       },
       ...catalogDefaultCycleOffersJsonLd(undefined, { url: pricingUrl }),
     ],
-    ...(opts?.withReviews ? { review: softwareApplicationReviewsJsonLd() } : {}),
     featureList: [
       'WhatsApp cart recovery',
       'Shopify integration',
