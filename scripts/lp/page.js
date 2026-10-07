@@ -17,15 +17,44 @@
     $$('[data-step]').forEach(function(li){io.observe(li)});
   }
 
-  // Hero film: choose ONE source. preload="none" keeps it at zero bytes until
-  // the viewer presses play, so setting src here costs nothing. A media
-  // attribute on a source element is not honoured inside a video element, and
-  // two video elements would fetch both files, so one matchMedia check does it.
+  // Hero film, same behaviour as the product demos on the homepage: muted, looping,
+  // and playing by itself on phones and desktop alike. Weight is the reason this is
+  // scripted rather than an autoplay attribute. The markup carries no src, so the
+  // page still paints from the poster alone; ONE source is attached when the film
+  // is near the viewport (a media attribute on <source> is ignored inside <video>,
+  // and two <video> elements would fetch both files). A visitor who never scrolls
+  // past the fold on a metered connection downloads nothing.
   var film=$('#lv');
   if(film){
     var small=w.matchMedia&&w.matchMedia('(max-width: 48rem)').matches;
     var src=(small?film.getAttribute('data-sm'):film.getAttribute('data-lg'))||film.getAttribute('data-lg');
-    if(src)film.src=src;
+    var saveData=navigator.connection&&navigator.connection.saveData;
+    var started=false;
+    var start=function(){
+      if(started||!src)return;
+      started=true;
+      film.muted=true;film.loop=true;film.playsInline=true;film.src=src;
+      if(!reduce){var p=film.play();if(p&&p.catch)p.catch(function(){})}
+    };
+    if(saveData){
+      // Poster only. The viewer can still press play and fetch it deliberately.
+      film.addEventListener('play',function(){if(!film.getAttribute('src')&&src)film.src=src},{once:true});
+    }else if('IntersectionObserver' in w){
+      var fio=new IntersectionObserver(function(es){
+        es.forEach(function(e){
+          if(e.isIntersecting){start();if(!reduce&&film.paused){var p=film.play();if(p&&p.catch)p.catch(function(){})}}
+          else if(started&&!film.paused){film.pause()}
+        });
+      },{rootMargin:'200px 0px',threshold:.25});
+      fio.observe(film);
+    }else{
+      start();
+    }
+    // A backgrounded tab should not keep decoding frames.
+    d.addEventListener('visibilitychange',function(){
+      if(!started)return;
+      if(d.hidden)film.pause();
+    });
   }
 
   // Pricing cycle toggle. Both prices are in the HTML, so the page reads correctly before this runs.
@@ -57,24 +86,4 @@
   var field=/^(INPUT|TEXTAREA|SELECT)$/;
   d.addEventListener('focusin',function(e){if(field.test(e.target.tagName)){typing=true;sync()}});
   d.addEventListener('focusout',function(e){if(field.test(e.target.tagName)){typing=false;sync()}});
-
-  // Hero motion video: built with createElement and attached only after window `load`,
-  // so it never competes with first paint or counts toward the page's render-blocking budget.
-  // Skipped on narrow viewports (CSS hides the layer there too) and on metered connections.
-  var heroVideo=$('#hero-video');
-  var saveData=navigator.connection&&navigator.connection.saveData;
-  if(heroVideo&&!reduce&&!saveData&&w.matchMedia('(min-width: 900px)').matches){
-    w.addEventListener('load',function(){
-      try{
-        var v=d.createElement('video');
-        v.muted=true;v.loop=true;v.playsInline=true;v.autoplay=true;v.preload='auto';
-        v.setAttribute('aria-hidden','true');
-        v.addEventListener('loadeddata',function(){v.classList.add('is-ready')});
-        v.addEventListener('error',function(){v.remove()});
-        v.src='{{HERO_VIDEO_SRC}}';
-        heroVideo.appendChild(v);
-        var p=v.play();if(p&&p.catch)p.catch(function(){});
-      }catch(e){}
-    });
-  }
 })();

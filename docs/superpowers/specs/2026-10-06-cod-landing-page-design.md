@@ -113,6 +113,49 @@ The hero phone mockup is replaced by the film. The same mockup is still rendered
 "how it works" section (`PHONE_HOW`), so the WhatsApp confirm/cancel illustration and its
 `aria-label` are not lost.
 
+## Revision 4 — centred hero, autoplay, fewer boxes (2026-10-07)
+
+Owner review of revision 3: the page read as a stack of cards, the film needed a press of
+play, and the layout did not match the homepage. Four changes, all owner-directed.
+
+**1. The film autoplays on both desktop and phone**, the way the product demos on the
+homepage do. Revision 3's "no autoplay" rule stays in the guards, because the attribute is
+still the wrong tool: `page.js` sets `muted`, `loop`, `playsinline`, attaches the source and
+calls `play()` when the film is within 200px of the viewport, and pauses it when it leaves
+or the tab is hidden. The other revision 3 terms are untouched and still enforced, so the
+cost model does not change: no `src` in the markup, `preload="none"`, poster paints first,
+exactly one file per device (desktop 21.47 MB, phone 8.87 MB, verified in a browser), and a
+visitor who never scrolls past the fold still downloads no video at all. Data Saver gets the
+poster only and loads the film on a deliberate press. `controls` stays: an autoplaying loop
+over five seconds needs a stop (WCAG 2.2.2) and it is how a viewer turns sound on.
+
+**2. Centred hero, film below the copy.** One column: eyebrow pill, H1, sub, CTAs, microcopy,
+then the film full-width underneath. The two-column hero is gone.
+
+**3. Real screens instead of icon cards.** The four "why" cards and the six platform cards
+were nineteen boxes on one page. The platform grid is replaced by three showcase rows built
+from actual product frames (`/lp/shots/*.webp`, resampled from the demo posters already in
+the repo, 14-24 KB each, lazy, dimensioned); the "why" items keep their copy but lose their
+boxes; the three cost cards collapse into one line of arithmetic. The remaining cards are
+the ones a card suits: quotes and plans.
+
+**4. The switching objection, answered without naming anyone.** A two-column comparison
+covers what this audience actually arrives with: a per-message markup, a quote that moves
+once you depend on it, metered automation runs, and split contact history. The
+competitor-name ban is unchanged and is what makes this section honest rather than a
+teardown. Claims are limited to what the site already supports: 0% markup on Meta's fees,
+published plans, GST invoices, cancel anytime, no setup fee, unlimited flow runs. **No
+price-lock or price-freeze promise is made**, because the business has not made one.
+
+Also: the homepage logo marquee is ported (CSS-only, three copies of four logos translating
+-33.333%, static and wrapped under reduced motion), and the Shopify App Store, Meta Business
+Partner and WhatsApp Cloud API badges from the site footer now sit under the reviews.
+
+Checker changes: the three costs are asserted by what they say rather than by `class="card
+cost"`, since the markup they live in is now a design decision; screenshots must carry
+descriptive alt text, `loading="lazy"` and dimensions; the comparison must exist with at
+least three answered objections.
+
 ## Testing
 Repo has no JS test runner, so verification is a node script:
 `scripts/check-landing-pages.mjs` (`npm run check:lp`) reads the generated HTML and asserts: size budget, noindex, no em dashes, no competitor names, the three quotes verbatim, plan prices equal `FALLBACK_CATALOG`, Launch has no prepaid text, Growth and Scale do, `TRIAL` numbers appear, 6 FAQs with exactly one `open`, both CTA kinds present, no external script or stylesheet. Browser checks with Playwright (installed): 360px and 1280px screenshots, H1 at most 3 lines on mobile, sticky bar behaviour, toggle, hero variant swap by `?utm_content=`.

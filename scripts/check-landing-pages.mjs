@@ -77,10 +77,27 @@ for (const logo of ['choicesalon', 'delitech', 'apex']) {
 must(/role="img"[^>]*aria-label="[^"]*Confirm[^"]*Cancel/i.test(html), 'phone mockup needs an aria-label describing confirm and cancel');
 
 // --- Problem and how it works ---
-must(count(/class="card cost"/g) === 3, 'expected 3 cost cards');
+// The three costs are asserted by what they say, not by the markup they happen to sit
+// in: they were three cards, they are now one line of arithmetic, and the claim that
+// has to survive a redesign is that the page still names all three.
+for (const cost of ['out', 'back', 'handling']) {
+  must(new RegExp(`₹\\d+\\s*${cost}\\b`, 'i').test(html), `problem section no longer prices "${cost}"`);
+}
+must(/Illustrative/i.test(html), 'the cost arithmetic must be marked illustrative, not a customer result');
 must(html.includes('so every parcel that leaves your warehouse is one the buyer actually wants'), 'missing problem closing line');
 must(count(/data-step="[123]"/g) === 3, 'expected 3 data-step items');
 must(html.includes('nothing sends without your sign-off'), 'missing Meta-approval caption');
+
+// --- Product showcase ---
+// Screens from the real product, not icons. Each needs a described alt: these are the
+// only images on the page carrying meaning, and the ad audience reads them before copy.
+const shots = html.match(/<img class="shot"[^>]*>/g) || [];
+must(shots.length >= 3, `expected at least 3 product screenshots, found ${shots.length}`);
+for (const s of shots) {
+  must(/\balt="[^"]{40,}"/.test(s), 'a product screenshot has no descriptive alt text');
+  must(/\bloading="lazy"/.test(s), 'product screenshots must be lazy, they sit below the fold');
+  must(/\bwidth="\d+"[^>]*\bheight="\d+"/.test(s), 'product screenshots need width/height so they reserve space');
+}
 
 // --- Proof and why ---
 const quotes = [
@@ -97,6 +114,11 @@ must(html.includes('Launched on the Shopify App Store'), 'missing launch line');
 for (const h of ['You pay Meta. Not us, on top of Meta.', 'One buyer, one profile', 'Turn hesitant COD buyers into paid-upfront customers.', 'Automate as much as you need']) {
   must(html.includes(h), `missing why-card: ${h}`);
 }
+// The switching section answers the objection this audience actually arrives with
+// (markup on messages, a price that moves, metered runs). It must do that without
+// naming anyone: the competitor-name rule above is the other half of this one.
+must(/Most WhatsApp tools/.test(html), 'missing the switching comparison');
+must(count(/class="sw-us"/g) >= 3, 'the comparison needs at least 3 answered objections');
 
 // --- Pricing ---
 for (const p of FALLBACK_CATALOG.plans) {

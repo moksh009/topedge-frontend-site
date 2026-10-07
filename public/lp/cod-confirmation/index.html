@@ -10,16 +10,17 @@
 <link rel="icon" type="image/png" sizes="96x96" href="/favicon.png">
 <style>:root{--violet:#7c3aed;--violet-hover:#6d28d9;--ink:#0c1222;--muted:#5b6677;--line:#eef0f4;--wash:#f8f6ff;--chip-bg:#e4d4ff;--chip-ink:#5b21b6;--ok:#0f9d6a;--font:-apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display','Inter',system-ui,'Segoe UI',Roboto,sans-serif}
 *{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
 body{margin:0;font-family:var(--font);color:var(--ink);background:#fff;line-height:1.5;-webkit-font-smoothing:antialiased}
 a{color:var(--violet)}
 h1,h2,h3,p,ul,ol,figure{margin:0}
-.wrap{width:min(100% - 2.5rem,68rem);margin:0 auto}
+img{max-width:100%}
+.wrap{width:min(100% - 2.5rem,70rem);margin:0 auto}
 .narrow{width:min(100% - 2.5rem,44rem);margin:0 auto}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 /* nav: transparent over the hero, solid once scrolled */
 .nav{position:sticky;top:0;z-index:20;background:transparent;transition:background .2s,box-shadow .2s}
-.nav.is-solid{background:rgba(255,255,255,.96);box-shadow:0 1px 0 var(--line)}
+.nav.is-solid{background:rgba(255,255,255,.92);backdrop-filter:saturate(180%) blur(12px);-webkit-backdrop-filter:saturate(180%) blur(12px);box-shadow:0 1px 0 var(--line)}
 .nav-in{display:flex;align-items:center;justify-content:space-between;min-height:3.75rem}
 .nav-r{display:flex;align-items:center;gap:1.1rem}
 .nav-link{font-size:.95rem;font-weight:500;color:#475569;text-decoration:none;padding:.75rem .2rem}
@@ -27,40 +28,50 @@ h1,h2,h3,p,ul,ol,figure{margin:0}
 .brand{display:inline-flex;align-items:center;gap:.55rem;font-size:1rem;font-weight:500;letter-spacing:-.01em}
 .brand img{display:block;width:28px;height:28px}
 .brand span span{color:var(--violet)}
-/* hero */
-.hero{position:relative;overflow:hidden;margin-top:-3.75rem;padding:5.75rem 0 3rem;background:radial-gradient(60rem 28rem at 85% -10%,#e7d9ff 0,transparent 60%),radial-gradient(44rem 24rem at 5% 0,#dbeafe 0,transparent 62%),radial-gradient(40rem 22rem at 55% 110%,#fde7f3 0,transparent 60%),#f7f8fc}
-.hero-video{position:absolute;inset:0;z-index:0;overflow:hidden;display:none}
-.hero-video video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .8s ease}
-.hero-video video.is-ready{opacity:.34}
-.hero-video:after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(247,248,252,.1) 0%,rgba(247,248,252,.8) 72%,#f7f8fc 100%)}
-.hero-grid{position:relative;z-index:1;display:grid;gap:2.5rem;align-items:center}
+/* hero: one centred column, film underneath */
+.hero{position:relative;overflow:hidden;margin-top:-3.75rem;padding:6.5rem 0 3rem;text-align:center;background:radial-gradient(60rem 30rem at 80% -12%,#e7d9ff 0,transparent 60%),radial-gradient(46rem 26rem at 8% -4%,#dbeafe 0,transparent 62%),radial-gradient(44rem 24rem at 50% 108%,#fde7f3 0,transparent 62%),#f7f8fc}
+.hero-in{display:flex;flex-direction:column;align-items:center}
 .eyebrow{font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--violet)}
-.hero h1{margin:.8rem 0 0;font-size:clamp(1.65rem,5.2vw,2.9rem);font-weight:400;letter-spacing:-.034em;line-height:1.12;text-wrap:balance}
-.chip{color:var(--chip-ink);background:var(--chip-bg);border-radius:.45em;padding:.04em .24em .08em;white-space:nowrap}
-.sub{margin:1rem 0 0;max-width:34rem;font-size:clamp(1rem,2.4vw,1.15rem);color:var(--muted)}
-.cta-row{margin-top:1.6rem;display:flex;flex-wrap:wrap;gap:.75rem}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:3rem;padding:0 1.6rem;border-radius:9999px;background:var(--violet);color:#fff;font:inherit;font-size:1rem;font-weight:500;text-decoration:none;transition:background .2s}
-.btn:hover,.btn:focus-visible{background:var(--violet-hover)}
+.pill{display:inline-block;padding:.45rem 1rem;border-radius:9999px;background:rgba(255,255,255,.85);box-shadow:inset 0 0 0 1px #ddd0fb,0 1px 2px rgba(76,29,149,.06);font-size:.72rem}
+.hero h1{margin:1.1rem 0 0;max-width:19ch;font-size:clamp(2rem,5.6vw,3.4rem);font-weight:500;letter-spacing:-.04em;line-height:1.06;text-wrap:balance}
+.sub{margin:1.1rem 0 0;max-width:40rem;font-size:clamp(1.02rem,2.2vw,1.2rem);color:var(--muted);text-wrap:pretty}
+.cta-row{margin-top:1.8rem;display:flex;flex-wrap:wrap;justify-content:center;gap:.75rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:3.25rem;padding:0 1.8rem;border-radius:9999px;background:var(--violet);color:#fff;font:inherit;font-size:1rem;font-weight:500;text-decoration:none;box-shadow:0 1px 2px rgba(76,29,149,.3),0 10px 24px -12px rgba(76,29,149,.55);transition:background .2s,transform .2s,box-shadow .2s}
+.btn:hover,.btn:focus-visible{background:var(--violet-hover);transform:translateY(-1px);box-shadow:0 2px 4px rgba(76,29,149,.3),0 16px 32px -14px rgba(76,29,149,.6)}
 .btn:focus-visible{outline:3px solid #c4b5fd;outline-offset:2px}
-.btn-sm{min-height:2.5rem;padding:0 1.1rem;font-size:.9rem}
-.btn-out{background:transparent;color:var(--violet);box-shadow:inset 0 0 0 1.5px #c4b5fd}
-.btn-out:hover,.btn-out:focus-visible{background:#f3edff}
-.micro{margin-top:.8rem;font-size:.875rem;color:var(--muted)}
-.hero-plat{margin-top:.9rem;font-size:.85rem;color:var(--chip-ink)}
+.btn-sm{min-height:2.5rem;padding:0 1.15rem;font-size:.9rem}
+.btn-out{background:#fff;color:var(--chip-ink);box-shadow:inset 0 0 0 1.5px #ddd0fb,0 1px 2px rgba(15,23,42,.04)}
+.btn-out:hover,.btn-out:focus-visible{background:#faf7ff;box-shadow:inset 0 0 0 1.5px #c4b5fd,0 8px 20px -14px rgba(76,29,149,.5)}
+.micro{margin-top:.9rem;font-size:.875rem;color:var(--muted)}
+/* hero film */
+.hero-vis{width:100%;margin-top:2.6rem}
+.hero-film{margin:0 auto;width:min(100%,62rem)}
+.hero-film .film{display:block;width:100%;height:auto;aspect-ratio:16/9;border-radius:20px;background:#ece7fa;box-shadow:0 0 0 1px rgba(124,58,237,.1),0 2px 8px rgba(15,23,42,.06),0 18px 40px -16px rgba(15,23,42,.18),0 48px 90px -40px rgba(76,29,149,.4)}
+.fcap{margin-top:.8rem;font-size:.8rem;color:var(--muted)}
 /* sections */
 section{padding:3.5rem 0}
 .alt{background:var(--wash)}
-.head{text-align:center;margin-bottom:1.9rem}
-.head h2{font-size:clamp(1.4rem,3.6vw,1.9rem);font-weight:400;letter-spacing:-.03em;line-height:1.25}
-.head p{margin:.6rem auto 0;max-width:36rem;color:var(--muted);font-size:1rem}
-.eyebrow-s{margin:0 auto .5rem!important;font-size:.72rem!important;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#b45309!important}
+.head{text-align:center;margin-bottom:2.2rem}
+.head h2{max-width:24ch;margin:0 auto;font-size:clamp(1.6rem,4vw,2.3rem);font-weight:500;letter-spacing:-.035em;line-height:1.14;text-wrap:balance}
+.head p{margin:.75rem auto 0;max-width:38rem;color:var(--muted);font-size:1.02rem}
+.head .eyebrow{display:block;margin-bottom:.6rem}
+.eyebrow-s{display:block;margin-bottom:.6rem;font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#b45309}
 .card{border-radius:20px;background:#fff;box-shadow:0 0 0 1px rgba(15,23,42,.03),0 2px 8px rgba(15,23,42,.05),0 8px 24px -8px rgba(15,23,42,.1),0 18px 40px -20px rgba(76,29,149,.08)}
+/* problem: one line of arithmetic instead of three boxes */
+.problem{background:linear-gradient(180deg,#fffaf3,#fff)}
+.maths{width:min(100%,46rem);margin:0 auto;padding:1.8rem 1.5rem;border-radius:20px;background:#fff;box-shadow:0 0 0 1px #fcd9a8,0 10px 30px -18px rgba(180,83,9,.4);text-align:center}
+.sum{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.5rem;font-size:clamp(1rem,2.6vw,1.2rem)}
+.sum span{padding:.3rem .7rem;border-radius:9999px;background:#fff4e5;color:#92400e;font-variant-numeric:tabular-nums}
+.sum i{font-style:normal;color:#b45309}
+.sum strong{font-weight:500;color:var(--ink);font-variant-numeric:tabular-nums}
+.sum-note{margin-top:.9rem;font-size:.88rem;color:var(--muted)}
+.costnote{margin:1.5rem auto 0;max-width:44rem;text-align:center;font-size:1.05rem;color:var(--ink)}
 /* how it works + example message */
 .how{display:grid;gap:2rem;align-items:center}
 .steps{list-style:none;padding:0;counter-reset:s;border-top:1px solid var(--line)}
 .steps li{counter-increment:s;display:grid;grid-template-columns:2.4rem 1fr;gap:.9rem;padding:1.15rem 0;border-bottom:1px solid var(--line)}
 .steps li:before{content:'0' counter(s);font-size:.8rem;font-weight:600;color:var(--violet);padding-top:.15rem}
-.steps strong{display:block;font-weight:500;font-size:1rem}
+.steps strong{display:block;font-weight:500;font-size:1.05rem}
 .steps span{display:block;margin-top:.2rem;font-size:1rem;color:var(--muted)}
 .phone{width:min(100%,20rem);margin:0 auto;border-radius:24px;overflow:hidden;background:#fff;box-shadow:0 0 0 1px rgba(15,23,42,.04),0 8px 24px -8px rgba(15,23,42,.14),0 28px 56px -24px rgba(76,29,149,.22)}
 .pbar{display:flex;align-items:center;gap:.6rem;padding:.8rem 1rem;font-size:.9rem;font-weight:500;color:#fff;background:#0b7a6e}
@@ -72,40 +83,6 @@ section{padding:3.5rem 0}
 .rep{display:grid;gap:.4rem;margin-top:.4rem}
 .rep span{display:block;padding:.7rem .5rem;border-radius:12px;background:#fff;box-shadow:0 1px 1px rgba(15,23,42,.1);font-size:.9rem;font-weight:500;text-align:center;color:#0b7a6e}
 .pcap{padding:.7rem 1rem .85rem;font-size:.78rem;text-align:center;color:var(--muted);background:#fff}
-/* cost */
-.costs{display:grid;gap:.9rem}
-.problem{background:#fffaf3}
-.cost{padding:1.2rem 1.3rem;background:#fff4e5;box-shadow:0 0 0 1px #fcd9a8,0 6px 18px -10px rgba(180,83,9,.25)}
-.cost strong{display:block;font-weight:500}
-.cost span{display:block;margin-top:.2rem;font-size:1rem;color:var(--muted)}
-.costnote{margin:1.6rem auto 0;max-width:44rem;text-align:center;font-size:1.05rem;color:var(--ink)}
-/* pricing */
-.plans{display:grid;gap:1rem}
-.plan{padding:1.5rem 1.4rem;text-align:left}
-.plan.em{box-shadow:0 0 0 2px var(--violet),0 18px 40px -20px rgba(76,29,149,.25)}
-.plan h3{font-size:1rem;font-weight:600;color:var(--chip-ink)}
-.price{margin-top:.6rem;font-size:2.1rem;font-weight:500;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
-.price small{font-size:.9rem;font-weight:400;color:var(--muted);letter-spacing:0}
-.yearly{margin-top:.3rem;font-size:.85rem;color:var(--muted)}
-.plan ul{list-style:none;padding:0;margin-top:1rem;border-top:1px solid var(--line)}
-.plan li{position:relative;padding:.6rem 0 0 1.4rem;font-size:1rem}
-.plan li:before{content:'';position:absolute;left:.1rem;top:1.05rem;width:.7rem;height:.38rem;border-left:2px solid var(--ok);border-bottom:2px solid var(--ok);transform:rotate(-45deg)}
-.foot-note{margin-top:1.1rem;text-align:center;font-size:.85rem;color:var(--muted)}
-.mid-cta{margin-top:1.8rem;text-align:center}
-/* faq */
-details{border:1px solid var(--line);border-radius:12px;background:#fff;padding:0 1rem}
-details+details{margin-top:.65rem}
-summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:3rem;padding:.6rem 0;font-weight:500}
-summary::-webkit-details-marker{display:none}
-summary:after{content:'+';font-size:1.3rem;font-weight:400;color:var(--violet);line-height:1}
-details[open] summary:after{content:'\2212'}
-details p{padding:0 0 1rem;font-size:1rem;color:var(--muted)}
-/* hero phone, how-it-works emphasis */
-.hero-vis .phone{margin:0 auto}
-.hero-film{margin:0;width:min(100%,34rem)}
-.hero-film .film{display:block;width:100%;height:auto;aspect-ratio:16/9;border-radius:18px;background:#ece7fa;box-shadow:0 0 0 1px rgba(15,23,42,.04),0 8px 24px -8px rgba(15,23,42,.14),0 28px 56px -24px rgba(76,29,149,.22)}
-.fcap{margin:.6rem 0 0;font-size:.78rem;text-align:center;color:var(--muted)}
-.hero-vis .done{display:none}
 .done{margin-top:.5rem;padding:.55rem;border-radius:12px;background:#dcf8c6;text-align:center;font-size:.9rem;font-weight:500;color:#0b7a6e;transition:opacity .25s}
 .how-vis{display:grid;gap:1rem;justify-items:center}
 .how-cap{max-width:20rem;text-align:center;font-size:.9rem;color:var(--muted)}
@@ -114,14 +91,41 @@ details p{padding:0 0 1rem;font-size:1rem;color:var(--muted)}
 #how-phone[data-active="2"] [data-hl=buttons]{opacity:1;box-shadow:0 0 0 2px #c4b5fd;border-radius:12px}
 #how-phone[data-active="3"] [data-hl=check]{opacity:1}
 #how-phone[data-active="1"] [data-hl=check],#how-phone[data-active="2"] [data-hl=check]{opacity:0}
-/* trust strip */
+/* trust strip with the logo marquee */
 .trust{background:var(--ink);color:#fff}
-.trust-in{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.9rem 2rem;padding:1.15rem 0}
-.trust-l{font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#94a3b8}
-.logos{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;align-items:center;gap:1rem 2rem}
-.logos img{display:block;height:28px;width:auto;max-width:9rem;object-fit:contain;opacity:.9}
+.trust-in{display:grid;gap:1rem;align-items:center;padding:1.35rem 0;text-align:center}
+.trust-l{font-size:.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#94a3b8}
+/* Four logos are narrower than a desktop viewport, so an unconstrained track shows the
+   same mark twice at once. Capping the window keeps the scroll without the double. */
+.mq{position:relative;width:100%;max-width:30rem;margin:0 auto;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.mq-track{display:flex;width:max-content;align-items:center;gap:3.5rem;list-style:none;padding:0;margin:0;animation:mq 32s linear infinite}
+.mq-track img{display:block;height:26px;width:auto;max-width:9rem;object-fit:contain;opacity:.9}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-33.333%)}}
 .trust-tp{font-size:.88rem;color:#cbd5e1}
 .trust-tp:hover{color:#fff}
+/* showcase rows: real screens, alternating sides */
+.rows{display:grid;gap:3rem}
+.row{display:grid;gap:1.5rem;align-items:center}
+.row h3{margin-top:.5rem;font-size:clamp(1.3rem,3vw,1.75rem);font-weight:500;letter-spacing:-.03em;line-height:1.18}
+.row-p{margin-top:.7rem;font-size:1.02rem;color:var(--muted)}
+.shot{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:18px;background:#f1edfb;box-shadow:0 0 0 1px rgba(15,23,42,.05),0 10px 28px -12px rgba(15,23,42,.18),0 34px 60px -34px rgba(76,29,149,.4)}
+.ticks{list-style:none;padding:0;margin-top:1.1rem;display:grid;gap:.55rem}
+.ticks li{position:relative;padding-left:1.6rem;font-size:.98rem;color:var(--ink)}
+.ticks li:before{content:'';position:absolute;left:.15rem;top:.48rem;width:.7rem;height:.38rem;border-left:2px solid var(--ok);border-bottom:2px solid var(--ok);transform:rotate(-45deg)}
+/* the switching pain, two columns of plain text */
+.sws{width:min(100%,52rem);margin:0 auto;border-top:1px solid var(--line)}
+.sw-head{display:none}
+.sw{display:grid;gap:.4rem;padding:1.15rem 0;border-bottom:1px solid var(--line)}
+.sw p{display:grid;gap:.2rem;font-size:1rem}
+.sw span{font-size:.68rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase}
+.sw-them{color:var(--muted)}
+.sw-them span{color:#9aa4b2}
+.sw-us span{color:var(--violet)}
+/* why: icon, line, no box */
+.whys{display:grid;gap:1.8rem;margin-top:2.6rem}
+.ic{display:inline-flex;align-items:center;justify-content:center;width:2.6rem;height:2.6rem;border-radius:14px;background:var(--wash);color:var(--violet);box-shadow:inset 0 0 0 1px #ece5fd}
+.why h3{margin-top:.8rem;font-size:1.05rem;font-weight:500;line-height:1.3}
+.why p{margin-top:.4rem;font-size:.98rem;color:var(--muted)}
 /* proof */
 .quotes{display:grid;gap:1rem}
 .quote{margin:0;padding:1.4rem 1.4rem 1.2rem}
@@ -130,39 +134,49 @@ details p{padding:0 0 1rem;font-size:1rem;color:var(--muted)}
 .quote p:after{content:'\201D'}
 .quote footer{margin-top:.9rem;font-size:.85rem;font-weight:500;color:var(--muted)}
 .q-note{margin-top:1rem;text-align:center;font-size:.82rem;color:var(--muted)}
-.proof-logos{margin-top:2.2rem;text-align:center}
-.proof-logos p{font-size:.95rem;color:var(--muted)}
-.logos-dark{justify-content:center;margin:1rem auto 0;padding:1rem 1.6rem;border-radius:16px;background:var(--ink);width:max-content;max-width:100%}
-.proof-logos small{display:block;margin-top:.9rem;font-size:.8rem;color:var(--muted)}
-/* icon chip, shared by why + platform cards */
-.ic{display:inline-flex;align-items:center;justify-content:center;width:2.75rem;height:2.75rem;border-radius:14px;background:var(--wash);color:var(--violet)}
-/* why cards */
-.whys{display:grid;gap:1rem}
-.why,.pf{padding:1.5rem 1.4rem;transition:transform .2s,box-shadow .2s}
-.why h3,.pf h3{margin-top:.8rem;font-size:1.05rem;font-weight:500;line-height:1.3}
-.why p,.pf p{margin-top:.45rem;font-size:1rem;color:var(--muted)}
-.why:hover,.pf:hover{transform:translateY(-3px);box-shadow:0 0 0 1px rgba(15,23,42,.04),0 22px 44px -20px rgba(76,29,149,.24)}
-/* platform cards */
-.pf-grid{display:grid;gap:1rem}
-/* pricing toggle */
+.badges{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:1.4rem 2.4rem;list-style:none;padding:0;margin:2.6rem auto 0}
+.badges img{display:block;height:46px;width:auto;object-fit:contain}
+.badge-note{margin:1rem auto 0;max-width:40rem;text-align:center;font-size:.85rem;color:var(--muted)}
+/* pricing */
+.plans{display:grid;gap:1rem}
+.plan{padding:1.6rem 1.5rem;text-align:left}
+.plan.em{box-shadow:0 0 0 2px var(--violet),0 18px 40px -20px rgba(76,29,149,.3)}
+.plan h3{font-size:1rem;font-weight:600;color:var(--chip-ink)}
+.price{margin-top:.6rem;font-size:2.3rem;font-weight:500;letter-spacing:-.035em;font-variant-numeric:tabular-nums}
+.price small{font-size:.9rem;font-weight:400;color:var(--muted);letter-spacing:0}
+.plan ul{list-style:none;padding:0;margin-top:1rem;border-top:1px solid var(--line)}
+.plan li{position:relative;padding:.6rem 0 0 1.4rem;font-size:1rem}
+.plan li:before{content:'';position:absolute;left:.1rem;top:1.05rem;width:.7rem;height:.38rem;border-left:2px solid var(--ok);border-bottom:2px solid var(--ok);transform:rotate(-45deg)}
 .cycle{display:flex;justify-content:center;gap:.25rem;width:max-content;margin:0 auto 1.6rem;padding:.25rem;border-radius:9999px;background:#ede9fe}
 .cycle button{min-height:2.75rem;padding:0 1.3rem;border:0;border-radius:9999px;background:transparent;font:inherit;font-size:.95rem;font-weight:500;color:var(--chip-ink);cursor:pointer}
-.cycle button.on{background:var(--violet);color:#fff}
+.cycle button.on{background:var(--violet);color:#fff;box-shadow:0 1px 2px rgba(76,29,149,.3)}
 .cycle button:focus-visible{outline:3px solid #c4b5fd;outline-offset:2px}
 #plans[data-cycle="yearly"] .p-monthly,#plans[data-cycle="monthly"] .p-yearly{display:none}
 .badge{display:inline-block;margin-top:.5rem;padding:.15rem .6rem;border-radius:9999px;background:var(--violet);color:#fff;font-size:.72rem;font-weight:600}
 .bill{margin-top:.3rem;font-size:.85rem;color:var(--muted)}
 .price .p-yearly,.price .p-monthly{display:inline}
-/* sticky mobile cta */
-.sticky{display:none}
+.incl{width:min(100%,52rem);margin:2.2rem auto 0;padding:1.5rem 1.6rem;border-radius:20px;background:var(--wash);box-shadow:inset 0 0 0 1px #ece5fd}
+.incl-h{font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--chip-ink);text-align:center}
+.ticks.two{margin-top:1rem}
+.foot-note{margin-top:1.3rem;text-align:center;font-size:.85rem;color:var(--muted)}
+.mid-cta{margin-top:1.8rem;text-align:center}
+/* faq */
+details{border:1px solid var(--line);border-radius:14px;background:#fff;padding:0 1.1rem}
+details+details{margin-top:.65rem}
+summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:3.25rem;padding:.6rem 0;font-weight:500}
+summary::-webkit-details-marker{display:none}
+summary:after{content:'+';font-size:1.3rem;font-weight:400;color:var(--violet);line-height:1}
+details[open] summary:after{content:'\2212'}
+details p{padding:0 0 1rem;font-size:1rem;color:var(--muted)}
 /* final cta + footer */
-.final{text-align:center;background:radial-gradient(48rem 20rem at 50% 110%,#e7d9ff 0,transparent 65%),#f7f8fc}
+.final{text-align:center;background:radial-gradient(48rem 22rem at 50% 112%,#e7d9ff 0,transparent 65%),#f7f8fc}
 .final .sub{margin:.9rem auto 0;text-align:center}
-.final .cta-row{justify-content:center}
-.final h2{font-size:clamp(1.5rem,4vw,2.1rem);font-weight:400;letter-spacing:-.03em;line-height:1.2;text-wrap:balance}
-.foot{padding:1.6rem 0 2.2rem;text-align:center;font-size:.82rem;color:var(--muted)}
+.final h2{font-size:clamp(1.6rem,4.4vw,2.4rem);font-weight:500;letter-spacing:-.035em;line-height:1.14;text-wrap:balance}
+.foot{padding:1.8rem 0 2.4rem;text-align:center;font-size:.82rem;color:var(--muted)}
 .foot p+p{margin-top:.5rem}
 .foot a{color:var(--muted)}
+/* sticky mobile cta */
+.sticky{display:none}
 @media(max-width:759px){
  .btn-sm{min-height:3rem}
  .nav-r{gap:.5rem}
@@ -170,27 +184,41 @@ details p{padding:0 0 1rem;font-size:1rem;color:var(--muted)}
  .nav-how{display:none}
  .cta-row .btn{flex:1 1 100%}
  body{padding-bottom:5rem}
+ .hero{padding-top:5.5rem}
+ /* Dashboard detail is unreadable at 390px in a 16:9 box, so crop in and scale up. */
+ .shot{aspect-ratio:4/3;object-position:center}
  .sticky{display:block;position:fixed;left:0;right:0;bottom:0;z-index:30;padding:.7rem 1rem calc(.7rem + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);box-shadow:0 -1px 0 var(--line),0 -8px 24px -12px rgba(15,23,42,.2);transform:translateY(110%);transition:transform .2s}
  .sticky.on{transform:none}
  .sticky .btn{width:100%}
 }
 @media(min-width:760px){
- .costs{grid-template-columns:repeat(3,1fr)}
  .plans{grid-template-columns:repeat(3,1fr)}
  .quotes{grid-template-columns:repeat(3,1fr)}
- .whys{grid-template-columns:repeat(2,1fr)}
- .pf-grid{grid-template-columns:repeat(2,1fr)}
+ .whys{grid-template-columns:repeat(2,1fr);gap:2.2rem}
+ .ticks.two{grid-template-columns:repeat(2,1fr);gap:.6rem 2rem}
+ .sw{grid-template-columns:1fr 1fr;gap:2rem;align-items:start}
+ /* one pair of column headings instead of the same label on every row */
+ .sw-head{display:grid;grid-template-columns:1fr 1fr;gap:2rem;padding:.9rem 0 .2rem}
+ .sw-head span{font-size:.68rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:#9aa4b2}
+ .sw-head .sw-head-us{color:var(--violet)}
+ .sw p span{display:none}
+ .trust-in{grid-template-columns:auto 1fr auto;text-align:left;gap:2rem}
 }
 @media(min-width:900px){
  .how{grid-template-columns:1.1fr .9fr;gap:3.5rem}
- .hero-grid{grid-template-columns:55fr 45fr;gap:3rem}
- .hero{padding:7rem 0 4.5rem}
- .hero-video{display:block}
- section{padding:6rem 0}
+ .hero{padding:8rem 0 4rem}
+ section{padding:5rem 0}
  .plan.em{transform:translateY(-.5rem)}
- .pf-grid{grid-template-columns:repeat(3,1fr)}
+ .rows{gap:4.5rem}
+ .row{grid-template-columns:1fr 1.15fr;gap:3.5rem}
+ .row.flip .row-copy{order:2}
 }
-@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}</style>
+@media(prefers-reduced-motion:reduce){
+ *{transition:none!important;animation:none!important}
+ html{scroll-behavior:auto}
+ .mq-track{width:100%;flex-wrap:wrap;justify-content:center;gap:1rem 1.5rem}
+ .mq{-webkit-mask-image:none;mask-image:none}
+}</style>
 </head>
 <body>
 <nav class="nav" id="nav" aria-label="Main">
@@ -198,6 +226,7 @@ details p{padding:0 0 1rem;font-size:1rem;color:var(--muted)}
     <div class="brand"><img src="/brand-mark-56.webp" width="28" height="28" alt=""><span>TopEdge <span>AI</span></span></div>
     <div class="nav-r">
       <a class="nav-link nav-how" href="#how">How it works</a>
+      <a class="nav-link nav-how" href="#pricing">Pricing</a>
       <a class="nav-link" href="/login">Log in</a>
       <a class="btn btn-sm" data-cta="trial" href="/signup?lp=cod-confirmation">Start free trial</a>
     </div>
@@ -205,32 +234,28 @@ details p{padding:0 0 1rem;font-size:1rem;color:var(--muted)}
 </nav>
 
 <header class="hero" id="hero">
-  <div class="hero-video" id="hero-video" aria-hidden="true"></div>
-  <div class="wrap hero-grid">
-    <div class="hero-copy">
-      <p class="eyebrow">Built for Indian Shopify D2C brands</p>
-      <h1 id="hero-h1">Stop Paying Three Times for Orders Your Customers Never Wanted</h1>
-      <p class="sub" id="hero-sub">TopEdge sends an automatic WhatsApp confirmation the moment a COD order is placed. You only pack, ship, and chase courier costs for orders the buyer actually confirmed.</p>
-      <script>
-      (function(){try{var V={"loss":{"h1":"Stop Paying Three Times for Orders Your Customers Never Wanted","sub":"TopEdge sends an automatic WhatsApp confirmation the moment a COD order is placed. You only pack, ship, and chase courier costs for orders the buyer actually confirmed."},"speed":{"h1":"Confirm COD Orders on WhatsApp Before You Ship","sub":"TopEdge sends an automatic WhatsApp confirmation the moment a COD order is placed. The buyer taps Confirm or Cancel, and you ship what they confirm."},"rto":{"h1":"Cut RTO Before the Courier Even Picks Up","sub":"TopEdge sends an automatic WhatsApp confirmation the moment a COD order is placed, so fewer refused parcels make the trip in the first place."}};var c=(new URLSearchParams(location.search).get('utm_content')||'').toLowerCase();
-      for(var k in V){if(c.indexOf(k)===0){document.getElementById('hero-h1').textContent=V[k].h1;document.getElementById('hero-sub').textContent=V[k].sub;break}}}catch(e){}})();
-      </script>
-      <div class="cta-row" id="hero-cta">
-        <a class="btn" data-cta="trial" href="/signup?lp=cod-confirmation">Start free trial <span aria-hidden="true">&rarr;</span></a>
-        <a class="btn btn-out" data-cta="shopify" href="https://apps.shopify.com/topedge-ai" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V7a3 3 0 0 1 6 0v1"/></svg>Install on Shopify</a>
-      </div>
-      <p class="micro">14-day free trial · 20 free order confirmations · No credit card · Live in about 15 minutes</p>
-      <p class="hero-plat">Part of one WhatsApp commerce platform: journeys, live chat, campaigns, and CRM included.</p>
+  <div class="wrap hero-in">
+    <p class="eyebrow pill">Built for Indian Shopify D2C brands</p>
+    <h1 id="hero-h1">Stop Paying Three Times for Orders Your Customers Never Wanted</h1>
+    <p class="sub" id="hero-sub">TopEdge sends an automatic WhatsApp confirmation the moment a COD order is placed. You only pack, ship, and chase courier costs for orders the buyer actually confirmed.</p>
+    <script>
+    (function(){try{var V={"loss":{"h1":"Stop Paying Three Times for Orders Your Customers Never Wanted","sub":"TopEdge sends an automatic WhatsApp confirmation the moment a COD order is placed. You only pack, ship, and chase courier costs for orders the buyer actually confirmed."},"speed":{"h1":"Confirm COD Orders on WhatsApp Before You Ship","sub":"TopEdge sends an automatic WhatsApp confirmation the moment a COD order is placed. The buyer taps Confirm or Cancel, and you ship what they confirm."},"rto":{"h1":"Cut RTO Before the Courier Even Picks Up","sub":"TopEdge sends an automatic WhatsApp confirmation the moment a COD order is placed, so fewer refused parcels make the trip in the first place."}};var c=(new URLSearchParams(location.search).get('utm_content')||'').toLowerCase();
+    for(var k in V){if(c.indexOf(k)===0){document.getElementById('hero-h1').textContent=V[k].h1;document.getElementById('hero-sub').textContent=V[k].sub;break}}}catch(e){}})();
+    </script>
+    <div class="cta-row" id="hero-cta">
+      <a class="btn" data-cta="trial" href="/signup?lp=cod-confirmation">Start free trial <span aria-hidden="true">&rarr;</span></a>
+      <a class="btn btn-out" data-cta="shopify" href="https://apps.shopify.com/topedge-ai" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V7a3 3 0 0 1 6 0v1"/></svg>Install on Shopify</a>
     </div>
+    <p class="micro">14-day free trial · 20 free order confirmations · No credit card · Live in about 15 minutes</p>
     <div class="hero-vis">
       <figure class="hero-film">
-        <video id="lv" class="film" controls playsinline preload="none"
+        <video id="lv" class="film" controls muted loop playsinline preload="none"
                poster="/marketing/demos/topedge-launch-poster.webp" width="1280" height="720"
                data-lg="/marketing/demos/topedge-launch.mp4" data-sm="/marketing/demos/topedge-launch-mobile.mp4"
                aria-label="TopEdge AI launch film: turning Shopify visitors into WhatsApp contacts and confirming COD orders before dispatch.">
           <p>Your browser cannot play this video. <a href="/marketing/demos/topedge-launch.mp4">Download it instead</a>.</p>
         </video>
-        <figcaption class="fcap">70-second tour. Press play for sound.</figcaption>
+        <figcaption class="fcap">Playing without sound. Use the controls for audio.</figcaption>
       </figure>
     </div>
   </div>
@@ -238,12 +263,10 @@ details p{padding:0 0 1rem;font-size:1rem;color:var(--muted)}
 
 <div class="trust">
   <div class="wrap trust-in">
-    <p class="trust-l">Trusted by</p>
-    <ul class="logos">
-      <li><img src="/trust/choicesalon-white.png" alt="Choice Salon" height="28" loading="lazy"></li>
-      <li><img src="/trust/delitech-white.png" alt="Delitech" height="28" loading="lazy"></li>
-      <li><img src="/trust/apex-white.png" alt="Apex Light" height="28" loading="lazy"></li>
-    </ul>
+    <p class="trust-l">Trusted by Shopify brands</p>
+    <div class="mq" aria-label="Brands running on TopEdge">
+      <ul class="mq-track"><li><img src="/trust/delitech-white.png" alt="Delitech" height="26" loading="lazy" decoding="async"></li><li><img src="/trust/apex-white.png" alt="Apex Light" height="26" loading="lazy" decoding="async"></li><li><img src="/trust/codeclinic-white.png" alt="code CLINIC" height="26" loading="lazy" decoding="async"></li><li><img src="/trust/choicesalon-white.png" alt="Choice Salon" height="26" loading="lazy" decoding="async"></li><li aria-hidden="true"><img src="/trust/delitech-white.png" alt="" height="26" loading="lazy" decoding="async"></li><li aria-hidden="true"><img src="/trust/apex-white.png" alt="" height="26" loading="lazy" decoding="async"></li><li aria-hidden="true"><img src="/trust/codeclinic-white.png" alt="" height="26" loading="lazy" decoding="async"></li><li aria-hidden="true"><img src="/trust/choicesalon-white.png" alt="" height="26" loading="lazy" decoding="async"></li><li aria-hidden="true"><img src="/trust/delitech-white.png" alt="" height="26" loading="lazy" decoding="async"></li><li aria-hidden="true"><img src="/trust/apex-white.png" alt="" height="26" loading="lazy" decoding="async"></li><li aria-hidden="true"><img src="/trust/codeclinic-white.png" alt="" height="26" loading="lazy" decoding="async"></li><li aria-hidden="true"><img src="/trust/choicesalon-white.png" alt="" height="26" loading="lazy" decoding="async"></li></ul>
+    </div>
     <a class="trust-tp" href="https://www.trustpilot.com/review/topedgeai.com" target="_blank" rel="noopener">Read our reviews on Trustpilot</a>
   </div>
 </div>
@@ -251,13 +274,12 @@ details p{padding:0 0 1rem;font-size:1rem;color:var(--muted)}
 <main>
 <section class="problem">
   <div class="wrap">
-    <div class="head"><p class="eyebrow-s">The hidden cost</p><h2>A returned COD order doesn't cost you a sale. It costs you three payments.</h2><p>Every parcel a buyer refuses at the door is shipping fees out, shipping fees back, and packaging, paid before you've made a single rupee.</p></div>
-    <div class="costs">
-      <div class="card cost"><strong>Shipping out</strong><span>The courier is paid to carry the parcel to the buyer, whether they accept it or not.</span></div>
-      <div class="card cost"><strong>Shipping back</strong><span>Refused at the door? You pay the courier again to bring it back.</span></div>
-      <div class="card cost"><strong>Packaging &amp; handling</strong><span>Plus the packing materials, warehouse time, and restocking, for a sale that never happened.</span></div>
+    <div class="head"><p class="eyebrow-s">The hidden cost</p><h2>A returned COD order doesn't cost you a sale. It costs you three payments.</h2></div>
+    <div class="maths">
+      <p class="sum"><span>₹80 out</span> <i>+</i> <span>₹80 back</span> <i>+</i> <span>₹20 handling</span> <i>=</i> <strong>₹180 gone, per refused parcel</strong></p>
+      <p class="sum-note">Illustrative courier rates, not a customer result. At 50 refusals a month that is ₹9,000 you paid to ship something nobody wanted.</p>
     </div>
-    <p class="costnote"><strong>TopEdge removes the guesswork. Buyers confirm on WhatsApp before you ship, so every parcel that leaves your warehouse is one the buyer actually wants.</strong></p>
+    <p class="costnote"><strong>TopEdge asks the buyer to confirm on WhatsApp first, so every parcel that leaves your warehouse is one the buyer actually wants.</strong></p>
   </div>
 </section>
 
@@ -286,6 +308,72 @@ details p{padding:0 0 1rem;font-size:1rem;color:var(--muted)}
   </div>
 </section>
 
+<section class="alt" id="product">
+  <div class="wrap">
+    <div class="head"><p class="eyebrow">Inside the product</p><h2>COD confirmation is one screen of it.</h2></div>
+    <div class="rows">
+      <div class="row">
+        <div class="row-copy">
+          <p class="eyebrow">Journeys</p>
+          <h3>Confirm the order, or turn it prepaid</h3>
+          <p class="row-p">A COD order lands and the buyer gets a WhatsApp message in seconds. They confirm, cancel, or pay online instead.</p>
+          <ul class="ticks"><li>Confirm and Cancel buttons on an approved template</li><li>Payment link from a Shopify draft invoice</li><li>Revenue tracked per journey, not vanity sends</li></ul>
+        </div>
+        <img class="shot" src="/lp/shots/journeys.webp" width="1120" height="630" loading="lazy" decoding="async" alt="TopEdge journeys list showing a COD to prepaid nudge and abandoned cart recovery with revenue, enrolments and open rate per journey.">
+      </div>
+      <div class="row flip">
+        <div class="row-copy">
+          <p class="eyebrow">Cart recovery</p>
+          <h3>See the money leaving, then go get it</h3>
+          <p class="row-p">Abandoned carts, open cart value, and what you actually recovered sit on one dashboard instead of in a weekly export.</p>
+          <ul class="ticks"><li>Cart value at risk, live</li><li>Recovery funnel from abandon to purchase</li><li>WhatsApp, Instagram, and email in one flow</li></ul>
+        </div>
+        <img class="shot" src="/lp/shots/recovery.webp" width="1120" height="630" loading="lazy" decoding="async" alt="TopEdge store growth dashboard showing cart value at risk, abandoned carts, recovery rate and a recovery funnel from abandoned to purchased.">
+      </div>
+      <div class="row">
+        <div class="row-copy">
+          <p class="eyebrow">No code</p>
+          <h3>Build the whole flow by dragging boxes</h3>
+          <p class="row-p">Describe the bot, edit the canvas it drafts, then test before you publish. No developer, no theme edits, no checkout scripts.</p>
+          <ul class="ticks"><li>Menus, conditions, catalog sends, human handoff</li><li>Test runs before anything goes live</li><li>Live in about 15 minutes</li></ul>
+        </div>
+        <img class="shot" src="/lp/shots/flow.webp" width="1120" height="630" loading="lazy" decoding="async" alt="TopEdge flow builder canvas with a flow entry node connected to a WhatsApp message node and an interactive button node.">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="switch">
+  <div class="wrap">
+    <div class="head"><p class="eyebrow-s">Why stores move</p><h2>You have probably been burned by a WhatsApp tool already.</h2></div>
+    <div class="sws">
+      <div class="sw-head" aria-hidden="true"><span>Most WhatsApp tools</span><span class="sw-head-us">TopEdge</span></div>
+      <div class="sw">
+        <p class="sw-them"><span>Most WhatsApp tools</span>A per-message fee on top of what Meta already charges you</p>
+        <p class="sw-us"><span>TopEdge</span>Meta bills your own account. TopEdge adds 0% markup.</p>
+      </div>
+      <div class="sw">
+        <p class="sw-them"><span>Most WhatsApp tools</span>The quote goes up once you depend on it</p>
+        <p class="sw-us"><span>TopEdge</span>Published plans, GST invoices, cancel anytime, no setup fee.</p>
+      </div>
+      <div class="sw">
+        <p class="sw-them"><span>Most WhatsApp tools</span>Automation runs are metered and you get rationed</p>
+        <p class="sw-us"><span>TopEdge</span>Flow automations run unlimited times on every plan.</p>
+      </div>
+      <div class="sw">
+        <p class="sw-them"><span>Most WhatsApp tools</span>One buyer becomes three contacts and the history splits</p>
+        <p class="sw-us"><span>TopEdge</span>Orders, carts, and chats merge into a single profile.</p>
+      </div>
+    </div>
+    <div class="whys">
+      <div class="why"><span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18M16 7.5c0-1.4-1.8-2.5-4-2.5s-4 1.1-4 2.5 1.8 2.5 4 2.5 4 1.1 4 2.5-1.8 2.5-4 2.5-4-1.1-4-2.5"/></svg></span><h3>You pay Meta. Not us, on top of Meta.</h3><p>WhatsApp message fees are billed directly to your own Meta Business account. TopEdge adds 0% markup, unlike platforms that charge a per-message fee on top of Meta's own rate.</p></div>
+      <div class="why"><span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c.6-3.6 3.4-5.5 7-5.5s6.4 1.9 7 5.5"/></svg></span><h3>One buyer, one profile, even with three phone numbers.</h3><p>Orders, carts, and chats from the same person merge into a single profile automatically, instead of splitting into duplicate, disconnected leads.</p></div>
+      <div class="why"><span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2.5"/><path d="M3 10.5h18M7 15h3"/></svg></span><h3>Turn hesitant COD buyers into paid-upfront customers.</h3><p>Send a payment link in the same WhatsApp thread, built natively for Shopify checkout, no manual mapping required.</p></div>
+      <div class="why"><span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 8a6 6 0 0 0-10.5 1.5M7 16a6 6 0 0 0 10.5-1.5M17 4v4h-4M7 20v-4h4"/></svg></span><h3>Automate as much as you need. It is not metered.</h3><p>Flow automations run unlimited times on every plan. You are never rationed on how many times your own workflows can run.</p></div>
+    </div>
+  </div>
+</section>
+
 <section class="alt">
   <div class="wrap">
     <div class="head"><h2>What real Shopify sellers say after switching</h2></div>
@@ -295,46 +383,12 @@ details p{padding:0 0 1rem;font-size:1rem;color:var(--muted)}
       <blockquote class="card quote"><p>In 2 days they built me everything... I'm on their ₹1,999 base plan, and mostly every feature is unlocked on every plan.</p><footer>Robin, Trustpilot</footer></blockquote>
     </div>
     <p class="q-note">Reviews quoted as published on <a href="https://www.trustpilot.com/review/topedgeai.com" target="_blank" rel="noopener">Trustpilot</a>, retrieved 6 October 2026.</p>
-    <div class="proof-logos">
-      <p>Shopify D2C brands already live on TopEdge</p>
-      <ul class="logos logos-dark">
-        <li><img src="/trust/choicesalon-white.png" alt="Choice Salon" height="26" loading="lazy"></li>
-        <li><img src="/trust/delitech-white.png" alt="Delitech" height="26" loading="lazy"></li>
-        <li><img src="/trust/apex-white.png" alt="Apex Light" height="26" loading="lazy"></li>
-      </ul>
-      <small>Launched on the Shopify App Store &middot; 30 September 2026</small>
-    </div>
+    <ul class="badges"><li><img src="/badges/shopify-app-store.png?v=4" alt="Available on the Shopify App Store" height="40" loading="lazy" decoding="async"></li><li><img src="/badges/meta-business-partner.png?v=4" alt="Meta Business Partner" height="40" loading="lazy" decoding="async"></li><li><img src="/badges/whatsapp-cloud-api.png?v=5" alt="Built on the official WhatsApp Cloud API" height="40" loading="lazy" decoding="async"></li></ul>
+    <p class="badge-note">Launched on the Shopify App Store &middot; 30 September 2026. Messages send on the official WhatsApp Cloud API, never a workaround.</p>
   </div>
 </section>
 
-<section>
-  <div class="wrap">
-    <div class="head"><h2>Built different from the WhatsApp tools you've already tried</h2></div>
-    <div class="whys">
-      <div class="card why"><span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18M16 7.5c0-1.4-1.8-2.5-4-2.5s-4 1.1-4 2.5 1.8 2.5 4 2.5 4 1.1 4 2.5-1.8 2.5-4 2.5-4-1.1-4-2.5"/></svg></span><h3>You pay Meta. Not us, on top of Meta.</h3><p>WhatsApp message fees are billed directly to your own Meta Business account. TopEdge adds 0% markup, unlike platforms that charge a per-message fee on top of Meta's own rate.</p></div>
-      <div class="card why"><span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c.6-3.6 3.4-5.5 7-5.5s6.4 1.9 7 5.5"/></svg></span><h3>One buyer, one profile, even with three phone numbers.</h3><p>Orders, carts, and chats from the same person merge into a single profile automatically, instead of splitting into duplicate, disconnected leads.</p></div>
-      <div class="card why"><span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2.5"/><path d="M3 10.5h18M7 15h3"/></svg></span><h3>Turn hesitant COD buyers into paid-upfront customers.</h3><p>Send a payment link in the same WhatsApp thread, built natively for Shopify checkout, no manual mapping required.</p></div>
-      <div class="card why"><span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 8a6 6 0 0 0-10.5 1.5M7 16a6 6 0 0 0 10.5-1.5M17 4v4h-4M7 20v-4h4"/></svg></span><h3>Automate as much as you need. It is not metered.</h3><p>Flow automations run unlimited times on every plan. You are never rationed on how many times your own workflows can run.</p></div>
-    </div>
-    <p class="costnote">Everything above is live today, not on a roadmap.</p>
-  </div>
-</section>
-
-<section class="alt">
-  <div class="wrap">
-    <div class="head"><p class="eyebrow">More than COD confirmation</p><h2>One subscription. A complete WhatsApp commerce platform.</h2><p>COD confirmation is one journey. Every plan also ships with the rest of this, live today.</p></div>
-    <div class="pf-grid">
-      <div class="card pf"><span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="6" r="2.1"/><circle cx="19" cy="6" r="2.1"/><circle cx="12" cy="18" r="2.1"/><path d="M6.8 7.8 10.6 16M17.2 7.8 13.4 16"/></svg></span><h3>Journeys and cart recovery</h3><p>Drag-and-drop WhatsApp flows that recover abandoned carts and follow up unconfirmed COD orders automatically.</p></div>
-      <div class="card pf"><span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7.2A3.2 3.2 0 0 1 7.2 4h9.6A3.2 3.2 0 0 1 20 7.2V13a3.2 3.2 0 0 1-3.2 3.2H9l-4.2 3v-3A3.2 3.2 0 0 1 4 13.2Z"/><circle cx="9" cy="10" r=".55" fill="currentColor" stroke="none"/><circle cx="12" cy="10" r=".55" fill="currentColor" stroke="none"/><circle cx="15" cy="10" r=".55" fill="currentColor" stroke="none"/></svg></span><h3>One inbox for WhatsApp and Instagram</h3><p>Every thread sits next to the order, COD status, and cart history, so agents never tab over to Shopify admin.</p></div>
-      <div class="card pf"><span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10v4h3l5.5 4V6L6 10H3Z"/><path d="M16 9.3a4 4 0 0 1 0 5.4M18.7 7a7.6 7.6 0 0 1 0 10"/></svg></span><h3>Meta-approved broadcast campaigns</h3><p>Segment your audience and send on approved templates only, with the per-message cost shown before you send.</p></div>
-      <div class="card pf"><span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="7.5" r="3"/><path d="M3.3 20c.5-3.5 2.9-5.5 5.7-5.5s5.2 2 5.7 5.5"/><circle cx="18" cy="8.5" r="2.1"/><path d="M15.6 14.7c2.2.4 3.6 1.9 4 4.3"/></svg></span><h3>A CRM built from real orders and chats</h3><p>One profile per buyer, so you can target VIPs, repeat buyers, and COD-risk customers as separate audiences.</p></div>
-      <div class="card pf"><span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="7.3"/><circle cx="12" cy="12" r="3.2"/><path d="M12 2.3v3M12 18.7v3M2.3 12h3M18.7 12h3"/></svg></span><h3>A tracking pixel that feeds WhatsApp</h3><p>A Shopify theme embed matches product and cart intent to WhatsApp outreach, consent-aware by default.</p></div>
-      <div class="card pf"><span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.2 19 6v5.3c0 4.6-3 7.6-7 9.1-4-1.5-7-4.5-7-9.1V6Z"/><path d="M9 12.2l2 2 4-4.2"/></svg></span><h3>Template approval you control</h3><p>Create and track every WhatsApp template with Meta in one place. Nothing sends until Meta approves it.</p></div>
-    </div>
-  </div>
-</section>
-
-<section class="alt" id="pricing">
+<section id="pricing">
   <div class="wrap">
     <div class="head"><h2>Simple pricing. COD confirmation is on every plan.</h2><p>No setup fee. No hidden WhatsApp markup. Cancel anytime.</p></div>
     <div class="cycle" role="tablist" aria-label="Billing cycle">
@@ -365,12 +419,16 @@ details p{padding:0 0 1rem;font-size:1rem;color:var(--muted)}
         <ul><li>Basic COD confirmation</li><li>COD to prepaid payment links</li><li>Highest dispatch priority</li></ul>
       </div>
     </div>
+    <div class="incl">
+      <p class="incl-h">On every plan, whichever you pick</p>
+      <ul class="ticks two"><li>WhatsApp and Instagram in one inbox</li><li>Customer 360 beside every thread</li><li>Meta-approved broadcast campaigns</li><li>Segments, lead scores, and a real CRM</li><li>Shopify tracking pixel and intent signals</li><li>Template library synced with Meta</li><li>AI replies on your own OpenAI or Claude key</li><li>Opt-in tools, QR codes, and catalog sends</li></ul>
+    </div>
     <p class="foot-note">Meta&rsquo;s WhatsApp message fees are billed by Meta directly to your own Meta Business account. TopEdge adds 0% markup. GST invoices issued automatically.</p>
     <div class="mid-cta"><a class="btn" data-cta="trial" href="/signup?lp=cod-confirmation">Start free trial <span aria-hidden="true">&rarr;</span></a><p class="micro">14-day free trial · 20 free order confirmations · No credit card · Live in about 15 minutes</p></div>
   </div>
 </section>
 
-<section>
+<section class="alt">
   <div class="narrow">
     <div class="head"><h2>Questions before you start</h2></div>
     <details name="faq" open><summary>How much does it cost?</summary><p>Plans start at ₹1,999 a month + 18% GST, or ₹1,599 a month if billed yearly, and basic COD confirmation is included on every plan. Meta charges its own per-message WhatsApp fees directly on your Meta Business account, and TopEdge adds 0% markup.</p></details>
@@ -422,15 +480,44 @@ details p{padding:0 0 1rem;font-size:1rem;color:var(--muted)}
     $$('[data-step]').forEach(function(li){io.observe(li)});
   }
 
-  // Hero film: choose ONE source. preload="none" keeps it at zero bytes until
-  // the viewer presses play, so setting src here costs nothing. A media
-  // attribute on a source element is not honoured inside a video element, and
-  // two video elements would fetch both files, so one matchMedia check does it.
+  // Hero film, same behaviour as the product demos on the homepage: muted, looping,
+  // and playing by itself on phones and desktop alike. Weight is the reason this is
+  // scripted rather than an autoplay attribute. The markup carries no src, so the
+  // page still paints from the poster alone; ONE source is attached when the film
+  // is near the viewport (a media attribute on <source> is ignored inside <video>,
+  // and two <video> elements would fetch both files). A visitor who never scrolls
+  // past the fold on a metered connection downloads nothing.
   var film=$('#lv');
   if(film){
     var small=w.matchMedia&&w.matchMedia('(max-width: 48rem)').matches;
     var src=(small?film.getAttribute('data-sm'):film.getAttribute('data-lg'))||film.getAttribute('data-lg');
-    if(src)film.src=src;
+    var saveData=navigator.connection&&navigator.connection.saveData;
+    var started=false;
+    var start=function(){
+      if(started||!src)return;
+      started=true;
+      film.muted=true;film.loop=true;film.playsInline=true;film.src=src;
+      if(!reduce){var p=film.play();if(p&&p.catch)p.catch(function(){})}
+    };
+    if(saveData){
+      // Poster only. The viewer can still press play and fetch it deliberately.
+      film.addEventListener('play',function(){if(!film.getAttribute('src')&&src)film.src=src},{once:true});
+    }else if('IntersectionObserver' in w){
+      var fio=new IntersectionObserver(function(es){
+        es.forEach(function(e){
+          if(e.isIntersecting){start();if(!reduce&&film.paused){var p=film.play();if(p&&p.catch)p.catch(function(){})}}
+          else if(started&&!film.paused){film.pause()}
+        });
+      },{rootMargin:'200px 0px',threshold:.25});
+      fio.observe(film);
+    }else{
+      start();
+    }
+    // A backgrounded tab should not keep decoding frames.
+    d.addEventListener('visibilitychange',function(){
+      if(!started)return;
+      if(d.hidden)film.pause();
+    });
   }
 
   // Pricing cycle toggle. Both prices are in the HTML, so the page reads correctly before this runs.
@@ -462,26 +549,6 @@ details p{padding:0 0 1rem;font-size:1rem;color:var(--muted)}
   var field=/^(INPUT|TEXTAREA|SELECT)$/;
   d.addEventListener('focusin',function(e){if(field.test(e.target.tagName)){typing=true;sync()}});
   d.addEventListener('focusout',function(e){if(field.test(e.target.tagName)){typing=false;sync()}});
-
-  // Hero motion video: built with createElement and attached only after window `load`,
-  // so it never competes with first paint or counts toward the page's render-blocking budget.
-  // Skipped on narrow viewports (CSS hides the layer there too) and on metered connections.
-  var heroVideo=$('#hero-video');
-  var saveData=navigator.connection&&navigator.connection.saveData;
-  if(heroVideo&&!reduce&&!saveData&&w.matchMedia('(min-width: 900px)').matches){
-    w.addEventListener('load',function(){
-      try{
-        var v=d.createElement('video');
-        v.muted=true;v.loop=true;v.playsInline=true;v.autoplay=true;v.preload='auto';
-        v.setAttribute('aria-hidden','true');
-        v.addEventListener('loadeddata',function(){v.classList.add('is-ready')});
-        v.addEventListener('error',function(){v.remove()});
-        v.src='/videos/cod-hero-motion.mp4';
-        heroVideo.appendChild(v);
-        var p=v.play();if(p&&p.catch)p.catch(function(){});
-      }catch(e){}
-    });
-  }
 })();
 </script>
 <script>

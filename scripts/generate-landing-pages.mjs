@@ -89,20 +89,72 @@ const WHY = [
   { icon: 'loop', h: 'Automate as much as you need. It is not metered.', p: "Flow automations run unlimited times on every plan. You are never rationed on how many times your own workflows can run." },
 ];
 
-// COD confirmation is one journey inside the platform. These are the other pieces every
-// plan already ships with, so the ad page does not read as a single-feature tool.
-const PLATFORM = [
-  { icon: 'flow', h: 'Journeys and cart recovery', p: 'Drag-and-drop WhatsApp flows that recover abandoned carts and follow up unconfirmed COD orders automatically.' },
-  { icon: 'chat', h: 'One inbox for WhatsApp and Instagram', p: 'Every thread sits next to the order, COD status, and cart history, so agents never tab over to Shopify admin.' },
-  { icon: 'horn', h: 'Meta-approved broadcast campaigns', p: 'Segment your audience and send on approved templates only, with the per-message cost shown before you send.' },
-  { icon: 'people', h: 'A CRM built from real orders and chats', p: 'One profile per buyer, so you can target VIPs, repeat buyers, and COD-risk customers as separate audiences.' },
-  { icon: 'target', h: 'A tracking pixel that feeds WhatsApp', p: 'A Shopify theme embed matches product and cart intent to WhatsApp outreach, consent-aware by default.' },
-  { icon: 'shield', h: 'Template approval you control', p: 'Create and track every WhatsApp template with Meta in one place. Nothing sends until Meta approves it.' },
+// Three showcase rows, each a real screen from the product rather than an icon. Short
+// copy, three proof points, one image: the page has to be skimmable in one scroll.
+const SHOWCASE = [
+  {
+    eyebrow: 'Journeys',
+    h: 'Confirm the order, or turn it prepaid',
+    p: 'A COD order lands and the buyer gets a WhatsApp message in seconds. They confirm, cancel, or pay online instead.',
+    bullets: ['Confirm and Cancel buttons on an approved template', 'Payment link from a Shopify draft invoice', 'Revenue tracked per journey, not vanity sends'],
+    img: '/lp/shots/journeys.webp',
+    alt: 'TopEdge journeys list showing a COD to prepaid nudge and abandoned cart recovery with revenue, enrolments and open rate per journey.',
+  },
+  {
+    eyebrow: 'Cart recovery',
+    h: 'See the money leaving, then go get it',
+    p: 'Abandoned carts, open cart value, and what you actually recovered sit on one dashboard instead of in a weekly export.',
+    bullets: ['Cart value at risk, live', 'Recovery funnel from abandon to purchase', 'WhatsApp, Instagram, and email in one flow'],
+    img: '/lp/shots/recovery.webp',
+    alt: 'TopEdge store growth dashboard showing cart value at risk, abandoned carts, recovery rate and a recovery funnel from abandoned to purchased.',
+  },
+  {
+    eyebrow: 'No code',
+    h: 'Build the whole flow by dragging boxes',
+    p: 'Describe the bot, edit the canvas it drafts, then test before you publish. No developer, no theme edits, no checkout scripts.',
+    bullets: ['Menus, conditions, catalog sends, human handoff', 'Test runs before anything goes live', 'Live in about 15 minutes'],
+    img: '/lp/shots/flow.webp',
+    alt: 'TopEdge flow builder canvas with a flow entry node connected to a WhatsApp message node and an interactive button node.',
+  },
 ];
 
-// Replace later with the real file once the asset is ready (keep the format and path; it is
-// injected by JS after window `load`, so a missing or oversized file never delays the page).
-const HERO_VIDEO_SRC = '/videos/cod-hero-motion.mp4';
+// The switching pain, in the merchant's own terms. No competitor is named anywhere on
+// this page; the left column is the experience, not a product.
+const SWITCH = [
+  { them: 'A per-message fee on top of what Meta already charges you', us: 'Meta bills your own account. TopEdge adds 0% markup.' },
+  { them: 'The quote goes up once you depend on it', us: 'Published plans, GST invoices, cancel anytime, no setup fee.' },
+  { them: 'Automation runs are metered and you get rationed', us: 'Flow automations run unlimited times on every plan.' },
+  { them: 'One buyer becomes three contacts and the history splits', us: 'Orders, carts, and chats merge into a single profile.' },
+];
+
+// Everything else the subscription carries, as one quick list rather than ten boxes.
+const INCLUDED = [
+  'WhatsApp and Instagram in one inbox',
+  'Customer 360 beside every thread',
+  'Meta-approved broadcast campaigns',
+  'Segments, lead scores, and a real CRM',
+  'Shopify tracking pixel and intent signals',
+  'Template library synced with Meta',
+  'AI replies on your own OpenAI or Claude key',
+  'Opt-in tools, QR codes, and catalog sends',
+];
+
+// Credibility marks that already ship on the site footer, reused here because an ad
+// visitor has never heard of us and needs to see who vouches before they read a price.
+const BADGES = [
+  { src: '/badges/shopify-app-store.png?v=4', alt: 'Available on the Shopify App Store' },
+  { src: '/badges/meta-business-partner.png?v=4', alt: 'Meta Business Partner' },
+  { src: '/badges/whatsapp-cloud-api.png?v=5', alt: 'Built on the official WhatsApp Cloud API' },
+];
+
+// The marquee repeats the list three times: two copies left a visible seam at 1440px
+// because four logos are narrower than the viewport. The CSS translates by -33.333%.
+const TRUST_LOGOS = [
+  { src: '/trust/delitech-white.png', alt: 'Delitech' },
+  { src: '/trust/apex-white.png', alt: 'Apex Light' },
+  { src: '/trust/codeclinic-white.png', alt: 'code CLINIC' },
+  { src: '/trust/choicesalon-white.png', alt: 'Choice Salon' },
+];
 
 function yearly(p) {
   return p.pricing.yearly?.effectiveMonthlyLabel ?? p.monthlyPriceLabel;
@@ -172,12 +224,40 @@ function iconChip(name) {
 }
 
 const whyHtml = WHY.map(
-  (w) => `      <div class="card why">${iconChip(w.icon)}<h3>${esc(w.h)}</h3><p>${esc(w.p)}</p></div>`,
+  (w) => `      <div class="why">${iconChip(w.icon)}<h3>${esc(w.h)}</h3><p>${esc(w.p)}</p></div>`,
 ).join('\n');
 
-const platformHtml = PLATFORM.map(
-  (w) => `      <div class="card pf">${iconChip(w.icon)}<h3>${esc(w.h)}</h3><p>${esc(w.p)}</p></div>`,
+const showcaseHtml = SHOWCASE.map(
+  (s, i) => `      <div class="row${i % 2 ? ' flip' : ''}">
+        <div class="row-copy">
+          <p class="eyebrow">${esc(s.eyebrow)}</p>
+          <h3>${esc(s.h)}</h3>
+          <p class="row-p">${esc(s.p)}</p>
+          <ul class="ticks">${s.bullets.map((b) => `<li>${esc(b)}</li>`).join('')}</ul>
+        </div>
+        <img class="shot" src="${s.img}" width="1120" height="630" loading="lazy" decoding="async" alt="${esc(s.alt)}">
+      </div>`,
 ).join('\n');
+
+const switchHtml = SWITCH.map(
+  (s) => `      <div class="sw">
+        <p class="sw-them"><span>Most WhatsApp tools</span>${esc(s.them)}</p>
+        <p class="sw-us"><span>TopEdge</span>${esc(s.us)}</p>
+      </div>`,
+).join('\n');
+
+const includedHtml = INCLUDED.map((i) => `<li>${esc(i)}</li>`).join('');
+
+const badgesHtml = BADGES.map(
+  (b) => `<li><img src="${b.src}" alt="${esc(b.alt)}" height="40" loading="lazy" decoding="async"></li>`,
+).join('');
+
+const marqueeHtml = [...TRUST_LOGOS, ...TRUST_LOGOS, ...TRUST_LOGOS]
+  .map((l, i) => {
+    const dupe = i >= TRUST_LOGOS.length;
+    return `<li${dupe ? ' aria-hidden="true"' : ''}><img src="${l.src}" alt="${dupe ? '' : esc(l.alt)}" height="26" loading="lazy" decoding="async"></li>`;
+  })
+  .join('');
 
 const PHONE_LABEL =
   'Example WhatsApp message to a buyer: Hi Priya, we received your order #1042, Cash on Delivery, ₹1,499. Please confirm it so we can ship it today. Two buttons follow: Confirm order and Cancel order.';
@@ -188,7 +268,7 @@ const VIDEO = {
   sm: '/marketing/demos/topedge-launch-mobile.mp4',
   poster: '/marketing/demos/topedge-launch-poster.webp',
   label: 'TopEdge AI launch film: turning Shopify visitors into WhatsApp contacts and confirming COD orders before dispatch.',
-  caption: '70-second tour. Press play for sound.',
+  caption: 'Playing without sound. Use the controls for audio.',
 };
 function phone(id) {
   return `<figure class="phone" id="${id}">
@@ -203,16 +283,18 @@ function phone(id) {
 }
 
 /**
- * Hero launch film. The page contract is "instant paint", so this must cost
- * nothing until someone asks for it: `preload="none"` means the browser fetches
- * the poster and not a single byte of video until the viewer presses play.
- * The source is chosen in page.js from one matchMedia check, so exactly ONE
- * file is ever requested (a `media` attribute on <source> is not honoured
- * inside <video>, and two <video> elements would download both).
+ * Hero launch film, muted and looping like the product demos on the homepage.
+ * `preload="none"` plus no `src` in the markup means the page still paints from
+ * the 37 KB poster alone; page.js attaches ONE source and starts playback when
+ * the film scrolls into view, so a viewer who bounces above the fold downloads
+ * no video at all. A `media` attribute on <source> is not honoured inside
+ * <video> and two <video> elements would fetch both files, hence data-lg/data-sm.
+ * `controls` stays: an autoplaying loop longer than five seconds needs a way to
+ * stop it (WCAG 2.2.2), and it is also how a viewer turns the sound on.
  */
 function heroVideo() {
   return `<figure class="hero-film">
-        <video id="lv" class="film" controls playsinline preload="none"
+        <video id="lv" class="film" controls muted loop playsinline preload="none"
                poster="${VIDEO.poster}" width="1280" height="720"
                data-lg="${VIDEO.lg}" data-sm="${VIDEO.sm}"
                aria-label="${esc(VIDEO.label)}">
@@ -246,10 +328,7 @@ addEventListener('load',function(){var s=document.createElement('script');s.asyn
 
 const css = fs.readFileSync(path.join(lpDir, 'base.css'), 'utf8').trim();
 const attribution = fs.readFileSync(path.join(lpDir, 'attribution.js'), 'utf8').trim();
-const behavior = fs
-  .readFileSync(path.join(lpDir, 'page.js'), 'utf8')
-  .trim()
-  .replaceAll('{{HERO_VIDEO_SRC}}', HERO_VIDEO_SRC);
+const behavior = fs.readFileSync(path.join(lpDir, 'page.js'), 'utf8').trim();
 
 // Function replacers: a catalog string containing `$&` must never be interpreted as a pattern.
 const fill = (tpl, map) => tpl.replace(/\{\{([A-Z0-9_]+)\}\}/g, (m, k) => (k in map ? map[k] : m));
@@ -260,7 +339,11 @@ for (const page of PAGES) {
     FAQS: faqHtml,
     QUOTES: quotesHtml,
     WHY_CARDS: whyHtml,
-    PLATFORM_CARDS: platformHtml,
+    SHOWCASE_ROWS: showcaseHtml,
+    SWITCH_ROWS: switchHtml,
+    INCLUDED_LIST: includedHtml,
+    BADGES: badgesHtml,
+    TRUST_MARQUEE: marqueeHtml,
     HERO_MEDIA: heroVideo(),
     PHONE_HOW: phone('how-phone'),
     SLUG: page.slug,
