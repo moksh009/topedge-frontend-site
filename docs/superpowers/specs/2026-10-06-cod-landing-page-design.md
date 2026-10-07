@@ -230,6 +230,43 @@ change in the catalog that the card does not reflect fails the build.
 an inlined stylesheet; they stay in the source and are dropped on the way out. Without this
 the page was 62 KB against a 60 KB budget; it is 57.5 KB with everything above.
 
+## Revision 7 — lighter type, coloured plans, a person instead of a FAQ (2026-10-07)
+
+Owner review. Eight changes.
+
+**Buttons** are content width again. `.cta-row .btn{flex:1 1 100%}` turned the hero pair
+into two full-bleed slabs on a phone; the rule is gone and the button is 2.95rem rather
+than 3.25rem.
+
+**Type is lighter.** Headings were 500; the site sets `.mkt-pf__title` at 400, so the hero
+and every section heading are 400 now, and the hero drops from 3.4rem to 3.15rem.
+
+**Uppercase labels above titles are gone**, in the problem, product and switching sections
+and on the bento cards. The footer column headings stay: they are the site's own footer.
+
+**Headings fit on one line** where the content allows. `max-width` on `.head h2` went from
+22ch to 34ch; all eight headings now set in one line at 1440px.
+
+**Plan cards carry their colour**: Launch orange, Growth purple, Scale pink, panel gradient,
+border and tick colour each taken from pricing.css. The card was already the site's; now it
+looks like it.
+
+**Hover lift removed** from the bento and plan cards, and the purple radial behind the
+closing CTA is gone; that section is white with a hairline top border.
+
+**The FAQ is gone.** Six accordions at the bottom of an ad page answer objections to
+nobody: a visitor who still has a question wants a person, and this audience lives on
+WhatsApp. In its place a single WhatsApp handoff, prefilled with the page's own context so
+the reply does not start with "who is this", plus the phone number. `check:lp` asserts the
+link opens the company number with a prefilled message, and that no `<details>` comes back
+without a spec change.
+
+**Reviews read as Trustpilot cards**: the green mark, the quote, a rule, the author.
+**No star rating is shown, on purpose.** The published reviews give text and author, not
+the score each one carried, and a star row is a score claim we cannot support. `check:lp`
+now also fails if two star glyphs ever end up adjacent. Real stars need the TrustBox embed
+with the business unit and template ids, or the per-review ratings (see Open items).
+
 ## Testing
 Repo has no JS test runner, so verification is a node script:
 `scripts/check-landing-pages.mjs` (`npm run check:lp`) reads the generated HTML and asserts: size budget, noindex, no em dashes, no competitor names, the three quotes verbatim, plan prices equal `FALLBACK_CATALOG`, Launch has no prepaid text, Growth and Scale do, `TRIAL` numbers appear, 6 FAQs with exactly one `open`, both CTA kinds present, no external script or stylesheet. Browser checks with Playwright (installed): 360px and 1280px screenshots, H1 at most 3 lines on mobile, sticky bar behaviour, toggle, hero variant swap by `?utm_content=`.

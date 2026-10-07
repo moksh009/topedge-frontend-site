@@ -34,10 +34,10 @@ img{max-width:100%}
 /* The marked phrase in a title, same treatment the site puts on its headings. */
 .chip{color:var(--chip-ink);background:var(--chip-bg);border-radius:.4em;padding:.02em .22em .06em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
 mark.chip{background:var(--chip-bg)}
-.hero h1{margin:0;max-width:23ch;font-size:clamp(2.05rem,5.4vw,3.4rem);font-weight:500;letter-spacing:-.04em;line-height:1.22;text-wrap:balance}
+.hero h1{margin:0;max-width:26ch;font-size:clamp(1.95rem,5vw,3.15rem);font-weight:400;letter-spacing:-.038em;line-height:1.22;text-wrap:balance}
 .sub{margin:1rem 0 0;max-width:38rem;font-size:clamp(1.02rem,2.2vw,1.18rem);color:var(--muted);text-wrap:pretty}
 .cta-row{margin-top:1.8rem;display:flex;flex-wrap:wrap;justify-content:center;gap:.75rem}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:3.25rem;padding:0 1.8rem;border-radius:9999px;background:var(--violet);color:#fff;font:inherit;font-size:1rem;font-weight:500;text-decoration:none;transition:background .2s}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:2.95rem;padding:0 1.5rem;border-radius:9999px;background:var(--violet);color:#fff;font:inherit;font-size:.95rem;font-weight:500;text-decoration:none;transition:background .2s}
 .btn:hover,.btn:focus-visible{background:var(--violet-hover)}
 .btn:focus-visible{outline:3px solid #c4b5fd;outline-offset:2px}
 .btn-out{background:#fff;color:var(--chip-ink);box-shadow:inset 0 0 0 1.5px #ddd0fb}
@@ -51,7 +51,7 @@ mark.chip{background:var(--chip-bg)}
 section{padding:3.5rem 0}
 .alt{background:var(--wash)}
 .head{text-align:center;margin-bottom:2.2rem}
-.head h2{max-width:22ch;margin:0 auto;font-size:clamp(1.6rem,4vw,2.3rem);font-weight:500;letter-spacing:-.035em;line-height:1.32;text-wrap:balance}
+.head h2{max-width:34ch;margin:0 auto;font-size:clamp(1.55rem,3.6vw,2.2rem);font-weight:400;letter-spacing:-.032em;line-height:1.3;text-wrap:balance}
 .head p{margin:.75rem auto 0;max-width:36rem;color:var(--muted);font-size:1.02rem}
 .head .eyebrow{display:block;margin-bottom:.6rem}
 .eyebrow-s{display:block;margin-bottom:.6rem;font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#b45309}
@@ -106,13 +106,12 @@ section{padding:3.5rem 0}
 .trust-tp:hover{color:#fff}
 /* bento: three real screens in one row */
 .bentos{display:grid;gap:1rem}
-.bento{display:flex;flex-direction:column;overflow:hidden;border-radius:20px;background:#fff;box-shadow:0 0 0 1px rgba(15,23,42,.04),0 2px 8px rgba(15,23,42,.04),0 16px 36px -22px rgba(76,29,149,.3);transition:transform .2s,box-shadow .2s}
-.bento:hover{transform:translateY(-3px);box-shadow:0 0 0 1px rgba(15,23,42,.05),0 24px 48px -24px rgba(76,29,149,.42)}
+.bento{display:flex;flex-direction:column;overflow:hidden;border-radius:20px;background:#fff;box-shadow:0 0 0 1px rgba(15,23,42,.05),0 2px 8px rgba(15,23,42,.04)}
 /* The screens are 16:9 dashboards; a shorter box crops to the part that reads at card
    width, and the top-left anchor keeps the numbers rather than the empty canvas. */
 .shot{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;background:#f1edfb;border-bottom:1px solid var(--line)}
 .bento-copy{padding:1.3rem 1.3rem 1.5rem}
-.bento-copy h3{margin-top:.5rem;font-size:1.15rem;font-weight:500;letter-spacing:-.02em;line-height:1.25}
+.bento-copy h3{font-size:1.1rem;font-weight:500;letter-spacing:-.02em;line-height:1.3}
 .bento-copy p{margin-top:.45rem;font-size:.97rem;color:var(--muted)}
 /* the four objections */
 .sws{width:min(100%,56rem);margin:0 auto;display:grid;gap:1.6rem}
@@ -123,13 +122,15 @@ section{padding:3.5rem 0}
 .sw-us h3{font-size:1.08rem;font-weight:500;line-height:1.3}
 .sw-us p{margin-top:.25rem;font-size:1rem;color:var(--muted)}
 .ic{display:inline-flex;align-items:center;justify-content:center;width:2.4rem;height:2.4rem;border-radius:13px;background:var(--wash);color:var(--violet);box-shadow:inset 0 0 0 1px #ece5fd}
-/* proof */
+/* proof: review cards in Trustpilot's visual language */
 .quotes{display:grid;gap:1rem}
-.quote{margin:0;padding:1.4rem 1.4rem 1.2rem}
-.quote p{font-size:1rem;line-height:1.55}
-.quote p:before{content:'\201C'}
-.quote p:after{content:'\201D'}
-.quote footer{margin-top:.9rem;font-size:.85rem;font-weight:500;color:var(--muted)}
+.quote{margin:0;padding:1.3rem 1.3rem 1.2rem;display:flex;flex-direction:column;gap:.75rem}
+.tp-mark{display:flex;align-items:center;gap:.35rem;font-size:.78rem;font-weight:600;letter-spacing:-.01em;color:#0c1222}
+.tp-mark svg{display:block}
+.tp-text{flex:1;font-size:.98rem;line-height:1.55}
+.tp-text:before{content:'\201C'}
+.tp-text:after{content:'\201D'}
+.quote footer{padding-top:.75rem;border-top:1px solid var(--line);font-size:.85rem;font-weight:500;color:var(--muted)}
 .q-note{margin-top:1rem;text-align:center;font-size:.82rem;color:var(--muted)}
 .badges{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:1.2rem 2.4rem;list-style:none;padding:0;margin:2.4rem auto 0}
 .badges img{display:block;height:46px;width:auto;object-fit:contain}
@@ -138,11 +139,18 @@ section{padding:3.5rem 0}
 .plans{display:grid;gap:1rem}
 .mkt-plan{position:relative;display:flex;flex-direction:column;height:100%;transition:transform .22s ease}
 .mkt-plan__shell{display:flex;flex-direction:column;height:100%;padding:.65rem;border-radius:1.65rem;border:1px solid #eef0f4;background:#fff;transition:border-color .2s}
-.mkt-plan:hover .mkt-plan__shell{border-color:#e2e8f0}
 .mkt-plan--emphasis .mkt-plan__shell{border-color:#e9d5ff}
-.mkt-plan--emphasis:hover .mkt-plan__shell{border-color:#d8b4fe}
 .mkt-plan__panel{display:flex;flex-direction:column;align-items:flex-start;text-align:left;padding:1.35rem 1.15rem 1.2rem;border-radius:1.25rem;border:1px solid #e8ecf1;background:#fff;box-shadow:0 16px 34px -14px rgba(15,23,42,.16),0 8px 18px -10px rgba(15,23,42,.1),0 2px 6px -2px rgba(15,23,42,.06);transition:box-shadow .22s,transform .22s,border-color .2s}
-.mkt-plan:hover .mkt-plan__panel{border-color:#dfe4ea;transform:translateY(-2px);box-shadow:0 22px 42px -12px rgba(15,23,42,.18),0 10px 22px -10px rgba(15,23,42,.11)}
+/* Per-plan colour, the same assignment the pricing page uses. */
+.mkt-plan--launch .mkt-plan__shell{border-color:#fed7aa}
+.mkt-plan--launch .mkt-plan__panel{border-color:#fdba74;background:linear-gradient(180deg,#fff7ed 0,#ffedd5 44%,#fff 100%);box-shadow:0 16px 34px -14px rgba(249,115,22,.12),0 8px 18px -10px rgba(15,23,42,.08),0 2px 6px -2px rgba(15,23,42,.05)}
+.mkt-plan--launch .mkt-plan__mark{background:#ffedd5;color:#ea580c}
+.mkt-plan--emphasis .mkt-plan__panel{border-color:#d8b4fe;background:linear-gradient(180deg,#faf5ff 0,#f3e8ff 44%,#fff 100%);box-shadow:0 16px 34px -14px rgba(168,85,247,.12),0 8px 18px -10px rgba(15,23,42,.08),0 2px 6px -2px rgba(15,23,42,.05)}
+.mkt-plan--emphasis .mkt-plan__period{color:#a855f7}
+.mkt-plan--emphasis .mkt-plan__mark{background:#f3e8ff;color:#9333ea}
+.mkt-plan--scale .mkt-plan__shell{border-color:#fbcfe8}
+.mkt-plan--scale .mkt-plan__panel{border-color:#f9a8d4;background:linear-gradient(180deg,#fdf2f8 0,#fce7f3 44%,#fff 100%);box-shadow:0 16px 34px -14px rgba(236,72,153,.13),0 8px 18px -10px rgba(15,23,42,.08),0 2px 6px -2px rgba(15,23,42,.05)}
+.mkt-plan--scale .mkt-plan__mark{background:#fce7f3;color:#db2777}
 .mkt-plan__title-row{display:flex;align-items:center;justify-content:space-between;gap:.5rem .75rem;width:100%}
 .mkt-plan__name{font-size:.8125rem;font-weight:500;letter-spacing:-.02em;color:#64748b}
 .mkt-plan__badge{display:inline-flex;align-items:center;min-height:1.35rem;padding:.15rem .6rem;border-radius:9999px;border:1px solid #ddd6fe;background:#ede9fe;color:#6d28d9;font-size:.625rem;font-weight:650;white-space:nowrap}
@@ -171,24 +179,22 @@ section{padding:3.5rem 0}
 #plans[data-cycle="yearly"] .p-monthly,#plans[data-cycle="monthly"] .p-yearly{display:none}
 #plans .p-yearly,#plans .p-monthly{display:inline}
 .incl{width:min(100%,52rem);margin:2.2rem auto 0;padding:1.5rem 1.6rem;border-radius:20px;background:var(--wash);box-shadow:inset 0 0 0 1px #ece5fd}
-.incl-h{font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--chip-ink);text-align:center}
+.incl-h{font-size:.9rem;font-weight:600;letter-spacing:-.01em;color:var(--chip-ink);text-align:center}
 .ticks{list-style:none;padding:0;margin-top:1rem;display:grid;gap:.55rem}
 .ticks li{position:relative;padding-left:1.6rem;font-size:.98rem}
 .ticks li:before{content:'';position:absolute;left:.15rem;top:.48rem;width:.7rem;height:.38rem;border-left:2px solid var(--ok);border-bottom:2px solid var(--ok);transform:rotate(-45deg)}
 .foot-note{margin-top:1.3rem;text-align:center;font-size:.85rem;color:var(--muted)}
 .mid-cta{margin-top:1.8rem;text-align:center}
-/* faq */
-details{border:1px solid var(--line);border-radius:14px;background:#fff;padding:0 1.1rem}
-details+details{margin-top:.65rem}
-summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:3.25rem;padding:.6rem 0;font-weight:500}
-summary::-webkit-details-marker{display:none}
-summary:after{content:'+';font-size:1.3rem;font-weight:400;color:var(--violet);line-height:1}
-details[open] summary:after{content:'\2212'}
-details p{padding:0 0 1rem;font-size:1rem;color:var(--muted)}
+/* talk to a person */
+.help{text-align:center}
+.help h2{font-size:clamp(1.55rem,3.6vw,2.2rem);font-weight:400;letter-spacing:-.032em;line-height:1.3}
+.help .sub{margin:.9rem auto 1.5rem;text-align:center}
+.btn-wa{background:#25d366;color:#0b3d24}
+.btn-wa:hover,.btn-wa:focus-visible{background:#1fbe5a}
 /* final cta */
-.final{text-align:center;background:radial-gradient(48rem 22rem at 50% 112%,#e7d9ff 0,transparent 65%),#f7f8fc}
+.final{text-align:center;background:#fff;border-top:1px solid var(--line)}
 .final .sub{margin:.9rem auto 0;text-align:center}
-.final h2{font-size:clamp(1.6rem,4.4vw,2.4rem);font-weight:500;letter-spacing:-.035em;line-height:1.3;text-wrap:balance}
+.final h2{font-size:clamp(1.6rem,4vw,2.3rem);font-weight:400;letter-spacing:-.032em;line-height:1.3;text-wrap:balance}
 /* ---- footer, ported from MarketingFooter + marketing.css ---- */
 .mkt-foot{position:relative;isolation:isolate;overflow:hidden;background:#fff;border-top:1px solid #f1f5f9;color:var(--ink)}
 .mkt-foot__shell{position:relative;z-index:2;width:min(100%,1180px);margin:0 auto;padding:clamp(2.25rem,3.5vw,2.85rem) clamp(1.25rem,2vw,1.35rem) 1.25rem}
@@ -223,7 +229,6 @@ details p{padding:0 0 1rem;font-size:1rem;color:var(--muted)}
 .sticky{display:none}
 @media(max-width:759px){
  .mkt-plan--emphasis{order:-1}
- .cta-row .btn{flex:1 1 100%}
  body{padding-bottom:6rem}
  /* Dashboard detail is unreadable at 390px in a 16:9 box, so crop in and scale up. */
  .shot{aspect-ratio:4/3;object-position:center}

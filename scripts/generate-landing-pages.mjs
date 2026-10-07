@@ -29,7 +29,6 @@ const MAX_BYTES = 60 * 1024;
 const { FALLBACK_CATALOG, TRIAL, planBlurb, planFeatureKicker, dispatchLabel, planPricing } =
   await loadBillingCatalog();
 const plans = FALLBACK_CATALOG.plans;
-const byslug = Object.fromEntries(plans.map((p) => [p.slug, p]));
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 
@@ -63,6 +62,14 @@ const COMPANY_PHONE_E164 = identity('COMPANY_PHONE_E164');
 const WHATSAPP_MSG = (identitySrc.match(/COMPANY_WHATSAPP_URL =[\s\S]{0,120}?encodeURIComponent\(\s*'([^']+)'/) || [])[1];
 if (!WHATSAPP_MSG) throw new Error('companyIdentity.ts: COMPANY_WHATSAPP_URL message not found');
 const WHATSAPP_URL = `https://wa.me/${COMPANY_PHONE_E164}?text=${encodeURIComponent(WHATSAPP_MSG)}`;
+
+// The FAQ is gone. Six accordions at the bottom of an ad page answer objections to
+// nobody: the visitor who still has a question wants a person, and this audience already
+// lives on WhatsApp. The thread opens prefilled so the merchant does not have to explain
+// where they came from, and so the reply can pick up the context.
+const HELP_MSG =
+  'Hi TopEdge, I have a question about WhatsApp COD confirmation for my Shopify store.';
+const HELP_WHATSAPP_URL = `https://wa.me/${COMPANY_PHONE_E164}?text=${encodeURIComponent(HELP_MSG)}`;
 const ADDRESS_LINES = identityList('COMPANY_ADDRESS_LINES');
 const SOCIAL = identityMap('COMPANY_SOCIAL');
 
@@ -145,21 +152,18 @@ const SWITCH = [
 // Three real screens. One line each: the picture is the argument, not the caption.
 const SHOWCASE = [
   {
-    eyebrow: 'Journeys',
     h: 'Confirm it, or turn it prepaid',
     p: 'The buyer answers on WhatsApp. Confirm, cancel, or pay online instead.',
     img: '/lp/shots/journeys.webp',
     alt: 'TopEdge journeys list showing a COD to prepaid nudge and abandoned cart recovery with revenue, enrolments and open rate per journey.',
   },
   {
-    eyebrow: 'Cart recovery',
     h: 'Win back the carts that leave',
     p: 'Cart value at risk and what you actually recovered, on one dashboard.',
     img: '/lp/shots/recovery.webp',
     alt: 'TopEdge store growth dashboard showing cart value at risk, abandoned carts, recovery rate and a recovery funnel from abandoned to purchased.',
   },
   {
-    eyebrow: 'No code',
     h: 'Build a flow by dragging boxes',
     p: 'No developer, no theme edits, no checkout scripts.',
     img: '/lp/shots/flow.webp',
@@ -219,10 +223,6 @@ const SOCIAL_ICONS = {
   youtube: '<path d="M23.5 6.2a3.02 3.02 0 0 0-2.12-2.14C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.38.56A3.02 3.02 0 0 0 .5 6.2 31.6 31.6 0 0 0 0 12a31.6 31.6 0 0 0 .5 5.8 3.02 3.02 0 0 0 2.12 2.14c1.88.56 9.38.56 9.38.56s7.5 0 9.38-.56a3.02 3.02 0 0 0 2.12-2.14A31.6 31.6 0 0 0 24 12a31.6 31.6 0 0 0-.5-5.8zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/>',
 };
 
-function yearly(p) {
-  return p.pricing.yearly?.effectiveMonthlyLabel ?? p.monthlyPriceLabel;
-}
-
 /**
  * The pricing card from the site, not a second design. Same shell/panel/meters
  * structure and class names as `PlanGrid` + pricing.css, including the per-plan CTA
@@ -280,46 +280,14 @@ function planCards(slug) {
     .join('\n');
 }
 
-const prepaidPlans = plans.filter((p) => p.features.journeyCodPrepaid).map((p) => p.displayName);
-const prepaidText = prepaidPlans.join(' and ');
-const launch = byslug.launch;
-
 // The plan lists six questions. Answers about Meta approval and COD to prepaid keep the wording
 // already verified on this page; the rest follow the plan with em dashes removed.
-const FAQS = [
-  {
-    q: 'How much does it cost?',
-    a: `From ${launch.monthlyPriceLabel} a month + 18% GST, or ${yearly(launch)} billed yearly. COD confirmation is on every plan. Meta bills its own per-message fees to your account and TopEdge adds 0% markup.`,
-  },
-  {
-    q: 'What if the customer does not reply?',
-    a: 'You decide: auto follow-up, or hold the order for review. Nothing ships until you have set that rule.',
-  },
-  {
-    q: 'Do templates need Meta approval?',
-    a: 'Yes, and TopEdge will not send one that is not approved yet. That is what protects your number.',
-  },
-  {
-    q: 'Which plan has COD to prepaid?',
-    a: `${prepaidText}. It sends a payment link built from a Shopify draft invoice, so the buyer can pay upfront instead. ${launch.displayName} covers basic COD confirmation.`,
-  },
-  {
-    q: 'Will it work with my checkout?',
-    a: 'Yes. It connects through Shopify order webhooks. No theme edits, no checkout scripts, no developer.',
-  },
-  {
-    q: 'Is my WhatsApp number safe?',
-    a: 'Yes. Messages go through the official WhatsApp Cloud API on approved templates. It is not a workaround.',
-  },
-];
-
-const faqHtml = FAQS.map(
-  (f, i) => `    <details name="faq"${i === 0 ? ' open' : ''}><summary>${esc(f.q)}</summary><p>${esc(f.a)}</p></details>`,
-).join('\n');
-
-const quotesHtml = QUOTES.map(
-  (q) => `      <blockquote class="card quote"><p>${esc(q.text)}</p><footer>${esc(q.author)}, Trustpilot</footer></blockquote>`,
-).join('\n');
+// The Trustpilot mark, as a logo lockup only. No per-review star rating is rendered
+// anywhere: the published reviews give the text and the author, not the score each one
+// carried, and a star row is a score claim. Real stars need the TrustBox embed and the
+// business unit id (see Open items), or the per-review ratings from the owner.
+const TP_STAR =
+  '<svg viewBox="0 0 24 24" width="14" height="14" fill="#00b67a" aria-hidden="true"><path d="M12 1.6l3.1 7.2 7.8.6-5.9 5.1 1.8 7.6L12 18l-6.8 4.1 1.8-7.6L1.1 9.4l7.8-.6z"/></svg>';
 
 function iconChip(name) {
   return `<span class="ic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name]}</svg></span>`;
@@ -332,11 +300,18 @@ const switchHtml = SWITCH.map(
       </div>`,
 ).join('\n');
 
+const quotesHtml = QUOTES.map(
+  (q) => `      <blockquote class="card quote">
+        <p class="tp-mark">${TP_STAR}<span>Trustpilot</span></p>
+        <p class="tp-text">${esc(q.text)}</p>
+        <footer>${esc(q.author)}</footer>
+      </blockquote>`,
+).join('\n');
+
 const showcaseHtml = SHOWCASE.map(
   (s2) => `      <article class="bento">
         <img class="shot" src="${s2.img}" width="1000" height="625" loading="lazy" decoding="async" alt="${esc(s2.alt)}">
         <div class="bento-copy">
-          <p class="eyebrow">${esc(s2.eyebrow)}</p>
           <h3>${esc(s2.h)}</h3>
           <p>${esc(s2.p)}</p>
         </div>
@@ -542,7 +517,6 @@ const fill = (tpl, map) => tpl.replace(/\{\{([A-Z0-9_]+)\}\}/g, (m, k) => (k in 
 for (const page of PAGES) {
   const body = fill(fs.readFileSync(path.join(lpDir, `${page.slug}.body.html`), 'utf8'), {
     PLAN_CARDS: planCards(page.slug),
-    FAQS: faqHtml,
     QUOTES: quotesHtml,
     NAV: navHtml(page.slug),
     FOOTER: footHtml(),
@@ -556,6 +530,8 @@ for (const page of PAGES) {
     PHONE_HOW: phone('how-phone'),
     SLUG: page.slug,
     SHOPIFY_URL,
+    HELP_WHATSAPP_URL: esc(HELP_WHATSAPP_URL),
+    COMPANY_PHONE: esc(COMPANY_PHONE),
     TRIAL_MICRO,
     TRIAL_SHORT,
     HERO_LEAD: esc(HERO_VARIANTS.loss.lead),

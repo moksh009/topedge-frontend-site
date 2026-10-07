@@ -122,10 +122,18 @@ const quotes = [
   ['Topedge helped me a lot to solve issues with my ecomm business like abandoned cart followups, complete tracing of what a lead did and where it dropped off. Their support team is very helpful.', 'Shubham P.'],
   ["In 2 days they built me everything... I'm on their ₹1,999 base plan, and mostly every feature is unlocked on every plan.", 'Robin'],
 ];
+// Each review must be verbatim and must say on its own card where it came from, with
+// the author named. The card carries the Trustpilot mark above the quote now, so the
+// check is "this card names Trustpilot and this author" rather than a word order.
+const quoteCards = markup.match(/<blockquote[\s\S]*?<\/blockquote>/g) || [];
 for (const [text, author] of quotes) {
   must(html.includes(text), `quote not verbatim: ${author}`);
-  must(new RegExp(`${author.replace('.', '\\.')}[^<]*<[^>]*>?[^<]*Trustpilot|${author.replace('.', '\\.')}[\\s\\S]{0,80}Trustpilot`).test(html), `quote missing Trustpilot attribution: ${author}`);
+  const onCard = quoteCards.find((c) => c.includes(text));
+  must(/Trustpilot/.test(onCard || ''), `quote missing Trustpilot attribution: ${author}`);
+  must((onCard || '').includes(author), `quote missing its author: ${author}`);
 }
+// A star row is a score claim and the published reviews do not give per-review scores.
+must(!/<svg[^>]*>(?:(?!<\/svg>)[\s\S])*?<\/svg>\s*(?:<svg|★)/.test(markup), 'looks like a star rating row');
 must(html.includes('trustpilot.com/review/topedgeai.com'), 'missing Trustpilot link');
 must(html.includes('Launched on the Shopify App Store'), 'missing launch line');
 for (const h of ['You pay Meta. Not us, on top of Meta.', 'One buyer, one profile', 'Turn hesitant COD buyers into paid-upfront customers.', 'Automate as much as you need']) {
@@ -158,9 +166,14 @@ for (const p of FALLBACK_CATALOG.plans) {
 }
 must(/TopEdge adds 0% markup/.test(html), 'missing 0% markup line');
 
-// --- FAQ ---
-must(count(/<details name="faq"/g) === 6, 'expected 6 FAQ items (the plan lists six)');
-must(count(/<details name="faq" open/g) === 1, 'expected exactly one FAQ open');
+// --- Talk to a person ---
+// The FAQ was replaced by a WhatsApp handoff. It has to open a real thread on the
+// company number, prefilled, so the reply starts with context instead of "who is this".
+const wa = (markup.match(/<a[^>]*data-cta="whatsapp"[^>]*>/) || [''])[0];
+must(wa !== '', 'missing the WhatsApp CTA that replaced the FAQ');
+must(/href="https:\/\/wa\.me\/\d{8,}\?text=\S+"/.test(wa), 'WhatsApp CTA must open the company number with a prefilled message');
+must(/target="_blank"/.test(wa) && /rel="noopener"/.test(wa), 'WhatsApp CTA must open safely in a new tab');
+must(!/<details/.test(markup), 'the FAQ accordion is gone; do not reintroduce it without the spec');
 
 // --- Final CTA, sticky bar, tracking ---
 must(copy.includes('Ship only the COD orders buyers confirm'), 'missing final CTA heading');
