@@ -4,13 +4,13 @@
  */
 export const CONTENT_DATES = {
   /** Last edit of compare competitor data (+ feature matrix). */
-  compareTwoWay: '2026-09-22',
+  compareTwoWay: '2026-10-07',
   /** Last edit of 3-way compare page (+ feature matrix). */
-  compareThreeWay: '2026-09-22',
+  compareThreeWay: '2026-10-05',
   /** Last edit of blogPosts.ts (used as Article dateModified fallback). */
-  blogPosts: '2026-10-04',
+  blogPosts: '2026-10-07',
   /** Last edit of feature / product page content. */
-  featurePages: '2026-10-01',
+  featurePages: '2026-10-05',
   /** Last edit of published plan catalog (pricing Offers). */
   pricing: '2026-10-01',
 } as const;
@@ -41,7 +41,13 @@ export const BLOG_DATES_BY_SLUG = {
   "profitable-ecommerce-business-india": "2026-10-04",
   "how-to-automate-ecommerce-store-india": "2026-10-04",
   "organic-ecommerce-leads-short-form-video": "2026-10-04",
-  "trending-products-to-sell-online-india-2026": "2026-10-04"
+  "trending-products-to-sell-online-india-2026": "2026-10-04",
+  "wati-alternative-shopify-india": "2026-10-08",
+  "aisensy-alternative-shopify-india": "2026-10-08",
+  "interakt-alternative-shopify-india": "2026-10-08",
+  "bitespeed-alternative-shopify-india": "2026-10-08",
+  "whatsapp-template-rejected-meta-shopify-fix": "2026-10-08",
+  "whatsapp-opt-in-shopify-india": "2026-10-08"
 } as const;
 
 export type ContentDateKey = keyof typeof CONTENT_DATES;

@@ -1,4 +1,5 @@
 import type { BlogPost } from '../types/blog';
+import { blogPostsQ4 } from './blogPostsQ4';
 
 /**
  * High-intent Shopify / WhatsApp / ecommerce automation playbooks
@@ -354,6 +355,7 @@ export const blogPosts: BlogPost[] = [
 <p class="mkt-blog-footnote">Baymard average cart abandonment rate (70.22%) from baymard.com/lists/cart-abandonment-rate (updated Sep 22, 2025). Shopify abandoned-checkout timing and suppression rules from Shopify Help Center. WhatsApp opt-in, templates, and marketing category examples from Meta WhatsApp Business Platform docs. Re-check Meta and Shopify docs before production launches. Policies and defaults change.</p>
 <p>Shopify abandoned cart recovery is not a single email template. Detect the right abandonment event, message on channels customers actually use, respect WhatsApp consent and template rules, suppress completed purchases, and answer replies like a store, not a broadcast tool.</p>
 <p>Put a WhatsApp recovery journey live from <a href="/features/journeys">Journeys</a>, review <a href="/pricing">pricing</a>, or <a href="/signup">start free</a>. Related: <a href="/blog/whatsapp-automation-for-shopify">WhatsApp automation for Shopify</a> (pillar), <a href="/blog/best-whatsapp-apps-for-shopify">best WhatsApp apps for Shopify</a>, <a href="/blog/shopify-whatsapp-automation-what-to-automate-first">what to automate first</a>, <a href="/blog/cod-confirmation-whatsapp-reduce-rto-shopify">COD confirmation</a>, <a href="/blog/whatsapp-shared-inbox-shopify-order-context">shared inbox with Shopify orders</a>.</p>
+<p>Before you send a single reminder, set up consent properly: <a href="/blog/whatsapp-opt-in-shopify-india">WhatsApp opt-in for Shopify India</a>.</p>
 `,
   },
   {
@@ -573,6 +575,7 @@ export const blogPosts: BlogPost[] = [
 <p>Ship this with <a href="/features/cod-confirmation">COD confirmation journeys</a>, keep templates clean in <a href="/features/meta-manager">Meta Manager</a>, and see how other brands operate on <a href="/customers">customers</a>. Questions? <a href="/contact">Contact us</a> or review <a href="/pricing">pricing</a>.</p>
 
 <p>See the full 2026 India RTO benchmark data → <a href="/blog/cod-rto-benchmark-india-2026">COD &amp; RTO in Indian D2C: the 2026 benchmark report</a>.</p>
+<p>Related: <a href="/blog/whatsapp-opt-in-shopify-india">WhatsApp opt-in for Shopify India</a> and <a href="/blog/whatsapp-template-rejected-meta-shopify-fix">fixing rejected templates</a>.</p>
 `,
   },
   {
@@ -751,6 +754,7 @@ export const blogPosts: BlogPost[] = [
 <p>Wire store data through the <a href="/shopify-whatsapp-integration">Shopify WhatsApp integration</a> and <a href="/integrations">integrations</a> page.</p>
 
 <p>Build templates once, reuse across journeys, and keep humans nearby in <a href="/features/live-chat">Live Chat</a>. For competitor context see <a href="/compare">compare</a> and <a href="/compare/aisensy">vs AiSensy</a>. Next: the <a href="/blog/shopify-automation-checklist-whatsapp-cart-recovery">automation checklist</a>.</p>
+<p>Template got refused? See <a href="/blog/whatsapp-template-rejected-meta-shopify-fix">why WhatsApp templates are rejected and how to fix them</a>.</p>
 `,
   },
   {
@@ -1138,6 +1142,7 @@ export const blogPosts: BlogPost[] = [
 
 <p>For single-vendor comparisons, see <a href="/blog/zoko-alternative-shopify-india">Zoko alternatives</a>, <a href="/blog/getgabs-alternative-shopify-whatsapp">Getgabs alternatives</a>, <a href="/blog/kanal-whatsapp-alternative-shopify">Kanal alternatives</a> and <a href="/blog/dondy-alternative-shopify-india">Dondy alternatives</a>, or work through <a href="/blog/how-to-choose-whatsapp-app-shopify-app-store">how to choose a WhatsApp app from the Shopify App Store</a>.</p>
 <p>See <a href="/pricing">pricing</a>, <a href="/integrations">integrations</a>, and <a href="/customers">customer outcomes</a>. Prefer a walkthrough? <a href="/contact">Contact</a>.</p>
+<p>Also compare: <a href="/blog/wati-alternative-shopify-india">WATI alternative</a>, <a href="/blog/aisensy-alternative-shopify-india">AiSensy alternative</a>, <a href="/blog/interakt-alternative-shopify-india">Interakt alternative</a> and <a href="/blog/bitespeed-alternative-shopify-india">Bitespeed alternative</a>.</p>
 `,
   },
   {
@@ -1472,6 +1477,7 @@ export const blogPosts: BlogPost[] = [
 
 <p class="mkt-blog-footnote">Pricing and feature claims about Zoko should be re-checked on zoko.io and apps.shopify.com before purchase. Snapshot research for our compare page: Sep 2026.</p>
 <p>Related: <a href="/blog/best-whatsapp-automation-tools-shopify-india">best WhatsApp tools for Shopify India</a>, <a href="/pricing">TopEdge pricing</a>, <a href="/contact">contact</a>.</p>
+<p>Also compare: <a href="/blog/wati-alternative-shopify-india">WATI alternative</a>, <a href="/blog/aisensy-alternative-shopify-india">AiSensy alternative</a>, <a href="/blog/interakt-alternative-shopify-india">Interakt alternative</a> and <a href="/blog/bitespeed-alternative-shopify-india">Bitespeed alternative</a>.</p>
 `,
   },
   {
@@ -1545,6 +1551,7 @@ export const blogPosts: BlogPost[] = [
 
 <p class="mkt-blog-footnote">Getgabs pricing: confirm on getgabs.com/pricing and apps.shopify.com/getgabs-whatsapp-chatbot-api. Research snapshot used on our compare page: Sep 2026.</p>
 <p>Also read <a href="/blog/how-to-choose-whatsapp-app-shopify-app-store">how to choose a WhatsApp app from the Shopify App Store</a> and <a href="/blog/how-to-reduce-rto-with-whatsapp-cod-confirmation">COD confirmation for RTO</a>.</p>
+<p>Also compare: <a href="/blog/wati-alternative-shopify-india">WATI alternative</a>, <a href="/blog/aisensy-alternative-shopify-india">AiSensy alternative</a>, <a href="/blog/interakt-alternative-shopify-india">Interakt alternative</a> and <a href="/blog/bitespeed-alternative-shopify-india">Bitespeed alternative</a>.</p>
 `,
   },
   {
@@ -1611,6 +1618,7 @@ export const blogPosts: BlogPost[] = [
 
 <p class="mkt-blog-footnote">Kanal plans: confirm on getkanal.com/pricing and apps.shopify.com/kanal-marketing-ai. Snapshot used on our compare page: Sep 2026.</p>
 <p>Related: <a href="/blog/whatsapp-business-api-pricing-india">Meta Cloud API pricing in India</a>, <a href="/pricing">TopEdge pricing</a>.</p>
+<p>Also compare: <a href="/blog/wati-alternative-shopify-india">WATI alternative</a>, <a href="/blog/aisensy-alternative-shopify-india">AiSensy alternative</a>, <a href="/blog/interakt-alternative-shopify-india">Interakt alternative</a> and <a href="/blog/bitespeed-alternative-shopify-india">Bitespeed alternative</a>.</p>
 `,
   },
   {
@@ -1700,6 +1708,7 @@ export const blogPosts: BlogPost[] = [
 
 <p class="mkt-blog-footnote">App Store prices, review counts, and plan names change. Re-check the vendor listing and pricing page the day you install.</p>
 <p>Build on <a href="/features/journeys">Journeys</a> when you are ready, or <a href="/contact">contact</a> for a walkthrough.</p>
+<p>Also compare: <a href="/blog/wati-alternative-shopify-india">WATI alternative</a>, <a href="/blog/aisensy-alternative-shopify-india">AiSensy alternative</a>, <a href="/blog/interakt-alternative-shopify-india">Interakt alternative</a> and <a href="/blog/bitespeed-alternative-shopify-india">Bitespeed alternative</a>.</p>
 `,
   },
   {
@@ -1801,6 +1810,7 @@ export const blogPosts: BlogPost[] = [
 
 <p class="mkt-blog-footnote">Meta rate cards change. Confirm on Meta’s official WhatsApp pricing documentation before budgeting. TopEdge plan amounts: see <a href="/pricing">/pricing</a>.</p>
 <p>Next: <a href="/blog/how-to-choose-whatsapp-app-shopify-app-store">choose a Shopify WhatsApp app</a>, <a href="/blog/dondy-alternative-shopify-india">Dondy markup example</a>, or start on <a href="/features/journeys">Journeys</a>.</p>
+<p>Related: <a href="/blog/whatsapp-template-rejected-meta-shopify-fix">fix a rejected template</a> before a reclassification to marketing raises your per-message cost.</p>
 `,
   },
   {
@@ -1878,6 +1888,7 @@ export const blogPosts: BlogPost[] = [
 
 <p class="mkt-blog-footnote">Figures checked 21 Sep 2026 on dondy.net/dondy-pricing and apps.shopify.com/dondy-marketing-ai. The website also lists an Advanced $14.99 tier that the App Store listing does not. Re-check both before purchase.</p>
 <p>Related: <a href="/blog/whatsapp-business-api-pricing-india">WhatsApp API pricing in India</a>, <a href="/blog/best-whatsapp-automation-tools-shopify-india">best tools pillar</a>, <a href="/blog/how-to-choose-whatsapp-app-shopify-app-store">choose a Shopify WhatsApp app</a>, <a href="/pricing">TopEdge pricing</a>.</p>
+<p>Also compare: <a href="/blog/wati-alternative-shopify-india">WATI alternative</a>, <a href="/blog/aisensy-alternative-shopify-india">AiSensy alternative</a>, <a href="/blog/interakt-alternative-shopify-india">Interakt alternative</a> and <a href="/blog/bitespeed-alternative-shopify-india">Bitespeed alternative</a>.</p>
 `,
   },
   {
@@ -2275,6 +2286,7 @@ export const blogPosts: BlogPost[] = [
 <p class="mkt-blog-footnote">Shopify Messaging capabilities referenced from Shopify Help Center (campaigns for email/SMS/WhatsApp; automations documented for email and SMS). WhatsApp opt-in, customer service window, and template categories from Meta WhatsApp Business Platform documentation. TopEdge plan labels from the public pricing catalog (Launch ₹1,999 · Growth ₹3,999 · Scale ₹6,499 monthly; +GST). Re-check Meta, Shopify, and vendor pages before production launches. Surfaces change.</p>
 <p>WhatsApp automation for Shopify is an operating system: store truth, approved messages, journeys, and humans for exceptions. Start with connection and one high-ROI journey, then widen the lifecycle.</p>
 <p>Next steps: <a href="/shopify-whatsapp-integration">Shopify WhatsApp integration</a>, <a href="/features/journeys">Journeys</a>, <a href="/pricing">pricing</a>, or <a href="/signup">start free</a>. Cluster: <a href="/blog/whatsapp-abandoned-cart-recovery-shopify">cart recovery</a>, <a href="/blog/best-whatsapp-apps-for-shopify">best WhatsApp apps for Shopify</a>, <a href="/blog/whatsapp-shared-inbox-shopify-order-context">shared inbox</a>.</p>
+<p>Two prerequisites most teams skip: <a href="/blog/whatsapp-opt-in-shopify-india">opt-in</a> and <a href="/blog/whatsapp-template-rejected-meta-shopify-fix">template approval</a>.</p>
 `,
   },
   {
@@ -3012,6 +3024,7 @@ export const blogPosts: BlogPost[] = [
 <p class="mkt-blog-footnote">Comparison snapshots compiled September 2026 from TopEdge public pricing/compare boards and publicly described vendor patterns (Dondy rate table, Interakt AI add-on notes, Updatrr App Store floors, Bitespeed USD listings). DelightChat and any App Store rating figures must be re-checked live. Listings move. Meta conversation rates change by country and category. This is not affiliate ranking advice; it is a buyer’s framework.</p>
 <p>Choose the WhatsApp app that matches the job you hire it for, then verify Meta economics and reply handling before you scale sends.</p>
 <p>Next: <a href="/blog/whatsapp-automation-for-shopify">WhatsApp automation pillar</a>, <a href="/blog/whatsapp-abandoned-cart-recovery-shopify">cart recovery</a>, <a href="/compare/alternatives">alternatives index</a>, <a href="/pricing">TopEdge pricing</a>, or <a href="/signup">start free</a>.</p>
+<p>Also compare: <a href="/blog/wati-alternative-shopify-india">WATI alternative</a>, <a href="/blog/aisensy-alternative-shopify-india">AiSensy alternative</a>, <a href="/blog/interakt-alternative-shopify-india">Interakt alternative</a> and <a href="/blog/bitespeed-alternative-shopify-india">Bitespeed alternative</a>.</p>
 `,
   },
   {
@@ -4369,4 +4382,5 @@ export const blogPosts: BlogPost[] = [
 <p>Next: <a href="/docs/quickstart">set up your store automation in about 30 minutes</a>, compare plans on <a href="/pricing">pricing</a>, or <a href="/signup">start free on your Shopify store</a>.</p>
 `,
   },
+  ...blogPostsQ4,
 ];

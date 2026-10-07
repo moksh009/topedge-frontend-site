@@ -203,3 +203,14 @@ poster, `playsinline`, `controls`, a descriptive `aria-label`, no `autoplay` and
 hardcoded `src`. Both also now strip inline `<script>` bodies before applying
 markup-shape rules — JS source is not markup, and a tag name inside a comment is not an
 element. Spec revision 3 records the decision and the numbers.
+
+## Batch 3 - 2026-10-08
+
+- **TE-004** One Organization node (`@id` `https://topedgeai.com/#organization`) emitted on every indexable page via `MarketingSEO`, deduped by `@id`; blog, docs, WebPage and WebSite now reference it instead of restating a stub. Name unified to "TopEdge AI", one logo.
+- **TE-008** Blog and docs now use a Person author (founder) with `@id`, `worksFor` the organization; visible byline links to /about; `article:author`, `article:section` and `meta author` added.
+- **TE-018** `robots.txt` rewritten as one group listing every crawler, so Disallow rules apply to AI bots too.
+- Added hreflang `en-IN` + `x-default` self-references; `og:site_name` is "TopEdge AI".
+- Six new posts (see `docs/seo/keyword-map-2026-10.md`), interlinked from 11 existing posts and 4 compare pages; `llms.txt` and `BLOG_SLUGS` updated; content-date generator reads the new data file.
+- `tsconfig.app.json` now resolves the `@/` alias (the long-standing tsc noise).
+- Gates: `build:netlify` exit 0 (106 prerendered, 0 failed), `seo:audit` passed, `sitemap:validate` all clear, `check:blog` 32 posts clean.
+- **Not done:** legacy `/community` + old-site code removal (blocked, awaiting owner), live re-verification, GSC.

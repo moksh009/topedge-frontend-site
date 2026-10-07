@@ -58,8 +58,9 @@ function maxIso(...dates) {
 
 /** Per-blog-post lastmod from `updated` (preferred) or `date` next to each slug. */
 function blogDatesBySlug() {
-  const abs = path.join(root, 'src/data/blogPosts.ts');
-  const src = fs.readFileSync(abs, 'utf8');
+  const src = ['src/data/blogPosts.ts', 'src/data/blogPostsQ4.ts']
+    .map((f) => fs.readFileSync(path.join(root, f), 'utf8'))
+    .join('\n');
   const bySlug = {};
   // Match each post object roughly: slug + nearby date/updated fields
   const blocks = src.split(/\n  \{\n    id:\s*\d+/).slice(1);
@@ -76,7 +77,10 @@ function blogDatesBySlug() {
 const compareCompetitors = isoDateFromMtime('src/marketing/data/compareCompetitors.ts');
 const compareFeatureMatrix = isoDateFromMtime('src/marketing/data/compareFeatureMatrix.ts');
 const compareThreeWayPage = isoDateFromMtime('src/marketing/pages/CompareThreeWayPage.tsx');
-const blogPosts = isoDateFromMtime('src/data/blogPosts.ts');
+const blogPosts = maxIso(
+  isoDateFromMtime('src/data/blogPosts.ts'),
+  isoDateFromMtime('src/data/blogPostsQ4.ts'),
+);
 const features = isoDateFromMtime('src/marketing/data/features.ts');
 const productPages = isoDateFromMtime('src/marketing/data/productPages.ts');
 const billingCatalog = isoDateFromMtime('src/marketing/lib/billingCatalog.ts');

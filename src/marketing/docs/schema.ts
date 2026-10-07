@@ -1,4 +1,5 @@
 import { SITE_URL } from '../data/marketingSeo';
+import { ORG_REF, WEBSITE_ID, authorJsonLd } from '../data/pageSeo';
 import { plainText } from './inline';
 import { docPathFor } from './manifest.mjs';
 import type { DocArticle, DocBlock, DocGroup } from './types';
@@ -12,15 +13,7 @@ import type { DocArticle, DocBlock, DocGroup } from './types';
  * tie to visible content, so every value here comes from a rendered block.
  */
 
-const PUBLISHER = {
-  '@type': 'Organization',
-  name: 'TopEdge',
-  url: `${SITE_URL}/`,
-  logo: {
-    '@type': 'ImageObject',
-    url: `${SITE_URL}/og-share.jpg`,
-  },
-};
+const PUBLISHER = ORG_REF;
 
 export function docAbsoluteUrl(slug: string): string {
   return `${SITE_URL}${docPathFor(slug)}`;
@@ -40,13 +33,9 @@ function techArticle(article: DocArticle): Record<string, unknown> {
     datePublished: article.updated,
     keywords: article.keywords.join(', '),
     image: `${SITE_URL}/og-share.jpg`,
-    author: PUBLISHER,
+    author: authorJsonLd(),
     publisher: PUBLISHER,
-    isPartOf: {
-      '@type': 'WebSite',
-      name: 'TopEdge',
-      url: `${SITE_URL}/`,
-    },
+    isPartOf: { '@type': 'WebSite', '@id': WEBSITE_ID, name: 'TopEdge AI', url: `${SITE_URL}/` },
     // Documentation audience — reinforces the entity for answer engines.
     audience: {
       '@type': 'Audience',

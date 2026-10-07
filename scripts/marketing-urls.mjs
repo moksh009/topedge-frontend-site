@@ -79,6 +79,12 @@ export const BLOG_SLUGS = [
   'how-to-automate-ecommerce-store-india',
   'organic-ecommerce-leads-short-form-video',
   'trending-products-to-sell-online-india-2026',
+  'wati-alternative-shopify-india',
+  'aisensy-alternative-shopify-india',
+  'interakt-alternative-shopify-india',
+  'bitespeed-alternative-shopify-india',
+  'whatsapp-template-rejected-meta-shopify-fix',
+  'whatsapp-opt-in-shopify-india',
 ];
 
 /** Soft-404 shell — prerendered to dist/404.html (Netlify 404 document). Not in sitemap. */

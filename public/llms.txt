@@ -149,6 +149,8 @@ Markdown mirror at the same URL with a `.md` suffix.
 - [How to automate your ecommerce store in India](https://topedgeai.com/blog/how-to-automate-ecommerce-store-india)
 - [Organic ecommerce leads from Reels and Shorts](https://topedgeai.com/blog/organic-ecommerce-leads-short-form-video)
 - [Top 5 product categories to sell online in 2026](https://topedgeai.com/blog/trending-products-to-sell-online-india-2026)
+- [WhatsApp template rejected: how to fix it on Shopify](https://topedgeai.com/blog/whatsapp-template-rejected-meta-shopify-fix)
+- [WhatsApp opt-in for Shopify India](https://topedgeai.com/blog/whatsapp-opt-in-shopify-india)
 - [Blog index](https://topedgeai.com/blog): Playbooks and GEO guides
 
 ## Optional
@@ -157,6 +159,10 @@ Markdown mirror at the same URL with a `.md` suffix.
 - [Getgabs alternative](https://topedgeai.com/blog/getgabs-alternative-shopify-whatsapp)
 - [Kanal alternative](https://topedgeai.com/blog/kanal-whatsapp-alternative-shopify)
 - [Dondy alternative](https://topedgeai.com/blog/dondy-alternative-shopify-india)
+- [WATI alternative](https://topedgeai.com/blog/wati-alternative-shopify-india)
+- [AiSensy alternative](https://topedgeai.com/blog/aisensy-alternative-shopify-india)
+- [Interakt alternative](https://topedgeai.com/blog/interakt-alternative-shopify-india)
+- [Bitespeed alternative](https://topedgeai.com/blog/bitespeed-alternative-shopify-india)
 - [How to choose a Shopify WhatsApp app](https://topedgeai.com/blog/how-to-choose-whatsapp-app-shopify-app-store)
 - [WhatsApp Business API pricing India](https://topedgeai.com/blog/whatsapp-business-api-pricing-india)
 - [About](https://topedgeai.com/about)

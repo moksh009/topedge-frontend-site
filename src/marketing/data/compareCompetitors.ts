@@ -130,6 +130,7 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
       'Capability claims reflect TopEdge product positioning vs publicly described WATI platform patterns. Confirm live plan limits and fees on wati.io before purchase.',
     researchAsOf: 'Sep 2026',
     related: [
+      { label: 'WATI alternative guide', href: '/blog/wati-alternative-shopify-india' },
       { label: 'All comparisons', href: '/compare' },
       { label: 'vs AiSensy', href: '/compare/aisensy' },
       { label: 'vs Bitespeed', href: '/compare/bitespeed' },
@@ -164,6 +165,7 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
       'Capability claims reflect TopEdge product positioning vs publicly described AiSensy platform patterns. Confirm live plan limits, credits, and fees on aisensy.com before purchase.',
     researchAsOf: 'Sep 2026',
     related: [
+      { label: 'AiSensy alternative guide', href: '/blog/aisensy-alternative-shopify-india' },
       { label: 'All comparisons', href: '/compare' },
       { label: 'vs WATI', href: '/compare/wati' },
       { label: 'vs Bitespeed', href: '/compare/bitespeed' },
@@ -198,6 +200,7 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
       'Capability board uses TopEdge product positioning vs publicly described Interakt plan patterns. Confirm live App vs India website tiers, AI add-ons (₹0.50 / message after 100 free), and Meta fees on interakt.shop before purchase.',
     researchAsOf: 'Sep 2026',
     related: [
+      { label: 'Interakt alternative guide', href: '/blog/interakt-alternative-shopify-india' },
       { label: 'All comparisons', href: '/compare' },
       { label: 'vs WATI', href: '/compare/wati' },
       { label: 'vs AiSensy', href: '/compare/aisensy' },
@@ -233,6 +236,7 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
     matrixNote:
       'Bitespeed pricing and AI add-ons as of September 2026 from public listings / third-party summaries. Confirm live on bitespeed.co and the Shopify App Store before purchase.',
     related: [
+      { label: 'Bitespeed alternative guide', href: '/blog/bitespeed-alternative-shopify-india' },
       { label: 'All comparisons', href: '/compare' },
       { label: 'Alternatives index', href: '/compare/alternatives' },
       { label: 'vs WATI', href: '/compare/wati' },

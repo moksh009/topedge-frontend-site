@@ -282,35 +282,89 @@ export const SOLUTION_SEO: Record<
   },
 };
 
+/**
+ * One Organization entity for the whole site. Every page that needs the
+ * publisher (blog, docs, WebPage.about, WebSite.publisher) points here by @id
+ * instead of restating a thinner copy, so crawlers and LLMs resolve a single
+ * "TopEdge AI" node. See seo-audit/ TE-004.
+ */
+export const ORG_ID = `${SITE_URL}/#organization`;
+export const WEBSITE_ID = `${SITE_URL}/#website`;
+export const ORG_LOGO_URL = `${SITE_URL}/og-image.png`;
+
+export const ORG_REF = { '@id': ORG_ID } as const;
+
+/** The two named people behind the product; used as real bylines on articles. */
+export const TEAM = {
+  'Moksh Patel': {
+    id: `${SITE_URL}/about#moksh-patel`,
+    jobTitle: 'Co-founder',
+    image: `${SITE_URL}/marketing/team/moksh-patel.jpg`,
+    sameAs: [] as string[],
+  },
+  'Smit Tilva': {
+    id: `${SITE_URL}/about#smit-tilva`,
+    jobTitle: 'Co-founder',
+    image: `${SITE_URL}/marketing/team/smit-tilva.png`,
+    sameAs: [] as string[],
+  },
+} as const;
+
+export const DEFAULT_AUTHOR = 'Moksh Patel';
+
+/** Person node for a byline; unknown names fall back to the organization. */
+export function authorJsonLd(name?: string) {
+  const person = TEAM[(name ?? DEFAULT_AUTHOR) as keyof typeof TEAM];
+  if (!person) return ORG_REF;
+  return {
+    '@type': 'Person',
+    '@id': person.id,
+    name: name ?? DEFAULT_AUTHOR,
+    jobTitle: person.jobTitle,
+    url: `${SITE_URL}/about`,
+    image: person.image,
+    worksFor: ORG_REF,
+  };
+}
+
 export function organizationJsonLd() {
   return {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'TopEdge',
-    // 'TopEdge' is already `name`; these are the two aliases that actually differ
-    // — the brand spelling and the legal entity name used on the Shopify listing.
-    alternateName: ['TopEdge AI', COMPANY_LEGAL_NAME],
+    '@id': ORG_ID,
+    name: 'TopEdge AI',
+    // The short brand and the legal entity name used on the Shopify listing.
+    alternateName: ['TopEdge', COMPANY_LEGAL_NAME],
     url: SITE_URL,
-    logo: `${SITE_URL}/og-image.png`,
+    logo: {
+      '@type': 'ImageObject',
+      url: ORG_LOGO_URL,
+      width: 1024,
+      height: 1024,
+    },
+    image: ORG_LOGO_URL,
     description:
       'WhatsApp automation and cart recovery platform for Shopify ecommerce brands in India.',
     // Separates this entity from the edge-AI hardware companies that share the name.
     disambiguatingDescription:
       'TopEdge AI is a WhatsApp automation platform for Shopify D2C brands in India, based in Ahmedabad, Gujarat. It is not related to edge-AI hardware or other products with a similar name.',
     foundingDate: '2024',
-    founder: [
-      {
-        '@type': 'Person',
-        name: 'Moksh Patel',
-        jobTitle: 'Co-founder',
-        image: `${SITE_URL}/marketing/team/moksh-patel.jpg`,
-      },
-      {
-        '@type': 'Person',
-        name: 'Smit Tilva',
-        jobTitle: 'Co-founder',
-        image: `${SITE_URL}/marketing/team/smit-tilva.png`,
-      },
+    founder: [authorJsonLd('Moksh Patel'), authorJsonLd('Smit Tilva')],
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'Block-A, 606, Prahladnagar, Trade Center',
+      addressLocality: 'Ahmedabad',
+      addressRegion: 'Gujarat',
+      postalCode: '380051',
+      addressCountry: 'IN',
+    },
+    areaServed: { '@type': 'Country', name: 'India' },
+    knowsAbout: [
+      'WhatsApp Business API',
+      'Shopify abandoned cart recovery',
+      'COD order confirmation',
+      'RTO reduction for Indian D2C',
+      'Meta WhatsApp Cloud API',
     ],
     sameAs: [
       'https://www.linkedin.com/company/topedgeai',
@@ -350,8 +404,8 @@ export function softwareApplicationJsonLd() {
     // Dual type: keeps SoftwareApplication semantics while satisfying Product
     // merchant-listing validators that require `image` on Product.
     '@type': ['SoftwareApplication', 'Product'],
-    name: 'TopEdge',
-    alternateName: 'TopEdge AI',
+    name: 'TopEdge AI',
+    alternateName: 'TopEdge',
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'Web',
     url: SITE_URL,
@@ -361,8 +415,10 @@ export function softwareApplicationJsonLd() {
       'WhatsApp automation for Shopify: abandoned cart recovery, COD confirmations, Live Chat, journeys, and Meta Cloud API campaigns for Indian ecommerce.',
     brand: {
       '@type': 'Brand',
-      name: 'TopEdge',
+      name: 'TopEdge AI',
     },
+    publisher: ORG_REF,
+    provider: ORG_REF,
     offers: [
       {
         '@type': 'Offer',
@@ -396,10 +452,13 @@ export function websiteJsonLd() {
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: 'TopEdge',
+    '@id': WEBSITE_ID,
+    name: 'TopEdge AI',
+    alternateName: 'TopEdge',
     url: SITE_URL,
+    inLanguage: 'en-IN',
     description: 'WhatsApp automation and Shopify ecommerce growth platform for Indian D2C.',
-    publisher: { '@type': 'Organization', name: 'TopEdge', url: SITE_URL },
+    publisher: ORG_REF,
     potentialAction: {
       '@type': 'SearchAction',
       target: `${SITE_URL}/blog?q={search_term_string}`,
@@ -428,17 +487,14 @@ export function webPageJsonLd(opts: {
           ).toISOString(),
         }
       : {}),
-    isPartOf: { '@type': 'WebSite', name: 'TopEdge', url: SITE_URL },
+    inLanguage: 'en-IN',
+    isPartOf: { '@type': 'WebSite', '@id': WEBSITE_ID, name: 'TopEdge AI', url: SITE_URL },
     // Full SoftwareApplication+Product (with image + merchant offer fields) lives
     // on home/pricing/SEO topics via softwareApplicationJsonLd(). Compare pages
     // intentionally omit priced Offers so Merchant listings do not apply.
     // Keep about as Organization so nested schemas never lack required image.
-    about: {
-      '@type': 'Organization',
-      name: 'TopEdge',
-      url: SITE_URL,
-      logo: `${SITE_URL}/og-image.png`,
-    },
+    about: ORG_REF,
+    publisher: ORG_REF,
   };
 }
 

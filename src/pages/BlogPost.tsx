@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet-async';
 import MarketingSEO, { canonicalUrlForPath } from '../marketing/components/MarketingSEO';
 import MarketingPage from '../marketing/components/MarketingPage';
 import { SITE_URL } from '../marketing/data/marketingSeo';
-import { breadcrumbJsonLd } from '../marketing/data/pageSeo';
+import { ORG_REF, authorJsonLd, breadcrumbJsonLd, DEFAULT_AUTHOR, TEAM } from '../marketing/data/pageSeo';
 import { blogPosts } from '../data/blogPosts';
 import { filterMarketingBlogPosts, relatedBlogPosts } from '../marketing/data/blog';
 import type { BlogPost as BlogPostModel } from '../types/blog';
@@ -49,6 +49,9 @@ export default function BlogPost() {
   const imageAbs = post.image.startsWith('http') ? post.image : `${SITE_URL}${post.image}`;
   const datePublished = articleDatePublishedIso(post.date);
   const dateModified = articleDateModifiedIso({ updated: post.updated });
+  // Posts tagged with the generic brand name are bylined to the founder; a
+  // post can carry another team member's name via `author`.
+  const authorName = post.author in TEAM ? post.author : DEFAULT_AUTHOR;
 
   return (
     <>
@@ -63,6 +66,8 @@ export default function BlogPost() {
         noSuffix
         articlePublished={datePublished}
         articleModified={dateModified}
+        articleAuthor={authorName}
+        articleSection={post.category}
         faqSchema={post.faqs}
         jsonLd={[
           breadcrumbJsonLd([
@@ -77,18 +82,16 @@ export default function BlogPost() {
           {JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'BlogPosting',
+            '@id': `${canonical}#article`,
+            inLanguage: 'en-IN',
             headline: post.title,
             description: post.description,
             image: imageAbs,
             datePublished,
             dateModified,
-            author: { '@type': 'Organization', name: 'TopEdge AI', url: SITE_URL },
-            publisher: {
-              '@type': 'Organization',
-              name: 'TopEdge AI',
-              url: SITE_URL,
-              logo: { '@type': 'ImageObject', url: `${SITE_URL}/brand-mark.png` },
-            },
+            author: authorJsonLd(authorName),
+            publisher: ORG_REF,
+            isPartOf: { '@type': 'Blog', '@id': `${SITE_URL}/blog`, name: 'TopEdge AI Playbooks', url: `${SITE_URL}/blog` },
             mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
             url: canonical,
             keywords: post.keywords?.join(', '),
@@ -108,7 +111,7 @@ export default function BlogPost() {
               <h1 className="mkt-blog-title">{post.title}</h1>
               <p className="mkt-blog-lede">{post.description}</p>
               <div className="mkt-blog-meta">
-                <span>{post.author || 'TopEdge'}</span>
+                <Link to="/about" rel="author">{authorName}</Link>
                 <span className="mkt-blog-meta__dot" aria-hidden />
                 <time dateTime={post.date}>{formatDate(post.date)}</time>
                 <span className="mkt-blog-meta__dot" aria-hidden />

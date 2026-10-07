@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { SITE_URL } from '../data/marketingSeo';
+import { ORG_ID, organizationJsonLd } from '../data/pageSeo';
 import {
   OG_IMAGE_ALT_DEFAULT,
   OG_IMAGE_HEIGHT,
@@ -25,6 +26,10 @@ type MarketingSEOProps = {
   /** ISO-8601 dates for og:type=article */
   articlePublished?: string;
   articleModified?: string;
+  /** Visible byline for og:type=article (emits article:author + meta author). */
+  articleAuthor?: string;
+  /** Section/category for og:type=article. */
+  articleSection?: string;
   /**
    * Homepage LCP: responsive preload for the hero product shot.
    * Only set on `/` — prerender embeds it in dist/index.html for first paint.
@@ -60,6 +65,8 @@ export default function MarketingSEO({
   type = 'website',
   articlePublished,
   articleModified,
+  articleAuthor,
+  articleSection,
   preloadLcpImage,
 }: MarketingSEOProps) {
   const fullTitle = noSuffix ? title : title.includes('TopEdge') ? title : `TopEdge AI: ${title}`;
@@ -86,6 +93,20 @@ export default function MarketingSEO({
     schemas.push(...(Array.isArray(jsonLd) ? jsonLd : [jsonLd]));
   }
 
+  // Every page carries the one full Organization node (other nodes reference it
+  // by @id), and no node is emitted twice.
+  if (!noIndex && !schemas.some((n) => n['@id'] === ORG_ID)) {
+    schemas.push(organizationJsonLd());
+  }
+  const seenIds = new Set<string>();
+  const uniqueSchemas = schemas.filter((n) => {
+    const id = typeof n['@id'] === 'string' ? (n['@id'] as string) : null;
+    if (!id) return true;
+    if (seenIds.has(id)) return false;
+    seenIds.add(id);
+    return true;
+  });
+
   return (
     <Helmet prioritizeSeoTags>
       <html lang="en-IN" />
@@ -106,7 +127,9 @@ export default function MarketingSEO({
       ) : null}
       <meta name="robots" content={robots} />
       <meta property="og:type" content={type} />
-      <meta property="og:site_name" content="TopEdge" />
+      <link rel="alternate" hrefLang="en-IN" href={url} />
+      <link rel="alternate" hrefLang="x-default" href={url} />
+      <meta property="og:site_name" content="TopEdge AI" />
       <meta property="og:locale" content="en_IN" />
       <meta property="og:url" content={url} />
       <meta property="og:title" content={fullTitle} />
@@ -122,6 +145,13 @@ export default function MarketingSEO({
       {type === 'article' && articlePublished ? (
         <meta property="article:published_time" content={articlePublished} />
       ) : null}
+      {type === 'article' && articleAuthor ? (
+        <meta property="article:author" content={articleAuthor} />
+      ) : null}
+      {type === 'article' && articleAuthor ? <meta name="author" content={articleAuthor} /> : null}
+      {type === 'article' && articleSection ? (
+        <meta property="article:section" content={articleSection} />
+      ) : null}
       {type === 'article' && articleModified ? (
         <meta property="article:modified_time" content={articleModified} />
       ) : null}
@@ -131,7 +161,7 @@ export default function MarketingSEO({
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={image} />
       <meta name="twitter:image:alt" content={imageAlt} />
-      {schemas.map((schema, i) => (
+      {uniqueSchemas.map((schema, i) => (
         <script key={i} type="application/ld+json">
           {JSON.stringify(schema)}
         </script>
