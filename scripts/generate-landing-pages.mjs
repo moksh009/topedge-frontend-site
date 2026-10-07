@@ -75,6 +75,12 @@ const ICONS = {
   user: '<circle cx="12" cy="8" r="3.5"/><path d="M5 20c.6-3.6 3.4-5.5 7-5.5s6.4 1.9 7 5.5"/>',
   card: '<rect x="3" y="6" width="18" height="12" rx="2.5"/><path d="M3 10.5h18M7 15h3"/>',
   loop: '<path d="M17 8a6 6 0 0 0-10.5 1.5M7 16a6 6 0 0 0 10.5-1.5M17 4v4h-4M7 20v-4h4"/>',
+  flow: '<circle cx="5" cy="6" r="2.1"/><circle cx="19" cy="6" r="2.1"/><circle cx="12" cy="18" r="2.1"/><path d="M6.8 7.8 10.6 16M17.2 7.8 13.4 16"/>',
+  chat: '<path d="M4 7.2A3.2 3.2 0 0 1 7.2 4h9.6A3.2 3.2 0 0 1 20 7.2V13a3.2 3.2 0 0 1-3.2 3.2H9l-4.2 3v-3A3.2 3.2 0 0 1 4 13.2Z"/><circle cx="9" cy="10" r=".55" fill="currentColor" stroke="none"/><circle cx="12" cy="10" r=".55" fill="currentColor" stroke="none"/><circle cx="15" cy="10" r=".55" fill="currentColor" stroke="none"/>',
+  horn: '<path d="M3 10v4h3l5.5 4V6L6 10H3Z"/><path d="M16 9.3a4 4 0 0 1 0 5.4M18.7 7a7.6 7.6 0 0 1 0 10"/>',
+  people: '<circle cx="9" cy="7.5" r="3"/><path d="M3.3 20c.5-3.5 2.9-5.5 5.7-5.5s5.2 2 5.7 5.5"/><circle cx="18" cy="8.5" r="2.1"/><path d="M15.6 14.7c2.2.4 3.6 1.9 4 4.3"/>',
+  target: '<circle cx="12" cy="12" r="7.3"/><circle cx="12" cy="12" r="3.2"/><path d="M12 2.3v3M12 18.7v3M2.3 12h3M18.7 12h3"/>',
+  shield: '<path d="M12 3.2 19 6v5.3c0 4.6-3 7.6-7 9.1-4-1.5-7-4.5-7-9.1V6Z"/><path d="M9 12.2l2 2 4-4.2"/>',
 };
 const WHY = [
   { icon: 'coin', h: 'You pay Meta. Not us, on top of Meta.', p: "WhatsApp message fees are billed directly to your own Meta Business account. TopEdge adds 0% markup, unlike platforms that charge a per-message fee on top of Meta's own rate." },
@@ -82,6 +88,21 @@ const WHY = [
   { icon: 'card', h: 'Turn hesitant COD buyers into paid-upfront customers.', p: 'Send a payment link in the same WhatsApp thread, built natively for Shopify checkout, no manual mapping required.' },
   { icon: 'loop', h: 'Automate as much as you need. It is not metered.', p: "Flow automations run unlimited times on every plan. You are never rationed on how many times your own workflows can run." },
 ];
+
+// COD confirmation is one journey inside the platform. These are the other pieces every
+// plan already ships with, so the ad page does not read as a single-feature tool.
+const PLATFORM = [
+  { icon: 'flow', h: 'Journeys and cart recovery', p: 'Drag-and-drop WhatsApp flows that recover abandoned carts and follow up unconfirmed COD orders automatically.' },
+  { icon: 'chat', h: 'One inbox for WhatsApp and Instagram', p: 'Every thread sits next to the order, COD status, and cart history, so agents never tab over to Shopify admin.' },
+  { icon: 'horn', h: 'Meta-approved broadcast campaigns', p: 'Segment your audience and send on approved templates only, with the per-message cost shown before you send.' },
+  { icon: 'people', h: 'A CRM built from real orders and chats', p: 'One profile per buyer, so you can target VIPs, repeat buyers, and COD-risk customers as separate audiences.' },
+  { icon: 'target', h: 'A tracking pixel that feeds WhatsApp', p: 'A Shopify theme embed matches product and cart intent to WhatsApp outreach, consent-aware by default.' },
+  { icon: 'shield', h: 'Template approval you control', p: 'Create and track every WhatsApp template with Meta in one place. Nothing sends until Meta approves it.' },
+];
+
+// Replace later with the real file once the asset is ready (keep the format and path; it is
+// injected by JS after window `load`, so a missing or oversized file never delays the page).
+const HERO_VIDEO_SRC = '/videos/cod-hero-motion.mp4';
 
 function yearly(p) {
   return p.pricing.yearly?.effectiveMonthlyLabel ?? p.monthlyPriceLabel;
@@ -146,8 +167,16 @@ const quotesHtml = QUOTES.map(
   (q) => `      <blockquote class="card quote"><p>${esc(q.text)}</p><footer>${esc(q.author)}, Trustpilot</footer></blockquote>`,
 ).join('\n');
 
+function iconChip(name) {
+  return `<span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name]}</svg></span>`;
+}
+
 const whyHtml = WHY.map(
-  (w) => `      <div class="card why"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[w.icon]}</svg><h3>${esc(w.h)}</h3><p>${esc(w.p)}</p></div>`,
+  (w) => `      <div class="card why">${iconChip(w.icon)}<h3>${esc(w.h)}</h3><p>${esc(w.p)}</p></div>`,
+).join('\n');
+
+const platformHtml = PLATFORM.map(
+  (w) => `      <div class="card pf">${iconChip(w.icon)}<h3>${esc(w.h)}</h3><p>${esc(w.p)}</p></div>`,
 ).join('\n');
 
 const PHONE_LABEL =
@@ -189,7 +218,10 @@ addEventListener('load',function(){var s=document.createElement('script');s.asyn
 
 const css = fs.readFileSync(path.join(lpDir, 'base.css'), 'utf8').trim();
 const attribution = fs.readFileSync(path.join(lpDir, 'attribution.js'), 'utf8').trim();
-const behavior = fs.readFileSync(path.join(lpDir, 'page.js'), 'utf8').trim();
+const behavior = fs
+  .readFileSync(path.join(lpDir, 'page.js'), 'utf8')
+  .trim()
+  .replaceAll('{{HERO_VIDEO_SRC}}', HERO_VIDEO_SRC);
 
 // Function replacers: a catalog string containing `$&` must never be interpreted as a pattern.
 const fill = (tpl, map) => tpl.replace(/\{\{([A-Z0-9_]+)\}\}/g, (m, k) => (k in map ? map[k] : m));
@@ -200,6 +232,7 @@ for (const page of PAGES) {
     FAQS: faqHtml,
     QUOTES: quotesHtml,
     WHY_CARDS: whyHtml,
+    PLATFORM_CARDS: platformHtml,
     PHONE_HERO: phone('hero-phone'),
     PHONE_HOW: phone('how-phone'),
     SLUG: page.slug,

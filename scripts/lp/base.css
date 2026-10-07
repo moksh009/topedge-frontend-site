@@ -18,8 +18,12 @@ h1,h2,h3,p,ul,ol,figure{margin:0}
 .brand img{display:block;width:28px;height:28px}
 .brand span span{color:var(--violet)}
 /* hero */
-.hero{position:relative;margin-top:-3.75rem;padding:5.75rem 0 3rem;background:radial-gradient(60rem 28rem at 85% -10%,#e7d9ff 0,transparent 60%),radial-gradient(44rem 24rem at 5% 0,#dbeafe 0,transparent 62%),radial-gradient(40rem 22rem at 55% 110%,#fde7f3 0,transparent 60%),#f7f8fc}
-.hero-grid{display:grid;gap:2.5rem;align-items:center}
+.hero{position:relative;overflow:hidden;margin-top:-3.75rem;padding:5.75rem 0 3rem;background:radial-gradient(60rem 28rem at 85% -10%,#e7d9ff 0,transparent 60%),radial-gradient(44rem 24rem at 5% 0,#dbeafe 0,transparent 62%),radial-gradient(40rem 22rem at 55% 110%,#fde7f3 0,transparent 60%),#f7f8fc}
+.hero-video{position:absolute;inset:0;z-index:0;overflow:hidden;display:none}
+.hero-video video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .8s ease}
+.hero-video video.is-ready{opacity:.34}
+.hero-video:after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(247,248,252,.1) 0%,rgba(247,248,252,.8) 72%,#f7f8fc 100%)}
+.hero-grid{position:relative;z-index:1;display:grid;gap:2.5rem;align-items:center}
 .eyebrow{font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--violet)}
 .hero h1{margin:.8rem 0 0;font-size:clamp(1.65rem,5.2vw,2.9rem);font-weight:400;letter-spacing:-.034em;line-height:1.12;text-wrap:balance}
 .chip{color:var(--chip-ink);background:var(--chip-bg);border-radius:.45em;padding:.04em .24em .08em;white-space:nowrap}
@@ -32,6 +36,7 @@ h1,h2,h3,p,ul,ol,figure{margin:0}
 .btn-out{background:transparent;color:var(--violet);box-shadow:inset 0 0 0 1.5px #c4b5fd}
 .btn-out:hover,.btn-out:focus-visible{background:#f3edff}
 .micro{margin-top:.8rem;font-size:.875rem;color:var(--muted)}
+.hero-plat{margin-top:.9rem;font-size:.85rem;color:var(--chip-ink)}
 /* sections */
 section{padding:3.5rem 0}
 .alt{background:var(--wash)}
@@ -116,12 +121,16 @@ details p{padding:0 0 1rem;font-size:1rem;color:var(--muted)}
 .proof-logos p{font-size:.95rem;color:var(--muted)}
 .logos-dark{justify-content:center;margin:1rem auto 0;padding:1rem 1.6rem;border-radius:16px;background:var(--ink);width:max-content;max-width:100%}
 .proof-logos small{display:block;margin-top:.9rem;font-size:.8rem;color:var(--muted)}
+/* icon chip, shared by why + platform cards */
+.ic{display:inline-flex;align-items:center;justify-content:center;width:2.75rem;height:2.75rem;border-radius:14px;background:var(--wash);color:var(--violet)}
 /* why cards */
 .whys{display:grid;gap:1rem}
-.why{padding:1.5rem 1.4rem}
-.why svg{color:var(--violet)}
-.why h3{margin-top:.8rem;font-size:1.05rem;font-weight:500;line-height:1.3}
-.why p{margin-top:.45rem;font-size:1rem;color:var(--muted)}
+.why,.pf{padding:1.5rem 1.4rem;transition:transform .2s,box-shadow .2s}
+.why h3,.pf h3{margin-top:.8rem;font-size:1.05rem;font-weight:500;line-height:1.3}
+.why p,.pf p{margin-top:.45rem;font-size:1rem;color:var(--muted)}
+.why:hover,.pf:hover{transform:translateY(-3px);box-shadow:0 0 0 1px rgba(15,23,42,.04),0 22px 44px -20px rgba(76,29,149,.24)}
+/* platform cards */
+.pf-grid{display:grid;gap:1rem}
 /* pricing toggle */
 .cycle{display:flex;justify-content:center;gap:.25rem;width:max-content;margin:0 auto 1.6rem;padding:.25rem;border-radius:9999px;background:#ede9fe}
 .cycle button{min-height:2.75rem;padding:0 1.3rem;border:0;border-radius:9999px;background:transparent;font:inherit;font-size:.95rem;font-weight:500;color:var(--chip-ink);cursor:pointer}
@@ -157,12 +166,15 @@ details p{padding:0 0 1rem;font-size:1rem;color:var(--muted)}
  .plans{grid-template-columns:repeat(3,1fr)}
  .quotes{grid-template-columns:repeat(3,1fr)}
  .whys{grid-template-columns:repeat(2,1fr)}
+ .pf-grid{grid-template-columns:repeat(2,1fr)}
 }
 @media(min-width:900px){
  .how{grid-template-columns:1.1fr .9fr;gap:3.5rem}
  .hero-grid{grid-template-columns:55fr 45fr;gap:3rem}
  .hero{padding:7rem 0 4.5rem}
+ .hero-video{display:block}
  section{padding:6rem 0}
  .plan.em{transform:translateY(-.5rem)}
+ .pf-grid{grid-template-columns:repeat(3,1fr)}
 }
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}

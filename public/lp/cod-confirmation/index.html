@@ -28,8 +28,12 @@ h1,h2,h3,p,ul,ol,figure{margin:0}
 .brand img{display:block;width:28px;height:28px}
 .brand span span{color:var(--violet)}
 /* hero */
-.hero{position:relative;margin-top:-3.75rem;padding:5.75rem 0 3rem;background:radial-gradient(60rem 28rem at 85% -10%,#e7d9ff 0,transparent 60%),radial-gradient(44rem 24rem at 5% 0,#dbeafe 0,transparent 62%),radial-gradient(40rem 22rem at 55% 110%,#fde7f3 0,transparent 60%),#f7f8fc}
-.hero-grid{display:grid;gap:2.5rem;align-items:center}
+.hero{position:relative;overflow:hidden;margin-top:-3.75rem;padding:5.75rem 0 3rem;background:radial-gradient(60rem 28rem at 85% -10%,#e7d9ff 0,transparent 60%),radial-gradient(44rem 24rem at 5% 0,#dbeafe 0,transparent 62%),radial-gradient(40rem 22rem at 55% 110%,#fde7f3 0,transparent 60%),#f7f8fc}
+.hero-video{position:absolute;inset:0;z-index:0;overflow:hidden;display:none}
+.hero-video video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .8s ease}
+.hero-video video.is-ready{opacity:.34}
+.hero-video:after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(247,248,252,.1) 0%,rgba(247,248,252,.8) 72%,#f7f8fc 100%)}
+.hero-grid{position:relative;z-index:1;display:grid;gap:2.5rem;align-items:center}
 .eyebrow{font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--violet)}
 .hero h1{margin:.8rem 0 0;font-size:clamp(1.65rem,5.2vw,2.9rem);font-weight:400;letter-spacing:-.034em;line-height:1.12;text-wrap:balance}
 .chip{color:var(--chip-ink);background:var(--chip-bg);border-radius:.45em;padding:.04em .24em .08em;white-space:nowrap}
@@ -42,6 +46,7 @@ h1,h2,h3,p,ul,ol,figure{margin:0}
 .btn-out{background:transparent;color:var(--violet);box-shadow:inset 0 0 0 1.5px #c4b5fd}
 .btn-out:hover,.btn-out:focus-visible{background:#f3edff}
 .micro{margin-top:.8rem;font-size:.875rem;color:var(--muted)}
+.hero-plat{margin-top:.9rem;font-size:.85rem;color:var(--chip-ink)}
 /* sections */
 section{padding:3.5rem 0}
 .alt{background:var(--wash)}
@@ -126,12 +131,16 @@ details p{padding:0 0 1rem;font-size:1rem;color:var(--muted)}
 .proof-logos p{font-size:.95rem;color:var(--muted)}
 .logos-dark{justify-content:center;margin:1rem auto 0;padding:1rem 1.6rem;border-radius:16px;background:var(--ink);width:max-content;max-width:100%}
 .proof-logos small{display:block;margin-top:.9rem;font-size:.8rem;color:var(--muted)}
+/* icon chip, shared by why + platform cards */
+.ic{display:inline-flex;align-items:center;justify-content:center;width:2.75rem;height:2.75rem;border-radius:14px;background:var(--wash);color:var(--violet)}
 /* why cards */
 .whys{display:grid;gap:1rem}
-.why{padding:1.5rem 1.4rem}
-.why svg{color:var(--violet)}
-.why h3{margin-top:.8rem;font-size:1.05rem;font-weight:500;line-height:1.3}
-.why p{margin-top:.45rem;font-size:1rem;color:var(--muted)}
+.why,.pf{padding:1.5rem 1.4rem;transition:transform .2s,box-shadow .2s}
+.why h3,.pf h3{margin-top:.8rem;font-size:1.05rem;font-weight:500;line-height:1.3}
+.why p,.pf p{margin-top:.45rem;font-size:1rem;color:var(--muted)}
+.why:hover,.pf:hover{transform:translateY(-3px);box-shadow:0 0 0 1px rgba(15,23,42,.04),0 22px 44px -20px rgba(76,29,149,.24)}
+/* platform cards */
+.pf-grid{display:grid;gap:1rem}
 /* pricing toggle */
 .cycle{display:flex;justify-content:center;gap:.25rem;width:max-content;margin:0 auto 1.6rem;padding:.25rem;border-radius:9999px;background:#ede9fe}
 .cycle button{min-height:2.75rem;padding:0 1.3rem;border:0;border-radius:9999px;background:transparent;font:inherit;font-size:.95rem;font-weight:500;color:var(--chip-ink);cursor:pointer}
@@ -167,13 +176,16 @@ details p{padding:0 0 1rem;font-size:1rem;color:var(--muted)}
  .plans{grid-template-columns:repeat(3,1fr)}
  .quotes{grid-template-columns:repeat(3,1fr)}
  .whys{grid-template-columns:repeat(2,1fr)}
+ .pf-grid{grid-template-columns:repeat(2,1fr)}
 }
 @media(min-width:900px){
  .how{grid-template-columns:1.1fr .9fr;gap:3.5rem}
  .hero-grid{grid-template-columns:55fr 45fr;gap:3rem}
  .hero{padding:7rem 0 4.5rem}
+ .hero-video{display:block}
  section{padding:6rem 0}
  .plan.em{transform:translateY(-.5rem)}
+ .pf-grid{grid-template-columns:repeat(3,1fr)}
 }
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}</style>
 </head>
@@ -190,6 +202,7 @@ details p{padding:0 0 1rem;font-size:1rem;color:var(--muted)}
 </nav>
 
 <header class="hero" id="hero">
+  <div class="hero-video" id="hero-video" aria-hidden="true"></div>
   <div class="wrap hero-grid">
     <div class="hero-copy">
       <p class="eyebrow">Built for Indian Shopify D2C brands</p>
@@ -204,6 +217,7 @@ details p{padding:0 0 1rem;font-size:1rem;color:var(--muted)}
         <a class="btn btn-out" data-cta="shopify" href="https://apps.shopify.com/topedge-ai" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V7a3 3 0 0 1 6 0v1"/></svg>Install on Shopify</a>
       </div>
       <p class="micro">14-day free trial · 20 free order confirmations · No credit card · Live in about 15 minutes</p>
+      <p class="hero-plat">Part of one WhatsApp commerce platform: journeys, live chat, campaigns, and CRM included.</p>
     </div>
     <div class="hero-vis">
       <figure class="phone" id="hero-phone">
@@ -294,12 +308,26 @@ details p{padding:0 0 1rem;font-size:1rem;color:var(--muted)}
   <div class="wrap">
     <div class="head"><h2>Built different from the WhatsApp tools you've already tried</h2></div>
     <div class="whys">
-      <div class="card why"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18M16 7.5c0-1.4-1.8-2.5-4-2.5s-4 1.1-4 2.5 1.8 2.5 4 2.5 4 1.1 4 2.5-1.8 2.5-4 2.5-4-1.1-4-2.5"/></svg><h3>You pay Meta. Not us, on top of Meta.</h3><p>WhatsApp message fees are billed directly to your own Meta Business account. TopEdge adds 0% markup, unlike platforms that charge a per-message fee on top of Meta's own rate.</p></div>
-      <div class="card why"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c.6-3.6 3.4-5.5 7-5.5s6.4 1.9 7 5.5"/></svg><h3>One buyer, one profile, even with three phone numbers.</h3><p>Orders, carts, and chats from the same person merge into a single profile automatically, instead of splitting into duplicate, disconnected leads.</p></div>
-      <div class="card why"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2.5"/><path d="M3 10.5h18M7 15h3"/></svg><h3>Turn hesitant COD buyers into paid-upfront customers.</h3><p>Send a payment link in the same WhatsApp thread, built natively for Shopify checkout, no manual mapping required.</p></div>
-      <div class="card why"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 8a6 6 0 0 0-10.5 1.5M7 16a6 6 0 0 0 10.5-1.5M17 4v4h-4M7 20v-4h4"/></svg><h3>Automate as much as you need. It is not metered.</h3><p>Flow automations run unlimited times on every plan. You are never rationed on how many times your own workflows can run.</p></div>
+      <div class="card why"><span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18M16 7.5c0-1.4-1.8-2.5-4-2.5s-4 1.1-4 2.5 1.8 2.5 4 2.5 4 1.1 4 2.5-1.8 2.5-4 2.5-4-1.1-4-2.5"/></svg></span><h3>You pay Meta. Not us, on top of Meta.</h3><p>WhatsApp message fees are billed directly to your own Meta Business account. TopEdge adds 0% markup, unlike platforms that charge a per-message fee on top of Meta's own rate.</p></div>
+      <div class="card why"><span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c.6-3.6 3.4-5.5 7-5.5s6.4 1.9 7 5.5"/></svg></span><h3>One buyer, one profile, even with three phone numbers.</h3><p>Orders, carts, and chats from the same person merge into a single profile automatically, instead of splitting into duplicate, disconnected leads.</p></div>
+      <div class="card why"><span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2.5"/><path d="M3 10.5h18M7 15h3"/></svg></span><h3>Turn hesitant COD buyers into paid-upfront customers.</h3><p>Send a payment link in the same WhatsApp thread, built natively for Shopify checkout, no manual mapping required.</p></div>
+      <div class="card why"><span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 8a6 6 0 0 0-10.5 1.5M7 16a6 6 0 0 0 10.5-1.5M17 4v4h-4M7 20v-4h4"/></svg></span><h3>Automate as much as you need. It is not metered.</h3><p>Flow automations run unlimited times on every plan. You are never rationed on how many times your own workflows can run.</p></div>
     </div>
     <p class="costnote">Everything above is live today, not on a roadmap.</p>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <div class="head"><p class="eyebrow">More than COD confirmation</p><h2>One subscription. A complete WhatsApp commerce platform.</h2><p>COD confirmation is one journey. Every plan also ships with the rest of this, live today.</p></div>
+    <div class="pf-grid">
+      <div class="card pf"><span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="6" r="2.1"/><circle cx="19" cy="6" r="2.1"/><circle cx="12" cy="18" r="2.1"/><path d="M6.8 7.8 10.6 16M17.2 7.8 13.4 16"/></svg></span><h3>Journeys and cart recovery</h3><p>Drag-and-drop WhatsApp flows that recover abandoned carts and follow up unconfirmed COD orders automatically.</p></div>
+      <div class="card pf"><span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7.2A3.2 3.2 0 0 1 7.2 4h9.6A3.2 3.2 0 0 1 20 7.2V13a3.2 3.2 0 0 1-3.2 3.2H9l-4.2 3v-3A3.2 3.2 0 0 1 4 13.2Z"/><circle cx="9" cy="10" r=".55" fill="currentColor" stroke="none"/><circle cx="12" cy="10" r=".55" fill="currentColor" stroke="none"/><circle cx="15" cy="10" r=".55" fill="currentColor" stroke="none"/></svg></span><h3>One inbox for WhatsApp and Instagram</h3><p>Every thread sits next to the order, COD status, and cart history, so agents never tab over to Shopify admin.</p></div>
+      <div class="card pf"><span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10v4h3l5.5 4V6L6 10H3Z"/><path d="M16 9.3a4 4 0 0 1 0 5.4M18.7 7a7.6 7.6 0 0 1 0 10"/></svg></span><h3>Meta-approved broadcast campaigns</h3><p>Segment your audience and send on approved templates only, with the per-message cost shown before you send.</p></div>
+      <div class="card pf"><span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="7.5" r="3"/><path d="M3.3 20c.5-3.5 2.9-5.5 5.7-5.5s5.2 2 5.7 5.5"/><circle cx="18" cy="8.5" r="2.1"/><path d="M15.6 14.7c2.2.4 3.6 1.9 4 4.3"/></svg></span><h3>A CRM built from real orders and chats</h3><p>One profile per buyer, so you can target VIPs, repeat buyers, and COD-risk customers as separate audiences.</p></div>
+      <div class="card pf"><span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="7.3"/><circle cx="12" cy="12" r="3.2"/><path d="M12 2.3v3M12 18.7v3M2.3 12h3M18.7 12h3"/></svg></span><h3>A tracking pixel that feeds WhatsApp</h3><p>A Shopify theme embed matches product and cart intent to WhatsApp outreach, consent-aware by default.</p></div>
+      <div class="card pf"><span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.2 19 6v5.3c0 4.6-3 7.6-7 9.1-4-1.5-7-4.5-7-9.1V6Z"/><path d="M9 12.2l2 2 4-4.2"/></svg></span><h3>Template approval you control</h3><p>Create and track every WhatsApp template with Meta in one place. Nothing sends until Meta approves it.</p></div>
+    </div>
   </div>
 </section>
 
@@ -420,6 +448,26 @@ details p{padding:0 0 1rem;font-size:1rem;color:var(--muted)}
   var field=/^(INPUT|TEXTAREA|SELECT)$/;
   d.addEventListener('focusin',function(e){if(field.test(e.target.tagName)){typing=true;sync()}});
   d.addEventListener('focusout',function(e){if(field.test(e.target.tagName)){typing=false;sync()}});
+
+  // Hero motion video: built with createElement and attached only after window `load`,
+  // so it never competes with first paint or counts toward the page's render-blocking budget.
+  // Skipped on narrow viewports (CSS hides the layer there too) and on metered connections.
+  var heroVideo=$('#hero-video');
+  var saveData=navigator.connection&&navigator.connection.saveData;
+  if(heroVideo&&!reduce&&!saveData&&w.matchMedia('(min-width: 900px)').matches){
+    w.addEventListener('load',function(){
+      try{
+        var v=d.createElement('video');
+        v.muted=true;v.loop=true;v.playsInline=true;v.autoplay=true;v.preload='auto';
+        v.setAttribute('aria-hidden','true');
+        v.addEventListener('loadeddata',function(){v.classList.add('is-ready')});
+        v.addEventListener('error',function(){v.remove()});
+        v.src='/videos/cod-hero-motion.mp4';
+        heroVideo.appendChild(v);
+        var p=v.play();if(p&&p.catch)p.catch(function(){});
+      }catch(e){}
+    });
+  }
 })();
 </script>
 <script>

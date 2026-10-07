@@ -46,4 +46,24 @@
   var field=/^(INPUT|TEXTAREA|SELECT)$/;
   d.addEventListener('focusin',function(e){if(field.test(e.target.tagName)){typing=true;sync()}});
   d.addEventListener('focusout',function(e){if(field.test(e.target.tagName)){typing=false;sync()}});
+
+  // Hero motion video: built with createElement and attached only after window `load`,
+  // so it never competes with first paint or counts toward the page's render-blocking budget.
+  // Skipped on narrow viewports (CSS hides the layer there too) and on metered connections.
+  var heroVideo=$('#hero-video');
+  var saveData=navigator.connection&&navigator.connection.saveData;
+  if(heroVideo&&!reduce&&!saveData&&w.matchMedia('(min-width: 900px)').matches){
+    w.addEventListener('load',function(){
+      try{
+        var v=d.createElement('video');
+        v.muted=true;v.loop=true;v.playsInline=true;v.autoplay=true;v.preload='auto';
+        v.setAttribute('aria-hidden','true');
+        v.addEventListener('loadeddata',function(){v.classList.add('is-ready')});
+        v.addEventListener('error',function(){v.remove()});
+        v.src='{{HERO_VIDEO_SRC}}';
+        heroVideo.appendChild(v);
+        var p=v.play();if(p&&p.catch)p.catch(function(){});
+      }catch(e){}
+    });
+  }
 })();
