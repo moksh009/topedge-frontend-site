@@ -22,9 +22,15 @@ const must = (ok, msg) => {
 };
 const count = (re) => (html.match(re) || []).length;
 
-// Markup-shape rules read the document with inline <script> bodies removed: JS
-// source is not markup, and a tag name inside a comment or string is not an element.
-const markup = html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, '');
+// Markup-shape rules read the document with inline <script> and <style> bodies removed:
+// JS and CSS source are not markup, and a tag name or an attribute selector inside them
+// is not an element. `copy` goes further and strips tags, so a sentence still reads as
+// one string after a word inside it is wrapped in a highlight span.
+const markup = html
+  .replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, '')
+  .replace(/<style\b[^>]*>[\s\S]*?<\/style>/g, '');
+const copy = markup.replace(/<[^>]+>/g, '');
+const countIn = (src, re) => (src.match(re) || []).length;
 
 // Em dashes are banned in our copy, but verbatim reviews are quoted exactly as written.
 const withoutQuotes = html.replace(/<blockquote[\s\S]*?<\/blockquote>/g, '');
@@ -73,9 +79,11 @@ must(/href="#how"[^>]*>How it works</.test(html), 'nav missing "How it works" an
 must(/Log in</.test(html), 'nav missing "Log in"');
 must(/data-cta="trial"/.test(html), 'missing trial CTA');
 must(/data-cta="shopify"[^>]*href="https:\/\/apps\.shopify\.com\/|href="https:\/\/apps\.shopify\.com\/[^"]*"[^>]*data-cta="shopify"/.test(html), 'Shopify CTA does not link to the App Store');
-const h1 = (html.match(/<h1 id="hero-h1">([\s\S]*?)<\/h1>/) || [])[1] || '';
-must(/Stop Paying Three Times for Orders Your Customers Never Wanted/.test(h1), 'default H1 is not the recommended headline');
-must(html.includes('Built for Indian Shopify D2C brands'), 'missing hero eyebrow');
+const h1 = ((markup.match(/<h1 id="hero-h1">([\s\S]*?)<\/h1>/) || [])[1] || '').replace(/<[^>]+>/g, '');
+must(/Stop paying three times for orders nobody wanted/.test(h1), 'default H1 is not the recommended headline');
+must(h1.length <= 60, `H1 is ${h1.length} characters; over 60 wraps past two lines on desktop`);
+must(/<mark class="chip" id="hero-mark">/.test(markup), 'the H1 payload is not highlighted like the site titles');
+must(copy.includes('Built for Indian Shopify D2C brands'), 'page no longer says who it is for');
 must(
   html.includes(`${TRIAL.days}-day free trial · ${TRIAL.orders} free order confirmations · No credit card · Live in about 15 minutes`),
   'hero microcopy does not match TRIAL',
@@ -93,8 +101,8 @@ for (const cost of ['out', 'back', 'handling']) {
   must(new RegExp(`₹\\d+\\s*${cost}\\b`, 'i').test(html), `problem section no longer prices "${cost}"`);
 }
 must(/Illustrative/i.test(html), 'the cost arithmetic must be marked illustrative, not a customer result');
-must(html.includes('every parcel that leaves your warehouse is one the buyer actually wants'), 'missing problem closing line');
-must(count(/data-step="[123]"/g) === 3, 'expected 3 data-step items');
+must(copy.includes('every parcel that leaves your warehouse is one the buyer actually wants'), 'missing problem closing line');
+must(countIn(markup, /data-step="[123]"/g) === 3, 'expected 3 data-step items');
 must(html.includes('nothing sends without your sign-off'), 'missing Meta-approval caption');
 
 // --- Product showcase ---
@@ -135,9 +143,19 @@ for (const p of FALLBACK_CATALOG.plans) {
   must(html.includes(p.pricing.yearly.effectiveMonthlyLabel), `${p.displayName}: yearly price missing`);
 }
 must(/Most popular/.test(html), 'Growth missing "Most popular"');
-const card = (name) => (html.match(new RegExp(`<div class="card plan[^"]*"[^>]*>\\s*<h3>${name}</h3>[\\s\\S]*?</div>`)) || [''])[0];
-must(!/payment links/i.test(card('Launch')), 'Launch card must not offer payment links');
-must(/payment links/i.test(card('Growth')) && /payment links/i.test(card('Scale')), 'Growth and Scale must offer payment links');
+// COD to prepaid is gated by the catalog, and the card shows it locked when a plan
+// lacks it. Read the state straight off each card rather than trusting the copy.
+const card = (slug) => (markup.match(new RegExp(`<article class="mkt-plan mkt-plan--${slug}[\\s\\S]*?</article>`)) || [''])[0];
+for (const p of FALLBACK_CATALOG.plans) {
+  // Anchored to one <li>: a lazy match from the first item would run past it.
+  const row = (card(p.slug).match(/<li([^>]*)>(?:(?!<\/li>)[\s\S])*?COD to prepaid/) || [])[1];
+  must(row !== undefined, `${p.displayName}: card does not list COD to prepaid`);
+  must(
+    /is-locked/.test(row || '') === !p.features.journeyCodPrepaid,
+    `${p.displayName}: COD to prepaid lock state disagrees with the catalog`,
+  );
+  must(new RegExp(`data-plan="${p.slug}"`).test(markup), `${p.displayName}: card has no CTA`);
+}
 must(/TopEdge adds 0% markup/.test(html), 'missing 0% markup line');
 
 // --- FAQ ---
@@ -145,7 +163,7 @@ must(count(/<details name="faq"/g) === 6, 'expected 6 FAQ items (the plan lists 
 must(count(/<details name="faq" open/g) === 1, 'expected exactly one FAQ open');
 
 // --- Final CTA, sticky bar, tracking ---
-must(html.includes('Ship only the COD orders buyers confirm'), 'missing final CTA heading');
+must(copy.includes('Ship only the COD orders buyers confirm'), 'missing final CTA heading');
 must(/id="sticky-cta"[^>]*>/.test(html), 'missing sticky mobile CTA');
 must(count(/data-cta="trial"/g) >= 5, 'expected the trial CTA in nav, hero, pricing, final CTA and sticky bar');
 must(/shopify_install_click/.test(html), 'missing Shopify click event');

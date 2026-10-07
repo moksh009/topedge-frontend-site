@@ -26,7 +26,8 @@ const root = path.resolve(__dirname, '..');
 const lpDir = path.join(__dirname, 'lp');
 const MAX_BYTES = 60 * 1024;
 
-const { FALLBACK_CATALOG, TRIAL } = await loadBillingCatalog();
+const { FALLBACK_CATALOG, TRIAL, planBlurb, planFeatureKicker, dispatchLabel, planPricing } =
+  await loadBillingCatalog();
 const plans = FALLBACK_CATALOG.plans;
 const byslug = Object.fromEntries(plans.map((p) => [p.slug, p]));
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -69,18 +70,25 @@ const TRIAL_MICRO = `${TRIAL.days}-day free trial · ${TRIAL.orders} free order 
 const TRIAL_SHORT = `${TRIAL.days} days. ${TRIAL.orders} free orders. No card.`;
 
 // Hero headline per ad group. utm_content that starts with a key selects that variant.
+// Hero headline per ad group. utm_content that starts with a key selects that variant.
+// Each headline is a lead plus a marked phrase, because the site highlights the payload
+// of a title rather than setting the whole line in one colour. Sentence case and under
+// fifty characters: title case reads like an ad, and three lines is not a headline.
 const HERO_VARIANTS = {
   loss: {
-    h1: 'Stop Paying Three Times for Orders Your Customers Never Wanted',
-    sub: 'TopEdge sends an automatic WhatsApp confirmation the moment a COD order is placed. You only pack, ship, and chase courier costs for orders the buyer actually confirmed.',
+    lead: 'Stop paying three times for orders ',
+    mark: 'nobody wanted',
+    sub: 'TopEdge asks the buyer to confirm on WhatsApp the moment a COD order is placed. Built for Indian Shopify D2C brands.',
   },
   speed: {
-    h1: 'Confirm COD Orders on WhatsApp Before You Ship',
-    sub: 'TopEdge sends an automatic WhatsApp confirmation the moment a COD order is placed. The buyer taps Confirm or Cancel, and you ship what they confirm.',
+    lead: 'Confirm COD orders on WhatsApp ',
+    mark: 'before you ship',
+    sub: 'The buyer taps Confirm or Cancel in seconds, and you ship only what they confirm. Built for Indian Shopify D2C brands.',
   },
   rto: {
-    h1: 'Cut RTO Before the Courier Even Picks Up',
-    sub: 'TopEdge sends an automatic WhatsApp confirmation the moment a COD order is placed, so fewer refused parcels make the trip in the first place.',
+    lead: 'Cut RTO ',
+    mark: 'before the courier picks up',
+    sub: 'Fewer refused parcels make the trip in the first place. Built for Indian Shopify D2C brands.',
   },
 };
 
@@ -139,24 +147,33 @@ const SHOWCASE = [
   {
     eyebrow: 'Journeys',
     h: 'Confirm it, or turn it prepaid',
-    p: 'The buyer answers on WhatsApp in seconds. Confirm, cancel, or pay online instead.',
+    p: 'The buyer answers on WhatsApp. Confirm, cancel, or pay online instead.',
     img: '/lp/shots/journeys.webp',
     alt: 'TopEdge journeys list showing a COD to prepaid nudge and abandoned cart recovery with revenue, enrolments and open rate per journey.',
   },
   {
     eyebrow: 'Cart recovery',
-    h: 'See the money leaving, then go get it',
+    h: 'Win back the carts that leave',
     p: 'Cart value at risk and what you actually recovered, on one dashboard.',
     img: '/lp/shots/recovery.webp',
     alt: 'TopEdge store growth dashboard showing cart value at risk, abandoned carts, recovery rate and a recovery funnel from abandoned to purchased.',
   },
   {
     eyebrow: 'No code',
-    h: 'Build the flow by dragging boxes',
+    h: 'Build a flow by dragging boxes',
     p: 'No developer, no theme edits, no checkout scripts.',
     img: '/lp/shots/flow.webp',
     alt: 'TopEdge flow builder canvas with a flow entry node connected to a WhatsApp message node and an interactive button node.',
   },
+];
+
+// What happens to the parcel, which is the merchant's actual question. Replaces a
+// numbered install guide: nobody buys because setup has three steps, they buy because
+// they can see where each order ends up. data-step drives the message highlight.
+const OUTCOMES = [
+  { step: 1, tag: 'Confirmed', p: 'Ships today, and the buyer is expecting it.' },
+  { step: 2, tag: 'Cancelled', p: 'Never leaves the warehouse. You keep the ₹180.' },
+  { step: 3, tag: 'No reply', p: 'Auto follow-up, or hold it for review. Your rule.' },
 ];
 
 // Value stack beside the price, so the plan reads as a platform and not one feature.
@@ -206,20 +223,59 @@ function yearly(p) {
   return p.pricing.yearly?.effectiveMonthlyLabel ?? p.monthlyPriceLabel;
 }
 
-function planCards() {
+/**
+ * The pricing card from the site, not a second design. Same shell/panel/meters
+ * structure and class names as `PlanGrid` + pricing.css, including the per-plan CTA
+ * and the locked rows, so a visitor who later opens /pricing sees the same object.
+ * React swaps on the billing cycle; here both cycles are in the HTML and the toggle
+ * flips which one shows, so the page is correct before any script runs.
+ */
+const INR = (n) => Number(n).toLocaleString('en-IN');
+
+function planMeters(p) {
+  return [
+    { text: `${INR(p.ordersPerCycle)} orders / month`, locked: false },
+    { text: `${INR(p.campaignEmailSendsPerCycle)} campaign + email sends / month`, locked: false },
+    { text: 'Journey Branch', locked: !p.features.journeyBranch },
+    { text: 'COD to prepaid', locked: !p.features.journeyCodPrepaid },
+    { text: dispatchLabel(p.features.dispatchPriority), locked: false },
+  ];
+}
+
+const TICK = '<svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
+const LOCK = '<svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>';
+
+function planCards(slug) {
   return plans
     .map((p) => {
-      const items = ['Basic COD confirmation'];
-      if (p.features.journeyCodPrepaid) items.push('COD to prepaid payment links');
-      if (p.features.dispatchPriority === 'highest') items.push('Highest dispatch priority');
-      const yearlyBilled = p.pricing.yearly?.billedLabel ?? p.yearlyPriceLabel;
-      return `      <div class="card plan${p.emphasis ? ' em' : ''}">
-        <h3>${esc(p.displayName)}</h3>${p.emphasis ? '\n        <span class="badge">Most popular</span>' : ''}
-        <p class="price"><span class="p-yearly">${esc(yearly(p))}</span><span class="p-monthly">${esc(p.monthlyPriceLabel)}</span> <small>/ month</small></p>
-        <p class="bill p-yearly">Billed yearly at ${esc(yearlyBilled)} + 18% GST</p>
-        <p class="bill p-monthly">Billed monthly + 18% GST</p>
-        <ul>${items.map((i) => `<li>${esc(i)}</li>`).join('')}</ul>
-      </div>`;
+      const y = planPricing(p, 'yearly');
+      const m = planPricing(p, 'monthly');
+      const cls = `mkt-plan mkt-plan--${p.slug}${p.emphasis ? ' mkt-plan--emphasis' : ''}`;
+      const meters = planMeters(p)
+        .map(
+          (row) => `<li${row.locked ? ' class="is-locked"' : ''}><span class="mkt-plan__mark" aria-hidden="true">${row.locked ? LOCK : TICK}</span><span>${esc(row.text)}</span>${row.locked ? '<span class="sr">not included</span>' : ''}</li>`,
+        )
+        .join('');
+      return `      <article class="${cls}">
+        <div class="mkt-plan__shell">
+          <div class="mkt-plan__panel">
+            <div class="mkt-plan__title-row">
+              <h3 class="mkt-plan__name">${esc(p.displayName)} Plan</h3>${p.emphasis ? '<span class="mkt-plan__badge">Most popular</span>' : ''}
+            </div>
+            <div class="mkt-plan__price-row">
+              <p class="mkt-plan__price"><span class="p-yearly">${esc(y.effectiveMonthlyLabel)}</span><span class="p-monthly">${esc(m.effectiveMonthlyLabel)}</span></p>
+              <span class="mkt-plan__period"><span class="p-yearly">per month, billed yearly</span><span class="p-monthly">per month</span></span>
+            </div>
+            <p class="mkt-plan__billing-note"><span class="p-yearly">billed yearly (${esc(y.billedLabel)}/year) &middot; ${esc(p.monthlyPriceLabel)}/mo month-to-month</span><span class="p-monthly">+18% GST. Cancel anytime.</span></p>
+            <p class="mkt-plan__blurb">${esc(planBlurb(p.slug))}</p>
+            <a class="mkt-plan__cta mkt-plan__cta--${p.emphasis ? 'solid' : 'ghost'}" data-cta="trial" data-plan="${esc(p.slug)}" href="/signup?lp=${slug}">Choose ${esc(p.displayName)}</a>
+          </div>
+          <div class="mkt-plan__features">
+            <p class="mkt-plan__kicker">${esc(planFeatureKicker(p.slug))}</p>
+            <ul class="mkt-plan__meters">${meters}</ul>
+          </div>
+        </div>
+      </article>`;
     })
     .join('\n');
 }
@@ -277,14 +333,18 @@ const switchHtml = SWITCH.map(
 ).join('\n');
 
 const showcaseHtml = SHOWCASE.map(
-  (s2, i) => `      <div class="row${i % 2 ? ' flip' : ''}">
-        <div class="row-copy">
+  (s2) => `      <article class="bento">
+        <img class="shot" src="${s2.img}" width="1000" height="625" loading="lazy" decoding="async" alt="${esc(s2.alt)}">
+        <div class="bento-copy">
           <p class="eyebrow">${esc(s2.eyebrow)}</p>
           <h3>${esc(s2.h)}</h3>
-          <p class="row-p">${esc(s2.p)}</p>
+          <p>${esc(s2.p)}</p>
         </div>
-        <img class="shot" src="${s2.img}" width="1120" height="630" loading="lazy" decoding="async" alt="${esc(s2.alt)}">
-      </div>`,
+      </article>`,
+).join('\n');
+
+const outcomesHtml = OUTCOMES.map(
+  (o) => `        <li data-step="${o.step}"><span class="oc-tag">${esc(o.tag)}</span><span class="oc-p">${esc(o.p)}</span></li>`,
 ).join('\n');
 
 const includedHtml = INCLUDED.map((i) => `<li>${esc(i)}</li>`).join('');
@@ -446,21 +506,48 @@ addEventListener('load',function(){var s=document.createElement('script');s.asyn
 `
   : '';
 
-const css = fs.readFileSync(path.join(lpDir, 'base.css'), 'utf8').trim();
-const attribution = fs.readFileSync(path.join(lpDir, 'attribution.js'), 'utf8').trim();
-const behavior = fs.readFileSync(path.join(lpDir, 'page.js'), 'utf8').trim();
+/**
+ * The stylesheet ships inline, so every byte of it is page weight against the 60 KB
+ * budget. Comments and indentation are for whoever edits base.css next, not for the
+ * browser: they are dropped here rather than written out of the source. CSS has no
+ * line-sensitive syntax and the file has no `/*` inside a string, so this is safe.
+ */
+/**
+ * Same reasoning for the two inline scripts. Only whole-line `//` comments and the
+ * leading indentation go: stripping mid-line would have to tell a comment from a URL
+ * or a regex literal, and neither file has a comment that does not own its line.
+ */
+const squashJs = (src) =>
+  src
+    .split('\n')
+    .map((l) => l.trim())
+    .filter((l) => l && !l.startsWith('//'))
+    .join('\n');
+
+const squashCss = (src) =>
+  src
+    .replace(/\/\*[\s\S]*?\*\//g, '')
+    .split('\n')
+    .map((l) => l.trim())
+    .filter(Boolean)
+    .join('');
+
+const css = squashCss(fs.readFileSync(path.join(lpDir, 'base.css'), 'utf8'));
+const attribution = squashJs(fs.readFileSync(path.join(lpDir, 'attribution.js'), 'utf8'));
+const behavior = squashJs(fs.readFileSync(path.join(lpDir, 'page.js'), 'utf8'));
 
 // Function replacers: a catalog string containing `$&` must never be interpreted as a pattern.
 const fill = (tpl, map) => tpl.replace(/\{\{([A-Z0-9_]+)\}\}/g, (m, k) => (k in map ? map[k] : m));
 
 for (const page of PAGES) {
   const body = fill(fs.readFileSync(path.join(lpDir, `${page.slug}.body.html`), 'utf8'), {
-    PLAN_CARDS: planCards(),
+    PLAN_CARDS: planCards(page.slug),
     FAQS: faqHtml,
     QUOTES: quotesHtml,
     NAV: navHtml(page.slug),
     FOOTER: footHtml(),
-    SHOWCASE_ROWS: showcaseHtml,
+    BENTO_CARDS: showcaseHtml,
+    OUTCOMES: outcomesHtml,
     SWITCH_ROWS: switchHtml,
     INCLUDED_LIST: includedHtml,
     BADGES: badgesHtml,
@@ -471,7 +558,8 @@ for (const page of PAGES) {
     SHOPIFY_URL,
     TRIAL_MICRO,
     TRIAL_SHORT,
-    HERO_H1: esc(HERO_VARIANTS.loss.h1),
+    HERO_LEAD: esc(HERO_VARIANTS.loss.lead),
+    HERO_MARK: esc(HERO_VARIANTS.loss.mark),
     HERO_SUB: esc(HERO_VARIANTS.loss.sub),
     HERO_VARIANTS_JSON: JSON.stringify(HERO_VARIANTS).replace(/</g, '\\u003c'),
     LEGAL_NAME: esc(LEGAL_NAME),

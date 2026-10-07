@@ -189,6 +189,47 @@ Checker changes: nav and footer shells are asserted, along with the address, a p
 and the sitemap columns, so the chrome cannot silently drift back to a bespoke one. The
 comparison assertion now requires every objection raised to be answered.
 
+## Revision 6 — the headline, the bento, the real plan card (2026-10-07)
+
+Owner review of revision 5. Six changes.
+
+**1. The headline.** The eyebrow capsule above it is gone; the audience qualifier moved
+into the sub line, so the page still says who it is for. Headlines are now a lead plus a
+marked phrase, highlighted the way the site highlights the payload of a title, and are set
+in sentence case under sixty characters. Title case reads like an ad and three lines is not
+a headline; the default now sets in two lines at 1440px, and `check:lp` fails over sixty
+characters. Variant swapping sets the text of the two spans, so it is still `textContent`
+and still injection-free.
+
+| | before | after |
+|---|---|---|
+| loss | Stop Paying Three Times for Orders Your Customers Never Wanted | Stop paying three times for orders **nobody wanted** |
+| speed | Confirm COD Orders on WhatsApp Before You Ship | Confirm COD orders on WhatsApp **before you ship** |
+| rto | Cut RTO Before the Courier Even Picks Up | Cut RTO **before the courier picks up** |
+
+**2. Bento.** The three showcase rows, one full-width row each, are now three cards in one
+row. The screenshots were re-cropped to 16:10 around the part of each screen that carries
+the claim, rather than scaled 16:9 frames fought with `object-position`.
+
+**3. The steps section is gone.** "Live in about 15 minutes" plus a numbered install guide
+answered a question nobody asks before they buy. In its place: what happens to the parcel,
+which is the question. Confirmed ships, cancelled never leaves and you keep the ₹180 the
+page costed two sections earlier, no reply follows your rule. The message stays as the
+artifact beside it and keeps driving the highlight.
+
+**4. The real plan card.** Pricing used a card invented for this page. It now uses the
+site's: same `mkt-plan` shell, panel, meters and class names as `PlanGrid` and pricing.css,
+including the per-plan CTA and the locked rows. `attribution.js` carries `data-plan` into
+the signup URL, so a click on Growth opens signup on Growth with the click id intact.
+`check:lp` reads the lock state off each card and compares it to the catalog, so a gating
+change in the catalog that the card does not reflect fails the build.
+
+**5. Marked section headings**, matching the site.
+
+**6. CSS and JS are squashed at build time.** Comments and indentation are page weight on
+an inlined stylesheet; they stay in the source and are dropped on the way out. Without this
+the page was 62 KB against a 60 KB budget; it is 57.5 KB with everything above.
+
 ## Testing
 Repo has no JS test runner, so verification is a node script:
 `scripts/check-landing-pages.mjs` (`npm run check:lp`) reads the generated HTML and asserts: size budget, noindex, no em dashes, no competitor names, the three quotes verbatim, plan prices equal `FALLBACK_CATALOG`, Launch has no prepaid text, Growth and Scale do, `TRIAL` numbers appear, 6 FAQs with exactly one `open`, both CTA kinds present, no external script or stylesheet. Browser checks with Playwright (installed): 360px and 1280px screenshots, H1 at most 3 lines on mobile, sticky bar behaviour, toggle, hero variant swap by `?utm_content=`.

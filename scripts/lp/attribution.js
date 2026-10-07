@@ -17,7 +17,12 @@
     q.push('lp='+encodeURIComponent(SLUG));
     var href='/signup?'+q.join('&');
     // Only the trial links carry attribution into signup. The Shopify link goes to the App Store as is.
-    document.querySelectorAll('a[data-cta="trial"]').forEach(function(a){a.href=href;});
+    // A plan card's own CTA keeps the plan it was clicked from, so signup opens on that plan
+    // rather than dropping the visitor back at the top of the list.
+    document.querySelectorAll('a[data-cta="trial"]').forEach(function(a){
+      var plan=a.getAttribute('data-plan');
+      a.href=plan?href+'&plan='+encodeURIComponent(plan):href;
+    });
   }catch(e){}
   // Two measurable paths: the primary trial CTA and the secondary Shopify install click.
   try{

@@ -2,12 +2,11 @@
 
 <header class="hero" id="hero">
   <div class="wrap hero-in">
-    <p class="eyebrow pill">Built for Indian Shopify D2C brands</p>
-    <h1 id="hero-h1">{{HERO_H1}}</h1>
+    <h1 id="hero-h1"><span id="hero-lead">{{HERO_LEAD}}</span><mark class="chip" id="hero-mark">{{HERO_MARK}}</mark></h1>
     <p class="sub" id="hero-sub">{{HERO_SUB}}</p>
     <script>
     (function(){try{var V={{HERO_VARIANTS_JSON}};var c=(new URLSearchParams(location.search).get('utm_content')||'').toLowerCase();
-    for(var k in V){if(c.indexOf(k)===0){document.getElementById('hero-h1').textContent=V[k].h1;document.getElementById('hero-sub').textContent=V[k].sub;break}}}catch(e){}})();
+    for(var k in V){if(c.indexOf(k)===0){document.getElementById('hero-lead').textContent=V[k].lead;document.getElementById('hero-mark').textContent=V[k].mark;document.getElementById('hero-sub').textContent=V[k].sub;break}}}catch(e){}})();
     </script>
     <div class="cta-row" id="hero-cta">
       <a class="btn" data-cta="trial" href="/signup?lp={{SLUG}}">Start free trial <span aria-hidden="true">&rarr;</span></a>
@@ -33,7 +32,7 @@
 <main>
 <section class="problem">
   <div class="wrap">
-    <div class="head"><p class="eyebrow-s">The hidden cost</p><h2>A refused COD parcel costs you three times.</h2></div>
+    <div class="head"><p class="eyebrow-s">The hidden cost</p><h2>A refused COD parcel costs you <span class="chip">three times</span></h2></div>
     <div class="maths">
       <p class="sum"><span>₹80 out</span> <i>+</i> <span>₹80 back</span> <i>+</i> <span>₹20 handling</span> <i>=</i> <strong>₹180 gone</strong></p>
       <p class="sum-note">Illustrative courier rates. At 50 refusals a month, ₹9,000 to ship what nobody wanted.</p>
@@ -44,33 +43,31 @@
 
 <section id="how">
   <div class="wrap">
-    <div class="head"><h2>Live in about 15 minutes.</h2></div>
+    <div class="head"><h2>Every COD order ends one of <span class="chip">three ways</span></h2><p>One message, sent the second the order lands. You decide what each answer does.</p></div>
     <div class="how">
-      <ol class="steps">
-        <li data-step="1"><div><strong>A COD order is placed</strong><span>Shopify tells TopEdge the instant it is created.</span></div></li>
-        <li data-step="2"><div><strong>The buyer gets a WhatsApp message</strong><span>They tap Confirm or Cancel.</span></div></li>
-        <li data-step="3"><div><strong>You ship what they confirm</strong><span>No reply? Follow up or hold. Your call.</span></div></li>
-      </ol>
       <div class="how-vis">
         {{PHONE_HOW}}
-        <p class="how-cap">Every message uses a template Meta has approved for your account, so nothing sends without your sign-off.</p>
+        <p class="how-cap">Templates are approved by Meta for your own account, so nothing sends without your sign-off.</p>
       </div>
+      <ol class="outcomes">
+{{OUTCOMES}}
+      </ol>
     </div>
   </div>
 </section>
 
 <section class="alt" id="product">
   <div class="wrap">
-    <div class="head"><p class="eyebrow">Inside the product</p><h2>COD confirmation is one screen of it.</h2></div>
-    <div class="rows">
-{{SHOWCASE_ROWS}}
+    <div class="head"><h2>COD confirmation is <span class="chip">one screen</span> of it</h2><p>Every plan runs the whole platform, not one feature.</p></div>
+    <div class="bentos">
+{{BENTO_CARDS}}
     </div>
   </div>
 </section>
 
 <section id="switch">
   <div class="wrap">
-    <div class="head"><p class="eyebrow-s">If you have tried one before</p><h2>The four things that made you leave.</h2></div>
+    <div class="head"><p class="eyebrow-s">If you have tried one before</p><h2>The four things that <span class="chip">made you leave</span></h2></div>
     <div class="sws">
 {{SWITCH_ROWS}}
     </div>
@@ -91,7 +88,7 @@
 
 <section id="pricing">
   <div class="wrap">
-    <div class="head"><h2>One plan covers the RTO you lose in a week.</h2><p>COD confirmation on every plan. No setup fee, no WhatsApp markup, cancel anytime.</p></div>
+    <div class="head"><h2>One plan covers the RTO you lose <span class="chip">in a week</span></h2><p>COD confirmation on every plan. No setup fee, no WhatsApp markup, cancel anytime.</p></div>
     <div class="cycle" role="tablist" aria-label="Billing cycle">
       <button type="button" role="tab" aria-selected="false" data-cycle="monthly">Monthly</button>
       <button type="button" role="tab" aria-selected="true" data-cycle="yearly" class="on">Yearly</button>
@@ -117,7 +114,7 @@
 
 <section class="final">
   <div class="wrap">
-    <h2>Ship only the COD orders buyers confirm</h2>
+    <h2>Ship only the COD orders <span class="chip">buyers confirm</span></h2>
     <p class="sub">Connect Shopify, approve one template, confirm your first order today.</p>
     <div class="cta-row"><a class="btn" data-cta="trial" href="/signup?lp={{SLUG}}">Start free trial <span aria-hidden="true">&rarr;</span></a></div>
     <p class="micro">{{TRIAL_SHORT}}</p>
