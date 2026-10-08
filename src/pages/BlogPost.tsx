@@ -56,14 +56,15 @@ export default function BlogPost() {
   return (
     <>
       <MarketingSEO
-        title={`TopEdge AI: ${post.title}`}
+        // Keyword-first. MarketingSEO appends " | TopEdge AI" unless the post
+        // title already names the brand, so the query terms lead the snippet.
+        title={post.title}
         description={post.description}
         keywords={post.keywords?.join(', ')}
         image={imageAbs}
         imageAlt={post.imageAlt || post.title}
         path={`/blog/${post.slug}`}
         type="article"
-        noSuffix
         articlePublished={datePublished}
         articleModified={dateModified}
         articleAuthor={authorName}

@@ -32,7 +32,7 @@ export type PageSeoEntry = {
 
 export const PAGE_SEO = {
   home: {
-    title: 'TopEdge AI: WhatsApp COD Confirmation & Cart Recovery',
+    title: 'WhatsApp COD Confirmation & Cart Recovery | TopEdge AI',
     description:
       'Confirm COD orders and recover abandoned carts on WhatsApp for Shopify. 14-day free trial, no card. Plans from ₹1,999/mo + GST. Built for Indian D2C.',
     keywords:
@@ -65,7 +65,7 @@ export const PAGE_SEO = {
     path: '/integrations',
   },
   customers: {
-    title: 'TopEdge AI: Indian Shopify Brands & Customer Stories',
+    title: 'Indian Shopify Brands & Customer Stories | TopEdge AI',
     description:
       'Customer stories from Indian D2C brands running WhatsApp cart recovery and COD flows with TopEdge on Shopify.',
     keywords:
@@ -89,7 +89,7 @@ export const PAGE_SEO = {
     path: '/blog',
   },
   about: {
-    title: 'TopEdge AI: About the Shopify WhatsApp Platform, India',
+    title: 'About the Shopify WhatsApp Platform, India | TopEdge AI',
     description:
       'TopEdge AI is the WhatsApp growth OS for Shopify India, founded by Moksh Patel and Smit Tilva. Cart recovery, COD, and Meta templates.',
     keywords:
@@ -97,7 +97,7 @@ export const PAGE_SEO = {
     path: '/about',
   },
   contact: {
-    title: 'TopEdge AI: Contact Us for Shopify WhatsApp Automation',
+    title: 'Contact Us for Shopify WhatsApp Automation | TopEdge AI',
     description:
       'Talk to us about WhatsApp automation, abandoned cart recovery, COD flows, or fully managed setup for your Shopify store in India.',
     keywords:
@@ -445,6 +445,41 @@ export function softwareApplicationJsonLd() {
       '@type': 'Audience',
       audienceType: 'Shopify D2C merchants and ecommerce agencies in India',
     },
+  };
+}
+
+/**
+ * VideoObject for an embedded product demo.
+ *
+ * GSC showed 7 pages carrying video and 0 indexed as video: the clips are
+ * self-hosted MP4s with poster frames and no markup, so Google never saw them.
+ *
+ * Only emit this where the clip is genuinely part of the page's main content —
+ * a feature page showing that feature. Marking up a decorative background loop
+ * is a structured-data violation, not a shortcut to a video result.
+ *
+ * `contentUrl` and `thumbnailUrl` must be absolute and crawlable; cache-busting
+ * query strings are stripped so the URL matches the file Googlebot fetches.
+ */
+export function videoObjectJsonLd(demo: {
+  name: string;
+  description: string;
+  uploadDate: string;
+  src: string;
+  poster: string;
+}) {
+  const abs = (p: string) => `${SITE_URL}${p.split('?')[0]}`;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'VideoObject',
+    name: demo.name,
+    description: demo.description,
+    uploadDate: demo.uploadDate,
+    thumbnailUrl: [abs(demo.poster)],
+    contentUrl: abs(demo.src),
+    publisher: ORG_REF,
+    isFamilyFriendly: true,
+    inLanguage: 'en-IN',
   };
 }
 

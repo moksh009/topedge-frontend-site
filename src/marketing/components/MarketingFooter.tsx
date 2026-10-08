@@ -35,6 +35,10 @@ const columns: { title: string; links: FootLink[] }[] = [
       { label: 'Audience Campaigns', href: '/features/campaigns' },
       { label: 'Profit & costs', href: '/features/profit-loss' },
       { label: 'AI Brain', href: '/features/ai-brain' },
+      // Also "Discovered – currently not indexed" in GSC for want of a
+      // sitewide link (see the Compare column note).
+      { label: 'Instagram', href: '/features/instagram' },
+      { label: 'Warranty', href: '/features/warranty' },
     ],
   },
   {
@@ -56,6 +60,17 @@ const columns: { title: string; links: FootLink[] }[] = [
       { label: 'TopEdge vs WATI vs AiSensy', href: '/compare/topedge-vs-wati-vs-aisensy' },
       { label: 'TopEdge vs Interakt', href: '/compare/interakt' },
       { label: 'TopEdge vs Bitespeed', href: '/compare/bitespeed' },
+      // Zoko, Gupshup, Kanal and Getgabs were "Discovered – currently not
+      // indexed" in GSC: linked only from /compare, so Googlebot queued them
+      // and never spent the crawl. A sitewide footer link is the cheapest way
+      // to raise their crawl priority. Keep every /compare/* slug listed here.
+      { label: 'TopEdge vs Zoko', href: '/compare/zoko' },
+      { label: 'TopEdge vs Gupshup', href: '/compare/gupshup' },
+      { label: 'TopEdge vs Dondy', href: '/compare/dondy' },
+      { label: 'TopEdge vs Kanal', href: '/compare/kanal' },
+      { label: 'TopEdge vs Getgabs', href: '/compare/getgabs' },
+      { label: 'TopEdge vs Updatrr', href: '/compare/updatrr' },
+      { label: 'All alternatives', href: '/compare/alternatives' },
     ],
   },
 ];

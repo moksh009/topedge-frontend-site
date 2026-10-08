@@ -8,7 +8,7 @@
  *
  * Usage: npm run check:docs
  */
-import { assertSnippetBudgets } from './seo-contracts.mjs';
+import { assertSnippetBudgets, withBrandSuffix } from './seo-contracts.mjs';
 import { loadDocsModule, loadDocsRegistry } from './load-docs-content.mjs';
 import { getSitemapPaths } from './marketing-urls.mjs';
 import { DOC_PATHS } from '../src/marketing/docs/manifest.mjs';
@@ -30,7 +30,7 @@ const DIAGRAMS = new Set([
 
 /** Mirrors the suffix rule in MarketingSEO so budgets match what ships. */
 function renderedTitle(title) {
-  return title.includes('TopEdge') ? title : `TopEdge AI: ${title}`;
+  return withBrandSuffix(title);
 }
 
 const LINK_RE = /\[[^\]]+\]\(([^)\s]+)\)/g;

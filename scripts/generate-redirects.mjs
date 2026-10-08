@@ -19,12 +19,42 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { getSitemapPaths } from './marketing-urls.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const redirectsPath = path.resolve(__dirname, '../public/_redirects');
 
 const BEGIN = '# BEGIN GENERATED — do not edit (scripts/generate-redirects.mjs)';
 const END = '# END GENERATED';
+
+/**
+ * Trailing-slash duplicates, one explicit rule per known URL.
+ *
+ * Netlify serves `/compare/wati/` and `/compare/wati` as separate 200s. The
+ * canonical tag points at the slashless form, but GSC indexed BOTH and split
+ * their positions across the pair (e.g. /compare/aisensy at 3.8 and
+ * /compare/aisensy/ at 1.9), which is the "Duplicate without user-selected
+ * canonical" finding.
+ *
+ * A wildcard `/*\/ → /:splat 301!` is what the header above bans: it matches
+ * slashless paths too and 301-loops every URL onto itself. Explicit per-path
+ * rules cannot loop, because the source always has a trailing slash and the
+ * target never does, and no generated rule matches the target.
+ *
+ * /privacy and /terms are skipped — public/_redirects already force-rewrites
+ * both slash forms to static HTML higher up the file, and first match wins.
+ */
+const SLASH_REDIRECT_SKIP = new Set(['/', '/privacy', '/terms']);
+
+function buildTrailingSlashRules() {
+  const paths = getSitemapPaths()
+    .filter((p) => p.startsWith('/') && !SLASH_REDIRECT_SKIP.has(p))
+    .filter((p) => !p.endsWith('/'));
+  const unique = [...new Set(paths)].sort();
+  const lines = unique.map((p) => `${p}/  ${p}  301!`);
+  return `# Trailing-slash duplicates → canonical slashless URL (explicit, never wildcard)
+${lines.join('\n')}`;
+}
 
 function buildGeneratedBlock() {
   return `${BEGIN}
@@ -42,6 +72,8 @@ function buildGeneratedBlock() {
 /community/*  /404.html  410!
 /admin  /404.html  410!
 /admin/*  /404.html  410!
+
+${buildTrailingSlashRules()}
 
 # Soft-404: unknown paths get noindex 404.html — never homepage SEO
 # (Do not add trailing-slash force 301s — they self-loop with Pretty URLs.)

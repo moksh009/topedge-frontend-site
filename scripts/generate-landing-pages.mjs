@@ -493,7 +493,7 @@ function heroVideo() {
 const PAGES = [
   {
     slug: 'cod-confirmation',
-    title: 'TopEdge AI: WhatsApp COD Confirmation for Shopify',
+    title: 'WhatsApp COD Confirmation for Shopify | TopEdge AI',
     description:
       'Confirm COD orders on WhatsApp before you ship them. Fewer fake orders and returned parcels for Indian Shopify stores. 14-day free trial, no card.',
   },

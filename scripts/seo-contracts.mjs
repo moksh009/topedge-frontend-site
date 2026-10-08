@@ -8,6 +8,20 @@ export const TITLE_MAX = 65;
 export const DESC_MIN = 70;
 export const DESC_MAX = 165;
 
+/**
+ * Mirrors withBrandSuffix() in src/marketing/components/MarketingSEO.tsx.
+ * Keep the two in step — these checkers exist to catch exactly the drift
+ * between what the audit assumes and what React actually renders.
+ */
+export const BRAND_SUFFIX = ' | TopEdge AI';
+
+export function withBrandSuffix(title) {
+  const t = String(title || '');
+  if (t.includes('TopEdge')) return t;
+  const full = `${t}${BRAND_SUFFIX}`;
+  return [...full].length <= TITLE_MAX ? full : t;
+}
+
 export function assertSnippetBudgets(title, description) {
   const titleLen = [...String(title || '')].length;
   const descriptionLen = [...String(description || '')].length;

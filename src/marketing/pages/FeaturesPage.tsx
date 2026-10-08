@@ -3,6 +3,7 @@ import MarketingSEO from '../components/MarketingSEO';
 import {
   PAGE_SEO,
   organizationJsonLd,
+  videoObjectJsonLd,
   breadcrumbJsonLd,
   webPageJsonLd,
 } from '../data/pageSeo';
@@ -128,6 +129,8 @@ export default function FeaturesPage() {
             { name: 'Home', path: '/' },
             { name: 'Features', path: '/features' },
           ]),
+          // Hero demo is the page's lead visual, so it is main content.
+          videoObjectJsonLd(demoAssetFor('hero')),
         ]}
       />
       <MarketingPage className="mkt-fx">

@@ -13,7 +13,7 @@ import '../styles/cod-confirmation.css';
 
 const PATH = '/features/cod-confirmation';
 
-const SEO_TITLE = 'TopEdge AI: WhatsApp COD Confirmation for Shopify India';
+const SEO_TITLE = 'WhatsApp COD Confirmation for Shopify India | TopEdge AI';
 const SEO_DESCRIPTION =
   'Confirm every COD order on WhatsApp before dispatch. Cut fake orders and RTO. Growth plan adds COD-to-prepaid links. 14-day free trial, no card.';
 

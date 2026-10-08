@@ -92,8 +92,9 @@ export type DocArticle = {
   /** Sidebar label — short. */
   navLabel: string;
   /**
-   * SEO title. `MarketingSEO` prepends `TopEdge AI: `, and the prerender audit caps
-   * the rendered title at 65 characters, so keep this at 53 or fewer.
+   * SEO title. `MarketingSEO` appends ` | TopEdge AI` when it fits, and the
+   * prerender audit caps the rendered title at 65 characters, so keep this at
+   * 52 or fewer to keep the brand; longer titles keep their keywords instead.
    */
   title: string;
   /** Meta description — the audit requires 70–165 characters. */

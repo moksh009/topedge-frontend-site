@@ -133,7 +133,7 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
           'Yes. Escalate into Live Chat so agents see the same Shopify order beside the thread, and takeover pauses automation on that chat.',
       },
     ],
-    seoTitle: 'TopEdge AI: WhatsApp Flow Builder for Shopify India',
+    seoTitle: 'WhatsApp Flow Builder for Shopify India | TopEdge AI',
     seoDescription:
       'Shopify WhatsApp flow builder: OAuth, order webhooks, Shopify tools on the canvas, and Live Chat handoff with order context.',
     keywords:
@@ -274,7 +274,7 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
           'Yes. Use the consented list as the audience for campaigns and journey eligibility so Meta marketing sends stay tied to real opt-in.',
       },
     ],
-    seoTitle: 'TopEdge AI: WhatsApp Opt-in Tools for Shopify India',
+    seoTitle: 'WhatsApp Opt-in Tools for Shopify India | TopEdge AI',
     seoDescription:
       'Capture WhatsApp numbers on Shopify with popup, spin wheel, and chat widget, then message only consented subscribers.',
     keywords:
@@ -696,7 +696,7 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
           'No. TopEdge gates live sends on APPROVED templates so drafts and rejected copy cannot go out and damage quality rating.',
       },
     ],
-    seoTitle: 'TopEdge AI: WhatsApp Cart Recovery & COD Flows for Shopify',
+    seoTitle: 'WhatsApp Cart Recovery & COD Flows for Shopify | TopEdge AI',
     seoDescription:
       'Build WhatsApp journeys for abandoned carts and COD confirmation in a visual editor. Meta approval gating, recovered revenue tracked in ₹. Try free.',
     keywords:
@@ -841,7 +841,7 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
           'Browse and cart events feed journey triggers and audiences (for example viewed 3×, never bought) when a WhatsApp number is already known or later attached at checkout.',
       },
     ],
-    seoTitle: 'TopEdge AI: Shopify WhatsApp Tracking Pixel',
+    seoTitle: 'Shopify WhatsApp Tracking Pixel | TopEdge AI',
     seoDescription:
       'Shopify tracking pixel: theme embed, product and cart intent matched to WhatsApp, consent-aware events, and pixel health.',
     keywords:
@@ -987,7 +987,7 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
           'Inside 24 hours of the customer’s last message, free text is allowed. Outside that window, use a Meta-approved utility or marketing template.',
       },
     ],
-    seoTitle: 'TopEdge AI: WhatsApp Shared Inbox for Shopify India',
+    seoTitle: 'WhatsApp Shared Inbox for Shopify India | TopEdge AI',
     seoDescription:
       'WhatsApp and Instagram inbox for Shopify. Agents see the order, confirm COD, recover carts, and pause AI on takeover.',
     keywords:
@@ -1133,7 +1133,7 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
           'It should not. Load store knowledge and policies first, keep Quick FAQs for rigid answers, and escalate disputes to Live Chat with order context.',
       },
     ],
-    seoTitle: 'TopEdge AI: WhatsApp AI for Shopify India (BYOK)',
+    seoTitle: 'WhatsApp AI for Shopify India (BYOK) | TopEdge AI',
     seoDescription:
       'Bring your own OpenAI or Claude key. Ground WhatsApp replies in store knowledge, route with Intent Detect, and pause AI on takeover.',
     keywords:
@@ -1900,7 +1900,7 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
           'Yes. Configure handoff intents to assign humans, and Live Chat takeover still pauses bots on that thread.',
       },
     ],
-    seoTitle: 'TopEdge AI: WhatsApp Intent Detection for Shopify India',
+    seoTitle: 'WhatsApp Intent Detection for Shopify India | TopEdge AI',
     seoDescription:
       'Route shipping, returns, COD, and handoff on WhatsApp before you spend AI tokens. Works with AI Brain and Live Chat.',
     keywords:

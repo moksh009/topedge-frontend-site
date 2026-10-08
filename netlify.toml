@@ -15,6 +15,24 @@
   status = 301
   force = true
 
+# Edge-cache every response (HTML included) on Netlify's CDN.
+#
+# LCP on mobile India was dominated by TTFB: HTML shipped
+# `cache-control: public,max-age=0,must-revalidate` and the edge reported
+# `fwd=miss`, so every visit revalidated against origin (0.65-1.5s TTFB).
+#
+# `Netlify-CDN-Cache-Control` is read by the CDN only and is stripped before the
+# response reaches the browser, so the browser keeps revalidating (no stale HTML
+# after a deploy) while the edge serves from cache. Netlify invalidates this
+# cache automatically on every deploy, so a long s-maxage is safe.
+#
+# Deliberately only sets the CDN header here: the browser-facing Cache-Control
+# for /assets/*, images and media stays owned by the specific rules below.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Netlify-CDN-Cache-Control = "public, s-maxage=604800, stale-while-revalidate=604800, durable"
+
 # Long-cache hashed assets + static media (PSI: efficient cache lifetimes)
 [[headers]]
   for = "/assets/*"

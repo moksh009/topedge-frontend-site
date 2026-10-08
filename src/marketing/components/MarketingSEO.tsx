@@ -5,7 +5,28 @@ import {
   OG_IMAGE_ALT_DEFAULT,
   OG_IMAGE_HEIGHT,
   OG_IMAGE_WIDTH,
+  TITLE_MAX,
 } from '../data/seoContracts';
+
+const BRAND_SUFFIX = ' | TopEdge AI';
+
+/**
+ * Brand goes LAST, and only when it fits.
+ *
+ * A `TopEdge AI: ` prefix spent the first 12 characters — the weightiest part of
+ * a title for ranking and the part users actually read — on a brand nobody
+ * searches for yet, and pushed the keyword toward the truncation point.
+ *
+ * Titles that already name TopEdge keep their own wording. Titles that would
+ * breach the snippet budget keep their keywords instead of the brand: a title
+ * Google truncates loses the brand anyway, and Google appends the site name
+ * from og:site_name on its own when it wants to.
+ */
+export function withBrandSuffix(title: string): string {
+  if (title.includes('TopEdge')) return title;
+  const full = `${title}${BRAND_SUFFIX}`;
+  return [...full].length <= TITLE_MAX ? full : title;
+}
 
 type FaqItem = { question: string; answer: string };
 
@@ -69,7 +90,7 @@ export default function MarketingSEO({
   articleSection,
   preloadLcpImage,
 }: MarketingSEOProps) {
-  const fullTitle = noSuffix ? title : title.includes('TopEdge') ? title : `TopEdge AI: ${title}`;
+  const fullTitle = noSuffix ? title : withBrandSuffix(title);
   const url = canonicalUrlForPath(path);
   const robots = noIndex
     ? 'noindex, nofollow'

@@ -12,7 +12,13 @@ import {
   type ProductBento,
   type ProductShowcase,
 } from '../data/productPages';
-import { organizationJsonLd, breadcrumbJsonLd, webPageJsonLd } from '../data/pageSeo';
+import {
+  organizationJsonLd,
+  breadcrumbJsonLd,
+  webPageJsonLd,
+  videoObjectJsonLd,
+} from '../data/pageSeo';
+import { demoAssetBySrc } from '../data/productDemoVideos';
 import { featurePagesModifiedIso } from '../data/contentDates';
 import FeatureMeshStage from '../components/effects/FeatureMeshStage';
 import HomeTrust from '../components/home/HomeTrust';
@@ -112,6 +118,7 @@ function ProductFeatureView({ page }: { page: ProductPage }) {
   const hasFaqs = Boolean(page.faqs?.length);
   const hasRelated = Boolean(page.related?.length);
   const modifiedIso = featurePagesModifiedIso();
+  const heroDemo = page.hero.kind === 'video' ? demoAssetBySrc(page.hero.src) : undefined;
 
   useEffect(() => {
     const hash = location.hash.replace(/^#/, '');
@@ -144,6 +151,10 @@ function ProductFeatureView({ page }: { page: ProductPage }) {
             { name: 'Product', path: '/features' },
             { name: page.eyebrow, path: page.path },
           ]),
+          // Hero demo is the page's lead visual, so it is main content and
+          // eligible for a video result. Only pages whose clip this catalog
+          // describes get markup — no invented names or dates.
+          ...(heroDemo ? [videoObjectJsonLd(heroDemo)] : []),
         ]}
       />
       <MarketingPage className="mkt-pf">

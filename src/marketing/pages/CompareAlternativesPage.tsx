@@ -9,7 +9,7 @@ import { compareTwoWayModifiedIso, updatedKicker } from '../data/contentDates';
 import '../styles/compare.css';
 
 const PATH = '/compare/alternatives';
-const TITLE = 'TopEdge AI: WhatsApp Alternatives for Shopify';
+const TITLE = 'WhatsApp Alternatives for Shopify | TopEdge AI';
 const DESCRIPTION =
   'Fair index of Shopify WhatsApp alternatives: WATI, AiSensy, Interakt, Bitespeed, Zoko, Getgabs, Kanal, and Dondy, with full TopEdge comparisons.';
 

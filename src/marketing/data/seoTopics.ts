@@ -20,7 +20,7 @@ export const SEO_TOPICS: Record<string, SeoTopic> = {
     h1: 'WhatsApp cart recovery for Shopify',
     subtitle:
       'Recover abandoned carts on WhatsApp with Meta-approved templates, live Shopify cart data, and a three-message sequence built for Indian D2C.',
-    title: 'TopEdge AI: WhatsApp Cart Recovery for Shopify',
+    title: 'WhatsApp Cart Recovery for Shopify | TopEdge AI',
     description:
       'Abandoned cart recovery on WhatsApp for Shopify India, timing, Meta templates, COD-aware journeys, and recovery ₹ tracking in one workspace.',
     keywords:

@@ -14,7 +14,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { assertSnippetBudgets } from './seo-contracts.mjs';
+import { assertSnippetBudgets, withBrandSuffix } from './seo-contracts.mjs';
 import { getSitemapPaths } from './marketing-urls.mjs';
 import { DOC_PATHS } from '../src/marketing/docs/manifest.mjs';
 
@@ -39,9 +39,9 @@ async function loadBlogPosts() {
   }
 }
 
-/** Mirrors BlogPost.tsx, which renders `TopEdge AI: ${post.title}` with noSuffix. */
+/** Mirrors BlogPost.tsx, which passes post.title straight to MarketingSEO. */
 function renderedTitle(title) {
-  return `TopEdge AI: ${title}`;
+  return withBrandSuffix(title);
 }
 
 const posts = await loadBlogPosts();

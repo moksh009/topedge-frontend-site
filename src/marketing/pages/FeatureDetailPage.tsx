@@ -9,6 +9,7 @@ import {
   organizationJsonLd,
   breadcrumbJsonLd,
   webPageJsonLd,
+  videoObjectJsonLd,
 } from '../data/pageSeo';
 import { featurePagesModifiedIso } from '../data/contentDates';
 import { demoAssetFor } from '../data/productDemoVideos';
@@ -48,7 +49,7 @@ export default function FeatureDetailPage() {
   return (
     <>
       <MarketingSEO
-        title={featureSeo?.title ?? `TopEdge AI: ${feature.title}`}
+        title={featureSeo?.title ?? feature.title}
         description={featureSeo?.description ?? feature.body}
         keywords={featureSeo?.keywords}
         path={`/features/${feature.slug}`}
@@ -66,6 +67,9 @@ export default function FeatureDetailPage() {
             { name: 'Features', path: '/features' },
             { name: feature.title, path: `/features/${feature.slug}` },
           ]),
+          // The demo sits directly under the hero and shows this feature, so it
+          // is main content and eligible for a video result.
+          videoObjectJsonLd(demo),
         ]}
       />
       <MarketingPage>
