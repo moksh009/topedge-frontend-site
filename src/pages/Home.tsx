@@ -15,7 +15,6 @@ import HomeHero from '../marketing/components/home/HomeHero';
 /** Below-fold sections — keep out of the critical homepage JS path for LCP. */
 const HomeStickyStories = lazy(() => import('../marketing/components/home/HomeStickyStories'));
 const HomeCrmSurface = lazy(() => import('../marketing/components/home/HomeCrmSurface'));
-const HomeRoiPayoff = lazy(() => import('../marketing/components/home/HomeRoiPayoff'));
 const HomeTestimonials = lazy(() => import('../marketing/components/home/HomeTestimonials'));
 const HomeFaq = lazy(() => import('../marketing/components/home/HomeFaq'));
 const HomeClose = lazy(() => import('../marketing/components/home/HomeClose'));
@@ -87,7 +86,6 @@ export default function Home() {
           <Suspense fallback={null}>
             <HomeStickyStories />
             <HomeCrmSurface />
-            <HomeRoiPayoff />
             <HomeTestimonials />
             <HomeFaq />
             <HomeClose />

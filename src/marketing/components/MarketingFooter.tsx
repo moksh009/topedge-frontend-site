@@ -21,6 +21,7 @@ const columns: { title: string; links: FootLink[] }[] = [
       { label: 'About', href: '/about' },
       { label: 'Customers', href: '/customers' },
       { label: 'Compare', href: '/compare' },
+      { label: 'Docs', href: '/docs' },
       { label: 'Blog', href: '/blog' },
       { label: 'Contact', href: '/contact' },
     ],
@@ -39,17 +40,6 @@ const columns: { title: string; links: FootLink[] }[] = [
       // sitewide link (see the Compare column note).
       { label: 'Instagram', href: '/features/instagram' },
       { label: 'Warranty', href: '/features/warranty' },
-    ],
-  },
-  {
-    title: 'Docs',
-    links: [
-      { label: 'Documentation', href: '/docs' },
-      { label: 'Quickstart', href: '/docs/quickstart' },
-      { label: 'Cart recovery', href: '/docs/guides/abandoned-cart-recovery' },
-      { label: 'COD confirmation', href: '/docs/guides/cod-confirmation' },
-      { label: 'Order updates', href: '/docs/guides/order-status-updates' },
-      { label: 'Troubleshooting', href: '/docs/troubleshooting' },
     ],
   },
   {

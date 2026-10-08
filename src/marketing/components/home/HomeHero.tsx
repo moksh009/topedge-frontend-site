@@ -52,7 +52,18 @@ export default function HomeHero() {
                 <span className="home-hero__title-text home-hero__title-text--job">
                   Confirm COD orders. Recover abandoned carts.{' '}
                 </span>
-                <span className="home-hero__title-highlight">On WhatsApp.</span>
+                <span className="home-hero__title-highlight">
+                  <img
+                    className="home-hero__title-wa"
+                    src="/platforms/whatsapp.svg"
+                    alt=""
+                    width={24}
+                    height={24}
+                    decoding="async"
+                    aria-hidden
+                  />
+                  On WhatsApp.
+                </span>
               </h1>
               <p className="home-hero__sub">
                 Live Chat with Shopify order context, Meta-approved journeys, and a 14-day free
