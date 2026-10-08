@@ -186,13 +186,31 @@ function sanitizePrerenderHtml(html) {
     out = out.replace(/<\/head>/i, `${nonBlocking}\n</head>`);
   }
 
+  // Hero film: drop the baked-in src from the saved HTML.
+  //
+  // The prerender runs the real app, so HomeHeroVideo has already picked a file
+  // by the time the snapshot is taken — the DESKTOP encode (~22 MB), because
+  // Playwright renders at a desktop viewport. Leaving that in the HTML means a
+  // phone starts fetching 22 MB straight from the markup and only swaps to the
+  // ~9 MB mobile cut once React hydrates, paying for both.
+  //
+  // Playback is driven entirely by the component, so an src-less <video> costs
+  // nothing: the poster shows until the client picks the right file. With JS
+  // off, the poster is what remains, which is the correct fallback anyway.
+  out = out.replace(
+    /(<video\b[^>]*\bclass="[^"]*home-hero__film-el[^"]*"[^>]*)\ssrc="[^"]*"/i,
+    '$1',
+  );
+
   // Hoist LCP image preload to the top of <head> so it is not stuck behind
   // CSS/modulepreload discovered during the SPA render.
   let lcpPreload = '';
   out = out.replace(/<link\b[^>]*>/gi, (tag) => {
     if (!/rel=["']preload["']/i.test(tag)) return tag;
     if (!/as=["']image["']/i.test(tag)) return tag;
-    if (!/herooo-immage/i.test(tag)) return tag;
+    // Homepage LCP candidate: the hero product still until Oct 2026, the hero
+    // film's poster frame since. Match either so the hoist keeps working.
+    if (!/herooo-immage|topedge-launch-poster/i.test(tag)) return tag;
     lcpPreload = tag;
     return '';
   });

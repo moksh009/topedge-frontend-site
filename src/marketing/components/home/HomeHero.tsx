@@ -2,6 +2,7 @@ import { ArrowRight } from 'lucide-react';
 import { PrimaryButton } from '../ui';
 import HeroRippleBackground from '../effects/HeroRippleBackground';
 import HomeTrust from './HomeTrust';
+import HomeHeroVideo from './HomeHeroVideo';
 import BrandMark from '../BrandMark';
 
 import { COMPANY_SHOPIFY_APP_URL } from '../../legal/companyIdentity';
@@ -40,7 +41,16 @@ export default function HomeHero() {
 
           <div className="home-hero__layout">
             <div className="home-hero__copy">
+              {/*
+                Three short beats instead of one 76-character sentence, and the
+                brand lockup moved to the end: the first thing read is what the
+                product does, not who makes it. Keeps the three terms the page
+                ranks on — COD, abandoned carts, WhatsApp.
+              */}
               <h1 className="home-hero__title home-hero__title--job">
+                <span className="home-hero__title-text home-hero__title-text--job">
+                  Confirm COD orders. Recover abandoned carts. On WhatsApp.
+                </span>{' '}
                 <span className="home-hero__title-brand">
                   <BrandMark
                     className="home-hero__title-mark"
@@ -51,9 +61,6 @@ export default function HomeHero() {
                   <span className="home-hero__title-name">
                     TopEdge <span>AI</span>
                   </span>
-                </span>{' '}
-                <span className="home-hero__title-text home-hero__title-text--job">
-                  confirms your COD orders and wins back abandoned carts on WhatsApp
                 </span>
               </h1>
               <p className="home-hero__sub">
@@ -89,24 +96,8 @@ export default function HomeHero() {
               </div>
             </div>
 
-            <div className="home-hero__shot">
-              <picture>
-                <source
-                  type="image/webp"
-                  srcSet="/herooo-immage-800.webp?v=3 800w, /herooo-immage-1200.webp?v=3 1200w, /herooo-immage-1600.webp?v=3 1600w, /herooo-immage-2400.webp?v=3 2398w"
-                  sizes="(max-width: 960px) 92vw, min(1040px, 92vw)"
-                />
-                <img
-                  src="/herooo-immage-800.webp?v=3"
-                  alt="TopEdge dashboard: WhatsApp commerce workspace"
-                  width={1200}
-                  height={606}
-                  sizes="(max-width: 960px) 92vw, min(1040px, 92vw)"
-                  decoding="async"
-                  loading="eager"
-                  fetchPriority="high"
-                />
-              </picture>
+            <div className="home-hero__shot home-hero__shot--film">
+              <HomeHeroVideo />
             </div>
           </div>
         </div>

@@ -6171,3 +6171,157 @@
   text-wrap: balance;
   line-height: 1.14;
 }
+
+/* ===========================================================================
+   Homepage hero film (HomeHeroVideo)
+   ---------------------------------------------------------------------------
+   Replaces the static product shot inside .home-hero__shot. Appended rather
+   than merged into the blocks above because `.home-hero__shot img` rules do
+   not apply to a <video>, so only the container and the new elements need
+   styling — and source order keeps this self-contained.
+
+   The film is 16:9 (1280x720). The shot it replaces was 1200x606, so the hero
+   gets marginally taller; the frame is left uncropped because cutting the top
+   or bottom off a product film hides the UI it exists to show.
+   =========================================================================== */
+
+.home-hero__shot--film {
+  /* The image used a negative bottom margin to sit flush with the section end;
+     the film fills its own box, so the container owns that offset instead. */
+  line-height: 0;
+  /* The film's UI is near-white; a dark placeholder reads as a broken
+     player in the beat before the first frame paints. */
+  background: #f5f6fa;
+}
+
+.home-hero__film {
+  position: relative;
+  display: block;
+  width: 100%;
+  line-height: 0;
+}
+
+.home-hero__film-el {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  /* `contain`, not `cover`: the still this replaced was cropped to sit flush
+     with the section edge, but a film has to be shown whole — a cropped frame
+     cuts off the product UI the film exists to demonstrate. The box is 16/9,
+     the same ratio as both encodes, so nothing is letterboxed either. */
+  object-fit: contain;
+  object-position: center center;
+  background: #f5f6fa;
+  margin: 0;
+  user-select: none;
+}
+
+/* Sound toggle. Always visible: audio that starts on its own with no way to
+   stop it is the single most complained-about pattern on the web, and the
+   button doubles as the affordance for browsers that refuse to unmute. */
+.home-hero__film-sound {
+  position: absolute;
+  right: 0.75rem;
+  bottom: 0.9rem;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.42rem 0.7rem;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 999px;
+  background: rgba(10, 14, 28, 0.58);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition:
+    background 160ms ease,
+    border-color 160ms ease,
+    transform 160ms ease;
+}
+
+.home-hero__film-sound:hover {
+  background: rgba(10, 14, 28, 0.76);
+  border-color: rgba(255, 255, 255, 0.44);
+}
+
+.home-hero__film-sound:focus-visible {
+  outline: 2px solid #a78bfa;
+  outline-offset: 2px;
+}
+
+.home-hero__film-sound:active {
+  transform: translateY(1px);
+}
+
+.home-hero__film-sound svg {
+  flex: 0 0 auto;
+}
+
+/* Tablet and below: the component also swaps to the ~9 MB mobile encode at
+   this exact width (MOBILE_QUERY in HomeHeroVideo.tsx) — keep them in step. */
+@media (max-width: 960px) {
+  .home-hero__film-el {
+    margin: 0;
+  }
+
+  .home-hero__film-sound {
+    right: 0.6rem;
+    bottom: 0.7rem;
+    padding: 0.38rem 0.62rem;
+    font-size: 0.72rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .home-hero__shot--film {
+    /* The still used object-fit: contain here so nothing was cropped; the film
+       already fits its own box, so it just needs to stop short of the fold. */
+    max-height: none;
+  }
+
+  .home-hero__film-el {
+    margin: 0;
+    object-fit: contain;
+  }
+}
+
+/* Nothing crops the film any more, so the hero board no longer needs to pull
+   the frame past its own bottom edge. */
+
+@media (max-width: 479px) {
+  .home-hero__film-sound {
+    right: 0.5rem;
+    bottom: 0.55rem;
+    padding: 0.34rem 0.56rem;
+  }
+
+  /* Label is redundant next to the icon once space is this tight. */
+  .home-hero__film-sound-text {
+    display: none;
+  }
+}
+
+/* Short landscape phones: the hero board is height-constrained here, so cap
+   the film instead of letting it push the CTAs off-screen. */
+@media (max-height: 700px) and (max-width: 900px) {
+  .home-hero__film-el {
+    max-height: 46dvh;
+    object-fit: contain;
+    margin: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* HomeHeroVideo does not autoplay under this preference; the poster frame
+     stands in, and the sound control is not rendered. */
+  .home-hero__film-el {
+    aspect-ratio: 16 / 9;
+  }
+}
