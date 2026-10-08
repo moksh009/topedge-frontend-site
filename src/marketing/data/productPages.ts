@@ -91,12 +91,6 @@ export type ProductPage = {
   ctaSub: string;
 };
 
-const CART_VIDEO = {
-  src: '/marketing/demos/cart-recovery.mp4',
-  poster: '/marketing/demos/cart-recovery-poster.jpg',
-  mobileSrc: '/marketing/demos/cart-recovery-mobile.mp4',
-} as const;
-
 const COD_VIDEO = {
   src: '/marketing/demos/cod-prepaid11.mp4?v=20260918a',
   poster: '/marketing/demos/cod-prepaid-poster.jpg?v=20260918a',

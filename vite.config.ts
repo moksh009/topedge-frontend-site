@@ -70,12 +70,11 @@ export default defineConfig(({ mode }) => {
       sourcemap: false,
       minify: 'terser',
       chunkSizeWarningLimit: 1000,
-      // Do not modulepreload firebase/charts/heavy on every route — homepage never needs them.
+      // Do not modulepreload charts/heavy on every route — homepage never needs them.
       modulePreload: {
         resolveDependencies(filename, deps) {
           return deps.filter(
             (d) =>
-              !d.includes('firebase') &&
               !d.includes('charts') &&
               !d.includes('heavy'),
           );
@@ -90,7 +89,7 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         output: {
           // Keep React in a leaf vendor chunk. Do NOT force-split app source
-          // (marketing/community) — that created vendor→community cycles and
+          // (marketing) — that created vendor→community cycles and
           // left React undefined when framer-motion called createContext
           // (blank pages + prerender h1 timeouts on Netlify).
           manualChunks(id) {
@@ -111,9 +110,6 @@ export default defineConfig(({ mode }) => {
             if (id.includes('chart.js') || id.includes('react-chartjs-2')) {
               return 'charts';
             }
-            if (id.includes('firebase')) {
-              return 'firebase';
-            }
             if (id.includes('jspdf') || id.includes('mathjs')) {
               return 'heavy';
             }
@@ -127,7 +123,6 @@ export default defineConfig(({ mode }) => {
     },
     optimizeDeps: {
       include: ['react', 'react-dom', 'react-router-dom', 'framer-motion'],
-      exclude: ['firebase'],
     },
   };
 });

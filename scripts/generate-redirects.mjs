@@ -35,8 +35,13 @@ function buildGeneratedBlock() {
 /login/  /login.html  200
 /signup  /signup.html  200
 /signup/  /signup.html  200
-/admin/*  /admin.html  200
 /dev/*  /dev.html  200
+
+# Retired builder-community and admin areas: tell crawlers they are gone for good.
+/community  /404.html  410!
+/community/*  /404.html  410!
+/admin  /404.html  410!
+/admin/*  /404.html  410!
 
 # Soft-404: unknown paths get noindex 404.html — never homepage SEO
 # (Do not add trailing-slash force 301s — they self-loop with Pretty URLs.)

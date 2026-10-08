@@ -3,21 +3,17 @@ import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'r
 import { AnimatePresence, motion } from 'framer-motion';
 import { Toaster } from 'react-hot-toast';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
-import { ThemeProvider } from './contexts/ThemeContext';
 import MarketingNavbar from './marketing/components/MarketingNavbar';
 import MarketingFooter from './marketing/components/MarketingFooter';
 import MarketingConvertPrompt from './marketing/components/MarketingConvertPrompt';
 import MarketingSmoothScroll, {
   SmoothScrollToTop,
 } from './marketing/components/effects/MarketingSmoothScroll';
-import { isMarketingRoute } from './marketing/routes';
 import MarketingPageLoader from './marketing/components/MarketingPageLoader';
 import MetaPixel from './components/MetaPixel';
 import Analytics from './marketing/components/Analytics';
 import Home from './pages/Home';
 
-const CommunityNavbar = React.lazy(() => import('./components/community/layout/CommunityNavbar'));
-const Footer = React.lazy(() => import('./components/Footer'));
 const About = React.lazy(() => import('./pages/About'));
 const Contact = React.lazy(() => import('./pages/Contact'));
 const Pricing = React.lazy(() => import('./marketing/pages/PricingPage'));
@@ -41,131 +37,42 @@ const CompareThreeWayPage = React.lazy(() => import('./marketing/pages/CompareTh
 const SeoTopicPage = React.lazy(() => import('./marketing/pages/SeoTopicPage'));
 const NotFoundPage = React.lazy(() => import('./marketing/pages/NotFoundPage'));
 const PrivacyPolicy = React.lazy(() => import('./pages/PrivacyPolicy'));
-const ProtectedRoute = React.lazy(() =>
-  import('./components/admin/ProtectedRoute').then((m) => ({ default: m.ProtectedRoute }))
-);
 
 const DevShowcasePage = import.meta.env.DEV
   ? React.lazy(() => import('./marketing/pages/DevShowcasePage'))
   : null;
 
-// Community
-const CommunityHome = React.lazy(() => import('./pages/community/home'));
-const CommunityLogin = React.lazy(() => import('./pages/community/login'));
-const CommunitySignup = React.lazy(() => import('./pages/community/signup'));
-const CommunityProfiles = React.lazy(() => import('./pages/community/profiles'));
-const CommunityPromoteProfile = React.lazy(() => import('./pages/community/PromoteProfile'));
-const ProfileDetails = React.lazy(() => import('./pages/community/ProfileDetails'));
-const AutomationHub = React.lazy(() => import('./pages/community/AutomationHub'));
-const SubmitResource = React.lazy(() => import('./pages/community/SubmitResource'));
-const ResourceDetails = React.lazy(() => import('./pages/community/ResourceDetails'));
-const OpenSource = React.lazy(() => import('./pages/community/OpenSource'));
-const Announcements = React.lazy(() => import('./pages/community/Announcements'));
-const AdminAnnouncements = React.lazy(() => import('./pages/community/AdminAnnouncements'));
-const Settings = React.lazy(() => import('./pages/community/Settings'));
-const Discord = React.lazy(() => import('./pages/community/Discord'));
-const CreatorDashboard = React.lazy(() => import('./pages/community/CreatorDashboard'));
-const RequestBoard = React.lazy(() => import('./pages/community/RequestBoard'));
-const ApproveAccess = React.lazy(() => import('./pages/community/ApproveAccess'));
-
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
-  const isCommunityRoute = location.pathname.startsWith('/community');
-  const isNoindexRoute =
-    isCommunityRoute ||
-    location.pathname.startsWith('/admin') ||
-    location.pathname.startsWith('/dev');
-  const isAuthPage =
-    location.pathname === '/community/login' || location.pathname === '/community/signup';
-  const marketing = isMarketingRoute(location.pathname);
   const isLegalRoute =
     location.pathname === '/privacy' ||
     location.pathname === '/privacy-policy' ||
     location.pathname === '/terms' ||
     location.pathname === '/terms-of-service';
-  const isAuthHandoff =
-    location.pathname === '/signup' || location.pathname === '/login';
-
-  const pageTitle = isCommunityRoute
-    ? 'Community | TopEdge'
-    : marketing
-      ? 'TopEdge | WhatsApp Automation & Cart Recovery for Shopify India'
-      : 'TopEdge';
-
-  const pageDescription = isCommunityRoute
-    ? 'Join the TopEdge community, automation workflows, resources, and builders.'
-    : marketing
-      ? 'WhatsApp automation for Shopify: abandoned cart recovery, COD confirmations, Live Chat, and ecommerce journeys for Indian D2C.'
-      : 'TopEdge, WhatsApp growth for Shopify and builders.';
+  const isAuthHandoff = location.pathname === '/signup' || location.pathname === '/login';
 
   return (
-    <div
-      className={`min-h-screen transition-colors duration-200 relative ${
-        marketing ? 'bg-white text-[#0c1222]' : 'bg-background text-text [zoom:0.9]'
-      }`}
-    >
+    <div className="min-h-screen transition-colors duration-200 relative bg-white text-[#0c1222]">
       <Helmet>
-        {!marketing && (
-          <>
-            <title>{pageTitle}</title>
-            <meta name="description" content={pageDescription} />
-            <meta
-              name="keywords"
-              content="TopEdge, WhatsApp Shopify, community, automation workflows, Indian D2C"
-            />
-            <meta property="og:type" content="website" />
-            <meta property="og:url" content="https://topedgeai.com/" />
-            <meta property="og:title" content={pageTitle} />
-            <meta property="og:description" content={pageDescription} />
-            <meta property="og:image" content="https://topedgeai.com/og-share.jpg" />
-            <meta name="twitter:card" content="summary_large_image" />
-            <meta name="twitter:url" content="https://topedgeai.com/" />
-            <meta name="twitter:title" content={pageTitle} />
-            <meta name="twitter:description" content={pageDescription} />
-            <meta name="twitter:image" content="https://topedgeai.com/og-share.jpg" />
-            {!isNoindexRoute && <link rel="canonical" href="https://topedgeai.com" />}
-            <meta name="robots" content={isNoindexRoute ? 'noindex, follow' : 'index, follow'} />
-          </>
-        )}
         <meta name="theme-color" content="#7C3AED" />
       </Helmet>
 
-      {!isCommunityRoute && !isLegalRoute && !isAuthHandoff && (
+      {!isLegalRoute && !isAuthHandoff && (
         <motion.div key="marketing-nav">
           <MarketingNavbar />
         </motion.div>
       )}
-      {isCommunityRoute && !isAuthPage && (
-        <React.Suspense fallback={null}>
-          <CommunityNavbar />
-        </React.Suspense>
-      )}
 
-      {isCommunityRoute ? (
-        <>
-          <Toaster />
-          {children}
-        </>
-      ) : (
-        <div className="flex-grow" role="main">
-          <Toaster />
-          {children}
-        </div>
-      )}
-
-      {isCommunityRoute && !isAuthPage && (
-        <React.Suspense fallback={null}>
-          <Footer />
-        </React.Suspense>
-      )}
+      <div className="flex-grow" role="main">
+        <Toaster />
+        {children}
+      </div>
     </div>
   );
 };
 
 function RouteOutlet() {
   const { pathname } = useLocation();
-  const marketing = isMarketingRoute(pathname);
-  const isCommunityRoute = pathname.startsWith('/community');
   const isLegalRoute =
     pathname === '/privacy' ||
     pathname === '/privacy-policy' ||
@@ -176,8 +83,8 @@ function RouteOutlet() {
   return (
     <>
       <AnimatedRoutes />
-      {!isCommunityRoute && !isLegalRoute && !isAuthHandoff && <MarketingFooter />}
-      {marketing && !isCommunityRoute && !isLegalRoute && !isAuthHandoff ? (
+      {!isLegalRoute && !isAuthHandoff && <MarketingFooter />}
+      {!isLegalRoute && !isAuthHandoff ? (
         <MarketingConvertPrompt />
       ) : null}
     </>
@@ -227,37 +134,11 @@ class AppErrorBoundary extends React.Component<
   }
 }
 
-const LazyAuthShell = React.lazy(() =>
-  Promise.all([import('./contexts/AuthContext'), import('./contexts/CommunityCacheContext')]).then(
-    ([auth, cache]) => ({
-      default: ({ children }: { children: React.ReactNode }) => (
-        <auth.AuthProvider>
-          <cache.CommunityCacheProvider>{children}</cache.CommunityCacheProvider>
-        </auth.AuthProvider>
-      ),
-    })
-  )
-);
-
-function RouteProviders({ children }: { children: React.ReactNode }) {
-  const { pathname } = useLocation();
-  if (isMarketingRoute(pathname)) {
-    return <>{children}</>;
-  }
-  return (
-    <React.Suspense fallback={<MarketingPageLoader />}>
-      <LazyAuthShell>{children}</LazyAuthShell>
-    </React.Suspense>
-  );
-}
-
 const App: React.FC = () => {
   return (
     <HelmetProvider>
-      <ThemeProvider>
         <AppErrorBoundary>
           <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
-            <RouteProviders>
               <MarketingSmoothScroll>
                 <SmoothScrollToTop />
                 <MetaPixel />
@@ -268,10 +149,8 @@ const App: React.FC = () => {
                   </React.Suspense>
                 </Layout>
               </MarketingSmoothScroll>
-            </RouteProviders>
           </Router>
         </AppErrorBoundary>
-      </ThemeProvider>
     </HelmetProvider>
   );
 };
@@ -324,34 +203,6 @@ const AnimatedRoutes = () => {
 
           {DevShowcasePage && <Route path="/dev/showcase" element={<DevShowcasePage />} />}
 
-          <Route path="/admin/login" element={<CommunityLogin />} />
-
-          {/* Community */}
-          <Route path="/community" element={<CommunityHome />} />
-          <Route path="/community/home" element={<CommunityHome />} />
-          <Route path="/community/login" element={<CommunityLogin />} />
-          <Route path="/community/signup" element={<CommunitySignup />} />
-          <Route path="/community/profiles" element={<CommunityProfiles />} />
-          <Route path="/community/profile/:id" element={<ProfileDetails />} />
-          <Route path="/community/promote-profile" element={<CommunityPromoteProfile />} />
-          <Route path="/community/automation-hub" element={<AutomationHub />} />
-          <Route path="/community/submit-resource" element={<SubmitResource />} />
-          <Route path="/community/resource/:id" element={<ResourceDetails />} />
-          <Route path="/community/open-source" element={<OpenSource />} />
-          <Route path="/community/announcements" element={<Announcements />} />
-          <Route path="/community/admin/announcements" element={<AdminAnnouncements />} />
-          <Route path="/community/settings" element={<Settings />} />
-          <Route path="/community/discord" element={<Discord />} />
-          <Route path="/community/approve-access" element={<ApproveAccess />} />
-          <Route
-            path="/community/dashboard"
-            element={
-              <ProtectedRoute>
-                <CreatorDashboard />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="/community/requests" element={<RequestBoard />} />
 
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
