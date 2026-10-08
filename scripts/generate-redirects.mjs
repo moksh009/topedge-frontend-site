@@ -19,7 +19,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { getSitemapPaths } from './marketing-urls.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const redirectsPath = path.resolve(__dirname, '../public/_redirects');
@@ -28,33 +27,31 @@ const BEGIN = '# BEGIN GENERATED — do not edit (scripts/generate-redirects.mjs
 const END = '# END GENERATED';
 
 /**
- * Trailing-slash duplicates, one explicit rule per known URL.
+ * Trailing-slash duplicates are NOT solved here. Reverted 2026-10-08.
  *
- * Netlify serves `/compare/wati/` and `/compare/wati` as separate 200s. The
- * canonical tag points at the slashless form, but GSC indexed BOTH and split
- * their positions across the pair (e.g. /compare/aisensy at 3.8 and
- * /compare/aisensy/ at 1.9), which is the "Duplicate without user-selected
- * canonical" finding.
+ * The previous version emitted one explicit `/<path>/  /<path>  301!` per sitemap
+ * URL to collapse the GSC "Duplicate without user-selected canonical" pair, on the
+ * reasoning that an explicit rule cannot loop because its source always has the
+ * slash and its target never does, and no other generated rule matches the target.
  *
- * A wildcard `/*\/ → /:splat 301!` is what the header above bans: it matches
- * slashless paths too and 301-loops every URL onto itself. Explicit per-path
- * rules cannot loop, because the source always has a trailing slash and the
- * target never does, and no generated rule matches the target.
+ * That holds inside this file, which is why it passed review. The loop partner is
+ * not in this file: it is Netlify's Pretty URLs, which 301s a path to its
+ * trailing-slash form. So `/compare` → `/compare/` → (our rule) → `/compare` →
+ * forever, and the browser gives up with ERR_TOO_MANY_REDIRECTS. That is what the
+ * header above has always meant by "they self-loop with Pretty URLs"; the hazard is
+ * the slash-stripping 301 itself, not the wildcard spelling of it.
  *
- * /privacy and /terms are skipped — public/_redirects already force-rewrites
- * both slash forms to static HTML higher up the file, and first match wins.
+ * Observed: /compare, /blog/*, /pricing and /docs/* all broke, while
+ * /lp/cod-confirmation kept serving — it is noindex, so it is not in
+ * getSitemapPaths() and never got a rule. /privacy and /terms were skipped and
+ * also stayed up. The Oct 7 crawl in seo-audit/evidence has all 101 URLs at 200,
+ * before these rules existed.
+ *
+ * The duplicate is real and still worth fixing. It needs Pretty URLs off on the
+ * Netlify site first; verify with `curl -sI https://topedgeai.com/compare` showing
+ * 200 and not a 301 to /compare/, then these rules can come back. Until then the
+ * canonical tag is the signal.
  */
-const SLASH_REDIRECT_SKIP = new Set(['/', '/privacy', '/terms']);
-
-function buildTrailingSlashRules() {
-  const paths = getSitemapPaths()
-    .filter((p) => p.startsWith('/') && !SLASH_REDIRECT_SKIP.has(p))
-    .filter((p) => !p.endsWith('/'));
-  const unique = [...new Set(paths)].sort();
-  const lines = unique.map((p) => `${p}/  ${p}  301!`);
-  return `# Trailing-slash duplicates → canonical slashless URL (explicit, never wildcard)
-${lines.join('\n')}`;
-}
 
 function buildGeneratedBlock() {
   return `${BEGIN}
@@ -72,8 +69,6 @@ function buildGeneratedBlock() {
 /community/*  /404.html  410!
 /admin  /404.html  410!
 /admin/*  /404.html  410!
-
-${buildTrailingSlashRules()}
 
 # Soft-404: unknown paths get noindex 404.html — never homepage SEO
 # (Do not add trailing-slash force 301s — they self-loop with Pretty URLs.)
@@ -105,7 +100,26 @@ function main() {
   // ignore comments that document the ban).
   if (/^\/\*\/\s+\/:splat\s+301!/m.test(next) || /^\/\*\s+\/:splat\s+301!/m.test(next)) {
     throw new Error(
-      'Refusing to write trailing-slash force 301s into _redirects (Netlify self-loop risk).',
+      'Refusing to write a wildcard trailing-slash force 301 into _redirects (Netlify self-loop risk).',
+    );
+  }
+  // Any forced 301 from a path to that same path without its trailing slash loops
+  // against Netlify's Pretty URLs, however it is spelled. The wildcard check above
+  // did not catch the explicit per-URL form, which is how the 2026-10-08 outage
+  // shipped, so the shape is banned rather than one way of writing it.
+  const selfSlashStrip = next
+    .split('\n')
+    .map((l) => l.trim())
+    .filter((l) => l && !l.startsWith('#'))
+    .filter((l) => {
+      const m = l.match(/^(\/\S*?)\/\s+(\/\S*)\s+30[18]!/);
+      return m && m[1] === m[2];
+    });
+  if (selfSlashStrip.length) {
+    throw new Error(
+      `Refusing to write ${selfSlashStrip.length} slash-stripping force 301s into _redirects ` +
+        `(Netlify Pretty URLs 301s the slashless form back, so each one is a loop). ` +
+        `First: ${selfSlashStrip[0]}`,
     );
   }
   fs.writeFileSync(redirectsPath, next, 'utf8');
