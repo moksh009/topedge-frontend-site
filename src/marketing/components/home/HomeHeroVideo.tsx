@@ -23,6 +23,14 @@ function SoundOnIcon() {
   );
 }
 
+function ExpandIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M9 4H4v5M15 4h5v5M15 20h5v-5M9 20H4v-5" />
+    </svg>
+  );
+}
+
 function SoundOffIcon() {
   return (
     <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
@@ -215,6 +223,33 @@ export default function HomeHeroVideo() {
     return () => io.disconnect();
   }, [src, reduced]);
 
+  /**
+   * Phone-sized screens get the film full-screen on tap.
+   *
+   * Inline, a 16:9 film inside a 375px column is about 190px tall — too small
+   * to read the product UI the film is demonstrating. iOS Safari does not
+   * implement requestFullscreen on elements and exposes webkitEnterFullscreen
+   * on the video instead, so both are tried.
+   *
+   * A tap is a user gesture, which is the one moment sound is guaranteed to be
+   * allowed, so take it.
+   */
+  const openFullscreen = useCallback(() => {
+    const video = videoRef.current as
+      | (HTMLVideoElement & { webkitEnterFullscreen?: () => void })
+      | null;
+    if (!video) return;
+    if (!window.matchMedia(MOBILE_QUERY).matches) return;
+    unmute();
+    if (typeof video.requestFullscreen === 'function') {
+      video.requestFullscreen().catch(() => {
+        video.webkitEnterFullscreen?.();
+      });
+    } else {
+      video.webkitEnterFullscreen?.();
+    }
+  }, [unmute]);
+
   const toggle = useCallback(() => {
     const video = videoRef.current;
     if (!video) return;
@@ -239,7 +274,20 @@ export default function HomeHeroVideo() {
         playsInline
         preload="auto"
         aria-label={LABEL}
+        onClick={openFullscreen}
       />
+      {/* The tap target above is the convenience; this button is the
+          accessible route — reachable by keyboard and announced by screen
+          readers, which a click handler on a <video> is not. */}
+      <button
+        type="button"
+        className="home-hero__film-expand"
+        onClick={openFullscreen}
+        aria-label="Play full screen"
+        title="Play full screen"
+      >
+        <ExpandIcon />
+      </button>
       {!reduced ? (
         <button
           type="button"

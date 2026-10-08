@@ -6325,3 +6325,132 @@
     aspect-ratio: 16 / 9;
   }
 }
+
+/* ===========================================================================
+   Hero headline — no brand lockup, highlighter on "On WhatsApp."
+   ---------------------------------------------------------------------------
+   The old title was a flex row/column of two blocks (sentence + brand pill),
+   which is why the breakpoints above set flex-direction and a stack gap. The
+   headline is now one sentence with an inline highlighted phrase, so it goes
+   back to normal inline text flow and the highlight wraps with the words.
+
+   Appended so these win over the flex rules in the breakpoints above; each
+   size below pairs with the media query of the same width up the file.
+   =========================================================================== */
+
+.home-hero__title {
+  display: block;
+  /* Dropping the brand pill freed a whole line, so the type can grow into it. */
+  font-size: clamp(1.75rem, 3.6vw, 3rem);
+  text-wrap: balance;
+}
+
+.home-hero__title-text {
+  display: inline;
+}
+
+/* Same lilac highlighter the brand pill used, as an inline marker.
+   box-decoration-break keeps the rounded ends and padding intact when the
+   phrase wraps to a second line instead of splitting into a square slab. */
+.home-hero__title-highlight {
+  display: inline;
+  padding: 0.1em 0.28em 0.14em;
+  border-radius: 0.32em;
+  background: #e4d4ff;
+  color: #2a1065;
+  font-weight: 500;
+  letter-spacing: inherit;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+@media (max-width: 959px) {
+  .home-hero__title {
+    display: block;
+    font-size: clamp(2.2rem, 9.2vw, 2.7rem);
+  }
+}
+
+@media (max-width: 767px) {
+  .home-hero__title {
+    font-size: clamp(2.1rem, 9vw, 2.55rem);
+  }
+}
+
+@media (max-width: 479px) {
+  .home-hero__title {
+    font-size: clamp(1.95rem, 8.6vw, 2.3rem);
+  }
+
+  .home-hero__title-highlight {
+    padding: 0.08em 0.24em 0.12em;
+  }
+}
+
+/* Short landscape phones: the board is height-constrained, so the headline
+   gives room back to the CTAs and the film rather than the other way round. */
+@media (max-height: 700px) and (max-width: 900px) {
+  .home-hero__title {
+    font-size: clamp(1.45rem, 5.6vw, 1.75rem);
+  }
+
+  .home-hero__title-text {
+    display: inline;
+  }
+}
+
+/* Full-screen control — phones only. On a laptop the film is already 895px
+   wide and the browser's own controls are a right-click away, so the button
+   would just be clutter. */
+.home-hero__film-expand {
+  display: none;
+}
+
+@media (max-width: 960px) {
+  .home-hero__film-el {
+    /* Signals the tap target. */
+    cursor: pointer;
+  }
+
+  .home-hero__film-expand {
+    position: absolute;
+    left: 0.6rem;
+    bottom: 0.7rem;
+    z-index: 3;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 999px;
+    background: rgba(10, 14, 28, 0.58);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    color: #fff;
+    cursor: pointer;
+    transition:
+      background 160ms ease,
+      border-color 160ms ease;
+  }
+
+  .home-hero__film-expand:hover {
+    background: rgba(10, 14, 28, 0.76);
+    border-color: rgba(255, 255, 255, 0.44);
+  }
+
+  .home-hero__film-expand:focus-visible {
+    outline: 2px solid #a78bfa;
+    outline-offset: 2px;
+  }
+}
+
+@media (max-width: 479px) {
+  .home-hero__film-expand {
+    left: 0.5rem;
+    bottom: 0.55rem;
+    width: 1.85rem;
+    height: 1.85rem;
+  }
+}

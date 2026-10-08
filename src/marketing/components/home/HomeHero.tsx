@@ -3,7 +3,6 @@ import { PrimaryButton } from '../ui';
 import HeroRippleBackground from '../effects/HeroRippleBackground';
 import HomeTrust from './HomeTrust';
 import HomeHeroVideo from './HomeHeroVideo';
-import BrandMark from '../BrandMark';
 
 import { COMPANY_SHOPIFY_APP_URL } from '../../legal/companyIdentity';
 
@@ -42,26 +41,18 @@ export default function HomeHero() {
           <div className="home-hero__layout">
             <div className="home-hero__copy">
               {/*
-                Three short beats instead of one 76-character sentence, and the
-                brand lockup moved to the end: the first thing read is what the
-                product does, not who makes it. Keeps the three terms the page
-                ranks on — COD, abandoned carts, WhatsApp.
+                Three short beats, no brand lockup: the logo sits in the navbar
+                two inches above, so repeating it here spent the largest type on
+                the page saying nothing. The highlighter moves to "On WhatsApp."
+                — the channel is the differentiator, and it is the last thing
+                read. Keeps the terms the page ranks on: COD, abandoned carts,
+                WhatsApp.
               */}
               <h1 className="home-hero__title home-hero__title--job">
                 <span className="home-hero__title-text home-hero__title-text--job">
-                  Confirm COD orders. Recover abandoned carts. On WhatsApp.
-                </span>{' '}
-                <span className="home-hero__title-brand">
-                  <BrandMark
-                    className="home-hero__title-mark"
-                    width={28}
-                    height={28}
-                    size="sm"
-                  />
-                  <span className="home-hero__title-name">
-                    TopEdge <span>AI</span>
-                  </span>
+                  Confirm COD orders. Recover abandoned carts.{' '}
                 </span>
+                <span className="home-hero__title-highlight">On WhatsApp.</span>
               </h1>
               <p className="home-hero__sub">
                 Live Chat with Shopify order context, Meta-approved journeys, and a 14-day free
