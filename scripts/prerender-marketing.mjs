@@ -102,6 +102,17 @@ function installChromium() {
 }
 
 async function launchBrowser() {
+  // An already-present browser beats downloading one mid-build. Losing this step
+  // costs the whole marketing site (every route exists only as a file written
+  // here), so a build host with its own Chromium should be able to say so rather
+  // than depend on reaching Playwright's CDN.
+  const preinstalled = process.env.PRERENDER_CHROMIUM_PATH;
+  if (preinstalled) {
+    if (!fs.existsSync(preinstalled)) {
+      throw new Error(`PRERENDER_CHROMIUM_PATH is set to ${preinstalled}, which does not exist`);
+    }
+    return await chromium.launch({ headless: true, executablePath: preinstalled });
+  }
   try {
     return await chromium.launch({ headless: true });
   } catch (err) {

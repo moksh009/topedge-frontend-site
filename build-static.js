@@ -26,3 +26,19 @@ for (const [name, title] of Object.entries(APP_SHELLS)) {
   fs.writeFileSync(path.join(distPath, `${name}.html`), shell);
   console.log(`✅ dist/${name}.html created (noindex, follow)`);
 }
+
+// Baseline dist/404.html, written here rather than only by the prerender.
+//
+// _redirects ends in `/*  /404.html  404` and carries no SPA fallback, so 404.html is
+// the document every unmatched URL resolves to. The prerender renders the real
+// NotFoundPage over this file, but it runs last and needs a Playwright browser it has
+// to download at build time. When that step does not run, every marketing URL loses
+// its .html AND the catch-all points at a file that is not there, which takes the
+// whole marketing site down while static files under public/ keep serving. This shell
+// means the catch-all always resolves, so the worst case is a plain 404 instead.
+const notFoundShell = bareShell.replace(
+  /<title>.*?<\/title>/,
+  '<title>Page not found | TopEdge AI</title>\n    <meta name="robots" content="noindex, follow" />',
+);
+fs.writeFileSync(path.join(distPath, '404.html'), notFoundShell);
+console.log('✅ dist/404.html created (noindex baseline; prerender overwrites it)');
