@@ -113,7 +113,7 @@ export default function PricingPage() {
                 highlight="not guesswork."
                 sub={
                   <>
-                    Three plans built around how many orders you actually process , {' '}
+                    Three plans built around how many orders you actually process:{' '}
                     <span className="mkt-psec__keep">100 to 1,500 a month.</span>
                   </>
                 }

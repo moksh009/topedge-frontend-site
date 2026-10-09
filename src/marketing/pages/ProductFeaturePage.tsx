@@ -96,7 +96,7 @@ function ShowcaseRow({ item, index }: { item: ProductShowcase; index: number }) 
         <ShotFrame src={item.image} label={label} wide />
       </div>
       <div className="mkt-pf__showcase-copy">
-        <h3 className="mkt-pf__showcase-title">
+        <h2 className="mkt-pf__showcase-title">
           {item.title}
           {item.titleAccent ? (
             <>
@@ -104,7 +104,7 @@ function ShowcaseRow({ item, index }: { item: ProductShowcase; index: number }) 
               <span className="mkt-pf__tile-accent">{item.titleAccent}</span>
             </>
           ) : null}
-        </h3>
+        </h2>
         <p className="mkt-pf__showcase-body">{item.body}</p>
       </div>
     </article>

@@ -373,6 +373,7 @@
   text-underline-offset: 2px;
 }
 
+.legal-page__body h3,
 .legal-page__body h4 {
   margin: 0.85rem 0 0.4rem;
   font-size: 0.8125rem;

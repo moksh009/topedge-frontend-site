@@ -91,7 +91,7 @@ export default function CustomersPage() {
                   />
                 </div>
                 <p className="mkt-customers__metric">{o.metric}</p>
-                <h3 className="mkt-customers__label">{o.label}</h3>
+                <h2 className="mkt-customers__label">{o.label}</h2>
                 <p className="mkt-customers__detail">{o.detail}</p>
               </article>
             ))}

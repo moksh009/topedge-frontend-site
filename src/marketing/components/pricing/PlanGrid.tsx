@@ -90,7 +90,7 @@ function TrialCard({ delay = 0, compact = false }: { delay?: number; compact?: b
   const panel = (
     <div className="mkt-plan__panel">
       <div className="mkt-plan__title-row">
-        <h3 className="mkt-plan__name">Free trial</h3>
+        <h2 className="mkt-plan__name">Free trial</h2>
         <span className="mkt-plan__badge mkt-plan__badge--trial">No card here</span>
       </div>
       <div className="mkt-plan__price-row">
@@ -157,7 +157,7 @@ function PlanCard({
   const panel = (
     <div className="mkt-plan__panel">
       <div className="mkt-plan__title-row">
-        <h3 className="mkt-plan__name">{plan.displayName} Plan</h3>
+        <h2 className="mkt-plan__name">{plan.displayName} Plan</h2>
         {emphasized ? <span className="mkt-plan__badge">Most popular</span> : null}
       </div>
       <div className="mkt-plan__price-row">
