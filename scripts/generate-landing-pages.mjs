@@ -326,13 +326,21 @@ const BADGES = [
 ];
 
 // Three copies of four logos: two left a visible double at 1440px.
-// The files are white-on-transparent. base.css paints them black for the hero
-// row; nothing tints them. `founder` fills the second line of the tooltip. It is blank because
-// nobody has given us those names, and a founder's name is the last thing to
-// guess at; set it and the tooltip reads "Delitech &middot; <name>".
+/**
+ * The four customers this page may name. The logo files are white-on-transparent,
+ * made for the dark band under the hero, which is where they are shown: a
+ * wordmark between 2.4:1 and 4:1 needs its width, and a round crop at 42px
+ * leaves about nine pixels of cap height. Nothing recolours them.
+ *
+ * `founder` drives the hero avatar. With a name the disc carries that person's
+ * initials and the tooltip reads the company then the founder; without one it
+ * falls back to the company's initials and the company name alone. Two names
+ * came from the owner on 9 Oct; the other two are still missing, and a
+ * founder's name is the last thing to guess at.
+ */
 const TRUST_LOGOS = [
-  { src: '/trust/delitech-white.png', alt: 'Delitech', founder: '' },
-  { src: '/trust/apex-white.png', alt: 'Apex Light', founder: '' },
+  { src: '/trust/delitech-white.png', alt: 'Delitech', founder: 'Ved Patel' },
+  { src: '/trust/apex-white.png', alt: 'Apex Light', founder: 'Shubham Patel' },
   { src: '/trust/codeclinic-white.png', alt: 'code CLINIC', founder: '' },
   { src: '/trust/choicesalon-white.png', alt: 'Choice Salon', founder: '' },
 ];
@@ -432,10 +440,19 @@ function planCards(slug) {
  * before the script lands and if it never does, so the proof never disappears.
  */
 const TRUSTPILOT = {
-  // Set this to the TrustScore shown on the Trustpilot dashboard (for example
-  // '4.6') and the hero grows a five-star row that links to the review page.
-  // Empty means no stars and no number anywhere on the page, which is the only
-  // honest default while nobody here can read the live score.
+  /**
+   * THE ONE VALUE THIS PAGE IS WAITING ON. Put the TrustScore from
+   * trustpilot.com/review/topedgeai.com here, as a string, for example '4.6'.
+   * The hero then draws five stars beside the customer avatars and says where
+   * the number came from; the rest of the page needs no other change.
+   *
+   * It is empty because it cannot be looked up from the build container:
+   * trustpilot.com does not resolve through the egress proxy at all (not a
+   * 403, an ENOTFOUND on the hostname), checked by curl, by fetch and by web
+   * search on 9 Oct 2026. Until someone reads it off the dashboard, the hero
+   * links to the review page and claims no score, because the three reviews we
+   * quote give their text and their author and not the rating each one carried.
+   */
   score: '',
   businessUnitId: '',
   templateId: '53aa8912dec7e10d38f59f36',
@@ -502,17 +519,23 @@ const includedHtml = INCLUDED.map((i) => `<li>${esc(i)}</li>`).join('');
 
 
 /**
- * The dark band under the hero. It used to scroll the same four customer logos
- * that now sit in the hero proof row, one screen above: the same marks twice in
- * a screen and a half, which is the sort of thing a visitor reads as filler
- * even when they could not say why.
- *
- * It answers the other question a cold visitor off an ad arrives with, which is
- * whether this is a real company plugged into real platforms. These three marks
- * were duplicated at the bottom of the reviews section; they are here only now.
+ * The band under the hero: the customer logos at a size where a wordmark is
+ * readable, which is the thing a 42px circle cannot do. The hero above shows
+ * these four as people; this shows them as companies. No marquee, because four
+ * logos do not fill a desktop viewport and the loop showed the same mark twice
+ * at once.
  */
-const stripHtml = BADGES.map(
-  (b) => `<li><img src="${b.src}" alt="${esc(b.alt)}" height="40" loading="lazy" decoding="async"></li>`,
+const stripHtml = TRUST_LOGOS.map(
+  (l) => `<li><img src="${l.src}" alt="${esc(l.alt)}" height="30" loading="lazy" decoding="async"></li>`,
+).join('');
+
+/**
+ * The platform marks, beside the price. They used to sit under the hero, which
+ * is early for them: "who actually bills me for the messages" is a question
+ * that arrives when someone is looking at a number, not at a headline.
+ */
+const badgesHtml = BADGES.map(
+  (b) => `<li><img src="${b.src}" alt="${esc(b.alt)}" height="42" loading="lazy" decoding="async"></li>`,
 ).join('');
 
 /**
@@ -592,40 +615,45 @@ ${cols}
 }
 
 /**
- * The proof row under the hero button: an overlapping stack of the four brands
- * this page is allowed to name, then a line of text. Pills rather than the
- * reference's round avatars, because the logo files are wordmarks and a circle
- * crops them to nothing; hovering one brings it to the front and names it. No
- * faces: we have no portraits of these customers and stock ones would be a lie.
+ * The proof block under the hero button, in the shape the reference uses: an
+ * overlapping stack of round avatars, a star row beside it, one line of text
+ * underneath.
  *
- * The pills are white and the marks are black. The files are pure white
- * monochrome with an alpha channel, made for the dark strip this page used to
- * carry, so `filter:brightness(0)` renders them as the flat black of an
- * ordinary logo wall with the alpha intact. Somebody else's logo tinted in our
- * brand colour is not their logo.
+ * The avatars carry initials, not photographs and not the logo files. No
+ * photographs because we have none of these people and stock faces presented as
+ * customers are a straightforward lie. Not the logos because every one of them
+ * is a wordmark between 2.4:1 and 4:1, and a round crop at 42px leaves about
+ * nine pixels of cap height: a smudge. The logos get a band of their own under
+ * the hero, at a size where they can be read. Here the disc is a person, the
+ * way the reference means it, and hovering one names the company and the
+ * founder.
  *
- * `TRUSTPILOT.score` is the switch for the star row. It is empty, and while it is
- * empty no stars and no number appear anywhere: the published reviews give the
- * text and the author, not the rating each one carried, and a star row drawn by
- * hand is a score claim with no source behind it. Paste the TrustScore from the
- * Trustpilot dashboard (or set `businessUnitId` and let the real widget draw it)
- * and the row below fills in on the next build.
+ * The star row is the honest half of this. It renders only when
+ * `TRUSTPILOT.score` holds a number, and it says where the number came from.
+ * See the note on TRUSTPILOT for why it is still empty.
  */
-const STAR = '<svg viewBox="0 0 24 24" width="15" height="15" fill="#00b67a" aria-hidden="true"><path d="M12 1.6l3.1 7.2 7.8.6-5.9 5.1 1.8 7.6L12 18l-6.8 4.1 1.8-7.6L1.1 9.4l7.8-.6z"/></svg>';
+const STAR = '<svg viewBox="0 0 24 24" width="17" height="17" fill="#f6a723" aria-hidden="true"><path d="M12 1.6l3.1 7.2 7.8.6-5.9 5.1 1.8 7.6L12 18l-6.8 4.1 1.8-7.6L1.1 9.4l7.8-.6z"/></svg>';
 
 function heroProof() {
-  const names = TRUST_LOGOS.map((l) => l.alt);
+  const initials = (c) => {
+    const from = c.founder || c.alt;
+    const words = from.split(/\s+/).filter(Boolean);
+    return (words.length > 1 ? words[0][0] + words[1][0] : from.slice(0, 2)).toUpperCase();
+  };
   const faces = TRUST_LOGOS.map(
-    (l) =>
-      `<span><img src="${l.src}" alt="" width="66" height="16" decoding="async"><i class="hp-tip">${esc(l.alt)}${l.founder ? ` &middot; ${esc(l.founder)}` : ''}</i></span>`,
+    (c, i) =>
+      `<span class="f${i + 1}"><b>${initials(c)}</b><i class="hp-tip">${esc(c.alt)}${c.founder ? `<em>${esc(c.founder)}</em>` : ''}</i></span>`,
   ).join('');
-  const who = `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]} run on TopEdge`;
+  const who = TRUST_LOGOS.map((c) => (c.founder ? `${c.founder} of ${c.alt}` : c.alt)).join(', ');
   const stars = TRUSTPILOT.score
-    ? `<span class="hp-stars">${STAR.repeat(5)}</span>${esc(TRUSTPILOT.score)} on <a href="${TRUSTPILOT.reviewUrl}" target="_blank" rel="noopener">Trustpilot</a>`
-    : `Trusted by Shopify brands in India &middot; <a href="${TRUSTPILOT.reviewUrl}" target="_blank" rel="noopener">read the reviews</a>`;
+    ? `<p class="hp-stars">${STAR.repeat(5)}<span>${esc(TRUSTPILOT.score)} on <a href="${TRUSTPILOT.reviewUrl}" target="_blank" rel="noopener">Trustpilot</a></span></p>`
+    : `<p class="hp-stars hp-stars--none"><a href="${TRUSTPILOT.reviewUrl}" target="_blank" rel="noopener">Read the reviews on Trustpilot</a></p>`;
   return `<div class="hp">
-        <div class="hp-faces" role="img" aria-label="${esc(who)}">${faces}</div>
-        <p class="hp-t">${stars}</p>
+        <div class="hp-row">
+          <div class="hp-faces" role="img" aria-label="Running on TopEdge: ${esc(who)}">${faces}</div>
+          ${stars}
+        </div>
+        <p class="hp-t">Loved by Shopify founders in India</p>
       </div>`;
 }
 
@@ -637,7 +665,7 @@ function heroProof() {
  */
 const SHOPIFY_BUTTON = `<a class="btn btn-out" data-cta="shopify" href="${SHOPIFY_URL}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V7a3 3 0 0 1 6 0v1"/></svg>Install on Shopify</a>`;
 
-const FREE_NOTE = `<span class="free" aria-hidden="true"><svg viewBox="0 0 92 46" width="92" height="46" fill="none" stroke="#8b5cf6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M88 36c-11 5-23 5-33 0-7-3-12-9-19-12-5-2-10-3-16-2"/><path d="M20 22l11-6M20 22l7 10"/></svg><b>Free for ${TRIAL.days} days</b></span>`;
+const FREE_NOTE = `<span class="free" aria-hidden="true"><svg viewBox="0 0 128 62" width="128" height="62" fill="none" stroke="#2e1065" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round"><path d="M115 16c-15 1-16 21-33 28-12 5-26 5-38-1 7 7 3 15-7 13-9-2-16-10-23-18"/><path d="M14 38l20-4M14 38l8 15"/></svg><b>Free for ${TRIAL.days} days</b></span>`;
 
 const VIDEO = {
   lg: '/marketing/demos/topedge-launch.mp4',
@@ -781,7 +809,8 @@ for (const page of PAGES) {
     POSTS: postsHtml,
     SWITCH_ROWS: switchHtml,
     INCLUDED_LIST: includedHtml,
-    STRIP_BADGES: stripHtml,
+    STRIP_LOGOS: stripHtml,
+    BADGES: badgesHtml,
     FILM: filmHtml(),
     SLUG: page.slug,
     SHOPIFY_URL,

@@ -43,6 +43,15 @@ const markup = html
   .replace(/<style\b[^>]*>[\s\S]*?<\/style>/g, '');
 const copy = markup.replace(/<[^>]+>/g, '');
 
+// String.search returns -1 for a pattern that is not there, which would make
+// every "A comes before B" comparison pass for a section that was deleted. Fail
+// on the missing section instead, and let the comparison mean what it says.
+const at = (re) => {
+  const i = markup.search(re);
+  must(i !== -1, `section missing: ${re}`);
+  return i === -1 ? Infinity : i;
+};
+
 // Em dashes are banned in our copy, but verbatim reviews are quoted exactly as written.
 const withoutQuotes = html.replace(/<blockquote[\s\S]*?<\/blockquote>/g, '');
 
@@ -130,31 +139,42 @@ must(/film\.play\(\)/.test(html), 'nothing starts the hero film; it would sit on
 // The proof row under the buttons. No star and no number may appear unless the generator
 // was given a real TrustScore: the published reviews do not carry per-review ratings.
 must(/class="hp-faces"/.test(markup), 'the hero proof row is missing');
-const proofRow = (markup.match(/<div class="hp-faces"[\s\S]*?<\/div>/) || [''])[0];
-for (const logo of ['delitech', 'apex', 'codeclinic', 'choicesalon']) {
-  must(proofRow.includes(`/trust/${logo}-white.png`), `the hero proof row is not showing the ${logo} logo`);
+const proofRow = (markup.match(/<div class="hp-faces"[\s\S]*?<\/div>\s*<p/) || [''])[0];
+must(count(/class="hp-tip"/g) === 4, 'expected four customer avatars, each with a tooltip');
+// Initials, never a photograph: we have no portraits of these people, and a
+// stock face captioned with a real customer's name is a lie, not a placeholder.
+must(!/<img\b/.test(proofRow), 'the hero avatars are showing images; stock faces are not our customers');
+must(/aria-label="[^"]*Delitech[^"]*Choice Salon[^"]*"/.test(proofRow), 'the hero avatar row no longer names the brands to a screen reader');
+// Where a founder is known the tooltip names them, and the avatar is their
+// initials rather than the company's.
+for (const [brand, founder] of [['Apex Light', 'Shubham Patel'], ['Delitech', 'Ved Patel']]) {
+  must(proofRow.includes(`${brand}<em>${founder}</em>`), `the tooltip does not name ${founder} under ${brand}`);
 }
-// Each pill is decoration inside one labelled row, so the images carry no alt of
-// their own; the row's aria-label names all four. Two labels would say it twice.
-must(/aria-label="[^"]*Delitech[^"]*Choice Salon[^"]*"/.test(proofRow), 'the hero proof row no longer names the brands to a screen reader');
-must(!/<img [^>]*alt="[^"]/.test(proofRow), 'a logo pill has its own alt; the row is already labelled');
-// A customer's wordmark is theirs. It is painted flat black here, never tinted.
-must(/\.hp-faces img\{[^}]*filter:brightness\(0\)/.test(html), 'the hero logos are not being painted flat black');
-must(!/\.hp-faces>span\{[^}]*background:linear-gradient/.test(html), 'the logo pills are tinted again; a customer logo is not ours to recolour');
+must(/<b>VP<\/b>/.test(proofRow) && /<b>SP<\/b>/.test(proofRow), 'the avatars are not using the founders initials where we have the name');
+// The star row renders only from a sourced score, and names its source.
+const starRow = (markup.match(/<p class="hp-stars[^"]*">[\s\S]*?<\/p>/) || [''])[0];
+must(starRow !== '', 'the star row is gone');
+must(/<svg/.test(starRow) === /\d\.\d/.test(starRow), 'stars without a sourced score, or a score without stars');
+must(/Trustpilot/.test(starRow), 'the star row does not say where the rating comes from');
 must(count(/class="hp-tip"/g) === 4, 'each logo in the hero needs a tooltip naming the brand');
 const proofLine = (markup.match(/<p class="hp-t">([\s\S]*?)<\/p>/) || ['', ''])[1];
 must(/class="hp-stars"/.test(proofLine) === /\d\.\d/.test(proofLine), 'the hero shows stars without a sourced score, or a score without stars');
-// The customer logos are in the hero row only (asserted below). The band under
-// the hero carries the platform marks instead of repeating them, and those are
-// the page's answer to "is this a real company", so each needs its own alt.
-const strip = (markup.match(/<ul class="trust-marks">[\s\S]*?<\/ul>/) || [''])[0];
+// The band under the hero is where a customer wordmark can actually be read; the
+// hero shows the same four as people. Each mark needs its own alt there.
+const strip = (markup.match(/<ul class="trust-marks[^"]*">[\s\S]*?<\/ul>/) || [''])[0];
 must(strip !== '', 'the band under the hero is gone');
-must((strip.match(/<img /g) || []).length >= 3, 'the band under the hero should carry the platform marks');
-for (const img of strip.match(/<img [^>]*>/g) || []) {
-  must(/\balt="[^"]{8,}"/.test(img), 'a platform mark in the band has no alt text');
+for (const logo of ['delitech', 'apex', 'codeclinic', 'choicesalon']) {
+  must(strip.includes(`/trust/${logo}-white.png`), `the band is not showing the ${logo} logo`);
 }
-must(!/\/trust\/[a-z]+-white\.png/.test(strip), 'the band is repeating the customer logos the hero already showed');
-must(!/class="mq"|mq-track/.test(markup), 'the logo marquee is back; it duplicated the hero proof row');
+for (const img of strip.match(/<img [^>]*>/g) || []) {
+  must(/\balt="[^"]{4,}"/.test(img), 'a customer logo in the band has no alt text');
+}
+must(!/class="mq"|mq-track/.test(markup), 'the logo marquee is back; four logos never filled a desktop viewport');
+// The platform marks answer "who bills me", which is a question asked at a price.
+const badgeRow = (markup.match(/<ul class="badges">[\s\S]*?<\/ul>/) || [''])[0];
+must(badgeRow !== '', 'the platform marks are gone');
+must(at(/<ul class="badges">/) > at(/<section[^>]*id="pricing"/), 'the platform marks belong beside the price, not above it');
+must((badgeRow.match(/<img /g) || []).length === 3, 'expected the three platform marks');
 
 // --- Headings ---
 // Every section heading carries a marked phrase, the way the site sets its titles, and
@@ -293,14 +313,6 @@ must(!/<details/.test(markup), 'the FAQ accordion is gone; do not reintroduce it
 // Three positions the owner set by hand, each of which a later edit could undo without
 // anything else failing: the brand strip sits above the three entry points, and the blog
 // sits above the WhatsApp handoff rather than at the very bottom of the page.
-// String.search returns -1 for a pattern that is not there, which would make
-// every "A comes before B" comparison pass for a section that was deleted. Fail
-// on the missing section instead, and let the comparison mean what it says.
-const at = (re) => {
-  const i = markup.search(re);
-  must(i !== -1, `section missing: ${re}`);
-  return i === -1 ? Infinity : i;
-};
 must(at(/<div class="trust">/) < at(/<section id="start"/), 'the brand strip belongs above the three entry points');
 must(at(/<section id="read"/) < at(/<section[^>]*id="help"/), 'the blog belongs above the "Still have a question" section');
 must(at(/<section[^>]*id="platform"/) < at(/<section id="how"/), 'the platform section belongs before going live');

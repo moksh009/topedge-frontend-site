@@ -589,6 +589,68 @@ failed request. 72 KB against the 80 KB budget, down from 74 despite a sixth
 panel, because the removals outweighed it. Seven new assertions each checked by
 breaking the page on purpose.
 
+## Revision 13 — the client row, the arrow, and the score (2026-10-09)
+
+### The Trustpilot score: still blocked, and now definitively
+The owner asked for it to be looked up. It cannot be, from here. `trustpilot.com`
+does not resolve through this container's egress proxy at all: not a 403 on the
+request but `getaddrinfo ENOTFOUND` on the hostname, confirmed three ways on
+9 Oct, by curl, by a fetch tool and by web search (which returned Trustpilot
+pages for `topview.ai` and `caledonai.com`, different companies with similar
+names, and nothing for `topedgeai.com`). Guessing a number off a near-miss
+domain would be worse than showing none.
+
+`TRUSTPILOT.score` now carries that explanation in the comment above it and is
+the single value the page waits on: one string, for example `'4.6'`, and the
+hero draws five gold stars beside the avatars and names the source. Until then
+the row links to the review page and claims nothing. `check:lp` holds the pair
+both ways: stars only with a number, a number only with stars.
+
+### The client row, rebuilt as the reference has it
+Round overlapping avatars, a star row beside them, one line underneath.
+
+The discs carry initials. Not photographs, because we have none of these people
+and a stock face captioned with a real customer's name is a lie rather than a
+placeholder. Not the logo files either, which is the mistake revision 11 made
+in the other direction: every one of them is a wordmark between 2.4:1 and 4:1,
+and a round crop at 42px leaves roughly nine pixels of cap height. So the hero
+shows these four as people and the band below shows them as companies, at a
+size where a wordmark can be read. Each disc names its company on hover, and
+its founder where we have the name.
+
+Two founders arrived with this review and are in `TRUST_LOGOS`: Ved Patel of
+Delitech, Shubham Patel of Apex Light. Their discs read VP and SP; code CLINIC
+and Choice Salon fall back to company initials until their names come. The four
+disc colours are violet, indigo, purple and slate, because an all-violet row of
+discs reads as a loading state rather than as four people.
+
+### The arrow
+Redrawn against the reference: thicker (3.1 rather than 2.2), darker (`#2e1065`
+rather than a mid violet), longer, and with the counter-curl before the head
+that makes it look drawn rather than generated. Five candidates were rendered
+side by side and compared against the reference before picking.
+
+Worth recording why it took two passes: the earlier edits targeted the whole
+`FREE_NOTE` template literal by its exact text, and an earlier change had
+already rewritten the label inside it, so the replacements matched nothing and
+failed silently while the build kept succeeding. The page was still shipping
+the original 92x46 swoosh. Anchor on the declaration, not on a span of text
+that something else may have edited.
+
+### The platform marks moved to the price
+They were under the hero, which is early: "who actually bills me for the
+messages" is a question asked while looking at a number. They sit above the
+Meta billing note in the pricing section now, each on a small white card,
+because the badge files carry their own white background and three bare white
+rectangles on a lavender section read as a rendering fault. The band under the
+hero went back to the customer logos. `check:lp` asserts the ordering.
+
+### Verified
+Chromium at 1440x900, 1440x760 and 390x844: hero exactly one viewport at all
+three, no clipped illustration, no horizontal overflow, no broken image, no
+failed request; all three badges load and render. 72 KB against the 80 KB
+budget. Seven new assertions each checked by breaking the page on purpose.
+
 ## Testing
 Repo has no JS test runner, so verification is a node script:
 `scripts/check-landing-pages.mjs` (`npm run check:lp`) reads the generated HTML and asserts: size budget, noindex, no em dashes, no competitor names, no invented rating, the three quotes verbatim, plan prices equal `FALLBACK_CATALOG`, each plan's COD-to-prepaid lock state agrees with the catalog, `TRIAL` numbers appear, the ported navbar and footer, every CTA kind present, no external script or stylesheet. Revision 9 adds: no `<video>` or `<img>` in the hero, a film section that exists, three entry-point cards that each link somewhere real, five bento panels with no image inside them, a marked phrase in every `<h2>`, three going-live steps, and three blog cards whose slugs resolve against `blogPosts.ts`. Browser checks with Playwright (installed): 360px and 1280px screenshots, H1 at most 3 lines on mobile, sticky bar behaviour, toggle, hero variant swap by `?utm_content=`.
