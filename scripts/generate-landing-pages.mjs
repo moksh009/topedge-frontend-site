@@ -315,11 +315,14 @@ const BADGES = [
 ];
 
 // Three copies of four logos: two left a visible double at 1440px.
+// `founder` fills the second line of the hero tooltip. It is blank because
+// nobody has given us those names, and a founder's name is the last thing to
+// guess at; set it and the tooltip reads "Delitech &middot; <name>".
 const TRUST_LOGOS = [
-  { src: '/trust/delitech-white.png', alt: 'Delitech' },
-  { src: '/trust/apex-white.png', alt: 'Apex Light' },
-  { src: '/trust/codeclinic-white.png', alt: 'code CLINIC' },
-  { src: '/trust/choicesalon-white.png', alt: 'Choice Salon' },
+  { src: '/trust/delitech-white.png', alt: 'Delitech', founder: '' },
+  { src: '/trust/apex-white.png', alt: 'Apex Light', founder: '' },
+  { src: '/trust/codeclinic-white.png', alt: 'code CLINIC', founder: '' },
+  { src: '/trust/choicesalon-white.png', alt: 'Choice Salon', founder: '' },
 ];
 
 // The site footer, minus the Compare column (this page may not name a competitor, and
@@ -577,12 +580,11 @@ ${cols}
 }
 
 /**
- * The proof row under the hero buttons: an overlapping stack for the four brands
- * this page is allowed to name, then a line of text. The stack carries monograms
- * rather than the logo files, which are wordmarks made for a 26px-tall strip and
- * are unreadable inside a 40px disc; the brands are named in the row's aria-label
- * so the information is not lost. No faces: we do not have portraits of these
- * customers and borrowing stock ones would be a lie in the most literal sense.
+ * The proof row under the hero button: an overlapping stack of the four brands
+ * this page is allowed to name, then a line of text. Pills rather than the
+ * reference's round avatars, because the logo files are wordmarks and a circle
+ * crops them to nothing; hovering one brings it to the front and names it. No
+ * faces: we have no portraits of these customers and stock ones would be a lie.
  *
  * `TRUSTPILOT.score` is the switch for the star row. It is empty, and while it is
  * empty no stars and no number appear anywhere: the published reviews give the
@@ -594,17 +596,14 @@ ${cols}
 const STAR = '<svg viewBox="0 0 24 24" width="15" height="15" fill="#00b67a" aria-hidden="true"><path d="M12 1.6l3.1 7.2 7.8.6-5.9 5.1 1.8 7.6L12 18l-6.8 4.1 1.8-7.6L1.1 9.4l7.8-.6z"/></svg>';
 
 function heroProof() {
-  // Two letters either way: the initials of a two-word name, or the first two
-  // letters of a one-word one, so no disc in the row is left with a lone letter.
-  const monogram = (name) => {
-    const words = name.split(/\s+/).filter(Boolean);
-    return (words.length > 1 ? words[0][0] + words[1][0] : name.slice(0, 2)).toUpperCase();
-  };
   const names = TRUST_LOGOS.map((l) => l.alt);
-  const faces = TRUST_LOGOS.map((l) => `<span>${monogram(l.alt)}</span>`).join('');
+  const faces = TRUST_LOGOS.map(
+    (l) =>
+      `<span><img src="${l.src}" alt="" width="66" height="16" decoding="async"><i class="hp-tip">${esc(l.alt)}${l.founder ? ` &middot; ${esc(l.founder)}` : ''}</i></span>`,
+  ).join('');
   const who = `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]} run on TopEdge`;
   const stars = TRUSTPILOT.score
-    ? `<span class="hp-stars">${STAR.repeat(5)}</span> ${esc(TRUSTPILOT.score)} on <a href="${TRUSTPILOT.reviewUrl}" target="_blank" rel="noopener">Trustpilot</a>`
+    ? `<span class="hp-stars">${STAR.repeat(5)}</span>${esc(TRUSTPILOT.score)} on <a href="${TRUSTPILOT.reviewUrl}" target="_blank" rel="noopener">Trustpilot</a>`
     : `Trusted by Shopify brands in India &middot; <a href="${TRUSTPILOT.reviewUrl}" target="_blank" rel="noopener">read the reviews</a>`;
   return `<div class="hp">
         <div class="hp-faces" role="img" aria-label="${esc(who)}">${faces}</div>
@@ -618,6 +617,8 @@ function heroProof() {
  * confirmed before clicking, and it is inert decoration, hidden from assistive
  * tech and dropped entirely below 1100px.
  */
+const SHOPIFY_BUTTON = `<a class="btn btn-out" data-cta="shopify" href="${SHOPIFY_URL}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V7a3 3 0 0 1 6 0v1"/></svg>Install on Shopify</a>`;
+
 const FREE_NOTE = `<span class="free" aria-hidden="true"><svg viewBox="0 0 92 46" width="92" height="46" fill="none" stroke="#8b5cf6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M88 36c-11 5-23 5-33 0-7-3-12-9-19-12-5-2-10-3-16-2"/><path d="M20 22l11-6M20 22l7 10"/></svg><b>It is free</b></span>`;
 
 const VIDEO = {
@@ -775,6 +776,7 @@ for (const page of PAGES) {
     HERO_MARK: esc(HERO_VARIANTS.platform.mark),
     HERO_SUB: esc(HERO_VARIANTS.platform.sub),
     HERO_PROOF: heroProof(),
+    SHOPIFY_BTN: SHOPIFY_BUTTON,
     FREE_NOTE,
     HERO_VARIANTS_JSON: JSON.stringify(HERO_VARIANTS).replace(/</g, '\\u003c'),
     LEGAL_NAME: esc(LEGAL_NAME),

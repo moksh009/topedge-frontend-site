@@ -98,9 +98,12 @@ must(/Your Shopify store, running on WhatsApp/.test(h1), 'default H1 no longer s
 must(h1.length <= 60, `H1 is ${h1.length} characters; over 60 wraps past two lines on desktop`);
 must(/<mark class="chip" id="hero-mark">/.test(markup), 'the H1 payload is not highlighted like the site titles');
 must(copy.includes('Built for Indian Shopify D2C brands'), 'page no longer says who it is for');
+// The microcopy line came out of the hero, which is one headline and one button
+// now. It still has to be on the page, and still has to come from TRIAL rather
+// than being retyped, so the assertion moves with it instead of being dropped.
 must(
   html.includes(`${TRIAL.days}-day free trial · ${TRIAL.orders} free order confirmations · No credit card · Live in about 15 minutes`),
-  'hero microcopy does not match TRIAL',
+  'the trial microcopy is gone, or no longer matches TRIAL',
 );
 // The first screen is the product moving: a full-viewport hero with the film inside it,
 // started by page.js rather than an autoplay attribute (which would also fetch the file
@@ -108,12 +111,27 @@ must(
 const heroBlock = (markup.match(/<header class="hero"[\s\S]*?<\/header>/) || [''])[0];
 must(heroBlock !== '', 'the hero header is gone');
 must(/<video\b/.test(heroBlock), 'the hero has no film; the first screen is meant to be the product moving');
+must(!/class="micro"/.test(heroBlock), 'the microcopy line is back in the hero');
+// One way forward above the fold. The App Store is still offered, on the mobile
+// bar, where it does not compete with the trial for the same first click.
+const heroCtas = heroBlock.match(/data-cta="[a-z]+"/g) || [];
+must(heroCtas.length === 1 && heroCtas[0] === 'data-cta="trial"', `the hero should offer one button, the trial; found ${heroCtas.join(', ') || 'none'}`);
+const bar = (markup.match(/<div class="sticky"[\s\S]*?<\/div>/) || [''])[0];
+must(/data-cta="trial"/.test(bar) && /data-cta="shopify"/.test(bar), 'the mobile bar should carry both the trial and the App Store');
 must(/min-height:100svh/.test(html), 'the hero is no longer a full viewport');
 must(/\.film\{[^}]*max-height:/.test(html), 'the hero film has no max-height, so it can push the buttons off the first screen');
+must(!/\.film\{[^}]*box-shadow:/.test(html), 'the film has a drop shadow again; the owner asked for it flat');
+must(/\.bx\{[^}]*border:1px solid/.test(html), 'the bento panels lost their hairline border');
+must(!/\.(bx|path):hover\{[^}]*transform:/.test(html), 'a card lifts on hover again; only the contents inside it should move');
+must(/\.bx:hover \./.test(html), 'nothing inside a bento panel animates on hover');
 must(/film\.play\(\)/.test(html), 'nothing starts the hero film; it would sit on its poster');
 // The proof row under the buttons. No star and no number may appear unless the generator
 // was given a real TrustScore: the published reviews do not carry per-review ratings.
 must(/class="hp-faces"/.test(markup), 'the hero proof row is missing');
+for (const logo of ['delitech', 'apex', 'codeclinic', 'choicesalon']) {
+  must(new RegExp(`<span><img src="/trust/${logo}-white\\.png"`).test(markup), `the hero proof row is not showing the ${logo} logo`);
+}
+must(count(/class="hp-tip"/g) === 4, 'each logo in the hero needs a tooltip naming the brand');
 const proofLine = (markup.match(/<p class="hp-t">([\s\S]*?)<\/p>/) || ['', ''])[1];
 must(/class="hp-stars"/.test(proofLine) === /\d\.\d/.test(proofLine), 'the hero shows stars without a sourced score, or a score without stars');
 for (const logo of ['choicesalon', 'delitech', 'apex']) {

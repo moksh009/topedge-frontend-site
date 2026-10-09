@@ -452,6 +452,65 @@ Playwright Chromium build, which ships without H.264; `reduce` is false,
 exercised and only the decode is missing. Page builds at 73 KB against the
 80 KB budget.
 
+## Revision 11 — one button, real logos, calmer cards (2026-10-09)
+
+Owner review of revision 10, side by side with the reference.
+
+**One button above the fold.** The App Store button is out of the hero; the
+trial is the only thing to click there. `/signup?lp=cod-confirmation` is the
+dashboard signup: `SignupRedirect` forwards to `DASH_SIGNUP` carrying the plan,
+the cycle, the `lp` and the stored ad attribution, so the destination is right
+already and only the second button had to go. The App Store is still offered,
+on the mobile bar, where it does not compete for the same first click.
+`check:lp` now counts the hero's CTAs and fails on anything but one trial.
+
+**The microcopy line is gone** from the hero. The assertion that it matches
+`TRIAL` moves with it rather than being deleted: the line still has to exist on
+the page (it does, under the pricing CTA) and still has to be generated from
+`TRIAL`. A second rule fails if it comes back into the hero.
+
+**Real logos in the proof row.** Revision 10 used monograms because a wordmark
+in a round crop is a smudge. The answer was the crop, not the logo: the discs
+are pills now, 74x37, and the marks read. Hovering one lifts it, brings it to
+the front and names it in a tooltip. `founder` is a field on each entry in
+`TRUST_LOGOS`, blank, and the tooltip grows a second half when it is filled;
+nobody has given us those names and a founder's name is the last thing to
+invent. `check:lp` asserts all four logo files are in the row and that each has
+a tooltip.
+
+**Stars: still built, still off.** Unchanged from revision 10 and still the one
+thing on this page waiting on the owner. `TRUSTPILOT.score` is one string.
+Fetching the live score from here is not possible: the egress proxy refuses
+`trustpilot.com` with a 403, checked again on 9 Oct.
+
+**The film is bigger and flat.** `max-height` from 40svh to 46svh and the wrap
+from 58rem to 66rem, which the removed button and microcopy line paid for. The
+drop shadow is gone, replaced by a hairline so the dark poster does not bleed
+into the wash. Hero still measures exactly one viewport at 1440x900, 1440x760
+and 390x844.
+
+**A gradient off the bottom.** A linear layer at the end of the hero's
+background stack takes it from clear at 42% to a deep violet at the bottom
+edge, so the hero resolves into the dark brand strip instead of stopping at a
+line. It is a background layer, so it sits behind the film and the buttons with
+nothing extra to manage.
+
+**Cards hold still.** The hover lift is gone from both the bento panels and the
+entry-point cards, on the owner's instruction: only the contents move now, and
+the card answers with its border and shadow. Both card types gained a 1px
+hairline. `check:lp` fails if a `transform` reappears in either `:hover` rule,
+if the hairline goes, or if nothing inside a panel animates.
+
+**The mobile bar carries both ways in.** Two equal halves, the trial weighted by
+colour, on a frosted bar with a violet hairline and safe-area padding.
+
+### Verified
+Chromium at 1440x900, 1440x760 and 390x844: hero exactly one viewport at all
+three, no clipped illustration, no horizontal overflow, no broken image, no
+failed request. Tooltip, pill lift and the mobile bar confirmed by capture;
+the bar's `on` class confirmed after scroll. 74 KB against the 80 KB budget.
+Seven new assertions each checked by breaking the page on purpose.
+
 ## Testing
 Repo has no JS test runner, so verification is a node script:
 `scripts/check-landing-pages.mjs` (`npm run check:lp`) reads the generated HTML and asserts: size budget, noindex, no em dashes, no competitor names, no invented rating, the three quotes verbatim, plan prices equal `FALLBACK_CATALOG`, each plan's COD-to-prepaid lock state agrees with the catalog, `TRIAL` numbers appear, the ported navbar and footer, every CTA kind present, no external script or stylesheet. Revision 9 adds: no `<video>` or `<img>` in the hero, a film section that exists, three entry-point cards that each link somewhere real, five bento panels with no image inside them, a marked phrase in every `<h2>`, three going-live steps, and three blog cards whose slugs resolve against `blogPosts.ts`. Browser checks with Playwright (installed): 360px and 1280px screenshots, H1 at most 3 lines on mobile, sticky bar behaviour, toggle, hero variant swap by `?utm_content=`.
