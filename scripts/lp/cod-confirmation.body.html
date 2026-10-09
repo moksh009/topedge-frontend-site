@@ -19,11 +19,8 @@
 
 <div class="trust">
   <div class="wrap trust-in">
-    <p class="trust-l">Trusted by Shopify brands</p>
-    <div class="mq" aria-label="Brands running on TopEdge">
-      <ul class="mq-track">{{TRUST_MARQUEE}}</ul>
-    </div>
-    <a class="trust-tp" href="https://www.trustpilot.com/review/topedgeai.com" target="_blank" rel="noopener">Reviews on Trustpilot</a>
+    <ul class="trust-marks">{{STRIP_BADGES}}</ul>
+    <p class="trust-l">Messages send on the official WhatsApp Cloud API and are billed by Meta to your own account. TopEdge adds 0% markup.</p>
   </div>
 </div>
 
@@ -43,13 +40,13 @@
     <div class="bento-grid">
 {{BENTO}}
     </div>
-    <p class="vz-note">Panels above are illustrations of the interface, not a customer result.</p>
+    <p class="vz-note">Every screen above is shown with sample data.</p>
   </div>
 </section>
 
 <section id="how">
   <div class="wrap">
-    <div class="head"><h2>Live in about <span class="chip">fifteen minutes</span></h2><p>No developer, no theme edits, no checkout scripts.</p></div>
+    <div class="head"><h2>Live in about <span class="chip">fifteen minutes</span></h2></div>
     <ol class="steps">
 {{STEPS}}
     </ol>
@@ -59,8 +56,7 @@
 
 <section class="alt" id="switch">
   <div class="wrap">
-    <div class="head"><h2>The four things that <span class="chip">made you leave</span></h2><p>Your own P&amp;L, with the WhatsApp line inside it. Nothing marked up, nothing hidden behind a plan.</p></div>
-    <img class="shot proof" src="/lp/shots/pnl.webp" width="1400" height="590" loading="lazy" decoding="async" alt="TopEdge profit and loss view: a waterfall from revenue to net profit with return losses from RTO and WhatsApp message cost as their own lines, beside key findings naming the RTO cost for the period and the WhatsApp spend read from the send ledger.">
+    <div class="head"><h2>The four things that make people <span class="chip">switch</span></h2></div>
     <div class="sws">
 {{SWITCH_ROWS}}
     </div>
@@ -71,19 +67,18 @@
   <div class="wrap">
     <div class="head"><h2>What sellers say on <span class="chip">Trustpilot</span></h2></div>
 {{QUOTES}}
-    <p class="q-note">Quoted as published on <a href="https://www.trustpilot.com/review/topedgeai.com" target="_blank" rel="noopener">Trustpilot</a>, retrieved 6 October 2026.</p>
-    <ul class="badges">{{BADGES}}</ul>
-    <p class="badge-note">Launched on the Shopify App Store &middot; 30 September 2026. Messages send on the official WhatsApp Cloud API.</p>
+    <p class="q-note">Quoted as published on <a href="https://www.trustpilot.com/review/topedgeai.com" target="_blank" rel="noopener">Trustpilot</a>, retrieved 6 October 2026. Launched on the Shopify App Store on 30 September 2026.</p>
   </div>
 </section>
 
 <section class="alt" id="pricing">
   <div class="wrap">
-    <div class="head"><h2>Every plan runs the <span class="chip">whole platform</span></h2><p>The plans differ in volume, not in what you are allowed to build. No setup fee, no WhatsApp markup, cancel anytime.</p></div>
+    <div class="head"><h2>Priced on volume, not on <span class="chip">features</span></h2><p>Every plan runs everything above. The number that changes is how many orders and sends it covers.</p></div>
     <div class="cycle" role="tablist" aria-label="Billing cycle">
       <button type="button" role="tab" aria-selected="false" data-cycle="monthly">Monthly</button>
       <button type="button" role="tab" aria-selected="true" data-cycle="yearly" class="on">Yearly</button>
     </div>
+    <p class="cycle-note">{{TRIAL_SHORT}} Cancel anytime.</p>
     <div class="plans" id="plans" data-cycle="yearly">
 {{PLAN_CARDS}}
     </div>
@@ -92,7 +87,7 @@
       <ul class="ticks two">{{INCLUDED_LIST}}</ul>
     </div>
     <p class="foot-note">Meta bills its own WhatsApp message fees to your Meta Business account. TopEdge adds 0% markup. GST invoices issued automatically.</p>
-    <div class="mid-cta"><a class="btn" data-cta="trial" href="/signup?lp={{SLUG}}">Start free trial <span aria-hidden="true">&rarr;</span></a><p class="micro">{{TRIAL_MICRO}}</p></div>
+    <div class="mid-cta"><a class="btn" data-cta="trial" href="/signup?lp={{SLUG}}">Start free trial <span aria-hidden="true">&rarr;</span></a></div>
   </div>
 </section>
 

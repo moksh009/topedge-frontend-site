@@ -85,9 +85,12 @@ mark.chip{background:var(--chip-bg)}
    overlap is small enough to clear the padding, and the hovered pill comes to
    the front so nothing is ever covered while you are reading it. */
 .hp-faces{display:flex;padding-left:.5rem}
-.hp-faces>span{position:relative;display:grid;place-items:center;width:4.6rem;height:2.3rem;margin-left:-.5rem;padding:0 .6rem;border-radius:999px;background:linear-gradient(150deg,#5b21b6,#8b5cf6);box-shadow:0 0 0 2.5px #fbfaff,0 5px 12px -5px rgba(46,16,101,.6);transition:transform .25s var(--e)}
-.hp-faces>span:hover{z-index:3;transform:translateY(-3px)}
-.hp-faces img{display:block;width:100%;height:.98rem;object-fit:contain}
+.hp-faces>span{position:relative;display:grid;place-items:center;width:4.7rem;height:2.35rem;margin-left:-.5rem;padding:0 .62rem;border-radius:999px;background:#fff;box-shadow:0 0 0 1px #e8e1f5,0 0 0 3.5px #fbfaff,0 6px 14px -8px rgba(46,16,101,.4);transition:transform .25s var(--e),box-shadow .25s var(--e)}
+.hp-faces>span:hover{z-index:3;transform:translateY(-3px);box-shadow:0 0 0 1px #d9cdf2,0 0 0 3.5px #fbfaff,0 10px 20px -10px rgba(46,16,101,.5)}
+/* The files are white-on-transparent, made for the dark strip this page used
+   to carry. brightness(0) renders them flat black with the alpha intact, which
+   is what a logo wall looks like. Nobody else's mark gets tinted in our violet. */
+.hp-faces img{display:block;width:100%;height:.98rem;object-fit:contain;filter:brightness(0);opacity:.82}
 .hp-tip{position:absolute;bottom:calc(100% + .5rem);left:50%;transform:translateX(-50%);padding:.3rem .6rem;border-radius:8px;background:#2e1065;color:#fff;font-size:.72rem;font-weight:450;line-height:1.3;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s}
 .hp-tip:after{content:'';position:absolute;top:100%;left:50%;margin-left:-4px;border:4px solid transparent;border-top-color:#2e1065}
 .hp-faces>span:hover .hp-tip{opacity:1}
@@ -166,6 +169,7 @@ section{padding:3.75rem 0}
 .bx{display:flex;flex-direction:column;padding:1.6rem 1.5rem;border-radius:26px;background:#fff;border:1px solid #ece4fb;box-shadow:0 1px 2px rgba(16,24,40,.03),0 14px 36px -18px rgba(76,29,149,.14);transition:border-color .35s var(--e),box-shadow .35s var(--e)}
 .bx h3{font-size:1.14rem;font-weight:450;letter-spacing:-.024em;line-height:1.3}
 .bx p{margin-top:.5rem;font-size:.95rem;color:var(--muted);text-wrap:pretty}
+.bx--f .shot{display:block;width:100%;height:auto;aspect-ratio:auto;border-radius:12px;background:#fff}
 .viz{position:relative;flex:1;margin-top:1.3rem;min-height:9.5rem;padding:1.05rem;border-radius:19px;overflow:hidden;background:linear-gradient(170deg,#fcfbff 0,#f5f0ff 55%,#efe6ff 100%);box-shadow:inset 0 0 0 1px #efe7fd}
 /* A soft wash that only shows on hover, so the panel warms up rather than jumping. */
 .viz:after{content:'';position:absolute;inset:0;border-radius:inherit;background:radial-gradient(18rem 12rem at 80% 0,rgba(168,85,247,.16),transparent 70%);opacity:0;transition:opacity .4s}
@@ -235,7 +239,6 @@ section{padding:3.75rem 0}
    gradient. A hairline keeps the dark poster from bleeding into the wash. */
 .film{display:block;width:100%;height:auto;aspect-ratio:16/9;max-height:min(46svh,32rem);margin:0 auto;border-radius:20px;background:#ece7fa;border:1px solid rgba(124,58,237,.16)}
 .shot{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;background:#f1edfb;border-bottom:1px solid var(--line)}
-.proof{width:min(100%,58rem);margin:0 auto 2.6rem;aspect-ratio:auto;border-radius:18px;border:1px solid var(--line);background:#fff;box-shadow:0 14px 34px -20px rgba(15,23,42,.35)}
 /* ---- going live, three steps on one rail ---- */
 .steps{counter-reset:s;list-style:none;margin:0;padding:0;display:grid;gap:1rem;width:min(100%,62rem);margin:0 auto}
 .stp{position:relative;padding:1.4rem 1.3rem;border-radius:20px;background:#fff;box-shadow:var(--ring),var(--lift)}
@@ -254,16 +257,12 @@ section{padding:3.75rem 0}
 .post-go{margin-top:auto;padding-top:.9rem;font-size:.86rem;font-weight:500;color:var(--violet)}
 .posts-all{margin-top:1.75rem;text-align:center;font-size:.92rem}
 /* trust strip with the logo marquee */
-.trust-in{display:grid;gap:1rem;align-items:center;padding:1.35rem 0;text-align:center}
-.trust-l{font-size:.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#94a3b8}
+.trust-in{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:1.1rem 2.75rem;padding:1.75rem 0;text-align:center}
+.trust-marks{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:1rem 2.1rem;list-style:none;margin:0;padding:0}
+.trust-marks img{display:block;height:42px;width:auto;object-fit:contain}
+.trust-l{max-width:30rem;font-size:.86rem;font-weight:400;letter-spacing:0;text-transform:none;line-height:1.55;color:#ddd4f8;text-align:left;text-wrap:pretty}
 /* Four logos are narrower than a desktop viewport, so an unconstrained track shows the
    same mark twice at once. Capping the window keeps the scroll without the double. */
-.mq{position:relative;width:100%;max-width:30rem;margin:0 auto;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
-.mq-track{display:flex;width:max-content;align-items:center;gap:3.5rem;list-style:none;padding:0;margin:0;animation:mq 32s linear infinite}
-.mq-track img{display:block;height:26px;width:auto;max-width:9rem;object-fit:contain;opacity:.9}
-@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-33.333%)}}
-.trust-tp{font-size:.88rem;color:#cbd5e1}
-.trust-tp:hover{color:#fff}
 /* the four objections */
 .sws{width:min(100%,56rem);margin:0 auto;display:grid;gap:1.6rem}
 .sw{display:grid;gap:.7rem;padding-top:1.6rem;border-top:1px solid var(--line)}
@@ -284,9 +283,6 @@ section{padding:3.75rem 0}
 .tp-text:after{content:'\201D'}
 .quote footer{padding-top:.75rem;border-top:1px solid var(--line);font-size:.85rem;font-weight:500;color:var(--muted)}
 .q-note{margin-top:1rem;text-align:center;font-size:.82rem;color:var(--muted)}
-.badges{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:1.2rem 2.4rem;list-style:none;padding:0;margin:2.4rem auto 0}
-.badges img{display:block;height:46px;width:auto;object-fit:contain}
-.badge-note{margin:1rem auto 0;max-width:38rem;text-align:center;font-size:.85rem;color:var(--muted)}
 /* ---- pricing card, ported from PlanGrid + pricing.css ---- */
 .plans{display:grid;gap:1rem}
 .mkt-plan{position:relative;display:flex;flex-direction:column;height:100%;transition:transform .22s ease}
@@ -328,6 +324,7 @@ section{padding:3.75rem 0}
 .cycle button{min-height:2.75rem;padding:0 1.3rem;border:0;border-radius:9999px;background:transparent;font:inherit;font-size:.95rem;font-weight:500;color:var(--chip-ink);cursor:pointer}
 .cycle button.on{background:var(--violet);color:#fff}
 .cycle button:focus-visible{outline:3px solid #c4b5fd;outline-offset:2px}
+.cycle-note{margin:-.9rem auto 1.8rem;text-align:center;font-size:.86rem;color:var(--muted)}
 #plans[data-cycle="yearly"] .p-monthly,#plans[data-cycle="monthly"] .p-yearly{display:none}
 #plans .p-yearly,#plans .p-monthly{display:inline}
 .incl{width:min(100%,52rem);margin:2.2rem auto 0;padding:1.5rem 1.6rem;border-radius:20px;background:var(--wash);box-shadow:inset 0 0 0 1px #ece5fd}
@@ -399,13 +396,18 @@ section{padding:3.75rem 0}
  .bento-grid{grid-template-columns:repeat(6,1fr)}
  .bx--w{grid-column:span 3}
  .bx--n{grid-column:span 2}
+ /* The reporting panel is the one place a real screenshot beats a drawing: it
+    is a chart, and a drawn chart would be a chart of nothing. */
+ /* Two children, two columns: the copy stays a block of its own so the chart
+    beside it cannot stretch the row the heading sits in. */
+ .bx--f{grid-column:span 6;display:grid;grid-template-columns:minmax(0,20rem) minmax(0,1fr);gap:2.5rem;align-items:center}
+ .bx--f .viz{margin-top:0}
  .plans{grid-template-columns:repeat(3,1fr)}
  .posts{grid-template-columns:repeat(3,1fr)}
  .steps{grid-template-columns:repeat(3,1fr)}
  .quotes{grid-template-columns:repeat(3,1fr)}
  .ticks.two{grid-template-columns:repeat(2,1fr);gap:.6rem 2rem}
  .sws{grid-template-columns:repeat(2,1fr);gap:2.2rem 3rem}
- .trust-in{grid-template-columns:auto 1fr auto;text-align:left;gap:2rem}
  .mkt-foot__top{grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:3rem}
  .mkt-foot__sitemap{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
@@ -434,6 +436,4 @@ section{padding:3.75rem 0}
  .path:hover .ch:nth-child(3){transform:rotate(4deg)}
  .path:hover .ch:nth-child(4){transform:rotate(-3deg)}
  html{scroll-behavior:auto}
- .mq-track{width:100%;flex-wrap:wrap;justify-content:center;gap:1rem 1.5rem}
- .mq{-webkit-mask-image:none;mask-image:none}
 }

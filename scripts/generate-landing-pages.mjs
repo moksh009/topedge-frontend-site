@@ -84,8 +84,7 @@ const HELP_WHATSAPP_URL = `https://wa.me/${COMPANY_PHONE_E164}?text=${encodeURIC
 const ADDRESS_LINES = identityList('COMPANY_ADDRESS_LINES');
 const SOCIAL = identityMap('COMPANY_SOCIAL');
 
-const TRIAL_MICRO = `${TRIAL.days}-day free trial · ${TRIAL.orders} free order confirmations · No credit card · Live in about 15 minutes`;
-const TRIAL_SHORT = `${TRIAL.days} days. ${TRIAL.orders} free orders. No card.`;
+const TRIAL_SHORT = `${TRIAL.days}-day free trial on every plan. ${TRIAL.orders} free order confirmations, no credit card.`;
 
 // ---- data for the redesigned page ----
 
@@ -130,7 +129,8 @@ const ICONS = {
 
 /**
  * Four claims this audience checks before paying, each paired with the experience
- * they arrived with. Nothing here goes past what the business actually supports:
+ * they arrived with. Read by someone who has never used a WhatsApp tool they still
+ * work, because each one names the cost before it names the answer. Nothing here goes past what the business actually supports:
  * no price-lock promise is made, because none has been made.
  */
 const SWITCH = [
@@ -196,7 +196,7 @@ const PATHS = [
   },
   {
     h: 'I am ready to start today',
-    p: `Install from the Shopify App Store and be live in about fifteen minutes.`,
+    p: 'Install from the Shopify App Store and switch on your first journey today.',
     cta: 'Start free trial',
     href: null,
     solid: true,
@@ -276,6 +276,12 @@ const BENTO = [
           </div>
         </div>`,
   },
+  {
+    full: true,
+    h: 'And the number that decides all of it',
+    p: 'Revenue down to net profit, with the money lost to returns and the money spent on WhatsApp as their own lines. Most tools show you sends; this shows you what the sends were worth.',
+    viz: `<div class="viz"><img class="shot" src="/lp/shots/pnl.webp" width="1400" height="590" loading="lazy" decoding="async" alt="TopEdge profit and loss view: a waterfall from revenue to net profit with return losses from RTO and WhatsApp message cost as their own lines, beside key findings naming the RTO cost for the period and the WhatsApp spend read from the send ledger."></div>`,
+  },
 ];
 
 // Going live, as the three things the merchant actually does.
@@ -297,14 +303,19 @@ const POST_SLUGS = [
   'whatsapp-business-api-pricing-india',
 ];
 
-// Value stack beside the price, so the plan reads as a platform and not one feature.
+/**
+ * The value stack beside the price. It deliberately does not repeat the six
+ * panels in the platform section: a visitor who has scrolled this far has read
+ * those, and seeing them again as a tick list is the thing that makes a page
+ * feel padded. These are the parts that never got a panel.
+ */
 const INCLUDED = [
-  'WhatsApp and Instagram in one inbox',
-  'Abandoned cart recovery',
-  'Broadcast campaigns',
+  'Unlimited flow runs',
   'Customer CRM and segments',
   'Shopify tracking pixel',
-  'AI replies on your own key',
+  'Help getting your Meta templates approved',
+  'GST invoices, issued automatically',
+  'A person on WhatsApp when you need one',
 ];
 
 // Marks that already sit in the site footer. An ad visitor has never heard of us.
@@ -315,7 +326,8 @@ const BADGES = [
 ];
 
 // Three copies of four logos: two left a visible double at 1440px.
-// `founder` fills the second line of the hero tooltip. It is blank because
+// The files are white-on-transparent. base.css paints them black for the hero
+// row; nothing tints them. `founder` fills the second line of the tooltip. It is blank because
 // nobody has given us those names, and a founder's name is the last thing to
 // guess at; set it and the tooltip reads "Delitech &middot; <name>".
 const TRUST_LOGOS = [
@@ -475,9 +487,9 @@ function pathsHtml(slug) {
 }
 
 const bentoHtml = BENTO.map(
-  (b, i) => `      <article class="bx bx--${b.w ? 'w' : 'n'}" data-rv style="--d:${i * 70}ms">
-        <h3>${esc(b.h)}</h3>
-        <p>${esc(b.p)}</p>
+  (b, i) => `      <article class="bx bx--${b.full ? 'f' : b.w ? 'w' : 'n'}" data-rv style="--d:${i * 70}ms">
+        ${b.full ? '<div class="bx-copy">' : ''}<h3>${esc(b.h)}</h3>
+        <p>${esc(b.p)}</p>${b.full ? '</div>' : ''}
         ${b.viz}
       </article>`,
 ).join('\n');
@@ -488,16 +500,20 @@ const stepsHtml = STEPS.map(
 
 const includedHtml = INCLUDED.map((i) => `<li>${esc(i)}</li>`).join('');
 
-const badgesHtml = BADGES.map(
-  (b) => `<li><img src="${b.src}" alt="${esc(b.alt)}" height="46" loading="lazy" decoding="async"></li>`,
-).join('');
 
-const marqueeHtml = [...TRUST_LOGOS, ...TRUST_LOGOS, ...TRUST_LOGOS]
-  .map((l, i) => {
-    const dupe = i >= TRUST_LOGOS.length;
-    return `<li${dupe ? ' aria-hidden="true"' : ''}><img src="${l.src}" alt="${dupe ? '' : esc(l.alt)}" height="26" loading="lazy" decoding="async"></li>`;
-  })
-  .join('');
+/**
+ * The dark band under the hero. It used to scroll the same four customer logos
+ * that now sit in the hero proof row, one screen above: the same marks twice in
+ * a screen and a half, which is the sort of thing a visitor reads as filler
+ * even when they could not say why.
+ *
+ * It answers the other question a cold visitor off an ad arrives with, which is
+ * whether this is a real company plugged into real platforms. These three marks
+ * were duplicated at the bottom of the reviews section; they are here only now.
+ */
+const stripHtml = BADGES.map(
+  (b) => `<li><img src="${b.src}" alt="${esc(b.alt)}" height="40" loading="lazy" decoding="async"></li>`,
+).join('');
 
 /**
  * The site navbar, as a static capsule. Same shell as MarketingNavbar: floating, ghost
@@ -567,10 +583,6 @@ function footHtml() {
 ${cols}
       </nav>
     </div>
-    <div class="mkt-foot__trust">
-      <p class="mkt-foot__trust-label">Trusted by platforms</p>
-      <ul class="mkt-foot__trust-list">${BADGES.map((b) => `<li><img src="${b.src}" alt="${esc(b.alt)}" loading="lazy" decoding="async"></li>`).join('')}</ul>
-    </div>
     <div class="mkt-foot__legal">
       <p>&copy; 2026 ${esc(LEGAL_NAME)}. Meta&rsquo;s WhatsApp fees are billed by Meta on your own account. TopEdge adds 0% markup.</p>
       <div class="mkt-foot__legal-links"><a href="/privacy">Privacy</a><a href="/terms">Terms</a></div>
@@ -585,6 +597,12 @@ ${cols}
  * reference's round avatars, because the logo files are wordmarks and a circle
  * crops them to nothing; hovering one brings it to the front and names it. No
  * faces: we have no portraits of these customers and stock ones would be a lie.
+ *
+ * The pills are white and the marks are black. The files are pure white
+ * monochrome with an alpha channel, made for the dark strip this page used to
+ * carry, so `filter:brightness(0)` renders them as the flat black of an
+ * ordinary logo wall with the alpha intact. Somebody else's logo tinted in our
+ * brand colour is not their logo.
  *
  * `TRUSTPILOT.score` is the switch for the star row. It is empty, and while it is
  * empty no stars and no number appear anywhere: the published reviews give the
@@ -619,7 +637,7 @@ function heroProof() {
  */
 const SHOPIFY_BUTTON = `<a class="btn btn-out" data-cta="shopify" href="${SHOPIFY_URL}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V7a3 3 0 0 1 6 0v1"/></svg>Install on Shopify</a>`;
 
-const FREE_NOTE = `<span class="free" aria-hidden="true"><svg viewBox="0 0 92 46" width="92" height="46" fill="none" stroke="#8b5cf6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M88 36c-11 5-23 5-33 0-7-3-12-9-19-12-5-2-10-3-16-2"/><path d="M20 22l11-6M20 22l7 10"/></svg><b>It is free</b></span>`;
+const FREE_NOTE = `<span class="free" aria-hidden="true"><svg viewBox="0 0 92 46" width="92" height="46" fill="none" stroke="#8b5cf6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M88 36c-11 5-23 5-33 0-7-3-12-9-19-12-5-2-10-3-16-2"/><path d="M20 22l11-6M20 22l7 10"/></svg><b>Free for ${TRIAL.days} days</b></span>`;
 
 const VIDEO = {
   lg: '/marketing/demos/topedge-launch.mp4',
@@ -763,14 +781,12 @@ for (const page of PAGES) {
     POSTS: postsHtml,
     SWITCH_ROWS: switchHtml,
     INCLUDED_LIST: includedHtml,
-    BADGES: badgesHtml,
-    TRUST_MARQUEE: marqueeHtml,
+    STRIP_BADGES: stripHtml,
     FILM: filmHtml(),
     SLUG: page.slug,
     SHOPIFY_URL,
     HELP_WHATSAPP_URL: esc(HELP_WHATSAPP_URL),
     COMPANY_PHONE: esc(COMPANY_PHONE),
-    TRIAL_MICRO,
     TRIAL_SHORT,
     HERO_LEAD: esc(HERO_VARIANTS.platform.lead),
     HERO_MARK: esc(HERO_VARIANTS.platform.mark),

@@ -511,6 +511,84 @@ failed request. Tooltip, pill lift and the mobile bar confirmed by capture;
 the bar's `on` class confirmed after scroll. 74 KB against the 80 KB budget.
 Seven new assertions each checked by breaking the page on purpose.
 
+## Revision 12 — the audit pass (2026-10-09)
+
+The owner asked for the page to be read the way a cold visitor off a Google ad
+reads it, and for whatever was padding, repeated or amateurish to be cut. The
+logo tint was the first thing named, and it was the right thing to name.
+
+### Nobody else's logo in our colour
+The hero pills were a violet gradient with the customer's wordmark knocked out
+of it. That is not their logo. The files are pure white monochrome with an
+alpha channel (checked: one distinct RGB value each), made for a dark strip, so
+`filter:brightness(0)` renders them flat black with the alpha intact. White
+pill, hairline, black mark: an ordinary logo wall. Two assertions now hold the
+line, one on the filter and one against any gradient coming back on the pill.
+
+### What the audit actually found
+
+**The same four logos appeared twice in a screen and a half**, in the hero
+proof row and then in the scrolling band directly beneath it. This is the kind
+of repetition a visitor reads as filler without being able to say why. The band
+keeps its place, which the owner set, but it carries the three platform marks
+now, which answer the other question a cold visitor arrives with: is this a
+real company plugged into real systems. The marquee is gone with its animation.
+
+**The partner marks were in three places** once the band had them: the band,
+the bottom of the reviews section, and the footer. They are in the band only.
+
+**Two headings said the same thing.** "One subscription, the whole stack" over
+the platform section and "Every plan runs the whole platform" over pricing.
+Pricing now leads on what actually changes between plans: "Priced on volume,
+not on features."
+
+**The trial terms were stated twice inside the pricing section**, once under
+the cycle toggle and again under the button below the plan cards. Once, at the
+price, where the hesitation is. `TRIAL_MICRO` is gone; `TRIAL_SHORT` carries it
+and the assertion moved with it.
+
+**The value stack under the price repeated four of the six panels above it.**
+A visitor who has scrolled that far has read them, and seeing them again as a
+tick list is what makes a page feel padded. It lists the six things that never
+got a panel instead: unlimited flow runs, CRM and segments, the tracking pixel,
+help getting Meta templates approved, GST invoices, a person on WhatsApp.
+
+**The P&L screenshot floated above the objections with nothing explaining it**,
+a dense chart with a 300-character alt and no heading, breaking the rhythm
+between two unrelated blocks. It is the sixth bento panel now, full width,
+titled, with one line saying what it is for. It is the one panel allowed a real
+screenshot, because its subject is a chart and a chart drawn in CSS would be a
+chart of nothing; `check:lp` encodes that exception rather than dropping the
+rule. The objections section is a clean 2x2.
+
+**"The four things that made you leave"** assumed the reader was switching from
+something. Half this traffic has never used a WhatsApp tool. "The four things
+that make people switch" reads as social proof to them and as recognition to
+the switchers.
+
+**Three subheads restated their own heading.** Two are gone. Not every section
+needs a line under the title; when every one has it, the rhythm itself starts
+to read as generated.
+
+**The entry-point card and the section below it both promised fifteen
+minutes.** The card promises a journey switched on today.
+
+**The scribble said "It is free", which is a tone, not information.** It says
+"Free for 14 days" now, and the number comes from `TRIAL`.
+
+### Left alone, on purpose
+The blog sits above the WhatsApp handoff rather than at the very bottom, which
+the owner set in revision 11. It does leak attention three ways just before the
+conversion point, and that is worth watching in the numbers; it is not worth
+overriding a decision the owner made deliberately.
+
+### Verified
+Chromium at 1440x900, 1440x760 and 390x844: hero exactly one viewport at all
+three, no clipped illustration, no horizontal overflow, no broken image, no
+failed request. 72 KB against the 80 KB budget, down from 74 despite a sixth
+panel, because the removals outweighed it. Seven new assertions each checked by
+breaking the page on purpose.
+
 ## Testing
 Repo has no JS test runner, so verification is a node script:
 `scripts/check-landing-pages.mjs` (`npm run check:lp`) reads the generated HTML and asserts: size budget, noindex, no em dashes, no competitor names, no invented rating, the three quotes verbatim, plan prices equal `FALLBACK_CATALOG`, each plan's COD-to-prepaid lock state agrees with the catalog, `TRIAL` numbers appear, the ported navbar and footer, every CTA kind present, no external script or stylesheet. Revision 9 adds: no `<video>` or `<img>` in the hero, a film section that exists, three entry-point cards that each link somewhere real, five bento panels with no image inside them, a marked phrase in every `<h2>`, three going-live steps, and three blog cards whose slugs resolve against `blogPosts.ts`. Browser checks with Playwright (installed): 360px and 1280px screenshots, H1 at most 3 lines on mobile, sticky bar behaviour, toggle, hero variant swap by `?utm_content=`.

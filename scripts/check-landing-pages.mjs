@@ -86,6 +86,7 @@ must(/<footer[^>]*class="mkt-foot"/.test(html), 'missing the site footer shell')
 must(/Prahladnagar/.test(html), 'footer is missing the registered address');
 must(/href="tel:\+\d{8,}"/.test(html), 'footer is missing a phone number');
 must(count(/class="mkt-foot__col"/g) >= 2, 'footer is missing the sitemap columns');
+must(!/mkt-foot__trust-list/.test(markup), 'the partner marks are in the footer as well as the band; once is enough');
 must(/href="#how"[^>]*>How it works</.test(html), 'nav missing "How it works" anchor');
 must(/href="#platform"[^>]*>Platform</.test(html), 'nav missing the "Platform" anchor');
 must(/Log in</.test(html), 'nav missing "Log in"');
@@ -98,12 +99,13 @@ must(/Your Shopify store, running on WhatsApp/.test(h1), 'default H1 no longer s
 must(h1.length <= 60, `H1 is ${h1.length} characters; over 60 wraps past two lines on desktop`);
 must(/<mark class="chip" id="hero-mark">/.test(markup), 'the H1 payload is not highlighted like the site titles');
 must(copy.includes('Built for Indian Shopify D2C brands'), 'page no longer says who it is for');
-// The microcopy line came out of the hero, which is one headline and one button
-// now. It still has to be on the page, and still has to come from TRIAL rather
-// than being retyped, so the assertion moves with it instead of being dropped.
+// The trial terms came out of the hero and out from under the pricing button,
+// where they were stated twice in one section. They still have to be on the
+// page and still have to be generated from TRIAL rather than retyped; the
+// assertion lives with the price now, beside the "Priced on volume" check.
 must(
-  html.includes(`${TRIAL.days}-day free trial · ${TRIAL.orders} free order confirmations · No credit card · Live in about 15 minutes`),
-  'the trial microcopy is gone, or no longer matches TRIAL',
+  html.includes(`${TRIAL.days}-day free trial on every plan. ${TRIAL.orders} free order confirmations, no credit card.`),
+  'the trial terms are gone, or no longer match TRIAL',
 );
 // The first screen is the product moving: a full-viewport hero with the film inside it,
 // started by page.js rather than an autoplay attribute (which would also fetch the file
@@ -128,15 +130,31 @@ must(/film\.play\(\)/.test(html), 'nothing starts the hero film; it would sit on
 // The proof row under the buttons. No star and no number may appear unless the generator
 // was given a real TrustScore: the published reviews do not carry per-review ratings.
 must(/class="hp-faces"/.test(markup), 'the hero proof row is missing');
+const proofRow = (markup.match(/<div class="hp-faces"[\s\S]*?<\/div>/) || [''])[0];
 for (const logo of ['delitech', 'apex', 'codeclinic', 'choicesalon']) {
-  must(new RegExp(`<span><img src="/trust/${logo}-white\\.png"`).test(markup), `the hero proof row is not showing the ${logo} logo`);
+  must(proofRow.includes(`/trust/${logo}-white.png`), `the hero proof row is not showing the ${logo} logo`);
 }
+// Each pill is decoration inside one labelled row, so the images carry no alt of
+// their own; the row's aria-label names all four. Two labels would say it twice.
+must(/aria-label="[^"]*Delitech[^"]*Choice Salon[^"]*"/.test(proofRow), 'the hero proof row no longer names the brands to a screen reader');
+must(!/<img [^>]*alt="[^"]/.test(proofRow), 'a logo pill has its own alt; the row is already labelled');
+// A customer's wordmark is theirs. It is painted flat black here, never tinted.
+must(/\.hp-faces img\{[^}]*filter:brightness\(0\)/.test(html), 'the hero logos are not being painted flat black');
+must(!/\.hp-faces>span\{[^}]*background:linear-gradient/.test(html), 'the logo pills are tinted again; a customer logo is not ours to recolour');
 must(count(/class="hp-tip"/g) === 4, 'each logo in the hero needs a tooltip naming the brand');
 const proofLine = (markup.match(/<p class="hp-t">([\s\S]*?)<\/p>/) || ['', ''])[1];
 must(/class="hp-stars"/.test(proofLine) === /\d\.\d/.test(proofLine), 'the hero shows stars without a sourced score, or a score without stars');
-for (const logo of ['choicesalon', 'delitech', 'apex']) {
-  must(new RegExp(`src="/trust/${logo}-white\\.png"[^>]*alt="[^"]+"|alt="[^"]+"[^>]*src="/trust/${logo}-white\\.png"`).test(html), `trust logo ${logo} missing or has no alt`);
+// The customer logos are in the hero row only (asserted below). The band under
+// the hero carries the platform marks instead of repeating them, and those are
+// the page's answer to "is this a real company", so each needs its own alt.
+const strip = (markup.match(/<ul class="trust-marks">[\s\S]*?<\/ul>/) || [''])[0];
+must(strip !== '', 'the band under the hero is gone');
+must((strip.match(/<img /g) || []).length >= 3, 'the band under the hero should carry the platform marks');
+for (const img of strip.match(/<img [^>]*>/g) || []) {
+  must(/\balt="[^"]{8,}"/.test(img), 'a platform mark in the band has no alt text');
 }
+must(!/\/trust\/[a-z]+-white\.png/.test(strip), 'the band is repeating the customer logos the hero already showed');
+must(!/class="mq"|mq-track/.test(markup), 'the logo marquee is back; it duplicated the hero proof row');
 
 // --- Headings ---
 // Every section heading carries a marked phrase, the way the site sets its titles, and
@@ -145,7 +163,13 @@ for (const logo of ['choicesalon', 'delitech', 'apex']) {
 const heads = markup.match(/<h2[^>]*>[\s\S]*?<\/h2>/g) || [];
 must(heads.length >= 7, `expected at least 7 section headings, found ${heads.length}`);
 for (const h of heads) must(/class="chip"/.test(h), `heading has no marked phrase: ${h.replace(/<[^>]+>/g, '').trim()}`);
-must(!/text-transform:uppercase/.test(html.match(/\.(eyebrow|head p)[^}]*\{[^}]*\}/g)?.join('') || ''), 'an uppercase eyebrow is back above a title');
+// No shouting anywhere on this page: the owner stripped the uppercase eyebrows
+// by hand once, so the rule is about the declaration, not one class name. The
+// navbar and the plan badges are the exceptions the site itself already sets.
+const upper = (html.match(/[^{}]+\{[^}]*text-transform:uppercase[^}]*\}/g) || []).filter(
+  (r) => !/mkt-foot__capsule|mkt-plan__badge/.test(r),
+);
+must(upper.length === 0, `uppercase is back on: ${upper.map((r) => r.split('{')[0]).join(', ')}`);
 
 // --- The three entry points ---
 // The panel the page is built around. Each card has to lead somewhere real: a card with
@@ -164,15 +188,19 @@ must(/role="img"[^>]*aria-label="[^"]*Confirm[^"]*Cancel/i.test(html), 'the exam
 // The reason this page exists in its new form: it sells the subscription, not one
 // feature. Every illustration is markup and CSS, which is what keeps the page inside
 // its byte budget while showing five things; an <img> smuggled into one would undo it.
-const bx = markup.match(/<article class="bx bx--[wn]"[\s\S]*?<\/article>/g) || [];
-must(bx.length === 5, `expected 5 platform panels, found ${bx.length}`);
+const bx = markup.match(/<article class="bx bx--[wnf]"[\s\S]*?<\/article>/g) || [];
+must(bx.length === 6, `expected 6 platform panels, found ${bx.length}`);
 must(count(/class="bx bx--w"/g) === 2, 'the bento is no longer asymmetric: expected 2 wide panels');
+must(count(/class="bx bx--f"/g) === 1, 'the full-width reporting panel is gone');
 for (const b of bx) {
   must(/class="viz"/.test(b), 'a platform panel has no illustration');
-  must(!/<img\b|<svg\b/.test(b), 'a platform panel ships an image; these are drawn in CSS on purpose');
+  // The reporting panel is the exception, and only because its subject is a
+  // chart: a chart drawn in CSS would be a chart of nothing.
+  const drawn = !/class="bx bx--f"/.test(b);
+  must(!drawn || !/<img\b|<svg\b/.test(b), 'a platform panel ships an image; these are drawn in CSS on purpose');
 }
-must(/illustrations of the interface, not a customer result/.test(copy), 'the sample values in the panels are not marked illustrative');
-for (const job of ['carts that leave', 'Confirm COD before you ship', 'Broadcast', 'One inbox', 'Flows you build']) {
+must(/shown with sample data/.test(copy), 'the numbers in the panels are not marked as sample data');
+for (const job of ['carts that leave', 'Confirm COD before you ship', 'Broadcast', 'One inbox', 'Flows you build', 'the number that decides']) {
   must(copy.includes(job), `the platform section no longer names: ${job}`);
 }
 
@@ -184,6 +212,12 @@ for (const job of ['carts that leave', 'Confirm COD before you ship', 'Broadcast
 const shots = html.match(/<img class="shot[^"]*"[^>]*>/g) || [];
 must(shots.length >= 1, 'the P&L screenshot is gone from the objections section');
 must(!/class="shotc"/.test(markup), 'the three dashboard stills are back; the owner cut them');
+// The P&L used to float above the objections with nothing explaining it. It is a
+// labelled panel in the platform section now, and this keeps it there.
+must(/class="bx bx--f"[\s\S]*?lp\/shots\/pnl\.webp/.test(markup), 'the P&L screen is not inside the reporting panel');
+must(!/class="shot proof"/.test(markup), 'the P&L is loose on the page again instead of being a labelled panel');
+// The trial terms sit beside the price, which is where the hesitation is.
+must(new RegExp(`${TRIAL.days}-day free trial on every plan`).test(copy), 'the pricing section no longer carries the trial terms');
 for (const s of shots) {
   must(/\balt="[^"]{40,}"/.test(s), 'a product screenshot has no descriptive alt text');
   must(/\bloading="lazy"/.test(s), 'product screenshots must be lazy, they sit below the fold');
