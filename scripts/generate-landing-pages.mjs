@@ -16,15 +16,26 @@
  *
  * Usage: node scripts/generate-landing-pages.mjs
  */
+import { build as esbuild } from 'esbuild';
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { loadBillingCatalog, resolveViteEnv } from './load-billing-catalog.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
 const lpDir = path.join(__dirname, 'lp');
-const MAX_BYTES = 60 * 1024;
+/**
+ * Byte budget for the whole page, inline CSS and inline JS included. It was 60 KB
+ * when the page argued one feature; the redesign sells the platform, which is five
+ * more panels of markup, and draws every illustration in CSS instead of shipping a
+ * screenshot of it. 80 KB of HTML is about 11 KB over the wire after Brotli, which
+ * is less than the two 20 KB PNGs the drawn panels replace, and the page still makes
+ * no external request before first paint. If an edit needs more than this, cut
+ * something rather than raising it again.
+ */
+const MAX_BYTES = 80 * 1024;
 
 const { FALLBACK_CATALOG, TRIAL, planBlurb, planFeatureKicker, dispatchLabel, planPricing } =
   await loadBillingCatalog();
@@ -76,26 +87,30 @@ const SOCIAL = identityMap('COMPANY_SOCIAL');
 const TRIAL_MICRO = `${TRIAL.days}-day free trial · ${TRIAL.orders} free order confirmations · No credit card · Live in about 15 minutes`;
 const TRIAL_SHORT = `${TRIAL.days} days. ${TRIAL.orders} free orders. No card.`;
 
-// Hero headline per ad group. utm_content that starts with a key selects that variant.
-// Hero headline per ad group. utm_content that starts with a key selects that variant.
-// Each headline is a lead plus a marked phrase, because the site highlights the payload
-// of a title rather than setting the whole line in one colour. Sentence case and under
-// fifty characters: title case reads like an ad, and three lines is not a headline.
+// ---- data for the redesigned page ----
+
+/**
+ * Hero headline per ad group. utm_content that starts with a key selects that
+ * variant. The page is bought on platform terms as well as COD terms now, so
+ * the default sells the subscription and the narrower ad groups keep their own
+ * promise. Each headline is a lead plus a marked phrase, because the site
+ * highlights the payload of a title rather than colouring the whole line.
+ */
 const HERO_VARIANTS = {
-  loss: {
-    lead: 'Stop paying three times for orders ',
-    mark: 'nobody wanted',
-    sub: 'TopEdge asks the buyer to confirm on WhatsApp the moment a COD order is placed. Built for Indian Shopify D2C brands.',
+  platform: {
+    lead: 'Your Shopify store, running on ',
+    mark: 'WhatsApp',
+    sub: 'Confirm COD orders, win back abandoned carts, run campaigns and answer every chat from one place. Built for Indian Shopify D2C brands.',
   },
-  speed: {
-    lead: 'Confirm COD orders on WhatsApp ',
-    mark: 'before you ship',
-    sub: 'The buyer taps Confirm or Cancel in seconds, and you ship only what they confirm. Built for Indian Shopify D2C brands.',
+  cod: {
+    lead: 'Confirm COD orders before you ',
+    mark: 'ship them',
+    sub: 'The buyer taps Confirm or Cancel in seconds, and the rest of the platform comes with it. Built for Indian Shopify D2C brands.',
   },
-  rto: {
-    lead: 'Cut RTO ',
-    mark: 'before the courier picks up',
-    sub: 'Fewer refused parcels make the trip in the first place. Built for Indian Shopify D2C brands.',
+  cart: {
+    lead: 'Win back the carts that ',
+    mark: 'walked out',
+    sub: 'A reminder on WhatsApp while the cart is still warm, plus the rest of the platform. Built for Indian Shopify D2C brands.',
   },
 };
 
@@ -111,17 +126,13 @@ const ICONS = {
   user: '<circle cx="12" cy="8" r="3.5"/><path d="M5 20c.6-3.6 3.4-5.5 7-5.5s6.4 1.9 7 5.5"/>',
   card: '<rect x="3" y="6" width="18" height="12" rx="2.5"/><path d="M3 10.5h18M7 15h3"/>',
   loop: '<path d="M17 8a6 6 0 0 0-10.5 1.5M7 16a6 6 0 0 0 10.5-1.5M17 4v4h-4M7 20v-4h4"/>',
-  flow: '<circle cx="5" cy="6" r="2.1"/><circle cx="19" cy="6" r="2.1"/><circle cx="12" cy="18" r="2.1"/><path d="M6.8 7.8 10.6 16M17.2 7.8 13.4 16"/>',
-  chat: '<path d="M4 7.2A3.2 3.2 0 0 1 7.2 4h9.6A3.2 3.2 0 0 1 20 7.2V13a3.2 3.2 0 0 1-3.2 3.2H9l-4.2 3v-3A3.2 3.2 0 0 1 4 13.2Z"/><circle cx="9" cy="10" r=".55" fill="currentColor" stroke="none"/><circle cx="12" cy="10" r=".55" fill="currentColor" stroke="none"/><circle cx="15" cy="10" r=".55" fill="currentColor" stroke="none"/>',
-  horn: '<path d="M3 10v4h3l5.5 4V6L6 10H3Z"/><path d="M16 9.3a4 4 0 0 1 0 5.4M18.7 7a7.6 7.6 0 0 1 0 10"/>',
-  people: '<circle cx="9" cy="7.5" r="3"/><path d="M3.3 20c.5-3.5 2.9-5.5 5.7-5.5s5.2 2 5.7 5.5"/><circle cx="18" cy="8.5" r="2.1"/><path d="M15.6 14.7c2.2.4 3.6 1.9 4 4.3"/>',
-  target: '<circle cx="12" cy="12" r="7.3"/><circle cx="12" cy="12" r="3.2"/><path d="M12 2.3v3M12 18.7v3M2.3 12h3M18.7 12h3"/>',
-  shield: '<path d="M12 3.2 19 6v5.3c0 4.6-3 7.6-7 9.1-4-1.5-7-4.5-7-9.1V6Z"/><path d="M9 12.2l2 2 4-4.2"/>',
 };
-// Four claims this audience checks before paying, each paired with the experience they
-// arrived with. One block, not a comparison table plus a near-identical card grid saying
-// the same four things twice. Nothing here goes past what the site already supports: no
-// price-lock promise is made, because the business has not made one.
+
+/**
+ * Four claims this audience checks before paying, each paired with the experience
+ * they arrived with. Nothing here goes past what the business actually supports:
+ * no price-lock promise is made, because none has been made.
+ */
 const SWITCH = [
   {
     icon: 'coin',
@@ -149,35 +160,160 @@ const SWITCH = [
   },
 ];
 
-// Three real screens. One line each: the picture is the argument, not the caption.
+/**
+ * The three states a visitor arrives in off a search ad: carrying a problem,
+ * curious what the product is, or ready to start. One hero cannot speak to all
+ * three, so the page forks here and each fork goes somewhere real. The artwork
+ * under each card is markup and CSS, not a screenshot, so it stays sharp at any
+ * width and costs nothing to download.
+ */
+const PATHS = [
+  {
+    h: 'COD and RTO are eating the margin',
+    p: 'Parcels go out, come back, and the courier bills you both ways.',
+    cta: 'Read: how COD confirmation works',
+    href: '/blog/cod-confirmation-whatsapp-reduce-rto-shopify',
+    solid: false,
+    art: `<div class="art" aria-hidden="true">
+          <span class="ch">Orders nobody wanted<i>&times;</i></span>
+          <span class="ch">Refused at the door<i>&times;</i></span>
+          <span class="ch">Return freight<i>&times;</i></span>
+          <span class="ch">Stock stuck in transit<i>&times;</i></span>
+        </div>`,
+  },
+  {
+    h: 'Show me what it actually does',
+    p: 'Journeys, campaigns, a shared inbox and a flow builder, on every plan.',
+    cta: 'Explore the platform',
+    href: '#platform',
+    solid: false,
+    art: `<div class="art art-rows" aria-hidden="true">
+          <div class="rw"><b>1</b><span>COD order confirmation</span><em>On</em></div>
+          <div class="rw"><b>2</b><span>Abandoned cart recovery</span><em>On</em></div>
+          <div class="rw"><b>3</b><span>COD to prepaid nudge</span><em>On</em></div>
+          <div class="rw"><b>4</b><span>Campaign broadcast</span><em>On</em></div>
+        </div>`,
+  },
+  {
+    h: 'I am ready to start today',
+    p: `Install from the Shopify App Store and be live in about fifteen minutes.`,
+    cta: 'Start free trial',
+    href: null,
+    solid: true,
+    art: `<div class="art art-chat" role="img" aria-label="Example WhatsApp message to a buyer: Hi Priya, your order #1042 is Cash on Delivery for ₹1,499. Confirm it and we ship today. Two buttons follow, Confirm order and Cancel order, then a confirmation that the order ships today.">
+          <p class="cb">Hi Priya, your order #1042 is Cash on Delivery for ₹1,499. Confirm it and we ship today.</p>
+          <div class="cq"><span>Confirm order</span><span>Cancel order</span></div>
+          <p class="ok">&#10003; Confirmed &middot; shipping today</p>
+        </div>`,
+  },
+];
+
+/**
+ * The five jobs the subscription does, which is what the ad is now bought for.
+ * The old page argued one feature and then had to admit at the bottom that the
+ * product was bigger; this says it once, at the size the claim deserves. Every
+ * illustration is drawn in CSS: no screenshot to re-cut when a button moves.
+ * The sample values inside them are labelled illustrative under the grid.
+ */
+const BENTO = [
+  {
+    w: true,
+    h: 'Win back the carts that leave',
+    p: 'A reminder on WhatsApp while the cart is still warm, then one more the next day. Shopify tells us the cart; the buyer replies in the thread they already use.',
+    viz: `<div class="viz">
+          <div class="fn">
+            <div class="fb"><span>Abandoned</span><i style="width:100%"></i><b>1,240</b></div>
+            <div class="fb"><span>Reminded</span><i style="width:88%"></i><b>1,092</b></div>
+            <div class="fb fb--win"><span>Purchased</span><i style="width:22%"></i><b>263</b></div>
+          </div>
+          <p class="fn-tot"><span>Recovered this month</span><strong>&#8377;4,18,700</strong></p>
+        </div>`,
+  },
+  {
+    w: true,
+    h: 'Confirm COD before you ship',
+    p: 'One message the moment the order lands. The buyer confirms, cancels, or pays online instead, and you decide what each answer does to the order in Shopify.',
+    viz: `<div class="viz">
+          <div class="ib">
+            <div class="ib-r"><span class="av">&#10003;</span><p>Confirmed<span>Ships today, buyer is expecting it</span></p><em>#1042</em></div>
+            <div class="ib-r"><span class="av">&times;</span><p>Cancelled<span>Never leaves the warehouse</span></p><em>#1043</em></div>
+            <div class="ib-r"><span class="av">&#8377;</span><p>Paid online instead<span>COD turned prepaid in the thread</span></p><em>#1044</em></div>
+          </div>
+        </div>`,
+  },
+  {
+    w: false,
+    h: 'Broadcast to the right people',
+    p: 'Segment by what they bought, when they last ordered, or where they dropped off.',
+    viz: `<div class="viz">
+          <div class="sg"><span>Bought once</span><span>90 days quiet</span><span>Mumbai</span><span>Prepaid</span></div>
+          <div class="mtr"><p class="mtr-l"><span>Campaign sending</span><span>72%</span></p><p class="mtr-b"><i></i></p></div>
+        </div>`,
+  },
+  {
+    w: false,
+    h: 'One inbox, with the order attached',
+    p: 'WhatsApp and Instagram in one thread, the buyer’s Shopify orders beside it, and AI drafting the reply on your own key.',
+    viz: `<div class="viz">
+          <div class="ib">
+            <div class="ib-r"><span class="av">PR</span><p>Priya R.<span>Where is my order?</span></p><em>#1042</em></div>
+            <div class="ib-r"><span class="av">AK</span><p>Arjun K.<span>Can I pay online?</span></p><em>#1039</em></div>
+            <div class="ib-r"><span class="av">SM</span><p>Sana M.<span class="ty"><i></i><i></i><i></i></span></p><em>AI</em></div>
+          </div>
+        </div>`,
+  },
+  {
+    w: false,
+    h: 'Flows you build by dragging',
+    p: 'No developer, no theme edits, no checkout scripts. Branch on what the buyer did.',
+    viz: `<div class="viz">
+          <div class="fl">
+            <span class="nd">Cart abandoned</span>
+            <span class="wire"></span>
+            <span class="nd nd--b">Wait 45 minutes</span>
+            <span class="wire"></span>
+            <span class="fl-split"><span class="nd nd--c">Send reminder</span><span class="nd">Tag and wait</span></span>
+          </div>
+        </div>`,
+  },
+];
+
+// Going live, as the three things the merchant actually does.
+const STEPS = [
+  { h: 'Install from the Shopify App Store', p: 'One click from your admin. No theme edits and no code on the storefront.' },
+  { h: 'Connect your WhatsApp number', p: 'We walk you through Meta approval on your own Business account, so the templates stay yours.' },
+  { h: 'Switch on a journey', p: 'Start with COD confirmation or cart recovery, edit the wording, and go live.' },
+];
+
+// Three real screens, one line each: the picture is the argument, not the caption.
 const SHOWCASE = [
   {
-    h: 'Confirm it, or turn it prepaid',
-    p: 'The buyer answers on WhatsApp. Confirm, cancel, or pay online instead.',
+    p: 'Journeys, with revenue and open rate per journey.',
     img: '/lp/shots/journeys.webp',
     alt: 'TopEdge journeys list showing a COD to prepaid nudge and abandoned cart recovery with revenue, enrolments and open rate per journey.',
   },
   {
-    h: 'Win back the carts that leave',
-    p: 'Cart value at risk and what you actually recovered, on one dashboard.',
+    p: 'Cart value at risk, and what you actually recovered.',
     img: '/lp/shots/recovery.webp',
     alt: 'TopEdge store growth dashboard showing cart value at risk, abandoned carts, recovery rate and a recovery funnel from abandoned to purchased.',
   },
   {
-    h: 'Build a flow by dragging boxes',
-    p: 'No developer, no theme edits, no checkout scripts.',
+    p: 'The flow builder, where the automation is drawn.',
     img: '/lp/shots/flow.webp',
     alt: 'TopEdge flow builder canvas with a flow entry node connected to a WhatsApp message node and an interactive button node.',
   },
 ];
 
-// What happens to the parcel, which is the merchant's actual question. Replaces a
-// numbered install guide: nobody buys because setup has three steps, they buy because
-// they can see where each order ends up. data-step drives the message highlight.
-const OUTCOMES = [
-  { step: 1, tag: 'Confirmed', p: 'Ships today, and the buyer is expecting it.' },
-  { step: 2, tag: 'Cancelled', p: 'Never leaves the warehouse. You keep the ₹180.' },
-  { step: 3, tag: 'No reply', p: 'Auto follow-up, or hold it for review. Your rule.' },
+/**
+ * Posts to send the visitor who is not buying today. Slugs only: the title, the
+ * category, the read time and the image are read out of the real post data at
+ * build time, so a renamed post fails the build instead of shipping a dead card.
+ * None of these name a competitor, which this page may not do.
+ */
+const POST_SLUGS = [
+  'cod-confirmation-whatsapp-reduce-rto-shopify',
+  'whatsapp-abandoned-cart-recovery-shopify',
+  'whatsapp-business-api-pricing-india',
 ];
 
 // Value stack beside the price, so the plan reads as a platform and not one feature.
@@ -340,17 +476,32 @@ ${quoteCardsHtml}
     </div>`;
 
 const showcaseHtml = SHOWCASE.map(
-  (s2) => `      <article class="bento">
+  (s2) => `      <figure class="shotc">
         <img class="shot" src="${s2.img}" width="1000" height="625" loading="lazy" decoding="async" alt="${esc(s2.alt)}">
-        <div class="bento-copy">
-          <h3>${esc(s2.h)}</h3>
-          <p>${esc(s2.p)}</p>
-        </div>
+        <figcaption><p>${esc(s2.p)}</p></figcaption>
+      </figure>`,
+).join('\n');
+
+function pathsHtml(slug) {
+  return PATHS.map(
+    (c, i) => `      <article class="path" data-rv style="transition-delay:${i * 90}ms">
+        <div class="path-c"><h3>${esc(c.h)}</h3><p>${esc(c.p)}</p></div>
+        <a class="go${c.solid ? ' go--solid' : ''}"${c.solid ? ' data-cta="trial"' : ''} href="${c.href === null ? `/signup?lp=${slug}` : c.href}">${esc(c.cta)} <span aria-hidden="true">&rarr;</span></a>
+        ${c.art}
+      </article>`,
+  ).join('\n');
+}
+
+const bentoHtml = BENTO.map(
+  (b, i) => `      <article class="bx bx--${b.w ? 'w' : 'n'}" data-rv style="transition-delay:${i * 70}ms">
+        <h3>${esc(b.h)}</h3>
+        <p>${esc(b.p)}</p>
+        ${b.viz}
       </article>`,
 ).join('\n');
 
-const outcomesHtml = OUTCOMES.map(
-  (o) => `        <li data-step="${o.step}"><span class="oc-tag">${esc(o.tag)}</span><span class="oc-p">${esc(o.p)}</span></li>`,
+const stepsHtml = STEPS.map(
+  (s2, i) => `      <li class="stp" data-rv style="transition-delay:${i * 90}ms"><h3>${esc(s2.h)}</h3><p>${esc(s2.p)}</p></li>`,
 ).join('\n');
 
 const includedHtml = INCLUDED.map((i) => `<li>${esc(i)}</li>`).join('');
@@ -383,6 +534,7 @@ function navHtml(slug) {
           <span class="mkt-nav__brand-text">TopEdge <span>AI</span></span>
         </a>
         <nav class="mkt-nav__desktop" aria-label="Primary">
+          <a class="mkt-nav__link" href="#platform">Platform</a>
           <a class="mkt-nav__link" href="#how">How it works</a>
           <a class="mkt-nav__link" href="#pricing">Pricing</a>
         </nav>
@@ -445,41 +597,31 @@ ${cols}
 </footer>`;
 }
 
-const PHONE_LABEL =
-  'Example WhatsApp message to a buyer: Hi Priya, we received your order #1042, Cash on Delivery, ₹1,499. Please confirm it so we can ship it today. Two buttons follow: Confirm order and Cancel order.';
-
-
 const VIDEO = {
   lg: '/marketing/demos/topedge-launch.mp4',
   sm: '/marketing/demos/topedge-launch-mobile.mp4',
   poster: '/marketing/demos/topedge-launch-poster.webp',
-  label: 'TopEdge AI launch film: turning Shopify visitors into WhatsApp contacts and confirming COD orders before dispatch.',
+  label: 'TopEdge AI launch film: turning Shopify visitors into WhatsApp contacts, recovering abandoned carts, and confirming COD orders before dispatch.',
   caption: 'Playing without sound. Use the controls for audio.',
 };
-function phone(id) {
-  return `<figure class="phone" id="${id}">
-        <div class="pbar"><i></i>Your store</div>
-        <div class="chat" role="img" aria-label="${esc(PHONE_LABEL)}">
-          <div class="bubble"><p>Hi Priya, we received your order <strong data-hl="order">#1042</strong> (Cash on Delivery, ₹1,499).</p><p>Please confirm it so we can ship it today.</p><time>10:42</time></div>
-          <div class="rep" data-hl="buttons"><span>Confirm order</span><span>Cancel order</span></div>
-          <div class="done" data-hl="check">✓ Confirmed</div>
-        </div>
-        <figcaption class="pcap">Example message. Your approved Meta template may differ.</figcaption>
-      </figure>`;
-}
 
 /**
- * Hero launch film, muted and looping like the product demos on the homepage.
+ * The launch film, moved out of the hero. A film above the fold is the slowest
+ * thing a visitor can be handed and it pushed the headline and the buttons off
+ * a phone screen; the reference this page was redrawn from puts nothing there
+ * either. It now opens its own section, where someone who has read what the
+ * product does can watch it do it.
+ *
  * `preload="none"` plus no `src` in the markup means the page still paints from
  * the 37 KB poster alone; page.js attaches ONE source and starts playback when
- * the film scrolls into view, so a viewer who bounces above the fold downloads
- * no video at all. A `media` attribute on <source> is not honoured inside
- * <video> and two <video> elements would fetch both files, hence data-lg/data-sm.
- * `controls` stays: an autoplaying loop longer than five seconds needs a way to
- * stop it (WCAG 2.2.2), and it is also how a viewer turns the sound on.
+ * the film scrolls into view, so a viewer who never reaches it downloads no
+ * video at all. A `media` attribute on <source> is not honoured inside <video>
+ * and two <video> elements would fetch both files, hence data-lg/data-sm.
+ * `controls` stays: a loop longer than five seconds needs a way to stop it
+ * (WCAG 2.2.2), and it is also how a viewer turns the sound on.
  */
-function heroVideo() {
-  return `<figure class="hero-film">
+function filmHtml() {
+  return `<figure class="film-wrap">
         <video id="lv" class="film" controls muted loop playsinline preload="none"
                poster="${VIDEO.poster}" width="1280" height="720"
                data-lg="${VIDEO.lg}" data-sm="${VIDEO.sm}"
@@ -490,12 +632,55 @@ function heroVideo() {
       </figure>`;
 }
 
+/**
+ * Blog cards, read out of the real post data rather than retyped here, so the
+ * title, the category, the read time and the image cannot drift and a renamed
+ * post fails the build. The page is noindex, so these links are for the person
+ * reading it, not for a crawler: someone who is not buying today leaves with
+ * something to read instead of leaving with nothing.
+ */
+async function loadPosts() {
+  const outDir = fs.mkdtempSync(path.join(os.tmpdir(), 'topedge-lp-blog-'));
+  const outfile = path.join(outDir, 'blogPosts.mjs');
+  try {
+    await esbuild({
+      entryPoints: [path.join(root, 'src/data/blogPosts.ts')],
+      bundle: true,
+      format: 'esm',
+      platform: 'node',
+      outfile,
+      logLevel: 'error',
+    });
+    const all = (await import(pathToFileURL(outfile).href)).blogPosts;
+    return POST_SLUGS.map((slug) => {
+      const post = all.find((x) => x.slug === slug);
+      if (!post) throw new Error(`/lp: POST_SLUGS names ${slug}, which is not a published post`);
+      return post;
+    });
+  } finally {
+    fs.rmSync(outDir, { recursive: true, force: true });
+  }
+}
+
+const postsHtml = (await loadPosts())
+  .map(
+    (b, i) => `      <a class="post" data-rv style="transition-delay:${i * 80}ms" href="/blog/${b.slug}">
+        <img src="${b.image}" width="800" height="450" loading="lazy" decoding="async" alt="${esc(b.imageAlt || b.title)}">
+        <div class="post-b">
+          <p class="post-m"><span>${esc(b.category)}</span><span>${esc(b.readTime)} read</span></p>
+          <h3>${esc(b.title)}</h3>
+          <p class="post-go">Read the playbook <span aria-hidden="true">&rarr;</span></p>
+        </div>
+      </a>`,
+  )
+  .join('\n');
+
 const PAGES = [
   {
     slug: 'cod-confirmation',
-    title: 'WhatsApp COD Confirmation for Shopify | TopEdge AI',
+    title: 'WhatsApp Automation for Shopify | TopEdge AI',
     description:
-      'Confirm COD orders on WhatsApp before you ship them. Fewer fake orders and returned parcels for Indian Shopify stores. 14-day free trial, no card.',
+      'Confirm COD orders, recover abandoned carts, run campaigns and answer every chat on WhatsApp. One subscription for Indian Shopify stores. 14-day free trial, no card.',
   },
 ];
 
@@ -551,23 +736,25 @@ for (const page of PAGES) {
     QUOTES: quotesHtml,
     NAV: navHtml(page.slug),
     FOOTER: footHtml(),
-    BENTO_CARDS: showcaseHtml,
-    OUTCOMES: outcomesHtml,
+    SHOTS: showcaseHtml,
+    PATHS: pathsHtml(page.slug),
+    BENTO: bentoHtml,
+    STEPS: stepsHtml,
+    POSTS: postsHtml,
     SWITCH_ROWS: switchHtml,
     INCLUDED_LIST: includedHtml,
     BADGES: badgesHtml,
     TRUST_MARQUEE: marqueeHtml,
-    HERO_MEDIA: heroVideo(),
-    PHONE_HOW: phone('how-phone'),
+    FILM: filmHtml(),
     SLUG: page.slug,
     SHOPIFY_URL,
     HELP_WHATSAPP_URL: esc(HELP_WHATSAPP_URL),
     COMPANY_PHONE: esc(COMPANY_PHONE),
     TRIAL_MICRO,
     TRIAL_SHORT,
-    HERO_LEAD: esc(HERO_VARIANTS.loss.lead),
-    HERO_MARK: esc(HERO_VARIANTS.loss.mark),
-    HERO_SUB: esc(HERO_VARIANTS.loss.sub),
+    HERO_LEAD: esc(HERO_VARIANTS.platform.lead),
+    HERO_MARK: esc(HERO_VARIANTS.platform.mark),
+    HERO_SUB: esc(HERO_VARIANTS.platform.sub),
     HERO_VARIANTS_JSON: JSON.stringify(HERO_VARIANTS).replace(/</g, '\\u003c'),
     LEGAL_NAME: esc(LEGAL_NAME),
     COMPANY_EMAIL: esc(COMPANY_EMAIL),

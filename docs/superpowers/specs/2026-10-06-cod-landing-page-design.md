@@ -301,9 +301,86 @@ would catch us if it were false.
 page ends on a person rather than a fourth repeat of the same button (eight trial entry
 points remain, which `check:lp` counts). The purple wash behind the product bento is gone.
 
+## Revision 9 — the page sells the platform (2026-10-09)
+
+The owner's note, in full: the page had been built COD-first, and the ads it is
+paid for sell the software. It was to be redrawn against humanto.io as a
+structural reference, in our purple gradient theme, with the bento cards drawn
+in code rather than shipped as pictures; the film out of the hero but still on
+the page; the blog surfaced at the bottom for interlinking; and none of it a
+straight copy of the reference.
+
+### What changed
+
+**Structure.** The reference opens with type and two buttons, then forks the
+visitor three ways before it explains anything. That fork is the one idea worth
+borrowing wholesale, because it matches how paid traffic actually arrives: with
+a problem, with curiosity, or ready. The page now runs hero, three entry points,
+trust strip, the platform bento, the film, going live, the four objections,
+reviews, pricing, the WhatsApp handoff, playbooks.
+
+**Not COD-first.** The default headline is "Your Shopify store, running on
+WhatsApp" and the hero subhead names carts, campaigns and the inbox alongside
+COD. The ₹180 refused-parcel arithmetic and the three-outcome walkthrough are
+gone: they argued one feature at the length of a section each. COD is now one
+of five panels in the bento and one of three entry points, which is its real
+share of the product. `HERO_VARIANTS` still swaps the headline on
+`utm_content`, so the COD and cart ad groups keep their own promise.
+
+**The bento is code.** Five panels, two wide and three narrow on a six-track
+grid. Each carries an illustration built from markup and CSS: a recovery
+funnel, order-state rows, segment chips with a send meter, an inbox with the
+order riding along and the AI reply being drafted, and a flow with its nodes
+and wires. Nothing in them is an image. A screenshot of the same box costs
+about 20 KB, goes soft on a retina screen and is stale the next time a button
+moves. `check:lp` now fails if an `<img>` or `<svg>` appears inside one.
+Sample values inside them are labelled illustrative under the grid, once.
+
+**No film in the hero.** It was the slowest thing above the fold and it pushed
+the headline and the buttons off a phone screen. It opens its own section,
+after the visitor knows what the product is, and keeps `preload="none"` with no
+`src` in the markup, so it still costs nothing until it scrolls into view.
+`check:lp` asserts the hero holds no `<video>` and no `<img>` at all.
+
+**Type.** Headings stay at weight 400 and the marked phrase carries the claim,
+which is how the site sets its titles. `check:lp` now requires a `.chip` in
+every `<h2>`, so a future edit cannot quietly drop the treatment, and it fails
+if an uppercase eyebrow comes back above a title.
+
+**Playbooks.** Three blog cards and a link to the index. The page is `noindex`,
+so these are for the reader, not a crawler: someone who is not buying today
+leaves with something instead of leaving with nothing. The cards read their
+title, category, read time and image out of `blogPosts.ts` at build time, and
+both the generator and `check:lp` fail on a slug that is not a published post.
+
+**Motion.** One scroll reveal, driven by an IntersectionObserver. The marker
+class goes on `<html>` from the script rather than living in the stylesheet, so
+the content is visible with JS off, under reduced motion, and if the script
+throws. No hover transforms: the owner asked for those gone in revision 7 and
+they stay gone.
+
+**Budget.** 60 KB to 80 KB, and the page builds at 70 KB. The increase buys
+five more panels of markup and the drawn illustrations; after Brotli it is
+about 11 KB over the wire, less than the two screenshots the drawings replace,
+and the page still makes no external request before first paint. If a later
+edit needs more than 80 KB, cut something instead of raising it again.
+
+### Still true
+Everything in "Existing contract to preserve" holds: `noindex`, no external
+script, stylesheet or webfont, no iframe, at most one `<video>` and only on the
+terms above, no competitor named, no rating invented, prices from
+`FALLBACK_CATALOG`, the site's own navbar and footer, the three Trustpilot
+quotes verbatim.
+
+### Not done
+The URL is still `/lp/cod-confirmation`, because live ads point at it and
+renaming it would drop that traffic. The slug no longer describes the page. If
+the ad groups are rebuilt, this should move to `/lp/whatsapp-automation` with a
+301 from the old path.
+
 ## Testing
 Repo has no JS test runner, so verification is a node script:
-`scripts/check-landing-pages.mjs` (`npm run check:lp`) reads the generated HTML and asserts: size budget, noindex, no em dashes, no competitor names, the three quotes verbatim, plan prices equal `FALLBACK_CATALOG`, Launch has no prepaid text, Growth and Scale do, `TRIAL` numbers appear, 6 FAQs with exactly one `open`, both CTA kinds present, no external script or stylesheet. Browser checks with Playwright (installed): 360px and 1280px screenshots, H1 at most 3 lines on mobile, sticky bar behaviour, toggle, hero variant swap by `?utm_content=`.
+`scripts/check-landing-pages.mjs` (`npm run check:lp`) reads the generated HTML and asserts: size budget, noindex, no em dashes, no competitor names, no invented rating, the three quotes verbatim, plan prices equal `FALLBACK_CATALOG`, each plan's COD-to-prepaid lock state agrees with the catalog, `TRIAL` numbers appear, the ported navbar and footer, every CTA kind present, no external script or stylesheet. Revision 9 adds: no `<video>` or `<img>` in the hero, a film section that exists, three entry-point cards that each link somewhere real, five bento panels with no image inside them, a marked phrase in every `<h2>`, three going-live steps, and three blog cards whose slugs resolve against `blogPosts.ts`. Browser checks with Playwright (installed): 360px and 1280px screenshots, H1 at most 3 lines on mobile, sticky bar behaviour, toggle, hero variant swap by `?utm_content=`.
 
 ## Open items for the owner
 1. **Trustpilot TrustBox:** the integration is built (revision 8); it needs the business unit ID from Trustpilot Business > Integrations > TrustBox pasted into `TRUSTPILOT.businessUnitId`. Until then no stars or score appear anywhere, by design.

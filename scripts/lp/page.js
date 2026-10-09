@@ -8,17 +8,22 @@
   function onScroll(){cap.classList.toggle('is-solid',(w.scrollY||0)>40)}
   onScroll();w.addEventListener('scroll',onScroll,{passive:true});
 
-  // How it works: highlight the part of the example message that matches the step in view.
-  // Under reduced motion nothing is dimmed, so every state stays visible.
-  var how=$('#how-phone');
-  if(how&&!reduce&&'IntersectionObserver' in w){
-    var io=new IntersectionObserver(function(es){
-      es.forEach(function(e){if(e.isIntersecting)how.setAttribute('data-active',e.target.getAttribute('data-step'))});
-    },{rootMargin:'-40% 0px -40% 0px'});
-    $$('[data-step]').forEach(function(li){io.observe(li)});
+  // Scroll reveal, the one piece of motion the page has. The marker class goes
+  // on <html> from here rather than living in the stylesheet, so the content is
+  // visible when JS is off, when this script throws, and under reduced motion:
+  // nothing is hidden by CSS that is waiting on a script to un-hide it.
+  if(!reduce&&'IntersectionObserver' in w){
+    var rvs=$$('[data-rv]');
+    if(rvs.length){
+      d.documentElement.className+=' js-rv';
+      var rio=new IntersectionObserver(function(es){
+        es.forEach(function(e){if(e.isIntersecting){e.target.className+=' on';rio.unobserve(e.target)}});
+      },{rootMargin:'0px 0px -12% 0px',threshold:.1});
+      rvs.forEach(function(el){rio.observe(el)});
+    }
   }
 
-  // Hero film, same behaviour as the product demos on the homepage: muted, looping,
+  // The launch film, same behaviour as the product demos on the homepage: muted, looping,
   // and playing by itself on phones and desktop alike. Weight is the reason this is
   // scripted rather than an autoplay attribute. The markup carries no src, so the
   // page still paints from the poster alone; ONE source is attached when the film
@@ -65,13 +70,6 @@
     b.addEventListener('click',function(){
       plans.setAttribute('data-cycle',b.getAttribute('data-cycle'));
       $$('.cycle button').forEach(function(x){var on=x===b;x.classList.toggle('on',on);x.setAttribute('aria-selected',on?'true':'false')});
-    });
-  });
-
-  // FAQ: one open at a time (the name attribute does this natively; this covers older browsers).
-  $$('details[name="faq"]').forEach(function(el){
-    el.addEventListener('toggle',function(){
-      if(el.open)$$('details[name="faq"]').forEach(function(o){if(o!==el)o.open=false});
     });
   });
 

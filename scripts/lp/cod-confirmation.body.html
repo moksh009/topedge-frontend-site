@@ -13,11 +13,18 @@
       <a class="btn btn-out" data-cta="shopify" href="{{SHOPIFY_URL}}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V7a3 3 0 0 1 6 0v1"/></svg>Install on Shopify</a>
     </div>
     <p class="micro">{{TRIAL_MICRO}}</p>
-    <div class="hero-vis">
-      {{HERO_MEDIA}}
-    </div>
   </div>
 </header>
+
+<main>
+<section id="start">
+  <div class="wrap">
+    <div class="head"><h2>Start where you are, and we will take you to the <span class="chip">right next step</span></h2></div>
+    <div class="paths">
+{{PATHS}}
+    </div>
+  </div>
+</section>
 
 <div class="trust">
   <div class="wrap trust-in">
@@ -29,43 +36,37 @@
   </div>
 </div>
 
-<main>
-<section class="problem">
+<section class="alt" id="platform">
   <div class="wrap">
-    <div class="head"><h2>A refused COD parcel costs you <span class="chip">three times</span></h2></div>
-    <div class="maths">
-      <p class="sum"><span>₹80 out</span> <i>+</i> <span>₹80 back</span> <i>+</i> <span>₹20 handling</span> <i>=</i> <strong>₹180 gone</strong></p>
-      <p class="sum-note">Illustrative courier rates. At 50 refusals a month, ₹9,000 to ship what nobody wanted.</p>
+    <div class="head"><h2>One subscription, the <span class="chip">whole stack</span></h2><p>Every plan runs all of it. Nothing below is an add-on, and nothing is metered by us.</p></div>
+    <div class="bento-grid">
+{{BENTO}}
     </div>
-    <p class="costnote">Ask first on WhatsApp, and every parcel that leaves your warehouse is one the buyer actually wants.</p>
+    <p class="vz-note">Panels above are illustrations of the interface, not a customer result.</p>
   </div>
 </section>
 
-<section id="how">
+<section id="watch">
   <div class="wrap">
-    <div class="head"><h2>Every COD order ends one of <span class="chip">three ways</span></h2><p>One message, sent the second the order lands. You decide what each answer does.</p></div>
-    <div class="how">
-      <div class="how-vis">
-        {{PHONE_HOW}}
-        <p class="how-cap">Templates are approved by Meta for your own account, so nothing sends without your sign-off.</p>
-      </div>
-      <ol class="outcomes">
-{{OUTCOMES}}
-      </ol>
+    <div class="head"><h2>Two minutes of the <span class="chip">real thing</span></h2><p>The same screens your team works in, from the first visitor to the confirmed order.</p></div>
+    {{FILM}}
+    <div class="shots">
+{{SHOTS}}
     </div>
   </div>
 </section>
 
-<section id="product">
+<section class="alt" id="how">
   <div class="wrap">
-    <div class="head"><h2>COD confirmation is <span class="chip">one screen</span> of it</h2><p>Every plan runs the whole platform, not one feature.</p></div>
-    <div class="bentos">
-{{BENTO_CARDS}}
-    </div>
+    <div class="head"><h2>Live in about <span class="chip">fifteen minutes</span></h2><p>No developer, no theme edits, no checkout scripts.</p></div>
+    <ol class="steps">
+{{STEPS}}
+    </ol>
+    <p class="vz-note">Templates are approved by Meta on your own Business account, so nothing sends without your sign-off.</p>
   </div>
 </section>
 
-<section class="alt" id="switch">
+<section id="switch">
   <div class="wrap">
     <div class="head"><h2>The four things that <span class="chip">made you leave</span></h2><p>Your own P&amp;L, with the WhatsApp line inside it. Nothing marked up, nothing hidden behind a plan.</p></div>
     <img class="shot proof" src="/lp/shots/pnl.webp" width="1400" height="590" loading="lazy" decoding="async" alt="TopEdge profit and loss view: a waterfall from revenue to net profit with return losses from RTO and WhatsApp message cost as their own lines, beside key findings naming the RTO cost for the period and the WhatsApp spend read from the send ledger.">
@@ -75,7 +76,7 @@
   </div>
 </section>
 
-<section>
+<section class="alt">
   <div class="wrap">
     <div class="head"><h2>What sellers say on <span class="chip">Trustpilot</span></h2></div>
 {{QUOTES}}
@@ -87,7 +88,7 @@
 
 <section id="pricing">
   <div class="wrap">
-    <div class="head"><h2>One plan covers the RTO you lose <span class="chip">in a week</span></h2><p>COD confirmation on every plan. No setup fee, no WhatsApp markup, cancel anytime.</p></div>
+    <div class="head"><h2>Every plan runs the <span class="chip">whole platform</span></h2><p>The plans differ in volume, not in what you are allowed to build. No setup fee, no WhatsApp markup, cancel anytime.</p></div>
     <div class="cycle" role="tablist" aria-label="Billing cycle">
       <button type="button" role="tab" aria-selected="false" data-cycle="monthly">Monthly</button>
       <button type="button" role="tab" aria-selected="true" data-cycle="yearly" class="on">Yearly</button>
@@ -110,6 +111,16 @@
     <p class="sub">Message us on WhatsApp. A person answers, usually within the hour on a working day.</p>
     <a class="btn btn-wa" data-cta="whatsapp" href="{{HELP_WHATSAPP_URL}}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.1-.2 0-.4.1-.5l.4-.5c.1-.2.2-.3.3-.5v-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.8.8-1 1.9-.7 3a7.6 7.6 0 0 0 1.6 2.8 9.2 9.2 0 0 0 4.4 3.1c1.4.4 2.2.3 2.9.2.6-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.4-.3z"/></svg>Chat on WhatsApp</a>
     <p class="micro">Or call {{COMPANY_PHONE}}</p>
+  </div>
+</section>
+
+<section id="read">
+  <div class="wrap">
+    <div class="head"><h2>Playbooks for Indian <span class="chip">Shopify stores</span></h2><p>What we have learned running COD, carts and WhatsApp templates for brands like yours.</p></div>
+    <div class="posts">
+{{POSTS}}
+    </div>
+    <p class="posts-all"><a href="/blog">Read all posts <span aria-hidden="true">&rarr;</span></a></p>
   </div>
 </section>
 
