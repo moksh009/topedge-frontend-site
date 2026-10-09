@@ -2,7 +2,8 @@
 
 > **Rule:** This file is discovery + draft queue only. Nothing here is auto-sent or auto-published. A human reviews, edits, and personally sends or posts.
 
-Last refreshed: **2026-09-21** (manual Week 1 pass; Phase 6 measurement cross-ref added)
+Last refreshed: **2026-10-09** (competitor link-gap pass — see "Link gap" below).
+Previous: 2026-09-21 (manual Week 1 pass; Phase 6 measurement cross-ref added)
 
 Related: [`measurement.md`](./measurement.md) (monthly review must cross-ref this tracker when citations appear after a roundup win).
 
@@ -64,3 +65,113 @@ _Add rows here when you spot new “best WhatsApp / cart recovery Shopify” pos
 | Date | Site | Outcome | URL live? |
 |---|---|---|---|
 | | | | |
+
+---
+
+# Link gap vs WATI / AiSensy / Interakt / Zoko / Bitespeed — 2026-10-09
+
+**How this was gathered, and how far to trust it.** Semrush (the backlink database) is out of
+API units on this account, so there is **no crawled backlink export behind this list** — top up at
+https://www.semrush.com/mcp-access and re-run `backlinks_research` for the real referring-domain
+diff. Everything below came from live search. The sandbox's egress proxy blocks outbound page
+fetches, so **individual pages were not opened to confirm TopEdge is absent**. Treat every row as
+*a lead to verify in one click*, not as a confirmed gap.
+
+**What this list is not.** A backlink is a link on *someone else's* domain pointing at ours. It
+cannot be copied onto topedgeai.com — an outbound link to these sites would pass equity away from
+us. The only way to "take" a competitor's link is to get the same page to mention us. That is what
+the tiers below are ordered by: how much permission each one needs.
+
+---
+
+## Tier A — self-serve profiles. No outreach, no permission. Do these first.
+
+Competitors hold these; we do not. Each is a free vendor profile we can simply create, and each
+one is also a `sameAs` entity signal (see "Wire-up" below), so they pay twice: a link **and**
+disambiguation for the entity confusion in audit findings TE-004 / TE-005.
+
+| Site | Competitor presence (per search, unverified) | TopEdge | Action |
+|---|---|---|---|
+| G2 | WATI listed — reported 461 reviews, 4.6 | absent | Create vendor profile, claim it |
+| Capterra (+ GetApp, Software Advice — one submission, three sites) | WATI listed (product 204314) | absent | Create vendor profile |
+| TrustRadius | Zoko listed | absent | Create vendor profile |
+| Techjockey (India) | AiSensy listed — reported 4.4, ~12 reviews | absent | Create vendor profile |
+| Crunchbase | AiSensy has a company record (CB Insights too) | unknown | Claim/create company record |
+| SoftwareSuggest (India) | not confirmed in results | unknown | Check, then list |
+| SaaSworthy / GoodFirms | not confirmed in results | unknown | Check, then list |
+| Product Hunt | not confirmed in results | unknown | Launch — one-time, also drives first reviews |
+| AlternativeTo | not confirmed in results | unknown | Add as an alternative to WATI / Interakt / AiSensy |
+
+**Already listed, no action needed:** WebCatalog (`webcatalog.io/en/apps/topedge`) and PickYourApp
+both auto-scraped us from the App Store. Confirms scraped directories pick us up automatically
+once the App Store listing has substance.
+
+---
+
+## Tier B — integration directories. Needs a public integration, not outreach.
+
+These are earned by shipping a connector, and they sit on high-authority automation domains.
+
+| Site | Competitor presence | Action |
+|---|---|---|
+| Pipedream | `pipedream.com/apps/wati/integrations/shopify` | Publish a TopEdge app/connector |
+| Zoho Flow | `zohoflow.com/apps/shopify/integrations/wati` | Submit a connector |
+| Zapier app directory | not confirmed in results | Check; a public API makes this available |
+
+---
+
+## Tier C — independent roundups. These need outreach (drafts in `outreach-drafts-week1.md`).
+
+New finds, **not already covered by R1–R7**. All are third-party (not a competitor's own blog), so
+inclusion is a genuine editorial ask.
+
+| ID | URL | Who they list | Angle |
+|---|---|---|---|
+| R8 | sumtracker.com/blog/best-shopify-whatsapp-apps | "10 Best WhatsApp Apps for Shopify 2026" | Independent, Shopify-tooling publisher |
+| R9 | controlf5.in/best-shopify-whatsapp-marketing-apps/ | "10+ Best Shopify Apps for WhatsApp Marketing" | India agency — our exact market |
+| R10 | easysellapp.com/blogs/wiki/best-shopify-whatsapp-marketing-apps-2026 | "Best Shopify WhatsApp Marketing Apps (2026)" | Shopify app vendor, non-competing |
+| R11 | open.store/shopify-apps/whatsapp-abandoned-cart-1 | Shopify app directory | Directory listing, may be self-serve |
+| R12 | appnavigator.io | Mirrors App Store listings + reviews | Likely auto-listed once reviews exist |
+| R13 | echai.ventures/d2c/d2c-customer-support-cx/… | Gallabox, Interakt, Zoko, WATI | Indian D2C founder community — high relevance |
+| R14 | wiserreview.com/blog/aisensy-alternatives/ | "9 Best AiSensy Alternatives" | We are a literal AiSensy alternative |
+| R15 | hyperleap.ai/comparison/best-wati-alternatives-2026 | "Best WATI Alternatives 2026" | Same |
+| R16 | getpulsesignal.com/alternatives/aisensy | AiSensy alternatives page | Same |
+| R17 | edesy.in/whatsapp-bot-builder/alternatives/wati | WATI alternatives (India) | Same |
+| R18 | storeleads.app (Shopify app reports) | Per-app install/traffic reports | Data directory; listing likely automatic |
+
+---
+
+## Tier D — competitor-owned. Do not pitch; copy the play instead.
+
+A large share of what ranks for "WATI alternatives" / "AiSensy alternatives" is **published by the
+competitors themselves**: `wati.io/en/blog/aisensy-alternatives/`,
+`interakt.shop/blog/top-5-aisensy-alternatives/`, `aisensy.com/blog/best-whatsapp-apps-for-shopify/`,
+`zoko.io/post/wati-alternative-whatsapp-marketing`, `bitespeed.co/blog/top-wati-alternatives`, plus
+theconvertway, quickreply.ai, chatdaddy, go4whatsup, wanotifier, sleekflow, egrow, respond.io.
+
+They are not linking to us, ever. **The lesson is that this is a ranking play, not a link play — and
+we already run it:** 11 `/compare/*` pages and 9 `*-alternative-*` blog posts. That box is ticked;
+the gap is authority, not coverage.
+
+---
+
+## The two things that gate all of the above
+
+1. **Shopify App Store: 0 reviews** (audit TE-009, re-confirmed 2026-10-09). G2, Capterra and
+   TrustRadius profiles with zero reviews convert badly, and most roundup editors check the App
+   Store rating before adding a vendor. First ~10 honest reviews from live merchants unblock
+   Tier A *and* Tier C. This is the single highest-leverage item on this page and no amount of
+   engineering substitutes for it.
+2. **Nothing here can be automated or auto-published.** Every row is a human action: create a
+   profile, ship a connector, or send a personal email.
+
+## Wire-up when a profile goes live
+
+Add each live profile URL to `ORG.sameAs` in `src/marketing/data/pageSeo.ts`. It currently
+publishes only four — LinkedIn, Instagram, YouTube, Shopify App Store — which is thin next to the
+competitors' footprint and is part of why engines confuse the brand (TE-004 / TE-005). Founder
+profiles go in `TEAM[...].sameAs`, which is `[]` for both founders today.
+
+**Do not add a URL before the profile exists** — a `sameAs` pointing at a 404 is worse than no
+`sameAs`.
+
