@@ -102,13 +102,20 @@ must(
   html.includes(`${TRIAL.days}-day free trial · ${TRIAL.orders} free order confirmations · No credit card · Live in about 15 minutes`),
   'hero microcopy does not match TRIAL',
 );
-// The owner asked for the film out of the hero: it is the slowest thing a visitor can be
-// handed and it pushed the headline and the buttons off a phone screen. It lives in its
-// own section now, and this keeps it there.
+// The first screen is the product moving: a full-viewport hero with the film inside it,
+// started by page.js rather than an autoplay attribute (which would also fetch the file
+// before anyone asked for it). These keep the film there and keep it inside the viewport.
 const heroBlock = (markup.match(/<header class="hero"[\s\S]*?<\/header>/) || [''])[0];
-must(!/<video\b/.test(heroBlock), 'the hero has a <video> again; the film belongs in its own section');
-must(!/<img\b/.test(heroBlock), 'the hero has an image; it is type and two buttons by design');
-must(/<section id="watch"[\s\S]*?<video\b/.test(markup), 'the film section is gone');
+must(heroBlock !== '', 'the hero header is gone');
+must(/<video\b/.test(heroBlock), 'the hero has no film; the first screen is meant to be the product moving');
+must(/min-height:100svh/.test(html), 'the hero is no longer a full viewport');
+must(/\.film\{[^}]*max-height:/.test(html), 'the hero film has no max-height, so it can push the buttons off the first screen');
+must(/film\.play\(\)/.test(html), 'nothing starts the hero film; it would sit on its poster');
+// The proof row under the buttons. No star and no number may appear unless the generator
+// was given a real TrustScore: the published reviews do not carry per-review ratings.
+must(/class="hp-faces"/.test(markup), 'the hero proof row is missing');
+const proofLine = (markup.match(/<p class="hp-t">([\s\S]*?)<\/p>/) || ['', ''])[1];
+must(/class="hp-stars"/.test(proofLine) === /\d\.\d/.test(proofLine), 'the hero shows stars without a sourced score, or a score without stars');
 for (const logo of ['choicesalon', 'delitech', 'apex']) {
   must(new RegExp(`src="/trust/${logo}-white\\.png"[^>]*alt="[^"]+"|alt="[^"]+"[^>]*src="/trust/${logo}-white\\.png"`).test(html), `trust logo ${logo} missing or has no alt`);
 }
@@ -154,8 +161,11 @@ for (const job of ['carts that leave', 'Confirm COD before you ship', 'Broadcast
 // --- Product showcase and going live ---
 // Screens from the real product, not icons. Each needs a described alt: these are the
 // only images on the page carrying meaning, and the ad audience reads them before copy.
-const shots = html.match(/<img class="shot"[^>]*>/g) || [];
-must(shots.length >= 3, `expected at least 3 product screenshots, found ${shots.length}`);
+// The three dashboard stills were cut; the P&L stays, because it is the evidence the
+// objections section rests on rather than decoration.
+const shots = html.match(/<img class="shot[^"]*"[^>]*>/g) || [];
+must(shots.length >= 1, 'the P&L screenshot is gone from the objections section');
+must(!/class="shotc"/.test(markup), 'the three dashboard stills are back; the owner cut them');
 for (const s of shots) {
   must(/\balt="[^"]{40,}"/.test(s), 'a product screenshot has no descriptive alt text');
   must(/\bloading="lazy"/.test(s), 'product screenshots must be lazy, they sit below the fold');
@@ -227,6 +237,22 @@ must(!/<details/.test(markup), 'the FAQ accordion is gone; do not reintroduce it
 // The closing CTA band was removed; the WhatsApp handoff is the last section now.
 // What still has to hold is that a visitor is never far from a way to convert, so
 // count the entry points rather than assert one particular band exists.
+// --- Section order ---
+// Three positions the owner set by hand, each of which a later edit could undo without
+// anything else failing: the brand strip sits above the three entry points, and the blog
+// sits above the WhatsApp handoff rather than at the very bottom of the page.
+// String.search returns -1 for a pattern that is not there, which would make
+// every "A comes before B" comparison pass for a section that was deleted. Fail
+// on the missing section instead, and let the comparison mean what it says.
+const at = (re) => {
+  const i = markup.search(re);
+  must(i !== -1, `section missing: ${re}`);
+  return i === -1 ? Infinity : i;
+};
+must(at(/<div class="trust">/) < at(/<section id="start"/), 'the brand strip belongs above the three entry points');
+must(at(/<section id="read"/) < at(/<section[^>]*id="help"/), 'the blog belongs above the "Still have a question" section');
+must(at(/<section[^>]*id="platform"/) < at(/<section id="how"/), 'the platform section belongs before going live');
+
 // --- Playbooks ---
 // The last section is the only way off this page that is not the signup form, and it is
 // the reason the ad spend on a visitor who is not buying today is not wasted. The slugs

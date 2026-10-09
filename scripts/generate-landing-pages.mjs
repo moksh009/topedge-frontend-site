@@ -100,7 +100,7 @@ const HERO_VARIANTS = {
   platform: {
     lead: 'Your Shopify store, running on ',
     mark: 'WhatsApp',
-    sub: 'Confirm COD orders, win back abandoned carts, run campaigns and answer every chat from one place. Built for Indian Shopify D2C brands.',
+    sub: 'COD confirmation, cart recovery, campaigns and a shared inbox, in one place. Built for Indian Shopify D2C brands.',
   },
   cod: {
     lead: 'Confirm COD orders before you ',
@@ -285,25 +285,6 @@ const STEPS = [
   { h: 'Switch on a journey', p: 'Start with COD confirmation or cart recovery, edit the wording, and go live.' },
 ];
 
-// Three real screens, one line each: the picture is the argument, not the caption.
-const SHOWCASE = [
-  {
-    p: 'Journeys, with revenue and open rate per journey.',
-    img: '/lp/shots/journeys.webp',
-    alt: 'TopEdge journeys list showing a COD to prepaid nudge and abandoned cart recovery with revenue, enrolments and open rate per journey.',
-  },
-  {
-    p: 'Cart value at risk, and what you actually recovered.',
-    img: '/lp/shots/recovery.webp',
-    alt: 'TopEdge store growth dashboard showing cart value at risk, abandoned carts, recovery rate and a recovery funnel from abandoned to purchased.',
-  },
-  {
-    p: 'The flow builder, where the automation is drawn.',
-    img: '/lp/shots/flow.webp',
-    alt: 'TopEdge flow builder canvas with a flow entry node connected to a WhatsApp message node and an interactive button node.',
-  },
-];
-
 /**
  * Posts to send the visitor who is not buying today. Slugs only: the title, the
  * category, the read time and the image are read out of the real post data at
@@ -436,6 +417,11 @@ function planCards(slug) {
  * before the script lands and if it never does, so the proof never disappears.
  */
 const TRUSTPILOT = {
+  // Set this to the TrustScore shown on the Trustpilot dashboard (for example
+  // '4.6') and the hero grows a five-star row that links to the review page.
+  // Empty means no stars and no number anywhere on the page, which is the only
+  // honest default while nobody here can read the live score.
+  score: '',
   businessUnitId: '',
   templateId: '53aa8912dec7e10d38f59f36',
   locale: 'en-IN',
@@ -475,16 +461,9 @@ ${quoteCardsHtml}
 ${quoteCardsHtml}
     </div>`;
 
-const showcaseHtml = SHOWCASE.map(
-  (s2) => `      <figure class="shotc">
-        <img class="shot" src="${s2.img}" width="1000" height="625" loading="lazy" decoding="async" alt="${esc(s2.alt)}">
-        <figcaption><p>${esc(s2.p)}</p></figcaption>
-      </figure>`,
-).join('\n');
-
 function pathsHtml(slug) {
   return PATHS.map(
-    (c, i) => `      <article class="path" data-rv style="transition-delay:${i * 90}ms">
+    (c, i) => `      <article class="path" data-rv style="--d:${i * 90}ms">
         <div class="path-c"><h3>${esc(c.h)}</h3><p>${esc(c.p)}</p></div>
         <a class="go${c.solid ? ' go--solid' : ''}"${c.solid ? ' data-cta="trial"' : ''} href="${c.href === null ? `/signup?lp=${slug}` : c.href}">${esc(c.cta)} <span aria-hidden="true">&rarr;</span></a>
         ${c.art}
@@ -493,7 +472,7 @@ function pathsHtml(slug) {
 }
 
 const bentoHtml = BENTO.map(
-  (b, i) => `      <article class="bx bx--${b.w ? 'w' : 'n'}" data-rv style="transition-delay:${i * 70}ms">
+  (b, i) => `      <article class="bx bx--${b.w ? 'w' : 'n'}" data-rv style="--d:${i * 70}ms">
         <h3>${esc(b.h)}</h3>
         <p>${esc(b.p)}</p>
         ${b.viz}
@@ -501,7 +480,7 @@ const bentoHtml = BENTO.map(
 ).join('\n');
 
 const stepsHtml = STEPS.map(
-  (s2, i) => `      <li class="stp" data-rv style="transition-delay:${i * 90}ms"><h3>${esc(s2.h)}</h3><p>${esc(s2.p)}</p></li>`,
+  (s2, i) => `      <li class="stp" data-rv style="--d:${i * 90}ms"><h3>${esc(s2.h)}</h3><p>${esc(s2.p)}</p></li>`,
 ).join('\n');
 
 const includedHtml = INCLUDED.map((i) => `<li>${esc(i)}</li>`).join('');
@@ -597,20 +576,62 @@ ${cols}
 </footer>`;
 }
 
+/**
+ * The proof row under the hero buttons: an overlapping stack for the four brands
+ * this page is allowed to name, then a line of text. The stack carries monograms
+ * rather than the logo files, which are wordmarks made for a 26px-tall strip and
+ * are unreadable inside a 40px disc; the brands are named in the row's aria-label
+ * so the information is not lost. No faces: we do not have portraits of these
+ * customers and borrowing stock ones would be a lie in the most literal sense.
+ *
+ * `TRUSTPILOT.score` is the switch for the star row. It is empty, and while it is
+ * empty no stars and no number appear anywhere: the published reviews give the
+ * text and the author, not the rating each one carried, and a star row drawn by
+ * hand is a score claim with no source behind it. Paste the TrustScore from the
+ * Trustpilot dashboard (or set `businessUnitId` and let the real widget draw it)
+ * and the row below fills in on the next build.
+ */
+const STAR = '<svg viewBox="0 0 24 24" width="15" height="15" fill="#00b67a" aria-hidden="true"><path d="M12 1.6l3.1 7.2 7.8.6-5.9 5.1 1.8 7.6L12 18l-6.8 4.1 1.8-7.6L1.1 9.4l7.8-.6z"/></svg>';
+
+function heroProof() {
+  // Two letters either way: the initials of a two-word name, or the first two
+  // letters of a one-word one, so no disc in the row is left with a lone letter.
+  const monogram = (name) => {
+    const words = name.split(/\s+/).filter(Boolean);
+    return (words.length > 1 ? words[0][0] + words[1][0] : name.slice(0, 2)).toUpperCase();
+  };
+  const names = TRUST_LOGOS.map((l) => l.alt);
+  const faces = TRUST_LOGOS.map((l) => `<span>${monogram(l.alt)}</span>`).join('');
+  const who = `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]} run on TopEdge`;
+  const stars = TRUSTPILOT.score
+    ? `<span class="hp-stars">${STAR.repeat(5)}</span> ${esc(TRUSTPILOT.score)} on <a href="${TRUSTPILOT.reviewUrl}" target="_blank" rel="noopener">Trustpilot</a>`
+    : `Trusted by Shopify brands in India &middot; <a href="${TRUSTPILOT.reviewUrl}" target="_blank" rel="noopener">read the reviews</a>`;
+  return `<div class="hp">
+        <div class="hp-faces" role="img" aria-label="${esc(who)}">${faces}</div>
+        <p class="hp-t">${stars}</p>
+      </div>`;
+}
+
+/**
+ * The aside beside the primary button, borrowed from the reference: a scribbled
+ * arrow and two words in the margin. It says the one thing a cold visitor wants
+ * confirmed before clicking, and it is inert decoration, hidden from assistive
+ * tech and dropped entirely below 1100px.
+ */
+const FREE_NOTE = `<span class="free" aria-hidden="true"><svg viewBox="0 0 92 46" width="92" height="46" fill="none" stroke="#8b5cf6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M88 36c-11 5-23 5-33 0-7-3-12-9-19-12-5-2-10-3-16-2"/><path d="M20 22l11-6M20 22l7 10"/></svg><b>It is free</b></span>`;
+
 const VIDEO = {
   lg: '/marketing/demos/topedge-launch.mp4',
   sm: '/marketing/demos/topedge-launch-mobile.mp4',
   poster: '/marketing/demos/topedge-launch-poster.webp',
   label: 'TopEdge AI launch film: turning Shopify visitors into WhatsApp contacts, recovering abandoned carts, and confirming COD orders before dispatch.',
-  caption: 'Playing without sound. Use the controls for audio.',
 };
 
 /**
- * The launch film, moved out of the hero. A film above the fold is the slowest
- * thing a visitor can be handed and it pushed the headline and the buttons off
- * a phone screen; the reference this page was redrawn from puts nothing there
- * either. It now opens its own section, where someone who has read what the
- * product does can watch it do it.
+ * The launch film, in the hero, playing by itself. The owner wants the first
+ * screen to be the product moving, so the hero is a full viewport and the film
+ * fills what the headline and the buttons leave. `max-height` on the element
+ * keeps it inside that viewport instead of pushing the buttons off the bottom.
  *
  * `preload="none"` plus no `src` in the markup means the page still paints from
  * the 37 KB poster alone; page.js attaches ONE source and starts playback when
@@ -628,7 +649,6 @@ function filmHtml() {
                aria-label="${esc(VIDEO.label)}">
           <p>Your browser cannot play this video. <a href="${VIDEO.lg}">Download it instead</a>.</p>
         </video>
-        <figcaption class="fcap">${esc(VIDEO.caption)}</figcaption>
       </figure>`;
 }
 
@@ -664,7 +684,7 @@ async function loadPosts() {
 
 const postsHtml = (await loadPosts())
   .map(
-    (b, i) => `      <a class="post" data-rv style="transition-delay:${i * 80}ms" href="/blog/${b.slug}">
+    (b, i) => `      <a class="post" data-rv style="--d:${i * 80}ms" href="/blog/${b.slug}">
         <img src="${b.image}" width="800" height="450" loading="lazy" decoding="async" alt="${esc(b.imageAlt || b.title)}">
         <div class="post-b">
           <p class="post-m"><span>${esc(b.category)}</span><span>${esc(b.readTime)} read</span></p>
@@ -736,7 +756,6 @@ for (const page of PAGES) {
     QUOTES: quotesHtml,
     NAV: navHtml(page.slug),
     FOOTER: footHtml(),
-    SHOTS: showcaseHtml,
     PATHS: pathsHtml(page.slug),
     BENTO: bentoHtml,
     STEPS: stepsHtml,
@@ -755,6 +774,8 @@ for (const page of PAGES) {
     HERO_LEAD: esc(HERO_VARIANTS.platform.lead),
     HERO_MARK: esc(HERO_VARIANTS.platform.mark),
     HERO_SUB: esc(HERO_VARIANTS.platform.sub),
+    HERO_PROOF: heroProof(),
+    FREE_NOTE,
     HERO_VARIANTS_JSON: JSON.stringify(HERO_VARIANTS).replace(/</g, '\\u003c'),
     LEGAL_NAME: esc(LEGAL_NAME),
     COMPANY_EMAIL: esc(COMPANY_EMAIL),

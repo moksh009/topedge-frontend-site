@@ -378,6 +378,80 @@ renaming it would drop that traffic. The slug no longer describes the page. If
 the ad groups are rebuilt, this should move to `/lp/whatsapp-automation` with a
 301 from the old path.
 
+## Revision 10 — the first screen is the film (2026-10-09)
+
+Owner review of revision 9, point by point.
+
+**Hero is one viewport, with the film in it.** Revision 9 took the film out of
+the hero on a load argument; the owner wants the first screen to be the product
+moving, and that outranks it. The hero is `height:100svh` above 900px and the
+film is a flex child that takes exactly what the headline, the buttons and the
+proof row leave, so it can never be the thing that causes a scroll. Measured at
+1440x900, 1440x760 and 390x844: the hero is exactly one viewport at all three.
+It still carries no `autoplay` attribute and no `src` in the markup; page.js
+attaches one source and calls `play()` on intersection, muted and looping, the
+way the homepage film works, so nothing downloads before the page paints and
+reduced motion still leaves it on its poster. `check:lp` now asserts the
+opposite of what it asserted yesterday: the hero must contain a `<video>`, the
+hero must be a full viewport, the film must carry a `max-height`, and something
+must call `play()`.
+
+**A proof row under the buttons.** Four overlapping discs for the four brands
+this page may name, then a line of text. Monograms, not logo files: the files
+are wordmarks drawn for a 26px strip and are illegible inside a 40px disc. Not
+faces: we have no portraits of these customers and stock ones would be a lie.
+The brands are named in the row's `aria-label`.
+
+**Stars: built, switched off.** `TRUSTPILOT.score` is the switch. Set it to the
+TrustScore from the Trustpilot dashboard and the row grows five stars and the
+number, linked to the review page. It is empty, and while it is empty the page
+shows no star and no score anywhere, because the published reviews give the
+text and the author but not the rating each one carried, and a star row drawn
+by hand is a score claim with nothing behind it. `check:lp` enforces the pair:
+stars only with a number, a number only with stars. This is the one thing on
+the page still waiting on the owner.
+
+**The scribbled aside.** A hand-drawn arrow and two words beside the primary
+button, from the reference. Inert decoration, hidden from assistive tech,
+absolutely positioned out of flow and dropped entirely below 1100px rather than
+allowed to wrap. The button itself stays ours: a violet pill, not the
+reference's black capsule with a circular arrow.
+
+**Order.** The brand strip moved above the three entry points. The blog moved
+above the "Still have a question" handoff instead of sitting at the very
+bottom. Both are now assertions, because nothing else on the page would fail if
+a later edit undid them.
+
+**The three dashboard stills are gone** with their captions, as asked, and the
+`#watch` section with them. The P&L screenshot stays: it is the evidence the
+objections section rests on, not decoration.
+
+**Bento, second pass.** The panel is quiet now (white, one soft shadow) and the
+depth lives in the pieces inside it, which float on their own shadows the way
+the reference boards do. Hover gives the card a 5px lift and a warmer wash, and
+moves the contents further than the card itself: funnel bars run out to length
+and the total scales up, rows slide, segment chips lift in sequence, the send
+meter fills, flow nodes rise in stagger. The entry-point cards answer to the
+same hover. All of it is off under `prefers-reduced-motion`.
+
+One trap worth recording, because it cost a debugging pass: the reveal rule
+`.js-rv [data-rv].on` outranks `.bx:hover`, so a reveal written with `transform`
+silently eats the hover lift, and a `transition` declared only on `.bx` is
+replaced wholesale by the reveal's. The reveal now moves the card with the
+independent `translate` property and declares the hover transitions in the same
+rule, and the stagger rides on a `--d` custom property so it delays the reveal
+alone and never the hover.
+
+### Verified
+Chromium at 1440x1000, 1440x900, 1440x760 and 390x844: hero exactly one
+viewport, no clipped illustration, no horizontal overflow, no broken image, no
+failed request, hover deltas confirmed by computed style and by before/after
+captures. The film reports `DEMUXER_ERROR_NO_SUPPORTED_STREAMS` in the
+Playwright Chromium build, which ships without H.264; `reduce` is false,
+`saveData` is false and the source is attached, so the autoplay path is
+exercised and only the decode is missing. Page builds at 73 KB against the
+80 KB budget.
+
 ## Testing
 Repo has no JS test runner, so verification is a node script:
 `scripts/check-landing-pages.mjs` (`npm run check:lp`) reads the generated HTML and asserts: size budget, noindex, no em dashes, no competitor names, no invented rating, the three quotes verbatim, plan prices equal `FALLBACK_CATALOG`, each plan's COD-to-prepaid lock state agrees with the catalog, `TRIAL` numbers appear, the ported navbar and footer, every CTA kind present, no external script or stylesheet. Revision 9 adds: no `<video>` or `<img>` in the hero, a film section that exists, three entry-point cards that each link somewhere real, five bento panels with no image inside them, a marked phrase in every `<h2>`, three going-live steps, and three blog cards whose slugs resolve against `blogPosts.ts`. Browser checks with Playwright (installed): 360px and 1280px screenshots, H1 at most 3 lines on mobile, sticky bar behaviour, toggle, hero variant swap by `?utm_content=`.
@@ -387,4 +461,4 @@ Repo has no JS test runner, so verification is a node script:
 1. ~~Trustpilot TrustBox~~ (superseded, kept for history): needs the template ID and business unit ID. Until supplied the page shows a link to `trustpilot.com/review/topedgeai.com` and no score. The TrustBox also needs an external script, which the page contract currently forbids, so it would have to be injected after `load`, like gtag.
 2. **"No usage ceiling" card:** plans have order allowances (100, 800, 1,500 per cycle). The card is worded as flow runs being unmetered. Confirm that is accurate.
 3. **Consent bar** is required once an Ads conversion tag is installed.
-4. **Trustpilot rating** is not stated anywhere on the page because it cannot be hand-typed; the plan's "4.0 Great" appears only after the live widget exists.
+4. **Trustpilot rating** is not stated anywhere on the page because it cannot be hand-typed. Revision 10 wires the hero star row to `TRUSTPILOT.score`: paste the TrustScore from the Trustpilot dashboard into it (or set `businessUnitId` and let the live widget draw the stars itself) and the row fills in on the next build.

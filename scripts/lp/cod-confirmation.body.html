@@ -1,7 +1,7 @@
 {{NAV}}
 
 <header class="hero" id="hero">
-  <div class="wrap hero-in">
+  <div class="hero-in">
     <h1 id="hero-h1"><span id="hero-lead">{{HERO_LEAD}}</span><mark class="chip" id="hero-mark">{{HERO_MARK}}</mark></h1>
     <p class="sub" id="hero-sub">{{HERO_SUB}}</p>
     <script>
@@ -11,20 +11,13 @@
     <div class="cta-row" id="hero-cta">
       <a class="btn" data-cta="trial" href="/signup?lp={{SLUG}}">Start free trial <span aria-hidden="true">&rarr;</span></a>
       <a class="btn btn-out" data-cta="shopify" href="{{SHOPIFY_URL}}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V7a3 3 0 0 1 6 0v1"/></svg>Install on Shopify</a>
+      {{FREE_NOTE}}
     </div>
     <p class="micro">{{TRIAL_MICRO}}</p>
+    {{HERO_PROOF}}
+    {{FILM}}
   </div>
 </header>
-
-<main>
-<section id="start">
-  <div class="wrap">
-    <div class="head"><h2>Start where you are, and we will take you to the <span class="chip">right next step</span></h2></div>
-    <div class="paths">
-{{PATHS}}
-    </div>
-  </div>
-</section>
 
 <div class="trust">
   <div class="wrap trust-in">
@@ -36,6 +29,16 @@
   </div>
 </div>
 
+<main>
+<section id="start">
+  <div class="wrap">
+    <div class="head"><h2>Start where you are, and we will take you to the <span class="chip">right next step</span></h2></div>
+    <div class="paths">
+{{PATHS}}
+    </div>
+  </div>
+</section>
+
 <section class="alt" id="platform">
   <div class="wrap">
     <div class="head"><h2>One subscription, the <span class="chip">whole stack</span></h2><p>Every plan runs all of it. Nothing below is an add-on, and nothing is metered by us.</p></div>
@@ -46,17 +49,7 @@
   </div>
 </section>
 
-<section id="watch">
-  <div class="wrap">
-    <div class="head"><h2>Two minutes of the <span class="chip">real thing</span></h2><p>The same screens your team works in, from the first visitor to the confirmed order.</p></div>
-    {{FILM}}
-    <div class="shots">
-{{SHOTS}}
-    </div>
-  </div>
-</section>
-
-<section class="alt" id="how">
+<section id="how">
   <div class="wrap">
     <div class="head"><h2>Live in about <span class="chip">fifteen minutes</span></h2><p>No developer, no theme edits, no checkout scripts.</p></div>
     <ol class="steps">
@@ -66,7 +59,7 @@
   </div>
 </section>
 
-<section id="switch">
+<section class="alt" id="switch">
   <div class="wrap">
     <div class="head"><h2>The four things that <span class="chip">made you leave</span></h2><p>Your own P&amp;L, with the WhatsApp line inside it. Nothing marked up, nothing hidden behind a plan.</p></div>
     <img class="shot proof" src="/lp/shots/pnl.webp" width="1400" height="590" loading="lazy" decoding="async" alt="TopEdge profit and loss view: a waterfall from revenue to net profit with return losses from RTO and WhatsApp message cost as their own lines, beside key findings naming the RTO cost for the period and the WhatsApp spend read from the send ledger.">
@@ -76,7 +69,7 @@
   </div>
 </section>
 
-<section class="alt">
+<section>
   <div class="wrap">
     <div class="head"><h2>What sellers say on <span class="chip">Trustpilot</span></h2></div>
 {{QUOTES}}
@@ -86,7 +79,7 @@
   </div>
 </section>
 
-<section id="pricing">
+<section class="alt" id="pricing">
   <div class="wrap">
     <div class="head"><h2>Every plan runs the <span class="chip">whole platform</span></h2><p>The plans differ in volume, not in what you are allowed to build. No setup fee, no WhatsApp markup, cancel anytime.</p></div>
     <div class="cycle" role="tablist" aria-label="Billing cycle">
@@ -105,15 +98,6 @@
   </div>
 </section>
 
-<section class="alt" id="help">
-  <div class="narrow help">
-    <h2>Still have a <span class="chip">question</span></h2>
-    <p class="sub">Message us on WhatsApp. A person answers, usually within the hour on a working day.</p>
-    <a class="btn btn-wa" data-cta="whatsapp" href="{{HELP_WHATSAPP_URL}}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.1-.2 0-.4.1-.5l.4-.5c.1-.2.2-.3.3-.5v-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.8.8-1 1.9-.7 3a7.6 7.6 0 0 0 1.6 2.8 9.2 9.2 0 0 0 4.4 3.1c1.4.4 2.2.3 2.9.2.6-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.4-.3z"/></svg>Chat on WhatsApp</a>
-    <p class="micro">Or call {{COMPANY_PHONE}}</p>
-  </div>
-</section>
-
 <section id="read">
   <div class="wrap">
     <div class="head"><h2>Playbooks for Indian <span class="chip">Shopify stores</span></h2><p>What we have learned running COD, carts and WhatsApp templates for brands like yours.</p></div>
@@ -121,6 +105,15 @@
 {{POSTS}}
     </div>
     <p class="posts-all"><a href="/blog">Read all posts <span aria-hidden="true">&rarr;</span></a></p>
+  </div>
+</section>
+
+<section class="alt" id="help">
+  <div class="narrow help">
+    <h2>Still have a <span class="chip">question</span></h2>
+    <p class="sub">Message us on WhatsApp. A person answers, usually within the hour on a working day.</p>
+    <a class="btn btn-wa" data-cta="whatsapp" href="{{HELP_WHATSAPP_URL}}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.1-.2 0-.4.1-.5l.4-.5c.1-.2.2-.3.3-.5v-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.8.8-1 1.9-.7 3a7.6 7.6 0 0 0 1.6 2.8 9.2 9.2 0 0 0 4.4 3.1c1.4.4 2.2.3 2.9.2.6-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.4-.3z"/></svg>Chat on WhatsApp</a>
+    <p class="micro">Or call {{COMPANY_PHONE}}</p>
   </div>
 </section>
 
