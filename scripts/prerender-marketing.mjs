@@ -213,6 +213,20 @@ function sanitizePrerenderHtml(html) {
     '$1',
   );
 
+  // Product demo films (feature pages): same problem, same fix.
+  //
+  // DemoProductVideoFrame attaches a src once the frame scrolls into view, so by
+  // snapshot time the desktop encode is in the markup — /features/journeys shipped
+  // the 10 MB cod-prepaid11.mp4 to phones straight from the HTML (preload="auto"),
+  // then fetched the 1.8 MB mobile cut after hydration, paying for both.
+  //
+  // The component re-attaches the right file on the client from its own viewport
+  // check, so an src-less <video> costs nothing and the poster covers JS-off.
+  out = out.replace(
+    /(<video\b[^>]*\bclass="[^"]*demo-video-glow__el[^"]*"[^>]*)\ssrc="[^"]*"/gi,
+    '$1',
+  );
+
   // Hoist LCP image preload to the top of <head> so it is not stuck behind
   // CSS/modulepreload discovered during the SPA render.
   let lcpPreload = '';
