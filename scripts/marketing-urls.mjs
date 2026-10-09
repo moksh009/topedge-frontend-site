@@ -2,28 +2,17 @@
  * Single source of marketing URLs for prerender + sitemap generation.
  * Keep in sync with App.tsx routes, MARKETING_FEATURES, and blogPosts.
  *
- * Documentation URLs are the exception: they are imported from the docs manifest
- * rather than restated here, because src/marketing/docs/registry.ts throws when
- * an article and the manifest disagree. A doc page therefore cannot exist at
- * runtime without also being prerendered and listed in the sitemap.
- *
  * Rules:
  * - Only canonical, indexable URLs (no aliases that 301 elsewhere).
  * - Paths have no trailing slash (except `/`).
  * - Do NOT include `/features/shopify` — it redirects to `/integrations`.
  */
-import { DOC_PATHS } from '../src/marketing/docs/manifest.mjs';
-
-export { DOC_PATHS };
-
 /** Live feature detail pages (must match MARKETING_FEATURES slugs). */
 export const FEATURE_SLUGS = [
   'journeys',
-  'live-chat',
   'flow-builder',
   'ai-brain',
   'campaigns',
-  'instagram',
   'analytics',
   'meta-manager',
   'audience-crm',
@@ -108,7 +97,6 @@ export function getMarketingPrerenderPaths() {
     ...COMPARE_SLUGS.map((s) => `/compare/${s}`),
     ...TOPIC_SLUGS.map((s) => `/${s}`),
     ...BLOG_SLUGS.map((s) => `/blog/${s}`),
-    ...DOC_PATHS,
     NOT_FOUND_PRERENDER_PATH,
   ];
 }

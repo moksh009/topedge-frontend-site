@@ -74,7 +74,7 @@ must(/class="mkt-nav__capsule"/.test(html), 'navbar is not the site capsule');
 must(/<footer[^>]*class="mkt-foot"/.test(html), 'missing the site footer shell');
 must(/Prahladnagar/.test(html), 'footer is missing the registered address');
 must(/href="tel:\+\d{8,}"/.test(html), 'footer is missing a phone number');
-must(count(/class="mkt-foot__col"/g) >= 3, 'footer is missing the sitemap columns');
+must(count(/class="mkt-foot__col"/g) >= 2, 'footer is missing the sitemap columns');
 must(/href="#how"[^>]*>How it works</.test(html), 'nav missing "How it works" anchor');
 must(/Log in</.test(html), 'nav missing "Log in"');
 must(/data-cta="trial"/.test(html), 'missing trial CTA');

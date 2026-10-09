@@ -8,9 +8,9 @@ export const CONTENT_DATES = {
   /** Last edit of 3-way compare page (+ feature matrix). */
   compareThreeWay: '2026-10-05',
   /** Last edit of blogPosts.ts (used as Article dateModified fallback). */
-  blogPosts: '2026-10-08',
+  blogPosts: '2026-10-09',
   /** Last edit of feature / product page content. */
-  featurePages: '2026-10-08',
+  featurePages: '2026-10-09',
   /** Last edit of published plan catalog (pricing Offers). */
   pricing: '2026-10-01',
 } as const;

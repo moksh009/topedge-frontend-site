@@ -64,17 +64,3 @@
   [headers.values]
     Content-Type = "text/plain; charset=utf-8"
     Cache-Control = "public, max-age=3600"
-
-# Docs Markdown mirrors (scripts/generate-docs-md.mjs). Served as readable
-# plaintext so LLM crawlers render them inline instead of downloading a file.
-[[headers]]
-  for = "/docs/*.md"
-  [headers.values]
-    Content-Type = "text/markdown; charset=utf-8"
-    Cache-Control = "public, max-age=3600"
-
-[[headers]]
-  for = "/docs.md"
-  [headers.values]
-    Content-Type = "text/markdown; charset=utf-8"
-    Cache-Control = "public, max-age=3600"

@@ -73,7 +73,7 @@ const LIMITS = [
 ];
 
 const READING = [
-  { label: 'COD confirmation setup guide', href: '/docs/guides/cod-confirmation' },
+  { label: 'COD confirmation setup guide', href: 'https://dash.topedgeai.com/docs' },
   { label: 'Journeys: the visual builder behind it', href: '/features/journeys' },
   { label: 'Profit & costs: measure your own RTO', href: '/features/profit-loss' },
   {
@@ -343,11 +343,23 @@ export default function CodConfirmationPage() {
             </h2>
           </div>
           <div className="mkt-pf__related">
-            {READING.map((r) => (
-              <Link key={r.href} to={r.href} className="mkt-pf__related-link">
-                {r.label}
-              </Link>
-            ))}
+            {READING.map((r) =>
+              r.href.startsWith('http') ? (
+                <a
+                  key={r.href}
+                  href={r.href}
+                  className="mkt-pf__related-link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {r.label}
+                </a>
+              ) : (
+                <Link key={r.href} to={r.href} className="mkt-pf__related-link">
+                  {r.label}
+                </Link>
+              ),
+            )}
           </div>
         </section>
 

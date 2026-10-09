@@ -73,7 +73,7 @@ const productColumns: NavColumn[] = [
 
 const primaryLinks = [
   { label: 'Pricing', href: '/pricing' },
-  { label: 'Docs', href: '/docs' },
+  { label: 'Docs', href: 'https://dash.topedgeai.com/docs' },
   { label: 'Customers', href: '/customers' },
 ] as const;
 
@@ -246,15 +246,27 @@ export default function MarketingNavbar() {
                 </div>
               </div>
 
-              {primaryLinks.map((l) => (
-                <Link
-                  key={l.href}
-                  to={l.href}
-                  className={cn('mkt-nav__link', location.pathname === l.href && 'is-active')}
-                >
-                  {l.label}
-                </Link>
-              ))}
+              {primaryLinks.map((l) =>
+                l.href.startsWith('http') ? (
+                  <a
+                    key={l.href}
+                    href={l.href}
+                    className="mkt-nav__link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {l.label}
+                  </a>
+                ) : (
+                  <Link
+                    key={l.href}
+                    to={l.href}
+                    className={cn('mkt-nav__link', location.pathname === l.href && 'is-active')}
+                  >
+                    {l.label}
+                  </Link>
+                ),
+              )}
             </nav>
 
             <div className="mkt-nav__actions">
@@ -368,19 +380,32 @@ export default function MarketingNavbar() {
 
                   <p className="mkt-nav__mobile-label">Explore</p>
                   <div className="mkt-nav__mobile-list">
-                    {primaryLinks.map((l) => (
-                      <Link
-                        key={l.href}
-                        to={l.href}
-                        className={cn(
-                          'mkt-nav__mobile-link',
-                          location.pathname === l.href && 'is-active',
-                        )}
-                        onClick={() => setOpen(false)}
-                      >
-                        {l.label}
-                      </Link>
-                    ))}
+                    {primaryLinks.map((l) =>
+                      l.href.startsWith('http') ? (
+                        <a
+                          key={l.href}
+                          href={l.href}
+                          className="mkt-nav__mobile-link"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={() => setOpen(false)}
+                        >
+                          {l.label}
+                        </a>
+                      ) : (
+                        <Link
+                          key={l.href}
+                          to={l.href}
+                          className={cn(
+                            'mkt-nav__mobile-link',
+                            location.pathname === l.href && 'is-active',
+                          )}
+                          onClick={() => setOpen(false)}
+                        >
+                          {l.label}
+                        </Link>
+                      ),
+                    )}
                   </div>
                 </div>
 

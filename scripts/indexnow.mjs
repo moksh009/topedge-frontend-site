@@ -19,7 +19,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { DOC_PATHS, getSitemapPaths } from './marketing-urls.mjs';
+import { getSitemapPaths } from './marketing-urls.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
@@ -47,12 +47,12 @@ const CHANGED_PHASE_E = [
   '/features/audience-crm',
   '/features/analytics',
   '/features/chat-rules',
-  '/features/instagram',
+  '/integrations',
   '/features/warranty',
   '/features/profit-loss',
   '/features/intent-detection',
   '/features/journeys',
-  '/features/live-chat',
+  '/features',
   '/features/ai-brain',
   '/features/meta-manager',
   '/compare/dondy',
@@ -88,7 +88,6 @@ const CHANGED_OCT_CONTENT = [
   '/blog/organic-vs-paid-ecommerce-marketing-2026',
   '/blog/shopify-whatsapp-automation-what-to-automate-first',
   '/blog/best-whatsapp-automation-tools-shopify-india',
-  ...DOC_PATHS,
 ];
 
 const DONDYY = ['/compare/dondy', '/blog/dondy-alternative-shopify-india'];

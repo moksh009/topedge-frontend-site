@@ -206,7 +206,7 @@ ${verdict(`<p><strong>A WATI alternative makes sense for Shopify India when</str
 </table>
 
 <h2>Where does TopEdge AI fit?</h2>
-<p>TopEdge AI is built around Shopify D2C in India: flat INR plans from ₹1,999 a month plus GST, Meta messages billed at Meta rates with no TopEdge markup, <a href="/features/journeys">cart recovery and COD journeys</a>, <a href="/features/live-chat">Live Chat with order context</a> and unified customer identity across numbers. We are not trying to out-support a dedicated helpdesk product.</p>
+<p>TopEdge AI is built around Shopify D2C in India: flat INR plans from ₹1,999 a month plus GST, Meta messages billed at Meta rates with no TopEdge markup, <a href="/features/journeys">cart recovery and COD journeys</a>, <a href="/features">Live Chat with order context</a> and unified customer identity across numbers. We are not trying to out-support a dedicated helpdesk product.</p>
 <p>See the line-by-line board on <a href="/compare/wati">TopEdge vs WATI</a> and plan details on <a href="/pricing">pricing</a>.</p>
 
 <h2>How do you test a switch in one afternoon?</h2>
@@ -399,7 +399,7 @@ ${verdict(`<p><strong>Bitespeed targets larger brands and global omnichannel sta
 ${faqHtml(BITESPEED_FAQS)}
 
 <p class="mkt-blog-footnote">Bitespeed statements reflect public listings and third-party summaries as of September 2026. Confirm on bitespeed.co and the Shopify App Store before purchase.</p>
-<p>Related: <a href="/blog/best-whatsapp-automation-tools-shopify-india">best WhatsApp automation tools for Shopify India</a>, <a href="/pricing">TopEdge pricing</a>, <a href="/features/live-chat">Live Chat</a>.</p>
+<p>Related: <a href="/blog/best-whatsapp-automation-tools-shopify-india">best WhatsApp automation tools for Shopify India</a>, <a href="/pricing">TopEdge pricing</a>, <a href="/features">Live Chat</a>.</p>
 `,
   },
   {
@@ -463,7 +463,7 @@ ${verdict(`<p><strong>Most rejections come from five fixable things:</strong> wr
 ${faqHtml(TEMPLATE_FAQS)}
 
 <p class="mkt-blog-footnote">Template rules come from Meta’s WhatsApp Business Platform documentation and change over time. Verify against the current guidelines before launch.</p>
-<p>Related: <a href="/blog/whatsapp-abandoned-cart-recovery-shopify">WhatsApp abandoned cart recovery</a>, <a href="/docs/quickstart">quickstart</a>.</p>
+<p>Related: <a href="/blog/whatsapp-abandoned-cart-recovery-shopify">WhatsApp abandoned cart recovery</a>, <a href="https://dash.topedgeai.com/docs" target="_blank" rel="noopener">quickstart</a>.</p>
 `,
   },
   {
@@ -529,7 +529,7 @@ ${verdict(`<p><strong>Collect opt-in at checkout and on your site, word it clear
 ${faqHtml(OPTIN_FAQS)}
 
 <p class="mkt-blog-footnote">This article is general information, not legal advice. Check Meta’s current WhatsApp Business Platform policy and take advice on India’s data protection rules for your own flows.</p>
-<p>Related: <a href="/blog/cod-confirmation-whatsapp-reduce-rto-shopify">COD confirmation on WhatsApp</a>, <a href="/docs/quickstart">quickstart</a>.</p>
+<p>Related: <a href="/blog/cod-confirmation-whatsapp-reduce-rto-shopify">COD confirmation on WhatsApp</a>, <a href="https://dash.topedgeai.com/docs" target="_blank" rel="noopener">quickstart</a>.</p>
 `,
   },
 ];

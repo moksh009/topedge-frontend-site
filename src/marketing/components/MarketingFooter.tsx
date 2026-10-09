@@ -21,7 +21,7 @@ const columns: { title: string; links: FootLink[] }[] = [
       { label: 'About', href: '/about' },
       { label: 'Customers', href: '/customers' },
       { label: 'Compare', href: '/compare' },
-      { label: 'Docs', href: '/docs' },
+      { label: 'Docs', href: 'https://dash.topedgeai.com/docs' },
       { label: 'Blog', href: '/blog' },
       { label: 'Contact', href: '/contact' },
     ],
@@ -38,7 +38,6 @@ const columns: { title: string; links: FootLink[] }[] = [
       { label: 'AI Brain', href: '/features/ai-brain' },
       // Also "Discovered – currently not indexed" in GSC for want of a
       // sitewide link (see the Compare column note).
-      { label: 'Instagram', href: '/features/instagram' },
       { label: 'Warranty', href: '/features/warranty' },
     ],
   },
@@ -186,10 +185,21 @@ export default function MarketingFooter() {
                   <ul className="mkt-foot__list">
                     {col.links.map((l) => (
                       <li key={l.href + l.label}>
-                        <Link to={l.href} className="mkt-foot__link">
-                          {l.label}
-                          {l.badge ? <span className="mkt-foot__badge">{l.badge}</span> : null}
-                        </Link>
+                        {l.href.startsWith('http') ? (
+                          <a
+                            href={l.href}
+                            className="mkt-foot__link"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {l.label}
+                          </a>
+                        ) : (
+                          <Link to={l.href} className="mkt-foot__link">
+                            {l.label}
+                            {l.badge ? <span className="mkt-foot__badge">{l.badge}</span> : null}
+                          </Link>
+                        )}
                       </li>
                     ))}
                   </ul>

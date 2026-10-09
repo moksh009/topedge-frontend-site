@@ -56,7 +56,7 @@ export const homeStories = [
     id: 'inbox' as const,
     title: 'Shared Team Inbox for WhatsApp & IG',
     body: 'One inbox for WhatsApp and Instagram. Assign chats, reply with order context, stay aligned.',
-    href: '/features/live-chat',
+    href: '/features',
     cta: 'Start free',
   },
   {
@@ -101,7 +101,7 @@ export const homeIntegrations = [
       { label: 'Continue', value: 'Live Chat handoff' },
     ],
     action: 'Add',
-    href: '/features/instagram',
+    href: '/integrations',
   },
   {
     name: 'Tracking Pixel',
@@ -144,7 +144,7 @@ export type FeatureStoryId =
 
 export const modules = [
   { name: 'Dashboard', outcome: 'Store + support KPIs at a glance', href: '/features' },
-  { name: 'Live Chat', outcome: 'Unified WA + IG inbox', href: '/features/live-chat' },
+  { name: 'Live Chat', outcome: 'Unified WA + IG inbox', href: '/features' },
   { name: 'AI Brain', outcome: 'Catalog-grounded replies', href: '/features/ai-brain' },
   { name: 'Tracking Pixel', outcome: 'Website intent → WhatsApp', href: '/features/analytics' },
   { name: 'Audience', outcome: 'Customers, segments, scores', href: '/features/audience-crm' },
@@ -152,7 +152,7 @@ export const modules = [
   { name: 'Flow Builder', outcome: 'AI form → WA flows', href: '/features/flow-builder' },
   { name: 'Journey', outcome: 'Cart, COD & order journeys', href: '/features/journeys' },
   { name: 'Meta Manager', outcome: 'Templates, catalog, QR', href: '/features/meta-manager' },
-  { name: 'IG Automation', outcome: 'Comment & story to DM', href: '/features/instagram' },
+  { name: 'IG Automation', outcome: 'Comment & story to DM', href: '/integrations' },
   { name: 'Warranty', outcome: 'Hub, queue, assign', href: '/features/warranty' },
   { name: 'Intent detection', outcome: 'Route chats by meaning', href: '/features/intent-detection' },
   { name: 'Profit & costs', outcome: 'True net after COD & RTO', href: '/features/profit-loss' },

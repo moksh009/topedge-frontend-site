@@ -17,27 +17,22 @@ https://www.topedgeai.com/*  https://topedgeai.com/:splat  301!
 /terms-of-service  /terms  301!
 /terms-of-service/  /terms  301!
 
-# Legacy dashboard doc paths → the public documentation.
-# dash.topedgeai.com/docs/* was noindexed, but these paths appear in older
-# support replies and in-app links, so they resolve rather than 404.
-/docs/setup  /docs/connect-whatsapp  301!
-/docs/flow-builder  /docs/reference/flow-builder  301!
-/docs/live-chat  /docs/reference/live-chat  301!
-/docs/leads-orders  /docs/reference/orders  301!
-/docs/shopify-automation  /docs/reference/journeys  301!
-/docs/audience-hub  /docs/reference/audience-crm  301!
-/docs/compliance  /docs/reference/opt-in-tools  301!
-/docs/templates  /docs/reference/meta-manager  301!
-/docs/campaigns  /docs/reference/campaigns  301!
-/docs/intelligence-hub  /docs/reference/ai-brain  301!
-/docs/ecommerce  /docs/reference/commerce  301!
-/docs/analytics  /docs/reference/analytics  301!
-/docs/settings  /docs/reference/settings-billing  301!
-/docs/cart-leads  /docs/reference/store-growth  301!
-/docs/warranty-hub  /docs/reference/warranty-hub  301!
-/docs/system-admin  /docs  301!
+# Documentation lives in the dashboard, not here. The marketing copy of the docs
+# was removed on 2026-10-09: the same pages existed at dash.topedgeai.com/docs and
+# at topedgeai.com/docs, which is duplicate content and two places to keep correct.
+# Every old marketing docs URL, and the older dashboard aliases that used to point
+# into it, now land on the dashboard documentation.
+/docs  https://dash.topedgeai.com/docs  301!
+/docs/  https://dash.topedgeai.com/docs  301!
+/docs/*  https://dash.topedgeai.com/docs  301!
 
 # Feature aliases → canonical hubs
+# Removed 2026-10-09. Live Chat has no replacement page, so it lands on the hub;
+# Instagram is still a supported integration, so it lands on /integrations.
+/features/live-chat  /features  301!
+/features/live-chat/  /features  301!
+/features/instagram  /integrations  301!
+/features/instagram/  /integrations  301!
 /features/shopify  /integrations  301!
 /features/shopify/  /integrations  301!
 /features/store-engine  /integrations  301!
@@ -50,8 +45,8 @@ https://www.topedgeai.com/*  https://topedgeai.com/:splat  301!
 /features/cart-recovery/  /features/journeys  301!
 /features/journey  /features/journeys  301!
 /features/journey/  /features/journeys  301!
-/features/inbox  /features/live-chat  301!
-/features/inbox/  /features/live-chat  301!
+/features/inbox  /features  301!
+/features/inbox/  /features  301!
 /features/audience  /features/audience-crm  301!
 /features/audience/  /features/audience-crm  301!
 /features/segments  /features/audience-crm  301!
@@ -78,7 +73,7 @@ https://www.topedgeai.com/*  https://topedgeai.com/:splat  301!
 /solutions/*  /features  301!
 /ecommerce  /  301!
 /ai-caller  /features/ai-brain  301!
-/ai-chatbot  /features/live-chat  301!
+/ai-chatbot  /features  301!
 
 # Do not add `/blog/:file.jpg` or `/blog/*.jpg`. Netlify treats the
 # extension as part of the placeholder and 301s every post to /blog-media/.

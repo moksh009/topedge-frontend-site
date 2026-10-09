@@ -6,9 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "build:netlify": "node scripts/generate-llms-docs.mjs && npm run check:pricing && npm run check:docs && npm run check:blog && node scripts/generate-content-dates.mjs && node scripts/generate-landing-pages.mjs && node scripts/generate-sitemap.mjs && node scripts/generate-redirects.mjs && vite build && node build-static.js && node scripts/prerender-marketing.mjs && node scripts/generate-docs-md.mjs && node scripts/check-dist.mjs",
-    "build:firebase": "node scripts/generate-llms-docs.mjs && npm run check:pricing && npm run check:docs && npm run check:blog && node scripts/generate-content-dates.mjs && node scripts/generate-landing-pages.mjs && vite build && node build-static.js && node scripts/prerender-marketing.mjs && node scripts/generate-docs-md.mjs && node scripts/check-dist.mjs",
-    "build:static": "node scripts/generate-llms-docs.mjs && npm run check:pricing && npm run check:docs && npm run check:blog && node scripts/generate-content-dates.mjs && node scripts/generate-landing-pages.mjs && vite build && node build-static.js && node scripts/prerender-marketing.mjs && node scripts/generate-docs-md.mjs && node scripts/check-dist.mjs",
+    "build:netlify": "npm run check:pricing && npm run check:blog && node scripts/generate-content-dates.mjs && node scripts/generate-landing-pages.mjs && node scripts/generate-sitemap.mjs && node scripts/generate-redirects.mjs && vite build && node build-static.js && node scripts/prerender-marketing.mjs && node scripts/check-dist.mjs",
+    "build:firebase": "npm run check:pricing && npm run check:blog && node scripts/generate-content-dates.mjs && node scripts/generate-landing-pages.mjs && vite build && node build-static.js && node scripts/prerender-marketing.mjs && node scripts/check-dist.mjs",
+    "build:static": "npm run check:pricing && npm run check:blog && node scripts/generate-content-dates.mjs && node scripts/generate-landing-pages.mjs && vite build && node build-static.js && node scripts/prerender-marketing.mjs && node scripts/check-dist.mjs",
     "prerender": "node scripts/prerender-marketing.mjs",
     "sitemap": "node scripts/generate-sitemap.mjs",
     "redirects": "node scripts/generate-redirects.mjs",
@@ -27,9 +27,6 @@
     "lint": "eslint . --fix",
     "preview": "vite preview",
     "capture-showcases": "node scripts/capture-showcases.mjs",
-    "check:docs": "node scripts/check-docs.mjs",
-    "docs:md": "node scripts/generate-docs-md.mjs",
-    "llms:docs": "node scripts/generate-llms-docs.mjs",
     "check:blog": "node scripts/check-blog-links.mjs"
   },
   "dependencies": {

@@ -79,7 +79,7 @@ const CONNECTIONS: Connection[] = [
       'Continue on Instagram or WhatsApp',
       'Same Live Chat inbox as WhatsApp',
     ],
-    href: '/features/instagram',
+    href: '/integrations',
     cta: 'Instagram automation',
   },
   {

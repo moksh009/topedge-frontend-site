@@ -205,13 +205,13 @@ const TRUST_LOGOS = [
   { src: '/trust/choicesalon-white.png', alt: 'Choice Salon' },
 ];
 
-// The site footer, minus the two things an ad page should not carry: the Compare column
-// (this page may not name a competitor, and paid traffic should not be sent shopping) and
-// the newsletter form (a second form competes with the trial for the same click).
+// The site footer, minus the Compare column (this page may not name a competitor, and
+// paid traffic should not be sent shopping) and the newsletter form (a second form
+// competes with the trial for the same click). Docs point at the dashboard, which is
+// where the documentation lives since the marketing copy was removed.
 const FOOT_COLUMNS = [
   { title: 'Product', links: [['Pricing', '/pricing'], ['Journey', '/features/journeys'], ['COD confirmation', '/features/cod-confirmation'], ['Audience Campaigns', '/features/campaigns'], ['AI Brain', '/features/ai-brain']] },
-  { title: 'Docs', links: [['Documentation', '/docs'], ['Quickstart', '/docs/quickstart'], ['Cart recovery', '/docs/guides/abandoned-cart-recovery'], ['COD confirmation', '/docs/guides/cod-confirmation'], ['Troubleshooting', '/docs/troubleshooting']] },
-  { title: 'Company', links: [['About', '/about'], ['Customers', '/customers'], ['Blog', '/blog'], ['Contact', '/contact']] },
+  { title: 'Company', links: [['About', '/about'], ['Customers', '/customers'], ['Docs', 'https://dash.topedgeai.com/docs'], ['Blog', '/blog'], ['Contact', '/contact']] },
 ];
 
 // Same brand fills the site footer uses. Instagram's real mark is a radial gradient;

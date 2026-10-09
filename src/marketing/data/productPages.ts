@@ -10,11 +10,9 @@ export type ProductPageId =
   | 'audience-crm'
   | 'journeys'
   | 'tracking-pixel'
-  | 'live-chat'
   | 'ai-brain'
   | 'meta-manager'
   | 'chat-rules'
-  | 'instagram'
   | 'warranty'
   | 'profit-loss'
   | 'intent-detection';
@@ -242,7 +240,7 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     relatedAccent: 'recovery + CRM',
     related: [
       { label: 'Cart recovery journeys', href: '/features/journeys#abandoned-cart' },
-      { label: 'Live Chat handoff', href: '/features/live-chat' },
+      { label: 'Live Chat handoff', href: '/features' },
       { label: 'Intent detection', href: '/features/intent-detection' },
       { label: 'Chat rules', href: '/features/chat-rules' },
       { label: 'What to automate first', href: '/blog/shopify-whatsapp-automation-what-to-automate-first' },
@@ -959,152 +957,6 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     ctaSub: 'Theme embed, consent-aware events, and journeys that fire on real browse behavior.',
   },
 
-  'live-chat': {
-    id: 'live-chat',
-    path: '/features/live-chat',
-    featureSlug: 'live-chat',
-    eyebrow: 'Live Chat',
-    title: 'WhatsApp inbox with',
-    titleAccent: 'order context',
-    subtitle:
-      'Reply with Shopify order context in one WhatsApp inbox.\nTake over from AI anytime, release when you are done.',
-    answerFirst:
-      'TopEdge Live Chat is a shared WhatsApp (and Instagram) inbox for Shopify India teams. Agents see order, COD, and cart context beside the thread, take over to pause automation, and reply free-text inside the 24h window or with Meta-approved templates outside it.',
-    faqs: [
-      {
-        question: 'Can agents see Shopify orders inside WhatsApp?',
-        answer:
-          'Yes. The contact panel shows order context next to the thread so agents do not ask for an order ID the system already knows—critical for COD disputes and WISMO.',
-      },
-      {
-        question: 'What happens when an agent takes over from AI?',
-        answer:
-          'Take control pauses Flow Builder and AI on that thread until the agent releases. Automation resumes on the next inbound after release.',
-      },
-      {
-        question: 'When can agents free-text vs use templates?',
-        answer:
-          'Inside 24 hours of the customer’s last message, free text is allowed. Outside that window, use a Meta-approved utility or marketing template.',
-      },
-    ],
-    seoTitle: 'WhatsApp Shared Inbox for Shopify India | TopEdge AI',
-    seoDescription:
-      'WhatsApp and Instagram inbox for Shopify. Agents see the order, confirm COD, recover carts, and pause AI on takeover.',
-    keywords:
-      'WhatsApp shared inbox Shopify India, ecommerce live chat WhatsApp, WhatsApp customer support Shopify, Live Chat takeover pauses AI',
-    hero: {
-      kind: 'image',
-      src: '/marketing/customers/customers-outcome-inbox.png',
-      alt: 'TopEdge WhatsApp Live Chat inbox with conversation list and open thread',
-      glow: 'sky',
-    },
-    outcomesTitle: 'What support',
-    outcomesAccent: 'teams feel',
-    outcomes: [
-      {
-        metric: '24h',
-        label: 'Session aware',
-        detail: 'Free text inside window, templates outside',
-      },
-      {
-        metric: 'Takeover',
-        label: 'Bot pauses',
-        detail: 'Take control stops automation until Release',
-      },
-      {
-        metric: '360°',
-        label: 'Beside the thread',
-        detail: 'Orders, tags, opt-in, jump to Audience',
-      },
-    ],
-    bentoTitle: 'Who is Live Chat',
-    bentoAccent: 'for?',
-    bentoSub: 'List left, thread center, contact panel right—agents answer with cart, COD, and order context.',
-    bentos: [
-      {
-        titleLead: 'Thread +',
-        titleAccent: 'composer',
-        body: 'Open unread first, check the 24h window, then free-text or pick a Meta-approved template when the session expired.',
-        image: '/marketing/customers/customers-outcome-inbox.png',
-        imageAlt: 'WhatsApp Live Chat inbox with thread list and message composer for Shopify',
-        span: 'third',
-      },
-      {
-        titleLead: 'Take',
-        titleAccent: 'control',
-        body: 'Pause Flow Builder and AI on the thread so only your team replies. Release to bot resumes automation on the next inbound.',
-        image: '/marketing/solutions/sol-fashion-inbox.png',
-        imageAlt: 'Live Chat takeover control that pauses WhatsApp AI and Flow Builder',
-        span: 'third',
-      },
-      {
-        titleLead: 'Customer',
-        titleAccent: '360',
-        body: 'Orders, tags, and opt-in live in the contact panel, assign or resolve without tab-switching to Shopify admin.',
-        image: '/marketing/solutions/sol-electronics-inbox-saas.png',
-        imageAlt: 'WhatsApp Live Chat inbox with Shopify order context panel Customer 360',
-        span: 'third',
-      },
-    ],
-    showcasesTitle: 'Inside',
-    showcasesAccent: 'Live Chat',
-    showcasesSub: 'Reply, takeover, Meta templates, and filters, same names as the dashboard.',
-    showcases: [
-      {
-        title: 'Inbox',
-        titleAccent: 'layout',
-        body: 'Conversation list on the left, open thread in the center, contact panel on the right. Unread bubbles rise to the top.',
-        image: '/marketing/customers/customers-outcome-inbox.png',
-        imageLabel: 'WhatsApp Live Chat inbox, list, thread, and Shopify contact panel',
-      },
-      {
-        title: 'Composer &',
-        titleAccent: '24h window',
-        body: 'Inside 24h of the customer’s last message → free text. Outside → pick a Meta-approved utility or marketing template.',
-        image: '/marketing/solutions/sol-fashion-inbox-saas.png',
-        imageLabel: 'WhatsApp composer with 24h session state and approved template picker',
-      },
-      {
-        title: 'Search &',
-        titleAccent: 'filters',
-        body: 'Filter by status, assignee, or date. Search name, phone, or message snippet, then assign or resolve.',
-        image: '',
-        imageLabel: 'Live Chat filters, assigned, open, needs help for Shopify support teams',
-      },
-    ],
-    stepsTitle: 'How does a reply',
-    stepsAccent: 'get done?',
-    steps: [
-      {
-        title: 'Open the thread',
-        body: 'Click a row in the inbox, unread WhatsApp threads bubble to the top.',
-      },
-      {
-        title: 'Check the session',
-        body: 'Inside 24h send free text; outside pick a Meta-approved template in the composer.',
-      },
-      {
-        title: 'Take control if needed',
-        body: 'Pause AI and Flow Builder so only your team replies, Release when you’re done.',
-      },
-      {
-        title: 'Resolve or assign',
-        body: 'Use Customer 360 for orders and tags, then resolve the ticket or route to a teammate.',
-      },
-    ],
-    relatedTitle: 'Related in this',
-    relatedAccent: 'cluster',
-    related: [
-      { label: 'Shared inbox playbook', href: '/blog/whatsapp-shared-inbox-shopify-order-context' },
-      { label: 'AI Brain (BYOK)', href: '/features/ai-brain' },
-      { label: 'Chat rules', href: '/features/chat-rules' },
-      { label: 'Journeys', href: '/features/journeys' },
-      { label: 'TopEdge vs WATI', href: '/compare/wati' },
-    ],
-    ctaTitle: 'Put support next to the Shopify order',
-    ctaSub: 'Connect WhatsApp, publish a flow, and answer with order context. Takeover pauses AI instantly.',
-  },
-
   'ai-brain': {
     id: 'ai-brain',
     path: '/features/ai-brain',
@@ -1225,7 +1077,7 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
       { label: 'AI chatbot for Shopify', href: '/blog/ai-chatbot-for-shopify' },
       { label: 'AI chatbot playbook (India WhatsApp)', href: '/blog/ai-whatsapp-chatbot-for-shopify-india' },
       { label: 'Intent detection', href: '/features/intent-detection' },
-      { label: 'Live Chat', href: '/features/live-chat' },
+      { label: 'Live Chat', href: '/features' },
       { label: 'Flow Builder', href: '/features/flow-builder' },
     ],
     ctaTitle: 'Run WhatsApp AI on your own keys',
@@ -1509,154 +1361,13 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     relatedTitle: 'Works with',
     relatedAccent: 'inbox + AI',
     related: [
-      { label: 'Live Chat', href: '/features/live-chat' },
+      { label: 'Live Chat', href: '/features' },
       { label: 'Intent detection', href: '/features/intent-detection' },
       { label: 'COD confirmation', href: '/blog/cod-confirmation-whatsapp-reduce-rto-shopify' },
       { label: 'Shared inbox playbook', href: '/blog/whatsapp-shared-inbox-shopify-order-context' },
     ],
     ctaTitle: 'Keep Live Chat calm at peak',
     ctaSub: 'Route COD and VIP correctly, then let agents finish with Shopify order context.',
-  },
-
-  instagram: {
-    id: 'instagram',
-    path: '/features/instagram',
-    featureSlug: 'instagram',
-    eyebrow: 'IG Automation',
-    title: 'Comment or story',
-    titleAccent: '→ DM',
-    subtitle:
-      'Turn comments and story mentions into Instagram or WhatsApp DMs.\nContinue in Live Chat with Shopify context.',
-    answerFirst:
-      'TopEdge Instagram automation turns comments and story mentions into Instagram or WhatsApp DMs for Shopify brands, then continues the conversation in Live Chat with order context—built for drops and price questions while interest is hot.',
-    faqs: [
-      {
-        question: 'Can Instagram chats continue on WhatsApp?',
-        answer:
-          'Yes. Comment-to-DM can land on Instagram or WhatsApp depending on your setup, then agents continue in the shared Live Chat inbox.',
-      },
-      {
-        question: 'Who is IG automation for?',
-        answer:
-          'Shopify D2C teams running drop launches, price Q&A in comments, and story mentions that should become sales or support threads fast.',
-      },
-    ],
-    seoTitle: 'Instagram to WhatsApp Automation for Shopify | Comment-to-DM',
-    seoDescription:
-      'Turn Instagram comments and stories into WhatsApp DMs for Shopify India, comment-to-DM automation for drops, price questions, and Live Chat handoff.',
-    keywords:
-      'Instagram WhatsApp automation Shopify, comment to DM India, IG automation ecommerce D2C, Instagram Live Chat Shopify',
-    hero: {
-      kind: 'image',
-      src: '/marketing/features/optin-popup.png',
-      alt: 'Instagram comment-to-DM automation connected to TopEdge Live Chat for Shopify',
-      glow: 'rose',
-    },
-    outcomesTitle: 'What IG',
-    outcomesAccent: 'traffic needs',
-    outcomes: [
-      {
-        metric: 'Comment',
-        label: '→ DM',
-        detail: 'Capture price questions while interest is hot',
-      },
-      {
-        metric: 'Story',
-        label: 'triggers',
-        detail: 'Mentions and replies open a conversation',
-      },
-      {
-        metric: 'Inbox',
-        label: 'handoff',
-        detail: 'IG + WhatsApp follow-ups in Live Chat',
-      },
-    ],
-    bentoTitle: 'Social entry,',
-    bentoAccent: 'commerce follow-through',
-    bentoSub: 'Automate the first DM, keep brand voice consistent, then finish sales in the shared WhatsApp inbox.',
-    bentos: [
-      {
-        titleLead: 'Comment',
-        titleAccent: 'rules',
-        body: 'Auto-reply to comment keywords with a DM, turn drop comments into conversations without leaving Instagram.',
-        image: '/marketing/features/optin-popup.png',
-        imageAlt: 'Instagram comment-to-DM rules for Shopify drop and price questions',
-        span: 'third',
-      },
-      {
-        titleLead: 'Story',
-        titleAccent: 'replies',
-        body: 'Story mention and reply triggers open a DM while the viewer is still mid-scroll.',
-        image: '/marketing/features/unified-identity.png',
-        imageAlt: 'Instagram story reply and mention triggers opening a DM conversation',
-        span: 'third',
-      },
-      {
-        titleLead: 'Live Chat',
-        titleAccent: 'continue',
-        body: 'Handoff into the same inbox as WhatsApp so agents see IG context beside Shopify orders.',
-        image: '/marketing/customers/customers-outcome-inbox.png',
-        imageAlt: 'Live Chat inbox continuing Instagram DM beside WhatsApp with Shopify orders',
-        span: 'third',
-      },
-    ],
-    showcasesTitle: 'Inside',
-    showcasesAccent: 'IG automation',
-    showcasesSub: 'Comment and story rules, then one inbox for WhatsApp and Instagram follow-ups.',
-    showcases: [
-      {
-        title: 'Comment-to',
-        titleAccent: '-DM rules',
-        body: 'Match keywords like “price” or “link” and send a branded DM with catalog or WhatsApp deep link.',
-        image: '',
-        imageLabel: 'Instagram comment-to-DM rule builder for Shopify ecommerce',
-      },
-      {
-        title: 'Story',
-        titleAccent: 'triggers',
-        body: 'Story reply and mention automations capture interest before the viewer scrolls away.',
-        image: '',
-        imageLabel: 'Instagram story reply automation settings for D2C brands',
-      },
-      {
-        title: 'Inbox',
-        titleAccent: 'handoff',
-        body: 'Continue the thread in Live Chat, WA + IG list with channel filters and Customer 360.',
-        image: '/marketing/customers/customers-outcome-inbox.png',
-        imageLabel: 'Live Chat with Instagram thread beside WhatsApp and Shopify order context',
-      },
-    ],
-    stepsTitle: 'How IG',
-    stepsAccent: 'becomes revenue',
-    steps: [
-      {
-        title: 'Connect Instagram',
-        body: 'Link the business account in Settings → Connections alongside WhatsApp.',
-      },
-      {
-        title: 'Publish comment rules',
-        body: 'Define keywords and the first DM copy, keep brand voice consistent.',
-      },
-      {
-        title: 'Add story triggers',
-        body: 'Turn mentions and replies into conversations while attention is warm.',
-      },
-      {
-        title: 'Finish in Live Chat',
-        body: 'Agents pick up IG threads next to WhatsApp with Shopify order context when the shopper is ready to buy.',
-      },
-    ],
-    relatedTitle: 'Works with',
-    relatedAccent: 'inbox + Meta',
-    related: [
-      { label: 'Live Chat', href: '/features/live-chat' },
-      { label: 'Opt-in tools', href: '/features/opt-in-tools' },
-      { label: 'Campaigns', href: '/features/campaigns' },
-      { label: 'Chat rules', href: '/features/chat-rules' },
-      { label: 'Shared inbox playbook', href: '/blog/whatsapp-shared-inbox-shopify-order-context' },
-    ],
-    ctaTitle: 'Turn IG comments into conversations',
-    ctaSub: 'Automate the first DM, then close in Live Chat with Shopify context.',
   },
 
   warranty: {
@@ -1746,7 +1457,7 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     relatedTitle: 'Works with',
     relatedAccent: 'CRM + Meta',
     related: [
-      { label: 'Live Chat', href: '/features/live-chat' },
+      { label: 'Live Chat', href: '/features' },
       { label: 'Audience CRM', href: '/features/audience-crm' },
       { label: 'Profit & costs', href: '/features/profit-loss' },
       { label: 'Customers', href: '/customers' },
@@ -1993,7 +1704,7 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     related: [
       { label: 'AI Brain', href: '/features/ai-brain' },
       { label: 'Flow Builder', href: '/features/flow-builder' },
-      { label: 'Live Chat', href: '/features/live-chat' },
+      { label: 'Live Chat', href: '/features' },
       { label: 'Chat rules', href: '/features/chat-rules' },
       { label: 'AI chatbot playbook (India WhatsApp)', href: '/blog/ai-whatsapp-chatbot-for-shopify-india' },
     ],

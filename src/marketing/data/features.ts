@@ -31,23 +31,6 @@ export const MARKETING_FEATURES: MarketingFeature[] = [
     aliases: ['journey', 'order-automations', 'order-messages', 'cart-recovery'],
   },
   {
-    slug: 'live-chat',
-    scene: 'inbox',
-    title: 'Every thread beside the order it belongs to',
-    body: 'WhatsApp and Instagram in one inbox. Customer 360 shows order #, COD status, LTV, and cart history, so agents never tab-switch to Shopify admin.',
-    bullets: [
-      'Assign, tag, and hand off to humans',
-      'AI replies pause on takeover',
-      'Full conversation history',
-    ],
-    outcomes: [
-      'Reply with tracking without leaving the thread',
-      'Unified WA + IG list with channel filters',
-      'Human takeover pauses automation instantly',
-    ],
-    aliases: ['inbox'],
-  },
-  {
     slug: 'flow-builder',
     scene: 'flow-builder',
     title: 'Describe the bot, AI drafts the flow canvas',
@@ -93,22 +76,6 @@ export const MARKETING_FEATURES: MarketingFeature[] = [
       'Broadcasts that never sneak past Meta approval',
       'Audience pulls from real lead scores and cart state',
       'Cost clarity before you hit send',
-    ],
-  },
-  {
-    slug: 'instagram',
-    scene: 'instagram',
-    title: 'Comment or story → DM, without leaving Instagram',
-    body: 'Auto-reply to comments and story mentions with a WhatsApp or IG DM. Capture interest while it’s hot, then continue in Live Chat.',
-    bullets: [
-      'Comment-to-DM rules',
-      'Story reply triggers',
-      'Hands off into Live Chat',
-    ],
-    outcomes: [
-      'Turn “price?” comments into conversations',
-      'Keep brand voice consistent on auto-DM',
-      'One inbox for IG + WhatsApp follow-ups',
     ],
   },
   {
@@ -276,7 +243,7 @@ export function canonicalHrefForStory(storyId: string): string {
   const map: Record<string, string> = {
     shopify: '/integrations',
     'cart-recovery': '/features/journeys',
-    inbox: '/features/live-chat',
+    inbox: '/features',
     journey: '/features/journeys',
     'flow-builder': '/features/flow-builder',
     'opt-in-tools': '/features/opt-in-tools',
@@ -285,7 +252,7 @@ export function canonicalHrefForStory(storyId: string): string {
     'optin-popup': '/features/opt-in-tools',
     'ai-brain': '/features/ai-brain',
     campaigns: '/features/campaigns',
-    instagram: '/features/instagram',
+    instagram: '/integrations',
     dashboard: '/features',
     analytics: '/features/analytics',
     'meta-manager': '/features/meta-manager',

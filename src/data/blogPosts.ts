@@ -270,7 +270,7 @@ export const blogPosts: BlogPost[] = [
 <p>Use lighter reminder copy and more product reassurance. Contact capture is harder here. If you only have email from account login or earlier signup, use that channel first.</p>
 <h3>Workflow C: Recovery that becomes support</h3>
 <p>When a customer replies to a recovery template, open the conversation in a shared inbox with order/cart context. AI or automation can answer FAQs; size disputes, damaged-item claims, payment failures, and angry customers go to a human.</p>
-<p>On TopEdge, that reply path is designed to land in <a href="/features/live-chat">Live Chat</a>, where agents see Shopify order and cart context beside the thread and can take over from automation when needed.</p>
+<p>On TopEdge, that reply path is designed to land in <a href="/features">Live Chat</a>, where agents see Shopify order and cart context beside the thread and can take over from automation when needed.</p>
 <h3>Workflow D: Stop the bleeding before recovery</h3>
 <p>If analysis shows abandonments cluster around surprise shipping fees or payment failures, fix checkout first. Recovery messages cannot permanently patch a broken checkout.</p>
 <p>If you are sequencing what to automate after cart recovery, use <a href="/blog/shopify-whatsapp-automation-what-to-automate-first">Shopify WhatsApp: what to automate first</a> and the <a href="/blog/shopify-automation-checklist-whatsapp-cart-recovery">Shopify WhatsApp automation checklist</a>.</p>
@@ -305,7 +305,7 @@ export const blogPosts: BlogPost[] = [
 <h2>How TopEdge AI fits Shopify abandoned cart recovery</h2>
 <p>For Shopify merchants who want WhatsApp inside the recovery loop (not only email), TopEdge AI approaches cart recovery as ecommerce automation tied to store events.</p>
 <p>Within TopEdge AI, this workflow is handled through <a href="/features/journeys">Journeys</a>: Shopify triggers such as checkout abandoned can start a multi-step WhatsApp sequence using Meta-approved templates. The <a href="/features/journeys#abandoned-cart">Abandoned Cart</a> section of Journeys describes a pre-built recovery sequence with live line items, checkout links, optional high-AOV prioritization, and recovered-revenue attribution rather than send volume alone. Journeys are gated so non-approved templates do not go live. Merchants can also branch by payment method when COD and prepaid need different copy.</p>
-<p>Connecting the store and messaging channel is covered on the <a href="/shopify-whatsapp-integration">Shopify WhatsApp integration</a> page (Shopify OAuth + Meta WhatsApp Cloud API in one workspace). When a customer replies to a recovery message, conversations continue in <a href="/features/live-chat">Live Chat</a>. Related building blocks include <a href="/features/flow-builder">Flow Builder</a> for conversational trees and human handoff, and <a href="/features/campaigns">Campaigns</a> for broader Meta-safe outreach to consented audiences. Current plan details are on <a href="/pricing">Pricing</a>.</p>
+<p>Connecting the store and messaging channel is covered on the <a href="/shopify-whatsapp-integration">Shopify WhatsApp integration</a> page (Shopify OAuth + Meta WhatsApp Cloud API in one workspace). When a customer replies to a recovery message, conversations continue in <a href="/features">Live Chat</a>. Related building blocks include <a href="/features/flow-builder">Flow Builder</a> for conversational trees and human handoff, and <a href="/features/campaigns">Campaigns</a> for broader Meta-safe outreach to consented audiences. Current plan details are on <a href="/pricing">Pricing</a>.</p>
 <p>TopEdge is ecommerce automation software for customer engagement on Shopify and WhatsApp. It is not a marketing agency, and cart recovery results always depend on opt-in rates, offer quality, checkout friction, and how well replies are handled.</p>
 
 <h2>Common questions</h2>
@@ -425,7 +425,7 @@ export const blogPosts: BlogPost[] = [
 <p>Before you celebrate automation volume, finish two boring jobs:</p>
 <ol>
 <li>Submit and wait for APPROVED utility templates for cart, COD, and shipping. Manage them in <a href="/features/meta-manager">Meta Manager</a>.</li>
-<li>Put the team on a shared inbox with order context via <a href="/features/live-chat">Live Chat</a>. Automation that cannot escalate cleanly will create angry buyers.</li>
+<li>Put the team on a shared inbox with order context via <a href="/features">Live Chat</a>. Automation that cannot escalate cleanly will create angry buyers.</li>
 </ol>
 <blockquote><p>If humans cannot see the order next to the thread, your “automation stack” is still a screenshot workflow.</p></blockquote>
 
@@ -547,7 +547,7 @@ export const blogPosts: BlogPost[] = [
 </div>
 
 <h2>When should humans take over?</h2>
-<p>Automation should pause when an agent joins. Escalate when the buyer disputes the amount, asks for partial cancel, reports a wrong address, or sounds like a complaint. Put those threads in <a href="/features/live-chat">Live Chat</a> with full order context. Agents should never ask for an order ID the system already knows.</p>
+<p>Automation should pause when an agent joins. Escalate when the buyer disputes the amount, asks for partial cancel, reports a wrong address, or sounds like a complaint. Put those threads in <a href="/features">Live Chat</a> with full order context. Agents should never ask for an order ID the system already knows.</p>
 
 <h2>Which metrics will finance trust?</h2>
 <p>Track confirmation rate, ship rate of confirmed COD, RTO %, and cost per recovered order vs. reverse logistics cost. Opens alone do not prove the program works. For a deeper RTO playbook, read <a href="/blog/how-to-reduce-rto-with-whatsapp-cod-confirmation">how to reduce RTO with WhatsApp COD confirmation</a>. For cart recovery timing on the same canvas, see <a href="/blog/whatsapp-abandoned-cart-recovery-shopify">abandoned cart recovery</a>.</p>
@@ -636,7 +636,7 @@ export const blogPosts: BlogPost[] = [
 <li>Support needs order context in-thread</li>
 <li>Delivery updates that should feel immediate</li>
 </ul>
-<p>These flows belong in <a href="/features/journeys">Journeys</a> with humans available in <a href="/features/live-chat">Live Chat</a>.</p>
+<p>These flows belong in <a href="/features/journeys">Journeys</a> with humans available in <a href="/features">Live Chat</a>.</p>
 
 <h2>Keep email when depth and archive matter</h2>
 <ul>
@@ -753,7 +753,7 @@ export const blogPosts: BlogPost[] = [
 </ul>
 <p>Wire store data through the <a href="/shopify-whatsapp-integration">Shopify WhatsApp integration</a> and <a href="/integrations">integrations</a> page.</p>
 
-<p>Build templates once, reuse across journeys, and keep humans nearby in <a href="/features/live-chat">Live Chat</a>. For competitor context see <a href="/compare">compare</a> and <a href="/compare/aisensy">vs AiSensy</a>. Next: the <a href="/blog/shopify-automation-checklist-whatsapp-cart-recovery">automation checklist</a>.</p>
+<p>Build templates once, reuse across journeys, and keep humans nearby in <a href="/features">Live Chat</a>. For competitor context see <a href="/compare">compare</a> and <a href="/compare/aisensy">vs AiSensy</a>. Next: the <a href="/blog/shopify-automation-checklist-whatsapp-cart-recovery">automation checklist</a>.</p>
 <p>Template got refused? See <a href="/blog/whatsapp-template-rejected-meta-shopify-fix">why WhatsApp templates are rejected and how to fix them</a>.</p>
 `,
   },
@@ -816,7 +816,7 @@ export const blogPosts: BlogPost[] = [
 <li>Macros for common COD, size, and shipping answers</li>
 <li>WhatsApp + Instagram in one queue when both channels drive D2C traffic</li>
 </ul>
-<p>That is the job of <a href="/features/live-chat">Live Chat</a>, not a personal phone with Business App.</p>
+<p>That is the job of <a href="/features">Live Chat</a>, not a personal phone with Business App.</p>
 
 <h2>Why order context cuts handle time</h2>
 <p>Most WISMO and COD tickets start with “order id please.” When the inbox already shows the order, agents jump to the real issue: wrong size, delayed courier, address change. That alone often pays for the tool in saved agent hours during sale weeks.</p>
@@ -842,7 +842,7 @@ export const blogPosts: BlogPost[] = [
 <h2>Tie inbox to journeys</h2>
 <p>Cart recovery and COD confirmation create replies. Those replies must land in the same inbox with history intact. Otherwise growth and CX become two companies sharing a phone number. See how journeys feed the inbox in <a href="/features/journeys">Journeys</a>, and how brands run this on <a href="/customers">customers</a>.</p>
 
-<p>Explore <a href="/features/live-chat">Live Chat</a>, compare inbox-centric tools like <a href="/compare/wati">WATI</a> on our <a href="/compare">compare hub</a>, and get Shopify wiring right via <a href="/shopify-whatsapp-integration">Shopify WhatsApp integration</a>. Ready to talk setup? <a href="/contact">Contact</a>.</p>
+<p>Explore <a href="/features">Live Chat</a>, compare inbox-centric tools like <a href="/compare/wati">WATI</a> on our <a href="/compare">compare hub</a>, and get Shopify wiring right via <a href="/shopify-whatsapp-integration">Shopify WhatsApp integration</a>. Ready to talk setup? <a href="/contact">Contact</a>.</p>
 `,
   },
   {
@@ -927,7 +927,7 @@ export const blogPosts: BlogPost[] = [
 <li><a href="/features/chat-rules">Routing rules</a>: sales hours vs after-hours</li>
 <li>Macros for COD and shipping</li>
 <li>AI FAQ on, purchase-risk intents off until you trust grounding: <a href="/features/ai-brain">AI Brain</a></li>
-<li>Team trained to pause automation on takeover: <a href="/features/live-chat">Live Chat</a></li>
+<li>Team trained to pause automation on takeover: <a href="/features">Live Chat</a></li>
 </ul>
 
 <h2>Go-live checks before paid traffic</h2>
@@ -1104,7 +1104,7 @@ export const blogPosts: BlogPost[] = [
 <p>Start at the <a href="/compare/alternatives">alternatives index</a> for one factual line per tool, then open only the pairwise pages you care about. If a vendor cannot show a live Shopify cart inside a WhatsApp preview, you are buying a broadcast tool, not ecommerce automation.</p>
 
 <h2>Where does TopEdge fit on this shortlist?</h2>
-<p>TopEdge is built as a WhatsApp growth OS for Shopify India: <a href="/features/journeys">Journeys</a>, <a href="/features/live-chat">Live Chat</a>, <a href="/features/meta-manager">Meta Manager</a>, and recovery math in one workspace. Compare named alternatives on our <a href="/compare">compare hub</a>, including <a href="/compare/wati">vs WATI</a>, <a href="/compare/zoko">vs Zoko</a>, <a href="/compare/kanal">vs Kanal</a>, and <a href="/compare/dondy">vs Dondy</a> (narrative: <a href="/blog/dondy-alternative-shopify-india">Dondy alternative</a>).</p>
+<p>TopEdge is built as a WhatsApp growth OS for Shopify India: <a href="/features/journeys">Journeys</a>, <a href="/features">Live Chat</a>, <a href="/features/meta-manager">Meta Manager</a>, and recovery math in one workspace. Compare named alternatives on our <a href="/compare">compare hub</a>, including <a href="/compare/wati">vs WATI</a>, <a href="/compare/zoko">vs Zoko</a>, <a href="/compare/kanal">vs Kanal</a>, and <a href="/compare/dondy">vs Dondy</a> (narrative: <a href="/blog/dondy-alternative-shopify-india">Dondy alternative</a>).</p>
 <blockquote><p>If a demo cannot show a live Shopify cart inside a WhatsApp preview, you are buying a broadcast tool, not ecommerce automation.</p></blockquote>
 
 <h2>What are red flags while buying a WhatsApp app?</h2>
@@ -1204,7 +1204,7 @@ export const blogPosts: BlogPost[] = [
 <li>Trigger after order creation (utility template where eligible)</li>
 <li>Include items, total, and delivery window from Shopify</li>
 <li>Branch: confirmed → fulfill; reschedule → update; cancel → stop; no reply → reminder then hold/cancel policy</li>
-<li>Pause automation when an agent replies in <a href="/features/live-chat">Live Chat</a></li>
+<li>Pause automation when an agent replies in <a href="/features">Live Chat</a></li>
 </ol>
 <p>Implement the branches in <a href="/features/journeys">Journeys</a> and keep templates healthy in <a href="/features/meta-manager">Meta Manager</a>.</p>
 <div class="mkt-blog-callout"><p><strong>Operator tip:</strong> Warehouse must not pick COD orders until confirmation state is green, or you will confirm after the damage is packed.</p></div>
@@ -1285,7 +1285,7 @@ export const blogPosts: BlogPost[] = [
 <li>Campaigns / drops (after template hygiene)</li>
 <li>AI answers grounded in catalog truth + human handoff; see <a href="/blog/ai-chatbot-for-shopify">AI chatbot for Shopify</a></li>
 </ul>
-<p>These map to <a href="/features/journeys">Journeys</a>, <a href="/features/live-chat">Live Chat</a>, <a href="/features/ai-brain">AI Brain</a>, and <a href="/features/meta-manager">Meta Manager</a>.</p>
+<p>These map to <a href="/features/journeys">Journeys</a>, <a href="/features">Live Chat</a>, <a href="/features/ai-brain">AI Brain</a>, and <a href="/features/meta-manager">Meta Manager</a>.</p>
 
 <h2>What it is not</h2>
 <p>It is not blasting unverified marketing templates, running a chatbot that invents prices, or treating WhatsApp Web as your CRM. Meta quality ratings and Shopify accuracy matter. If the phone number is busy on a laptop, you do not have automation. You have a bottleneck.</p>
@@ -1375,7 +1375,7 @@ export const blogPosts: BlogPost[] = [
 <li>Respect Meta policies, opt-outs, and quiet hours</li>
 <li>Never invent a discount or shipping promise ops cannot keep</li>
 </ol>
-<p>Configure grounding and escalation in <a href="/features/ai-brain">AI Brain</a>, with humans in <a href="/features/live-chat">Live Chat</a>.</p>
+<p>Configure grounding and escalation in <a href="/features/ai-brain">AI Brain</a>, with humans in <a href="/features">Live Chat</a>.</p>
 
 <h2>Where AI helps vs where it hurts</h2>
 <ul>
@@ -2063,7 +2063,7 @@ export const blogPosts: BlogPost[] = [
 <p><a href="/features/audience-crm">Segment lapsed buyers</a>; Meta-safe marketing templates; stop when they reorder or opt out. Campaigns come after transactional quality is stable.</p>
 
 <h3>10. Instagram-to-WhatsApp Conversations</h3>
-<p><a href="/features/instagram">Comment / story / mention interest</a> → continue in WhatsApp or DM inbox with the same customer identity. Useful for drops and social commerce, not a substitute for order utilities.</p>
+<p><a href="/integrations">Comment / story / mention interest</a> → continue in WhatsApp or DM inbox with the same customer identity. Useful for drops and social commerce, not a substitute for order utilities.</p>
 
 <p>Sane rollout for most stores: cart recovery → COD confirm (if you sell COD) → order/shipping updates → support automation → campaigns. Why that order: <a href="/blog/shopify-whatsapp-automation-what-to-automate-first">what to automate first</a>. Checklist: <a href="/blog/shopify-automation-checklist-whatsapp-cart-recovery">Shopify WhatsApp automation checklist</a>.</p>
 
@@ -2154,7 +2154,7 @@ export const blogPosts: BlogPost[] = [
 <li><strong>Staff the inbox</strong>: Two agents who know takeover rules before campaigns go live.</li>
 <li><strong>Measure outcomes</strong>: Recovered revenue, confirmation rate, WISMO volume, not opens alone.</li>
 </ol>
-<p>Product surface for TopEdge: <a href="/features/journeys">Journeys</a>, <a href="/features/opt-in-tools">Opt-in tools</a>, <a href="/features/live-chat">Live Chat</a>, <a href="/features/meta-manager">Meta Manager</a>.</p>
+<p>Product surface for TopEdge: <a href="/features/journeys">Journeys</a>, <a href="/features/opt-in-tools">Opt-in tools</a>, <a href="/features">Live Chat</a>, <a href="/features/meta-manager">Meta Manager</a>.</p>
 
 <h2>Important WhatsApp Opt-In &amp; Messaging Rules</h2>
 <ul>
@@ -2219,7 +2219,7 @@ export const blogPosts: BlogPost[] = [
 <li><a href="/shopify-whatsapp-integration">Shopify WhatsApp integration</a>: OAuth store sync + Meta Cloud API</li>
 <li><a href="/features/journeys">Journeys</a>: cart, COD, shipping sequences with Meta approval gating</li>
 <li><a href="/features/flow-builder">Flow Builder</a>: conversational trees with Shopify tools and Live Chat handoff</li>
-<li><a href="/features/live-chat">Live Chat</a>: shared WhatsApp/Instagram inbox with order context</li>
+<li><a href="/features">Live Chat</a>: shared WhatsApp/Instagram inbox with order context</li>
 <li><a href="/features/opt-in-tools">Opt-in tools</a>: storefront capture into consented audiences</li>
 <li><a href="/features/campaigns">Campaigns</a>: Meta-safe broadcasts after transactional hygiene</li>
 <li><a href="/features/ai-brain">AI Brain</a>: optional catalog-grounded answers with intent routing</li>
@@ -2547,7 +2547,7 @@ export const blogPosts: BlogPost[] = [
 <li><a href="/features/ai-brain">AI Brain</a>: bring-your-own-key models (OpenAI, Claude, or Gemini), store knowledge/RAG over policies and docs, bot persona, and activation controls so spend stays on your provider bill</li>
 <li><a href="/features/intent-detection">Intent Detection</a>: route shipping, returns, COD, and handoff intents before spending model tokens on every message</li>
 <li><a href="/features/flow-builder">Flow Builder</a>: deterministic WhatsApp trees with Shopify tools and AI nodes where open language helps</li>
-<li><a href="/features/live-chat">Live Chat</a>: agents see order context; takeover pauses AI and flows on that thread</li>
+<li><a href="/features">Live Chat</a>: agents see order context; takeover pauses AI and flows on that thread</li>
 <li><a href="/shopify-whatsapp-integration">Shopify WhatsApp integration</a>: catalog/order sync so answers can stay store-aware</li>
 </ul>
 <p>AI here is a layer on customer engagement automation, not a replacement for <a href="/features/journeys">Journeys</a> or Meta template hygiene in <a href="/features/meta-manager">Meta Manager</a>. Plans: <a href="/pricing">Pricing</a>.</p>
@@ -2594,7 +2594,7 @@ export const blogPosts: BlogPost[] = [
 
 <p class="mkt-blog-footnote">Shopify Inbox Instant Answers behavior referenced from Shopify Help Center. Competitive market context informed by public Shopify and third-party explainers; no conversion percentages invented. TopEdge AI Brain / Intent Detection / Live Chat capabilities from TopEdge product pages. Re-check Shopify Inbox and Meta policies before production launches.</p>
 <p>An AI chatbot for Shopify is useful when it is store-aware, limited where money moves, and quick to hand off. Start with grounded FAQs and order status, review transcripts weekly, then expand sales assist.</p>
-<p>Next steps: <a href="/features/ai-brain">AI Brain</a>, <a href="/features/live-chat">Live Chat</a>, <a href="/pricing">pricing</a>, or <a href="/signup">start free</a>. Cluster links: <a href="/blog/whatsapp-automation-for-shopify">WhatsApp automation for Shopify</a>, <a href="/blog/ai-whatsapp-chatbot-for-shopify-india">AI WhatsApp chatbot (India)</a>, <a href="/blog/whatsapp-shared-inbox-shopify-order-context">shared inbox</a>.</p>
+<p>Next steps: <a href="/features/ai-brain">AI Brain</a>, <a href="/features">Live Chat</a>, <a href="/pricing">pricing</a>, or <a href="/signup">start free</a>. Cluster links: <a href="/blog/whatsapp-automation-for-shopify">WhatsApp automation for Shopify</a>, <a href="/blog/ai-whatsapp-chatbot-for-shopify-india">AI WhatsApp chatbot (India)</a>, <a href="/blog/whatsapp-shared-inbox-shopify-order-context">shared inbox</a>.</p>
 `,
   },
   {
@@ -3777,7 +3777,7 @@ export const blogPosts: BlogPost[] = [
 </ul>
 <p>Watch these consistently and problems surface early, while fixes are still cheap.</p>
 
-<p>Next steps: <a href="/features/journeys">set up COD confirmation and cart recovery journeys</a>, <a href="/features/profit-loss">measure your real margin after RTO</a>, read the <a href="/docs/guides/cod-confirmation">COD confirmation setup guide</a>, or <a href="/signup">start free on your Shopify store</a>.</p>
+<p>Next steps: <a href="/features/journeys">set up COD confirmation and cart recovery journeys</a>, <a href="/features/profit-loss">measure your real margin after RTO</a>, read the <a href="https://dash.topedgeai.com/docs" target="_blank" rel="noopener">COD confirmation setup guide</a>, or <a href="/signup">start free on your Shopify store</a>.</p>
 `,
   },
   {
@@ -3895,7 +3895,7 @@ export const blogPosts: BlogPost[] = [
 
 <h3>1. Automating order processing and fulfilment</h3>
 <p>The moment an order arrives through Shopify or WooCommerce, a trigger fires. That one trigger can send the customer a confirmation on WhatsApp or email, update your internal records, notify the packing team, and assign a courier based on delivery pincode.</p>
-<p>For stores doing Cash on Delivery, this matters even more. A well-timed message asking the customer to confirm before dispatch dramatically reduces undelivered packages. Doing this manually catches only a fraction of would-be returns; an automated system catches all of them. The setup walkthrough is in the <a href="/docs/guides/cod-confirmation">COD confirmation guide</a>.</p>
+<p>For stores doing Cash on Delivery, this matters even more. A well-timed message asking the customer to confirm before dispatch dramatically reduces undelivered packages. Doing this manually catches only a fraction of would-be returns; an automated system catches all of them. The setup walkthrough is in the <a href="https://dash.topedgeai.com/docs" target="_blank" rel="noopener">COD confirmation guide</a>.</p>
 <p>Shopify's native order management is a solid foundation but does not do everything. Tools like Shiprocket, Pickrr and Easyship handle multi-courier routing automatically — you set the rules once. For fulfilment, the biggest unlock is automating the handoff between your store and your 3PL or warehouse. If you still email packing lists every morning, that alone can be replaced with a webhook.</p>
 <p>The goal is not removing the human touch. It is making sure the human shows up when something actually goes wrong, instead of being spent copying order numbers between systems.</p>
 
@@ -4023,12 +4023,12 @@ export const blogPosts: BlogPost[] = [
 <h2>Where TopEdge fits</h2>
 <p>TopEdge is a WhatsApp automation and ecommerce CRM platform built for Indian D2C brands. It connects directly to Shopify and handles the customer communication layer that generic tools cover poorly for this market.</p>
 <p>It automates <a href="/features/journeys">cart recovery and order lifecycle journeys</a>, sends order confirmations and shipping updates, runs COD to prepaid conversion nudges to reduce RTO, and provides a <a href="/features/flow-builder">visual flow builder</a> for designing multi-step sequences without code. <a href="/features/audience-crm">Audience CRM</a> adds lead scoring and segmentation, and the store engine dashboard puts customer relationships and store performance in one place.</p>
-<p>What makes it specific to India is that it is built around WhatsApp-first communication and COD order management rather than retrofitted onto them. Setup is documented end to end in the <a href="/docs/quickstart">quickstart</a>.</p>
+<p>What makes it specific to India is that it is built around WhatsApp-first communication and COD order management rather than retrofitted onto them. Setup is documented end to end in the <a href="https://dash.topedgeai.com/docs" target="_blank" rel="noopener">quickstart</a>.</p>
 
 <h2>Start with one workflow</h2>
 <p>The gap between brands that scale and brands that stay stuck is usually not the product or even the marketing. It is operations. The brands still growing three years later are the ones that figured out how to run efficiently.</p>
 <p>You do not need to automate everything at once. Pick the task wasting the most of your time right now. For most Indian D2C brands that is order confirmations and shipping updates on WhatsApp, or abandoned cart recovery. Both are quick, and both show results fast.</p>
-<p>Next: follow the <a href="/docs/guides/abandoned-cart-recovery">cart recovery setup guide</a>, review the <a href="/blog/shopify-automation-checklist-whatsapp-cart-recovery">automation checklist</a>, compare plans on <a href="/pricing">pricing</a>, or <a href="/signup">start free on your Shopify store</a>.</p>
+<p>Next: follow the <a href="https://dash.topedgeai.com/docs" target="_blank" rel="noopener">cart recovery setup guide</a>, review the <a href="/blog/shopify-automation-checklist-whatsapp-cart-recovery">automation checklist</a>, compare plans on <a href="/pricing">pricing</a>, or <a href="/signup">start free on your Shopify store</a>.</p>
 `,
   },
   {
@@ -4194,14 +4194,14 @@ export const blogPosts: BlogPost[] = [
 
 <h2>Closing the gap between views and revenue</h2>
 <p>Getting someone from a Reel into a conversation is a win. What happens next is where most brands lose the lead. A buyer messages, clicks a link, maybe adds to cart. Then something interrupts them — they close the app, a call comes in. Without follow-up, the lead is gone.</p>
-<p>This is the part TopEdge handles. Once a conversation moves to WhatsApp, which is where most Indian buyers continue it, TopEdge's <a href="/features/journeys">automated journeys</a> keep it alive: <a href="/docs/guides/abandoned-cart-recovery">cart recovery</a> if they added to cart and left, post-visit follow-ups, and product messages based on what they asked about. The <a href="/features/analytics">Shopify integration and tracking pixel</a> mean the system knows when a visitor from your social funnel adds to cart, starts checkout or buys, so the right message fires without manual tracking.</p>
+<p>This is the part TopEdge handles. Once a conversation moves to WhatsApp, which is where most Indian buyers continue it, TopEdge's <a href="/features/journeys">automated journeys</a> keep it alive: <a href="https://dash.topedgeai.com/docs" target="_blank" rel="noopener">cart recovery</a> if they added to cart and left, post-visit follow-ups, and product messages based on what they asked about. The <a href="/features/analytics">Shopify integration and tracking pixel</a> mean the system knows when a visitor from your social funnel adds to cart, starts checkout or buys, so the right message fires without manual tracking.</p>
 <p>Automated Instagram comment-to-DM capture is on the TopEdge roadmap rather than live today, so for now the practical setup is to use Instagram and YouTube to start the conversation, then let WhatsApp automation carry the follow-up. If you are picking tools for that layer, compare them in <a href="/blog/best-whatsapp-automation-tools-shopify-india">the best WhatsApp automation tools for Shopify India</a>.</p>
 
 <h2>Start with one video</h2>
 <p>Short-form video is one of the few organic channels left that can take a brand from no visibility to real buyer conversations without an ad budget. But only if the strategy is deliberate.</p>
 <p>Post frequently. Build hooks that earn the first two seconds. Lean educational over product showcase. Point your bio links and CTAs at a specific next action. Capture interested viewers into a conversation instead of hoping they remember you. Track what works and make more of it.</p>
 <p>Views compound. Audiences grow. Leads get cheaper as your library builds. Start with one video, then another.</p>
-<p>Next: <a href="/features/opt-in-tools">capture consent from the traffic you earn</a>, <a href="/docs/guides/whatsapp-broadcast">learn how to message that audience safely</a>, or <a href="/signup">start free on your Shopify store</a>.</p>
+<p>Next: <a href="/features/opt-in-tools">capture consent from the traffic you earn</a>, <a href="https://dash.topedgeai.com/docs" target="_blank" rel="noopener">learn how to message that audience safely</a>, or <a href="/signup">start free on your Shopify store</a>.</p>
 `,
   },
   {
@@ -4372,14 +4372,14 @@ export const blogPosts: BlogPost[] = [
 
 <h2>What happens after you pick the category</h2>
 <p>Picking the category and launching the store is the beginning. Once orders arrive, a different set of problems shows up: COD confirmations, order updates, abandoned carts, questions coming in across channels. For most sellers this is where it starts to feel like too much.</p>
-<p>TopEdge automates that layer for Indian D2C brands. It connects to Shopify and runs <a href="/features/journeys">cart recovery and order lifecycle journeys</a> on WhatsApp, sends <a href="/docs/guides/cod-confirmation">COD confirmation and prepaid conversion messages</a> before dispatch to reduce RTO exposure, and keeps order updates flowing automatically. <a href="/features/audience-crm">Audience CRM</a> adds lead scoring and segmentation, and <a href="/features/profit-loss">profit and costs</a> shows real net margin per product after cost of goods, shipping, RTO and fees — which is exactly the number this guide has been pointing at.</p>
+<p>TopEdge automates that layer for Indian D2C brands. It connects to Shopify and runs <a href="/features/journeys">cart recovery and order lifecycle journeys</a> on WhatsApp, sends <a href="https://dash.topedgeai.com/docs" target="_blank" rel="noopener">COD confirmation and prepaid conversion messages</a> before dispatch to reduce RTO exposure, and keeps order updates flowing automatically. <a href="/features/audience-crm">Audience CRM</a> adds lead scoring and segmentation, and <a href="/features/profit-loss">profit and costs</a> shows real net margin per product after cost of goods, shipping, RTO and fees — which is exactly the number this guide has been pointing at.</p>
 <p>If you are still deciding whether your unit economics work at all, start with <a href="/blog/profitable-ecommerce-business-india">how to run a profitable ecommerce business in India</a>, then <a href="/blog/how-to-automate-ecommerce-store-india">automate the operations</a> once orders are consistent.</p>
 
 <h2>Pick a category with momentum, then do the work</h2>
 <p>These five categories are not trending because of hype. They are growing because of real shifts in how people spend, what they care about, and how they discover products.</p>
 <p>Picking one is not a guarantee. You still need the right product within it, a clear view of your buyer, pricing that leaves real margin, and a customer experience worth returning to. But starting in a category with genuine momentum is a far better foundation than entering one that is overcrowded or declining.</p>
 <p>Research first, validate before scaling, and build systems that let you operate without burning out.</p>
-<p>Next: <a href="/docs/quickstart">set up your store automation in about 30 minutes</a>, compare plans on <a href="/pricing">pricing</a>, or <a href="/signup">start free on your Shopify store</a>.</p>
+<p>Next: <a href="https://dash.topedgeai.com/docs" target="_blank" rel="noopener">set up your store automation in about 30 minutes</a>, compare plans on <a href="/pricing">pricing</a>, or <a href="/signup">start free on your Shopify store</a>.</p>
 `,
   },
   ...blogPostsQ4,

@@ -16,7 +16,6 @@ import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { assertSnippetBudgets, withBrandSuffix } from './seo-contracts.mjs';
 import { getSitemapPaths } from './marketing-urls.mjs';
-import { DOC_PATHS } from '../src/marketing/docs/manifest.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
@@ -51,7 +50,6 @@ const warnings = [];
 const blogPaths = posts.map((p) => `/blog/${p.slug}`);
 const knownPaths = new Set([
   ...getSitemapPaths(),
-  ...DOC_PATHS,
   ...blogPaths,
   '/signup',
   '/login',
