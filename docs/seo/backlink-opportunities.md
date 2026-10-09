@@ -73,7 +73,7 @@ _Add rows here when you spot new “best WhatsApp / cart recovery Shopify” pos
 **How this was gathered, and how far to trust it.** Semrush (the backlink database) is out of
 API units on this account, so there is **no crawled backlink export behind this list** — top up at
 https://www.semrush.com/mcp-access and re-run `backlinks_research` for the real referring-domain
-diff. Everything below came from live search. The sandbox's egress proxy blocks outbound page
+diff. (Retried 2026-10-09 after the connector came back: still `no_api_units`.) Everything below came from live search. The sandbox's egress proxy blocks outbound page
 fetches, so **individual pages were not opened to confirm TopEdge is absent**. Treat every row as
 *a lead to verify in one click*, not as a confirmed gap.
 
@@ -90,17 +90,24 @@ Competitors hold these; we do not. Each is a free vendor profile we can simply c
 one is also a `sameAs` entity signal (see "Wire-up" below), so they pay twice: a link **and**
 disambiguation for the entity confusion in audit findings TE-004 / TE-005.
 
-| Site | Competitor presence (per search, unverified) | TopEdge | Action |
+| Site | Competitor presence (reported by search; counts not independently re-checked) | TopEdge | Action |
 |---|---|---|---|
-| G2 | WATI listed — reported 461 reviews, 4.6 | absent | Create vendor profile, claim it |
-| Capterra (+ GetApp, Software Advice — one submission, three sites) | WATI listed (product 204314) | absent | Create vendor profile |
+| **G2** | WATI ~460 reviews / 4.6 · AiSensy 104 / 4.3 · Interakt ~63 / 4.5 | absent | Create + claim vendor profile |
+| **Capterra India** (`capterra.in`) | AiSensy `software/1022328` 4.4 (5) · Interakt `software/1023144` 4.2 (13) | absent | List on the **.in** domain — it is our market |
+| Capterra US (+ GetApp, Software Advice — one submission, three sites) | WATI `p/204314` | absent | Same submission covers all three |
 | TrustRadius | Zoko listed | absent | Create vendor profile |
-| Techjockey (India) | AiSensy listed — reported 4.4, ~12 reviews | absent | Create vendor profile |
-| Crunchbase | AiSensy has a company record (CB Insights too) | unknown | Claim/create company record |
-| SoftwareSuggest (India) | not confirmed in results | unknown | Check, then list |
-| SaaSworthy / GoodFirms | not confirmed in results | unknown | Check, then list |
+| Techjockey (India) | AiSensy ~4.4 / ~12 reviews | absent | Create vendor profile |
+| CB Insights | WATI, Zoko, AiSensy, Interakt, DelightChat all have company records | absent | Claim/create company record |
+| Crunchbase | not confirmed in results | unknown | Claim/create company record |
+| SoftwareSuggest · SaaSworthy · GoodFirms | not confirmed in results | unknown | Check each, then list |
 | Product Hunt | not confirmed in results | unknown | Launch — one-time, also drives first reviews |
 | AlternativeTo | not confirmed in results | unknown | Add as an alternative to WATI / Interakt / AiSensy |
+
+**Why G2 is the single best row here.** G2 auto-generates a comparison URL for every pair of
+profiles in a category — `g2.com/compare/aisensy-vs-wati` exists without either vendor creating it.
+One TopEdge profile therefore spawns `topedge-vs-wati`, `topedge-vs-interakt`, `topedge-vs-aisensy`
+and so on, each a page on a high-authority domain targeting exactly the comparison queries our own
+`/compare/*` pages chase. No competitor can opt out of them.
 
 **Already listed, no action needed:** WebCatalog (`webcatalog.io/en/apps/topedge`) and PickYourApp
 both auto-scraped us from the App Store. Confirms scraped directories pick us up automatically
@@ -138,6 +145,10 @@ inclusion is a genuine editorial ask.
 | R16 | getpulsesignal.com/alternatives/aisensy | AiSensy alternatives page | Same |
 | R17 | edesy.in/whatsapp-bot-builder/alternatives/wati | WATI alternatives (India) | Same |
 | R18 | storeleads.app (Shopify app reports) | Per-app install/traffic reports | Data directory; listing likely automatic |
+| R19 | bot.space/blog/best-interakt-alternatives | "7 Best Interakt Alternatives 2026" | Named in your own earlier audit as a listicle that omits us |
+| R20 | prospeo.io/s/interakt-alternatives | "10 Best Interakt Alternatives" | Independent, pricing-led angle |
+| R21 | chakrahq.com/article/top-10-aisensy-alternatives-in-2026/ | "Top 10 AiSensy Alternatives" | Independent |
+| R22 | stork.ai/en/interakt | Per-tool directory entry | Directory; check if self-serve |
 
 ---
 
