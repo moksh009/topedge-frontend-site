@@ -214,3 +214,86 @@ element. Spec revision 3 records the decision and the numbers.
 - `tsconfig.app.json` now resolves the `@/` alias (the long-standing tsc noise).
 - Gates: `build:netlify` exit 0 (106 prerendered, 0 failed), `seo:audit` passed, `sitemap:validate` all clear, `check:blog` 32 posts clean.
 - **Not done:** legacy `/community` + old-site code removal (blocked, awaiting owner), live re-verification, GSC.
+
+## Batch 4 — attribution end-to-end, TE-006, heading skips — 2026-10-09
+
+### Site (`topedge-frontend-site`)
+
+- **TE-006 fixed.** `DemoProductVideoFrame` attaches its src once the frame scrolls into
+  view, so the prerender snapshot — taken at a desktop viewport — baked the DESKTOP encode
+  into the markup with `preload="auto"`. A phone therefore started fetching
+  `cod-prepaid11.mp4` (10.1 MB) / `flowwww1.mp4` (13.4 MB) / `opt-in.mp4` (11.7 MB) straight
+  from the HTML and only swapped to the ~1.8–2.2 MB mobile cut after hydration, paying for
+  both. `scripts/prerender-marketing.mjs` now strips the baked-in src for
+  `demo-video-glow__el`, exactly as it already did for the home hero film.
+  **Verified in a real browser:** `/features/journeys`, `/features/flow-builder` and
+  `/features/opt-in-tools` each requested two `.mp4` files at 390px before and one after;
+  desktop still receives the full-size encode. Video requests on `/features/journeys`
+  mobile: 2 → 1.
+- **Heading skips: 4 → 0.** `/customers`, `/pricing` and the product feature pages jumped
+  h1 → h3 (card titles with no section heading between). Promoted to h2. Every one of those
+  classes sets `margin`, `font-size`, `font-weight` and `line-height` explicitly, so the
+  change is invisible — confirmed numerically: the `.mkt-customers__label` box computed
+  13px / 5.6px margin-top / 121×35 both before and after, tag name the only difference.
+  `public/privacy.html` jumped h2 → h4; those eight became h3 and the tag-coupled selector
+  was widened to `h3, h4` so nothing lost styling.
+- **hreflang on the static legal pages.** `/privacy` and `/terms` are plain HTML (Meta
+  crawler-safe) so `MarketingSEO`'s hreflang never reached them; added the same
+  self-referencing `en-IN` + `x-default` pair the React pages emit.
+- Pricing subtitle had a space before its comma; now a colon.
+
+### Attribution (all three repos)
+
+Ad attribution now covers the three signup doors and both iPhone click types:
+
+| Door | How it is attributed |
+|---|---|
+| Email signup | `attribution` on `POST /auth/register` |
+| Google signup / first Google login | carried inside the signed OAuth state |
+| **Shopify App Store install** | the `te_attr` cookie on the OAuth callback; cold installs carry it on `PendingShopifyInstall` until claimed |
+
+- Shopify installs set `signupMethod: 'shopify'` and never overwrite an existing signup
+  attribution.
+- Shopify bills in USD, so the first paid event records `paidCurrency` + `paidValueMinor`
+  alongside the existing INR `paidMrrExGstPaise`.
+- The export writes one CSV per click-identifier type — `Google Click ID`, `GBRAID`,
+  `WBRAID` — because Google requires exactly one per upload row. gclid is preferred, then
+  gbraid, then wbraid.
+- 36 backend tests, 6 dashboard tests. End-to-end re-verified in a browser on this build:
+  `/lp/cod-confirmation?gclid=TEST123…` → signup redirect → dashboard register payload
+  carried `{"gclid":"TEST123","utm_source":"google","utm_campaign":"test","lp":"cod-confirmation"}`.
+
+### Gates
+
+```
+build:netlify   exit 0 — 68 prerendered, 0 failed
+seo:audit       ✅ passed (68 prerendered + legal)
+check:lp        ✅ landing page check passed
+check:blog      ✓ 32 posts, budgets and internal links clean
+check:pricing   ✓ catalog drift + llms.txt pricing match the live billing API
+seo:contracts   ✅ selftest passed
+full-page sweep 142 page-loads (69 URLs × 2 widths + /lp + /404): zero JS errors,
+                zero broken images, zero horizontal overflow, exactly one h1 each
+parity          sitemap 69 = built pages = llms.txt links; zero broken internal links
+```
+
+`sitemap:validate` could not run — it resolves `topedgeai.com`, which this sandbox's egress
+proxy blocks (`ENOTFOUND`). Not a code failure; re-run it on a networked machine.
+
+### Still open (unchanged by this batch)
+
+- **Mobile LCP is still above 2.5s** on React routes (`/` 4.5s, `/pricing` 4.5s,
+  `/features/cod-confirmation` 4.2s, `/compare/wati` 4.8s, `/blog/cod-rto…` 5.7s, measured at
+  390px with 4× CPU throttling and ~1.6 Mbps). The cause is architectural, not asset weight:
+  first paint waits on the ~590 KB JS bundle because the prerendered HTML is replaced by the
+  SPA render. I tested serving the CSS before the scripts and marking the module preloads
+  `fetchpriority="low"` — it moved LCP by ~100–250 ms, i.e. nothing. This needs the
+  hydration work (TE-007), not head-tag reordering. CLS is 0.000 everywhere.
+- `/contact` is 295 words (thin); `img` without explicit `width`/`height` on 14 pages —
+  measured CLS is 0.000, so this is latent rather than active.
+- GSC-blocked items (TE-009 reviews, indexation, rankings) are unchanged — see
+  `ACCESS-NEEDED.md`.
+- `/customers` renders its three proof cards as a fanned deck at 390px, where the side
+  cards' text is clipped. Pre-existing and identical before this batch (verified against the
+  prior build) — flagging it as a design call, not touched.
+
