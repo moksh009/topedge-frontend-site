@@ -1,5 +1,6 @@
 (function(){
   var SLUG='{{SLUG}}';
+  var SIGNUP_URL='{{SIGNUP_URL}}';
   var KEYS=['gclid','gbraid','wbraid','utm_source','utm_medium','utm_campaign','utm_term','utm_content'];
   var d={},n=0,s=null;
   try{
@@ -15,7 +16,15 @@
     var o=s?JSON.parse(s):{};
     var q=KEYS.filter(function(k){return o[k];}).map(function(k){return k+'='+encodeURIComponent(o[k]);});
     q.push('lp='+encodeURIComponent(SLUG));
-    var href='/signup?'+q.join('&');
+    // from=www is what the dashboard reads to clear a stale paid-plan intent, and it is
+    // added here because this link no longer passes through the www /signup route.
+    q.push('from=www');
+    // Straight to the dashboard, not through www/signup. That route is a React page whose
+    // only job is to redirect, and booting it costs ~758 KB of JS and CSS before the
+    // browser can move — paid for on every single ad click, between "I clicked buy" and
+    // "I see a form". Nothing is lost by skipping it: the query string below already
+    // carries the click ids, and the API reads the same te_attr cookie by itself.
+    var href=SIGNUP_URL+'?'+q.join('&');
     // Only the trial links carry attribution into signup. The Shopify link goes to the App Store as is.
     // A plan card's own CTA keeps the plan it was clicked from, so signup opens on that plan
     // rather than dropping the visitor back at the top of the list.

@@ -239,7 +239,14 @@ must(paths.length === 3, `expected 3 entry-point cards, found ${paths.length}`);
 must(paths.filter((c) => /class="orb orb--/.test(c)).length === 3, 'an entry-point card lost the orb behind its artwork');
 for (const c of paths) {
   must(/<h3>/.test(c), 'an entry-point card has no heading');
-  must(/<a class="go[^"]*" [^>]*href="(\/[^"#][^"]*|#[a-z]+)"/.test(c), 'an entry-point card has no destination');
+  // A real destination is a path on this site, an in-page anchor, or the dashboard
+  // signup. The trial CTAs point straight at dash.topedgeai.com rather than the www
+  // /signup route, which only existed to redirect and cost ~758 KB to do it — so an
+  // absolute dashboard URL is now a legitimate destination, and nothing else is.
+  must(
+    /<a class="go[^"]*" [^>]*href="(\/[^"#][^"]*|#[a-z]+|https:\/\/dash\.topedgeai\.com\/[^"]*)"/.test(c),
+    'an entry-point card has no destination',
+  );
   must(/class="art/.test(c), 'an entry-point card has no illustration');
 }
 must(/class="go go--solid"/.test(markup), 'none of the three entry points is the primary one');

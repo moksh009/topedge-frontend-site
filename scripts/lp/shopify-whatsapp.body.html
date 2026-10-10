@@ -9,7 +9,7 @@
     for(var k in V){if(c.indexOf(k)===0){document.getElementById('hero-lead').textContent=V[k].lead;document.getElementById('hero-mark').textContent=V[k].mark;document.getElementById('hero-sub').textContent=V[k].sub;break}}}catch(e){}})();
     </script>
     <div class="cta-row" id="hero-cta">
-      <a class="btn" data-cta="trial" href="/signup?lp={{SLUG}}">Start free trial <span aria-hidden="true">&rarr;</span></a>
+      <a class="btn" data-cta="trial" href="{{SIGNUP_FALLBACK}}">Start free trial <span aria-hidden="true">&rarr;</span></a>
       {{FREE_NOTE}}
     </div>
     {{HERO_PROOF}}
@@ -82,7 +82,7 @@
     </div>
     <ul class="badges">{{BADGES}}</ul>
     <p class="foot-note">Meta bills its own WhatsApp message fees to your Meta Business account. TopEdge adds 0% markup, and GST invoices are issued automatically. Templates are approved by Meta on your own Business account, so nothing sends without your sign-off.</p>
-    <div class="mid-cta"><a class="btn" data-cta="trial" href="/signup?lp={{SLUG}}">Start free trial <span aria-hidden="true">&rarr;</span></a></div>
+    <div class="mid-cta"><a class="btn" data-cta="trial" href="{{SIGNUP_FALLBACK}}">Start free trial <span aria-hidden="true">&rarr;</span></a></div>
   </div>
 </section>
 
@@ -109,4 +109,4 @@
 
 {{FOOTER}}
 
-<div class="sticky" id="sticky-cta">{{SHOPIFY_BTN}}<a class="btn" data-cta="trial" href="/signup?lp={{SLUG}}">Start free trial</a></div>
+<div class="sticky" id="sticky-cta">{{SHOPIFY_BTN}}<a class="btn" data-cta="trial" href="{{SIGNUP_FALLBACK}}">Start free trial</a></div>

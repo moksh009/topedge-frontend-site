@@ -42,9 +42,19 @@ const lpDir = path.join(__dirname, 'lp');
  */
 const MAX_BYTES = 88 * 1024;
 
-const { FALLBACK_CATALOG, TRIAL, planBlurb, planFeatureKicker, dispatchLabel, planPricing } =
+const { FALLBACK_CATALOG, TRIAL, planBlurb, planFeatureKicker, dispatchLabel, planPricing, DASH_SIGNUP } =
   await loadBillingCatalog();
 const plans = FALLBACK_CATALOG.plans;
+/**
+ * The no-JS fallback href for a trial CTA.
+ *
+ * attribution.js overwrites every one of these the moment it runs, adding the click
+ * ids and the chosen plan/cycle. This value is what a visitor with JavaScript off
+ * clicks, so it points at the same destination rather than the www /signup route —
+ * there is no reason to make anyone pay for a 758 KB redirect page.
+ */
+const SIGNUP_FALLBACK = (slug) => `${DASH_SIGNUP}?lp=${slug}&from=www`;
+
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 
@@ -478,7 +488,7 @@ function planCards(slug) {
             </div>
             <p class="mkt-plan__billing-note"><span class="p-yearly">billed yearly (${esc(y.billedLabel)}/year) &middot; ${esc(p.monthlyPriceLabel)}/mo month-to-month</span><span class="p-monthly">+18% GST. Cancel anytime.</span></p>
             <p class="mkt-plan__blurb">${esc(planBlurb(p.slug))}</p>
-            <a class="mkt-plan__cta mkt-plan__cta--${p.emphasis ? 'solid' : 'ghost'}" data-cta="trial" data-plan="${esc(p.slug)}" href="/signup?lp=${slug}">Choose ${esc(p.displayName)}</a>
+            <a class="mkt-plan__cta mkt-plan__cta--${p.emphasis ? 'solid' : 'ghost'}" data-cta="trial" data-plan="${esc(p.slug)}" href="${SIGNUP_FALLBACK(slug)}">Choose ${esc(p.displayName)}</a>
           </div>
           <div class="mkt-plan__features">
             <p class="mkt-plan__kicker">${esc(planFeatureKicker(p.slug))}</p>
@@ -574,7 +584,7 @@ function pathsHtml(slug) {
   return PATHS.map(
     (c, i) => `      <article class="path" data-rv style="--d:${i * 90}ms">
         <div class="path-c"><h3>${esc(c.h)}</h3><p>${esc(c.p)}</p></div>
-        <a class="go${c.solid ? ' go--solid' : ''}"${c.solid ? ' data-cta="trial"' : ''} href="${c.href === null ? `/signup?lp=${slug}` : c.href}">${esc(c.cta)} <span aria-hidden="true">&rarr;</span></a>
+        <a class="go${c.solid ? ' go--solid' : ''}"${c.solid ? ' data-cta="trial"' : ''} href="${c.href === null ? SIGNUP_FALLBACK(slug) : c.href}">${esc(c.cta)} <span aria-hidden="true">&rarr;</span></a>
         ${c.art}
       </article>`,
   ).join('\n');
@@ -645,7 +655,7 @@ function navHtml(slug) {
         </nav>
         <div class="mkt-nav__actions">
           <a class="mkt-nav__link" href="/login">Log in</a>
-          <a class="mkt-btn-primary" data-cta="trial" href="/signup?lp=${slug}">Start free</a>
+          <a class="mkt-btn-primary" data-cta="trial" href="${SIGNUP_FALLBACK(slug)}">Start free</a>
         </div>
       </div>
     </div>
@@ -941,6 +951,7 @@ for (const page of PAGES) {
     BADGES: badgesHtml,
     FILM: filmHtml(),
     SLUG: page.slug,
+    SIGNUP_FALLBACK: SIGNUP_FALLBACK(page.slug),
     SHOPIFY_URL,
     HELP_WHATSAPP_URL: esc(HELP_WHATSAPP_URL),
     COMPANY_PHONE: esc(COMPANY_PHONE),
@@ -974,7 +985,7 @@ ${analytics}<script>
 ${behavior}
 </script>
 <script>
-${attribution.replaceAll('{{SLUG}}', page.slug).replaceAll('{{ADS_SEND_TO}}', ADS_SEND_TO)}
+${attribution.replaceAll('{{SLUG}}', page.slug).replaceAll('{{ADS_SEND_TO}}', ADS_SEND_TO).replaceAll('{{SIGNUP_URL}}', DASH_SIGNUP)}
 </script>
 </body>
 </html>
