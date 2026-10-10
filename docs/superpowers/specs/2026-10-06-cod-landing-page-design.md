@@ -828,6 +828,63 @@ no reading copy is that small.
 Eleven negative tests, each by breaking the page on purpose. 76 KB against the
 80 KB budget.
 
+## Revision 17 — layered panels, website tracking, hero proportions (2026-10-10)
+
+### Hero
+The headline was sitting under the navbar with no air; top padding goes from
+5.25rem to 8.5rem. The film came down from 52svh to 44svh in a 64rem frame,
+and the arrow from 8.75rem to 6.4rem, both of which had grown past the
+headline they are meant to support.
+
+The bottom gradient stops dissolving into the white band and deepens all the
+way to the edge instead, which is what the reference does with amber: the band
+below reads as a separate surface rather than the same one, slightly lighter.
+
+The avatar stack was stacked backwards. DOM order puts the last element on
+top, so code CLINIC was in front of Ved, the opposite of the order asked for
+two revisions ago. Explicit descending z-index fixes it; the order rule in
+`check:lp` was reading the markup, which was right all along.
+
+### A website tracking panel, and layered illustrations
+"One inbox, with the order attached" is replaced by "See every step before the
+sale": a browser bar, the three events that decide a cart, and a dot
+travelling the rail so the tracking reads as live rather than as a screenshot
+of it. The shared inbox is still sold, in the copy and the value stack; what
+it had was the weakest illustration of the five, three rows that looked like
+the three rows in the panel beside it.
+
+All five illustrations are layered now, against the references the owner sent:
+a base element with one or two pieces floating over its corners, each carrying
+its own shadow and drifting a little further than the card on hover. Depth is
+what tells the eye these are separate objects before it reads a word.
+
+- Cart recovery: the funnel with a WhatsApp reminder floating over its right.
+- COD: an order card with the buyer's prompt floating over its corner and a
+  confirmed tag above it.
+- Broadcast: the segment chips with the audience count floating over them.
+- Tracking: the browser bar and the trail, with the travelling dot.
+- Flow: the nodes on a dot-grid canvas rather than a plain wash.
+
+One rule came out of building it. The float may overlap the base element's box
+but never its content: a figure half-hidden behind a card is a diagram lying
+about its own data. The first attempt covered 1,092 and ₹1,499. The fix is
+inner padding on the base element, and `check:lp` now guards that padding by
+name, because it looks like a stray value otherwise.
+
+### Budget
+80 KB to 88 KB, building at 80 KB. The extra buys the layered compositions.
+The four dashboard screenshots deleted in revision 16 were 83 KB of webp on
+their own; the drawings that replaced them cost a fraction of that, compress,
+stay sharp on a retina screen and never go stale when a button moves. Still no
+external request before first paint.
+
+### Verified
+Nine widths from 320 to 1920: no horizontal overflow, no clipped panel, hero
+exactly one viewport everywhere except 320x720 (52px over). Float geometry
+measured in the browser rather than eyeballed: 21px of clearance between the
+last funnel figure and the note, 35px of deliberate box overlap on the order
+card. Eight negative tests, each by breaking the page on purpose.
+
 ## Testing
 Repo has no JS test runner, so verification is a node script:
 `scripts/check-landing-pages.mjs` (`npm run check:lp`) reads the generated HTML and asserts: size budget, noindex, no em dashes, no competitor names, no invented rating, the three quotes verbatim, plan prices equal `FALLBACK_CATALOG`, each plan's COD-to-prepaid lock state agrees with the catalog, `TRIAL` numbers appear, the ported navbar and footer, every CTA kind present, no external script or stylesheet. Revision 9 adds: no `<video>` or `<img>` in the hero, a film section that exists, three entry-point cards that each link somewhere real, five bento panels with no image inside them, a marked phrase in every `<h2>`, three going-live steps, and three blog cards whose slugs resolve against `blogPosts.ts`. Browser checks with Playwright (installed): 360px and 1280px screenshots, H1 at most 3 lines on mobile, sticky bar behaviour, toggle, hero variant swap by `?utm_content=`.

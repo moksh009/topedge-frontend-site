@@ -64,7 +64,7 @@ const at = (re) => {
 const withoutQuotes = html.replace(/<blockquote[\s\S]*?<\/blockquote>/g, '');
 
 // --- Page contract ---
-must(Buffer.byteLength(html) <= 80 * 1024, 'exceeds the 80 KB budget');
+must(Buffer.byteLength(html) <= 88 * 1024, 'exceeds the 88 KB budget');
 must(html.includes('<meta name="robots" content="noindex,nofollow">'), 'missing noindex');
 must(!/\{\{[A-Z0-9_]+\}\}/.test(html), 'unreplaced {{placeholder}}');
 must(!/<script[^>]+src=|<link[^>]+rel="stylesheet"|fonts\.googleapis/.test(html), 'external script/stylesheet/font');
@@ -252,13 +252,20 @@ const bx = markup.match(/<article class="bx bx--[wn]"[\s\S]*?<\/article>/g) || [
 must(bx.length === 5, `expected 5 platform panels, found ${bx.length}`);
 must(count(/class="bx bx--w"/g) === 2, 'the bento is no longer asymmetric: expected 2 wide panels');
 for (const b of bx) {
-  must(/class="viz"/.test(b), 'a platform panel has no illustration');
+  must(/class="viz/.test(b), 'a platform panel has no illustration');
   must(!/<img\b|<svg\b/.test(b), 'a platform panel ships an image; these are drawn in CSS on purpose');
 }
+// Each panel has a piece floating over a corner of its base element. The
+// overlap is the point, but it may never cover a number: a figure hidden
+// behind a card is a diagram lying about its own data. The inner padding is
+// what keeps the figures clear, so the rule guards the padding.
+must(count(/class="float float--[tb]r/g) >= 3, 'the platform panels lost their floating layer');
+must(/\.lay \.fn\{[^}]*padding-right:/.test(html), 'the funnel lost the padding that keeps its figures out from under the floating note');
+must(/\.card-ord\{[^}]*padding:[^;}]*rem [0-9.]+rem/.test(html), 'the order card lost the padding that keeps its amounts out from under the floating reply');
 // The line under the grid that marked the panels illustrative came out, so the
 // one figure that could be read as a customer result carries its own marker.
 must(/Recovered <i>sample<\/i>/.test(markup), 'the money figure in the recovery panel is not marked as sample data');
-for (const job of ['carts that leave', 'Confirm COD before you ship', 'Broadcast', 'One inbox', 'Flows you build']) {
+for (const job of ['carts that leave', 'Confirm COD before you ship', 'Broadcast', 'every step before the sale', 'Flows you build']) {
   must(copy.includes(job), `the platform section no longer names: ${job}`);
 }
 

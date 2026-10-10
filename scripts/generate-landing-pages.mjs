@@ -27,15 +27,20 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
 const lpDir = path.join(__dirname, 'lp');
 /**
- * Byte budget for the whole page, inline CSS and inline JS included. It was 60 KB
- * when the page argued one feature; the redesign sells the platform, which is five
- * more panels of markup, and draws every illustration in CSS instead of shipping a
- * screenshot of it. 80 KB of HTML is about 11 KB over the wire after Brotli, which
- * is less than the two 20 KB PNGs the drawn panels replace, and the page still makes
- * no external request before first paint. If an edit needs more than this, cut
- * something rather than raising it again.
+ * Byte budget for the whole page, inline CSS and inline JS included.
+ *
+ * It was 60 KB when the page argued one feature. It is 88 KB now, and the extra
+ * buys the entire illustration layer: every panel on this page is markup and CSS
+ * rather than a screenshot, including the layered compositions inside the five
+ * platform panels. The four dashboard screenshots this replaced were 83 KB of
+ * webp on their own, and they went soft on a retina screen and stale whenever a
+ * button moved; the drawings do neither, and they compress. 88 KB of HTML is
+ * about 12 KB over the wire after Brotli, and the page still makes no external
+ * request before first paint.
+ *
+ * This is not a licence to grow. If an edit needs more than this, cut something.
  */
-const MAX_BYTES = 80 * 1024;
+const MAX_BYTES = 88 * 1024;
 
 const { FALLBACK_CATALOG, TRIAL, planBlurb, planFeatureKicker, dispatchLabel, planPricing } =
   await loadBillingCatalog();
@@ -227,10 +232,16 @@ const BENTO = [
     h: 'Win back the carts that leave',
     p: 'A reminder on WhatsApp while the cart is still warm, then one more the next day. Shopify tells us the cart; the buyer replies in the thread they already use.',
     viz: `<div class="viz">
-          <div class="fn">
-            <div class="fb"><span>Abandoned</span><i style="width:100%"></i><b>1,240</b></div>
-            <div class="fb"><span>Reminded</span><i style="width:88%"></i><b>1,092</b></div>
-            <div class="fb fb--win"><span>Purchased</span><i style="width:22%"></i><b>263</b></div>
+          <div class="lay">
+            <div class="fn">
+              <div class="fb"><span>Abandoned</span><i style="width:100%"></i><b>1,240</b></div>
+              <div class="fb"><span>Reminded</span><i style="width:88%"></i><b>1,092</b></div>
+              <div class="fb fb--win"><span>Purchased</span><i style="width:22%"></i><b>263</b></div>
+            </div>
+            <div class="float float--tr wa-note">
+              <p class="wa-h"><i class="wa-dot"></i>WhatsApp</p>
+              <p>Still thinking about the Linen Shirt?</p>
+            </div>
           </div>
           <p class="fn-tot"><span>Recovered <i>sample</i></span><strong>&#8377;4,18,700</strong></p>
         </div>`,
@@ -240,10 +251,17 @@ const BENTO = [
     h: 'Confirm COD before you ship',
     p: 'One message the moment the order lands. The buyer confirms, cancels, or pays online instead, and you decide what each answer does to the order in Shopify.',
     viz: `<div class="viz">
-          <div class="ib">
-            <div class="ib-r"><span class="av">&#10003;</span><p>Confirmed<span>Ships today, buyer is expecting it</span></p><em>#1042</em></div>
-            <div class="ib-r"><span class="av">&times;</span><p>Cancelled<span>Never leaves the warehouse</span></p><em>#1043</em></div>
-            <div class="ib-r"><span class="av">&#8377;</span><p>Paid online instead<span>COD turned prepaid in the thread</span></p><em>#1044</em></div>
+          <div class="lay lay--tall">
+            <div class="card-ord">
+              <p class="ord-h"><span>Order #1042</span><em class="tag tag--cod">COD</em></p>
+              <p class="ord-row"><span>Rohan Gupta &middot; Pune</span><b>&#8377;1,499</b></p>
+              <p class="ord-row ord-row--mut"><span>Linen Shirt, Olive, M</span><b>&times;1</b></p>
+            </div>
+            <div class="float float--br card-ask">
+              <p>Confirm your order so we can ship today.</p>
+              <span class="ask-btns"><i>Confirm</i><i>Cancel</i></span>
+            </div>
+            <span class="float float--tr tag tag--ok">&#10003; Confirmed</span>
           </div>
         </div>`,
   },
@@ -252,27 +270,31 @@ const BENTO = [
     h: 'Broadcast to the right people',
     p: 'Segment by what they bought, when they last ordered, or where they dropped off.',
     viz: `<div class="viz">
-          <div class="sg"><span>Bought once</span><span>90 days quiet</span><span>Mumbai</span><span>Prepaid</span></div>
+          <div class="lay">
+            <div class="sg"><span>Bought once</span><span>90 days quiet</span><span>Mumbai</span><span>Prepaid</span></div>
+            <div class="float float--br card-aud"><b>2,418</b><span>in this segment</span></div>
+          </div>
           <div class="mtr"><p class="mtr-l"><span>Campaign sending</span><span>72%</span></p><p class="mtr-b"><i></i></p></div>
         </div>`,
   },
   {
     w: false,
-    h: 'One inbox, with the order attached',
-    p: 'WhatsApp and Instagram in one thread, the buyer’s Shopify orders beside it, and AI drafting the reply on your own key.',
+    h: 'See every step before the sale',
+    p: 'The pages they opened, the product they lingered on, and where they dropped off, tied to the same WhatsApp thread.',
     viz: `<div class="viz">
-          <div class="ib">
-            <div class="ib-r"><span class="av">PR</span><p>Priya R.<span>Where is my order?</span></p><em>#1042</em></div>
-            <div class="ib-r"><span class="av">AK</span><p>Arjun K.<span>Can I pay online?</span></p><em>#1039</em></div>
-            <div class="ib-r"><span class="av">SM</span><p>Sana M.<span class="ty"><i></i><i></i><i></i></span></p><em>AI</em></div>
-          </div>
+          <div class="brow"><i></i><i></i><i></i><span>yourstore.com</span></div>
+          <ol class="trail">
+            <li><b></b><span>Viewed Linen Shirt<em>2:14</em></span></li>
+            <li><b></b><span>Added to cart<em>2:16</em></span></li>
+            <li class="is-drop"><b></b><span>Left at checkout<em>2:19</em></span></li>
+          </ol>
         </div>`,
   },
   {
     w: false,
     h: 'Flows you build by dragging',
     p: 'No developer, no theme edits, no checkout scripts. Branch on what the buyer did.',
-    viz: `<div class="viz">
+    viz: `<div class="viz viz--grid">
           <div class="fl">
             <span class="nd">Cart abandoned</span>
             <span class="wire"></span>
