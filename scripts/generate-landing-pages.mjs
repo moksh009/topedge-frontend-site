@@ -128,35 +128,41 @@ const ICONS = {
 };
 
 /**
- * Four claims this audience checks before paying, each paired with the experience
- * they arrived with. Read by someone who has never used a WhatsApp tool they still
- * work, because each one names the cost before it names the answer. Nothing here goes past what the business actually supports:
- * no price-lock promise is made, because none has been made.
+ * The four claims this audience checks before paying, as a comparison rather
+ * than prose. The old version set each one as a struck-through line, a heading
+ * and a paragraph, which made the reader assemble the contrast themselves; at
+ * a glance it read as four more paragraphs. A two-column table does the work
+ * for them: topic on the left, what they are used to in the middle, what
+ * happens here on the right, in a column that is tinted so the eye lands on it.
+ *
+ * Nobody is named. "A typical WhatsApp tool" is the comparison, which is both
+ * the honest framing (these are common practices, not one company's) and the
+ * only one this page's contract allows.
  */
 const SWITCH = [
   {
     icon: 'coin',
-    them: 'A per-message fee stacked on top of Meta',
-    h: 'You pay Meta. Not us, on top of Meta.',
-    p: 'Messages are billed by Meta to your own account. TopEdge adds 0% markup.',
+    topic: 'Message fees',
+    them: 'A per-message fee on top of what Meta charges',
+    us: 'Meta bills your own account. TopEdge adds 0% markup.',
   },
   {
     icon: 'loop',
-    them: 'Automation runs metered, then rationed',
-    h: 'Automate as much as you need. It is not metered.',
-    p: 'Flow automations run unlimited times on every plan.',
+    topic: 'Automation',
+    them: 'Runs are metered, then rationed as you grow',
+    us: 'Unlimited flow runs, on every plan.',
   },
   {
     icon: 'user',
-    them: 'One buyer split across three contacts',
-    h: 'One buyer, one profile, even with three phone numbers.',
-    p: 'Orders, carts, and chats merge automatically.',
+    topic: 'Customer records',
+    them: 'One buyer split across three separate contacts',
+    us: 'One profile, even with three phone numbers.',
   },
   {
     icon: 'card',
-    them: 'COD stays COD, and you carry the risk',
-    h: 'Turn hesitant COD buyers into paid-upfront customers.',
-    p: 'Send a payment link in the same thread, built for Shopify checkout.',
+    topic: 'COD risk',
+    them: 'COD stays COD, and you carry it to the door',
+    us: 'A payment link in the same thread, built for Shopify checkout.',
   },
 ];
 
@@ -226,7 +232,7 @@ const BENTO = [
             <div class="fb"><span>Reminded</span><i style="width:88%"></i><b>1,092</b></div>
             <div class="fb fb--win"><span>Purchased</span><i style="width:22%"></i><b>263</b></div>
           </div>
-          <p class="fn-tot"><span>Recovered this month</span><strong>&#8377;4,18,700</strong></p>
+          <p class="fn-tot"><span>Recovered <i>sample</i></span><strong>&#8377;4,18,700</strong></p>
         </div>`,
   },
   {
@@ -276,20 +282,8 @@ const BENTO = [
           </div>
         </div>`,
   },
-  {
-    full: true,
-    h: 'And the number that decides all of it',
-    p: 'Revenue down to net profit, with the money lost to returns and the money spent on WhatsApp as their own lines. Most tools show you sends; this shows you what the sends were worth.',
-    viz: `<div class="viz"><img class="shot" src="/lp/shots/pnl.webp" width="1400" height="590" loading="lazy" decoding="async" alt="TopEdge profit and loss view: a waterfall from revenue to net profit with return losses from RTO and WhatsApp message cost as their own lines, beside key findings naming the RTO cost for the period and the WhatsApp spend read from the send ledger."></div>`,
-  },
 ];
 
-// Going live, as the three things the merchant actually does.
-const STEPS = [
-  { h: 'Install from the Shopify App Store', p: 'One click from your admin. No theme edits and no code on the storefront.' },
-  { h: 'Connect your WhatsApp number', p: 'We walk you through Meta approval on your own Business account, so the templates stay yours.' },
-  { h: 'Switch on a journey', p: 'Start with COD confirmation or cart recovery, edit the wording, and go live.' },
-];
 
 /**
  * Posts to send the visitor who is not buying today. Slugs only: the title, the
@@ -484,10 +478,16 @@ function iconChip(name) {
   return `<span class="ic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name]}</svg></span>`;
 }
 
+const XMARK =
+  '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+const CHECK =
+  '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
+
 const switchHtml = SWITCH.map(
-  (w) => `      <div class="sw">
-        <p class="sw-them">${esc(w.them)}</p>
-        <div class="sw-us">${iconChip(w.icon)}<div><h3>${esc(w.h)}</h3><p>${esc(w.p)}</p></div></div>
+  (w) => `      <div class="cmp-row">
+        <p class="cmp-t">${iconChip(w.icon)}<span>${esc(w.topic)}</span></p>
+        <p class="cmp-x"><i>${XMARK}</i>${esc(w.them)}</p>
+        <p class="cmp-v"><i>${CHECK}</i>${esc(w.us)}</p>
       </div>`,
 ).join('\n');
 
@@ -520,16 +520,13 @@ function pathsHtml(slug) {
 }
 
 const bentoHtml = BENTO.map(
-  (b, i) => `      <article class="bx bx--${b.full ? 'f' : b.w ? 'w' : 'n'}" data-rv style="--d:${i * 70}ms">
-        ${b.full ? '<div class="bx-copy">' : ''}<h3>${esc(b.h)}</h3>
-        <p>${esc(b.p)}</p>${b.full ? '</div>' : ''}
+  (b, i) => `      <article class="bx bx--${b.w ? 'w' : 'n'}" data-rv style="--d:${i * 70}ms">
+        <h3>${esc(b.h)}</h3>
+        <p>${esc(b.p)}</p>
         ${b.viz}
       </article>`,
 ).join('\n');
 
-const stepsHtml = STEPS.map(
-  (s2, i) => `      <li class="stp" data-rv style="--d:${i * 90}ms"><h3>${esc(s2.h)}</h3><p>${esc(s2.p)}</p></li>`,
-).join('\n');
 
 const includedHtml = INCLUDED.map((i) => `<li>${esc(i)}</li>`).join('');
 
@@ -582,7 +579,7 @@ function navHtml(slug) {
         </a>
         <nav class="mkt-nav__desktop" aria-label="Primary">
           <a class="mkt-nav__link" href="#platform">Platform</a>
-          <a class="mkt-nav__link" href="#how">How it works</a>
+          <a class="mkt-nav__link" href="#compare">Why TopEdge</a>
           <a class="mkt-nav__link" href="#pricing">Pricing</a>
         </nav>
         <div class="mkt-nav__actions">
@@ -697,23 +694,24 @@ function heroProof() {
     ? `<p class="hp-stars">${starRow(TRUSTPILOT.score)}<span><b>${esc(TRUSTPILOT.score)}</b> from ${esc(TRUSTPILOT.reviews)} reviews on <a href="${TRUSTPILOT.reviewUrl}" target="_blank" rel="noopener">Trustpilot</a></span></p>`
     : `<p class="hp-stars hp-stars--none"><a href="${TRUSTPILOT.reviewUrl}" target="_blank" rel="noopener">Read the reviews on Trustpilot</a></p>`;
   return `<div class="hp">
-        <div class="hp-row">
-          <div class="hp-faces" role="img" aria-label="Running on TopEdge: ${esc(who)}">${faces}</div>
+        <div class="hp-faces" role="img" aria-label="Running on TopEdge: ${esc(who)}">${faces}</div>
+        <div class="hp-col">
           ${stars}
+          <p class="hp-t">Loved by Shopify founders in India <span aria-hidden="true">&#10084;</span></p>
         </div>
-        <p class="hp-t">Loved by Shopify founders in India</p>
       </div>`;
 }
 
 /**
- * The aside beside the primary button, borrowed from the reference: a scribbled
- * arrow and two words in the margin. It says the one thing a cold visitor wants
- * confirmed before clicking, and it is inert decoration, hidden from assistive
- * tech and dropped entirely below 1100px.
+ * The aside beside the primary button: the owner's own hand-drawn arrow with
+ * its cream ground stripped (threshold on luminance, alpha ramped across the
+ * antialiased edge so the stroke keeps a smooth outline, ink recoloured to the
+ * page's deep violet) and two words in the margin. Inert decoration: hidden
+ * from assistive tech and dropped entirely below 1100px.
  */
 const SHOPIFY_BUTTON = `<a class="btn btn-out" data-cta="shopify" href="${SHOPIFY_URL}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V7a3 3 0 0 1 6 0v1"/></svg>Install on Shopify</a>`;
 
-const FREE_NOTE = `<span class="free" aria-hidden="true"><svg viewBox="0 0 128 62" width="128" height="62" fill="none" stroke="#2e1065" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round"><path d="M115 16c-15 1-16 21-33 28-12 5-26 5-38-1 7 7 3 15-7 13-9-2-16-10-23-18"/><path d="M14 38l20-4M14 38l8 15"/></svg><b>Free for ${TRIAL.days} days</b></span>`;
+const FREE_NOTE = `<span class="free" aria-hidden="true"><img src="/lp/free-arrow.webp" width="140" height="55" alt="" decoding="async"><b>Free for ${TRIAL.days} days</b></span>`;
 
 const VIDEO = {
   lg: '/marketing/demos/topedge-launch.mp4',
@@ -853,7 +851,6 @@ for (const page of PAGES) {
     FOOTER: footHtml(),
     PATHS: pathsHtml(page.slug),
     BENTO: bentoHtml,
-    STEPS: stepsHtml,
     POSTS: postsHtml,
     SWITCH_ROWS: switchHtml,
     INCLUDED_LIST: includedHtml,

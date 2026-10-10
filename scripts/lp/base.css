@@ -72,20 +72,22 @@ mark.chip{background:var(--chip-bg)}
    out of flow and hidden below 1100px rather than allowed to wrap. */
 .free{display:none}
 @media(min-width:1100px){
- .free{display:flex;position:absolute;left:calc(100% + .35rem);top:50%;transform:translateY(-60%);align-items:center;gap:.1rem;color:#2e1065;white-space:nowrap}
- .free svg{display:block;flex:none}
- .free b{font-weight:600;font-size:1.02rem;transform:rotate(-9deg) translateY(-.2rem);color:#2e1065;letter-spacing:-.015em}
+ .free{display:flex;position:absolute;left:calc(100% + .4rem);top:50%;transform:translateY(-52%);align-items:center;gap:.35rem;color:#2e1065;white-space:nowrap}
+ .free img{display:block;flex:none;width:8.75rem;height:auto}
+ .free b{font-weight:600;font-size:1.02rem;transform:rotate(-8deg) translateY(-.55rem);color:#2e1065;letter-spacing:-.015em}
 }
 /* Proof under the buttons: the four brands we are allowed to name, as marks on the
    brand gradient (the files are white knockouts, so they need a dark disc), and a
    link to the reviews. No score is written here, see TRUSTPILOT in the generator. */
-.hp{display:flex;flex-direction:column;align-items:center;gap:.5rem;margin-top:1.4rem}
-.hp-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.5rem 1rem}
+/* Faces on the left, the rating over the line that reads it, on the right:
+   the shape of the proof block the owner sent as the reference. */
+.hp{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.6rem 1.1rem;margin-top:1.5rem}
+.hp-col{display:flex;flex-direction:column;align-items:flex-start;gap:.25rem}
 /* Round, overlapping, and each one a person: initials, because we have no
    photographs of these customers and the logo files are wordmarks that a 42px
    circle crops to a smudge. The logos get the band below, at a readable size. */
-.hp-faces{display:flex;padding-left:.7rem}
-.hp-faces>span{position:relative;display:block;width:2.75rem;height:2.75rem;margin-left:-.7rem;border-radius:50%;background:#ede9fe;box-shadow:0 0 0 2.5px #fbfaff,0 5px 12px -6px rgba(46,16,101,.55);transition:transform .25s var(--e)}
+.hp-faces{display:flex;padding-left:.78rem}
+.hp-faces>span{position:relative;display:block;width:3.1rem;height:3.1rem;margin-left:-.78rem;border-radius:50%;background:#ede9fe;box-shadow:0 0 0 3px #fff,0 6px 14px -7px rgba(46,16,101,.6);transition:transform .25s var(--e)}
 .hp-faces>span:hover{z-index:4;transform:translateY(-3px) scale(1.04)}
 .hp-faces img{display:block;width:100%;height:100%;border-radius:50%;object-fit:cover}
 .hp-tip{position:absolute;bottom:calc(100% + .55rem);left:50%;transform:translateX(-50%);display:grid;gap:.1rem;padding:.4rem .7rem;border-radius:10px;background:#2e1065;color:#fff;font-size:.74rem;font-weight:500;line-height:1.3;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s}
@@ -94,17 +96,19 @@ mark.chip{background:var(--chip-bg)}
 .hp-faces>span:hover .hp-tip{opacity:1}
 /* Trustpilot's stars sit in their own boxes in Trustpilot's widget, which is
    how the mark is recognised; the gap between them is the box edge. */
-.hp-stars{display:inline-flex;align-items:center;gap:.18rem;font-size:.88rem;color:#4b3a6e}
+.hp-stars{display:inline-flex;align-items:center;gap:.2rem;font-size:.92rem;color:#4b3a6e}
 .hp-stars .st{display:block;border-radius:2px}
 .hp-stars span{display:inline-flex;align-items:center;gap:.3rem;margin-left:.55rem}
 .hp-stars b{font-weight:600;color:#2e1065}
 .hp-stars a{font-weight:500;text-decoration:none}
 .hp-stars a:hover{text-decoration:underline}
-.hp-t{font-size:.92rem;color:#4b3a6e}
+.hp-t{font-size:.95rem;color:#4b3a6e}
 .micro{margin-top:.85rem;font-size:.84rem;color:var(--muted)}
 /* sections */
 section{padding:3.75rem 0}
-.alt{background:linear-gradient(180deg,#fbf9ff,#f5f0ff)}
+/* Flat, not a gradient: a wash under every other section made the page look
+   like it was fading out six times. The hero is the only gradient here. */
+.alt{background:#f8f6fd}
 .head{text-align:center;margin-bottom:2.3rem}
 .head h2{max-width:24ch;margin:0 auto;font-size:clamp(1.65rem,4.2vw,2.5rem);font-weight:400;letter-spacing:-.036em;line-height:1.18;text-wrap:balance}
 .head p{margin:.85rem auto 0;max-width:36rem;color:var(--muted);font-size:1.02rem;text-wrap:pretty}
@@ -115,7 +119,9 @@ section{padding:3.75rem 0}
    page forks here and each fork says where it leads. The art under each card is
    the argument: the chips are the costs, the rows are the product, the thread is
    the outcome. */
-.paths{display:grid;gap:1.1rem}
+/* Single column below 900px, capped to a reading width: stretched to a full
+   768px the card's artwork scatters and the copy runs too long a line. */
+.paths{display:grid;gap:1.1rem;width:min(100%,34rem);margin-inline:auto}
 /* The entry-point cards answer to the same hover as the bento panels: the card
    lifts, and the pieces inside it move a little further than the card does, so
    the artwork reads as sitting above the surface rather than printed on it. */
@@ -140,7 +146,9 @@ section{padding:3.75rem 0}
 .go--solid{background:linear-gradient(180deg,#8b5cf6,#7c3aed);color:#fff;box-shadow:0 10px 26px -12px rgba(124,58,237,.7)}
 .go--solid:hover,.go--solid:focus-visible{background:linear-gradient(180deg,#7c3aed,#6d28d9);color:#fff;box-shadow:0 12px 28px -12px rgba(109,40,217,.75)}
 .go:focus-visible{outline:3px solid #c4b5fd;outline-offset:2px}
-.art{position:relative;margin-top:1.5rem;height:17.75rem;border-radius:20px;overflow:hidden;background:var(--panel);box-shadow:inset 0 0 0 1px rgba(124,58,237,.08)}
+/* min-height, not height: at 320px and in a cramped three-up the thread inside
+   wraps one line further, and a fixed box clipped it. */
+.art{position:relative;margin-top:1.5rem;min-height:17.75rem;border-radius:20px;overflow:hidden;background:var(--panel);box-shadow:inset 0 0 0 1px rgba(124,58,237,.08)}
 /* art 1: what a refused parcel actually costs, as the chips a seller would list */
 .ch{position:absolute;display:inline-flex;align-items:center;padding:.6rem 1rem;border-radius:13px;background:#fff;box-shadow:0 10px 22px -14px rgba(46,16,101,.75),0 1px 2px rgba(15,23,42,.06);font-size:.85rem;color:#3b2d5c;white-space:nowrap}
 .ch i{position:absolute;right:-.4rem;top:-.4rem;display:grid;place-items:center;width:1.2rem;height:1.2rem;border-radius:50%;background:#f43f5e;color:#fff;font-size:.62rem;font-style:normal;line-height:1}
@@ -194,6 +202,7 @@ section{padding:3.75rem 0}
 .bx:hover .fb:nth-child(2) i{transition-delay:.06s}
 .bx:hover .fb:nth-child(3) i{transition-delay:.12s}
 .bx:hover .fn-tot strong{transform:translateY(-2px) scale(1.04)}
+.fn-tot i{display:inline-block;margin-left:.35rem;padding:.05rem .3rem;border-radius:4px;background:rgba(124,58,237,.1);font-style:normal;font-size:.62rem;font-weight:600;letter-spacing:.03em;color:#7c3aed;vertical-align:.08em}
 .fn-tot{display:flex;align-items:baseline;justify-content:space-between;gap:.5rem;margin-top:1rem;padding-top:.8rem;border-top:1px dashed rgba(124,58,237,.25);font-size:.8rem;color:#4b3a6e}
 .fn-tot strong{display:inline-block;transform-origin:right bottom;font-size:1.28rem;font-weight:500;letter-spacing:-.02em;color:var(--chip-ink);font-variant-numeric:tabular-nums}
 /* rows: order states and inbox threads, floating white on the wash */
@@ -237,17 +246,12 @@ section{padding:3.75rem 0}
 .ty i:nth-child(3){animation-delay:.36s}
 @keyframes ty{0%,60%,100%{opacity:.35;transform:translateY(0)}30%{opacity:1;transform:translateY(-.18rem)}}
 /* ---- the film, autoplaying in the hero ---- */
-.film-wrap{width:min(100%,66rem);margin:1.4rem auto 0}
+.film-wrap{width:min(100%,72rem);margin:1.4rem auto 0}
 /* No drop shadow behind the film: the owner wants the frame flat against the
    gradient. A hairline keeps the dark poster from bleeding into the wash. */
-.film{display:block;width:100%;height:auto;aspect-ratio:16/9;max-height:min(46svh,32rem);margin:0 auto;border-radius:20px;background:#ece7fa;border:1px solid rgba(124,58,237,.16)}
+.film{display:block;width:100%;height:auto;aspect-ratio:16/9;max-height:min(52svh,34rem);margin:0 auto;border-radius:20px;background:#ece7fa;border:1px solid rgba(124,58,237,.16)}
 .shot{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;background:#f1edfb;border-bottom:1px solid var(--line)}
 /* ---- going live, three steps on one rail ---- */
-.steps{counter-reset:s;list-style:none;margin:0;padding:0;display:grid;gap:1rem;width:min(100%,62rem);margin:0 auto}
-.stp{position:relative;padding:1.4rem 1.3rem;border-radius:20px;background:#fff;box-shadow:var(--ring),var(--lift)}
-.stp:before{counter-increment:s;content:counter(s);display:grid;place-items:center;width:2rem;height:2rem;border-radius:11px;background:#ede9fe;color:#6d28d9;font-size:.85rem;font-weight:600}
-.stp h3{margin-top:.9rem;font-size:1.05rem;font-weight:500;letter-spacing:-.02em}
-.stp p{margin-top:.4rem;font-size:.94rem;color:var(--muted);text-wrap:pretty}
 /* ---- playbooks: the blog, so the visitor who is not ready today has a reason
    to come back and a path into the rest of the site ---- */
 .posts{display:grid;gap:1rem}
@@ -276,15 +280,23 @@ section{padding:3.75rem 0}
 @keyframes mq{from{transform:translateX(0)}to{transform:translateX(-33.3333%)}}
 /* Four logos are narrower than a desktop viewport, so an unconstrained track shows the
    same mark twice at once. Capping the window keeps the scroll without the double. */
-/* the four objections */
-.sws{width:min(100%,56rem);margin:0 auto;display:grid;gap:1.6rem}
-.sw{display:grid;gap:.7rem;padding-top:1.6rem;border-top:1px solid var(--line)}
-.sw-them{position:relative;padding-left:1.5rem;font-size:.95rem;color:#9aa4b2;text-decoration:line-through;text-decoration-color:#d8dde5}
-.sw-them:before{content:'';position:absolute;left:.25rem;top:.55rem;width:.6rem;height:1px;background:#c6ccd6}
-.sw-us{display:grid;grid-template-columns:auto 1fr;gap:.9rem;align-items:start}
-.sw-us h3{font-size:1.08rem;font-weight:500;line-height:1.3}
-.sw-us p{margin-top:.25rem;font-size:1rem;color:var(--muted)}
-.ic{display:inline-flex;align-items:center;justify-content:center;width:2.4rem;height:2.4rem;border-radius:13px;background:var(--wash);color:var(--violet);box-shadow:inset 0 0 0 1px #ece5fd}
+/* ---- the comparison ----
+   Three columns: the topic, what the reader is used to, what happens here. The
+   right column is tinted the whole way down so the eye lands on it without
+   anything shouting, and the rows share one grid so the three lines of each
+   row sit on the same baseline. Below 760px each row becomes its own card,
+   because a three-column table at 390px is unreadable at any type size. */
+.cmp{width:min(100%,58rem);margin:0 auto;display:grid;gap:.6rem}
+.cmp-row{display:grid;gap:.45rem;padding:1.1rem 1.15rem;border-radius:18px;background:#fff;border:1px solid #ece4fb;box-shadow:0 1px 2px rgba(16,24,40,.03),0 12px 30px -20px rgba(76,29,149,.16)}
+.cmp-row--head{display:none}
+.cmp-t{display:flex;align-items:center;gap:.6rem;font-size:1rem;font-weight:500;letter-spacing:-.015em;color:var(--ink)}
+.cmp-x,.cmp-v{display:flex;align-items:flex-start;gap:.5rem;font-size:.93rem;line-height:1.45;text-wrap:pretty}
+.cmp-x i,.cmp-v i{display:inline-flex;align-items:center;justify-content:center;flex:none;width:1.25rem;height:1.25rem;margin-top:.1rem;border-radius:999px}
+.cmp-x{color:#94a0b0}
+.cmp-x i{background:#f1f3f7;color:#9aa6b4}
+.cmp-v{color:var(--ink)}
+.cmp-v i{background:#e6f8ef;color:#0f9d6a}
+.ic{display:inline-flex;align-items:center;justify-content:center;width:2.1rem;height:2.1rem;border-radius:11px;background:#f4efff;color:var(--violet);box-shadow:inset 0 0 0 1px #e9dffd}
 .trustpilot-widget{min-height:1px}
 /* proof: review cards in Trustpilot's visual language */
 .quotes{display:grid;gap:1rem}
@@ -393,6 +405,10 @@ section{padding:3.75rem 0}
 .trust{background:#fff;padding:2.5rem 0 1.5rem}
 /* sticky mobile cta */
 .sticky{display:none}
+@media(max-width:380px){
+ .film{max-height:34svh}
+ .hero h1{font-size:1.85rem}
+}
 @media(max-width:759px){
  .mkt-plan--emphasis{order:-1}
  body{padding-bottom:6rem}
@@ -409,12 +425,9 @@ section{padding:3.75rem 0}
  .sticky .btn-out{background:#fff;box-shadow:inset 0 0 0 1.5px #ded1fb}
 }
 @media(min-width:760px){
- .paths{grid-template-columns:repeat(3,1fr)}
- /* Six tracks so the two panels that need room to breathe take half the row and
-    the three smaller jobs sit on the one below without a ragged last cell. */
- .bento-grid{grid-template-columns:repeat(6,1fr)}
- .bx--w{grid-column:span 3}
- .bx--n{grid-column:span 2}
+ /* Two up on a tablet: the six-track bento gives its narrow panels 240px at
+    768, which is not enough for a heading, two lines and an illustration. */
+ .bento-grid{grid-template-columns:repeat(2,1fr)}
  /* The reporting panel is the one place a real screenshot beats a drawing: it
     is a chart, and a drawn chart would be a chart of nothing. */
  /* Two children, two columns: the copy stays a block of its own so the chart
@@ -423,10 +436,8 @@ section{padding:3.75rem 0}
  .bx--f .viz{margin-top:0}
  .plans{grid-template-columns:repeat(3,1fr)}
  .posts{grid-template-columns:repeat(3,1fr)}
- .steps{grid-template-columns:repeat(3,1fr)}
  .quotes{grid-template-columns:repeat(3,1fr)}
  .ticks.two{grid-template-columns:repeat(2,1fr);gap:.6rem 2rem}
- .sws{grid-template-columns:repeat(2,1fr);gap:2.2rem 3rem}
  .mkt-foot__top{grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:3rem}
  .mkt-foot__sitemap{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
@@ -440,7 +451,26 @@ section{padding:3.75rem 0}
  .mkt-nav__capsule.is-solid{background:rgba(255,255,255,.94);border-color:rgba(232,228,245,.98);box-shadow:0 12px 36px -18px rgba(76,29,149,.28),0 2px 8px -4px rgba(15,23,42,.06);backdrop-filter:blur(18px) saturate(1.15);-webkit-backdrop-filter:blur(18px) saturate(1.15)}
 }
 @media(min-width:900px){
+ .paths{grid-template-columns:repeat(3,1fr);width:100%}
+ /* Six tracks so the two panels that need room to breathe take half the row and
+    the three smaller jobs sit on the one below without a ragged last cell. */
+ .bento-grid{grid-template-columns:repeat(6,1fr)}
+ .bx--w{grid-column:span 3}
+ .bx--n{grid-column:span 2}
+ /* The comparison becomes one table. `display:contents` on each row hands its
+    three cells to the parent grid, so the columns line up across rows and the
+    tinted column can be painted cell by cell without a wrapper to position. */
+ .cmp{display:grid;gap:0;padding:.5rem;border-radius:22px;background:#fff;border:1px solid #ece4fb;box-shadow:0 1px 2px rgba(16,24,40,.03),0 18px 44px -24px rgba(76,29,149,.2);grid-template-columns:minmax(0,13rem) minmax(0,1fr) minmax(0,1fr)}
+ .cmp-row,.cmp-row--head{display:contents}
+ .cmp-t,.cmp-x,.cmp-v{padding:1.05rem 1.25rem;align-items:center;border-radius:0}
+ .cmp-v{background:#f8f4ff}
+ .cmp-row--head .cmp-x,.cmp-row--head .cmp-v{padding-top:.9rem;padding-bottom:.7rem;font-size:.82rem;font-weight:600;color:#8b7ba8}
+ .cmp-row--head .cmp-v{color:var(--chip-ink);border-radius:16px 16px 0 0}
+ .cmp-row:last-child .cmp-v{border-radius:0 0 16px 16px}
+ .cmp-row:not(.cmp-row--head) .cmp-t,.cmp-row:not(.cmp-row--head) .cmp-x,.cmp-row:not(.cmp-row--head) .cmp-v{border-top:1px solid #f3eefb}
+ .cmp-row:nth-child(2) .cmp-t,.cmp-row:nth-child(2) .cmp-x,.cmp-row:nth-child(2) .cmp-v{border-top:0}
  .hero{height:100svh;min-height:36rem;align-items:stretch;padding:5.25rem 0 1.5rem}
+ .hero h1{max-width:none;font-size:clamp(2.4rem,3.9vw,3.1rem)}
  .hero-in{flex:1;min-height:0;justify-content:center}
  .film-wrap{flex:1;min-height:12rem;display:flex;align-items:center;justify-content:center}
  .film{height:100%;width:auto;max-width:100%;max-height:none}

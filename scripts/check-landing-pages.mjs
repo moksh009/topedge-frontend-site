@@ -116,7 +116,7 @@ must(/Prahladnagar/.test(html), 'footer is missing the registered address');
 must(/href="tel:\+\d{8,}"/.test(html), 'footer is missing a phone number');
 must(count(/class="mkt-foot__col"/g) >= 2, 'footer is missing the sitemap columns');
 must(!/mkt-foot__trust-list/.test(markup), 'the partner marks are in the footer as well as the band; once is enough');
-must(/href="#how"[^>]*>How it works</.test(html), 'nav missing "How it works" anchor');
+must(/href="#compare"[^>]*>Why TopEdge</.test(html), 'nav missing the "Why TopEdge" anchor');
 must(/href="#platform"[^>]*>Platform</.test(html), 'nav missing the "Platform" anchor');
 must(/Log in</.test(html), 'nav missing "Log in"');
 must(/data-cta="trial"/.test(html), 'missing trial CTA');
@@ -159,7 +159,7 @@ must(/film\.play\(\)/.test(html), 'nothing starts the hero film; it would sit on
 // The proof row under the buttons. No star and no number may appear unless the generator
 // was given a real TrustScore: the published reviews do not carry per-review ratings.
 must(/class="hp-faces"/.test(markup), 'the hero proof row is missing');
-const proofRow = (markup.match(/<div class="hp-faces"[\s\S]*?<\/div>\s*<p/) || [''])[0];
+const proofRow = (markup.match(/<div class="hp-faces"[\s\S]*?<\/div>/) || [''])[0];
 // Five faces, in the order the owner set: Delitech, then the two Apex Light
 // founders, then Choice Salon and code CLINIC.
 must(count(/class="hp-tip"/g) === 5, 'expected five customer faces, each with a tooltip');
@@ -248,42 +248,33 @@ must(/role="img"[^>]*aria-label="[^"]*Confirm[^"]*Cancel/i.test(html), 'the exam
 // The reason this page exists in its new form: it sells the subscription, not one
 // feature. Every illustration is markup and CSS, which is what keeps the page inside
 // its byte budget while showing five things; an <img> smuggled into one would undo it.
-const bx = markup.match(/<article class="bx bx--[wnf]"[\s\S]*?<\/article>/g) || [];
-must(bx.length === 6, `expected 6 platform panels, found ${bx.length}`);
+const bx = markup.match(/<article class="bx bx--[wn]"[\s\S]*?<\/article>/g) || [];
+must(bx.length === 5, `expected 5 platform panels, found ${bx.length}`);
 must(count(/class="bx bx--w"/g) === 2, 'the bento is no longer asymmetric: expected 2 wide panels');
-must(count(/class="bx bx--f"/g) === 1, 'the full-width reporting panel is gone');
 for (const b of bx) {
   must(/class="viz"/.test(b), 'a platform panel has no illustration');
-  // The reporting panel is the exception, and only because its subject is a
-  // chart: a chart drawn in CSS would be a chart of nothing.
-  const drawn = !/class="bx bx--f"/.test(b);
-  must(!drawn || !/<img\b|<svg\b/.test(b), 'a platform panel ships an image; these are drawn in CSS on purpose');
+  must(!/<img\b|<svg\b/.test(b), 'a platform panel ships an image; these are drawn in CSS on purpose');
 }
-must(/shown with sample data/.test(copy), 'the numbers in the panels are not marked as sample data');
-for (const job of ['carts that leave', 'Confirm COD before you ship', 'Broadcast', 'One inbox', 'Flows you build', 'the number that decides']) {
+// The line under the grid that marked the panels illustrative came out, so the
+// one figure that could be read as a customer result carries its own marker.
+must(/Recovered <i>sample<\/i>/.test(markup), 'the money figure in the recovery panel is not marked as sample data');
+for (const job of ['carts that leave', 'Confirm COD before you ship', 'Broadcast', 'One inbox', 'Flows you build']) {
   must(copy.includes(job), `the platform section no longer names: ${job}`);
 }
 
-// --- Product showcase and going live ---
-// Screens from the real product, not icons. Each needs a described alt: these are the
-// only images on the page carrying meaning, and the ad audience reads them before copy.
+// --- Illustrations ---
+// Nothing on this page is a screenshot any more: every illustration is markup
+// and CSS, and the only raster images left are the logos, the badges, the
+// customer faces, the blog thumbnails, the film poster and the arrow. Each of
+// those is asserted where it belongs.
 // The three dashboard stills were cut; the P&L stays, because it is the evidence the
 // objections section rests on rather than decoration.
-const shots = html.match(/<img class="shot[^"]*"[^>]*>/g) || [];
-must(shots.length >= 1, 'the P&L screenshot is gone from the objections section');
-must(!/class="shotc"/.test(markup), 'the three dashboard stills are back; the owner cut them');
-// The P&L used to float above the objections with nothing explaining it. It is a
-// labelled panel in the platform section now, and this keeps it there.
-must(/class="bx bx--f"[\s\S]*?lp\/shots\/pnl\.webp/.test(markup), 'the P&L screen is not inside the reporting panel');
-must(!/class="shot proof"/.test(markup), 'the P&L is loose on the page again instead of being a labelled panel');
+must(!/class="shotc"|lp\/shots\//.test(markup), 'a dashboard screenshot is back; every illustration on this page is drawn');
+// The owner took the wash out from under every other section; the hero is the
+// only gradient on the page now.
+must(!/\.alt\{[^}]*linear-gradient/.test(html), 'a section has a gradient background again; only the hero has one');
 // The trial terms sit beside the price, which is where the hesitation is.
 must(new RegExp(`${TRIAL.days}-day free trial on every plan`).test(copy), 'the pricing section no longer carries the trial terms');
-for (const s of shots) {
-  must(/\balt="[^"]{40,}"/.test(s), 'a product screenshot has no descriptive alt text');
-  must(/\bloading="lazy"/.test(s), 'product screenshots must be lazy, they sit below the fold');
-  must(/\bwidth="\d+"[^>]*\bheight="\d+"/.test(s), 'product screenshots need width/height so they reserve space');
-}
-must(count(/<li class="stp"/g) === 3, 'expected 3 going-live steps');
 must(html.includes('nothing sends without your sign-off'), 'missing Meta-approval caption');
 
 // --- Proof and why ---
@@ -319,14 +310,26 @@ must(new RegExp(`from ${TRUSTPILOT_REVIEWS} reviews`).test(markup), 'the rating 
 must(/trustpilot\.com\/review\/topedgeai\.com/.test(starRow), 'the rating does not link to the page it came from');
 must(html.includes('trustpilot.com/review/topedgeai.com'), 'missing Trustpilot link');
 must(html.includes('Launched on the Shopify App Store'), 'missing launch line');
-for (const h of ['You pay Meta. Not us, on top of Meta.', 'One buyer, one profile', 'Turn hesitant COD buyers into paid-upfront customers.', 'Automate as much as you need']) {
-  must(html.includes(h), `missing why-card: ${h}`);
+// Scoped to the table: "Unlimited flow runs" also appears in the value stack
+// beside the price, and a claim satisfied by a different section is not this
+// section making it.
+const cmpCopy = ((markup.match(/<div class="cmp"[\s\S]*?<\/section>/) || [''])[0]).replace(/<[^>]+>/g, '');
+for (const h of ['TopEdge adds 0% markup', 'Unlimited flow runs', 'One profile, even with three phone numbers', 'A payment link in the same thread']) {
+  must(cmpCopy.includes(h), `the comparison no longer makes the claim: ${h}`);
 }
 // The switching section answers the objection this audience actually arrives with
 // (markup on messages, a price that moves, metered runs). It must do that without
 // naming anyone: the competitor-name rule above is the other half of this one.
-must(count(/class="sw-them"/g) >= 3, 'the switching section needs at least 3 objections raised');
-must(count(/class="sw-us"/g) === count(/class="sw-them"/g), 'every objection raised must be answered');
+// Four topics, each with what the reader is used to and what happens here. The
+// table reads left to right, so a row missing one of its two halves is worse
+// than no row at all.
+const rows = markup.match(/<div class="cmp-row">[\s\S]*?<\/div>/g) || [];
+must(rows.length === 4, `expected 4 comparison rows, found ${rows.length}`);
+for (const r of rows) {
+  must(/class="cmp-t"/.test(r) && /class="cmp-x"/.test(r) && /class="cmp-v"/.test(r), 'a comparison row is missing one of its three cells');
+}
+must(/class="cmp-row cmp-row--head"/.test(markup), 'the comparison has no column headings');
+must(!/class="sw-them"|class="sw-us"/.test(markup), 'the old prose version of the objections is back');
 
 // --- Pricing ---
 for (const p of FALLBACK_CATALOG.plans) {
@@ -367,8 +370,8 @@ must(!/<details/.test(markup), 'the FAQ accordion is gone; do not reintroduce it
 // anything else failing: the brand strip sits above the three entry points, and the blog
 // sits above the WhatsApp handoff rather than at the very bottom of the page.
 must(at(/<div class="trust">/) < at(/<section id="start"/), 'the brand strip belongs above the three entry points');
-must(at(/<section id="read"/) < at(/<section[^>]*id="help"/), 'the blog belongs above the "Still have a question" section');
-must(at(/<section[^>]*id="platform"/) < at(/<section id="how"/), 'the platform section belongs before going live');
+must(at(/<section[^>]*id="read"/) < at(/<section[^>]*id="help"/), 'the blog belongs above the "Still have a question" section');
+must(at(/<section[^>]*id="platform"/) < at(/<section[^>]*id="compare"/), 'the platform section belongs before the comparison');
 
 // --- Playbooks ---
 // The last section is the only way off this page that is not the signup form, and it is

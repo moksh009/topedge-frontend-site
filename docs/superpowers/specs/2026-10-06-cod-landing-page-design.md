@@ -763,6 +763,71 @@ of Choice Salon's owner (written "Shubhash" from the owner's message), and the
 code CLINIC founder's name. Also `businessUnitId`, which would let the live
 TrustBox keep the 4.0 current instead of a human refreshing it.
 
+## Revision 16 — the owner's arrow, a comparison table, and a responsive pass (2026-10-10)
+
+### The arrow is the owner's own
+Sent as a drawing on a cream ground. Background stripped by thresholding on
+luminance, with the alpha ramped across the antialiased edge so the stroke
+keeps a smooth outline at any size, and the ink recoloured to the page's deep
+violet. 6 KB webp at `public/lp/free-arrow.webp`. The five hand-drawn
+candidates from revision 13 are retired.
+
+### Cut, as asked
+- The reporting panel and its P&L screenshot. With it went the last screenshot
+  on the page, so `public/lp/shots/` is deleted (four files) and a rule now
+  fails if `lp/shots/` reappears: every illustration here is drawn.
+- "Every screen above is shown with sample data." The figure that needed it is
+  the recovered-revenue total, which could be read as a customer result, so it
+  carries a small `sample` chip inline instead of a sentence under the grid.
+  The rule moved with it.
+- The "Live in about fifteen minutes" section. Its Meta-approval line was a
+  real claim and not filler, so it moved into the pricing footnote, where it
+  sits with the other Meta fact. The nav anchor became "Why TopEdge" pointing
+  at the comparison.
+- The wash under every other section. `.alt` is flat `#f8f6fd`. Six fading
+  sections made the page look like it was running out of ink; the hero is the
+  only gradient now, and a rule holds that.
+
+### The objections became a comparison
+The old version set each of the four as a struck-through line, then a heading,
+then a paragraph, and left the reader to assemble the contrast. At a glance it
+read as four more paragraphs, which is what the owner meant by "not able to
+understand".
+
+It is a table now: topic, what you are used to, what happens here, with the
+right column tinted the whole way down. `display:contents` on each row hands
+its three cells to the parent grid so the columns line up across rows without
+a wrapper to position; below 900px each row becomes its own card, because a
+three-column table at 390px is unreadable at any type size. Nobody is named:
+"A typical WhatsApp tool" is both the honest framing and the only one this
+page's contract allows.
+
+### Hero
+The headline sets on one line above 900px (`max-width:none`, clamp to 3.1rem),
+and the 56px that frees goes to the film, which is now up to 52svh in a 72rem
+frame. The proof block takes the shape of the reference the owner sent: faces
+on the left, the rating over the line that reads it on the right.
+
+### The responsive pass
+Measured at nine widths from 320 to 1920. Two real faults, both fixed:
+
+- The illustration panels were a fixed 17.75rem. At 320px and in a cramped
+  three-up the thread inside wrapped one line further and was clipped. They are
+  `min-height` now.
+- The three-up entry points and the six-track bento started at 760px, which
+  gave a tablet 240px panels. Both move to 900px, with the bento two-up between;
+  single-column entry points are capped to a 34rem reading width, because
+  stretched across 768px their artwork scatters.
+
+After: no horizontal overflow and no clipped panel at any of the nine widths,
+and the hero is exactly one viewport everywhere except 320x720, where it runs
+29px over. Every piece of text under 11px is inside a drawn interface panel;
+no reading copy is that small.
+
+### Verified
+Eleven negative tests, each by breaking the page on purpose. 76 KB against the
+80 KB budget.
+
 ## Testing
 Repo has no JS test runner, so verification is a node script:
 `scripts/check-landing-pages.mjs` (`npm run check:lp`) reads the generated HTML and asserts: size budget, noindex, no em dashes, no competitor names, no invented rating, the three quotes verbatim, plan prices equal `FALLBACK_CATALOG`, each plan's COD-to-prepaid lock state agrees with the catalog, `TRIAL` numbers appear, the ported navbar and footer, every CTA kind present, no external script or stylesheet. Revision 9 adds: no `<video>` or `<img>` in the hero, a film section that exists, three entry-point cards that each link somewhere real, five bento panels with no image inside them, a marked phrase in every `<h2>`, three going-live steps, and three blog cards whose slugs resolve against `blogPosts.ts`. Browser checks with Playwright (installed): 360px and 1280px screenshots, H1 at most 3 lines on mobile, sticky bar behaviour, toggle, hero variant swap by `?utm_content=`.
