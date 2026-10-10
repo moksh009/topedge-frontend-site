@@ -1,5 +1,5 @@
 /**
- * Asserts the generated ad page (public/lp/cod-confirmation/index.html).
+ * Asserts the generated ad page (public/lp/shopify-whatsapp/index.html).
  *
  * The page was redrawn on 2026-10-09 to sell the platform rather than one
  * feature, so the assertions that pinned the old COD argument in place are
@@ -24,7 +24,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { loadBillingCatalog } from './load-billing-catalog.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const file = path.join(__dirname, '..', 'public', 'lp', 'cod-confirmation', 'index.html');
+const file = path.join(__dirname, '..', 'public', 'lp', 'shopify-whatsapp', 'index.html');
 const html = fs.readFileSync(file, 'utf8');
 const { FALLBACK_CATALOG, TRIAL } = await loadBillingCatalog();
 

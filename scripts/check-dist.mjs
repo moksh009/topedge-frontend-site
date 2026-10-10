@@ -95,7 +95,7 @@ if (fs.existsSync(redirectsPath)) {
 
 // --- The static ad pages must survive the build ---------------------------------
 // They are plain files under public/; if these are gone, vite did not copy public/.
-for (const f of ['lp/cod-confirmation/index.html', 'privacy.html', 'terms.html']) {
+for (const f of ['lp/shopify-whatsapp/index.html', 'privacy.html', 'terms.html']) {
   must(fs.existsSync(path.join(dist, f)), `dist/${f} missing`);
 }
 

@@ -99,6 +99,16 @@ const TRIAL_SHORT = `${TRIAL.days}-day free trial on every plan. ${TRIAL.orders}
  * the default sells the subscription and the narrower ad groups keep their own
  * promise. Each headline is a lead plus a marked phrase, because the site
  * highlights the payload of a title rather than colouring the whole line.
+ *
+ * This is the whole reason there is one ad page and not five. An ad must land on
+ * a page that repeats the promise the ad made, or the click is wasted — but at
+ * this budget five separate pages would split a few hundred clicks a month into
+ * samples too small to read, and each would rot separately. Swapping the hero per
+ * ad group buys the message match at the point the visitor actually looks, and
+ * every variant inherits the same proof, pricing and speed budget below the fold.
+ *
+ * A variant is added only when the ad group's promise genuinely differs. Adding
+ * one costs a line here; adding a page costs a build.
  */
 const HERO_VARIANTS = {
   platform: {
@@ -115,6 +125,20 @@ const HERO_VARIANTS = {
     lead: 'Win back the carts that ',
     mark: 'walked out',
     sub: 'A reminder on WhatsApp while the cart is still warm, plus the rest of the platform. Built for Indian Shopify D2C brands.',
+  },
+  // AG2/AG3. Problem-aware traffic: the searcher has already named the loss, so
+  // the hero names it back rather than selling a feature.
+  rto: {
+    lead: 'Every returned COD parcel is paid for ',
+    mark: 'twice',
+    sub: 'Confirm on WhatsApp before dispatch, and move the buyers who say yes onto prepaid. Built for Indian Shopify D2C brands.',
+  },
+  // C3. Competitor-alternative searchers arrive mid-comparison and want the price
+  // they could not find on the page they came from.
+  switch: {
+    lead: 'The whole platform, priced ',
+    mark: 'in the open',
+    sub: 'Every plan lists its price, Meta fees pass through at cost, and you can start without booking a demo. Built for Indian Shopify D2C brands.',
   },
 };
 
@@ -812,22 +836,44 @@ const postsHtml = (await loadPosts())
 
 const PAGES = [
   {
-    slug: 'cod-confirmation',
+    slug: 'shopify-whatsapp',
     title: 'WhatsApp Automation for Shopify | TopEdge AI',
     description:
       'Confirm COD orders, recover abandoned carts, run campaigns and answer every chat on WhatsApp. One subscription for Indian Shopify stores. 14-day free trial, no card.',
   },
 ];
 
-// GA4 is optional: with no VITE_GA_MEASUREMENT_ID the page makes no analytics request at all.
+// Tagging is optional: with neither id set the page makes no analytics request at all.
 // When set, gtag.js loads only after the window `load` event, so it cannot delay first paint.
-const gaId = String(resolveViteEnv().VITE_GA_MEASUREMENT_ID || '').trim();
-const analytics = /^G-[A-Z0-9]{4,}$/.test(gaId)
+//
+// Both ids matter and they do different jobs. GA4 measures; the Google Ads tag (AW-) is
+// what builds the remarketing audience and receives conversions. These pages ARE the ad
+// traffic, so without the AW tag here there is no retargeting list to build from the
+// people the ads were bought for.
+//
+// Consent mirrors src/marketing/lib/analytics.ts: ad signals granted by default because
+// this account advertises in India, denied across the EEA/UK/CH by a region-scoped
+// default. The previous blanket `ad_storage: denied` stopped remarketing lists
+// populating anywhere, which quietly made retargeting impossible.
+const viteEnv = resolveViteEnv();
+const gaId = String(viteEnv.VITE_GA_MEASUREMENT_ID || '').trim();
+const adsId = String(viteEnv.VITE_GOOGLE_ADS_ID || '').trim();
+const GA_OK = /^G-[A-Z0-9]{4,}$/.test(gaId);
+const ADS_OK = /^AW-[0-9]{6,}$/.test(adsId);
+const tagId = GA_OK ? gaId : ADS_OK ? adsId : '';
+const DENY_REGION =
+  "['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES','SE','IS','LI','NO','GB','CH']";
+// `AW-xxx/label` for the "reached signup" conversion, or '' to send nothing.
+// Both halves must be present: a send_to without a label is not a valid conversion.
+const adsSignupLabel = String(viteEnv.VITE_GOOGLE_ADS_SIGNUP_LABEL || '').trim();
+const ADS_SEND_TO = ADS_OK && adsSignupLabel ? `${adsId}/${adsSignupLabel}` : '';
+const analytics = tagId
   ? `<script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}window.gtag=gtag;
-gtag('consent','default',{analytics_storage:'granted',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});
-gtag('js',new Date());gtag('config','${gaId}');
-addEventListener('load',function(){var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=${gaId}';document.head.appendChild(s)});
+gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',region:${DENY_REGION},wait_for_update:500});
+gtag('consent','default',{ad_storage:'granted',ad_user_data:'granted',ad_personalization:'granted',analytics_storage:'granted'});
+gtag('js',new Date());
+${GA_OK ? `gtag('config','${gaId}');\n` : ''}${ADS_OK ? `gtag('config','${adsId}');\n` : ''}addEventListener('load',function(){var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=${tagId}';document.head.appendChild(s)});
 </script>
 `
   : '';
@@ -913,7 +959,7 @@ ${analytics}<script>
 ${behavior}
 </script>
 <script>
-${attribution.replaceAll('{{SLUG}}', page.slug)}
+${attribution.replaceAll('{{SLUG}}', page.slug).replaceAll('{{ADS_SEND_TO}}', ADS_SEND_TO)}
 </script>
 </body>
 </html>
