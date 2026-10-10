@@ -903,6 +903,25 @@ ${GA_OK ? `gtag('config','${gaId}');\n` : ''}${ADS_OK ? `gtag('config','${adsId}
 `
   : '';
 
+// PostHog, for the per-person journey GA4 cannot show: this visitor read the page,
+// opened pricing, clicked the trial button, signed up, connected Shopify. At a few
+// hundred ad clicks a month each one is worth looking at individually.
+//
+// `cross_subdomain_cookie` is the load-bearing option — it puts the id cookie on
+// `.topedgeai.com`, so the same person keeps one identity when the CTA sends them to
+// dash.topedgeai.com. Without it the journey stops dead at the click.
+//
+// Loaded after `load`, so nothing here is on the critical path; the inline cost is a
+// few hundred bytes against the page budget rather than PostHog's full snippet.
+const phKey = String(viteEnv.VITE_POSTHOG_KEY || '').trim();
+const phHost = String(viteEnv.VITE_POSTHOG_HOST || '').trim() || 'https://us.i.posthog.com';
+const posthog = phKey
+  ? `<script>
+addEventListener('load',function(){var s=document.createElement('script');s.async=true;s.src='${phHost}/static/array.js';s.onload=function(){try{posthog.init('${phKey}',{api_host:'${phHost}',cross_subdomain_cookie:true,autocapture:true,capture_pageview:true,person_profiles:'identified_only'})}catch(e){}};document.head.appendChild(s)});
+</script>
+`
+  : '';
+
 /**
  * The stylesheet ships inline, so every byte of it is page weight against the 60 KB
  * budget. Comments and indentation are for whoever edits base.css next, not for the
@@ -981,7 +1000,7 @@ for (const page of PAGES) {
 </head>
 <body>
 ${body}
-${analytics}<script>
+${analytics}${posthog}<script>
 ${behavior}
 </script>
 <script>
