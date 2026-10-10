@@ -236,6 +236,7 @@ must(upper.length === 0, `uppercase is back on: ${upper.map((r) => r.split('{')[
 // no link is three lines of copy taking the width of a third of the page.
 const paths = markup.match(/<article class="path"[\s\S]*?<\/article>/g) || [];
 must(paths.length === 3, `expected 3 entry-point cards, found ${paths.length}`);
+must(paths.filter((c) => /class="orb orb--/.test(c)).length === 3, 'an entry-point card lost the orb behind its artwork');
 for (const c of paths) {
   must(/<h3>/.test(c), 'an entry-point card has no heading');
   must(/<a class="go[^"]*" [^>]*href="(\/[^"#][^"]*|#[a-z]+)"/.test(c), 'an entry-point card has no destination');
@@ -253,18 +254,26 @@ must(bx.length === 5, `expected 5 platform panels, found ${bx.length}`);
 must(count(/class="bx bx--w"/g) === 2, 'the bento is no longer asymmetric: expected 2 wide panels');
 for (const b of bx) {
   must(/class="viz/.test(b), 'a platform panel has no illustration');
-  must(!/<img\b|<svg\b/.test(b), 'a platform panel ships an image; these are drawn in CSS on purpose');
+  // No raster image: a screenshot is the thing these replaced. An inline <svg>
+// path is as drawn as a border-radius and weighs less, so the WhatsApp glyph
+// at the centre of the broadcast panel is allowed.
+must(!/<img\b/.test(b), 'a platform panel ships an image; these are drawn, not photographed');
 }
-// Each panel has a piece floating over a corner of its base element. The
-// overlap is the point, but it may never cover a number: a figure hidden
-// behind a card is a diagram lying about its own data. The inner padding is
-// what keeps the figures clear, so the rule guards the padding.
-must(count(/class="float float--[tb]r/g) >= 3, 'the platform panels lost their floating layer');
-must(/\.lay \.fn\{[^}]*padding-right:/.test(html), 'the funnel lost the padding that keeps its figures out from under the floating note');
-must(/\.card-ord\{[^}]*padding:[^;}]*rem [0-9.]+rem/.test(html), 'the order card lost the padding that keeps its amounts out from under the floating reply');
+// Each panel is staged: an orb behind the group so it reads as lit, and a
+// second card floating over a corner of the subject. Flat panels with
+// everything the same size were what made the owner say they all looked alike.
+must(bx.filter((b) => /class="orb orb--/.test(b)).length === 5, 'a platform panel lost the orb behind its composition');
+for (const cls of ['pane--wa', 'pane--ask', 'pane--aud']) {
+  must(markup.includes(cls), `the floating card ${cls} is gone; the panel is flat again`);
+}
+// The float may overlap the subject's box but never its content, so the
+// subject is held back from the right edge. A figure half-hidden behind a
+// card is a diagram lying about its own data.
+must(/\.pane--hero\{width:[0-9]+%/.test(html), 'the recovery subject is full width again; the floating reminder will cover its figures');
+must(/\.pane--ord\{width:[0-9]+%/.test(html), 'the order subject is full width again; the floating reply will cover its price');
 // The line under the grid that marked the panels illustrative came out, so the
 // one figure that could be read as a customer result carries its own marker.
-must(/Recovered <i>sample<\/i>/.test(markup), 'the money figure in the recovery panel is not marked as sample data');
+must(/Recovered this month <i>sample<\/i>/.test(markup), 'the money figure in the recovery panel is not marked as sample data');
 for (const job of ['carts that leave', 'Confirm COD before you ship', 'Broadcast', 'every step before the sale', 'Flows you build']) {
   must(copy.includes(job), `the platform section no longer names: ${job}`);
 }

@@ -135,10 +135,10 @@ section{padding:3.75rem 0}
 .path{display:flex;flex-direction:column;padding:1.75rem 1.4rem 1.4rem;border-radius:26px;background:#fff;border:1px solid #ece4fb;box-shadow:0 1px 2px rgba(16,24,40,.03),0 14px 36px -18px rgba(76,29,149,.14);text-align:center;transition:border-color .35s var(--e),box-shadow .35s var(--e)}
 .path:hover{border-color:#d9c8fa;box-shadow:0 1px 2px rgba(16,24,40,.04),0 18px 42px -20px rgba(76,29,149,.26)}
 .ch,.rw,.cq span{transition:transform .45s cubic-bezier(.22,1,.36,1),box-shadow .45s}
-.path:hover .ch:nth-child(1){transform:rotate(5deg) translate(-.3rem,-.25rem)}
-.path:hover .ch:nth-child(2){transform:rotate(-6deg) translate(.3rem,-.15rem);transition-delay:.05s}
-.path:hover .ch:nth-child(3){transform:rotate(4deg) translate(-.25rem,.15rem);transition-delay:.1s}
-.path:hover .ch:nth-child(4){transform:rotate(-3deg) translate(.3rem,.3rem);transition-delay:.15s}
+.path:hover .ch:nth-child(2){transform:rotate(5deg) translate(-.3rem,-.25rem)}
+.path:hover .ch:nth-child(3){transform:rotate(-6deg) translate(.3rem,-.15rem);transition-delay:.05s}
+.path:hover .ch:nth-child(4){transform:rotate(4deg) translate(-.25rem,.15rem);transition-delay:.1s}
+.path:hover .ch:nth-child(5){transform:rotate(-3deg) translate(.3rem,.3rem);transition-delay:.15s}
 .path:hover .rw{transform:translateX(4px)}
 .path:hover .rw:nth-child(2){transition-delay:.05s}
 .path:hover .rw:nth-child(3){transition-delay:.1s}
@@ -155,26 +155,35 @@ section{padding:3.75rem 0}
 .go:focus-visible{outline:3px solid #c4b5fd;outline-offset:2px}
 /* min-height, not height: at 320px and in a cramped three-up the thread inside
    wraps one line further, and a fixed box clipped it. */
-.art{position:relative;margin-top:1.5rem;min-height:17.75rem;border-radius:20px;overflow:hidden;background:var(--panel);box-shadow:inset 0 0 0 1px rgba(124,58,237,.08)}
+.art{position:relative;margin-top:1.5rem;min-height:17.75rem;border-radius:20px;overflow:hidden;isolation:isolate;background:linear-gradient(170deg,#fdfcff 0,#f7f3ff 52%,#f0e8ff 100%);box-shadow:inset 0 0 0 1px #efe7fd}
 /* art 1: what a refused parcel actually costs, as the chips a seller would list */
-.ch{position:absolute;display:inline-flex;align-items:center;padding:.6rem 1rem;border-radius:13px;background:#fff;box-shadow:0 10px 22px -14px rgba(46,16,101,.75),0 1px 2px rgba(15,23,42,.06);font-size:.85rem;color:#3b2d5c;white-space:nowrap}
+.ch{position:absolute;z-index:1;display:inline-flex;align-items:center;padding:.62rem 1rem;border-radius:13px;background:rgba(255,255,255,.95);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);box-shadow:0 0 0 1px rgba(124,58,237,.06),0 2px 4px rgba(16,24,40,.04),0 16px 30px -14px rgba(46,16,101,.5);font-size:.85rem;color:#3b2d5c;white-space:nowrap}
 .ch i{position:absolute;right:-.4rem;top:-.4rem;display:grid;place-items:center;width:1.2rem;height:1.2rem;border-radius:50%;background:#f43f5e;color:#fff;font-size:.62rem;font-style:normal;line-height:1}
-.ch:nth-child(1){top:1.8rem;right:1.1rem;transform:rotate(5deg)}
-.ch:nth-child(2){top:5.2rem;left:.9rem;transform:rotate(-6deg)}
-.ch:nth-child(3){top:8.7rem;right:1.4rem;transform:rotate(4deg)}
-.ch:nth-child(4){top:12.2rem;left:1.6rem;transform:rotate(-3deg)}
+/* Indices start at 2: the orb is the first child of the panel. */
+.ch:nth-child(2){top:1.8rem;right:1.1rem;transform:rotate(5deg)}
+.ch:nth-child(3){top:5.2rem;left:.9rem;transform:rotate(-6deg)}
+.ch:nth-child(4){top:8.7rem;right:1.4rem;transform:rotate(4deg)}
+.ch:nth-child(5){top:12.2rem;left:1.6rem;transform:rotate(-3deg)}
 /* art 2: the journeys that ship switched on, as rows of the real list */
-.art-rows{display:grid;gap:.6rem;padding:1.1rem}
-.rw{display:grid;grid-template-columns:1.6rem 1fr auto;align-items:center;gap:.7rem;padding:.65rem .8rem;border-radius:14px;background:#fff;box-shadow:0 1px 2px rgba(16,24,40,.05),0 8px 20px -12px rgba(46,16,101,.45)}
-.rw b{display:grid;place-items:center;width:1.6rem;height:1.6rem;border-radius:9px;background:#ede9fe;color:#6d28d9;font-size:.72rem;font-weight:600}
+.art-rows{display:grid;align-content:center;gap:.65rem;padding:1.1rem}
+.rw{position:relative;z-index:1;display:grid;grid-template-columns:1.5rem 1fr 2.1rem;align-items:center;gap:.7rem;padding:.7rem .8rem;border-radius:14px;background:rgba(255,255,255,.94);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);box-shadow:0 0 0 1px rgba(124,58,237,.06),0 2px 4px rgba(16,24,40,.04),0 14px 26px -14px rgba(46,16,101,.5)}
+.rw b{display:grid;place-items:center;width:1.5rem;height:1.5rem;border-radius:9px;background:#e6f8ef;color:#0f9d6a;font-size:.78rem;font-weight:600}
+.rw--off b{background:#f2effa;color:#a394c4}
 .rw span{font-size:.84rem;color:#3b2d5c;text-align:left;line-height:1.3}
-.rw em{font-style:normal;padding:.16rem .45rem;border-radius:999px;background:#dcfce7;color:#15803d;font-size:.64rem;font-weight:600}
+/* A switch, not a word: the product shows a toggle and so should the picture. */
+.rw em{position:relative;display:block;width:2.1rem;height:1.15rem;border-radius:999px;background:#0f9d6a;transition:background .3s}
+.rw em:after{content:'';position:absolute;top:.17rem;left:1.12rem;width:.81rem;height:.81rem;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.25);transition:left .3s var(--e)}
+.rw--off em{background:#ded5f0}
+.rw--off em:after{left:.17rem}
+.path:hover .rw--off em{background:#0f9d6a}
+.path:hover .rw--off em:after{left:1.12rem}
 /* art 3: the thread the buyer actually sees */
-.art-chat{display:grid;align-content:start;gap:.45rem;padding:1.05rem;text-align:left}
+.art-chat{position:relative;display:grid;align-content:center;gap:.45rem;padding:1.05rem;text-align:left}
 .cb{padding:.7rem .8rem;border-radius:4px 14px 14px 14px;background:#fff;box-shadow:0 1px 2px rgba(15,23,42,.08);font-size:.84rem;line-height:1.45;color:#1f2937}
-.cq{display:grid;gap:.35rem}
-.cq span{padding:.55rem;border-radius:12px;background:#fff;box-shadow:0 1px 2px rgba(16,24,40,.06),0 6px 16px -10px rgba(46,16,101,.5);font-size:.82rem;font-weight:500;text-align:center;color:#0b7a6e}
-.ok{margin-top:.15rem;padding:.5rem;border-radius:11px;background:#dcf8c6;text-align:center;font-size:.8rem;font-weight:500;color:#0b7a6e}
+.cq{position:relative;z-index:1;display:grid;gap:.35rem}
+.cq span{padding:.58rem;border-radius:12px;background:rgba(255,255,255,.95);box-shadow:0 0 0 1px rgba(124,58,237,.06),0 2px 4px rgba(16,24,40,.04),0 10px 20px -12px rgba(46,16,101,.5);font-size:.82rem;font-weight:500;text-align:center;color:#0b7a6e}
+.cq .is-on{background:#0b7a6e;color:#fff;box-shadow:0 10px 22px -10px rgba(11,122,110,.8)}
+.ok{position:relative;z-index:1;margin-top:.15rem;padding:.5rem;border-radius:11px;background:#dcf8c6;text-align:center;font-size:.8rem;font-weight:500;color:#0b7a6e}
 /* ---- the platform bento ----
    Five panels for the five jobs the subscription actually does, because the ad
    this page is bought for sells the platform and the old page sold one feature.
@@ -212,91 +221,109 @@ section{padding:3.75rem 0}
 .fn-tot i{display:inline-block;margin-left:.35rem;padding:.05rem .3rem;border-radius:4px;background:rgba(124,58,237,.1);font-style:normal;font-size:.62rem;font-weight:600;letter-spacing:.03em;color:#7c3aed;vertical-align:.08em}
 .fn-tot{display:flex;align-items:baseline;justify-content:space-between;gap:.5rem;margin-top:1rem;padding-top:.8rem;border-top:1px dashed rgba(124,58,237,.25);font-size:.8rem;color:#4b3a6e}
 .fn-tot strong{display:inline-block;transform-origin:right bottom;font-size:1.28rem;font-weight:500;letter-spacing:-.02em;color:var(--chip-ink);font-variant-numeric:tabular-nums}
-/* ---- the layered idiom ----
-   Every panel is a base element with one or two pieces floating over its
-   corners, each carrying its own shadow. That overlap is the whole difference
-   between a panel that reads as a diagram and one that reads as a product:
-   depth tells the eye these are separate objects before it reads a word. */
-/* The base element is held back from the right edge so the floating piece has
-   somewhere to sit. Overlap is the point, but it may never cover a number: a
-   figure hidden behind a card is a diagram that lies about its own data. */
-.lay{position:relative;padding-bottom:1.4rem}
-/* The float overlaps the base element's box but never its content: the inner
-   padding keeps every figure clear of the card sitting on top of it. */
-.lay .fn{width:72%;padding-right:1.7rem}
-.lay .sg{width:76%}
-.lay--tall{padding-bottom:2rem}
-.float{position:absolute;z-index:2;border-radius:13px;background:#fff;box-shadow:0 1px 2px rgba(16,24,40,.06),0 12px 26px -12px rgba(46,16,101,.5);transition:transform .45s var(--e)}
-.float--tr{top:-.3rem;right:-.2rem}
-.float--br{right:-.2rem;bottom:-.3rem}
-.bx:hover .float--tr{transform:translate(.2rem,-.25rem)}
-.bx:hover .float--br{transform:translate(.2rem,.25rem)}
-/* the reminder that sits over the funnel */
-.wa-note{top:50%;right:-.2rem;width:8.8rem;padding:.5rem .6rem;transform:translateY(-50%)}
-.bx:hover .wa-note{transform:translateY(-50%) translateX(.2rem)}
-.wa-h{display:flex;align-items:center;gap:.3rem;margin:0 0 .15rem;font-size:.62rem;font-weight:600;color:#0b7a6e}
-.wa-dot{width:.42rem;height:.42rem;border-radius:50%;background:#25d366}
-.wa-note p:last-child{margin:0;font-size:.72rem;line-height:1.3;color:#3b2d5c}
-/* the order the buyer is being asked about */
-.card-ord{position:relative;z-index:1;width:72%;display:grid;gap:.4rem;padding:.75rem 3.4rem .75rem .8rem;border-radius:14px;background:#fff;box-shadow:0 1px 2px rgba(16,24,40,.05),0 10px 24px -14px rgba(46,16,101,.45)}
-.ord-h{display:flex;align-items:center;justify-content:space-between;gap:.5rem;font-size:.78rem;font-weight:600;color:#3b2d5c}
-.ord-row{display:flex;align-items:baseline;justify-content:space-between;gap:.5rem;font-size:.74rem;color:#4b3a6e}
-.ord-row b{font-weight:600;color:#3b2d5c}
-.ord-row--mut{color:#9b8cb8}
-.tag{padding:.14rem .45rem;border-radius:999px;font-size:.62rem;font-weight:600;font-style:normal;white-space:nowrap}
+/* ---- the illustration layer ----
+   What separated these from the references the owner kept sending was never
+   the drawing, it was the staging: too many elements, all the same size, all
+   the same weight of shadow, on a flat ground. So: fewer things, one of them
+   clearly the subject, a coloured orb behind the group, and shadows deep
+   enough that a card looks like it is above the surface rather than printed
+   on it. Nothing here is an image. */
+.viz{position:relative;flex:1;margin-top:1.3rem;min-height:12.5rem;padding:1.15rem;border-radius:19px;overflow:hidden;isolation:isolate;background:linear-gradient(170deg,#fdfcff 0,#f7f3ff 52%,#f0e8ff 100%);box-shadow:inset 0 0 0 1px #efe7fd}
+.viz--mid{min-height:14rem}
+/* The orb is the whole reason the group reads as lit rather than stuck on. */
+.orb{position:absolute;z-index:0;border-radius:50%;pointer-events:none;transition:transform .7s var(--e),opacity .7s var(--e)}
+.orb--l{left:-14%;bottom:-38%;width:70%;padding-top:70%;background:radial-gradient(circle,rgba(139,92,246,.4),transparent 68%)}
+.orb--r{right:-12%;top:-32%;width:62%;padding-top:62%;background:radial-gradient(circle,rgba(168,85,247,.36),transparent 68%)}
+.orb--warn{left:-10%;top:-26%;width:76%;padding-top:76%;background:radial-gradient(circle,rgba(244,63,94,.22),transparent 68%)}
+.orb--wa{left:-12%;bottom:-30%;width:76%;padding-top:76%;background:radial-gradient(circle,rgba(37,211,102,.26),transparent 68%)}
+.path:hover .orb{transform:scale(1.12);opacity:.85}
+.path:hover .orb--c{transform:translate(-50%,-50%) scale(1.12)}
+.orb--c{left:50%;top:46%;width:86%;padding-top:86%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(139,92,246,.3),transparent 66%)}
+.bx:hover .orb{transform:scale(1.12);opacity:.85}
+.bx:hover .orb--c{transform:translate(-50%,-50%) scale(1.12)}
+/* Two deep shadows and a hairline: the difference between floating and flat. */
+.pane{position:relative;z-index:1;border-radius:15px;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);box-shadow:0 0 0 1px rgba(124,58,237,.07),0 2px 4px rgba(16,24,40,.04),0 14px 28px -12px rgba(76,29,149,.3),0 34px 60px -30px rgba(46,16,101,.45);transition:transform .5s var(--e),box-shadow .5s var(--e)}
+.stage{position:relative;z-index:1;height:100%}
+/* the recovered total, which is the subject, and the reminder that earned it */
+.pane--hero{width:61%;padding:.95rem 1.05rem 1.05rem}
+.k{font-size:.7rem;color:#8b7ba8}
+.k i{display:inline-block;margin-left:.3rem;padding:.05rem .3rem;border-radius:4px;background:rgba(124,58,237,.1);font-style:normal;font-size:.6rem;font-weight:600;letter-spacing:.03em;color:#7c3aed;vertical-align:.08em}
+.big{margin-top:.15rem;font-size:1.72rem;font-weight:500;letter-spacing:-.035em;line-height:1.1;color:var(--chip-ink);font-variant-numeric:tabular-nums}
+.spark{display:flex;align-items:flex-end;gap:.28rem;height:1.9rem;margin-top:.7rem}
+.spark i{flex:1;border-radius:3px 3px 1px 1px;background:linear-gradient(180deg,#a78bfa,#7c3aed);opacity:.5;transform-origin:bottom;transform:scaleY(.72);transition:transform .5s var(--e),opacity .5s var(--e)}
+.spark i:last-child{opacity:1}
+.bx:hover .spark i{transform:scaleY(1);opacity:.75}
+.bx:hover .spark i:last-child{opacity:1}
+/* Flush with the stage edge, not past it: .viz clips, so a float with a
+   negative offset loses its corner. It still overlaps the subject's box. */
+.pane--wa{position:absolute;right:0;bottom:0;width:10.1rem;padding:.65rem .75rem}
+.wa-h{display:flex;align-items:center;gap:.33rem;font-size:.64rem;font-weight:600;color:#0b7a6e}
+.wa-dot{width:.44rem;height:.44rem;border-radius:50%;background:#25d366;box-shadow:0 0 0 3px rgba(37,211,102,.18)}
+.wa-b{margin-top:.3rem;font-size:.76rem;line-height:1.4;color:#3b2d5c}
+.wa-cta{margin-top:.5rem;padding:.35rem;border-radius:9px;background:#eefaf4;font-size:.7rem;font-weight:600;text-align:center;color:#0b7a6e}
+.bx:hover .pane--wa{transform:translate(-.2rem,-.2rem);box-shadow:0 0 0 1px rgba(124,58,237,.07),0 2px 4px rgba(16,24,40,.04),0 20px 38px -14px rgba(76,29,149,.38),0 44px 70px -34px rgba(46,16,101,.5)}
+/* the order, with a product block big enough to read as a product */
+.pane--ord{width:70%;padding:.85rem .9rem}
+.ord-h{display:flex;align-items:center;gap:.65rem}
+.thumb{flex:none;width:2.6rem;height:2.6rem;border-radius:11px;background:linear-gradient(145deg,#ddd3c4,#b9ab95);box-shadow:inset 0 -.6rem .8rem -.5rem rgba(0,0,0,.18)}
+.ord-h b{display:block;font-size:.82rem;font-weight:600;color:#3b2d5c}
+.ord-h em{display:block;margin-top:.1rem;font-style:normal;font-size:.7rem;color:#9b8cb8}
+.ord-f{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.7rem}
+.tag{padding:.2rem .5rem;border-radius:999px;font-size:.64rem;font-weight:600;font-style:normal;white-space:nowrap}
 .tag--cod{background:#fff3e0;color:#b45309}
-.tag--ok{padding:.3rem .55rem;background:#e6f8ef;color:#0f7a52;box-shadow:0 1px 2px rgba(16,24,40,.06),0 10px 22px -12px rgba(15,122,82,.6)}
-.card-ask{width:10.6rem;padding:.6rem .65rem}
-.card-ask p{margin:0 0 .4rem;font-size:.72rem;line-height:1.35;color:#3b2d5c}
-.ask-btns{display:grid;gap:.25rem}
-.ask-btns i{padding:.3rem;border-radius:8px;background:#f3f7f6;font-style:normal;font-size:.68rem;font-weight:600;text-align:center;color:#0b7a6e}
-/* the size of the audience a campaign is about to reach */
-.card-aud{display:grid;gap:0;padding:.45rem .7rem;text-align:right}
-.card-aud b{font-size:1.02rem;font-weight:600;letter-spacing:-.02em;color:var(--chip-ink);font-variant-numeric:tabular-nums}
-.card-aud span{font-size:.62rem;color:#8b7ba8}
-/* ---- the visitor trail ----
-   A browser bar, then the three events that matter, with a dot travelling the
-   rail to say the tracking is live rather than a screenshot of it. */
-.brow{display:flex;align-items:center;gap:.28rem;padding:.4rem .6rem;border-radius:9px 9px 0 0;background:#fff;box-shadow:0 1px 2px rgba(16,24,40,.05)}
+.tag--ok{background:#e6f8ef;color:#0f7a52}
+.pane--ask{position:absolute;right:0;bottom:0;width:10.2rem;padding:.65rem .7rem}
+.ask-btns{display:grid;gap:.28rem;margin-top:.5rem}
+.ask-btns i{padding:.34rem;border-radius:9px;background:#f4f7f6;font-style:normal;font-size:.7rem;font-weight:600;text-align:center;color:#0b7a6e}
+.ask-btns .is-on{background:#0b7a6e;color:#fff}
+.bx:hover .pane--ask{transform:translate(-.2rem,-.2rem)}
+/* the audience, as a signal going out rather than a list */
+.orbit{position:relative;z-index:1;display:grid;place-items:center;height:100%;min-height:10.5rem}
+.ring{position:absolute;border-radius:50%;border:1px solid rgba(124,58,237,.22)}
+.ring--1{width:6.5rem;height:6.5rem}
+.ring--2{width:10rem;height:10rem;border-color:rgba(124,58,237,.14)}
+.core{display:grid;place-items:center;width:3.3rem;height:3.3rem;border-radius:50%;background:linear-gradient(145deg,#34d27b,#0b9e62);box-shadow:0 10px 24px -10px rgba(11,158,98,.85),0 0 0 7px rgba(37,211,102,.1)}
+.sat{position:absolute;padding:.3rem .6rem;border-radius:999px;background:rgba(255,255,255,.95);box-shadow:0 1px 2px rgba(16,24,40,.05),0 10px 22px -12px rgba(46,16,101,.6);font-size:.69rem;color:#4b3a6e;white-space:nowrap;transition:transform .55s var(--e)}
+.sat--1{top:.2rem;left:.1rem}
+.sat--2{right:-.2rem;top:42%}
+.sat--3{bottom:.35rem;left:1.6rem}
+.bx:hover .sat--1{transform:translate(-.2rem,-.2rem)}
+.bx:hover .sat--2{transform:translateX(.25rem)}
+.bx:hover .sat--3{transform:translate(-.2rem,.2rem)}
+.pane--aud{position:absolute;right:.5rem;bottom:.5rem;display:grid;padding:.45rem .7rem;text-align:right}
+.pane--aud b{font-size:1.04rem;font-weight:600;letter-spacing:-.02em;color:var(--chip-ink);font-variant-numeric:tabular-nums}
+.pane--aud span{font-size:.62rem;color:#8b7ba8}
+.bx:hover .pane--aud{transform:translate(-.2rem,-.2rem)}
+/* the visitor trail, inside the browser it happened in */
+.pane--trail{padding:0 0 .55rem;overflow:hidden}
+.brow{display:flex;align-items:center;gap:.28rem;padding:.45rem .6rem;border-bottom:1px solid #f3eefb}
 .brow i{width:.4rem;height:.4rem;border-radius:50%;background:#e4dcf6}
 .brow span{margin-left:.3rem;padding:.12rem .5rem;border-radius:999px;background:#f5f1fd;font-size:.62rem;color:#8b7ba8}
-.trail{position:relative;list-style:none;margin:0;padding:.75rem 0 .1rem .95rem;counter-reset:t}
-.trail:before{content:'';position:absolute;left:.3rem;top:1.05rem;bottom:.85rem;width:1.5px;background:linear-gradient(180deg,#c4b5fd,#e9d5ff)}
-.trail:after{content:'';position:absolute;left:.08rem;top:1rem;width:.5rem;height:.5rem;border-radius:50%;background:#7c3aed;box-shadow:0 0 0 3px rgba(124,58,237,.18);animation:trail 3.4s cubic-bezier(.65,0,.35,1) infinite}
-@keyframes trail{0%,8%{top:1rem}42%,50%{top:2.95rem}84%,100%{top:4.9rem}}
-.trail li{position:relative;display:flex;margin-left:.35rem}
-.trail li+li{margin-top:.5rem}
-.trail b{position:absolute;left:-.95rem;top:.45rem;width:.38rem;height:.38rem;border-radius:50%;background:#c4b5fd}
-.trail span{display:flex;align-items:baseline;justify-content:space-between;gap:.5rem;width:100%;padding:.45rem .6rem;border-radius:11px;background:#fff;box-shadow:0 1px 2px rgba(16,24,40,.05),0 8px 18px -12px rgba(46,16,101,.45);font-size:.74rem;color:#3b2d5c}
+.trail{position:relative;list-style:none;margin:0;padding:.65rem .7rem .1rem 1.5rem}
+.trail:before{content:'';position:absolute;left:.95rem;top:1rem;bottom:.8rem;width:1.5px;background:linear-gradient(180deg,#c4b5fd,#f0e4ff)}
+.trail:after{content:'';position:absolute;left:.7rem;top:.95rem;width:.52rem;height:.52rem;border-radius:50%;background:#7c3aed;box-shadow:0 0 0 4px rgba(124,58,237,.16);animation:trail 3.6s cubic-bezier(.65,0,.35,1) infinite}
+@keyframes trail{0%,8%{top:1.2rem}42%,50%{top:3.05rem}84%,100%{top:4.9rem}}
+.trail li{position:relative;display:flex}
+.trail li+li{margin-top:.45rem}
+.trail b{position:absolute;left:-.62rem;top:.75rem;width:.38rem;height:.38rem;border-radius:50%;background:#c4b5fd}
+.trail span{display:flex;align-items:baseline;justify-content:space-between;gap:.5rem;width:100%;padding:.4rem .55rem;border-radius:10px;background:#faf8ff;box-shadow:inset 0 0 0 1px #f1ebfd;font-size:.75rem;color:#3b2d5c}
 .trail em{font-style:normal;font-size:.64rem;color:#9b8cb8;font-variant-numeric:tabular-nums}
 .trail .is-drop b{background:#f43f5e}
-.trail .is-drop span{color:#b4245a;box-shadow:0 1px 2px rgba(16,24,40,.05),0 8px 18px -12px rgba(190,24,93,.5),inset 0 0 0 1px #fde0e8}
+.trail .is-drop span{color:#be2458;background:#fff5f8;box-shadow:inset 0 0 0 1px #fde0e8}
 /* a flow is built on a canvas, so the panel behind it reads as one */
-.viz--grid{background-image:radial-gradient(rgba(124,58,237,.18) 1px,transparent 1px),linear-gradient(170deg,#fcfbff 0,#f5f0ff 55%,#efe6ff 100%);background-size:13px 13px,100% 100%}
-/* campaigns: the segment, then the send running against it */
-.sg{display:flex;flex-wrap:wrap;gap:.42rem}
-.sg span{padding:.33rem .65rem;border-radius:999px;background:#fff;box-shadow:0 1px 2px rgba(16,24,40,.05),0 6px 14px -10px rgba(46,16,101,.5);font-size:.73rem;color:#4b3a6e}
-.sg span:first-child{background:linear-gradient(145deg,#8b5cf6,#7c3aed);color:#fff;font-weight:600;box-shadow:0 6px 14px -7px rgba(124,58,237,.8)}
-.bx:hover .sg span{transform:translateY(-3px)}
-.bx:hover .sg span:nth-child(2){transition-delay:.05s}
-.bx:hover .sg span:nth-child(3){transition-delay:.1s}
-.bx:hover .sg span:nth-child(4){transition-delay:.15s}
-.mtr{margin-top:1.1rem}
-.mtr-l{display:flex;justify-content:space-between;font-size:.72rem;color:#6b5b8c}
-.mtr-b{margin-top:.45rem;height:.65rem;border-radius:999px;background:#fff;box-shadow:inset 0 0 0 1px #e9deff;overflow:hidden}
-.mtr-b i{display:block;width:72%;height:100%;border-radius:999px;background:linear-gradient(90deg,#8b5cf6,#c026d3);transform-origin:left center;transform:scaleX(.72)}
-.bx:hover .mtr-b i{transform:scaleX(1)}
-/* flow builder: three nodes and the wires between them, no canvas library */
-.fl{display:grid;gap:.5rem;justify-items:center}
-.nd{display:inline-flex;align-items:center;gap:.45rem;padding:.48rem .8rem;border-radius:13px;background:#fff;box-shadow:0 1px 2px rgba(16,24,40,.05),0 8px 18px -10px rgba(46,16,101,.5);font-size:.76rem;color:#3b2d5c}
-.nd:before{content:'';width:.42rem;height:.42rem;border-radius:50%;background:#7c3aed}
+.viz--grid{background-image:radial-gradient(rgba(124,58,237,.2) 1px,transparent 1px),linear-gradient(170deg,#fdfcff 0,#f7f3ff 52%,#f0e8ff 100%);background-size:14px 14px,100% 100%}
+.fl{position:relative;z-index:1;display:grid;gap:.42rem;justify-items:center}
+.nd{display:inline-flex;align-items:center;gap:.45rem;padding:.5rem .8rem;border-radius:12px;background:rgba(255,255,255,.95);box-shadow:0 1px 2px rgba(16,24,40,.05),0 12px 24px -12px rgba(46,16,101,.6);font-size:.76rem;color:#3b2d5c;transition:transform .5s var(--e)}
+.nd:before{content:'';width:.45rem;height:.45rem;border-radius:50%;background:#7c3aed}
 .nd--b:before{background:#c026d3}
 .nd--c:before{background:#0f9d6a}
-.bx:hover .nd{transform:translateY(-3px)}
-.bx:hover .nd--b{transition-delay:.07s}
-.bx:hover .fl-split .nd{transition-delay:.14s}
-.wire{width:1.5px;height:.9rem;background:linear-gradient(180deg,rgba(124,58,237,.15),rgba(124,58,237,.55))}
+.nd--d:before{background:#94a3b8}
+.wire{width:1.5px;height:.95rem;background:linear-gradient(180deg,rgba(124,58,237,.2),rgba(124,58,237,.6))}
 .fl-split{display:flex;gap:.5rem}
+.bx:hover .nd--a{transform:translateY(-3px)}
+.bx:hover .nd--b{transform:translateY(-3px);transition-delay:.07s}
+.bx:hover .fl-split .nd{transform:translateY(-3px);transition-delay:.14s}
+.vz-note{margin-top:1.2rem;text-align:center;font-size:.82rem;color:var(--muted)}
 /* ---- the film, autoplaying in the hero ---- */
 .film-wrap{width:min(100%,64rem);margin:1.6rem auto 0}
 /* No drop shadow behind the film: the owner wants the frame flat against the
@@ -457,6 +484,16 @@ section{padding:3.75rem 0}
 .trust{background:#fff;padding:2.5rem 0 1.5rem}
 /* sticky mobile cta */
 .sticky{display:none}
+/* Below 900px a panel is too narrow for a card to float over another card
+   without covering it, so the pair stacks: subject first, the piece that was
+   floating directly under it. The depth comes from the shadows, which stay. */
+@media(max-width:899px){
+ .pane--hero,.pane--ord{width:100%}
+ .pane--wa,.pane--ask{position:static;width:100%;margin-top:.55rem}
+ .pane--aud{position:static;width:max-content;margin:.7rem 0 0 auto}
+ .orbit{height:auto;min-height:11.5rem}
+ .bx:hover .pane--wa,.bx:hover .pane--ask,.bx:hover .pane--aud{transform:none}
+}
 @media(max-width:380px){
  .film{max-height:34svh}
  .hero h1{font-size:1.85rem}
@@ -532,10 +569,10 @@ section{padding:3.75rem 0}
 @media(prefers-reduced-motion:reduce){
  *{transition:none!important;animation:none!important}
  .fb i,.mtr-b i{transform:none}
- .path:hover .ch:nth-child(1){transform:rotate(5deg)}
- .path:hover .ch:nth-child(2){transform:rotate(-6deg)}
- .path:hover .ch:nth-child(3){transform:rotate(4deg)}
- .path:hover .ch:nth-child(4){transform:rotate(-3deg)}
+ .path:hover .ch:nth-child(2){transform:rotate(5deg)}
+ .path:hover .ch:nth-child(3){transform:rotate(-6deg)}
+ .path:hover .ch:nth-child(4){transform:rotate(4deg)}
+ .path:hover .ch:nth-child(5){transform:rotate(-3deg)}
  html{scroll-behavior:auto}
  .trust-marks{width:100%;flex-wrap:wrap;justify-content:center;gap:1.5rem 3rem}
  .trust-marks li[aria-hidden]{display:none}
