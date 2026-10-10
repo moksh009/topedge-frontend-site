@@ -885,6 +885,69 @@ measured in the browser rather than eyeballed: 21px of clearance between the
 last funnel figure and the note, 35px of deliberate box overlap on the order
 card. Eight negative tests, each by breaking the page on purpose.
 
+## Revision 18 — the illustrations, staged (2026-10-10)
+
+The owner's note was that the panels still all looked the same next to the
+references, and that if code could not get there I should generate images
+instead. Code can get there; what was wrong was never the drawing.
+
+### What was actually wrong
+Every panel had the same problem: too many elements, all roughly the same
+size, all carrying the same weight of shadow, on a flat ground. That reads as
+a diagram. The references read as product because of three things the panels
+did not have.
+
+**One subject.** A panel should have one element that is clearly the point and
+one or two that support it. The recovery panel had three bars, a total and a
+note, all competing. It now leads with the figure at 1.72rem over a sparkline,
+with the reminder beside it.
+
+**Light.** Every panel gets a coloured orb behind the group, bleeding past the
+edge and clipped by it, which is why the group reads as lit rather than pasted
+on. Red behind the costs on the first entry card, WhatsApp green behind the
+thread on the third, violet everywhere else. It is a radial-gradient on an
+empty span and costs about 90 bytes each.
+
+**Depth.** The pane shadow is now two deep shadows plus a hairline, over a
+translucent white with a backdrop blur, instead of one modest shadow on solid
+white. A card has to look like it is above the surface, not printed on it.
+
+### Panel by panel
+- Recovery: the total and its sparkline, with the WhatsApp reminder floating
+  over the corner, carrying its own call to action.
+- COD: the product with a real thumbnail block and its tags, with the buyer's
+  prompt floating over it and a weighted Confirm.
+- Broadcast: replaced the chip list with the signal going out, which is what
+  a broadcast is. A WhatsApp core on two concentric rings with the segments as
+  satellites, and the audience size floating at the corner.
+- Tracking: the trail inside its browser chrome, rows back on their own
+  grounds, the travelling dot larger with a glow.
+- Flow: nodes on a dot-grid canvas, each with a coloured handle.
+
+The three entry-point cards got the same treatment: the costs as chips on
+frosted glass over a red orb, the journeys as real toggle switches (the fourth
+flips on when the card is hovered), and the thread with a header, a weighted
+primary reply and a green orb under it.
+
+### Two faults found while building
+The orb became the first child of the chip panel, which silently shifted every
+`.ch:nth-child` position by one and scrambled the four chips. Index-based
+positioning breaks the moment anything is inserted before it; the selectors
+are now documented with why they start at 2.
+
+And below 900px a panel is too narrow for one card to float over another
+without covering it: at 390px the reminder sat on top of the recovered total
+and the prompt covered the price. Below that width the pair stacks, subject
+then the piece that was floating. The shadows carry the depth instead.
+
+### Verified
+Nine widths from 320 to 1920: no horizontal overflow, nothing clipped. The
+clipping detector itself had to be fixed first, since it was counting the orbs
+as overflow when being clipped by the panel is their whole job. Float geometry
+measured rather than eyeballed: 36px of clearance between the sparkline and
+the reminder, 102px between the order's tags and the prompt. Five negative
+tests on the new rules. 84 KB against the 88 KB budget.
+
 ## Testing
 Repo has no JS test runner, so verification is a node script:
 `scripts/check-landing-pages.mjs` (`npm run check:lp`) reads the generated HTML and asserts: size budget, noindex, no em dashes, no competitor names, no invented rating, the three quotes verbatim, plan prices equal `FALLBACK_CATALOG`, each plan's COD-to-prepaid lock state agrees with the catalog, `TRIAL` numbers appear, the ported navbar and footer, every CTA kind present, no external script or stylesheet. Revision 9 adds: no `<video>` or `<img>` in the hero, a film section that exists, three entry-point cards that each link somewhere real, five bento panels with no image inside them, a marked phrase in every `<h2>`, three going-live steps, and three blog cards whose slugs resolve against `blogPosts.ts`. Browser checks with Playwright (installed): 360px and 1280px screenshots, H1 at most 3 lines on mobile, sticky bar behaviour, toggle, hero variant swap by `?utm_content=`.

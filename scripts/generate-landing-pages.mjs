@@ -186,6 +186,7 @@ const PATHS = [
     href: '/blog/cod-confirmation-whatsapp-reduce-rto-shopify',
     solid: false,
     art: `<div class="art" aria-hidden="true">
+          <span class="orb orb--warn"></span>
           <span class="ch">Orders nobody wanted<i>&times;</i></span>
           <span class="ch">Refused at the door<i>&times;</i></span>
           <span class="ch">Return freight<i>&times;</i></span>
@@ -199,10 +200,11 @@ const PATHS = [
     href: '#platform',
     solid: false,
     art: `<div class="art art-rows" aria-hidden="true">
-          <div class="rw"><b>1</b><span>COD order confirmation</span><em>On</em></div>
-          <div class="rw"><b>2</b><span>Abandoned cart recovery</span><em>On</em></div>
-          <div class="rw"><b>3</b><span>COD to prepaid nudge</span><em>On</em></div>
-          <div class="rw"><b>4</b><span>Campaign broadcast</span><em>On</em></div>
+          <span class="orb orb--c"></span>
+          <div class="rw"><b>&#10003;</b><span>COD order confirmation</span><em class="sw-on"></em></div>
+          <div class="rw"><b>&#10003;</b><span>Abandoned cart recovery</span><em class="sw-on"></em></div>
+          <div class="rw"><b>&#10003;</b><span>COD to prepaid nudge</span><em class="sw-on"></em></div>
+          <div class="rw rw--off"><b>+</b><span>Campaign broadcast</span><em></em></div>
         </div>`,
   },
   {
@@ -212,8 +214,10 @@ const PATHS = [
     href: null,
     solid: true,
     art: `<div class="art art-chat" role="img" aria-label="Example WhatsApp message to a buyer: Hi Priya, your order #1042 is Cash on Delivery for ₹1,499. Confirm it and we ship today. Two buttons follow, Confirm order and Cancel order, then a confirmation that the order ships today.">
+          <span class="orb orb--wa"></span>
+          <p class="chead"><i class="wa-dot"></i>Your store</p>
           <p class="cb">Hi Priya, your order #1042 is Cash on Delivery for ₹1,499. Confirm it and we ship today.</p>
-          <div class="cq"><span>Confirm order</span><span>Cancel order</span></div>
+          <div class="cq"><span class="is-on">Confirm order</span><span>Cancel order</span></div>
           <p class="ok">&#10003; Confirmed &middot; shipping today</p>
         </div>`,
   },
@@ -226,24 +230,28 @@ const PATHS = [
  * illustration is drawn in CSS: no screenshot to re-cut when a button moves.
  * The sample values inside them are labelled illustrative under the grid.
  */
+const WA_GLYPH =
+  '<svg viewBox="0 0 24 24" width="22" height="22" fill="#fff" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm4.5 12.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.1-.2 0-.4.1-.5l.4-.5c.1-.2.2-.3.3-.5v-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.8.8-1 1.9-.7 3a7.6 7.6 0 0 0 1.6 2.8 9.2 9.2 0 0 0 4.4 3.1c1.4.4 2.2.3 2.9.2.6-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.4-.3z"/></svg>';
+
 const BENTO = [
   {
     w: true,
     h: 'Win back the carts that leave',
     p: 'A reminder on WhatsApp while the cart is still warm, then one more the next day. Shopify tells us the cart; the buyer replies in the thread they already use.',
     viz: `<div class="viz">
-          <div class="lay">
-            <div class="fn">
-              <div class="fb"><span>Abandoned</span><i style="width:100%"></i><b>1,240</b></div>
-              <div class="fb"><span>Reminded</span><i style="width:88%"></i><b>1,092</b></div>
-              <div class="fb fb--win"><span>Purchased</span><i style="width:22%"></i><b>263</b></div>
+          <span class="orb orb--l"></span>
+          <div class="stage">
+            <div class="pane pane--hero">
+              <p class="k">Recovered this month <i>sample</i></p>
+              <p class="big">&#8377;4,18,700</p>
+              <p class="spark"><i style="height:34%"></i><i style="height:52%"></i><i style="height:41%"></i><i style="height:68%"></i><i style="height:59%"></i><i style="height:86%"></i><i style="height:100%"></i></p>
             </div>
-            <div class="float float--tr wa-note">
+            <div class="pane pane--wa">
               <p class="wa-h"><i class="wa-dot"></i>WhatsApp</p>
-              <p>Still thinking about the Linen Shirt?</p>
+              <p class="wa-b">Still thinking about the Linen Shirt? Your cart is saved.</p>
+              <p class="wa-cta">Resume checkout</p>
             </div>
           </div>
-          <p class="fn-tot"><span>Recovered <i>sample</i></span><strong>&#8377;4,18,700</strong></p>
         </div>`,
   },
   {
@@ -251,17 +259,16 @@ const BENTO = [
     h: 'Confirm COD before you ship',
     p: 'One message the moment the order lands. The buyer confirms, cancels, or pays online instead, and you decide what each answer does to the order in Shopify.',
     viz: `<div class="viz">
-          <div class="lay lay--tall">
-            <div class="card-ord">
-              <p class="ord-h"><span>Order #1042</span><em class="tag tag--cod">COD</em></p>
-              <p class="ord-row"><span>Rohan Gupta &middot; Pune</span><b>&#8377;1,499</b></p>
-              <p class="ord-row ord-row--mut"><span>Linen Shirt, Olive, M</span><b>&times;1</b></p>
+          <span class="orb orb--r"></span>
+          <div class="stage">
+            <div class="pane pane--ord">
+              <p class="ord-h"><span class="thumb"></span><span><b>Linen Shirt</b><em>Olive &middot; M &middot; &#8377;1,499</em></span></p>
+              <p class="ord-f"><span class="tag tag--cod">Cash on delivery</span><span class="tag tag--ok">&#10003; Confirmed</span></p>
             </div>
-            <div class="float float--br card-ask">
-              <p>Confirm your order so we can ship today.</p>
-              <span class="ask-btns"><i>Confirm</i><i>Cancel</i></span>
+            <div class="pane pane--ask">
+              <p class="wa-b">Confirm order #1042 so we can ship it today.</p>
+              <span class="ask-btns"><i class="is-on">Confirm</i><i>Cancel</i></span>
             </div>
-            <span class="float float--tr tag tag--ok">&#10003; Confirmed</span>
           </div>
         </div>`,
   },
@@ -269,12 +276,16 @@ const BENTO = [
     w: false,
     h: 'Broadcast to the right people',
     p: 'Segment by what they bought, when they last ordered, or where they dropped off.',
-    viz: `<div class="viz">
-          <div class="lay">
-            <div class="sg"><span>Bought once</span><span>90 days quiet</span><span>Mumbai</span><span>Prepaid</span></div>
-            <div class="float float--br card-aud"><b>2,418</b><span>in this segment</span></div>
+    viz: `<div class="viz viz--mid">
+          <span class="orb orb--c"></span>
+          <div class="orbit">
+            <span class="ring ring--1"></span><span class="ring ring--2"></span>
+            <span class="core">${WA_GLYPH}</span>
+            <span class="sat sat--1">Bought once</span>
+            <span class="sat sat--2">90 days quiet</span>
+            <span class="sat sat--3">Mumbai</span>
           </div>
-          <div class="mtr"><p class="mtr-l"><span>Campaign sending</span><span>72%</span></p><p class="mtr-b"><i></i></p></div>
+          <div class="pane pane--aud"><b>2,418</b><span>in this segment</span></div>
         </div>`,
   },
   {
@@ -282,12 +293,15 @@ const BENTO = [
     h: 'See every step before the sale',
     p: 'The pages they opened, the product they lingered on, and where they dropped off, tied to the same WhatsApp thread.',
     viz: `<div class="viz">
-          <div class="brow"><i></i><i></i><i></i><span>yourstore.com</span></div>
-          <ol class="trail">
-            <li><b></b><span>Viewed Linen Shirt<em>2:14</em></span></li>
-            <li><b></b><span>Added to cart<em>2:16</em></span></li>
-            <li class="is-drop"><b></b><span>Left at checkout<em>2:19</em></span></li>
-          </ol>
+          <span class="orb orb--c"></span>
+          <div class="pane pane--trail">
+            <p class="brow"><i></i><i></i><i></i><span>yourstore.com</span></p>
+            <ol class="trail">
+              <li><b></b><span>Viewed Linen Shirt<em>2:14</em></span></li>
+              <li><b></b><span>Added to cart<em>2:16</em></span></li>
+              <li class="is-drop"><b></b><span>Left at checkout<em>2:19</em></span></li>
+            </ol>
+          </div>
         </div>`,
   },
   {
@@ -295,12 +309,13 @@ const BENTO = [
     h: 'Flows you build by dragging',
     p: 'No developer, no theme edits, no checkout scripts. Branch on what the buyer did.',
     viz: `<div class="viz viz--grid">
+          <span class="orb orb--c"></span>
           <div class="fl">
-            <span class="nd">Cart abandoned</span>
+            <span class="nd nd--a">Cart abandoned</span>
             <span class="wire"></span>
             <span class="nd nd--b">Wait 45 minutes</span>
             <span class="wire"></span>
-            <span class="fl-split"><span class="nd nd--c">Send reminder</span><span class="nd">Tag and wait</span></span>
+            <span class="fl-split"><span class="nd nd--c">Send reminder</span><span class="nd nd--d">Tag and wait</span></span>
           </div>
         </div>`,
   },
