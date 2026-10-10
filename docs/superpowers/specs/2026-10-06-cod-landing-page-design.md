@@ -707,6 +707,62 @@ not rendering and the 4.0 is a number a human has to refresh. If the review
 count grows, that is the better fix: the widget keeps itself current and
 nobody has to remember.
 
+## Revision 15 — real faces, and a logo ribbon on white (2026-10-10)
+
+### The faces are real now
+The owner sent photographs of five customers. They are cropped to
+head-and-shoulders squares at 128px and committed to `public/trust/people/`,
+13 KB for all five, and they replace the initials discs. Five rather than four,
+because Apex Light has two founders in one photograph.
+
+Order is the owner's: Delitech first, then the two Apex Light founders, then
+Choice Salon and code CLINIC behind them. `check:lp` reads the tooltip
+sequence and fails on any other order, because nothing else on the page would
+notice if it changed.
+
+Two names are blank on purpose. The Apex Light photograph shows Shubham Patel
+and Sanket Patel standing together and nothing in it says which man is which,
+so both tooltips name the company alone rather than risk printing the wrong
+name under a real person's face on a public page. Same for code CLINIC, whose
+founder was not named. Filling `name` in `PEOPLE` is all either needs.
+
+A rule that used to read "no images in the face row, stock faces are not our
+customers" now reads: every face must load from `/trust/people/`. The point
+was never that photographs are forbidden, it was that a face we did not get
+from the owner is a stranger's.
+
+### The band, as the reference draws it
+White, a small "Trusted by" above, and the marks scrolling. The files are white
+knockouts made for the dark band this replaces, so `filter:brightness(0)` at
+55% opacity gives the flat grey a logo wall on white wants.
+
+The ribbon holds three copies of the four marks and travels exactly one copy,
+so the frame it lands on is identical to the one it left and the loop has no
+seam. Four marks do not fill a desktop viewport, so a mark appears twice on
+screen at once; the reference band does the same thing (its wyre and Barclays
+each appear twice) and it reads as a ribbon rather than a mistake. Only the
+first copy is announced: a screen reader hearing the same four companies three
+times is worse than hearing them none. It pauses on hover, and under reduced
+motion it becomes a static wrapped row with the duplicates hidden.
+
+The hero gradient changed with it. It used to deepen to violet at the bottom
+edge to hand off to a dark band; against a white one that was a hard line, so
+it now rises through the lower half and releases to white at the very edge.
+
+### Verified
+Eight negative tests, each by breaking the page on purpose: a stock photo URL,
+the faces reordered, a face removed, the ribbon's animation stripped, the band
+turned dark, the logo darkening removed, the duplicate copies announced, and a
+name dropped from a tooltip. Chromium at 1440x900, 1440x760 and 390x844: hero
+exactly one viewport at all three, no clipped illustration, no horizontal
+overflow, no broken image, no failed request. 76 KB against the 80 KB budget.
+
+### Still open
+Which Apex Light founder is which in the photograph, the spelling and surname
+of Choice Salon's owner (written "Shubhash" from the owner's message), and the
+code CLINIC founder's name. Also `businessUnitId`, which would let the live
+TrustBox keep the 4.0 current instead of a human refreshing it.
+
 ## Testing
 Repo has no JS test runner, so verification is a node script:
 `scripts/check-landing-pages.mjs` (`npm run check:lp`) reads the generated HTML and asserts: size budget, noindex, no em dashes, no competitor names, no invented rating, the three quotes verbatim, plan prices equal `FALLBACK_CATALOG`, each plan's COD-to-prepaid lock state agrees with the catalog, `TRIAL` numbers appear, the ported navbar and footer, every CTA kind present, no external script or stylesheet. Revision 9 adds: no `<video>` or `<img>` in the hero, a film section that exists, three entry-point cards that each link somewhere real, five bento panels with no image inside them, a marked phrase in every `<h2>`, three going-live steps, and three blog cards whose slugs resolve against `blogPosts.ts`. Browser checks with Playwright (installed): 360px and 1280px screenshots, H1 at most 3 lines on mobile, sticky bar behaviour, toggle, hero variant swap by `?utm_content=`.

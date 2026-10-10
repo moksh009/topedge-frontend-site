@@ -327,22 +327,37 @@ const BADGES = [
 
 // Three copies of four logos: two left a visible double at 1440px.
 /**
- * The four customers this page may name. The logo files are white-on-transparent,
- * made for the dark band under the hero, which is where they are shown: a
- * wordmark between 2.4:1 and 4:1 needs its width, and a round crop at 42px
- * leaves about nine pixels of cap height. Nothing recolours them.
- *
- * `founder` drives the hero avatar. With a name the disc carries that person's
- * initials and the tooltip reads the company then the founder; without one it
- * falls back to the company's initials and the company name alone. Two names
- * came from the owner on 9 Oct; the other two are still missing, and a
- * founder's name is the last thing to guess at.
+ * The four customers this page may name, as companies. The logo files are
+ * white-on-transparent; base.css paints them dark for the light band, and
+ * nothing recolours them into our own violet.
  */
 const TRUST_LOGOS = [
-  { src: '/trust/delitech-white.png', alt: 'Delitech', founder: 'Ved Patel' },
-  { src: '/trust/apex-white.png', alt: 'Apex Light', founder: 'Shubham Patel' },
-  { src: '/trust/codeclinic-white.png', alt: 'code CLINIC', founder: '' },
-  { src: '/trust/choicesalon-white.png', alt: 'Choice Salon', founder: '' },
+  { src: '/trust/delitech-white.png', alt: 'Delitech' },
+  { src: '/trust/apex-white.png', alt: 'Apex Light' },
+  { src: '/trust/codeclinic-white.png', alt: 'code CLINIC' },
+  { src: '/trust/choicesalon-white.png', alt: 'Choice Salon' },
+];
+
+/**
+ * The same customers as people, for the hero stack. Photographs supplied by the
+ * owner on 10 Oct 2026 and cropped to head-and-shoulders squares at 128px; they
+ * are the only faces on this site and none of them is stock.
+ *
+ * Order is the owner's: Delitech first, then the two Apex Light founders, with
+ * Choice Salon and code CLINIC behind them.
+ *
+ * Two names are deliberately blank. The Apex Light photograph shows Shubham
+ * Patel and Sanket Patel together and nothing in it says which man is which,
+ * so both tooltips name the company only rather than risk putting the wrong
+ * name under a real person's face. Fill `name` in and the tooltip picks it up.
+ * The same is true of code CLINIC, whose founder's name we were not given.
+ */
+const PEOPLE = [
+  { photo: '/trust/people/ved-patel.webp', name: 'Ved Patel', company: 'Delitech' },
+  { photo: '/trust/people/apex-a.webp', name: '', company: 'Apex Light' },
+  { photo: '/trust/people/apex-b.webp', name: '', company: 'Apex Light' },
+  { photo: '/trust/people/subhash.webp', name: 'Shubhash', company: 'Choice Salon' },
+  { photo: '/trust/people/codeclinic.webp', name: '', company: 'code CLINIC' },
 ];
 
 // The site footer, minus the Compare column (this page may not name a competitor, and
@@ -521,14 +536,24 @@ const includedHtml = INCLUDED.map((i) => `<li>${esc(i)}</li>`).join('');
 
 /**
  * The band under the hero: the customer logos at a size where a wordmark is
- * readable, which is the thing a 42px circle cannot do. The hero above shows
- * these four as people; this shows them as companies. No marquee, because four
- * logos do not fill a desktop viewport and the loop showed the same mark twice
- * at once.
+ * readable, which is the thing a 44px circle cannot do. The hero above shows
+ * these four as people; this shows them as companies.
+ *
+ * It scrolls. Four marks do not fill a desktop viewport, so a loop of them
+ * repeats within one screen, which the reference band the owner sent does too
+ * (its wyre and Barclays each appear twice). Three copies make the track long
+ * enough that a 33.3% translate returns it to an identical frame, so the loop
+ * has no seam. Only the first copy is announced; the rest are aria-hidden, or
+ * a screen reader reads the same four companies three times.
  */
-const stripHtml = TRUST_LOGOS.map(
-  (l) => `<li><img src="${l.src}" alt="${esc(l.alt)}" height="30" loading="lazy" decoding="async"></li>`,
-).join('');
+const stripHtml = [0, 1, 2]
+  .flatMap((copy) =>
+    TRUST_LOGOS.map(
+      (l) =>
+        `<li${copy ? ' aria-hidden="true"' : ''}><img src="${l.src}" alt="${copy ? '' : esc(l.alt)}" height="28" loading="lazy" decoding="async"></li>`,
+    ),
+  )
+  .join('');
 
 /**
  * The platform marks, beside the price. They used to sit under the hero, which
@@ -663,16 +688,11 @@ function starRow(score) {
 }
 
 function heroProof() {
-  const initials = (c) => {
-    const from = c.founder || c.alt;
-    const words = from.split(/\s+/).filter(Boolean);
-    return (words.length > 1 ? words[0][0] + words[1][0] : from.slice(0, 2)).toUpperCase();
-  };
-  const faces = TRUST_LOGOS.map(
-    (c, i) =>
-      `<span class="f${i + 1}"><b>${initials(c)}</b><i class="hp-tip">${esc(c.alt)}${c.founder ? `<em>${esc(c.founder)}</em>` : ''}</i></span>`,
+  const faces = PEOPLE.map(
+    (p2) =>
+      `<span><img src="${p2.photo}" alt="" width="128" height="128" decoding="async"><i class="hp-tip">${esc(p2.company)}${p2.name ? `<em>${esc(p2.name)}</em>` : ''}</i></span>`,
   ).join('');
-  const who = TRUST_LOGOS.map((c) => (c.founder ? `${c.founder} of ${c.alt}` : c.alt)).join(', ');
+  const who = PEOPLE.map((p2) => (p2.name ? `${p2.name} of ${p2.company}` : p2.company)).join(', ');
   const stars = TRUSTPILOT.score
     ? `<p class="hp-stars">${starRow(TRUSTPILOT.score)}<span><b>${esc(TRUSTPILOT.score)}</b> from ${esc(TRUSTPILOT.reviews)} reviews on <a href="${TRUSTPILOT.reviewUrl}" target="_blank" rel="noopener">Trustpilot</a></span></p>`
     : `<p class="hp-stars hp-stars--none"><a href="${TRUSTPILOT.reviewUrl}" target="_blank" rel="noopener">Read the reviews on Trustpilot</a></p>`;

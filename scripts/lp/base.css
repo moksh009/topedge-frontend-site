@@ -50,11 +50,12 @@ img{max-width:100%}
 /* hero: no film. The heading is the only thing above the fold besides the two
    buttons, so it gets the whole viewport width and the biggest step on the
    scale, and the marked phrase carries the claim. */
-/* The last layer in the stack is the one that matters here: a violet rising off
-   the bottom edge, so the hero resolves into the dark brand strip underneath it
-   instead of stopping at a hard line. Backgrounds paint behind content, so the
-   film and the buttons sit on top of it with nothing extra to manage. */
-.hero{position:relative;overflow:hidden;min-height:100svh;display:flex;align-items:center;padding:6rem 0 2.25rem;text-align:center;background:radial-gradient(56rem 30rem at 78% -16%,#e9dcff 0,transparent 62%),radial-gradient(46rem 26rem at 5% -8%,#dbe7ff 0,transparent 64%),linear-gradient(180deg,transparent 42%,rgba(196,181,253,.34) 74%,rgba(139,92,246,.52) 94%,rgba(109,40,217,.62) 100%),#fbfaff}
+/* The last layer in the stack is the one that matters here: a violet rising
+   through the lower half and then releasing to white at the very edge, so the
+   hero hands off to the white logo band underneath it instead of ending on a
+   line. Backgrounds paint behind content, so the film and the buttons sit on
+   top of it with nothing extra to manage. */
+.hero{position:relative;overflow:hidden;min-height:100svh;display:flex;align-items:center;padding:6rem 0 2.25rem;text-align:center;background:radial-gradient(56rem 30rem at 78% -16%,#e9dcff 0,transparent 62%),radial-gradient(46rem 26rem at 5% -8%,#dbe7ff 0,transparent 64%),linear-gradient(180deg,transparent 38%,rgba(196,181,253,.4) 68%,rgba(167,139,250,.48) 84%,rgba(214,204,252,.4) 95%,#fff 100%),#fbfaff}
 .hero-in{display:flex;flex-direction:column;align-items:center;width:min(100% - 2.5rem,70rem)}
 .chip{color:var(--chip-ink);background:var(--chip-bg);border-radius:.38em;padding:.02em .22em .06em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
 mark.chip{background:var(--chip-bg)}
@@ -83,17 +84,10 @@ mark.chip{background:var(--chip-bg)}
 /* Round, overlapping, and each one a person: initials, because we have no
    photographs of these customers and the logo files are wordmarks that a 42px
    circle crops to a smudge. The logos get the band below, at a readable size. */
-.hp-faces{display:flex;padding-left:.6rem}
-.hp-faces>span{position:relative;display:grid;place-items:center;width:2.6rem;height:2.6rem;margin-left:-.6rem;border-radius:50%;box-shadow:0 0 0 2.5px #fbfaff,0 5px 12px -6px rgba(46,16,101,.55);transition:transform .25s var(--e)}
+.hp-faces{display:flex;padding-left:.7rem}
+.hp-faces>span{position:relative;display:block;width:2.75rem;height:2.75rem;margin-left:-.7rem;border-radius:50%;background:#ede9fe;box-shadow:0 0 0 2.5px #fbfaff,0 5px 12px -6px rgba(46,16,101,.55);transition:transform .25s var(--e)}
 .hp-faces>span:hover{z-index:4;transform:translateY(-3px) scale(1.04)}
-.hp-faces b{font-size:.78rem;font-weight:600;letter-spacing:.01em;color:#fff}
-/* Four tones inside the brand family, so the stack reads as four people rather
-   than one repeated chip. The slate is deliberate: an all-violet row of discs
-   looks like a loading state. */
-.f1{background:linear-gradient(145deg,#7c3aed,#4c1d95)}
-.f2{background:linear-gradient(145deg,#4f46e5,#312e81)}
-.f3{background:linear-gradient(145deg,#9333ea,#6b21a8)}
-.f4{background:linear-gradient(145deg,#64748b,#334155)}
+.hp-faces img{display:block;width:100%;height:100%;border-radius:50%;object-fit:cover}
 .hp-tip{position:absolute;bottom:calc(100% + .55rem);left:50%;transform:translateX(-50%);display:grid;gap:.1rem;padding:.4rem .7rem;border-radius:10px;background:#2e1065;color:#fff;font-size:.74rem;font-weight:500;line-height:1.3;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s}
 .hp-tip em{font-style:normal;font-weight:400;color:#c4b5fd}
 .hp-tip:after{content:'';position:absolute;top:100%;left:50%;margin-left:-5px;border:5px solid transparent;border-top-color:#2e1065}
@@ -266,10 +260,20 @@ section{padding:3.75rem 0}
 .post-go{margin-top:auto;padding-top:.9rem;font-size:.86rem;font-weight:500;color:var(--violet)}
 .posts-all{margin-top:1.75rem;text-align:center;font-size:.92rem}
 /* trust strip with the logo marquee */
-.trust-in{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:1rem 2.5rem;padding:1.5rem 0;text-align:center}
-.trust-marks{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:1rem 2.6rem;list-style:none;margin:0;padding:0}
-.trust-marks img{display:block;height:30px;width:auto;max-width:9.5rem;object-fit:contain;opacity:.95}
-.trust-l{font-size:.84rem;font-weight:400;letter-spacing:0;text-transform:none;color:#cdc0f2}
+.trust-l{text-align:center;font-size:.9rem;color:#8b7ba8}
+/* The logo ribbon. The track holds three copies of the four marks and travels
+   exactly one copy, so the frame it lands on is identical to the one it left
+   and the loop has no seam. The mask fades both ends so a mark enters and
+   leaves rather than popping. It pauses on hover, and under reduced motion it
+   becomes a static wrapped row, where an endless scroll is the thing to avoid. */
+.mq{position:relative;width:min(100% - 2.5rem,76rem);margin:1.3rem auto 0;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
+.trust-marks{display:flex;width:max-content;align-items:center;gap:4.5rem;list-style:none;margin:0;padding:0;animation:mq 38s linear infinite}
+.mq:hover .trust-marks{animation-play-state:paused}
+/* The files are white-on-transparent, made for a dark band. brightness(0) gives
+   the flat dark mark a logo wall on white wants, with the alpha intact. */
+.trust-marks img{display:block;height:28px;width:auto;max-width:10rem;object-fit:contain;filter:brightness(0);opacity:.55;transition:opacity .25s}
+.trust-marks img:hover{opacity:.9}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-33.3333%)}}
 /* Four logos are narrower than a desktop viewport, so an unconstrained track shows the
    same mark twice at once. Capping the window keeps the scroll without the double. */
 /* the four objections */
@@ -386,7 +390,7 @@ section{padding:3.75rem 0}
 .mkt-foot__legal-links a{color:#94a3b8;text-decoration:none}
 .mkt-foot__legal-links a:hover{color:var(--violet)}
 /* the trust strip, restyled to the brand gradient rather than flat ink */
-.trust{background:linear-gradient(100deg,#2b1259 0,#4c1d95 46%,#6d28d9 100%);color:#fff}
+.trust{background:#fff;padding:2.5rem 0 1.5rem}
 /* sticky mobile cta */
 .sticky{display:none}
 @media(max-width:759px){
@@ -451,4 +455,7 @@ section{padding:3.75rem 0}
  .path:hover .ch:nth-child(3){transform:rotate(4deg)}
  .path:hover .ch:nth-child(4){transform:rotate(-3deg)}
  html{scroll-behavior:auto}
+ .trust-marks{width:100%;flex-wrap:wrap;justify-content:center;gap:1.5rem 3rem}
+ .trust-marks li[aria-hidden]{display:none}
+ .mq{-webkit-mask-image:none;mask-image:none}
 }

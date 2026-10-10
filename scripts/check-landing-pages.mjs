@@ -160,23 +160,29 @@ must(/film\.play\(\)/.test(html), 'nothing starts the hero film; it would sit on
 // was given a real TrustScore: the published reviews do not carry per-review ratings.
 must(/class="hp-faces"/.test(markup), 'the hero proof row is missing');
 const proofRow = (markup.match(/<div class="hp-faces"[\s\S]*?<\/div>\s*<p/) || [''])[0];
-must(count(/class="hp-tip"/g) === 4, 'expected four customer avatars, each with a tooltip');
-// Initials, never a photograph: we have no portraits of these people, and a
-// stock face captioned with a real customer's name is a lie, not a placeholder.
-must(!/<img\b/.test(proofRow), 'the hero avatars are showing images; stock faces are not our customers');
-must(/aria-label="[^"]*Delitech[^"]*Choice Salon[^"]*"/.test(proofRow), 'the hero avatar row no longer names the brands to a screen reader');
-// Where a founder is known the tooltip names them, and the avatar is their
-// initials rather than the company's.
-for (const [brand, founder] of [['Apex Light', 'Shubham Patel'], ['Delitech', 'Ved Patel']]) {
-  must(proofRow.includes(`${brand}<em>${founder}</em>`), `the tooltip does not name ${founder} under ${brand}`);
+// Five faces, in the order the owner set: Delitech, then the two Apex Light
+// founders, then Choice Salon and code CLINIC.
+must(count(/class="hp-tip"/g) === 5, 'expected five customer faces, each with a tooltip');
+const photos = [...proofRow.matchAll(/<img src="([^"]+)"/g)].map((m) => m[1]);
+must(photos.length === 5, `expected five photographs in the hero stack, found ${photos.length}`);
+// Every face is a file the owner supplied, cropped into the repo. A face loaded
+// from anywhere else is a stock photograph until proven otherwise.
+for (const src of photos) must(src.startsWith('/trust/people/'), `a hero face is not one of the owner's photographs: ${src}`);
+must(!/<img [^>]*alt="[^"]/.test(proofRow), 'a face carries its own alt; the row is already labelled');
+const order = [...proofRow.matchAll(/class="hp-tip">([^<]+)/g)].map((m) => m[1]);
+must(
+  order.join('|') === 'Delitech|Apex Light|Apex Light|Choice Salon|code CLINIC',
+  `the faces are in the wrong order: ${order.join(', ')}`,
+);
+must(/aria-label="[^"]*Ved Patel of Delitech[^"]*code CLINIC[^"]*"/.test(proofRow), 'the hero face row no longer names the people to a screen reader');
+for (const [brand, person] of [['Delitech', 'Ved Patel'], ['Choice Salon', 'Shubhash']]) {
+  must(proofRow.includes(`${brand}<em>${person}</em>`), `the tooltip does not name ${person} under ${brand}`);
 }
-must(/<b>VP<\/b>/.test(proofRow) && /<b>SP<\/b>/.test(proofRow), 'the avatars are not using the founders initials where we have the name');
 // The star row renders only from a sourced score, and names its source.
 const starRow = (markup.match(/<p class="hp-stars[^"]*">[\s\S]*?<\/p>/) || [''])[0];
 must(starRow !== '', 'the star row is gone');
 must(/<svg/.test(starRow) === /\d\.\d/.test(starRow), 'stars without a sourced score, or a score without stars');
 must(/Trustpilot/.test(starRow), 'the star row does not say where the rating comes from');
-must(count(/class="hp-tip"/g) === 4, 'each logo in the hero needs a tooltip naming the brand');
 const proofLine = (markup.match(/<p class="hp-t">([\s\S]*?)<\/p>/) || ['', ''])[1];
 must(/class="hp-stars"/.test(proofLine) === /\d\.\d/.test(proofLine), 'the hero shows stars without a sourced score, or a score without stars');
 // The band under the hero is where a customer wordmark can actually be read; the
@@ -186,10 +192,24 @@ must(strip !== '', 'the band under the hero is gone');
 for (const logo of ['delitech', 'apex', 'codeclinic', 'choicesalon']) {
   must(strip.includes(`/trust/${logo}-white.png`), `the band is not showing the ${logo} logo`);
 }
-for (const img of strip.match(/<img [^>]*>/g) || []) {
-  must(/\balt="[^"]{4,}"/.test(img), 'a customer logo in the band has no alt text');
+// The ribbon holds three copies of the four marks so the loop has no seam.
+// Exactly one copy is announced: a screen reader hearing the same four
+// companies three times is worse than hearing them none.
+const marks = strip.match(/<li[^>]*>\s*<img [^>]*>/g) || [];
+must(marks.length === 12, `expected three copies of four logos in the ribbon, found ${marks.length}`);
+const named = marks.filter((m) => !/aria-hidden/.test(m));
+must(named.length === 4, `${named.length} logo copies are announced; exactly one copy should be`);
+for (const m of named) must(/\balt="[^"]{4,}"/.test(m), 'an announced logo in the ribbon has no alt text');
+for (const m of marks.filter((m) => /aria-hidden/.test(m))) {
+  must(/\balt=""/.test(m), 'a duplicated logo in the ribbon has alt text; the copies are decoration');
 }
-must(!/class="mq"|mq-track/.test(markup), 'the logo marquee is back; four logos never filled a desktop viewport');
+must(/<div class="mq"[^>]*aria-label=/.test(markup), 'the ribbon has no label');
+must(/@keyframes mq\{/.test(html) && /animation:mq /.test(html), 'the ribbon does not scroll');
+must(/prefers-reduced-motion[\s\S]*?\.trust-marks\{[^}]*flex-wrap:wrap/.test(html), 'the ribbon still scrolls under reduced motion');
+// The band is white now, as the owner asked, which is why the marks are painted
+// dark rather than being the white knockouts the files actually are.
+must(/\.trust\{background:#fff/.test(html), 'the band is not white');
+must(/\.trust-marks img\{[^}]*filter:brightness\(0\)/.test(html), 'the logos are not painted dark for the white band');
 // The platform marks answer "who bills me", which is a question asked at a price.
 const badgeRow = (markup.match(/<ul class="badges">[\s\S]*?<\/ul>/) || [''])[0];
 must(badgeRow !== '', 'the platform marks are gone');
