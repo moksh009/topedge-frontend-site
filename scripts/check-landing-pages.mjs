@@ -28,6 +28,14 @@ const file = path.join(__dirname, '..', 'public', 'lp', 'cod-confirmation', 'ind
 const html = fs.readFileSync(file, 'utf8');
 const { FALLBACK_CATALOG, TRIAL } = await loadBillingCatalog();
 
+// The rating assertions compare the page against the generator's TRUSTPILOT
+// block rather than against a number typed in here, so there is one place a
+// refreshed score has to be edited and the check follows it.
+const genSrc = fs.readFileSync(path.join(__dirname, 'generate-landing-pages.mjs'), 'utf8');
+const trustpilot = (key) => (genSrc.match(new RegExp(`^  ${key}: '([^']*)',`, 'm')) || [])[1];
+const TRUSTPILOT_SCORE = trustpilot('score');
+const TRUSTPILOT_REVIEWS = trustpilot('reviews');
+
 const failures = [];
 const must = (ok, msg) => {
   if (!ok) failures.push(msg);
@@ -82,7 +90,19 @@ must(!withoutQuotes.includes('—'), 'em dash outside a verbatim quote');
 for (const name of ['WATI', 'AiSensy', 'Interakt', 'Releasit', 'EasySell', 'Dondy', 'KwikEngage', 'WASP', 'Zoko']) {
   must(!new RegExp(`\\b${name}\\b`, 'i').test(html), `names competitor ${name}`);
 }
-must(!/★|\b[45]\.0\b/.test(withoutQuotes.replace(/<style>[\s\S]*?<\/style>/, '')), 'states a star rating or score');
+// A rating used to be banned outright, because the only one available would
+// have been invented. The owner read the live TrustScore off Trustpilot on
+// 10 Oct and it is in the generator, so the rule flips from "no score" to "no
+// score but that one": any x.y on the page must be the sourced number, and it
+// must be the one the generator holds, so a stale page fails here rather than
+// quietly overstating. The typographic star stays banned; stars are drawn.
+// Read the words only: `markup` already has the inline script and stylesheet
+// out (a CSS length like 2.7rem is not a rating), blockquotes come out because
+// a verbatim review is quoted as written, and the tags come out last.
+const prose = markup.replace(/<blockquote[\s\S]*?<\/blockquote>/g, '').replace(/<[^>]+>/g, '');
+must(!/★/.test(prose), 'uses a typographic star; the rating is drawn from TRUSTPILOT');
+const scores = [...prose.matchAll(/\b([0-5]\.\d)\b(?!\d)/g)].map((m) => m[1]);
+for (const n of scores) must(n === TRUSTPILOT_SCORE, `states a rating of ${n}; the sourced TrustScore is ${TRUSTPILOT_SCORE}`);
 
 // --- Nav and hero ---
 // The navbar and footer are ports of the site's own MarketingNavbar / MarketingFooter, so
@@ -263,7 +283,20 @@ for (const [text, author] of quotes) {
   must((onCard || '').includes(author), `quote missing its author: ${author}`);
 }
 // A star row is a score claim and the published reviews do not give per-review scores.
-must(!/<svg[^>]*>(?:(?!<\/svg>)[\s\S])*?<\/svg>\s*(?:<svg|★)/.test(markup), 'looks like a star rating row');
+// A row of stars is a rating claim, so there may be exactly one on the page and
+// it has to be the sourced one: in the hero, beside the number, linked to the
+// page it came from, and with as many filled boxes as the number says. Five
+// filled stars next to a 4.0 is the misrepresentation this rule exists for.
+must(count(/class="st"/g) === 5, 'expected one five-star row, drawn by starRow');
+const filled = (starRow.match(/fill="#00b67a"/g) || []).length;
+const partial = (starRow.match(/clip-path="inset\(/g) || []).length;
+must(
+  filled - partial === Math.floor(Number(TRUSTPILOT_SCORE)) && partial === (Number(TRUSTPILOT_SCORE) % 1 ? 1 : 0),
+  `the star row shows ${filled} filled of 5, which does not read as ${TRUSTPILOT_SCORE}`,
+);
+must(/#dcdce6/.test(starRow), 'the unfilled stars are missing; a 4.0 drawn as four stars alone reads as four out of four');
+must(new RegExp(`from ${TRUSTPILOT_REVIEWS} reviews`).test(markup), 'the rating does not say how many reviews it is from');
+must(/trustpilot\.com\/review\/topedgeai\.com/.test(starRow), 'the rating does not link to the page it came from');
 must(html.includes('trustpilot.com/review/topedgeai.com'), 'missing Trustpilot link');
 must(html.includes('Launched on the Shopify App Store'), 'missing launch line');
 for (const h of ['You pay Meta. Not us, on top of Meta.', 'One buyer, one profile', 'Turn hesitant COD buyers into paid-upfront customers.', 'Automate as much as you need']) {

@@ -651,6 +651,62 @@ three, no clipped illustration, no horizontal overflow, no broken image, no
 failed request; all three badges load and render. 72 KB against the 80 KB
 budget. Seven new assertions each checked by breaking the page on purpose.
 
+## Revision 14 — the rating, sourced at last (2026-10-10)
+
+The owner sent a screenshot of trustpilot.com/review/topedgeai.com: **4.0,
+"Great", from 5 reviews**, profile claimed September 2026. That is the number
+the page had been waiting on since revision 10, and it is now in
+`TRUSTPILOT.score`, with `reviews: '5'` and `asOf: '10 October 2026'` beside
+it. It still could not be fetched here; the container does not resolve
+trustpilot.com at all.
+
+### Drawn as four, because it is four
+The obvious thing to ship was the reference's five gold stars. Five filled
+stars next to a 4.0 is the exact misrepresentation this whole thread has been
+avoiding, so `starRow()` computes the fill from the number: four filled boxes
+and one grey, and a fractional score would draw a clipped box rather than
+rounding up. Trustpilot's own colours, `#00b67a` filled and `#dcdce6` empty,
+with a white star knocked out of the box, which is how their widget draws it
+and how a reader recognises whose rating it is. Gold stars beside the word
+Trustpilot would be our rendering of their mark, not theirs.
+
+The row reads "4.0 from 5 reviews on Trustpilot", linked. The count ships with
+the score deliberately: a score with no count invites the reader to assume a
+large one, and anybody who follows the link sees five a second later. Saying it
+first costs nothing and buys the rest of the page some credit.
+
+### The checker flipped from banning to sourcing
+Two rules existed to stop a rating being invented: no `x.0` anywhere, and
+nothing shaped like a star row. Both now block the truth, so they are replaced
+by rules that pin the page to the source instead:
+
+- any `x.y` in the page's prose must equal `TRUSTPILOT.score`, so a second,
+  flattering number cannot appear somewhere else on the page;
+- exactly one five-star row, with as many filled boxes as the score says, the
+  grey remainder present, the review count stated and the source linked;
+- the typographic star stays banned, because stars are drawn now.
+
+`check:lp` reads the score and the count out of the generator rather than
+repeating them, so a refreshed score is edited in one place and a page built
+before that edit fails. Verified by bumping the generator to 4.5 without
+rebuilding: two failures, on the number and on the fill count.
+
+### Verified
+Eight negative tests, each by breaking the page on purpose: five filled stars
+against a 4.0, an inflated number, a second rating elsewhere in the copy, the
+review count dropped, the grey star removed, the source link removed, a
+typographic star, and the stale-build case above. Chromium at 1440x900,
+1440x760 and 390x844: hero exactly one viewport, no clipped illustration, no
+horizontal overflow, no broken image, no failed request. 74 KB against the
+80 KB budget.
+
+### Still open
+Founder names for code CLINIC and Choice Salon; their avatars show company
+initials until then. `businessUnitId` is still empty, so the live TrustBox is
+not rendering and the 4.0 is a number a human has to refresh. If the review
+count grows, that is the better fix: the widget keeps itself current and
+nobody has to remember.
+
 ## Testing
 Repo has no JS test runner, so verification is a node script:
 `scripts/check-landing-pages.mjs` (`npm run check:lp`) reads the generated HTML and asserts: size budget, noindex, no em dashes, no competitor names, no invented rating, the three quotes verbatim, plan prices equal `FALLBACK_CATALOG`, each plan's COD-to-prepaid lock state agrees with the catalog, `TRIAL` numbers appear, the ported navbar and footer, every CTA kind present, no external script or stylesheet. Revision 9 adds: no `<video>` or `<img>` in the hero, a film section that exists, three entry-point cards that each link somewhere real, five bento panels with no image inside them, a marked phrase in every `<h2>`, three going-live steps, and three blog cards whose slugs resolve against `blogPosts.ts`. Browser checks with Playwright (installed): 360px and 1280px screenshots, H1 at most 3 lines on mobile, sticky bar behaviour, toggle, hero variant swap by `?utm_content=`.
@@ -660,4 +716,4 @@ Repo has no JS test runner, so verification is a node script:
 1. ~~Trustpilot TrustBox~~ (superseded, kept for history): needs the template ID and business unit ID. Until supplied the page shows a link to `trustpilot.com/review/topedgeai.com` and no score. The TrustBox also needs an external script, which the page contract currently forbids, so it would have to be injected after `load`, like gtag.
 2. **"No usage ceiling" card:** plans have order allowances (100, 800, 1,500 per cycle). The card is worded as flow runs being unmetered. Confirm that is accurate.
 3. **Consent bar** is required once an Ads conversion tag is installed.
-4. **Trustpilot rating** is not stated anywhere on the page because it cannot be hand-typed. Revision 10 wires the hero star row to `TRUSTPILOT.score`: paste the TrustScore from the Trustpilot dashboard into it (or set `businessUnitId` and let the live widget draw the stars itself) and the row fills in on the next build.
+4. ~~**Trustpilot rating**~~ resolved in revision 14: the owner supplied the live TrustScore (4.0 from 5 reviews, 10 Oct 2026) and the hero draws it. It is a hand-refreshed number; setting `businessUnitId` would let the live TrustBox keep itself current instead.

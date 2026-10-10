@@ -441,19 +441,20 @@ function planCards(slug) {
  */
 const TRUSTPILOT = {
   /**
-   * THE ONE VALUE THIS PAGE IS WAITING ON. Put the TrustScore from
-   * trustpilot.com/review/topedgeai.com here, as a string, for example '4.6'.
-   * The hero then draws five stars beside the customer avatars and says where
-   * the number came from; the rest of the page needs no other change.
+   * The live TrustScore, read off trustpilot.com/review/topedgeai.com by the
+   * owner on 10 Oct 2026 and pasted here. It could not be fetched from the
+   * build container: trustpilot.com does not resolve through the egress proxy
+   * at all, ENOTFOUND on the hostname rather than a refused request, checked
+   * by curl, by fetch and by web search.
    *
-   * It is empty because it cannot be looked up from the build container:
-   * trustpilot.com does not resolve through the egress proxy at all (not a
-   * 403, an ENOTFOUND on the hostname), checked by curl, by fetch and by web
-   * search on 9 Oct 2026. Until someone reads it off the dashboard, the hero
-   * links to the review page and claims no score, because the three reviews we
-   * quote give their text and their author and not the rating each one carried.
+   * `reviews` ships with it on purpose. A score with no count invites the
+   * reader to assume a large one, and a visitor who follows the link sees the
+   * real number a second later; saying it first costs nothing and buys the
+   * rest of the page some credit. `asOf` is when a human last looked.
    */
-  score: '',
+  score: '4.0',
+  reviews: '5',
+  asOf: '10 October 2026',
   businessUnitId: '',
   templateId: '53aa8912dec7e10d38f59f36',
   locale: 'en-IN',
@@ -632,7 +633,34 @@ ${cols}
  * `TRUSTPILOT.score` holds a number, and it says where the number came from.
  * See the note on TRUSTPILOT for why it is still empty.
  */
-const STAR = '<svg viewBox="0 0 24 24" width="17" height="17" fill="#f6a723" aria-hidden="true"><path d="M12 1.6l3.1 7.2 7.8.6-5.9 5.1 1.8 7.6L12 18l-6.8 4.1 1.8-7.6L1.1 9.4l7.8-.6z"/></svg>';
+/**
+ * Trustpilot's own star, in Trustpilot's own colours: a filled box is #00b67a
+ * and an empty one is #dcdce6, which is how their widget draws it and how a
+ * reader recognises whose rating this is. Gold stars next to the word
+ * Trustpilot would be our rendering of their mark.
+ *
+ * `starRow` draws the score it is handed. Five filled stars beside a 4.0 is
+ * the exact misrepresentation this whole thread has been avoiding, so the
+ * fill count is computed, a half is drawn as a half, and `check:lp` counts
+ * the filled boxes against the number.
+ */
+const TP_GREEN = '#00b67a';
+const TP_GREY = '#dcdce6';
+const STAR_PATH = 'M12 1.6l3.1 7.2 7.8.6-5.9 5.1 1.8 7.6L12 18l-6.8 4.1 1.8-7.6L1.1 9.4l7.8-.6z';
+// A Trustpilot star is a white star knocked out of a coloured box, not a
+// coloured star on the page background. The box is drawn inside the svg so a
+// partial score can clip the green one and still show the white star on top.
+const star = (fill) =>
+  `<svg class="st" viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><rect width="24" height="24" fill="${TP_GREY}"/>${
+    fill > 0
+      ? `<rect width="24" height="24" fill="${TP_GREEN}"${fill < 1 ? ` clip-path="inset(0 ${Math.round((1 - fill) * 100)}% 0 0)"` : ''}/>`
+      : ''
+  }<path fill="#fff" d="${STAR_PATH}"/></svg>`;
+
+function starRow(score) {
+  const n = Number(score);
+  return Array.from({ length: 5 }, (_, i) => star(Math.max(0, Math.min(1, n - i)))).join('');
+}
 
 function heroProof() {
   const initials = (c) => {
@@ -646,7 +674,7 @@ function heroProof() {
   ).join('');
   const who = TRUST_LOGOS.map((c) => (c.founder ? `${c.founder} of ${c.alt}` : c.alt)).join(', ');
   const stars = TRUSTPILOT.score
-    ? `<p class="hp-stars">${STAR.repeat(5)}<span>${esc(TRUSTPILOT.score)} on <a href="${TRUSTPILOT.reviewUrl}" target="_blank" rel="noopener">Trustpilot</a></span></p>`
+    ? `<p class="hp-stars">${starRow(TRUSTPILOT.score)}<span><b>${esc(TRUSTPILOT.score)}</b> from ${esc(TRUSTPILOT.reviews)} reviews on <a href="${TRUSTPILOT.reviewUrl}" target="_blank" rel="noopener">Trustpilot</a></span></p>`
     : `<p class="hp-stars hp-stars--none"><a href="${TRUSTPILOT.reviewUrl}" target="_blank" rel="noopener">Read the reviews on Trustpilot</a></p>`;
   return `<div class="hp">
         <div class="hp-row">
