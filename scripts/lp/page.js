@@ -75,12 +75,19 @@
 
   // Sticky mobile CTA: appears once the hero buttons have scrolled out above the viewport,
   // and stays out of the way while a form field has focus.
-  var bar=$('#sticky-cta'),hero=$('#hero-cta'),past=false,typing=false;
-  function sync(){bar.classList.toggle('on',past&&!typing)}
+  // Two bars off one observer: the mobile pair at the bottom, and a slim desktop
+  // header carrying the price and one button. Both trip when the hero CTA has
+  // scrolled out above the viewport, which is the moment the offer stops being
+  // on screen. CSS decides which of the two a given width actually shows.
+  var bar=$('#sticky-cta'),top=$('#topbar'),hero=$('#hero-cta'),past=false,typing=false;
+  function sync(){
+    bar.classList.toggle('on',past&&!typing);
+    if(top)top.classList.toggle('on',past&&!typing);
+  }
   if(hero&&'IntersectionObserver' in w){
     new IntersectionObserver(function(es){
       var e=es[0];past=!e.isIntersecting&&e.boundingClientRect.top<0;sync();
-    }).observe(hero);
+    },{rootMargin:'-120px 0px 0px 0px'}).observe(hero);
   }
   var field=/^(INPUT|TEXTAREA|SELECT)$/;
   d.addEventListener('focusin',function(e){if(field.test(e.target.tagName)){typing=true;sync()}});

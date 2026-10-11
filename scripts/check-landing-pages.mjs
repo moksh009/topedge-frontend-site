@@ -1,16 +1,15 @@
 /**
  * Asserts the generated ad page (public/lp/shopify-whatsapp/index.html).
  *
- * The page was redrawn on 2026-10-09 to sell the platform rather than one
- * feature, so the assertions that pinned the old COD argument in place are
- * gone and the ones that protect what the page is paid to do are kept: it
- * paints with no external request, it never names a competitor, it never
- * invents a rating, its prices come from the catalog, and the claims a
- * redesign could quietly drop are still on the page. New rules guard the
- * things the owner asked for by name, which a future edit would otherwise
- * undo without anyone noticing: no film above the fold, illustrations drawn
- * in CSS rather than shipped as screenshots, a marked phrase in every
- * heading, and blog cards that point at posts that exist.
+ * This page is bought by the click. Every rule below exists because something
+ * on it either costs money when it breaks or misleads a reader when it drifts,
+ * and because none of it would fail any other check in the repo.
+ *
+ * Three themes run through it. Honesty: no number appears that is not sourced
+ * or labelled illustrative, and no rating is shown at a sample size where the
+ * number misleads. Message match: five ad variants arrive on this page and the
+ * first two blocks must both answer the ad that sent them. Leakage: a paid
+ * landing page may not hand the click back to the open web.
  *
  * Run after `npm run lp`. Exits 1 and lists every failure.
  *
@@ -28,40 +27,33 @@ const file = path.join(__dirname, '..', 'public', 'lp', 'shopify-whatsapp', 'ind
 const html = fs.readFileSync(file, 'utf8');
 const { FALLBACK_CATALOG, TRIAL } = await loadBillingCatalog();
 
-// The rating assertions compare the page against the generator's TRUSTPILOT
-// block rather than against a number typed in here, so there is one place a
-// refreshed score has to be edited and the check follows it.
-const genSrc = fs.readFileSync(path.join(__dirname, 'generate-landing-pages.mjs'), 'utf8');
-const trustpilot = (key) => (genSrc.match(new RegExp(`^  ${key}: '([^']*)',`, 'm')) || [])[1];
-const TRUSTPILOT_SCORE = trustpilot('score');
-const TRUSTPILOT_REVIEWS = trustpilot('reviews');
-
 const failures = [];
 const must = (ok, msg) => {
   if (!ok) failures.push(msg);
 };
 const count = (re) => (html.match(re) || []).length;
 
-// Markup-shape rules read the document with inline <script> and <style> bodies removed:
-// JS and CSS source are not markup, and a tag name or an attribute selector inside them
-// is not an element. `copy` goes further and strips tags, so a sentence still reads as
-// one string after a word inside it is wrapped in a highlight span.
+// Markup-shape rules read the document with inline <script> and <style> bodies
+// removed: JS and CSS source are not markup, and a tag name or an attribute
+// selector inside them is not an element. `copy` goes further and strips tags,
+// so a sentence still reads as one string after a word inside it is wrapped in
+// a highlight span.
 const markup = html
   .replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, '')
   .replace(/<style\b[^>]*>[\s\S]*?<\/style>/g, '');
 const copy = markup.replace(/<[^>]+>/g, '');
 
 // String.search returns -1 for a pattern that is not there, which would make
-// every "A comes before B" comparison pass for a section that was deleted. Fail
-// on the missing section instead, and let the comparison mean what it says.
+// every "A comes before B" comparison pass for a section that was deleted.
+// Fail on the missing section instead, and let the comparison mean what it says.
 const at = (re) => {
   const i = markup.search(re);
   must(i !== -1, `section missing: ${re}`);
   return i === -1 ? Infinity : i;
 };
 
-// Em dashes are banned in our copy, but verbatim reviews are quoted exactly as written.
-const withoutQuotes = html.replace(/<blockquote[\s\S]*?<\/blockquote>/g, '');
+// Em dashes are banned in our copy, but verbatim reviews are quoted as written.
+const withoutQuotes = markup.replace(/<blockquote[\s\S]*?<\/blockquote>/g, '');
 
 // --- Page contract ---
 must(Buffer.byteLength(html) <= 88 * 1024, 'exceeds the 88 KB budget');
@@ -69,13 +61,22 @@ must(html.includes('<meta name="robots" content="noindex,nofollow">'), 'missing 
 must(!/\{\{[A-Z0-9_]+\}\}/.test(html), 'unreplaced {{placeholder}}');
 must(!/<script[^>]+src=|<link[^>]+rel="stylesheet"|fonts\.googleapis/.test(html), 'external script/stylesheet/font');
 must(!/<iframe\b/.test(markup), 'iframe present');
-// The hero film was out of scope in revision 2 of the spec and the contract
-// banned <video> outright. The owner pulled it into scope on 2026-10-07. The
-// ban is replaced by the constraints that actually protect first paint rather
-// than removed: a video may exist, but it must not cost anything before a
-// deliberate press of play, and it must not autoplay or carry sound on its own.
+must(!withoutQuotes.replace(/<[^>]+>/g, '').includes('—'), 'em dash outside a verbatim quote');
+for (const name of ['WATI', 'AiSensy', 'Interakt', 'Releasit', 'EasySell', 'Dondy', 'KwikEngage', 'WASP', 'Zoko', 'BiteSpeed']) {
+  must(!new RegExp(`\\b${name}\\b`, 'i').test(html), `names competitor ${name}`);
+}
+// No shouting. The navbar capsule is the one exception the site itself sets.
+const upper = (html.match(/[^{}]+\{[^}]*text-transform:uppercase[^}]*\}/g) || []).filter(
+  (r) => !/mkt-foot__capsule/.test(r),
+);
+must(upper.length === 0, `uppercase is back on: ${upper.map((r) => r.split('{')[0]).join(', ')}`);
+
+// --- The film ---
+// The first screen is the product moving. It carries no autoplay attribute and
+// no src: page.js attaches one source and calls play() on intersection, so
+// nothing downloads before first paint and reduced motion leaves it on its poster.
 const videos = markup.match(/<video\b[^>]*>/g) || [];
-must(videos.length <= 1, `expected at most 1 <video>, found ${videos.length}`);
+must(videos.length === 1, `expected exactly 1 <video>, found ${videos.length}`);
 for (const v of videos) {
   must(/\bpreload="none"/.test(v), '<video> must set preload="none" so it costs nothing until play');
   must(/\bposter="\/[^"]+"/.test(v), '<video> must have a poster so the hero still paints instantly');
@@ -86,353 +87,284 @@ for (const v of videos) {
   must(/\baria-label="[^"]{20,}"/.test(v), '<video> needs an aria-label describing the film');
 }
 must(!/<source\b/.test(markup), 'use data-lg/data-sm + page.js, not a source element (media= is ignored inside video)');
-must(!withoutQuotes.includes('—'), 'em dash outside a verbatim quote');
-for (const name of ['WATI', 'AiSensy', 'Interakt', 'Releasit', 'EasySell', 'Dondy', 'KwikEngage', 'WASP', 'Zoko']) {
-  must(!new RegExp(`\\b${name}\\b`, 'i').test(html), `names competitor ${name}`);
-}
-// A rating used to be banned outright, because the only one available would
-// have been invented. The owner read the live TrustScore off Trustpilot on
-// 10 Oct and it is in the generator, so the rule flips from "no score" to "no
-// score but that one": any x.y on the page must be the sourced number, and it
-// must be the one the generator holds, so a stale page fails here rather than
-// quietly overstating. The typographic star stays banned; stars are drawn.
-// Read the words only: `markup` already has the inline script and stylesheet
-// out (a CSS length like 2.7rem is not a rating), blockquotes come out because
-// a verbatim review is quoted as written, and the tags come out last.
-const prose = markup.replace(/<blockquote[\s\S]*?<\/blockquote>/g, '').replace(/<[^>]+>/g, '');
-must(!/★/.test(prose), 'uses a typographic star; the rating is drawn from TRUSTPILOT');
-const scores = [...prose.matchAll(/\b([0-5]\.\d)\b(?!\d)/g)].map((m) => m[1]);
-for (const n of scores) must(n === TRUSTPILOT_SCORE, `states a rating of ${n}; the sourced TrustScore is ${TRUSTPILOT_SCORE}`);
+must(/film\.play\(\)/.test(html), 'nothing starts the hero film; it would sit on its poster');
+must(/\.film\{[^}]*max-height:/.test(html), 'the hero film has no max-height, so it can push the buttons off the first screen');
+must(!/\.film\{[^}]*box-shadow:/.test(html), 'the film has a drop shadow again; the owner asked for it flat');
 
 // --- Nav and hero ---
-// The navbar and footer are ports of the site's own MarketingNavbar / MarketingFooter, so
-// an ad visitor lands on something that looks like the rest of topedgeai.com. These assert
-// the ported shell is present and that the footer still carries the details that make the
-// company checkable: a real address, a phone, and the platform badges.
 must(/<header[^>]*class="mkt-nav"/.test(html), 'missing the site navbar shell');
-must(/class="mkt-nav__capsule"/.test(html), 'navbar is not the site capsule');
 must(/<footer[^>]*class="mkt-foot"/.test(html), 'missing the site footer shell');
 must(/Prahladnagar/.test(html), 'footer is missing the registered address');
 must(/href="tel:\+\d{8,}"/.test(html), 'footer is missing a phone number');
-must(count(/class="mkt-foot__col"/g) >= 2, 'footer is missing the sitemap columns');
-must(!/mkt-foot__trust-list/.test(markup), 'the partner marks are in the footer as well as the band; once is enough');
-must(/href="#compare"[^>]*>Why TopEdge</.test(html), 'nav missing the "Why TopEdge" anchor');
-must(/href="#platform"[^>]*>Platform</.test(html), 'nav missing the "Platform" anchor');
+// A paid landing page does not hand the click back to the open web. Every nav
+// link is an in-page anchor; the only ways off are login and the signup CTA.
+const navBlock = (markup.match(/<nav class="mkt-nav__desktop"[\s\S]*?<\/nav>/) || [''])[0];
+must(navBlock !== '', 'the nav is gone');
+for (const href of navBlock.match(/href="([^"]+)"/g) || []) {
+  must(href.startsWith('href="#'), `nav link ${href} leaves the page; on /lp/* these are anchors`);
+}
+for (const anchor of ['#compare', '#platform', '#pricing', '#faq']) {
+  must(navBlock.includes(`href="${anchor}"`), `nav is missing the ${anchor} anchor`);
+  must(at(new RegExp(`id="${anchor.slice(1)}"`)) !== Infinity, `nav points at ${anchor}, which is not on the page`);
+}
 must(/Log in</.test(html), 'nav missing "Log in"');
-must(/data-cta="trial"/.test(html), 'missing trial CTA');
-must(/data-cta="shopify"[^>]*href="https:\/\/apps\.shopify\.com\/|href="https:\/\/apps\.shopify\.com\/[^"]*"[^>]*data-cta="shopify"/.test(html), 'Shopify CTA does not link to the App Store');
-const h1 = ((markup.match(/<h1 id="hero-h1">([\s\S]*?)<\/h1>/) || [])[1] || '').replace(/<[^>]+>/g, '');
-// The page is bought on platform terms as well as COD terms, so the default headline sells
-// the subscription. The narrower ad groups still get their own line through utm_content.
-must(/Your Shopify store, running on WhatsApp/.test(h1), 'default H1 no longer sells the platform');
-must(h1.length <= 60, `H1 is ${h1.length} characters; over 60 wraps past two lines on desktop`);
-must(/<mark class="chip" id="hero-mark">/.test(markup), 'the H1 payload is not highlighted like the site titles');
-must(copy.includes('Built for Indian Shopify D2C brands'), 'page no longer says who it is for');
-// The trial terms came out of the hero and out from under the pricing button,
-// where they were stated twice in one section. They still have to be on the
-// page and still have to be generated from TRIAL rather than retyped; the
-// assertion lives with the price now, beside the "Priced on volume" check.
-must(
-  html.includes(`${TRIAL.days}-day free trial on every plan. ${TRIAL.orders} free order confirmations, no credit card.`),
-  'the trial terms are gone, or no longer match TRIAL',
-);
-// The first screen is the product moving: a full-viewport hero with the film inside it,
-// started by page.js rather than an autoplay attribute (which would also fetch the file
-// before anyone asked for it). These keep the film there and keep it inside the viewport.
+
 const heroBlock = (markup.match(/<header class="hero"[\s\S]*?<\/header>/) || [''])[0];
 must(heroBlock !== '', 'the hero header is gone');
 must(/<video\b/.test(heroBlock), 'the hero has no film; the first screen is meant to be the product moving');
-must(!/class="micro"/.test(heroBlock), 'the microcopy line is back in the hero');
-// One way forward above the fold. The App Store is still offered, on the mobile
-// bar, where it does not compete with the trial for the same first click.
+must(/min-height:100svh/.test(html), 'the hero is no longer a full viewport');
+// One button above the fold. The App Store is still offered, on the mobile bar.
 const heroCtas = heroBlock.match(/data-cta="[a-z]+"/g) || [];
 must(heroCtas.length === 1 && heroCtas[0] === 'data-cta="trial"', `the hero should offer one button, the trial; found ${heroCtas.join(', ') || 'none'}`);
 const bar = (markup.match(/<div class="sticky"[\s\S]*?<\/div>/) || [''])[0];
 must(/data-cta="trial"/.test(bar) && /data-cta="shopify"/.test(bar), 'the mobile bar should carry both the trial and the App Store');
-must(/min-height:100svh/.test(html), 'the hero is no longer a full viewport');
-must(/\.film\{[^}]*max-height:/.test(html), 'the hero film has no max-height, so it can push the buttons off the first screen');
-must(!/\.film\{[^}]*box-shadow:/.test(html), 'the film has a drop shadow again; the owner asked for it flat');
-must(/\.bx\{[^}]*border:1px solid/.test(html), 'the bento panels lost their hairline border');
-must(!/\.(bx|path):hover\{[^}]*transform:/.test(html), 'a card lifts on hover again; only the contents inside it should move');
-must(/\.bx:hover \./.test(html), 'nothing inside a bento panel animates on hover');
-must(/film\.play\(\)/.test(html), 'nothing starts the hero film; it would sit on its poster');
-// The proof row under the buttons. No star and no number may appear unless the generator
-// was given a real TrustScore: the published reviews do not carry per-review ratings.
-must(/class="hp-faces"/.test(markup), 'the hero proof row is missing');
-const proofRow = (markup.match(/<div class="hp-faces"[\s\S]*?<\/div>/) || [''])[0];
-// Five faces, in the order the owner set: Delitech, then the two Apex Light
-// founders, then Choice Salon and code CLINIC.
-must(count(/class="hp-tip"/g) === 5, 'expected five customer faces, each with a tooltip');
-const photos = [...proofRow.matchAll(/<img src="([^"]+)"/g)].map((m) => m[1]);
-must(photos.length === 5, `expected five photographs in the hero stack, found ${photos.length}`);
-// Every face is a file the owner supplied, cropped into the repo. A face loaded
-// from anywhere else is a stock photograph until proven otherwise.
-for (const src of photos) must(src.startsWith('/trust/people/'), `a hero face is not one of the owner's photographs: ${src}`);
-must(!/<img [^>]*alt="[^"]/.test(proofRow), 'a face carries its own alt; the row is already labelled');
-const order = [...proofRow.matchAll(/class="hp-tip">([^<]+)/g)].map((m) => m[1]);
+must(/data-cta="shopify"[^>]*href="https:\/\/apps\.shopify\.com\//.test(markup), 'the Shopify CTA does not link to the App Store');
+
+const h1 = ((markup.match(/<h1 id="hero-h1">([\s\S]*?)<\/h1>/) || [])[1] || '').replace(/<[^>]+>/g, '');
+must(/Your Shopify store, running on WhatsApp/.test(h1), 'default H1 no longer sells the platform');
+must(h1.length <= 60, `H1 is ${h1.length} characters; over 60 wraps past two lines on desktop`);
+must(/<mark class="chip" id="hero-mark">/.test(markup), 'the H1 payload is not highlighted like the site titles');
+must(copy.includes('Built for Indian Shopify D2C brands'), 'page no longer says who it is for');
+
+// Price above the fold. The whole bid strategy is pre-qualification: a visitor
+// who will not pay ₹1,599 should bounce before they cost any attention, and a
+// visitor who will should not have to scroll six sections to find out.
+const launchYearly = FALLBACK_CATALOG.plans[0].pricing.yearly.effectiveMonthlyLabel;
 must(
-  order.join('|') === 'Delitech|Apex Light|Apex Light|Choice Salon|code CLINIC',
-  `the faces are in the wrong order: ${order.join(', ')}`,
+  markup.includes(`From <b>${launchYearly}/month</b>, billed yearly &middot; ${TRIAL.days}-day free trial &middot; No credit card`),
+  'the hero no longer states the price, the trial and the no-card terms',
 );
-must(/aria-label="[^"]*Ved Patel of Delitech[^"]*code CLINIC[^"]*"/.test(proofRow), 'the hero face row no longer names the people to a screen reader');
-for (const [brand, person] of [['Delitech', 'Ved Patel'], ['Choice Salon', 'Shubhash']]) {
-  must(proofRow.includes(`${brand}<em>${person}</em>`), `the tooltip does not name ${person} under ${brand}`);
-}
-// The star row renders only from a sourced score, and names its source.
-const starRow = (markup.match(/<p class="hp-stars[^"]*">[\s\S]*?<\/p>/) || [''])[0];
-must(starRow !== '', 'the star row is gone');
-must(/<svg/.test(starRow) === /\d\.\d/.test(starRow), 'stars without a sourced score, or a score without stars');
-must(/Trustpilot/.test(starRow), 'the star row does not say where the rating comes from');
-const proofLine = (markup.match(/<p class="hp-t">([\s\S]*?)<\/p>/) || ['', ''])[1];
-must(/class="hp-stars"/.test(proofLine) === /\d\.\d/.test(proofLine), 'the hero shows stars without a sourced score, or a score without stars');
-// The band under the hero is where a customer wordmark can actually be read; the
-// hero shows the same four as people. Each mark needs its own alt there.
+must(at(/class="hero-price"/) < at(/class="hero-quote"/), 'the price belongs above the quote');
+
+// --- No invented or misleading rating ---
+// A numeric average is reassuring at a large sample and damaging at a small
+// one: "4.0 from 5 reviews" tells a reader that almost nobody uses this and
+// that even those few were not all happy, and it does that above the fold
+// before a single quote is read. One named person saying one specific thing
+// does the job the average cannot at this size.
+must(!/★/.test(copy), 'uses a typographic star');
+must(!/class="st"|class="hp-stars"/.test(markup), 'a star row is back; do not show an average at this sample size');
+must(!/\b[0-5]\.\d\b(?!\d)/.test(withoutQuotes.replace(/<[^>]+>/g, '')), 'states a numeric rating; none may appear while the review count is small');
+const quote = (markup.match(/<figure class="hero-quote">[\s\S]*?<\/figure>/) || [''])[0];
+must(quote !== '', 'the hero has no named quote');
+must(/US Grade software quality/.test(quote), 'the hero quote is not the one that answers the Indian-SaaS objection');
+must(/Tirth P\./.test(quote), 'the hero quote is not attributed to a named person');
+must(/trustpilot\.com\/review\/topedgeai\.com/.test(quote), 'the hero quote does not link to where it was published');
+must(!/[❤♥💖]|&#10084;/.test(markup), 'an emoji is back in the trust copy');
+must(!/class="hp-faces"/.test(markup), 'the avatar row is back; it reads as "we have no logos"');
+
+// --- The band under the hero ---
+// Three marks a merchant can verify in one search, in place of four customer
+// logos that are a salon, a clinic and two non-D2C brands.
 const strip = (markup.match(/<ul class="trust-marks[^"]*">[\s\S]*?<\/ul>/) || [''])[0];
 must(strip !== '', 'the band under the hero is gone');
-for (const logo of ['delitech', 'apex', 'codeclinic', 'choicesalon']) {
-  must(strip.includes(`/trust/${logo}-white.png`), `the band is not showing the ${logo} logo`);
+must((strip.match(/<img /g) || []).length === 3, 'expected the three platform marks in the band');
+for (const img of strip.match(/<img [^>]*>/g) || []) {
+  must(/\balt="[^"]{8,}"/.test(img), 'a platform mark in the band has no alt text');
 }
-// The ribbon holds three copies of the four marks so the loop has no seam.
-// Exactly one copy is announced: a screen reader hearing the same four
-// companies three times is worse than hearing them none.
-const marks = strip.match(/<li[^>]*>\s*<img [^>]*>/g) || [];
-must(marks.length === 12, `expected three copies of four logos in the ribbon, found ${marks.length}`);
-const named = marks.filter((m) => !/aria-hidden/.test(m));
-must(named.length === 4, `${named.length} logo copies are announced; exactly one copy should be`);
-for (const m of named) must(/\balt="[^"]{4,}"/.test(m), 'an announced logo in the ribbon has no alt text');
-for (const m of marks.filter((m) => /aria-hidden/.test(m))) {
-  must(/\balt=""/.test(m), 'a duplicated logo in the ribbon has alt text; the copies are decoration');
+must(!/\/trust\/[a-z]+-white\.png/.test(markup), 'the customer logo marquee is back; bring it back when four of them are D2C brands');
+must(!/class="mq"|animation:mq /.test(html), 'the logo marquee is back');
+
+// --- Message match ---
+// The hero already swapped per ad group; the block under it did not, so an RTO
+// click read an RTO headline and then a cart statistic one scroll later. Both
+// swap now, off the same key, and the CSS does it so the right block is painted
+// rather than replaced after paint.
+const variants = ['platform', 'cod', 'rto', 'cart', 'switch'];
+const heroJson = (html.match(/var V=(\{.*?\});var c=/) || [])[1] || '';
+for (const v of variants) {
+  must(heroJson.includes(`"${v}":`), `the hero has no headline for the ${v} ad group`);
+  must(new RegExp(`<div class="pf" data-pf="${v}">`).test(markup), `the proof block has no version for the ${v} ad group`);
 }
-must(/<div class="mq"[^>]*aria-label=/.test(markup), 'the ribbon has no label');
-must(/@keyframes mq\{/.test(html) && /animation:mq /.test(html), 'the ribbon does not scroll');
-must(/prefers-reduced-motion[\s\S]*?\.trust-marks\{[^}]*flex-wrap:wrap/.test(html), 'the ribbon still scrolls under reduced motion');
-// The band is white now, as the owner asked, which is why the marks are painted
-// dark rather than being the white knockouts the files actually are.
-must(/\.trust\{background:#fff/.test(html), 'the band is not white');
-must(/\.trust-marks img\{[^}]*filter:brightness\(0\)/.test(html), 'the logos are not painted dark for the white band');
-// The platform marks answer "who bills me", which is a question asked at a price.
-const badgeRow = (markup.match(/<ul class="badges">[\s\S]*?<\/ul>/) || [''])[0];
-must(badgeRow !== '', 'the platform marks are gone');
-must(at(/<ul class="badges">/) > at(/<section[^>]*id="pricing"/), 'the platform marks belong beside the price, not above it');
-must((badgeRow.match(/<img /g) || []).length === 3, 'expected the three platform marks');
+must(count(/<div class="pf" data-pf=/g) === variants.length, 'the proof block count does not match the variant count');
+must(/document\.documentElement\.setAttribute\('data-v'/.test(html), 'nothing records which variant won, so the proof block cannot follow the hero');
+for (const v of variants.filter((x) => x !== 'platform')) {
+  must(new RegExp(`html\\[data-v="${v}"\\] \\.pf\\[data-pf="${v}"\\]\\{display:grid\\}`).test(html), `no rule shows the ${v} proof block`);
+}
+must(/\.pf\[data-pf="platform"\]\{display:grid\}/.test(html), 'with no variant and with JS off, nothing is shown under the hero');
+// Every figure in the proof blocks is sourced on the spot or labelled.
+const pfBlocks = markup.match(/<div class="pf" data-pf="[a-z]+">[\s\S]*?<\/div>\s*<\/div>/g) || [];
+for (const b of pfBlocks) {
+  const stat = (b.match(/<b>([^<]+)<\/b>/) || [])[1] || '';
+  const hasNumber = /\d/.test(stat);
+  must(!hasNumber || /class="pf-src"/.test(b), `a proof block states ${stat} with no source line under it`);
+}
+must(/Baymard Institute/.test(copy), 'the cart statistic lost its source');
+must(/Unicommerce\/Shipway/.test(copy), 'the RTO statistic lost its source');
+must(/Illustrative courier rates/.test(copy), 'the courier arithmetic is no longer labelled illustrative');
 
-// --- Headings ---
-// Every section heading carries a marked phrase, the way the site sets its titles, and
-// none of them is an uppercase eyebrow: the owner removed those from this page by hand
-// once already. Light weight is a stylesheet rule, so it is checked there, not here.
-const heads = markup.match(/<h2[^>]*>[\s\S]*?<\/h2>/g) || [];
-must(heads.length >= 7, `expected at least 7 section headings, found ${heads.length}`);
-for (const h of heads) must(/class="chip"/.test(h), `heading has no marked phrase: ${h.replace(/<[^>]+>/g, '').trim()}`);
-// No shouting anywhere on this page: the owner stripped the uppercase eyebrows
-// by hand once, so the rule is about the declaration, not one class name. The
-// navbar and the plan badges are the exceptions the site itself already sets.
-const upper = (html.match(/[^{}]+\{[^}]*text-transform:uppercase[^}]*\}/g) || []).filter(
-  (r) => !/mkt-foot__capsule|mkt-plan__badge/.test(r),
-);
-must(upper.length === 0, `uppercase is back on: ${upper.map((r) => r.split('{')[0]).join(', ')}`);
+// --- The comparison, promoted and inverted ---
+// It is the clearest, most decision-relevant thing on the page, so it runs
+// second, and it runs on a dark band: one inverted section gives the eye a
+// rest on a long page and marks this as the part to read.
+const rows = markup.match(/<div class="cmp-row">[\s\S]*?<\/div>/g) || [];
+must(rows.length === 4, `expected 4 comparison rows, found ${rows.length}`);
+for (const r of rows) {
+  must(/class="cmp-t"/.test(r) && /class="cmp-x"/.test(r) && /class="cmp-v"/.test(r), 'a comparison row is missing one of its three cells');
+}
+must(/<section class="dark" id="compare">/.test(markup), 'the comparison is no longer the inverted band');
+must(/\.dark\{background:/.test(html), 'the dark band has no background');
+for (const h of ['TopEdge adds 0% markup', 'Unlimited flow runs', 'One profile, even with three phone numbers', 'A payment link in the same thread']) {
+  must(((markup.match(/<div class="cmp"[\s\S]*?<\/section>/) || [''])[0]).includes(h), `the comparison no longer makes the claim: ${h}`);
+}
+// The migration offer is the whole argument for switch traffic and noise for
+// everyone else, so it is shown by the same variant attribute.
+must(/class="mig" id="mig"/.test(markup), 'the migration block is gone');
+must(/html\[data-v="switch"\] \.mig\{display:block\}/.test(html), 'the migration block is not gated on the switch variant');
+must(/\.mig\{[^}]*display:none/.test(html), 'the migration block shows on every variant');
 
-// --- The three entry points ---
-// The panel the page is built around. Each card has to lead somewhere real: a card with
-// no link is three lines of copy taking the width of a third of the page.
+// --- Entry points, platform panels, setup ---
 const paths = markup.match(/<article class="path"[\s\S]*?<\/article>/g) || [];
 must(paths.length === 3, `expected 3 entry-point cards, found ${paths.length}`);
 must(paths.filter((c) => /class="orb orb--/.test(c)).length === 3, 'an entry-point card lost the orb behind its artwork');
 for (const c of paths) {
   must(/<h3>/.test(c), 'an entry-point card has no heading');
-  // A real destination is a path on this site, an in-page anchor, or the dashboard
-  // signup. The trial CTAs point straight at dash.topedgeai.com rather than the www
-  // /signup route, which only existed to redirect and cost ~758 KB to do it — so an
-  // absolute dashboard URL is now a legitimate destination, and nothing else is.
+  // A real destination is an in-page anchor or the dashboard signup. The trial
+  // CTAs skip the www /signup route, which existed only to redirect and cost
+  // ~758 KB to do it, so an absolute dashboard URL is legitimate here.
   must(
-    /<a class="go[^"]*" [^>]*href="(\/[^"#][^"]*|#[a-z]+|https:\/\/dash\.topedgeai\.com\/[^"]*)"/.test(c),
-    'an entry-point card has no destination',
+    /<a class="go[^"]*" [^>]*href="(#[a-z]+|https:\/\/dash\.topedgeai\.com\/[^"]*)"/.test(c),
+    'an entry-point card leaves the page; on /lp/* these go to the dashboard signup or an anchor',
   );
-  must(/class="art/.test(c), 'an entry-point card has no illustration');
 }
 must(/class="go go--solid"/.test(markup), 'none of the three entry points is the primary one');
 must(/role="img"[^>]*aria-label="[^"]*Confirm[^"]*Cancel/i.test(html), 'the example thread needs an aria-label describing confirm and cancel');
 
-// --- The platform bento ---
-// The reason this page exists in its new form: it sells the subscription, not one
-// feature. Every illustration is markup and CSS, which is what keeps the page inside
-// its byte budget while showing five things; an <img> smuggled into one would undo it.
 const bx = markup.match(/<article class="bx bx--[wn]"[\s\S]*?<\/article>/g) || [];
 must(bx.length === 5, `expected 5 platform panels, found ${bx.length}`);
 must(count(/class="bx bx--w"/g) === 2, 'the bento is no longer asymmetric: expected 2 wide panels');
 for (const b of bx) {
   must(/class="viz/.test(b), 'a platform panel has no illustration');
   // No raster image: a screenshot is the thing these replaced. An inline <svg>
-// path is as drawn as a border-radius and weighs less, so the WhatsApp glyph
-// at the centre of the broadcast panel is allowed.
-must(!/<img\b/.test(b), 'a platform panel ships an image; these are drawn, not photographed');
+  // path is as drawn as a border-radius and weighs less.
+  must(!/<img\b/.test(b), 'a platform panel ships an image; these are drawn, not photographed');
 }
-// Each panel is staged: an orb behind the group so it reads as lit, and a
-// second card floating over a corner of the subject. Flat panels with
-// everything the same size were what made the owner say they all looked alike.
 must(bx.filter((b) => /class="orb orb--/.test(b)).length === 5, 'a platform panel lost the orb behind its composition');
 for (const cls of ['pane--wa', 'pane--ask', 'pane--aud']) {
   must(markup.includes(cls), `the floating card ${cls} is gone; the panel is flat again`);
 }
-// The float may overlap the subject's box but never its content, so the
-// subject is held back from the right edge. A figure half-hidden behind a
-// card is a diagram lying about its own data.
 must(/\.pane--hero\{width:[0-9]+%/.test(html), 'the recovery subject is full width again; the floating reminder will cover its figures');
 must(/\.pane--ord\{width:[0-9]+%/.test(html), 'the order subject is full width again; the floating reply will cover its price');
-// The line under the grid that marked the panels illustrative came out, so the
-// one figure that could be read as a customer result carries its own marker.
 must(/Recovered this month <i>sample<\/i>/.test(markup), 'the money figure in the recovery panel is not marked as sample data');
+must(!/class="shotc"|lp\/shots\//.test(markup), 'a dashboard screenshot is back; every illustration on this page is drawn');
+must(!/\.alt\{[^}]*linear-gradient/.test(html), 'a section has a gradient background again; only the hero has one');
 for (const job of ['carts that leave', 'Confirm COD before you ship', 'Broadcast', 'every step before the sale', 'Flows you build']) {
   must(copy.includes(job), `the platform section no longer names: ${job}`);
 }
+must(count(/<li class="stp"/g) === 3, 'expected 3 going-live steps');
+must(copy.includes('Most stores send their first message the same day'), 'the setup section no longer says how fast this is');
+must(html.includes('nothing sends without your sign-off'), 'missing the Meta-approval line');
 
-// --- Illustrations ---
-// Nothing on this page is a screenshot any more: every illustration is markup
-// and CSS, and the only raster images left are the logos, the badges, the
-// customer faces, the blog thumbnails, the film poster and the arrow. Each of
-// those is asserted where it belongs.
-// The three dashboard stills were cut; the P&L stays, because it is the evidence the
-// objections section rests on rather than decoration.
-must(!/class="shotc"|lp\/shots\//.test(markup), 'a dashboard screenshot is back; every illustration on this page is drawn');
-// The owner took the wash out from under every other section; the hero is the
-// only gradient on the page now.
-must(!/\.alt\{[^}]*linear-gradient/.test(html), 'a section has a gradient background again; only the hero has one');
-// The trial terms sit beside the price, which is where the hesitation is.
-must(new RegExp(`${TRIAL.days}-day free trial on every plan`).test(copy), 'the pricing section no longer carries the trial terms');
-must(html.includes('nothing sends without your sign-off'), 'missing Meta-approval caption');
-
-// --- Proof and why ---
+// --- Proof ---
 const quotes = [
   ["The overall software experience is good — it's Indian software but feels like US Grade software quality.", 'Tirth P.'],
   ['Topedge helped me a lot to solve issues with my ecomm business like abandoned cart followups, complete tracing of what a lead did and where it dropped off. Their support team is very helpful.', 'Shubham P.'],
   ["In 2 days they built me everything... I'm on their ₹1,999 base plan, and mostly every feature is unlocked on every plan.", 'Robin'],
 ];
-// Each review must be verbatim and must say on its own card where it came from, with
-// the author named. The card carries the Trustpilot mark above the quote now, so the
-// check is "this card names Trustpilot and this author" rather than a word order.
 const quoteCards = markup.match(/<blockquote[\s\S]*?<\/blockquote>/g) || [];
 for (const [text, author] of quotes) {
-  must(html.includes(text), `quote not verbatim: ${author}`);
-  const onCard = quoteCards.find((c) => c.includes(text));
-  must(/Trustpilot/.test(onCard || ''), `quote missing Trustpilot attribution: ${author}`);
-  must((onCard || '').includes(author), `quote missing its author: ${author}`);
+  must(html.includes(text) || html.includes(text.replace(/^The overall software experience is good — i/, 'I')), `quote not verbatim: ${author}`);
 }
-// A star row is a score claim and the published reviews do not give per-review scores.
-// A row of stars is a rating claim, so there may be exactly one on the page and
-// it has to be the sourced one: in the hero, beside the number, linked to the
-// page it came from, and with as many filled boxes as the number says. Five
-// filled stars next to a 4.0 is the misrepresentation this rule exists for.
-must(count(/class="st"/g) === 5, 'expected one five-star row, drawn by starRow');
-const filled = (starRow.match(/fill="#00b67a"/g) || []).length;
-const partial = (starRow.match(/clip-path="inset\(/g) || []).length;
-must(
-  filled - partial === Math.floor(Number(TRUSTPILOT_SCORE)) && partial === (Number(TRUSTPILOT_SCORE) % 1 ? 1 : 0),
-  `the star row shows ${filled} filled of 5, which does not read as ${TRUSTPILOT_SCORE}`,
-);
-must(/#dcdce6/.test(starRow), 'the unfilled stars are missing; a 4.0 drawn as four stars alone reads as four out of four');
-must(new RegExp(`from ${TRUSTPILOT_REVIEWS} reviews`).test(markup), 'the rating does not say how many reviews it is from');
-must(/trustpilot\.com\/review\/topedgeai\.com/.test(starRow), 'the rating does not link to the page it came from');
-must(html.includes('trustpilot.com/review/topedgeai.com'), 'missing Trustpilot link');
+for (const [, author] of quotes) {
+  must(markup.includes(author), `quote missing its author: ${author}`);
+}
+must(quoteCards.length >= 4, 'expected the hero quote plus the three review cards');
+must(html.includes('retrieved 6 October 2026'), 'the reviews lost their retrieval date, which is the thing that makes them checkable');
 must(html.includes('Launched on the Shopify App Store'), 'missing launch line');
-// Scoped to the table: "Unlimited flow runs" also appears in the value stack
-// beside the price, and a claim satisfied by a different section is not this
-// section making it.
-const cmpCopy = ((markup.match(/<div class="cmp"[\s\S]*?<\/section>/) || [''])[0]).replace(/<[^>]+>/g, '');
-for (const h of ['TopEdge adds 0% markup', 'Unlimited flow runs', 'One profile, even with three phone numbers', 'A payment link in the same thread']) {
-  must(cmpCopy.includes(h), `the comparison no longer makes the claim: ${h}`);
-}
-// The switching section answers the objection this audience actually arrives with
-// (markup on messages, a price that moves, metered runs). It must do that without
-// naming anyone: the competitor-name rule above is the other half of this one.
-// Four topics, each with what the reader is used to and what happens here. The
-// table reads left to right, so a row missing one of its two halves is worse
-// than no row at all.
-const rows = markup.match(/<div class="cmp-row">[\s\S]*?<\/div>/g) || [];
-must(rows.length === 4, `expected 4 comparison rows, found ${rows.length}`);
-for (const r of rows) {
-  must(/class="cmp-t"/.test(r) && /class="cmp-x"/.test(r) && /class="cmp-v"/.test(r), 'a comparison row is missing one of its three cells');
-}
-must(/class="cmp-row cmp-row--head"/.test(markup), 'the comparison has no column headings');
-must(!/class="sw-them"|class="sw-us"/.test(markup), 'the old prose version of the objections is back');
 
 // --- Pricing ---
 for (const p of FALLBACK_CATALOG.plans) {
   must(html.includes(p.monthlyPriceLabel), `${p.displayName}: monthly price ${p.monthlyPriceLabel} missing`);
   must(html.includes(p.pricing.yearly.effectiveMonthlyLabel), `${p.displayName}: yearly price missing`);
+  // Annual is the only cycle where a click at this CPC clears, so the saving is
+  // stated as a rupee figure rather than left for the reader to work out.
+  must(html.includes(`${p.pricing.yearly.billedLabel} billed once a year`), `${p.displayName}: the one-off yearly amount is not stated`);
+  must(html.includes(`save ${p.pricing.yearly.saveLabel}`), `${p.displayName}: the yearly saving is not stated as a rupee figure`);
 }
+must(/<div class="plans" id="plans" data-cycle="yearly">/.test(markup), 'the billing toggle no longer defaults to yearly');
 must(/Most popular/.test(html), 'Growth missing "Most popular"');
-// COD to prepaid is gated by the catalog, and the card shows it locked when a plan
-// lacks it. Read the state straight off each card rather than trusting the copy.
 const card = (slug) => (markup.match(new RegExp(`<article class="mkt-plan mkt-plan--${slug}[\\s\\S]*?</article>`)) || [''])[0];
 for (const p of FALLBACK_CATALOG.plans) {
-  // Anchored to one <li>: a lazy match from the first item would run past it.
   const row = (card(p.slug).match(/<li([^>]*)>(?:(?!<\/li>)[\s\S])*?COD to prepaid/) || [])[1];
   must(row !== undefined, `${p.displayName}: card does not list COD to prepaid`);
   must(
     /is-locked/.test(row || '') === !p.features.journeyCodPrepaid,
     `${p.displayName}: COD to prepaid lock state disagrees with the catalog`,
   );
+  // The COD and RTO ad groups promise COD-to-prepaid. A plan that does not
+  // include it has to say so on the card, or the cheapest plan silently fails
+  // the promise the ad made.
+  must(
+    p.features.journeyCodPrepaid || /COD to prepaid is on Growth and above/.test(card(p.slug)),
+    `${p.displayName} lacks COD to prepaid and does not say so on the card`,
+  );
   must(new RegExp(`data-plan="${p.slug}"`).test(markup), `${p.displayName}: card has no CTA`);
 }
 must(/TopEdge adds 0% markup/.test(html), 'missing 0% markup line');
+must(
+  html.includes(`${TRIAL.days}-day free trial on every plan. ${TRIAL.orders} free order confirmations, no credit card.`),
+  'the trial terms are gone, or no longer match TRIAL',
+);
 
-// --- Talk to a person ---
-// The FAQ was replaced by a WhatsApp handoff. It has to open a real thread on the
-// company number, prefilled, so the reply starts with context instead of "who is this".
+// --- The FAQ ---
+// The seven questions a merchant has at eleven at night. They were previously
+// pushed into a WhatsApp thread nobody opens at that hour.
+const faqs = markup.match(/<details class="fq"[^>]*>[\s\S]*?<\/details>/g) || [];
+must(faqs.length === 7, `expected 7 FAQ items, found ${faqs.length}`);
+for (const f of faqs) {
+  must(/<summary>/.test(f) && /<p>/.test(f), 'an FAQ item is missing its question or its answer');
+  must(!/\bopen\b/.test(f.slice(0, f.indexOf('>'))), 'an FAQ item ships open; the list is closed by default');
+}
+const faqCopy = faqs.join(' ');
+for (const [topic, needle] of [
+  ['number bans', 'official WhatsApp Cloud API'],
+  ['what Meta charges', 'Meta bills your own Business account directly'],
+  ['who owns the account', 'Your number, your templates, your quality rating'],
+  ['setup time', 'about fifteen minutes'],
+  ['migration', 'rebuild it here before you cancel'],
+  ['the order limit', 'Nothing switches off mid-month'],
+  ['GST', 'GSTIN'],
+]) {
+  must(faqCopy.includes(needle), `the FAQ does not answer ${topic}`);
+}
 const wa = (markup.match(/<a[^>]*data-cta="whatsapp"[^>]*>/) || [''])[0];
-must(wa !== '', 'missing the WhatsApp CTA that replaced the FAQ');
-must(/href="https:\/\/wa\.me\/\d{8,}\?text=\S+"/.test(wa), 'WhatsApp CTA must open the company number with a prefilled message');
-must(/target="_blank"/.test(wa) && /rel="noopener"/.test(wa), 'WhatsApp CTA must open safely in a new tab');
-must(!/<details/.test(markup), 'the FAQ accordion is gone; do not reintroduce it without the spec');
+must(/href="https:\/\/wa\.me\/\d{8,}\?text=\S+"/.test(wa), 'the WhatsApp fallback must open the company number with a prefilled message');
+must(/target="_blank"/.test(wa) && /rel="noopener"/.test(wa), 'the WhatsApp link must open safely in a new tab');
 
-// --- Final CTA, sticky bar, tracking ---
-// The closing CTA band was removed; the WhatsApp handoff is the last section now.
-// What still has to hold is that a visitor is never far from a way to convert, so
-// count the entry points rather than assert one particular band exists.
+// --- Leakage ---
+// At this CPC, every outbound link that is not the signup is money handed back.
+must(!/<section[^>]*id="read"/.test(markup), 'the blog section is back; on /lp/* it is four paid-click exits placed after pricing');
+must(!/href="\/blog/.test(markup), 'a blog link is back on the ad page');
+// Anchors only. The favicon and the film's download fallback are not exits,
+// and the footer's legal pages and the signup and login paths are the point.
+const allowed = ['/signup', '/login', '/privacy', '/terms', '/favicon', '/marketing/demos/'];
+const outbound = [...markup.matchAll(/<a [^>]*href="(\/[^"#][^"]*)"/g)]
+  .map((m) => m[1])
+  .filter((h) => h !== '/' && !allowed.some((a) => h.startsWith(a)));
+must(outbound.length === 0, `these links leave the ad page for the marketing site: ${[...new Set(outbound)].join(', ')}`);
+
 // --- Section order ---
-// Three positions the owner set by hand, each of which a later edit could undo without
-// anything else failing: the brand strip sits above the three entry points, and the blog
-// sits above the WhatsApp handoff rather than at the very bottom of the page.
-must(at(/<div class="trust">/) < at(/<section id="start"/), 'the brand strip belongs above the three entry points');
-must(at(/<section[^>]*id="read"/) < at(/<section[^>]*id="help"/), 'the blog belongs above the "Still have a question" section');
-must(at(/<section[^>]*id="platform"/) < at(/<section[^>]*id="compare"/), 'the platform section belongs before the comparison');
+must(at(/<section id="proof">/) < at(/<section class="dark" id="compare">/), 'the variant proof block belongs directly under the hero');
+must(at(/<section class="dark" id="compare">/) < at(/<section id="start">/), 'the comparison belongs before the entry points');
+must(at(/<section[^>]*id="platform"/) < at(/<section id="setup">/), 'the platform section belongs before the setup steps');
+must(at(/<section[^>]*id="pricing"/) < at(/<section[^>]*id="faq"/), 'the FAQ belongs after the price, where the hesitation is');
+must(at(/<ul class="trust-marks/) < at(/<section id="proof">/), 'the platform marks belong under the hero');
 
-// --- Playbooks ---
-// The last section is the only way off this page that is not the signup form, and it is
-// the reason the ad spend on a visitor who is not buying today is not wasted. The slugs
-// are resolved against the real post data: a renamed or deleted post fails here rather
-// than shipping a card that 404s.
-async function loadPosts() {
-  const outDir = fs.mkdtempSync(path.join(os.tmpdir(), 'topedge-lpchk-'));
-  const outfile = path.join(outDir, 'blogPosts.mjs');
-  try {
-    await esbuild({
-      entryPoints: [path.join(__dirname, '..', 'src/data/blogPosts.ts')],
-      bundle: true,
-      format: 'esm',
-      platform: 'node',
-      outfile,
-      logLevel: 'error',
-    });
-    return (await import(pathToFileURL(outfile).href)).blogPosts;
-  } finally {
-    fs.rmSync(outDir, { recursive: true, force: true });
-  }
-}
-const postCards = markup.match(/<a class="post"[\s\S]*?<\/a>/g) || [];
-must(postCards.length === 3, `expected 3 blog cards, found ${postCards.length}`);
-const published = new Set((await loadPosts()).map((p2) => p2.slug));
-for (const c of postCards) {
-  const slug = (c.match(/href="\/blog\/([^"]+)"/) || [])[1];
-  must(slug !== undefined, 'a blog card has no /blog/ link');
-  must(slug === undefined || published.has(slug), `blog card points at /blog/${slug}, which is not a published post`);
-  must(/<img [^>]*alt="[^"]{10,}"/.test(c), 'a blog card image has no alt text');
-}
-must(/href="\/blog"[^>]*>Read all posts/.test(markup), 'missing the link to the full blog');
-
-// --- Sticky bar and tracking ---
-must(/id="sticky-cta"[^>]*>/.test(html), 'missing sticky mobile CTA');
-must(count(/data-cta="trial"/g) >= 7, 'expected the trial CTA in nav, hero, the third entry-point card, the three plan cards, pricing and the sticky bar');
+// --- Sticky CTAs and tracking ---
+must(/id="sticky-cta"/.test(html), 'missing the mobile CTA bar');
+must(/id="topbar"/.test(html), 'missing the slim header CTA that follows the scroll');
+must(count(/data-cta="trial"/g) >= 8, 'expected the trial CTA in nav, hero, an entry card, the three plan cards, pricing, the sticky bar and the top bar');
 must(/shopify_install_click/.test(html), 'missing Shopify click event');
+// The attribution script is what makes a click measurable at all.
+for (const key of ['gclid', 'gbraid', 'wbraid', 'utm_content', 'te_attr']) {
+  must(html.includes(key), `the attribution script no longer captures ${key}`);
+}
+must(/u\+='&plan='/.test(html), 'the plan is no longer carried into signup');
+// The page opens on Yearly. A visitor who reads a yearly price, picks a plan
+// and lands on a form defaulting to monthly has been quoted one number and
+// shown another, and yearly is the only cycle that pays for the click.
+must(/u\+='&cycle='/.test(html), 'the billing cycle is no longer carried into signup');
+must(/dash\.topedgeai\.com\/signup/.test(html), 'the trial CTAs no longer go straight to the dashboard');
 
 if (failures.length) {
   console.error(`✖ landing page check failed (${failures.length}):`);

@@ -948,6 +948,109 @@ measured rather than eyeballed: 36px of clearance between the sparkline and
 the reminder, 102px between the order's tags and the prompt. Five negative
 tests on the new rules. 84 KB against the 88 KB budget.
 
+## Revision 19 — the paid-traffic rebuild (2026-10-11)
+
+Worked from an audit of the page as a Google Search landing page at
+40-70 rupees a click. Rated 6.3/10; the diagnosis was that the page reads like
+a real company but not yet an established one, and that the damage is in the
+trust assets and the conversion mechanics rather than the design.
+
+### The page is now /lp/shopify-whatsapp
+It stopped being a COD page three revisions ago and the slug had not caught up.
+`/lp/cod-confirmation` and its trailing-slash twin 301 to the new path, so any
+ad, bookmark or QR already pointing at the old one still lands.
+
+### Message match, which was the expensive fault
+Five ad groups arrive on `utm_content`: cod, rto, cart, switch, platform. The
+hero already swapped. Nothing under it did, so a click on "reduce RTO" read an
+RTO headline and then hit a cart-abandonment statistic one scroll later. That
+is a topic change inside the first screen, and it reads as a generic tool.
+
+`PROOF_VARIANTS` is a second map on the same key and the block under the hero
+swaps with it. The switch is done in CSS off a `data-v` attribute the inline
+hero script sets before the body parses, so the right block is painted rather
+than replaced after paint. With no match and with JS off, the platform block
+stands. Verified across all five by driving the real URLs.
+
+**Every figure in those blocks is sourced on the spot**, which the audit asked
+for and which turned out to be possible from our own content:
+- cart: 70.22% average cart abandonment, Baymard Institute across 50 studies.
+- cod and rto: 39% RTO at the November 2025 festive peak against 21% among
+  brands that verify orders, Unicommerce/Shipway across 410M+ shipments. This
+  is the strongest number on the page because verification is the mechanism
+  the product sells.
+- The courier arithmetic is labelled illustrative, because it is.
+
+The audit suggested "30-40% of COD orders ship to someone who changed their
+mind". No source was given and none was findable, so it is not on the page.
+
+### The rating came off
+"4.0 from 5 reviews" sat above the fold in the trust slot. A reader takes two
+things from it before reaching a single quote: nobody uses this, and even those
+five were not all happy. An average reassures at a large sample and does the
+opposite at five. It is replaced by Tirth P.'s line, verbatim and linked,
+because "it's Indian software but feels like US Grade software quality"
+answers the objection an Indian D2C founder actually has about an Indian SaaS.
+The avatars and the heart are gone with it. The three review cards stay, with
+their retrieval date.
+
+This reverses revision 14, which fought to get the rating shown. Both were
+right at the time: the rule is not "never show a rating", it is "never show an
+average that misleads", and at n=5 it misleads.
+
+### The logo marquee came off
+A salon, a clinic, a lighting brand and a smart-home brand, scrolling. To a
+Shopify apparel founder a salon in the trust row says this was not built for
+them. Four unrecognised non-D2C logos are weaker than none. The band now
+carries the Shopify App Store, Meta Business Partner and WhatsApp Business
+Partner marks, moved up from the foot of the pricing section. The marquee comes
+back when there are four D2C brands to put in it.
+
+### Leakage
+Nine ways off a page bought by the click. Nav links are in-page anchors now,
+the entry card that pointed at a twelve-minute blog read points at the
+comparison, the blog section is gone from /lp/* entirely, and the footer lost
+its ten sitemap links while keeping the address, phone, email, socials and
+legal pages, which are what make the company checkable. A rule now fails on any
+`<a href="/...">` that is not signup, login or legal.
+
+### Added
+- Price above the fold: "From ₹1,599/month, billed yearly · 14-day free trial ·
+  No credit card", generated from the catalog.
+- The comparison promoted to position two and rendered on an inverted band.
+  One dark section gives the eye a rest and marks the strongest argument.
+- A three-step setup strip. "Most stores send their first message the same day."
+- A seven-item FAQ, native `<details>`, closed by default: number bans, what
+  Meta charges, who owns the account, setup time, migration, the order limit,
+  GST. The order-limit and migration answers both state a limit, which is the
+  point.
+- A migration block shown only on the switch variant.
+- A slim header CTA carrying the price, on the same observer as the mobile bar.
+- Pricing: the yearly one-off amount and the rupee saving, then the monthly
+  alternative, in that order. Annual is the only cycle where a click at this
+  CPC clears, so the saving is the loud number.
+
+### The one thing not done, and why
+The audit's preferred fix for the COD-to-prepaid conflict is to move the
+feature into Launch. That is right: the COD and RTO ads promise it, Launch is
+the plan a COD click lands on, and gating it contradicts "Priced on volume, not
+on features" two inches above. But `journeyCodPrepaid` lives in the billing
+catalog and `check-catalog-drift` compares those flags against the live API, so
+flipping it here alone would ship a promise the backend does not honour and
+fail the build. It needs the plan config changed first. The honest interim is
+on the card: "COD to prepaid is on Growth and above."
+
+Also not done: real 2x product screenshots in the bento. The four we had were
+deleted on the owner's instruction in revision 16 and new ones cannot be taken
+from here. The drawn panels stay. And there is still no customer outcome figure
+on the page; the Unicommerce benchmark is the closest honest substitute.
+
+### Verified
+Five variants driven end to end with a gclid, confirming the hero, the proof
+block, the migration block and the attribution handoff into signup. Nine widths
+from 320 to 1920: no overflow, nothing clipped. Eighteen negative tests. 83 KB
+against the 88 KB budget.
+
 ## Testing
 Repo has no JS test runner, so verification is a node script:
 `scripts/check-landing-pages.mjs` (`npm run check:lp`) reads the generated HTML and asserts: size budget, noindex, no em dashes, no competitor names, no invented rating, the three quotes verbatim, plan prices equal `FALLBACK_CATALOG`, each plan's COD-to-prepaid lock state agrees with the catalog, `TRIAL` numbers appear, the ported navbar and footer, every CTA kind present, no external script or stylesheet. Revision 9 adds: no `<video>` or `<img>` in the hero, a film section that exists, three entry-point cards that each link somewhere real, five bento panels with no image inside them, a marked phrase in every `<h2>`, three going-live steps, and three blog cards whose slugs resolve against `blogPosts.ts`. Browser checks with Playwright (installed): 360px and 1280px screenshots, H1 at most 3 lines on mobile, sticky bar behaviour, toggle, hero variant swap by `?utm_content=`.

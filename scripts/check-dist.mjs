@@ -2,7 +2,7 @@
  * Refuse to publish a dist that cannot serve the site.
  *
  * Why this exists. On 2026-10-08 the live site answered /compare and
- * /blog/* with a browser-level failure while /lp/cod-confirmation kept
+ * /blog/* with a browser-level failure while the ad page kept
  * working. That split is the signature of a deploy whose prerender step did not
  * run: pages under public/ are copied verbatim by vite and keep serving, while
  * every React marketing route exists ONLY as a file the prerender writes

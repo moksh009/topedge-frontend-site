@@ -167,6 +167,56 @@ const ICONS = {
 };
 
 /**
+ * The block under the hero, keyed on the same variant string.
+ *
+ * Every figure here is sourced and the source is printed next to it. Two come
+ * from research already cited in our own blog: Baymard's cart-abandonment
+ * average, and the Unicommerce/Shipway RTO read across 410M+ shipments. The
+ * RTO one is the strongest number on the page because it is the mechanism this
+ * product sells: the brands at 21% are the ones verifying orders.
+ *
+ * The courier arithmetic is labelled illustrative because it is: those are
+ * round numbers to show the shape of the loss, not anyone's real rate card.
+ */
+const PROOF_VARIANTS = {
+  platform: {
+    h: 'Your own Meta Business account, not an agency\u2019s',
+    p: 'Your number, your templates, your WhatsApp quality rating. Meta bills you directly and TopEdge adds 0% markup, so nothing about the channel is rented from us.',
+    stat: '0%',
+    statLabel: 'added to what Meta charges you',
+    src: 'Meta bills your Business account at its own per-conversation rates. We charge for the software only.',
+  },
+  cod: {
+    h: 'The brands that verify COD orders run half the RTO',
+    p: 'Verification is the difference, and verification is one WhatsApp message before dispatch. Ask first and the parcels that leave your warehouse are the ones somebody still wants.',
+    stat: '21% vs 39%',
+    statLabel: 'RTO among brands that verify orders, against the network at festive peak',
+    src: 'Unicommerce/Shipway, 410M+ shipments across 6,000+ brands: 39% at the November 2025 peak, 21% by February 2026 among brands that verify orders and optimise courier selection.',
+  },
+  rto: {
+    h: 'Every refused parcel bills you twice',
+    p: 'Freight out, freight back, and the handling in between, on an order that was never going to be paid for. The only cheap refusal is the one that never ships.',
+    stat: '\u20b980 + \u20b980 + \u20b920',
+    statLabel: 'out, back and handling: \u20b9180 gone per refused parcel',
+    src: 'Illustrative courier rates, not a quoted tariff. At 50 refusals a month that is \u20b99,000 to ship what nobody wanted.',
+  },
+  cart: {
+    h: 'Seven in ten carts are abandoned',
+    p: 'Email gets opened tomorrow, if at all. A WhatsApp reminder while the cart is still warm reaches the buyer in the thread they already have open.',
+    stat: '70.22%',
+    statLabel: 'average online cart abandonment',
+    src: 'Baymard Institute, average across 50 published studies, baymard.com/lists/cart-abandonment-rate, updated September 2025.',
+  },
+  switch: {
+    h: 'You are paying a markup on messages Meta already bills you for',
+    p: 'Most tools add a per-message fee on top of Meta\u2019s, then meter your automation runs and ration them as you grow. We do neither.',
+    stat: '0%',
+    statLabel: 'markup on Meta\u2019s message fees, on every plan',
+    src: 'Flow automations run unlimited times on every plan, and nothing is metered by us.',
+  },
+};
+
+/**
  * The four claims this audience checks before paying, as a comparison rather
  * than prose. The old version set each one as a struck-through line, a heading
  * and a paragraph, which made the reader assemble the contrast themselves; at
@@ -216,8 +266,8 @@ const PATHS = [
   {
     h: 'COD and RTO are eating the margin',
     p: 'Parcels go out, come back, and the courier bills you both ways.',
-    cta: 'Read: how COD confirmation works',
-    href: '/blog/cod-confirmation-whatsapp-reduce-rto-shopify',
+    cta: 'See what it costs you',
+    href: '#compare',
     solid: false,
     art: `<div class="art" aria-hidden="true">
           <span class="orb orb--warn"></span>
@@ -429,10 +479,7 @@ const PEOPLE = [
 // paid traffic should not be sent shopping) and the newsletter form (a second form
 // competes with the trial for the same click). Docs point at the dashboard, which is
 // where the documentation lives since the marketing copy was removed.
-const FOOT_COLUMNS = [
-  { title: 'Product', links: [['Pricing', '/pricing'], ['Journey', '/features/journeys'], ['COD confirmation', '/features/cod-confirmation'], ['Audience Campaigns', '/features/campaigns'], ['AI Brain', '/features/ai-brain']] },
-  { title: 'Company', links: [['About', '/about'], ['Customers', '/customers'], ['Docs', 'https://dash.topedgeai.com/docs'], ['Blog', '/blog'], ['Contact', '/contact']] },
-];
+const FOOT_COLUMNS = [];
 
 // Same brand fills the site footer uses. Instagram's real mark is a radial gradient;
 // a single mid-gradient magenta reads the same at 16px and costs no gradient def.
@@ -444,7 +491,22 @@ const SOCIAL_ICONS = {
 };
 
 /**
- * The pricing card from the site, not a second design. Same shell/panel/meters
+ * The pricing card from the site, not a second design.
+ *
+ * Two things here are load-bearing for the ad economics. Annual is the only
+ * cycle where a click at 40-70 rupees clears on the first payment, so the card
+ * leads with the yearly effective price and states the saving as a rupee
+ * figure rather than a percentage, which is what actually moves people onto
+ * annual. The old note said "billed yearly" twice and left the reader doing
+ * arithmetic to check it.
+ *
+ * The gate note on Launch exists because the COD and RTO ad groups promise
+ * COD-to-prepaid and Launch does not include it, so the cheapest plan silently
+ * fails the promise the ad made. Saying so on the card is the honest patch.
+ * The real fix is to move the feature into Launch, which is a change to the
+ * billing catalog and the live plan config, not to this file: check-catalog-drift
+ * compares FALLBACK_CATALOG's feature flags against the live API, so flipping
+ * it here alone would ship a promise the backend does not honour. Same shell/panel/meters
  * structure and class names as `PlanGrid` + pricing.css, including the per-plan CTA
  * and the locked rows, so a visitor who later opens /pricing sees the same object.
  * React swaps on the billing cycle; here both cycles are in the HTML and the toggle
@@ -484,15 +546,19 @@ function planCards(slug) {
             </div>
             <div class="mkt-plan__price-row">
               <p class="mkt-plan__price"><span class="p-yearly">${esc(y.effectiveMonthlyLabel)}</span><span class="p-monthly">${esc(m.effectiveMonthlyLabel)}</span></p>
-              <span class="mkt-plan__period"><span class="p-yearly">per month, billed yearly</span><span class="p-monthly">per month</span></span>
+              <span class="mkt-plan__period">per month</span>
             </div>
-            <p class="mkt-plan__billing-note"><span class="p-yearly">billed yearly (${esc(y.billedLabel)}/year) &middot; ${esc(p.monthlyPriceLabel)}/mo month-to-month</span><span class="p-monthly">+18% GST. Cancel anytime.</span></p>
+            <p class="mkt-plan__billing-note"><span class="p-yearly">${esc(y.billedLabel)} billed once a year <b class="save">save ${esc(y.saveLabel)}</b><em>Prefer monthly? ${esc(p.monthlyPriceLabel)}/mo</em></span><span class="p-monthly">${esc(p.monthlyPriceLabel)} every month, cancel anytime<em>Yearly works out at ${esc(y.effectiveMonthlyLabel)}/mo and saves ${esc(y.saveLabel)}</em></span></p>
             <p class="mkt-plan__blurb">${esc(planBlurb(p.slug))}</p>
             <a class="mkt-plan__cta mkt-plan__cta--${p.emphasis ? 'solid' : 'ghost'}" data-cta="trial" data-plan="${esc(p.slug)}" href="${SIGNUP_FALLBACK(slug)}">Choose ${esc(p.displayName)}</a>
           </div>
           <div class="mkt-plan__features">
             <p class="mkt-plan__kicker">${esc(planFeatureKicker(p.slug))}</p>
-            <ul class="mkt-plan__meters">${meters}</ul>
+            <ul class="mkt-plan__meters">${meters}</ul>${
+              p.features.journeyCodPrepaid
+                ? ''
+                : '<p class="mkt-plan__gate">COD to prepaid is on Growth and above.</p>'
+            }
           </div>
         </div>
       </article>`;
@@ -602,35 +668,93 @@ const bentoHtml = BENTO.map(
 const includedHtml = INCLUDED.map((i) => `<li>${esc(i)}</li>`).join('');
 
 
-/**
- * The band under the hero: the customer logos at a size where a wordmark is
- * readable, which is the thing a 44px circle cannot do. The hero above shows
- * these four as people; this shows them as companies.
- *
- * It scrolls. Four marks do not fill a desktop viewport, so a loop of them
- * repeats within one screen, which the reference band the owner sent does too
- * (its wyre and Barclays each appear twice). Three copies make the track long
- * enough that a 33.3% translate returns it to an identical frame, so the loop
- * has no seam. Only the first copy is announced; the rest are aria-hidden, or
- * a screen reader reads the same four companies three times.
- */
-const stripHtml = [0, 1, 2]
-  .flatMap((copy) =>
-    TRUST_LOGOS.map(
-      (l) =>
-        `<li${copy ? ' aria-hidden="true"' : ''}><img src="${l.src}" alt="${copy ? '' : esc(l.alt)}" height="28" loading="lazy" decoding="async"></li>`,
-    ),
-  )
-  .join('');
 
 /**
- * The platform marks, beside the price. They used to sit under the hero, which
- * is early for them: "who actually bills me for the messages" is a question
- * that arrives when someone is looking at a number, not at a headline.
+ * The variant proof block: all five in the markup, one shown.
+ *
+ * Which one is decided in CSS, off a `data-v` attribute the inline script in
+ * the hero puts on <html> before the body is parsed, so the right block is
+ * painted first rather than swapped in afterwards. A visitor never sees the
+ * wrong statistic flash. With no match, or with JS off, the platform block is
+ * what stands, which is also what a direct visitor should see.
  */
-const badgesHtml = BADGES.map(
-  (b) => `<li><img src="${b.src}" alt="${esc(b.alt)}" height="42" loading="lazy" decoding="async"></li>`,
-).join('');
+function proofHtml() {
+  return Object.entries(PROOF_VARIANTS)
+    .map(
+      ([k, v]) => `      <div class="pf" data-pf="${k}">
+        <div class="pf-stat"><b>${v.stat}</b><span>${esc(v.statLabel)}</span></div>
+        <div class="pf-copy">
+          <h2>${esc(v.h)}</h2>
+          <p>${esc(v.p)}</p>
+          <p class="pf-src">${esc(v.src)}</p>
+        </div>
+      </div>`,
+    )
+    .join('\n');
+}
+
+/**
+ * Going live, as the three things the merchant actually does. It answers the
+ * question a founder with no developer asks before any other, and the answer
+ * is genuinely good, so leaving it buried in a feature card's body copy was
+ * wasting it.
+ */
+const STEPS = [
+  { h: 'Install from the Shopify App Store', p: 'One click from your admin. No theme edits and no code on the storefront.' },
+  { h: 'Connect your Meta Business account', p: 'It stays yours, and we take your templates through Meta approval with you.' },
+  { h: 'Switch on your first journey', p: 'COD confirmation is pre-built. Edit the wording and turn it on.' },
+];
+
+/**
+ * The seven questions a merchant has at eleven at night, answered on the page
+ * rather than pushed into a WhatsApp thread they will never open. Native
+ * <details>, closed by default, so it costs nothing until it is used and works
+ * with no JavaScript at all.
+ *
+ * Nothing here is softened. The order-limit answer and the migration answer
+ * both state a limit, which is the point: a page willing to say what it does
+ * not do reads as more honest than one that only sells.
+ */
+const FAQS = [
+  {
+    q: 'Will my WhatsApp number get banned?',
+    a: 'Messages send on the official WhatsApp Cloud API, not an unofficial bridge, which is where bans come from. Every template is approved by Meta on your own Business account before it can send, so nothing goes out that Meta has not already cleared.',
+  },
+  {
+    q: 'What does Meta actually charge me?',
+    a: 'Meta bills your own Business account directly, at its own per-conversation rates, and TopEdge adds 0% on top. You pay us for the software and Meta for the messages, and you can see both bills separately.',
+  },
+  {
+    q: 'Do I need my own Meta Business account, or do you give me a number?',
+    a: 'Your own. Your number, your templates, your quality rating. If you ever leave, you keep all three; there is nothing to migrate back off us.',
+  },
+  {
+    q: 'How long does setup take?',
+    a: 'Installing from the Shopify App Store and switching on a journey takes about fifteen minutes. The part that is not in your hands is Meta template approval, which is usually same day but is Meta’s clock, not ours.',
+  },
+  {
+    q: 'I am already on another WhatsApp tool. Can I move my flows?',
+    a: 'Yes. Send us what you have running and we rebuild it here before you cancel anything, so you are never between two tools. There is no import button for this; a person does it with you.',
+  },
+  {
+    q: 'What happens if I cross my order limit?',
+    a: 'Nothing switches off mid-month and no message is silently dropped. You get a notice as you approach the limit and the option to move up a plan; the difference is prorated against what you have already paid.',
+  },
+  {
+    q: 'Do I get a GST invoice?',
+    a: 'Automatically, every cycle, with your GSTIN on it. Prices on this page are before 18% GST.',
+  },
+];
+
+/**
+ * Shown only on the switch variant, where it is the whole argument: the thing
+ * stopping somebody moving is never the price, it is the fortnight of rebuilding
+ * flows while two tools both bill them.
+ */
+const MIGRATION = {
+  h: 'Moving from another WhatsApp tool?',
+  p: 'Send us what you have running and we rebuild your journeys, templates and segments here before you cancel anything. You are never paying for two tools or running without one.',
+};
 
 /**
  * The site navbar, as a static capsule. Same shell as MarketingNavbar: floating, ghost
@@ -649,9 +773,10 @@ function navHtml(slug) {
           <span class="mkt-nav__brand-text">TopEdge <span>AI</span></span>
         </a>
         <nav class="mkt-nav__desktop" aria-label="Primary">
-          <a class="mkt-nav__link" href="#platform">Platform</a>
           <a class="mkt-nav__link" href="#compare">Why TopEdge</a>
+          <a class="mkt-nav__link" href="#platform">Platform</a>
           <a class="mkt-nav__link" href="#pricing">Pricing</a>
+          <a class="mkt-nav__link" href="#faq">FAQ</a>
         </nav>
         <div class="mkt-nav__actions">
           <a class="mkt-nav__link" href="/login">Log in</a>
@@ -671,7 +796,7 @@ function navHtml(slug) {
  * competing with the one conversion this page is paid for.
  */
 function footHtml() {
-  const cols = FOOT_COLUMNS.map(
+  const cols = !FOOT_COLUMNS.length ? '' : FOOT_COLUMNS.map(
     (c) => `        <div class="mkt-foot__col">
           <p class="mkt-foot__capsule">${esc(c.title)}</p>
           <ul class="mkt-foot__list">${c.links.map(([label, href]) => `<li><a class="mkt-foot__link" href="${href}">${esc(label)}</a></li>`).join('')}</ul>
@@ -696,9 +821,7 @@ function footHtml() {
         </div>
         <ul class="mkt-foot__social-list">${socials}</ul>
       </div>
-      <nav class="mkt-foot__sitemap" aria-label="Sitemap">
 ${cols}
-      </nav>
     </div>
     <div class="mkt-foot__legal">
       <p>&copy; 2026 ${esc(LEGAL_NAME)}. Meta&rsquo;s WhatsApp fees are billed by Meta on your own account. TopEdge adds 0% markup.</p>
@@ -709,69 +832,43 @@ ${cols}
 }
 
 /**
- * The proof block under the hero button, in the shape the reference uses: an
- * overlapping stack of round avatars, a star row beside it, one line of text
- * underneath.
+ * Under the hero button: the price, the risk reversal, and one named quote.
  *
- * The avatars carry initials, not photographs and not the logo files. No
- * photographs because we have none of these people and stock faces presented as
- * customers are a straightforward lie. Not the logos because every one of them
- * is a wordmark between 2.4:1 and 4:1, and a round crop at 42px leaves about
- * nine pixels of cap height: a smudge. The logos get a band of their own under
- * the hero, at a size where they can be read. Here the disc is a person, the
- * way the reference means it, and hovering one names the company and the
- * founder.
+ * What used to be here was five faces, "4.0 from 5 reviews" and a heart. The
+ * average was the problem. Stated above the fold, "5 reviews" says nobody uses
+ * this and "4.0" says at least one of those five was unhappy, and both land
+ * before the reader reaches a single quote. A numeric average is worth showing
+ * when the sample is large enough to reassure; at n=5 it does the opposite. The
+ * three quotes further down stay, with their retrieval date, because a quote
+ * from a named person is evidence and an average of five is a liability.
  *
- * The star row is the honest half of this. It renders only when
- * `TRUSTPILOT.score` holds a number, and it says where the number came from.
- * See the note on TRUSTPILOT for why it is still empty.
+ * Tirth's line is here specifically: "Indian software but feels like US-grade
+ * software quality" answers the objection an Indian D2C founder actually has
+ * about an Indian SaaS, which no amount of stars will.
  */
-/**
- * Trustpilot's own star, in Trustpilot's own colours: a filled box is #00b67a
- * and an empty one is #dcdce6, which is how their widget draws it and how a
- * reader recognises whose rating this is. Gold stars next to the word
- * Trustpilot would be our rendering of their mark.
- *
- * `starRow` draws the score it is handed. Five filled stars beside a 4.0 is
- * the exact misrepresentation this whole thread has been avoiding, so the
- * fill count is computed, a half is drawn as a half, and `check:lp` counts
- * the filled boxes against the number.
- */
-const TP_GREEN = '#00b67a';
-const TP_GREY = '#dcdce6';
-const STAR_PATH = 'M12 1.6l3.1 7.2 7.8.6-5.9 5.1 1.8 7.6L12 18l-6.8 4.1 1.8-7.6L1.1 9.4l7.8-.6z';
-// A Trustpilot star is a white star knocked out of a coloured box, not a
-// coloured star on the page background. The box is drawn inside the svg so a
-// partial score can clip the green one and still show the white star on top.
-const star = (fill) =>
-  `<svg class="st" viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><rect width="24" height="24" fill="${TP_GREY}"/>${
-    fill > 0
-      ? `<rect width="24" height="24" fill="${TP_GREEN}"${fill < 1 ? ` clip-path="inset(0 ${Math.round((1 - fill) * 100)}% 0 0)"` : ''}/>`
-      : ''
-  }<path fill="#fff" d="${STAR_PATH}"/></svg>`;
-
-function starRow(score) {
-  const n = Number(score);
-  return Array.from({ length: 5 }, (_, i) => star(Math.max(0, Math.min(1, n - i)))).join('');
-}
-
 function heroProof() {
-  const faces = PEOPLE.map(
-    (p2) =>
-      `<span><img src="${p2.photo}" alt="" width="128" height="128" decoding="async"><i class="hp-tip">${esc(p2.company)}${p2.name ? `<em>${esc(p2.name)}</em>` : ''}</i></span>`,
-  ).join('');
-  const who = PEOPLE.map((p2) => (p2.name ? `${p2.name} of ${p2.company}` : p2.company)).join(', ');
-  const stars = TRUSTPILOT.score
-    ? `<p class="hp-stars">${starRow(TRUSTPILOT.score)}<span><b>${esc(TRUSTPILOT.score)}</b> from ${esc(TRUSTPILOT.reviews)} reviews on <a href="${TRUSTPILOT.reviewUrl}" target="_blank" rel="noopener">Trustpilot</a></span></p>`
-    : `<p class="hp-stars hp-stars--none"><a href="${TRUSTPILOT.reviewUrl}" target="_blank" rel="noopener">Read the reviews on Trustpilot</a></p>`;
-  return `<div class="hp">
-        <div class="hp-faces" role="img" aria-label="Running on TopEdge: ${esc(who)}">${faces}</div>
-        <div class="hp-col">
-          ${stars}
-          <p class="hp-t">Loved by Shopify founders in India <span aria-hidden="true">&#10084;</span></p>
-        </div>
-      </div>`;
+  const y = planPricing(plans[0], 'yearly');
+  return `<p class="hero-price">From <b>${esc(y.effectiveMonthlyLabel)}/month</b>, billed yearly &middot; ${TRIAL.days}-day free trial &middot; No credit card</p>
+      <figure class="hero-quote">
+        <blockquote>&ldquo;${esc(QUOTES[0].text)}&rdquo;</blockquote>
+        <figcaption>${esc(QUOTES[0].author)}, verified review on <a href="${TRUSTPILOT.reviewUrl}" target="_blank" rel="noopener">Trustpilot</a></figcaption>
+      </figure>`;
 }
+
+/**
+ * The band under the hero. Three marks a merchant can verify in one search,
+ * moved up from the foot of the pricing section where nobody saw them.
+ *
+ * It replaces a marquee of four customer logos. Those four are a salon, a
+ * clinic, a lighting brand and a smart-home brand; to a Shopify apparel or
+ * skincare founder, a salon in the trust row says this was not built for me.
+ * Four unrecognised non-D2C logos are weaker than none, and these three are
+ * recognised and checkable. The marquee comes back when there are four D2C
+ * brands to put in it.
+ */
+const stripHtml = BADGES.map(
+  (b) => `<li><img src="${b.src}" alt="${esc(b.alt)}" height="40" loading="lazy" decoding="async"></li>`,
+).join('');
 
 /**
  * The aside beside the primary button: the owner's own hand-drawn arrow with
@@ -782,7 +879,6 @@ function heroProof() {
  */
 const SHOPIFY_BUTTON = `<a class="btn btn-out" data-cta="shopify" href="${SHOPIFY_URL}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V7a3 3 0 0 1 6 0v1"/></svg>Install on Shopify</a>`;
 
-const FREE_NOTE = `<span class="free" aria-hidden="true"><img src="/lp/free-arrow.webp" width="140" height="55" alt="" decoding="async"><b>Free for ${TRIAL.days} days</b></span>`;
 
 const VIDEO = {
   lg: '/marketing/demos/topedge-launch.mp4',
@@ -953,6 +1049,11 @@ const attribution = squashJs(fs.readFileSync(path.join(lpDir, 'attribution.js'),
 const behavior = squashJs(fs.readFileSync(path.join(lpDir, 'page.js'), 'utf8'));
 
 // Function replacers: a catalog string containing `$&` must never be interpreted as a pattern.
+const variantCss = Object.keys(PROOF_VARIANTS)
+  .filter((k) => k !== 'platform')
+  .map((k) => `html[data-v="${k}"] .pf[data-pf="platform"]{display:none}html[data-v="${k}"] .pf[data-pf="${k}"]{display:grid}`)
+  .join('');
+
 const fill = (tpl, map) => tpl.replace(/\{\{([A-Z0-9_]+)\}\}/g, (m, k) => (k in map ? map[k] : m));
 
 for (const page of PAGES) {
@@ -966,8 +1067,7 @@ for (const page of PAGES) {
     POSTS: postsHtml,
     SWITCH_ROWS: switchHtml,
     INCLUDED_LIST: includedHtml,
-    STRIP_LOGOS: stripHtml,
-    BADGES: badgesHtml,
+    STRIP_BADGES: stripHtml,
     FILM: filmHtml(),
     SLUG: page.slug,
     SIGNUP_FALLBACK: SIGNUP_FALLBACK(page.slug),
@@ -979,8 +1079,18 @@ for (const page of PAGES) {
     HERO_MARK: esc(HERO_VARIANTS.platform.mark),
     HERO_SUB: esc(HERO_VARIANTS.platform.sub),
     HERO_PROOF: heroProof(),
+    PROOF_BLOCKS: proofHtml(),
+    STEPS: STEPS.map(
+      (x, i) => `      <li class="stp" data-rv style="--d:${i * 70}ms"><b>${i + 1}</b><h3>${esc(x.h)}</h3><p>${esc(x.p)}</p></li>`,
+    ).join('\n'),
+    FAQS: FAQS.map(
+      (f) => `      <details class="fq"><summary>${esc(f.q)}<i aria-hidden="true"></i></summary><p>${esc(f.a)}</p></details>`,
+    ).join('\n'),
+    LAUNCH_YEARLY: esc(planPricing(plans[0], 'yearly').effectiveMonthlyLabel),
+    TRIAL_DAYS: String(TRIAL.days),
+    MIGRATION_H: esc(MIGRATION.h),
+    MIGRATION_P: esc(MIGRATION.p),
     SHOPIFY_BTN: SHOPIFY_BUTTON,
-    FREE_NOTE,
     HERO_VARIANTS_JSON: JSON.stringify(HERO_VARIANTS).replace(/</g, '\\u003c'),
     LEGAL_NAME: esc(LEGAL_NAME),
     COMPANY_EMAIL: esc(COMPANY_EMAIL),
@@ -996,7 +1106,7 @@ for (const page of PAGES) {
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#7C3AED">
 <link rel="icon" type="image/png" sizes="96x96" href="/favicon.png">
-<style>${css}</style>
+<style>${css}${variantCss}</style>
 </head>
 <body>
 ${body}

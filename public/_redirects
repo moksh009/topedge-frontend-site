@@ -59,6 +59,10 @@ https://www.topedgeai.com/*  https://topedgeai.com/:splat  301!
 # Retired topic / marketing URLs
 /whatsapp-cart-recovery  /features/journeys  301!
 /whatsapp-cart-recovery/  /features/journeys  301!
+# The ad page was renamed when it stopped being a COD-only page (11 Oct 2026).
+# Any ad, bookmark or QR still pointing at the old path lands on the new one.
+/lp/cod-confirmation  /lp/shopify-whatsapp  301!
+/lp/cod-confirmation/  /lp/shopify-whatsapp  301!
 /cod-confirmation-whatsapp  /features/journeys  301!
 /cod-confirmation-whatsapp/  /features/journeys  301!
 /services  /features  301!

@@ -70,47 +70,20 @@ mark.chip{background:var(--chip-bg)}
 /* The hand-drawn aside beside the primary button. It is decoration and it is the
    first thing to go when the row runs out of room, so it is absolutely positioned
    out of flow and hidden below 1100px rather than allowed to wrap. */
-.free{display:none}
 @media(min-width:1100px){
- .free{display:flex;position:absolute;left:calc(100% + .4rem);top:50%;transform:translateY(-52%);align-items:center;gap:.35rem;color:#2e1065;white-space:nowrap}
- .free img{display:block;flex:none;width:6.4rem;height:auto}
- .free b{font-weight:600;font-size:.92rem;transform:rotate(-8deg) translateY(-.4rem);color:#2e1065;letter-spacing:-.015em}
 }
 /* Proof under the buttons: the four brands we are allowed to name, as marks on the
    brand gradient (the files are white knockouts, so they need a dark disc), and a
    link to the reviews. No score is written here, see TRUSTPILOT in the generator. */
 /* Faces on the left, the rating over the line that reads it, on the right:
    the shape of the proof block the owner sent as the reference. */
-.hp{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.6rem 1.1rem;margin-top:1.5rem}
-.hp-col{display:flex;flex-direction:column;align-items:flex-start;gap:.25rem}
 /* Round, overlapping, and each one a person: initials, because we have no
    photographs of these customers and the logo files are wordmarks that a 42px
    circle crops to a smudge. The logos get the band below, at a readable size. */
-.hp-faces{display:flex;padding-left:.78rem}
 /* Ved in front, code CLINIC at the back. Without this the DOM order puts the
    last avatar on top, which is the opposite of the order the owner asked for. */
-.hp-faces>span:nth-child(1){z-index:5}
-.hp-faces>span:nth-child(2){z-index:4}
-.hp-faces>span:nth-child(3){z-index:3}
-.hp-faces>span:nth-child(4){z-index:2}
-.hp-faces>span:nth-child(5){z-index:1}
-.hp-faces>span{position:relative;display:block;width:3.1rem;height:3.1rem;margin-left:-.78rem;border-radius:50%;background:#ede9fe;box-shadow:0 0 0 3px #fff,0 6px 14px -7px rgba(46,16,101,.6);transition:transform .25s var(--e)}
-.hp-faces>span:hover{z-index:6;transform:translateY(-3px) scale(1.04)}
-.hp-faces img{display:block;width:100%;height:100%;border-radius:50%;object-fit:cover}
-.hp-tip{position:absolute;bottom:calc(100% + .55rem);left:50%;transform:translateX(-50%);display:grid;gap:.1rem;padding:.4rem .7rem;border-radius:10px;background:#2e1065;color:#fff;font-size:.74rem;font-weight:500;line-height:1.3;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s}
-.hp-tip em{font-style:normal;font-weight:400;color:#c4b5fd}
-.hp-tip:after{content:'';position:absolute;top:100%;left:50%;margin-left:-5px;border:5px solid transparent;border-top-color:#2e1065}
-.hp-faces>span:hover .hp-tip{opacity:1}
 /* Trustpilot's stars sit in their own boxes in Trustpilot's widget, which is
    how the mark is recognised; the gap between them is the box edge. */
-.hp-stars{display:inline-flex;align-items:center;gap:.2rem;font-size:.92rem;color:#4b3a6e}
-.hp-stars .st{display:block;border-radius:2px}
-.hp-stars span{display:inline-flex;align-items:center;gap:.3rem;margin-left:.55rem}
-.hp-stars b{font-weight:600;color:#2e1065}
-.hp-stars a{font-weight:500;text-decoration:none}
-.hp-stars a:hover{text-decoration:underline}
-.hp-t{font-size:.95rem;color:#4b3a6e}
-.micro{margin-top:.85rem;font-size:.84rem;color:var(--muted)}
 /* sections */
 section{padding:3.75rem 0}
 /* Flat, not a gradient: a wash under every other section made the page look
@@ -196,31 +169,19 @@ section{padding:3.75rem 0}
 .bx{display:flex;flex-direction:column;padding:1.6rem 1.5rem;border-radius:26px;background:#fff;border:1px solid #ece4fb;box-shadow:0 1px 2px rgba(16,24,40,.03),0 14px 36px -18px rgba(76,29,149,.14);transition:border-color .35s var(--e),box-shadow .35s var(--e)}
 .bx h3{font-size:1.14rem;font-weight:450;letter-spacing:-.024em;line-height:1.3}
 .bx p{margin-top:.5rem;font-size:.95rem;color:var(--muted);text-wrap:pretty}
-.bx--f .shot{display:block;width:100%;height:auto;aspect-ratio:auto;border-radius:12px;background:#fff}
 .viz{position:relative;flex:1;margin-top:1.3rem;min-height:9.5rem;padding:1.05rem;border-radius:19px;overflow:hidden;background:linear-gradient(170deg,#fcfbff 0,#f5f0ff 55%,#efe6ff 100%);box-shadow:inset 0 0 0 1px #efe7fd}
 /* A soft wash that only shows on hover, so the panel warms up rather than jumping. */
 .viz:after{content:'';position:absolute;inset:0;border-radius:inherit;background:radial-gradient(18rem 12rem at 80% 0,rgba(168,85,247,.16),transparent 70%);opacity:0;transition:opacity .4s}
 /* The card itself holds still on hover, as asked. Only its contents move. */
 .bx:hover{border-color:#d9c8fa;box-shadow:0 1px 2px rgba(16,24,40,.04),0 18px 42px -20px rgba(76,29,149,.26)}
 .bx:hover .viz:after{opacity:1}
-.vz-note{margin-top:1.2rem;text-align:center;font-size:.82rem;color:var(--muted)}
 /* Every moving piece shares one curve and one duration, so five panels animating at
    once read as one surface rather than five widgets. Staggers are per child. */
-.fb i,.fb b,.sg span,.mtr-b i,.nd,.fn-tot strong{transition:transform .45s cubic-bezier(.22,1,.36,1),opacity .45s}
 /* recovery funnel: the bars run out to length on hover and the total lifts */
-.fn{display:grid;gap:.65rem}
-.fb{display:grid;grid-template-columns:5.6rem 1fr auto;align-items:center;gap:.6rem;font-size:.78rem;color:#4b3a6e}
-.fb i{height:.9rem;border-radius:999px;background:linear-gradient(90deg,#c4b5fd,#a78bfa);box-shadow:0 2px 6px -3px rgba(124,58,237,.6);transform-origin:left center;transform:scaleX(.88)}
-.fb b{font-weight:600;font-variant-numeric:tabular-nums;color:#3b2d5c}
-.fb--win i{background:linear-gradient(90deg,#7c3aed,#9333ea)}
-.fb--win b{color:#6d28d9}
 .bx:hover .fb i{transform:scaleX(1)}
 .bx:hover .fb:nth-child(2) i{transition-delay:.06s}
 .bx:hover .fb:nth-child(3) i{transition-delay:.12s}
 .bx:hover .fn-tot strong{transform:translateY(-2px) scale(1.04)}
-.fn-tot i{display:inline-block;margin-left:.35rem;padding:.05rem .3rem;border-radius:4px;background:rgba(124,58,237,.1);font-style:normal;font-size:.62rem;font-weight:600;letter-spacing:.03em;color:#7c3aed;vertical-align:.08em}
-.fn-tot{display:flex;align-items:baseline;justify-content:space-between;gap:.5rem;margin-top:1rem;padding-top:.8rem;border-top:1px dashed rgba(124,58,237,.25);font-size:.8rem;color:#4b3a6e}
-.fn-tot strong{display:inline-block;transform-origin:right bottom;font-size:1.28rem;font-weight:500;letter-spacing:-.02em;color:var(--chip-ink);font-variant-numeric:tabular-nums}
 /* ---- the illustration layer ----
    What separated these from the references the owner kept sending was never
    the drawing, it was the staging: too many elements, all the same size, all
@@ -270,7 +231,6 @@ section{padding:3.75rem 0}
 .ord-h em{display:block;margin-top:.1rem;font-style:normal;font-size:.7rem;color:#9b8cb8}
 .ord-f{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.7rem}
 .tag{padding:.2rem .5rem;border-radius:999px;font-size:.64rem;font-weight:600;font-style:normal;white-space:nowrap}
-.tag--cod{background:#fff3e0;color:#b45309}
 .tag--ok{background:#e6f8ef;color:#0f7a52}
 .pane--ask{position:absolute;right:0;bottom:0;width:10.2rem;padding:.65rem .7rem}
 .ask-btns{display:grid;gap:.28rem;margin-top:.5rem}
@@ -297,7 +257,6 @@ section{padding:3.75rem 0}
 /* the visitor trail, inside the browser it happened in */
 .pane--trail{padding:0 0 .55rem;overflow:hidden}
 .brow{display:flex;align-items:center;gap:.28rem;padding:.45rem .6rem;border-bottom:1px solid #f3eefb}
-.brow i{width:.4rem;height:.4rem;border-radius:50%;background:#e4dcf6}
 .brow span{margin-left:.3rem;padding:.12rem .5rem;border-radius:999px;background:#f5f1fd;font-size:.62rem;color:#8b7ba8}
 .trail{position:relative;list-style:none;margin:0;padding:.65rem .7rem .1rem 1.5rem}
 .trail:before{content:'';position:absolute;left:.95rem;top:1rem;bottom:.8rem;width:1.5px;background:linear-gradient(180deg,#c4b5fd,#f0e4ff)}
@@ -323,40 +282,24 @@ section{padding:3.75rem 0}
 .bx:hover .nd--a{transform:translateY(-3px)}
 .bx:hover .nd--b{transform:translateY(-3px);transition-delay:.07s}
 .bx:hover .fl-split .nd{transform:translateY(-3px);transition-delay:.14s}
-.vz-note{margin-top:1.2rem;text-align:center;font-size:.82rem;color:var(--muted)}
 /* ---- the film, autoplaying in the hero ---- */
 .film-wrap{width:min(100%,64rem);margin:1.6rem auto 0}
 /* No drop shadow behind the film: the owner wants the frame flat against the
    gradient. A hairline keeps the dark poster from bleeding into the wash. */
 .film{display:block;width:100%;height:auto;aspect-ratio:16/9;max-height:min(44svh,29rem);margin:0 auto;border-radius:20px;background:#ece7fa;border:1px solid rgba(124,58,237,.16)}
-.shot{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;background:#f1edfb;border-bottom:1px solid var(--line)}
 /* ---- going live, three steps on one rail ---- */
 /* ---- playbooks: the blog, so the visitor who is not ready today has a reason
    to come back and a path into the rest of the site ---- */
-.posts{display:grid;gap:1rem}
-.post{display:flex;flex-direction:column;overflow:hidden;border-radius:20px;background:#fff;box-shadow:var(--ring),var(--lift);text-decoration:none;color:inherit}
-.post img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;background:#f1edfb}
-.post-b{display:flex;flex-direction:column;flex:1;padding:1.1rem 1.2rem 1.3rem}
-.post-m{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;font-size:.72rem;color:#8b7ba8}
-.post-m span:first-child{padding:.18rem .55rem;border-radius:999px;background:#f3eeff;color:#6d28d9;font-weight:600}
-.post h3{margin-top:.6rem;font-size:1.02rem;font-weight:450;letter-spacing:-.02em;line-height:1.35}
-.post-go{margin-top:auto;padding-top:.9rem;font-size:.86rem;font-weight:500;color:var(--violet)}
-.posts-all{margin-top:1.75rem;text-align:center;font-size:.92rem}
 /* trust strip with the logo marquee */
-.trust-l{text-align:center;font-size:.9rem;color:#8b7ba8}
 /* The logo ribbon. The track holds three copies of the four marks and travels
    exactly one copy, so the frame it lands on is identical to the one it left
    and the loop has no seam. The mask fades both ends so a mark enters and
    leaves rather than popping. It pauses on hover, and under reduced motion it
    becomes a static wrapped row, where an endless scroll is the thing to avoid. */
-.mq{position:relative;width:min(100% - 2.5rem,76rem);margin:1.3rem auto 0;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
-.trust-marks{display:flex;width:max-content;align-items:center;gap:4.5rem;list-style:none;margin:0;padding:0;animation:mq 38s linear infinite}
-.mq:hover .trust-marks{animation-play-state:paused}
+.trust-marks{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:1rem 2.4rem;list-style:none;margin:0 auto;padding:0}
 /* The files are white-on-transparent, made for a dark band. brightness(0) gives
    the flat dark mark a logo wall on white wants, with the alpha intact. */
-.trust-marks img{display:block;height:28px;width:auto;max-width:10rem;object-fit:contain;filter:brightness(0);opacity:.55;transition:opacity .25s}
-.trust-marks img:hover{opacity:.9}
-@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-33.3333%)}}
+.trust-marks img{display:block;height:40px;width:auto;object-fit:contain}
 /* Four logos are narrower than a desktop viewport, so an unconstrained track shows the
    same mark twice at once. Capping the window keeps the scroll without the double. */
 /* ---- the comparison ----
@@ -376,7 +319,6 @@ section{padding:3.75rem 0}
 .cmp-v{color:var(--ink)}
 .cmp-v i{background:#e6f8ef;color:#0f9d6a}
 .ic{display:inline-flex;align-items:center;justify-content:center;width:2.1rem;height:2.1rem;border-radius:11px;background:#f4efff;color:var(--violet);box-shadow:inset 0 0 0 1px #e9dffd}
-.trustpilot-widget{min-height:1px}
 /* proof: review cards in Trustpilot's visual language */
 .quotes{display:grid;gap:1rem}
 .quote{margin:0;padding:1.3rem 1.3rem 1.2rem;display:flex;flex-direction:column;gap:.75rem}
@@ -439,17 +381,9 @@ section{padding:3.75rem 0}
 /* The badge files carry their own white background, which on a lavender section
    reads as three stray white rectangles. Giving each one a card of its own makes
    that background deliberate instead of accidental. */
-.badges{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.8rem 1.1rem;list-style:none;padding:0;margin:2.2rem auto 0}
-.badges li{display:flex;padding:.35rem .6rem;border-radius:12px;background:#fff;box-shadow:0 1px 2px rgba(16,24,40,.05),0 8px 20px -14px rgba(46,16,101,.5)}
-.badges img{display:block;height:44px;width:auto;object-fit:contain}
 .foot-note{margin-top:1rem;text-align:center;font-size:.85rem;color:var(--muted)}
 .mid-cta{margin-top:1.8rem;text-align:center}
 /* talk to a person */
-.help{text-align:center}
-.help h2{font-size:clamp(1.55rem,3.6vw,2.2rem);font-weight:400;letter-spacing:-.032em;line-height:1.3}
-.help .sub{margin:.9rem auto 1.5rem;text-align:center}
-.btn-wa{background:#25d366;color:#0b3d24}
-.btn-wa:hover,.btn-wa:focus-visible{background:#1fbe5a}
 /* ---- footer, ported from MarketingFooter + marketing.css ---- */
 .mkt-foot{position:relative;isolation:isolate;overflow:hidden;background:#fff;border-top:1px solid #f1f5f9;color:var(--ink)}
 .mkt-foot__shell{position:relative;z-index:2;width:min(100%,1180px);margin:0 auto;padding:clamp(2.25rem,3.5vw,2.85rem) clamp(1.25rem,2vw,1.35rem) 1.25rem}
@@ -472,16 +406,12 @@ section{padding:3.75rem 0}
 .mkt-foot__list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.55rem}
 .mkt-foot__link{font-size:.875rem;font-weight:400;color:#475569;text-decoration:none;line-height:1.35;transition:color .15s}
 .mkt-foot__link:hover{color:var(--violet)}
-.mkt-foot__trust{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.75rem 1.25rem;margin-top:1.75rem;padding:.85rem 0 .5rem;border-top:1px solid #f1f5f9}
-.mkt-foot__trust-label{font-size:.72rem;font-weight:600;color:#94a3b8}
-.mkt-foot__trust-list{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;align-items:center;gap:.75rem 1.35rem}
-.mkt-foot__trust-list img{display:block;width:auto;height:3.15rem;max-width:10.5rem;object-fit:contain}
 .mkt-foot__legal{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.55rem 1.1rem;margin-top:.65rem;padding-top:.75rem;border-top:1px solid #f1f5f9;font-size:.72rem;color:#94a3b8}
 .mkt-foot__legal-links{display:flex;flex-wrap:wrap;gap:.75rem 1rem}
 .mkt-foot__legal-links a{color:#94a3b8;text-decoration:none}
 .mkt-foot__legal-links a:hover{color:var(--violet)}
 /* the trust strip, restyled to the brand gradient rather than flat ink */
-.trust{background:#fff;padding:2.5rem 0 1.5rem}
+.trust{background:#fff;padding:2rem 1.25rem}
 /* sticky mobile cta */
 .sticky{display:none}
 /* Below 900px a panel is too narrow for a card to float over another card
@@ -494,16 +424,23 @@ section{padding:3.75rem 0}
  .orbit{height:auto;min-height:11.5rem}
  .bx:hover .pane--wa,.bx:hover .pane--ask,.bx:hover .pane--aud{transform:none}
 }
+/* The quote and the price line both earn their space, so what gives on a short
+   phone is the film, which is the one thing still legible at any size. */
+@media(max-width:430px){
+ .hero-quote{margin-top:.85rem;padding:.7rem .85rem}
+ .hero-quote blockquote{font-size:.92rem}
+ .film{max-height:30svh}
+}
 @media(max-width:380px){
- .film{max-height:34svh}
- .hero h1{font-size:1.85rem}
+ .film{max-height:24svh}
+ .hero h1{font-size:1.8rem}
+ .hero-price{font-size:.88rem}
 }
 @media(max-width:759px){
  .mkt-plan--emphasis{order:-1}
  body{padding-bottom:6rem}
  .hero h1{max-width:16ch}
  /* Dashboard detail is unreadable at 390px in a 16:9 box, so crop in and scale up. */
- .shot{aspect-ratio:4/3;object-position:center}
  /* Both ways in, side by side: the trial is the page's job, but a Shopify
     merchant who would rather install from the App Store should not have to
     scroll back up to find that. Equal halves, the trial weighted by colour. */
@@ -521,10 +458,7 @@ section{padding:3.75rem 0}
     is a chart, and a drawn chart would be a chart of nothing. */
  /* Two children, two columns: the copy stays a block of its own so the chart
     beside it cannot stretch the row the heading sits in. */
- .bx--f{grid-column:span 6;display:grid;grid-template-columns:minmax(0,20rem) minmax(0,1fr);gap:2.5rem;align-items:center}
- .bx--f .viz{margin-top:0}
  .plans{grid-template-columns:repeat(3,1fr)}
- .posts{grid-template-columns:repeat(3,1fr)}
  .quotes{grid-template-columns:repeat(3,1fr)}
  .ticks.two{grid-template-columns:repeat(2,1fr);gap:.6rem 2rem}
  .mkt-foot__top{grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:3rem}
@@ -568,13 +502,87 @@ section{padding:3.75rem 0}
 }
 @media(prefers-reduced-motion:reduce){
  *{transition:none!important;animation:none!important}
- .fb i,.mtr-b i{transform:none}
  .path:hover .ch:nth-child(2){transform:rotate(5deg)}
  .path:hover .ch:nth-child(3){transform:rotate(-6deg)}
  .path:hover .ch:nth-child(4){transform:rotate(4deg)}
  .path:hover .ch:nth-child(5){transform:rotate(-3deg)}
  html{scroll-behavior:auto}
- .trust-marks{width:100%;flex-wrap:wrap;justify-content:center;gap:1.5rem 3rem}
- .trust-marks li[aria-hidden]{display:none}
- .mq{-webkit-mask-image:none;mask-image:none}
+}
+/* ---- 2026-10-11 audit rebuild ----
+   The page is bought by the click now, so everything below exists to answer
+   one of four questions inside eight seconds: what is this, what does it cost,
+   is it safe for my Meta account, what do I click. */
+/* Under the hero button: the number, the terms, and one named human. */
+.hero-price{margin-top:1rem;font-size:.95rem;color:#4b3a6e}
+.hero-price b{font-weight:600;color:var(--ink)}
+.hero-quote{width:min(100%,34rem);margin:1.1rem auto 0;padding:.9rem 1.1rem;border-radius:16px;background:rgba(255,255,255,.8);box-shadow:0 0 0 1px rgba(124,58,237,.1),0 10px 24px -16px rgba(46,16,101,.5)}
+.hero-quote blockquote{margin:0;font-size:1rem;line-height:1.5;color:var(--ink);text-wrap:pretty}
+.hero-quote figcaption{margin-top:.45rem;font-size:.8rem;color:#8b7ba8}
+.hero-quote a{font-weight:500;text-decoration:none}
+/* The variant proof block. The statistic is the subject and it carries its
+   source underneath, because a number a merchant cannot check is worth less
+   than no number at all. */
+.pf{display:none;gap:1.5rem 2.75rem;align-items:center;width:min(100%,62rem);margin:0 auto}
+.pf[data-pf="platform"]{display:grid}
+.pf-stat{display:grid;gap:.35rem;padding:1.4rem 1.5rem;border-radius:20px;background:#fff;border:1px solid #ece4fb;box-shadow:0 1px 2px rgba(16,24,40,.03),0 16px 38px -22px rgba(76,29,149,.3)}
+.pf-stat b{font-size:clamp(1.9rem,4.4vw,2.6rem);font-weight:500;letter-spacing:-.04em;line-height:1;color:var(--chip-ink);font-variant-numeric:tabular-nums}
+.pf-stat span{font-size:.85rem;line-height:1.45;color:var(--muted);text-wrap:pretty}
+.pf-copy h2{font-size:clamp(1.4rem,3.2vw,1.95rem);font-weight:400;letter-spacing:-.032em;line-height:1.22;text-wrap:balance}
+.pf-copy p{margin-top:.75rem;font-size:1.02rem;line-height:1.6;color:var(--muted);text-wrap:pretty}
+.pf-src{margin-top:.7rem;font-size:.78rem;line-height:1.5;color:#9b8cb8}
+/* One inverted band, on the strongest section. It gives the eye somewhere to
+   rest on a long page and marks the comparison as the thing to read. */
+.dark{background:#140a2b;color:#fff}
+.dark .head h2{color:#fff}
+.dark .chip{background:rgba(167,139,250,.25);color:#ddd0ff}
+.dark .cmp{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.1);box-shadow:none}
+.dark .cmp-row{background:transparent;border-color:rgba(255,255,255,.1);box-shadow:none}
+.dark .cmp-t{color:#fff}
+.dark .cmp-x{color:#8d85a6}
+.dark .cmp-x i{background:rgba(255,255,255,.07);color:#8d85a6}
+/* The light rule paints this column near-white, which on the inverted band
+   hides its own text. The tint has to invert with everything else. */
+.dark .cmp-v{background:rgba(167,139,250,.11);color:#f3f0ff}
+.dark .cmp-row--head .cmp-v{color:#d6c9ff}
+.dark .cmp-row--head .cmp-x{color:#8d85a6}
+.dark .cmp-v i{background:rgba(52,210,123,.16);color:#4ade9a}
+.dark .ic{background:rgba(167,139,250,.14);color:#c4b5fd;box-shadow:inset 0 0 0 1px rgba(167,139,250,.2)}
+.mig{width:min(100%,58rem);margin:1.5rem auto 0;padding:1.3rem 1.5rem;border-radius:18px;background:rgba(167,139,250,.12);border:1px solid rgba(167,139,250,.25);display:none}
+.mig h3{font-size:1.08rem;font-weight:500;color:#fff}
+.mig p{margin-top:.4rem;font-size:.97rem;line-height:1.55;color:#cdc3e8;text-wrap:pretty}
+html[data-v="switch"] .mig{display:block}
+/* Going live, numbered. */
+.steps{counter-reset:s;list-style:none;margin:0 auto;padding:0;display:grid;gap:1.25rem;width:min(100%,62rem)}
+.stp{padding:1.5rem 1.4rem;border-radius:20px;background:#fff;border:1px solid #ece4fb;box-shadow:0 1px 2px rgba(16,24,40,.03),0 14px 34px -20px rgba(76,29,149,.18)}
+.stp b{display:grid;place-items:center;width:2.1rem;height:2.1rem;border-radius:12px;background:#f3eeff;color:var(--chip-ink);font-size:.88rem;font-weight:600}
+.stp h3{margin-top:.95rem;font-size:1.05rem;font-weight:500;letter-spacing:-.02em}
+.stp p{margin-top:.4rem;font-size:.95rem;line-height:1.55;color:var(--muted);text-wrap:pretty}
+/* The seven questions, native details so they cost nothing until opened. */
+.narrow{width:min(100% - 2.5rem,48rem)}
+.fqs{display:grid;gap:.6rem}
+.fq{border-radius:16px;background:#fff;border:1px solid #ece4fb;box-shadow:0 1px 2px rgba(16,24,40,.03)}
+.fq summary{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.05rem 1.2rem;font-size:1rem;font-weight:500;letter-spacing:-.01em;color:var(--ink);cursor:pointer;list-style:none}
+.fq summary::-webkit-details-marker{display:none}
+.fq summary:focus-visible{outline:3px solid #c4b5fd;outline-offset:-3px;border-radius:16px}
+.fq summary i{position:relative;flex:none;width:1.05rem;height:1.05rem}
+.fq summary i:before,.fq summary i:after{content:'';position:absolute;top:50%;left:0;width:100%;height:1.6px;border-radius:2px;background:#8b7ba8;transition:transform .25s var(--e)}
+.fq summary i:after{transform:rotate(90deg)}
+.fq[open] summary i:after{transform:rotate(0)}
+.fq[open] summary{color:var(--chip-ink)}
+.fq p{padding:0 1.2rem 1.15rem;font-size:.97rem;line-height:1.6;color:var(--muted);text-wrap:pretty}
+.fq-more{margin-top:1.4rem;text-align:center;font-size:.95rem;color:var(--muted)}
+.fq-more a{font-weight:500;text-decoration:none}
+/* The price block, rewritten so the yearly saving is the loudest number. */
+.mkt-plan__billing-note em{display:block;margin-top:.3rem;font-style:normal;color:#94a3b8}
+.save{display:inline-block;margin-left:.3rem;padding:.08rem .4rem;border-radius:999px;background:#e6f8ef;color:#0f7a52;font-size:.68rem;font-weight:700}
+.mkt-plan__gate{margin:.6rem .35rem 0;font-size:.72rem;line-height:1.4;color:#94a3b8}
+/* The slim header, once the hero CTA is gone. */
+.topbar{position:fixed;inset:0 0 auto;z-index:45;display:none;align-items:center;justify-content:center;gap:1.25rem;padding:.6rem 1.25rem;background:rgba(255,255,255,.93);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);box-shadow:0 1px 0 rgba(124,58,237,.12),0 10px 30px -18px rgba(46,16,101,.4);transform:translateY(-110%);transition:transform .25s var(--e)}
+.topbar.on{transform:none}
+.topbar p{font-size:.88rem;color:#4b3a6e}
+.topbar .btn{min-height:2.5rem;padding:0 1.2rem;font-size:.88rem}
+@media(min-width:900px){
+ .pf{grid-template-columns:minmax(0,19rem) minmax(0,1fr)}
+ .steps{grid-template-columns:repeat(3,1fr)}
+ .topbar{display:flex}
 }
