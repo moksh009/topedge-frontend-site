@@ -63,9 +63,15 @@ function load(): void {
         // fires on a hard load and would under-count every route after the first.
         capture_pageview: false,
         capture_pageleave: true,
-        // Only build a person profile once someone is identified, so anonymous
-        // traffic does not burn the free tier's person allowance.
-        person_profiles: 'identified_only',
+        // A profile for EVERY visitor, not only identified ones.
+        //
+        // 'identified_only' saves quota but hides the people this account is bought
+        // for: at ~200 ad clicks a month, two or three become accounts and the rest
+        // are anonymous. Those are precisely the ones worth watching — what they read,
+        // where they hesitated, why they left — and under 'identified_only' they never
+        // appear in Persons at all. The volume here is a rounding error against the
+        // free tier's million events, so the trade is the wrong way round.
+        person_profiles: 'always',
       });
     } catch {
       /* analytics must never break the page */

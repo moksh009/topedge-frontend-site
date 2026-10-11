@@ -917,7 +917,7 @@ const phKey = String(viteEnv.VITE_POSTHOG_KEY || '').trim();
 const phHost = String(viteEnv.VITE_POSTHOG_HOST || '').trim() || 'https://us.i.posthog.com';
 const posthog = phKey
   ? `<script>
-addEventListener('load',function(){var s=document.createElement('script');s.async=true;s.src='${phHost}/static/array.js';s.onload=function(){try{posthog.init('${phKey}',{api_host:'${phHost}',cross_subdomain_cookie:true,autocapture:true,capture_pageview:true,person_profiles:'identified_only'})}catch(e){}};document.head.appendChild(s)});
+addEventListener('load',function(){var s=document.createElement('script');s.async=true;s.src='${phHost}/static/array.js';s.onload=function(){try{posthog.init('${phKey}',{api_host:'${phHost}',cross_subdomain_cookie:true,autocapture:true,capture_pageview:true,person_profiles:'always'})}catch(e){}};document.head.appendChild(s)});
 </script>
 `
   : '';
