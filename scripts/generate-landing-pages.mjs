@@ -440,7 +440,6 @@ const BADGES = [
   { src: '/badges/whatsapp-cloud-api.png?v=5', alt: 'Built on the official WhatsApp Cloud API' },
 ];
 
-// Three copies of four logos: two left a visible double at 1440px.
 /**
  * The four customers this page may name, as companies. The logo files are
  * white-on-transparent; base.css paints them dark for the light band, and
@@ -832,41 +831,91 @@ ${cols}
 }
 
 /**
- * Under the hero button: the price, the risk reversal, and one named quote.
+ * Trustpilot's own star, in Trustpilot's own colours: a filled box is #00b67a
+ * and an empty one is #dcdce6, which is how their widget draws it and how a
+ * reader recognises whose rating this is. Gold stars next to the word
+ * Trustpilot would be our rendering of their mark.
  *
- * What used to be here was five faces, "4.0 from 5 reviews" and a heart. The
- * average was the problem. Stated above the fold, "5 reviews" says nobody uses
- * this and "4.0" says at least one of those five was unhappy, and both land
- * before the reader reaches a single quote. A numeric average is worth showing
- * when the sample is large enough to reassure; at n=5 it does the opposite. The
- * three quotes further down stay, with their retrieval date, because a quote
- * from a named person is evidence and an average of five is a liability.
- *
- * Tirth's line is here specifically: "Indian software but feels like US-grade
- * software quality" answers the objection an Indian D2C founder actually has
- * about an Indian SaaS, which no amount of stars will.
+ * `starRow` draws the score it is handed. Five filled stars beside a 4.0 is
+ * the exact misrepresentation this whole thread has been avoiding, so the
+ * fill count is computed, a half is drawn as a half, and `check:lp` counts
+ * the filled boxes against the number.
  */
-function heroProof() {
-  const y = planPricing(plans[0], 'yearly');
-  return `<p class="hero-price">From <b>${esc(y.effectiveMonthlyLabel)}/month</b>, billed yearly &middot; ${TRIAL.days}-day free trial &middot; No credit card</p>
-      <figure class="hero-quote">
-        <blockquote>&ldquo;${esc(QUOTES[0].text)}&rdquo;</blockquote>
-        <figcaption>${esc(QUOTES[0].author)}, verified review on <a href="${TRUSTPILOT.reviewUrl}" target="_blank" rel="noopener">Trustpilot</a></figcaption>
-      </figure>`;
+const TP_GREEN = '#00b67a';
+const TP_GREY = '#dcdce6';
+const STAR_PATH = 'M12 1.6l3.1 7.2 7.8.6-5.9 5.1 1.8 7.6L12 18l-6.8 4.1 1.8-7.6L1.1 9.4l7.8-.6z';
+// A Trustpilot star is a white star knocked out of a coloured box, not a
+// coloured star on the page background. The box is drawn inside the svg so a
+// partial score can clip the green one and still show the white star on top.
+// All five boxes share one <svg> and one <path>: five standalone svgs cost
+// 1.5 KB of the page budget to draw the same mark five times.
+const star = (fill, i) =>
+  `<g transform="translate(${i * 27})"><rect width="24" height="24" rx="2" fill="${TP_GREY}"/>${
+    fill > 0
+      ? `<rect width="24" height="24" rx="2" fill="${TP_GREEN}"${fill < 1 ? ` clip-path="inset(0 ${Math.round((1 - fill) * 100)}% 0 0)"` : ''}/>`
+      : ''
+  }<use href="#tps"/></g>`;
+
+function starRow(score) {
+  const n = Number(score);
+  const boxes = Array.from({ length: 5 }, (_, i) => star(Math.max(0, Math.min(1, n - i)), i)).join('');
+  return `<svg class="st" viewBox="0 0 132 24" width="110" height="20" aria-hidden="true"><defs><path id="tps" fill="#fff" d="${STAR_PATH}"/></defs>${boxes}</svg>`;
 }
 
 /**
- * The band under the hero. Three marks a merchant can verify in one search,
- * moved up from the foot of the pricing section where nobody saw them.
+ * The proof row under the hero button: the five customers as people, the
+ * Trustpilot rating, and one line.
  *
- * It replaces a marquee of four customer logos. Those four are a salon, a
- * clinic, a lighting brand and a smart-home brand; to a Shopify apparel or
- * skincare founder, a salon in the trust row says this was not built for me.
- * Four unrecognised non-D2C logos are weaker than none, and these three are
- * recognised and checkable. The marquee comes back when there are four D2C
- * brands to put in it.
+ * The paid-traffic audit wanted this replaced by a price line and a pull
+ * quote. That version tested worse to the owner's eye and it was right to say
+ * so: a row of faces reads as "other founders did this" in a glance, which is
+ * the job above the fold, where a price line reads as a disclaimer. The price
+ * still appears, in the pricing section where someone goes looking for it.
+ *
+ * The company mark was tried on each face and removed: the logo files are 2:1
+ * to 4:1 wordmarks, so a chip small enough to sit on a 56px avatar crops
+ * DELITECH to a grey smear. The company is named on hover, and shown at a
+ * readable size in the ribbon below.
  */
-const stripHtml = BADGES.map(
+function heroProof() {
+  const faces = PEOPLE.map(
+    (p2) =>
+      `<span><img class="hp-ph" src="${p2.photo}" alt="" width="128" height="128" decoding="async"><i class="hp-tip">${esc(p2.company)}${p2.name ? `<em>${esc(p2.name)}</em>` : ''}</i></span>`,
+  ).join('');
+  const who = PEOPLE.map((p2) => (p2.name ? `${p2.name} of ${p2.company}` : p2.company)).join(', ');
+  const stars = TRUSTPILOT.score
+    ? `<p class="hp-stars">${starRow(TRUSTPILOT.score)}<span><b>${esc(TRUSTPILOT.score)}</b> from ${esc(TRUSTPILOT.reviews)} reviews on <a href="${TRUSTPILOT.reviewUrl}" target="_blank" rel="noopener">Trustpilot</a></span></p>`
+    : `<p class="hp-stars hp-stars--none"><a href="${TRUSTPILOT.reviewUrl}" target="_blank" rel="noopener">Read the reviews on Trustpilot</a></p>`;
+  return `<div class="hp">
+        <div class="hp-faces" role="img" aria-label="Running on TopEdge: ${esc(who)}">${faces}</div>
+        <div class="hp-col">
+          ${stars}
+          <p class="hp-t">Loved by Shopify founders in India</p>
+        </div>
+      </div>`;
+}
+
+/**
+ * The customer ribbon. Three copies of the four marks: the track travels exactly
+ * one copy, so the frame it lands on is identical to the one it left and the
+ * loop has no seam. Only the first copy is announced; the rest are aria-hidden,
+ * or a screen reader reads the same four companies three times.
+ */
+const stripHtml = [0, 1, 2]
+  .flatMap((copy) =>
+    TRUST_LOGOS.map(
+      (l) =>
+        `<li${copy ? ' aria-hidden="true"' : ''}><img src="${l.src}" alt="${copy ? '' : esc(l.alt)}" height="36" loading="lazy" decoding="async"></li>`,
+    ),
+  )
+  .join('');
+
+/**
+ * The platform marks, beside the price. "Who actually bills me for the messages"
+ * is a question that arrives when someone is looking at a number, not when they
+ * are looking at a headline.
+ */
+const badgesHtml = BADGES.map(
   (b) => `<li><img src="${b.src}" alt="${esc(b.alt)}" height="40" loading="lazy" decoding="async"></li>`,
 ).join('');
 
@@ -877,6 +926,13 @@ const stripHtml = BADGES.map(
  * page's deep violet) and two words in the margin. Inert decoration: hidden
  * from assistive tech and dropped entirely below 1100px.
  */
+/**
+ * The owner's hand-drawn arrow with its cream ground stripped, and two words in
+ * the margin. Inert decoration: hidden from assistive tech, positioned out of
+ * flow, and dropped entirely below 1100px rather than allowed to wrap.
+ */
+const FREE_NOTE = `<span class="free" aria-hidden="true"><img src="/lp/free-arrow.webp" width="140" height="55" alt="" decoding="async"><b>Free for ${TRIAL.days} days</b></span>`;
+
 const SHOPIFY_BUTTON = `<a class="btn btn-out" data-cta="shopify" href="${SHOPIFY_URL}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V7a3 3 0 0 1 6 0v1"/></svg>Install on Shopify</a>`;
 
 
@@ -1036,6 +1092,20 @@ const squashJs = (src) =>
     .filter((l) => l && !l.startsWith('//'))
     .join('\n');
 
+/**
+ * Markup indentation is 3 KB of the page: it buys nothing a reader can see and
+ * it is the first thing to go when the budget binds. Only the leading run goes,
+ * and the newline stays, so every line break still collapses to the single
+ * space it already was between two inline elements. Nothing here is inside a
+ * <pre> or a <textarea>, where the whitespace would be the content.
+ */
+const squashHtml = (src) =>
+  src
+    .split('\n')
+    .map((l) => l.replace(/^[\t ]+/, ''))
+    .filter(Boolean)
+    .join('\n');
+
 const squashCss = (src) =>
   src
     .replace(/\/\*[\s\S]*?\*\//g, '')
@@ -1067,7 +1137,8 @@ for (const page of PAGES) {
     POSTS: postsHtml,
     SWITCH_ROWS: switchHtml,
     INCLUDED_LIST: includedHtml,
-    STRIP_BADGES: stripHtml,
+    STRIP_LOGOS: stripHtml,
+    STRIP_BADGES: badgesHtml,
     FILM: filmHtml(),
     SLUG: page.slug,
     SIGNUP_FALLBACK: SIGNUP_FALLBACK(page.slug),
@@ -1091,12 +1162,13 @@ for (const page of PAGES) {
     MIGRATION_H: esc(MIGRATION.h),
     MIGRATION_P: esc(MIGRATION.p),
     SHOPIFY_BTN: SHOPIFY_BUTTON,
+    FREE_NOTE,
     HERO_VARIANTS_JSON: JSON.stringify(HERO_VARIANTS).replace(/</g, '\\u003c'),
     LEGAL_NAME: esc(LEGAL_NAME),
     COMPANY_EMAIL: esc(COMPANY_EMAIL),
   });
 
-  const html = `<!doctype html>
+  const html = squashHtml(`<!doctype html>
 <html lang="en-IN">
 <head>
 <meta charset="utf-8">
@@ -1118,7 +1190,7 @@ ${attribution.replaceAll('{{SLUG}}', page.slug).replaceAll('{{ADS_SEND_TO}}', AD
 </script>
 </body>
 </html>
-`;
+`);
 
   // Guardrails: fail the build rather than ship a page that breaks the ad-page contract.
   // Content assertions live in scripts/check-landing-pages.mjs (npm run check:lp).

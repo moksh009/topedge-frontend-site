@@ -1051,6 +1051,76 @@ block, the migration block and the attribution handoff into signup. Nine widths
 from 320 to 1920: no overflow, nothing clipped. Eighteen negative tests. 83 KB
 against the 88 KB budget.
 
+## Revision 19 — the owner reverses four of the audit's calls (2026-10-12)
+
+The audit rebuild shipped and the owner read it. Four things came back, and
+each reversal is his call, not a bug: he is looking at the page the ads buy.
+
+### One gradient, from the bottom only
+The rebuild had put a wash at the top of the hero as well as the bottom, and a
+barely-there lavender under every other section. His words were that one
+section is plain white, another a bit purple, another more purple. He is right
+that it reads as three greys chosen by accident rather than a rhythm. The hero
+is now one `linear-gradient` rising from white to violet at its foot, and
+`.alt` is plain `#fff`, so the page has exactly two surfaces: white, and the
+one inverted comparison band. `check:lp` fails on a radial in the hero rule or
+a tint on `.alt`.
+
+The strip under the hero opens on the same violet the hero closes on and
+resolves to white inside its own height, so the wash finishes instead of
+meeting a line.
+
+### The hero price line and the pull quote came off
+"From ₹1,599/month, billed yearly" above the fold was the audit's
+pre-qualification idea. His reading of it was that monthly-price-billed-yearly
+reads as fine print, which is what a reader does with a parenthetical under a
+headline. The pull quote went with it. The price has the pricing section, where
+someone goes looking for it, and it is still in the slim header CTA.
+
+### The faces came back, and the rating with them
+The audit removed the avatar row and the star row on the argument that an
+average misleads at n=5. That argument stands for the number on its own; it did
+not survive the row of faces being gone. Five founders, photographed, reads as
+"people like me already did this" in the half second the fold gets, and no
+sentence replaces it. The stars are back beside it with the sourced 4.0, the
+review count said out loud, and a link to the Trustpilot page — which is the
+honest form of a small sample: show the n, link the source, let the reader
+judge. Revision 18's rule stays as written ("never show an average that
+misleads"), and at n=5 beside five named faces it does not.
+
+### The marquee came back, on white
+Same reasoning. Four customer logos that a Shopify apparel founder does not
+recognise are weak; zero customer logos are weaker. The ribbon is back under
+the hero with "Trusted by" above it, the marks painted dark on white. The
+platform badges it displaced go back to the foot of the pricing section, where
+"who bills me for the messages" is actually asked.
+
+### What was tried and rejected
+He asked whether the company logo could sit on each founder's photograph. It
+can, and it should not: the four logo files are 2:1 to 4:1 wordmarks, so a chip
+small enough to sit on a 56px avatar crops DELITECH to a grey smear. Tried at
+three sizes, measured, removed. The company is named on hover and shown at a
+readable size in the ribbon 200px below. The reasoning is a comment on the
+rule, so the next person does not retry it.
+
+### Markup indentation is gone from the output
+Restoring the ribbon and the star row put the page 1.3 KB over budget. Rather
+than move the budget, two things paid for it. The five star boxes now share one
+`<svg>` and one `<path>` through `<use>` instead of being five standalone svgs
+of the same mark (-800 bytes). And `squashHtml` strips the leading indentation
+of every line of the document the way `squashCss` and `squashJs` already did
+for the other two languages (-3.1 KB): the newline stays, so every line break
+still collapses to the single space it already was, and nothing on this page is
+inside a `<pre>`. 85.8 KB against the 88 KB budget, with room again.
+
+### Verified
+All five variants driven end to end with a gclid: hero, proof block, migration
+block and the attribution handoff into signup. Eleven widths from 320 to 1920:
+no horizontal scroll anywhere, and the only boxes crossing the viewport edge
+are the `.orb` glows, which their panels clip by design. `check:lp`,
+`check:blog`, `check:pricing`, `seo:contracts`, `tsc`, `lint` and
+`build:netlify` green.
+
 ## Testing
 Repo has no JS test runner, so verification is a node script:
 `scripts/check-landing-pages.mjs` (`npm run check:lp`) reads the generated HTML and asserts: size budget, noindex, no em dashes, no competitor names, no invented rating, the three quotes verbatim, plan prices equal `FALLBACK_CATALOG`, each plan's COD-to-prepaid lock state agrees with the catalog, `TRIAL` numbers appear, the ported navbar and footer, every CTA kind present, no external script or stylesheet. Revision 9 adds: no `<video>` or `<img>` in the hero, a film section that exists, three entry-point cards that each link somewhere real, five bento panels with no image inside them, a marked phrase in every `<h2>`, three going-live steps, and three blog cards whose slugs resolve against `blogPosts.ts`. Browser checks with Playwright (installed): 360px and 1280px screenshots, H1 at most 3 lines on mobile, sticky bar behaviour, toggle, hero variant swap by `?utm_content=`.

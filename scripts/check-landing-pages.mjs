@@ -27,6 +27,14 @@ const file = path.join(__dirname, '..', 'public', 'lp', 'shopify-whatsapp', 'ind
 const html = fs.readFileSync(file, 'utf8');
 const { FALLBACK_CATALOG, TRIAL } = await loadBillingCatalog();
 
+// The rating assertions compare the page against the generator's TRUSTPILOT
+// block rather than against a number typed in here, so there is one place a
+// refreshed score has to be edited and the check follows it.
+const genSrc = fs.readFileSync(path.join(__dirname, 'generate-landing-pages.mjs'), 'utf8');
+const trustpilot = (key) => (genSrc.match(new RegExp(`^  ${key}: '([^']*)',`, 'm')) || [])[1];
+const TRUSTPILOT_SCORE = trustpilot('score');
+const TRUSTPILOT_REVIEWS = trustpilot('reviews');
+
 const failures = [];
 const must = (ok, msg) => {
   if (!ok) failures.push(msg);
@@ -126,44 +134,134 @@ must(h1.length <= 60, `H1 is ${h1.length} characters; over 60 wraps past two lin
 must(/<mark class="chip" id="hero-mark">/.test(markup), 'the H1 payload is not highlighted like the site titles');
 must(copy.includes('Built for Indian Shopify D2C brands'), 'page no longer says who it is for');
 
-// Price above the fold. The whole bid strategy is pre-qualification: a visitor
-// who will not pay ₹1,599 should bounce before they cost any attention, and a
-// visitor who will should not have to scroll six sections to find out.
-const launchYearly = FALLBACK_CATALOG.plans[0].pricing.yearly.effectiveMonthlyLabel;
+// The owner's own hand-drawn arrow beside the primary button, with its cream
+// ground stripped. It is decoration and it is hidden below 1100px, which is
+// exactly why it goes missing without anything noticing.
+const free = (markup.match(/<span class="free"[\s\S]*?<\/span>/) || [''])[0];
+must(free !== '', 'the hand-drawn arrow beside the trial button is gone');
+must(free.includes('/lp/free-arrow.webp'), 'the arrow is not the owner\'s own file');
+must(new RegExp(`Free for ${TRIAL.days} days`).test(free), 'the arrow no longer says how long the trial is');
+must(at(/<span class="free"/) < at(/class="hp-faces"/), 'the arrow belongs in the button row, above the faces');
+
+// --- One gradient, two surfaces ---
+// The owner's note was that the page read as three different purples chosen by
+// accident. It now has exactly two surfaces, white and the one inverted band,
+// and exactly one gradient, rising from the bottom of the hero into the strip
+// below it. A wash at the top of the hero, or a tint under every other
+// section, is what this rule exists to catch.
+must(/\.hero\{[^}]*background:linear-gradient\(180deg,#fff 0/.test(html), 'the hero gradient no longer starts from white at the top');
+must(!/\.hero\{[^}]*radial-gradient/.test(html), 'a radial wash is back at the top of the hero');
+must(/\.alt\{background:#fff\}/.test(html), 'the alternating section tint is back; the page has two surfaces');
+
+// --- The proof row under the hero button ---
+// The paid-traffic audit replaced the faces with a price line and a pull quote.
+// That version was wrong and the owner said so: a row of faces reads as "other
+// founders already did this" in a glance, which is the job above the fold,
+// where a price line reads as a disclaimer. The price still appears, in the
+// pricing section, where someone goes looking for it.
+must(/class="hp-faces"/.test(markup), 'the hero proof row is missing');
+const proofRow = (markup.match(/<div class="hp-faces"[\s\S]*?<\/div>/) || [''])[0];
+// Five faces, in the order the owner set: Delitech, then the two Apex Light
+// founders, then Choice Salon and code CLINIC.
+must(count(/class="hp-tip"/g) === 5, 'expected five customer faces, each with a tooltip');
+const photos = [...proofRow.matchAll(/<img [^>]*src="([^"]+)"/g)].map((m) => m[1]);
+must(photos.length === 5, `expected five photographs in the hero stack, found ${photos.length}`);
+// Every face is a file the owner supplied, cropped into the repo. A face loaded
+// from anywhere else is a stock photograph until proven otherwise.
+for (const src of photos) must(src.startsWith('/trust/people/'), `a hero face is not one of the owner's photographs: ${src}`);
+must(!/<img [^>]*alt="[^"]/.test(proofRow), 'a face carries its own alt; the row is already labelled');
+const order = [...proofRow.matchAll(/class="hp-tip">([^<]+)/g)].map((m) => m[1]);
 must(
-  markup.includes(`From <b>${launchYearly}/month</b>, billed yearly &middot; ${TRIAL.days}-day free trial &middot; No credit card`),
-  'the hero no longer states the price, the trial and the no-card terms',
+  order.join('|') === 'Delitech|Apex Light|Apex Light|Choice Salon|code CLINIC',
+  `the faces are in the wrong order: ${order.join(', ')}`,
 );
-must(at(/class="hero-price"/) < at(/class="hero-quote"/), 'the price belongs above the quote');
+must(/aria-label="[^"]*Ved Patel of Delitech[^"]*code CLINIC[^"]*"/.test(proofRow), 'the hero face row no longer names the people to a screen reader');
+for (const [brand, person] of [
+  ['Delitech', 'Ved Patel'],
+  ['Choice Salon', 'Shubhash'],
+]) {
+  must(proofRow.includes(`${brand}<em>${person}</em>`), `the tooltip does not name ${person} under ${brand}`);
+}
+// Descending z-index, or DOM order puts the last avatar in front, which is the
+// opposite of the order above.
+must(/\.hp-faces>span:nth-child\(1\)\{z-index:5\}/.test(html), 'the avatar stack is no longer ordered front to back');
 
 // --- No invented or misleading rating ---
-// A numeric average is reassuring at a large sample and damaging at a small
-// one: "4.0 from 5 reviews" tells a reader that almost nobody uses this and
-// that even those few were not all happy, and it does that above the fold
-// before a single quote is read. One named person saying one specific thing
-// does the job the average cannot at this size.
-must(!/★/.test(copy), 'uses a typographic star');
-must(!/class="st"|class="hp-stars"/.test(markup), 'a star row is back; do not show an average at this sample size');
-must(!/\b[0-5]\.\d\b(?!\d)/.test(withoutQuotes.replace(/<[^>]+>/g, '')), 'states a numeric rating; none may appear while the review count is small');
-const quote = (markup.match(/<figure class="hero-quote">[\s\S]*?<\/figure>/) || [''])[0];
-must(quote !== '', 'the hero has no named quote');
-must(/US Grade software quality/.test(quote), 'the hero quote is not the one that answers the Indian-SaaS objection');
-must(/Tirth P\./.test(quote), 'the hero quote is not attributed to a named person');
-must(/trustpilot\.com\/review\/topedgeai\.com/.test(quote), 'the hero quote does not link to where it was published');
+// A rating was banned outright while the only one available would have been
+// invented. The owner read the live TrustScore off Trustpilot on 10 Oct and it
+// is in the generator, so the rule is "no score but that one": any x.y in the
+// page's own words must be the sourced number, so a stale page fails here
+// rather than quietly overstating. Stars are drawn, never typed.
+const prose = withoutQuotes.replace(/<[^>]+>/g, '');
+must(!/★/.test(prose), 'uses a typographic star; the rating is drawn from TRUSTPILOT');
+const scores = [...prose.matchAll(/\b([0-5]\.\d)\b(?!\d)/g)].map((m) => m[1]);
+for (const n of scores) must(n === TRUSTPILOT_SCORE, `states a rating of ${n}; the sourced TrustScore is ${TRUSTPILOT_SCORE}`);
+// The star row renders only from a sourced score, and names its source.
+const starRow = (markup.match(/<p class="hp-stars[^"]*">[\s\S]*?<\/p>/) || [''])[0];
+must(starRow !== '', 'the star row is gone');
+must(/<svg/.test(starRow) === /\d\.\d/.test(starRow), 'stars without a sourced score, or a score without stars');
+must(/Trustpilot/.test(starRow), 'the star row does not say where the rating comes from');
+// A row of stars is a rating claim, so there is exactly one on the page and it
+// has to be the sourced one: beside the number, linked to the page it came
+// from, and with as many filled boxes as the number says. Five filled stars
+// next to a 4.0 is the misrepresentation this rule exists for. All five boxes
+// share one <svg> and one <path>, so the count is of boxes, not of svgs.
+must(count(/class="st"/g) === 1, 'expected one five-star row, drawn by starRow');
+const boxes = (starRow.match(/<rect /g) || []).length;
+const filled = (starRow.match(/fill="#00b67a"/g) || []).length;
+const partial = (starRow.match(/clip-path="inset\(/g) || []).length;
+must(boxes - filled === 5, `the row draws ${boxes - filled} of 5 star boxes`);
+must(
+  filled - partial === Math.floor(Number(TRUSTPILOT_SCORE)) && partial === (Number(TRUSTPILOT_SCORE) % 1 ? 1 : 0),
+  `the star row shows ${filled} filled of 5, which does not read as ${TRUSTPILOT_SCORE}`,
+);
+must(/#dcdce6/.test(starRow), 'the unfilled stars are missing; a 4.0 drawn as four stars alone reads as four out of four');
+must(new RegExp(`from ${TRUSTPILOT_REVIEWS} reviews`).test(markup), 'the rating does not say how many reviews it is from');
+must(/trustpilot\.com\/review\/topedgeai\.com/.test(starRow), 'the rating does not link to the page it came from');
 must(!/[❤♥💖]|&#10084;/.test(markup), 'an emoji is back in the trust copy');
-must(!/class="hp-faces"/.test(markup), 'the avatar row is back; it reads as "we have no logos"');
 
 // --- The band under the hero ---
-// Three marks a merchant can verify in one search, in place of four customer
-// logos that are a salon, a clinic and two non-D2C brands.
+// The band is where a customer wordmark can actually be read; the hero shows
+// the same four as people. Each mark needs its own alt there. A logo chip on
+// the avatar itself was tried and removed: these files are 2:1 to 4:1
+// wordmarks and a chip that fits a 56px circle crops them to a grey smudge.
 const strip = (markup.match(/<ul class="trust-marks[^"]*">[\s\S]*?<\/ul>/) || [''])[0];
 must(strip !== '', 'the band under the hero is gone');
-must((strip.match(/<img /g) || []).length === 3, 'expected the three platform marks in the band');
-for (const img of strip.match(/<img [^>]*>/g) || []) {
-  must(/\balt="[^"]{8,}"/.test(img), 'a platform mark in the band has no alt text');
+for (const logo of ['delitech', 'apex', 'codeclinic', 'choicesalon']) {
+  must(strip.includes(`/trust/${logo}-white.png`), `the band is not showing the ${logo} logo`);
 }
-must(!/\/trust\/[a-z]+-white\.png/.test(markup), 'the customer logo marquee is back; bring it back when four of them are D2C brands');
-must(!/class="mq"|animation:mq /.test(html), 'the logo marquee is back');
+// The ribbon holds three copies of the four marks so the loop has no seam.
+// Exactly one copy is announced: a screen reader hearing the same four
+// companies three times is worse than hearing them none.
+const marks = strip.match(/<li[^>]*>\s*<img [^>]*>/g) || [];
+must(marks.length === 12, `expected three copies of four logos in the ribbon, found ${marks.length}`);
+const named = marks.filter((m) => !/aria-hidden/.test(m));
+must(named.length === 4, `${named.length} logo copies are announced; exactly one copy should be`);
+for (const m of named) must(/\balt="[^"]{4,}"/.test(m), 'an announced logo in the ribbon has no alt text');
+for (const m of marks.filter((m) => /aria-hidden/.test(m))) {
+  must(/\balt=""/.test(m), 'a duplicated logo in the ribbon has alt text; the copies are decoration');
+}
+must(/<div class="mq"[^>]*aria-label=/.test(markup), 'the ribbon has no label');
+must(/@keyframes mq\{/.test(html) && /animation:mq /.test(html), 'the ribbon does not scroll');
+must(/prefers-reduced-motion[\s\S]*?\.trust-marks\{[^}]*flex-wrap:wrap/.test(html), 'the ribbon still scrolls under reduced motion');
+// Four marks are narrower than a desktop viewport, so one copy has to be longer
+// than the widest window the ribbon gets or the same mark shows twice at once.
+must(/\.mq\{[^}]*width:min\(100% - 2\.5rem,76rem\)/.test(html), 'the ribbon window is no longer capped');
+must(/\.trust-marks\{[^}]*gap:14rem/.test(html), 'the ribbon gap is back below one window width; the marks will double');
+// The band is white, as the owner asked, which is why the marks are painted
+// dark rather than being the white knockouts the files actually are. It opens
+// on the violet the hero ends on, so the wash resolves instead of meeting a line.
+must(/\.trust\{[^}]*rgba\(139,92,246,\.7\) 0/.test(html), 'the band no longer picks up the hero gradient where it ends');
+must(/\.trust\{[^}]*#fff \d+%\)\}/.test(html), 'the band does not land on white');
+must(/\.trust-marks img\{[^}]*filter:brightness\(0\)/.test(html), 'the logos are not painted dark for the white band');
+// The platform marks answer "who bills me", which is a question asked at a price.
+const badgeRow = (markup.match(/<ul class="badges">[\s\S]*?<\/ul>/) || [''])[0];
+must(badgeRow !== '', 'the platform marks are gone');
+must(at(/<ul class="badges">/) > at(/<section[^>]*id="pricing"/), 'the platform marks belong beside the price, not above it');
+must((badgeRow.match(/<img /g) || []).length === 3, 'expected the three platform marks');
+for (const img of badgeRow.match(/<img [^>]*>/g) || []) {
+  must(/\balt="[^"]{8,}"/.test(img), 'a platform mark has no alt text');
+}
 
 // --- Message match ---
 // The hero already swapped per ad group; the block under it did not, so an RTO
@@ -268,7 +366,7 @@ for (const [text, author] of quotes) {
 for (const [, author] of quotes) {
   must(markup.includes(author), `quote missing its author: ${author}`);
 }
-must(quoteCards.length >= 4, 'expected the hero quote plus the three review cards');
+must(quoteCards.length === 3, `expected the three review cards, found ${quoteCards.length}`);
 must(html.includes('retrieved 6 October 2026'), 'the reviews lost their retrieval date, which is the thing that makes them checkable');
 must(html.includes('Launched on the Shopify App Store'), 'missing launch line');
 

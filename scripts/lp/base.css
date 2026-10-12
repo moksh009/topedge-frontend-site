@@ -50,12 +50,11 @@ img{max-width:100%}
 /* hero: no film. The heading is the only thing above the fold besides the two
    buttons, so it gets the whole viewport width and the biggest step on the
    scale, and the marked phrase carries the claim. */
-/* The last layer in the stack is the one that matters here: a violet that
-   deepens all the way to the bottom edge, so the hero ends on a definite line
-   against the white band rather than dissolving into it. The reference does
-   the same thing with amber. Backgrounds paint behind content, so the film and
-   the buttons sit on top of it with nothing extra to manage. */
-.hero{position:relative;overflow:hidden;min-height:100svh;display:flex;align-items:center;padding:7.25rem 0 2.25rem;text-align:center;background:radial-gradient(56rem 30rem at 78% -16%,#e9dcff 0,transparent 62%),radial-gradient(46rem 26rem at 5% -8%,#dbe7ff 0,transparent 64%),linear-gradient(180deg,transparent 34%,rgba(196,181,253,.42) 66%,rgba(167,139,250,.62) 86%,rgba(139,92,246,.72) 100%),#fbfaff}
+/* One gradient, rising from the bottom only. The three radial washes that used
+   to sit behind the headline made the top of the page as busy as the bottom and
+   gave the hero two focal points; the page now starts white and darkens into
+   the band below it, which is the single thing the gradient is for. */
+.hero{position:relative;overflow:hidden;min-height:100svh;display:flex;align-items:center;padding:7.25rem 0 2.25rem;text-align:center;background:linear-gradient(180deg,#fff 0,#fdfcff 34%,rgba(196,181,253,.34) 72%,rgba(167,139,250,.56) 88%,rgba(139,92,246,.7) 100%)}
 .hero-in{display:flex;flex-direction:column;align-items:center;width:min(100% - 2.5rem,70rem)}
 .chip{color:var(--chip-ink);background:var(--chip-bg);border-radius:.38em;padding:.02em .22em .06em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
 mark.chip{background:var(--chip-bg)}
@@ -70,25 +69,48 @@ mark.chip{background:var(--chip-bg)}
 /* The hand-drawn aside beside the primary button. It is decoration and it is the
    first thing to go when the row runs out of room, so it is absolutely positioned
    out of flow and hidden below 1100px rather than allowed to wrap. */
+.free{display:none}
 @media(min-width:1100px){
+ .free{display:flex;position:absolute;left:calc(100% + .4rem);top:50%;transform:translateY(-52%);align-items:center;gap:.35rem;color:#2e1065;white-space:nowrap}
+ .free img{display:block;flex:none;width:6.4rem;height:auto}
+ .free b{font-weight:600;font-size:.92rem;transform:rotate(-8deg) translateY(-.4rem);color:#2e1065;letter-spacing:-.015em}
 }
-/* Proof under the buttons: the four brands we are allowed to name, as marks on the
-   brand gradient (the files are white knockouts, so they need a dark disc), and a
-   link to the reviews. No score is written here, see TRUSTPILOT in the generator. */
 /* Faces on the left, the rating over the line that reads it, on the right:
    the shape of the proof block the owner sent as the reference. */
-/* Round, overlapping, and each one a person: initials, because we have no
-   photographs of these customers and the logo files are wordmarks that a 42px
-   circle crops to a smudge. The logos get the band below, at a readable size. */
+.hp{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.6rem 1.1rem;margin-top:1.5rem}
+.hp-col{display:flex;flex-direction:column;align-items:flex-start;gap:.25rem}
+.hp-faces{display:flex;padding-left:.78rem}
 /* Ved in front, code CLINIC at the back. Without this the DOM order puts the
    last avatar on top, which is the opposite of the order the owner asked for. */
+.hp-faces>span:nth-child(1){z-index:5}
+.hp-faces>span:nth-child(2){z-index:4}
+.hp-faces>span:nth-child(3){z-index:3}
+.hp-faces>span:nth-child(4){z-index:2}
+.hp-faces>span:nth-child(5){z-index:1}
+.hp-faces>span{position:relative;display:block;width:3.3rem;height:3.3rem;margin-left:-.78rem;border-radius:50%;background:#ede9fe;box-shadow:0 0 0 3px #fff,0 6px 14px -7px rgba(46,16,101,.6);transition:transform .25s var(--e)}
+.hp-faces>span:hover{z-index:6;transform:translateY(-3px) scale(1.04)}
+.hp-ph{display:block;width:100%;height:100%;border-radius:50%;object-fit:cover}
+.hp-tip{position:absolute;bottom:calc(100% + .55rem);left:50%;transform:translateX(-50%);display:grid;gap:.1rem;padding:.4rem .7rem;border-radius:10px;background:#2e1065;color:#fff;font-size:.74rem;font-weight:500;line-height:1.3;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s}
+.hp-tip em{font-style:normal;font-weight:400;color:#c4b5fd}
+.hp-tip:after{content:'';position:absolute;top:100%;left:50%;margin-left:-5px;border:5px solid transparent;border-top-color:#2e1065}
+.hp-faces>span:hover .hp-tip{opacity:1}
 /* Trustpilot's stars sit in their own boxes in Trustpilot's widget, which is
    how the mark is recognised; the gap between them is the box edge. */
+.hp-stars{display:inline-flex;align-items:center;gap:.2rem;font-size:.92rem;color:#4b3a6e}
+.hp-stars .st{display:block}
+.hp-stars span{display:inline-flex;align-items:center;gap:.3rem;margin-left:.55rem}
+.hp-stars b{font-weight:600;color:#2e1065}
+.hp-stars a{font-weight:500;text-decoration:none}
+.hp-stars a:hover{text-decoration:underline}
+.hp-t{font-size:.95rem;color:#4b3a6e}
 /* sections */
 section{padding:3.75rem 0}
-/* Flat, not a gradient: a wash under every other section made the page look
-   like it was fading out six times. The hero is the only gradient here. */
-.alt{background:#f8f6fd}
+/* Two surfaces on the whole page: white, and the one inverted band. Alternating
+   a barely-there lavender under every other section read as three different
+   greys chosen by accident rather than a rhythm, which is exactly how it looks
+   when a page has more surfaces than it has reasons for them. Sections are
+   separated by space and by the cards sitting on them, not by fills. */
+.alt{background:#fff}
 .head{text-align:center;margin-bottom:2.3rem}
 .head h2{max-width:24ch;margin:0 auto;font-size:clamp(1.65rem,4.2vw,2.5rem);font-weight:400;letter-spacing:-.036em;line-height:1.18;text-wrap:balance}
 .head p{margin:.85rem auto 0;max-width:36rem;color:var(--muted);font-size:1.02rem;text-wrap:pretty}
@@ -177,11 +199,6 @@ section{padding:3.75rem 0}
 .bx:hover .viz:after{opacity:1}
 /* Every moving piece shares one curve and one duration, so five panels animating at
    once read as one surface rather than five widgets. Staggers are per child. */
-/* recovery funnel: the bars run out to length on hover and the total lifts */
-.bx:hover .fb i{transform:scaleX(1)}
-.bx:hover .fb:nth-child(2) i{transition-delay:.06s}
-.bx:hover .fb:nth-child(3) i{transition-delay:.12s}
-.bx:hover .fn-tot strong{transform:translateY(-2px) scale(1.04)}
 /* ---- the illustration layer ----
    What separated these from the references the owner kept sending was never
    the drawing, it was the staging: too many elements, all the same size, all
@@ -287,21 +304,26 @@ section{padding:3.75rem 0}
 /* No drop shadow behind the film: the owner wants the frame flat against the
    gradient. A hairline keeps the dark poster from bleeding into the wash. */
 .film{display:block;width:100%;height:auto;aspect-ratio:16/9;max-height:min(44svh,29rem);margin:0 auto;border-radius:20px;background:#ece7fa;border:1px solid rgba(124,58,237,.16)}
-/* ---- going live, three steps on one rail ---- */
-/* ---- playbooks: the blog, so the visitor who is not ready today has a reason
-   to come back and a path into the rest of the site ---- */
-/* trust strip with the logo marquee */
+.trust-l{text-align:center;font-size:.9rem;color:#8b7ba8}
 /* The logo ribbon. The track holds three copies of the four marks and travels
    exactly one copy, so the frame it lands on is identical to the one it left
    and the loop has no seam. The mask fades both ends so a mark enters and
    leaves rather than popping. It pauses on hover, and under reduced motion it
-   becomes a static wrapped row, where an endless scroll is the thing to avoid. */
-.trust-marks{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:1rem 2.4rem;list-style:none;margin:0 auto;padding:0}
+   becomes a static wrapped row, where an endless scroll is the thing to avoid.
+   Four marks are narrower than a desktop viewport, so the gap between them is
+   set wide enough that one copy is longer than the widest window the ribbon
+   ever gets. Any narrower and the same mark shows twice at once. */
+.mq{position:relative;width:min(100% - 2.5rem,76rem);margin:1.3rem auto 0;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
+.trust-marks{display:flex;width:max-content;align-items:center;gap:14rem;list-style:none;margin:0;padding:0;animation:mq 46s linear infinite}
+.mq:hover .trust-marks{animation-play-state:paused}
 /* The files are white-on-transparent, made for a dark band. brightness(0) gives
    the flat dark mark a logo wall on white wants, with the alpha intact. */
-.trust-marks img{display:block;height:40px;width:auto;object-fit:contain}
-/* Four logos are narrower than a desktop viewport, so an unconstrained track shows the
-   same mark twice at once. Capping the window keeps the scroll without the double. */
+.trust-marks img{display:block;height:36px;width:auto;max-width:11rem;object-fit:contain;filter:brightness(0);opacity:.55;transition:opacity .25s}
+.trust-marks img:hover{opacity:.9}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-33.3333%)}}
+/* The platform marks, under the price. */
+.badges{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:1rem 2.4rem;list-style:none;margin:1.75rem auto 0;padding:0}
+.badges img{display:block;height:40px;width:auto;object-fit:contain}
 /* ---- the comparison ----
    Three columns: the topic, what the reader is used to, what happens here. The
    right column is tinted the whole way down so the eye lands on it without
@@ -401,17 +423,12 @@ section{padding:3.75rem 0}
 .mkt-foot__social-list{display:flex;gap:.5rem;list-style:none;padding:0;margin:0}
 .mkt-foot__social-btn{display:inline-flex;align-items:center;justify-content:center;width:2rem;height:2rem;border-radius:999px;color:#94a3b8;background:#f8fafc;box-shadow:inset 0 0 0 1px #eef2f7;transition:color .15s,background .15s}
 .mkt-foot__social-btn:hover{color:var(--violet);background:#f5f3ff}
-.mkt-foot__sitemap{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.5rem 1rem}
-.mkt-foot__capsule{margin:0 0 .75rem;font-size:.68rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:#94a3b8}
-.mkt-foot__list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.55rem}
-.mkt-foot__link{font-size:.875rem;font-weight:400;color:#475569;text-decoration:none;line-height:1.35;transition:color .15s}
-.mkt-foot__link:hover{color:var(--violet)}
 .mkt-foot__legal{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.55rem 1.1rem;margin-top:.65rem;padding-top:.75rem;border-top:1px solid #f1f5f9;font-size:.72rem;color:#94a3b8}
 .mkt-foot__legal-links{display:flex;flex-wrap:wrap;gap:.75rem 1rem}
 .mkt-foot__legal-links a{color:#94a3b8;text-decoration:none}
 .mkt-foot__legal-links a:hover{color:var(--violet)}
 /* the trust strip, restyled to the brand gradient rather than flat ink */
-.trust{background:#fff;padding:2rem 1.25rem}
+.trust{padding:2.75rem 1.25rem 1.75rem;background:linear-gradient(180deg,rgba(139,92,246,.7) 0,rgba(167,139,250,.3) 22%,rgba(237,233,254,.45) 48%,#fff 78%)}
 /* sticky mobile cta */
 .sticky{display:none}
 /* Below 900px a panel is too narrow for a card to float over another card
@@ -423,18 +440,18 @@ section{padding:3.75rem 0}
  .pane--aud{position:static;width:max-content;margin:.7rem 0 0 auto}
  .orbit{height:auto;min-height:11.5rem}
  .bx:hover .pane--wa,.bx:hover .pane--ask,.bx:hover .pane--aud{transform:none}
+ .trust-marks{width:100%;flex-wrap:wrap;justify-content:center;gap:1.5rem 3rem;animation:none}
+ .trust-marks li[aria-hidden]{display:none}
+ .mq{-webkit-mask-image:none;mask-image:none}
 }
-/* The quote and the price line both earn their space, so what gives on a short
-   phone is the film, which is the one thing still legible at any size. */
+/* What gives on a short phone is the film, which is the one thing still
+   legible at any size. */
 @media(max-width:430px){
- .hero-quote{margin-top:.85rem;padding:.7rem .85rem}
- .hero-quote blockquote{font-size:.92rem}
  .film{max-height:30svh}
 }
 @media(max-width:380px){
  .film{max-height:24svh}
  .hero h1{font-size:1.8rem}
- .hero-price{font-size:.88rem}
 }
 @media(max-width:759px){
  .mkt-plan--emphasis{order:-1}
@@ -462,7 +479,6 @@ section{padding:3.75rem 0}
  .quotes{grid-template-columns:repeat(3,1fr)}
  .ticks.two{grid-template-columns:repeat(2,1fr);gap:.6rem 2rem}
  .mkt-foot__top{grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:3rem}
- .mkt-foot__sitemap{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
 @media(min-width:1024px){
  .mkt-nav__shell{padding:.85rem 1.15rem 0}
@@ -507,18 +523,13 @@ section{padding:3.75rem 0}
  .path:hover .ch:nth-child(4){transform:rotate(4deg)}
  .path:hover .ch:nth-child(5){transform:rotate(-3deg)}
  html{scroll-behavior:auto}
+ .trust-marks{width:100%;flex-wrap:wrap;justify-content:center;gap:1.5rem 3rem}
+ .trust-marks li[aria-hidden]{display:none}
 }
 /* ---- 2026-10-11 audit rebuild ----
    The page is bought by the click now, so everything below exists to answer
    one of four questions inside eight seconds: what is this, what does it cost,
    is it safe for my Meta account, what do I click. */
-/* Under the hero button: the number, the terms, and one named human. */
-.hero-price{margin-top:1rem;font-size:.95rem;color:#4b3a6e}
-.hero-price b{font-weight:600;color:var(--ink)}
-.hero-quote{width:min(100%,34rem);margin:1.1rem auto 0;padding:.9rem 1.1rem;border-radius:16px;background:rgba(255,255,255,.8);box-shadow:0 0 0 1px rgba(124,58,237,.1),0 10px 24px -16px rgba(46,16,101,.5)}
-.hero-quote blockquote{margin:0;font-size:1rem;line-height:1.5;color:var(--ink);text-wrap:pretty}
-.hero-quote figcaption{margin-top:.45rem;font-size:.8rem;color:#8b7ba8}
-.hero-quote a{font-weight:500;text-decoration:none}
 /* The variant proof block. The statistic is the subject and it carries its
    source underneath, because a number a merchant cannot check is worth less
    than no number at all. */
