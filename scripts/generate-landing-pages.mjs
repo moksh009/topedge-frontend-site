@@ -881,6 +881,12 @@ function starRow(score) {
  * the job above the fold, where a price line reads as a disclaimer. The price
  * still appears, in the pricing section where someone goes looking for it.
  *
+ * The review count is not on the visible line. It is the owner's call and the
+ * number is one click away on the Trustpilot page the rating links to, so it
+ * is withheld rather than hidden: a reader who wants the sample size reaches
+ * it from here. It stays in the accessible text, because a screen reader
+ * cannot glance at the link to find it.
+ *
  * The company mark was tried on each face and removed: the logo files are 2:1
  * to 4:1 wordmarks, so a chip small enough to sit on a 56px avatar crops
  * DELITECH to a grey smear. The company is named on hover, and shown at a
@@ -893,7 +899,7 @@ function heroProof() {
   ).join('');
   const who = PEOPLE.map((p2) => (p2.name ? `${p2.name} of ${p2.company}` : p2.company)).join(', ');
   const stars = TRUSTPILOT.score
-    ? `<p class="hp-stars">${starRow(TRUSTPILOT.score)}<span><b>${esc(TRUSTPILOT.score)}</b> from ${esc(TRUSTPILOT.reviews)} reviews on ${TP_LOCKUP}</span></p>`
+    ? `<p class="hp-stars">${starRow(TRUSTPILOT.score)}<span><b>${esc(TRUSTPILOT.score)}</b> on ${TP_LOCKUP}<i class="vh"> from ${esc(TRUSTPILOT.reviews)} reviews</i></span></p>`
     : `<p class="hp-stars hp-stars--none">${TP_LOCKUP} &mdash; read the reviews</p>`;
   return `<div class="hp">
         <div class="hp-faces" role="img" aria-label="Running on TopEdge: ${esc(who)}">${faces}</div>
@@ -914,7 +920,7 @@ const stripHtml = [0, 1, 2]
   .flatMap((copy) =>
     TRUST_LOGOS.map(
       (l) =>
-        `<li${copy ? ' aria-hidden="true"' : ''}><img src="${l.src}" alt="${copy ? '' : esc(l.alt)}" height="36" loading="lazy" decoding="async"></li>`,
+        `<li${copy ? ' aria-hidden="true"' : ''}><img src="${l.src}" alt="${copy ? '' : esc(l.alt)}" height="32" loading="lazy" decoding="async"></li>`,
     ),
   )
   .join('');

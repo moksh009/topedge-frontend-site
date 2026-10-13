@@ -226,7 +226,14 @@ must(
   `the star row shows ${filled} filled of 5, which does not read as ${TRUSTPILOT_SCORE}`,
 );
 must(/#dcdce6/.test(starSvg), 'the unfilled stars are missing; a 4.0 drawn as four stars alone reads as four out of four');
-must(new RegExp(`from ${TRUSTPILOT_REVIEWS} reviews`).test(markup), 'the rating does not say how many reviews it is from');
+// The count is off the visible line on the owner's instruction. It may be
+// withheld, not contradicted: it stays in the accessible text, the rating
+// still links to the page that prints it, and no larger number may appear.
+const vh = (markup.match(/<i class="vh">[\s\S]*?<\/i>/) || [''])[0];
+must(new RegExp(`from ${TRUSTPILOT_REVIEWS} reviews`).test(vh), 'the review count is gone from the accessible text as well as the visible line');
+must(!/class="vh"/.test(markup.replace(/<i class="vh">[\s\S]*?<\/i>/g, '')) , 'a second visually hidden run appeared; keep one place for text that is said and not drawn');
+const counts = [...prose.matchAll(/([\d,]+)\s+reviews?\b/gi)].map((m) => m[1]);
+for (const n of counts) must(n === TRUSTPILOT_REVIEWS, `states ${n} reviews on the page; the sourced count is ${TRUSTPILOT_REVIEWS}`);
 must(/trustpilot\.com\/review\/topedgeai\.com/.test(starRow), 'the rating does not link to the page it came from');
 // Trustpilot's name carries Trustpilot's mark, not a violet text link: the
 // green star is the half of the lockup a reader recognises without reading.
@@ -262,13 +269,13 @@ must(/@keyframes mq\{/.test(html) && /animation:mq /.test(html), 'the ribbon doe
 must(/prefers-reduced-motion[\s\S]*?\.trust-marks\{[^}]*flex-wrap:wrap/.test(html), 'the ribbon still scrolls under reduced motion');
 // Four marks are narrower than a desktop viewport, so one copy has to be longer
 // than the widest window the ribbon gets or the same mark shows twice at once.
-must(/\.mq\{[^}]*width:min\(100% - 2\.5rem,76rem\)/.test(html), 'the ribbon window is no longer capped');
-must(/\.trust-marks\{[^}]*gap:14rem/.test(html), 'the ribbon gap is back below one window width; the marks will double');
-// The band is white, as the owner asked, which is why the marks are painted
-// dark rather than being the white knockouts the files actually are. It opens
-// on the violet the hero ends on, so the wash resolves instead of meeting a line.
-must(/\.trust\{[^}]*rgba\(139,92,246,\.7\) 0/.test(html), 'the band no longer picks up the hero gradient where it ends');
-must(/\.trust\{[^}]*#fff \d+%\)\}/.test(html), 'the band does not land on white');
+must(/\.mq\{[^}]*width:min\(100% - 2\.5rem,44rem\)/.test(html), 'the ribbon window is no longer capped to less than one copy');
+// The band is flat white and the hero's gradient stops on its own edge, so the
+// two meet on a line. The owner asked for the line after seeing the version
+// where the violet bled down into the band and neither surface had an edge.
+must(/\.trust\{[^}]*background:#fff\}/.test(html), 'the band is not flat white; the hero gradient is bleeding into it again');
+must(/\.hero\{[^}]*#a78bfa 95%,#a78bfa 100%\)/.test(html), 'the hero gradient no longer ends on a flat violet, so it has no bottom edge');
+must(/\.trust-marks img\{[^}]*height:32px/.test(html), 'the ribbon marks changed size; check they still outrun the window');
 must(/\.trust-marks img\{[^}]*filter:brightness\(0\)/.test(html), 'the logos are not painted dark for the white band');
 // The platform marks answer "who bills me", which is a question asked at a price.
 const badgeRow = (markup.match(/<ul class="badges">[\s\S]*?<\/ul>/) || [''])[0];

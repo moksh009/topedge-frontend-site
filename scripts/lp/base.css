@@ -54,7 +54,7 @@ img{max-width:100%}
    to sit behind the headline made the top of the page as busy as the bottom and
    gave the hero two focal points; the page now starts white and darkens into
    the band below it, which is the single thing the gradient is for. */
-.hero{position:relative;overflow:hidden;min-height:100svh;display:flex;align-items:center;justify-content:center;padding:5.75rem 0 2.25rem;text-align:center;background:linear-gradient(180deg,#fff 0,#fdfcff 34%,rgba(196,181,253,.34) 72%,rgba(167,139,250,.56) 88%,rgba(139,92,246,.7) 100%)}
+.hero{position:relative;overflow:hidden;min-height:100svh;display:flex;align-items:center;justify-content:center;padding:5.75rem 0 2.25rem;text-align:center;background:linear-gradient(180deg,#fff 0,#fdfcff 30%,rgba(196,181,253,.38) 64%,rgba(167,139,250,.68) 84%,#a78bfa 95%,#a78bfa 100%)}
 .hero-in{display:flex;flex-direction:column;align-items:center;width:min(100% - 2.5rem,70rem)}
 .chip{color:var(--chip-ink);background:var(--chip-bg);border-radius:.38em;padding:.02em .22em .06em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
 mark.chip{background:var(--chip-bg)}
@@ -72,8 +72,8 @@ mark.chip{background:var(--chip-bg)}
 .free{display:none}
 @media(min-width:1100px){
  .free{display:flex;position:absolute;left:calc(100% + .4rem);top:50%;transform:translateY(-52%);align-items:center;gap:.35rem;color:#2e1065;white-space:nowrap}
- .free img{display:block;flex:none;width:6.4rem;height:auto}
- .free b{font-weight:600;font-size:.92rem;transform:rotate(-8deg) translateY(-.4rem);color:#2e1065;letter-spacing:-.015em}
+ .free img{display:block;flex:none;width:5rem;height:auto}
+ .free b{font-weight:600;font-size:.86rem;transform:rotate(-8deg) translateY(-.32rem);color:#2e1065;letter-spacing:-.015em}
 }
 /* Faces on the left, the rating over the line that reads it, on the right:
    the shape of the proof block the owner sent as the reference. */
@@ -106,6 +106,9 @@ mark.chip{background:var(--chip-bg)}
 .tp svg{display:block;flex:none;margin-bottom:.06em}
 .tp:hover{text-decoration:underline;text-underline-offset:2px}
 .hp-t{font-size:.88rem;color:#7c6b99}
+/* Said to a screen reader, not drawn: see heroProof on why the count is off
+   the visible line but still in the accessible one. */
+.vh{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
 /* sections */
 section{padding:3.75rem 0}
 /* Two surfaces on the whole page: white, and the one inverted band. Alternating
@@ -307,21 +310,22 @@ section{padding:3.75rem 0}
 /* No drop shadow behind the film: the owner wants the frame flat against the
    gradient. A hairline keeps the dark poster from bleeding into the wash. */
 .film{display:block;width:100%;height:auto;aspect-ratio:16/9;max-height:min(44svh,29rem);margin:0 auto;border-radius:20px;background:#ece7fa;border:1px solid rgba(124,58,237,.16)}
-.trust-l{text-align:center;font-size:.9rem;color:#8b7ba8}
+.trust-l{text-align:center;font-size:.78rem;font-weight:500;letter-spacing:.01em;color:#9b8cb8}
 /* The logo ribbon. The track holds three copies of the four marks and travels
    exactly one copy, so the frame it lands on is identical to the one it left
    and the loop has no seam. The mask fades both ends so a mark enters and
    leaves rather than popping. It pauses on hover, and under reduced motion it
    becomes a static wrapped row, where an endless scroll is the thing to avoid.
-   Four marks are narrower than a desktop viewport, so the gap between them is
-   set wide enough that one copy is longer than the widest window the ribbon
-   ever gets. Any narrower and the same mark shows twice at once. */
-.mq{position:relative;width:min(100% - 2.5rem,76rem);margin:1.3rem auto 0;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
-.trust-marks{display:flex;width:max-content;align-items:center;gap:14rem;list-style:none;margin:0;padding:0;animation:mq 46s linear infinite}
+   Four marks are narrower than a desktop viewport, so one copy has to be
+   longer than the window or the same mark shows twice at once. The window is
+   what gives, not the spacing: a 14rem gap bought the guarantee and left the
+   band looking like four logos lost on a white field. */
+.mq{position:relative;width:min(100% - 2.5rem,44rem);margin:.9rem auto 0;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
+.trust-marks{display:flex;width:max-content;align-items:center;gap:6rem;list-style:none;margin:0;padding:0;animation:mq 26s linear infinite}
 .mq:hover .trust-marks{animation-play-state:paused}
 /* The files are white-on-transparent, made for a dark band. brightness(0) gives
    the flat dark mark a logo wall on white wants, with the alpha intact. */
-.trust-marks img{display:block;height:36px;width:auto;max-width:11rem;object-fit:contain;filter:brightness(0);opacity:.55;transition:opacity .25s}
+.trust-marks img{display:block;height:32px;width:auto;max-width:9rem;object-fit:contain;filter:brightness(0);opacity:.55;transition:opacity .25s}
 .trust-marks img:hover{opacity:.9}
 @keyframes mq{from{transform:translateX(0)}to{transform:translateX(-33.3333%)}}
 /* The platform marks, under the price. */
@@ -434,7 +438,7 @@ section{padding:3.75rem 0}
    magenta and YouTube red: three loud brand colours in the quietest part of
    the page, and the hover the button defines could never take effect. */
 /* the trust strip, restyled to the brand gradient rather than flat ink */
-.trust{padding:2.75rem 1.25rem 1.75rem;background:linear-gradient(180deg,rgba(139,92,246,.7) 0,rgba(167,139,250,.3) 22%,rgba(237,233,254,.45) 48%,#fff 78%)}
+.trust{padding:2.1rem 1.25rem 1.6rem;background:#fff}
 /* sticky mobile cta */
 .sticky{display:none}
 /* Below 900px a panel is too narrow for a card to float over another card

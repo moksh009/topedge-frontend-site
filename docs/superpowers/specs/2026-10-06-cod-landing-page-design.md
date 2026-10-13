@@ -1171,6 +1171,49 @@ centred to within 2px of its own gutters (a sweep added for this revision,
 after the hero bug). Five variants driven with a gclid. All gates green.
 86.6 KB against the 88 KB budget.
 
+## Revision 21 — an edge, a tighter ribbon, and the count off the line (2026-10-13)
+
+### The gradient ends on a line
+Revision 19 resolved the hero's violet into the band below it so the wash
+would finish rather than meet an edge. Looked at on the page, that left two
+surfaces neither of which had a boundary: the purple just ran out somewhere in
+the middle of the strip. The hero gradient now holds a flat `#a78bfa` for its
+last 5% and stops at its own edge, and the band is flat white again. The two
+meet on a line, which is what the owner asked for and which reads as a colour
+block rather than a fade that lost its nerve.
+
+### The ribbon
+The marks were 14rem apart. That number was not a design choice: one copy of
+four logos has to be longer than the window or the same mark appears twice at
+once, and widening the gap was the way I bought that at a 76rem window. The
+window is what should have given. It is capped at 44rem now with a 6rem gap
+and 32px marks, which is the spacing a logo wall is actually set at, and the
+no-double guarantee still holds (one copy strides 740px against a 704px
+window). The band's padding and the label came down with it.
+
+### The review count is off the visible line
+"4.0 from 5 reviews on Trustpilot" is now "4.0 on Trustpilot". This is the
+owner's call and it is withholding, not hiding: the rating links to the
+Trustpilot page, which prints the count above the fold, and the count stays in
+the accessible text, because a screen reader cannot glance at a link to find
+it. `check:lp` enforces exactly that line: the count must be in the hidden run,
+and no number of reviews may appear anywhere on the page that is not the
+sourced one.
+
+The faces stay. The question was ambiguous enough to be worth asking rather
+than guessing, since the previous revision had put them back on the owner's
+instruction.
+
+### Also
+The hand-drawn arrow is 5rem rather than 6.4rem, with its label down to
+.86rem: at the old size it competed with the button it was pointing at.
+
+### Verified
+Eleven widths from 320 to 1920: no horizontal scroll, every major block
+centred to within 2px, and the ribbon's stride longer than its window at every
+width where it scrolls. Five negative tests on the new rules. All gates green.
+86.7 KB against the 88 KB budget.
+
 ## Testing
 Repo has no JS test runner, so verification is a node script:
 `scripts/check-landing-pages.mjs` (`npm run check:lp`) reads the generated HTML and asserts: size budget, noindex, no em dashes, no competitor names, no invented rating, the three quotes verbatim, plan prices equal `FALLBACK_CATALOG`, each plan's COD-to-prepaid lock state agrees with the catalog, `TRIAL` numbers appear, the ported navbar and footer, every CTA kind present, no external script or stylesheet. Revision 9 adds: no `<video>` or `<img>` in the hero, a film section that exists, three entry-point cards that each link somewhere real, five bento panels with no image inside them, a marked phrase in every `<h2>`, three going-live steps, and three blog cards whose slugs resolve against `blogPosts.ts`. Browser checks with Playwright (installed): 360px and 1280px screenshots, H1 at most 3 lines on mobile, sticky bar behaviour, toggle, hero variant swap by `?utm_content=`.
