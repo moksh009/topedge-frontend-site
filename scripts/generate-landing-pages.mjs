@@ -40,7 +40,14 @@ const lpDir = path.join(__dirname, 'lp');
  *
  * This is not a licence to grow. If an edit needs more than this, cut something.
  */
-const MAX_BYTES = 88 * 1024;
+// Raised from 88 KB on 13 Oct 2026, when the hero took on the value ticker and
+// the three anchors and the comparison copy roughly doubled. A budget that
+// moves whenever it binds is not a budget, so: it moves when the page is asked
+// to carry more, never to make room for slack. The last three times it bound,
+// what paid for the content was finding waste (five star svgs collapsed into
+// one, markup indentation stripped from the output), and that is still the
+// first thing to try.
+const MAX_BYTES = 100 * 1024;
 
 const { FALLBACK_CATALOG, TRIAL, planBlurb, planFeatureKicker, dispatchLabel, planPricing, DASH_SIGNUP } =
   await loadBillingCatalog();
@@ -122,9 +129,9 @@ const TRIAL_SHORT = `${TRIAL.days}-day free trial on every plan. ${TRIAL.orders}
  */
 const HERO_VARIANTS = {
   platform: {
-    lead: 'Your Shopify store, running on ',
-    mark: 'WhatsApp',
-    sub: 'COD confirmation, cart recovery, campaigns and a shared inbox, in one place. Built for Indian Shopify D2C brands.',
+    lead: 'Shopify Growth Suite ',
+    mark: 'TopEdge',
+    sub: 'WhatsApp cart recovery, COD-to-prepaid RTO reduction and automated customer journeys for Shopify brands, plus 20 more features in one suite.',
   },
   cod: {
     lead: 'Confirm COD orders before you ',
@@ -154,9 +161,9 @@ const HERO_VARIANTS = {
 
 // Verbatim Trustpilot reviews, retrieved 6 Oct 2026. Do not edit the text.
 const QUOTES = [
-  { text: "The overall software experience is good — it's Indian software but feels like US Grade software quality.", author: 'Tirth P.' },
+  { text: "The overall software experience is top-notch, it's Indian software but feels like US Grade software quality.", author: 'Tirth P.' },
   { text: 'Topedge helped me a lot to solve issues with my ecomm business like abandoned cart followups, complete tracing of what a lead did and where it dropped off. Their support team is very helpful.', author: 'Shubham P.' },
-  { text: "In 2 days they built me everything... I'm on their ₹1,999 base plan, and mostly every feature is unlocked on every plan.", author: 'Robin' },
+  { text: "In 2 days their team built me everything on the software... I'm on their ₹1,999 base plan, and mostly every feature is unlocked on every plan.", author: 'Robin' },
 ];
 
 const ICONS = {
@@ -180,9 +187,12 @@ const ICONS = {
  */
 const PROOF_VARIANTS = {
   platform: {
-    h: 'Your own Meta Business account, not an agency\u2019s',
-    p: 'Your number, your templates, your WhatsApp quality rating. Meta bills you directly and TopEdge adds 0% markup, so nothing about the channel is rented from us.',
+    h: '100% asset ownership. 0% WhatsApp API markup.',
+    p: 'Stop paying a hidden 20% to 30% markup on every customer message. TopEdge AI connects straight to your own Meta Business account, so you pay Meta directly at cost. Your phone numbers, subscriber database, templates and green tick verification stay under your brand\u2019s control. We charge for the software suite only.',
     stat: '0%',
+    // The mark earns its place on this one: the figure is about who bills you,
+    // and Meta's own symbol says that faster than the label under it.
+    statMark: '/brand/meta-mark.webp',
     statLabel: 'added to what Meta charges you',
     src: 'Meta bills your Business account at its own per-conversation rates. We charge for the software only.',
   },
@@ -231,27 +241,27 @@ const PROOF_VARIANTS = {
 const SWITCH = [
   {
     icon: 'coin',
-    topic: 'Message fees',
-    them: 'A per-message fee on top of what Meta charges',
-    us: 'Meta bills your own account. TopEdge adds 0% markup.',
+    topic: 'WhatsApp API pricing',
+    them: 'A hidden 20% to 30% per-message tax on top of the official Meta conversation rate',
+    us: '0% Meta API markup. Meta bills you directly, and the number and templates stay yours.',
   },
   {
     icon: 'loop',
-    topic: 'Automation',
-    them: 'Runs are metered, then rationed as you grow',
-    us: 'Unlimited flow runs, on every plan.',
+    topic: 'Flow automation',
+    them: 'Metered flow runs, charged for again once you pass the allowance',
+    us: 'Unlimited journey runs, cart recovery triggers and workflows, on every plan.',
   },
   {
     icon: 'user',
-    topic: 'Customer records',
-    them: 'One buyer split across three separate contacts',
-    us: 'One profile, even with three phone numbers.',
+    topic: 'Customer profile syncing',
+    them: 'A duplicate record every time a buyer checks out with a different number or email',
+    us: 'One profile, stitched live across browsing sessions, numbers and past Shopify orders.',
   },
   {
     icon: 'card',
-    topic: 'COD risk',
-    them: 'COD stays COD, and you carry it to the door',
-    us: 'A payment link in the same thread, built for Shopify checkout.',
+    topic: 'COD verification and RTO',
+    them: 'A delayed text notification that tells the buyer nothing is changing',
+    us: 'Instant WhatsApp COD confirmation, with a discounted prepaid link into Shopify checkout.',
   },
 ];
 
@@ -278,7 +288,7 @@ const PATHS = [
         </div>`,
   },
   {
-    h: 'Show me what it actually does',
+    h: 'Must-use D2C suite',
     p: 'Journeys, campaigns, a shared inbox and a flow builder, on every plan.',
     cta: 'Explore the platform',
     href: '#platform',
@@ -548,7 +558,7 @@ function planCards(slug) {
             </div>
             <p class="mkt-plan__billing-note"><span class="p-yearly">${esc(y.billedLabel)} billed once a year <b class="save">save ${esc(y.saveLabel)}</b><em>Prefer monthly? ${esc(p.monthlyPriceLabel)}/mo</em></span><span class="p-monthly">${esc(p.monthlyPriceLabel)} every month, cancel anytime<em>Yearly works out at ${esc(y.effectiveMonthlyLabel)}/mo and saves ${esc(y.saveLabel)}</em></span></p>
             <p class="mkt-plan__blurb">${esc(planBlurb(p.slug))}</p>
-            <a class="mkt-plan__cta mkt-plan__cta--${p.emphasis ? 'solid' : 'ghost'}" data-cta="trial" data-plan="${esc(p.slug)}" href="${SIGNUP_FALLBACK(slug)}">Choose ${esc(p.displayName)}</a>
+            <a class="mkt-plan__cta mkt-plan__cta--${p.emphasis ? 'solid' : 'ghost'}" data-cta="trial" data-plan="${esc(p.slug)}" href="${SIGNUP_FALLBACK(slug)}">Start with ${esc(p.displayName)} <span aria-hidden="true">&rarr;</span></a>
           </div>
           <div class="mkt-plan__features">
             <p class="mkt-plan__kicker">${esc(planFeatureKicker(p.slug))}</p>
@@ -684,7 +694,9 @@ function proofHtml() {
   return Object.entries(PROOF_VARIANTS)
     .map(
       ([k, v]) => `      <div class="pf" data-pf="${k}">
-        <div class="pf-stat"><b>${v.stat}</b><span>${esc(v.statLabel)}</span></div>
+        <div class="pf-stat"><p class="pf-fig">${
+          v.statMark ? `<img src="${v.statMark}" alt="" width="128" height="87" loading="lazy" decoding="async">` : ''
+        }<b>${v.stat}</b></p><span>${esc(v.statLabel)}</span></div>
         <div class="pf-copy">
           <h2>${esc(v.h)}</h2>
           <p>${esc(v.p)}</p>
@@ -701,10 +713,27 @@ function proofHtml() {
  * is genuinely good, so leaving it buried in a feature card's body copy was
  * wasting it.
  */
+/**
+ * Each step is marked by the thing it is about rather than by its number: the
+ * Shopify bag, Meta's symbol, and the workflow glyph the site already uses for
+ * Journeys. The marks carry no chip, border or tinted square, because a brand
+ * logo in a box of our colour reads as our badge for their product.
+ */
+const WORKFLOW_MARK =
+  '<svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="8" height="8" x="3" y="3" rx="2"/><path d="M7 11v4a2 2 0 0 0 2 2h4"/><rect width="8" height="8" x="13" y="13" rx="2"/></svg>';
+
 const STEPS = [
-  { h: 'Install from the Shopify App Store', p: 'One click from your admin. No theme edits and no code on the storefront.' },
-  { h: 'Connect your Meta Business account', p: 'It stays yours, and we take your templates through Meta approval with you.' },
-  { h: 'Switch on your first journey', p: 'COD confirmation is pre-built. Edit the wording and turn it on.' },
+  {
+    mark: '<img src="/brand/shopify-mark.webp" alt="" width="112" height="132" loading="lazy" decoding="async">',
+    h: 'Install from the Shopify App Store',
+    p: 'One click from your admin. No theme edits and no code on the storefront.',
+  },
+  {
+    mark: '<img src="/brand/meta-mark.webp" alt="" width="128" height="87" loading="lazy" decoding="async">',
+    h: 'Connect your Meta Business account',
+    p: 'It stays yours, and we take your templates through Meta approval with you.',
+  },
+  { mark: WORKFLOW_MARK, h: 'Switch on your first journey', p: 'COD confirmation is pre-built. Edit the wording and turn it on.' },
 ];
 
 /**
@@ -911,6 +940,61 @@ function heroProof() {
 }
 
 /**
+ * The value ticker, under the film. Six claims a merchant can weigh in the
+ * second it takes one to cross, scrolling right to left. Two copies of the
+ * list, the track travelling exactly one copy, so the loop has no seam; the
+ * second copy is aria-hidden, or a screen reader reads all six twice.
+ *
+ * It sits inside the hero on purpose. The first screen sells one idea and the
+ * ticker sells the breadth behind it, which is the thing a Google click has no
+ * way of knowing: the ad bought one feature and the suite has twenty more.
+ */
+const TICKER = [
+  'Recover 15 to 25% of abandoned checkout revenue automatically',
+  'Verify COD orders and convert cash on delivery to prepaid',
+  '0% Meta WhatsApp API markup, pay Meta directly at cost',
+  'Website identity capture pixel',
+  'Visual multi-channel customer journey and chatbot builder',
+  '+20 more features included',
+];
+
+const tickerHtml = `<div class="tk" aria-label="What is included">
+      <ul class="tk-track">${[0, 1]
+        .flatMap((copy) =>
+          TICKER.map(
+            (v) =>
+              `<li${copy ? ' aria-hidden="true"' : ''}><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>${esc(v)}</li>`,
+          ),
+        )
+        .join('')}</ul>
+    </div>`;
+
+/**
+ * The three anchors that close the hero. A paid click lands knowing one thing
+ * it searched for; these are the three claims that decide whether the rest of
+ * the page is worth a scroll, so they are the last thing in the first screen
+ * rather than a section somewhere below it.
+ */
+const PILLARS = [
+  {
+    h: 'Enterprise e-commerce OS, not a basic WhatsApp chat app',
+    p: 'Real-time intent tracking, automated WhatsApp recovery, COD verification and CRM workflows in one dashboard.',
+  },
+  {
+    h: 'Immediate RTO reduction: confirm COD, convert to prepaid',
+    p: 'Catch fake addresses and unverified cash orders on WhatsApp before you ship, instead of paying freight both ways.',
+  },
+  {
+    h: 'Zero message markup, and the number stays yours',
+    p: 'Your own Meta WhatsApp Business API, billed to you at cost. No agency surcharge, and the subscriber data never leaves your account.',
+  },
+];
+
+const pillarsHtml = `<ul class="pil">${PILLARS.map(
+  (x) => `<li><h3>${esc(x.h)}</h3><p>${esc(x.p)}</p></li>`,
+).join('')}</ul>`;
+
+/**
  * The customer ribbon. Three copies of the four marks: the track travels exactly
  * one copy, so the frame it lands on is identical to the one it left and the
  * loop has no seam. Only the first copy is announced; the rest are aria-hidden,
@@ -931,7 +1015,7 @@ const stripHtml = [0, 1, 2]
  * are looking at a headline.
  */
 const badgesHtml = BADGES.map(
-  (b) => `<li><img src="${b.src}" alt="${esc(b.alt)}" height="40" loading="lazy" decoding="async"></li>`,
+  (b) => `<li><img src="${b.src}" alt="${esc(b.alt)}" height="96" loading="lazy" decoding="async"></li>`,
 ).join('');
 
 /**
@@ -1152,6 +1236,8 @@ for (const page of PAGES) {
     POSTS: postsHtml,
     SWITCH_ROWS: switchHtml,
     INCLUDED_LIST: includedHtml,
+    TICKER: tickerHtml,
+    PILLARS: pillarsHtml,
     STRIP_LOGOS: stripHtml,
     STRIP_BADGES: badgesHtml,
     FILM: filmHtml(),
@@ -1167,7 +1253,7 @@ for (const page of PAGES) {
     HERO_PROOF: heroProof(),
     PROOF_BLOCKS: proofHtml(),
     STEPS: STEPS.map(
-      (x, i) => `      <li class="stp" data-rv style="--d:${i * 70}ms"><b>${i + 1}</b><h3>${esc(x.h)}</h3><p>${esc(x.p)}</p></li>`,
+      (x, i) => `      <li class="stp" data-rv style="--d:${i * 70}ms"><b class="stp-m">${x.mark}</b><h3>${esc(x.h)}</h3><p>${esc(x.p)}</p></li>`,
     ).join('\n'),
     FAQS: FAQS.map(
       (f) => `      <details class="fq"><summary>${esc(f.q)}<i aria-hidden="true"></i></summary><p>${esc(f.a)}</p></details>`,

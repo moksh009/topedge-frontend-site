@@ -64,7 +64,7 @@ const at = (re) => {
 const withoutQuotes = markup.replace(/<blockquote[\s\S]*?<\/blockquote>/g, '');
 
 // --- Page contract ---
-must(Buffer.byteLength(html) <= 88 * 1024, 'exceeds the 88 KB budget');
+must(Buffer.byteLength(html) <= 100 * 1024, 'exceeds the 100 KB budget');
 must(html.includes('<meta name="robots" content="noindex,nofollow">'), 'missing noindex');
 must(!/\{\{[A-Z0-9_]+\}\}/.test(html), 'unreplaced {{placeholder}}');
 must(!/<script[^>]+src=|<link[^>]+rel="stylesheet"|fonts\.googleapis/.test(html), 'external script/stylesheet/font');
@@ -120,7 +120,13 @@ must(/Log in</.test(html), 'nav missing "Log in"');
 const heroBlock = (markup.match(/<header class="hero"[\s\S]*?<\/header>/) || [''])[0];
 must(heroBlock !== '', 'the hero header is gone');
 must(/<video\b/.test(heroBlock), 'the hero has no film; the first screen is meant to be the product moving');
-must(/min-height:100svh/.test(html), 'the hero is no longer a full viewport');
+// The hero runs past one viewport now: it carries the value ticker and the
+// three anchors below the film. What still has to hold is that the film is in
+// the first screen on a laptop, and that the ticker and the anchors are inside
+// the hero rather than loose sections under it.
+must(/<div class="tk"/.test(heroBlock), 'the value ticker is not in the hero');
+must(/<ul class="pil">/.test(heroBlock), 'the three anchors are not in the hero');
+must(/\.film\{[^}]*max-height:min\(4\dsvh/.test(html), 'the film is no longer capped to a fraction of the viewport, so it can push itself below the fold');
 // One button above the fold. The App Store is still offered, on the mobile bar.
 const heroCtas = heroBlock.match(/data-cta="[a-z]+"/g) || [];
 must(heroCtas.length === 1 && heroCtas[0] === 'data-cta="trial"', `the hero should offer one button, the trial; found ${heroCtas.join(', ') || 'none'}`);
@@ -129,10 +135,13 @@ must(/data-cta="trial"/.test(bar) && /data-cta="shopify"/.test(bar), 'the mobile
 must(/data-cta="shopify"[^>]*href="https:\/\/apps\.shopify\.com\//.test(markup), 'the Shopify CTA does not link to the App Store');
 
 const h1 = ((markup.match(/<h1 id="hero-h1">([\s\S]*?)<\/h1>/) || [])[1] || '').replace(/<[^>]+>/g, '');
-must(/Your Shopify store, running on WhatsApp/.test(h1), 'default H1 no longer sells the platform');
+must(/Shopify Growth Suite TopEdge/.test(h1), 'default H1 no longer names the product and the brand');
 must(h1.length <= 60, `H1 is ${h1.length} characters; over 60 wraps past two lines on desktop`);
 must(/<mark class="chip" id="hero-mark">/.test(markup), 'the H1 payload is not highlighted like the site titles');
-must(copy.includes('Built for Indian Shopify D2C brands'), 'page no longer says who it is for');
+// The default sub dropped the "Built for Indian Shopify D2C brands" line when
+// it was rewritten to list the suite. The page still has to tell an Indian
+// merchant it is for them before they scroll, and the proof row does it.
+must(/founders in India/.test(copy), 'nothing above the fold says this is for Indian merchants');
 
 // The owner's own hand-drawn arrow beside the primary button, with its cream
 // ground stripped. It is decoration and it is hidden below 1100px, which is
@@ -148,7 +157,68 @@ must(at(/<span class="free"/) < at(/class="hp-faces"/), 'the arrow belongs in th
 // by the column stretching and below 900px put the whole fold against the
 // left edge with the entire 2.5rem gutter on the right. The owner caught that
 // one in a screenshot; this is the rule that would have caught it here.
-must(/\.hero\{[^}]*justify-content:center/.test(html), 'the hero no longer centres its column; below 900px the fold will sit against the left edge');
+must(
+  /\.hero\{[^}]*flex-direction:column[^}]*align-items:center/.test(html),
+  'the hero no longer centres its column; as a row with no justify-content it put the whole fold against the left edge below 900px',
+);
+
+// --- The hero extension: the ticker and the three anchors ---
+// Six claims, two copies, and the spacing on the item rather than the track: a
+// gap sits between items and not after the last one, so an N-item track holds
+// N-1 gaps and a 50% translate lands half a gap short of the frame it left.
+// Both marquees on this page are built the same way for the same reason.
+const tk = (markup.match(/<div class="tk"[\s\S]*?<\/div>/) || [''])[0];
+must(tk !== '', 'the value ticker is gone');
+const tkItems = tk.match(/<li[^>]*>/g) || [];
+must(tkItems.length === 12, `expected two copies of six pills, found ${tkItems.length}`);
+must(tkItems.filter((l) => /aria-hidden/.test(l)).length === 6, 'exactly one copy of the ticker should be announced');
+must(/\.tk-track li\{[^}]*margin-right:/.test(html), 'the ticker spacing is back on the track as a gap; the loop will jump every lap');
+must(!/\.tk-track\{[^}]*gap:/.test(html), 'the ticker track has a gap again; it breaks the one-copy translate');
+must(/\.trust-marks li\{[^}]*margin-right:/.test(html), 'the logo ribbon spacing is back on the track as a gap; same jump');
+for (const claim of ['abandoned checkout revenue', 'convert cash on delivery to prepaid', '0% Meta WhatsApp API markup', 'identity capture pixel', '+20 more features included']) {
+  must(tk.includes(claim), `the ticker no longer claims: ${claim}`);
+}
+const pil = (markup.match(/<ul class="pil">[\s\S]*?<\/ul>/) || [''])[0];
+must((pil.match(/<li>/g) || []).length === 3, 'expected three anchors closing the hero');
+must((pil.match(/<h3>/g) || []).length === 3, 'an anchor has no heading');
+// h3, not h2: every h2 on this page carries a marked phrase, and these are
+// three claims rather than a section heading.
+must(!/<h2/.test(pil), 'the anchors are using section headings');
+
+// --- Marks that belong to other people ---
+// Shopify's bag, Meta's symbol and our own workflow glyph, in place of the
+// step numbers. No chip, no tinted square: a partner's logo inside a box in
+// our brand colour reads as our badge for their product.
+const steps = (markup.match(/<ol class="steps">[\s\S]*?<\/ol>/) || [''])[0];
+must(steps.includes('/brand/shopify-mark.webp'), 'step one no longer carries the Shopify mark');
+must(steps.includes('/brand/meta-mark.webp'), 'step two no longer carries the Meta mark');
+must(/<b class="stp-m"><svg/.test(steps), 'step three no longer carries the journey glyph');
+must(!/\.stp-m\{[^}]*background:/.test(html), 'the step marks are back in a tinted box');
+must(/<img class="hero-bm"/.test(markup), 'the headline lost the brand mark inside its highlight');
+must(
+  /html\[data-v\]:not\(\[data-v="platform"\]\) \.hero-bm\{display:none\}/.test(html),
+  'the brand mark stays in the highlight on the ad variants, where the marked phrase is not our name',
+);
+must(/<span id="hero-mark-t">/.test(markup), 'the variant script will overwrite the brand mark; it must replace the word inside the highlight');
+must(/getElementById\('hero-mark-t'\)\.textContent/.test(html), 'the variant script is writing over the whole highlight again');
+// The figure beside the ownership copy carries Meta's symbol, and only there:
+// it is the one block whose number is about who bills you.
+must(/<p class="pf-fig"><img src="\/brand\/meta-mark\.webp"/.test(markup), 'the 0% figure lost the Meta mark');
+must((markup.match(/\/brand\/meta-mark\.webp/g) || []).length === 2, 'the Meta mark appears somewhere new; it belongs to the setup step and the billing figure');
+
+// --- Buttons ---
+// One behaviour for every CTA on the page. A page where one button lifts and
+// the next is a flat rectangle teaches the reader only one of them is real.
+for (const sel of ['\\.btn', '\\.mkt-plan__cta']) {
+  must(new RegExp(`${sel}:hover[^{]*\\{[^}]*transform:translateY`).test(html), `${sel} does not lift under the pointer`);
+  must(new RegExp(`${sel}:active\\{[^}]*transform:`).test(html), `${sel} has no press state`);
+  must(new RegExp(`${sel}:after\\{[^}]*translateX\\(-130%\\)`).test(html), `${sel} lost its sheen`);
+  must(new RegExp(`${sel}:hover>span\\[aria-hidden\\]`).test(html), `${sel} does not move its arrow`);
+}
+must(/prefers-reduced-motion[\s\S]*?\.btn:hover,\.mkt-plan__cta:hover\{transform:none\}/.test(html), 'the buttons still move under reduced motion');
+const planCtas = markup.match(/<a class="mkt-plan__cta[^>]*>[^<]*/g) || [];
+must(planCtas.length === 3, `expected three plan buttons, found ${planCtas.length}`);
+for (const c of planCtas) must(/Start with /.test(c), `a plan button does not name the action: ${c.slice(-40)}`);
 
 // --- One gradient, two surfaces ---
 // The owner's note was that the page read as three different purples chosen by
@@ -274,7 +344,7 @@ must(/\.mq\{[^}]*width:min\(100% - 2\.5rem,44rem\)/.test(html), 'the ribbon wind
 // two meet on a line. The owner asked for the line after seeing the version
 // where the violet bled down into the band and neither surface had an edge.
 must(/\.trust\{[^}]*background:#fff\}/.test(html), 'the band is not flat white; the hero gradient is bleeding into it again');
-must(/\.hero\{[^}]*#a78bfa 95%,#a78bfa 100%\)/.test(html), 'the hero gradient no longer ends on a flat violet, so it has no bottom edge');
+must(/\.hero\{[^}]*#a78bfa 82%,#a78bfa 100%\)/.test(html), 'the hero gradient no longer ends on a flat violet, so it has no bottom edge');
 must(/\.trust-marks img\{[^}]*height:32px/.test(html), 'the ribbon marks changed size; check they still outrun the window');
 must(/\.trust-marks img\{[^}]*filter:brightness\(0\)/.test(html), 'the logos are not painted dark for the white band');
 // The platform marks answer "who bills me", which is a question asked at a price.
@@ -282,6 +352,10 @@ const badgeRow = (markup.match(/<ul class="badges">[\s\S]*?<\/ul>/) || [''])[0];
 must(badgeRow !== '', 'the platform marks are gone');
 must(at(/<ul class="badges">/) > at(/<section[^>]*id="pricing"/), 'the platform marks belong beside the price, not above it');
 must((badgeRow.match(/<img /g) || []).length === 3, 'expected the three platform marks');
+must(/\.badges img\{[^}]*height:96px/.test(html), 'the platform marks shrank back; they were sized up to be read, not noticed');
+for (const img of badgeRow.match(/<img [^>]*>/g) || []) {
+  must(/height="96"/.test(img), 'a platform mark ships the wrong intrinsic height, so it will shift on load');
+}
 for (const img of badgeRow.match(/<img [^>]*>/g) || []) {
   must(/\balt="[^"]{8,}"/.test(img), 'a platform mark has no alt text');
 }
@@ -325,7 +399,7 @@ for (const r of rows) {
 }
 must(/<section class="dark" id="compare">/.test(markup), 'the comparison is no longer the inverted band');
 must(/\.dark\{background:/.test(html), 'the dark band has no background');
-for (const h of ['TopEdge adds 0% markup', 'Unlimited flow runs', 'One profile, even with three phone numbers', 'A payment link in the same thread']) {
+for (const h of ['0% Meta API markup', 'Unlimited journey runs', 'One profile, stitched live', 'discounted prepaid link into Shopify checkout']) {
   must(((markup.match(/<div class="cmp"[\s\S]*?<\/section>/) || [''])[0]).includes(h), `the comparison no longer makes the claim: ${h}`);
 }
 // The migration offer is the whole argument for switch traffic and noise for
@@ -377,14 +451,20 @@ must(copy.includes('Most stores send their first message the same day'), 'the se
 must(html.includes('nothing sends without your sign-off'), 'missing the Meta-approval line');
 
 // --- Proof ---
+// The three review texts, pinned here as a second copy of what is on
+// Trustpilot. Two were corrected against the live page on 13 Oct 2026 by the
+// owner: our transcription had softened Tirth P.'s wording and elided a clause
+// from Robin's. The page tells the reader these are quoted as published, so
+// this list is the thing that has to be true, and a reword in the generator
+// that nobody checked against Trustpilot fails here rather than shipping.
 const quotes = [
-  ["The overall software experience is good — it's Indian software but feels like US Grade software quality.", 'Tirth P.'],
+  ["The overall software experience is top-notch, it's Indian software but feels like US Grade software quality.", 'Tirth P.'],
   ['Topedge helped me a lot to solve issues with my ecomm business like abandoned cart followups, complete tracing of what a lead did and where it dropped off. Their support team is very helpful.', 'Shubham P.'],
-  ["In 2 days they built me everything... I'm on their ₹1,999 base plan, and mostly every feature is unlocked on every plan.", 'Robin'],
+  ["In 2 days their team built me everything on the software... I'm on their ₹1,999 base plan, and mostly every feature is unlocked on every plan.", 'Robin'],
 ];
 const quoteCards = markup.match(/<blockquote[\s\S]*?<\/blockquote>/g) || [];
 for (const [text, author] of quotes) {
-  must(html.includes(text) || html.includes(text.replace(/^The overall software experience is good — i/, 'I')), `quote not verbatim: ${author}`);
+  must(html.includes(text), `quote not verbatim: ${author}`);
 }
 for (const [, author] of quotes) {
   must(markup.includes(author), `quote missing its author: ${author}`);

@@ -54,18 +54,43 @@ img{max-width:100%}
    to sit behind the headline made the top of the page as busy as the bottom and
    gave the hero two focal points; the page now starts white and darkens into
    the band below it, which is the single thing the gradient is for. */
-.hero{position:relative;overflow:hidden;min-height:100svh;display:flex;align-items:center;justify-content:center;padding:5.75rem 0 2.25rem;text-align:center;background:linear-gradient(180deg,#fff 0,#fdfcff 30%,rgba(196,181,253,.38) 64%,rgba(167,139,250,.68) 84%,#a78bfa 95%,#a78bfa 100%)}
+/* The hero is taller than one screen now: headline, film, the value ticker and
+   the three anchors all live inside it. It is a column, so the gutter falls on
+   both sides (as a row with no justify-content it put the whole fold against
+   the left edge below 900px, which is the bug this comment is standing on).
+   The gradient still ends on a flat violet and stops at the hero's own edge. */
+.hero{position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;padding:5.5rem 0 3.5rem;text-align:center;background:linear-gradient(180deg,#fff 0,#fdfcff 16%,rgba(196,181,253,.34) 44%,rgba(167,139,250,.62) 64%,#a78bfa 82%,#a78bfa 100%)}
 .hero-in{display:flex;flex-direction:column;align-items:center;width:min(100% - 2.5rem,70rem)}
 .chip{color:var(--chip-ink);background:var(--chip-bg);border-radius:.38em;padding:.02em .22em .06em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
 mark.chip{background:var(--chip-bg)}
+/* The brand mark inside the highlight, so the headline is a lockup rather than
+   a product name with our name tacked on. It belongs to the default headline
+   only: every other variant marks a phrase ("ship them", "twice") that a logo
+   would make nonsense of, and data-v is set before the body parses. */
+.hero-bm{display:inline-block;width:.92em;height:.92em;margin:0 .22em -.1em 0;vertical-align:baseline}
+html[data-v]:not([data-v="platform"]) .hero-bm{display:none}
 .hero h1{margin:0;max-width:19ch;font-size:clamp(2rem,5.2vw,3.4rem);font-weight:400;letter-spacing:-.042em;line-height:1.12;text-wrap:balance}
 .sub{margin:.95rem 0 0;max-width:40rem;font-size:clamp(1rem,2.1vw,1.13rem);color:var(--muted);text-wrap:pretty}
 .cta-row{position:relative;margin-top:1.5rem;display:flex;flex-wrap:wrap;justify-content:center;gap:.7rem}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;min-height:3rem;padding:0 1.6rem;border-radius:9999px;background:linear-gradient(180deg,#8b5cf6,#7c3aed);color:#fff;font:inherit;font-size:.95rem;font-weight:500;text-decoration:none;box-shadow:0 10px 26px -12px rgba(124,58,237,.7);transition:background .2s,box-shadow .2s}
-.btn:hover,.btn:focus-visible{background:linear-gradient(180deg,#7c3aed,#6d28d9);box-shadow:0 12px 30px -12px rgba(109,40,217,.75)}
+/* Every button on the page behaves the same way, because a page where one CTA
+   is alive and the next is a flat rectangle teaches the reader that only one
+   of them is real. Three things, and nothing that blinks at rest: it rises a
+   little under the pointer so it reads as pressable, it takes the press (the
+   missing half of a hover state is what makes a button feel like an image),
+   and its arrow moves the way the click is about to. The sheen is the one
+   flourish; it runs once per hover and is a light source crossing a surface,
+   not an animation asking for attention. */
+.btn{position:relative;overflow:hidden;isolation:isolate;display:inline-flex;align-items:center;justify-content:center;gap:.55rem;min-height:3rem;padding:0 1.6rem;border-radius:9999px;background:linear-gradient(180deg,#8b5cf6,#7c3aed);color:#fff;font:inherit;font-size:.95rem;font-weight:500;text-decoration:none;box-shadow:0 10px 26px -12px rgba(124,58,237,.7);transition:background .2s,box-shadow .25s var(--e),transform .18s var(--e)}
+.btn:hover,.btn:focus-visible{background:linear-gradient(180deg,#7c3aed,#6d28d9);box-shadow:0 18px 38px -14px rgba(109,40,217,.8);transform:translateY(-2px)}
+.btn:active{transform:translateY(0) scale(.985);box-shadow:0 6px 16px -10px rgba(109,40,217,.7);transition-duration:.06s}
 .btn:focus-visible{outline:3px solid #c4b5fd;outline-offset:2px}
+.btn>span[aria-hidden]{display:inline-block;transition:transform .25s var(--e)}
+.btn:hover>span[aria-hidden],.btn:focus-visible>span[aria-hidden]{transform:translateX(3px)}
+.btn:after{content:'';position:absolute;z-index:-1;inset:0;background:linear-gradient(105deg,transparent 36%,rgba(255,255,255,.4) 50%,transparent 64%);transform:translateX(-130%);transition:transform .62s var(--e);pointer-events:none}
+.btn:hover:after,.btn:focus-visible:after{transform:translateX(130%)}
 .btn-out{background:rgba(255,255,255,.9);color:var(--chip-ink);box-shadow:inset 0 0 0 1.5px #ded1fb}
-.btn-out:hover,.btn-out:focus-visible{background:#fff;box-shadow:inset 0 0 0 1.5px #c4b5fd}
+.btn-out:hover,.btn-out:focus-visible{background:#fff;box-shadow:inset 0 0 0 1.5px #c4b5fd,0 14px 30px -16px rgba(76,29,149,.5)}
+.btn-out:after{background:linear-gradient(105deg,transparent 36%,rgba(124,58,237,.12) 50%,transparent 64%)}
 /* The hand-drawn aside beside the primary button. It is decoration and it is the
    first thing to go when the row runs out of room, so it is absolutely positioned
    out of flow and hidden below 1100px rather than allowed to wrap. */
@@ -75,6 +100,22 @@ mark.chip{background:var(--chip-bg)}
  .free img{display:block;flex:none;width:5rem;height:auto}
  .free b{font-weight:600;font-size:.86rem;transform:rotate(-8deg) translateY(-.32rem);color:#2e1065;letter-spacing:-.015em}
 }
+/* The value ticker under the film. Two copies of six pills, the track moving
+   exactly one copy so the loop has no seam. The spacing is a margin on the
+   item, not a gap on the track: a gap is laid between items and not after the
+   last one, so a track of N items carries N-1 gaps and a 50% translate lands
+   half a gap short of the frame it left, which is a visible jump every lap. */
+.tk{position:relative;width:100%;margin-top:2.4rem;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.tk-track{display:flex;width:max-content;align-items:center;list-style:none;margin:0;padding:0;animation:tk 44s linear infinite}
+.tk:hover .tk-track{animation-play-state:paused}
+.tk-track li{flex:none;display:inline-flex;align-items:center;gap:.45rem;margin-right:.7rem;padding:.55rem 1.1rem;border-radius:9999px;background:rgba(255,255,255,.86);box-shadow:0 0 0 1px rgba(124,58,237,.12),0 8px 20px -12px rgba(46,16,101,.55);font-size:.88rem;font-weight:500;letter-spacing:-.012em;color:#2e1065;white-space:nowrap}
+.tk-track svg{flex:none;color:var(--violet)}
+@keyframes tk{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+/* The three anchors that close the hero, on the violet the gradient ends on. */
+.pil{display:grid;gap:.85rem;width:min(100% - 2.5rem,70rem);margin:2.4rem auto 0;padding:0;list-style:none;text-align:left}
+.pil li{padding:1.45rem 1.4rem;border-radius:22px;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 0 0 1px rgba(255,255,255,.55),0 20px 44px -26px rgba(46,16,101,.7)}
+.pil h3{margin:0;font-size:1.02rem;font-weight:500;letter-spacing:-.024em;line-height:1.32;color:var(--ink);text-wrap:balance}
+.pil p{margin:.5rem 0 0;font-size:.9rem;line-height:1.55;color:var(--muted);text-wrap:pretty}
 /* Faces on the left, the rating over the line that reads it, on the right:
    the shape of the proof block the owner sent as the reference. */
 .hp{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.6rem 1.25rem;margin-top:1.75rem}
@@ -321,7 +362,8 @@ section{padding:3.75rem 0}
    what gives, not the spacing: a 14rem gap bought the guarantee and left the
    band looking like four logos lost on a white field. */
 .mq{position:relative;width:min(100% - 2.5rem,44rem);margin:.9rem auto 0;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
-.trust-marks{display:flex;width:max-content;align-items:center;gap:6rem;list-style:none;margin:0;padding:0;animation:mq 26s linear infinite}
+.trust-marks{display:flex;width:max-content;align-items:center;list-style:none;margin:0;padding:0;animation:mq 26s linear infinite}
+.trust-marks li{flex:none;margin-right:6rem}
 .mq:hover .trust-marks{animation-play-state:paused}
 /* The files are white-on-transparent, made for a dark band. brightness(0) gives
    the flat dark mark a logo wall on white wants, with the alpha intact. */
@@ -329,8 +371,8 @@ section{padding:3.75rem 0}
 .trust-marks img:hover{opacity:.9}
 @keyframes mq{from{transform:translateX(0)}to{transform:translateX(-33.3333%)}}
 /* The platform marks, under the price. */
-.badges{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:1rem 2.4rem;list-style:none;margin:1.75rem auto 0;padding:0}
-.badges img{display:block;height:40px;width:auto;object-fit:contain}
+.badges{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:1.4rem 3.2rem;list-style:none;margin:2.4rem auto 0;padding:0}
+.badges img{display:block;height:96px;width:auto;object-fit:contain}
 /* ---- the comparison ----
    Three columns: the topic, what the reader is used to, what happens here. The
    right column is tinted the whole way down so the eye lands on it without
@@ -351,8 +393,11 @@ section{padding:3.75rem 0}
 /* proof: review cards in Trustpilot's visual language */
 .quotes{display:grid;gap:1rem}
 .quote{margin:0;padding:1.3rem 1.3rem 1.2rem;display:flex;flex-direction:column;gap:.75rem}
-.tp-mark{display:flex;align-items:center;gap:.3rem;font-size:.78rem;font-weight:600;letter-spacing:-.025em;color:#191919}
-.tp-mark svg{display:block}
+/* The mark on a review card is the card's masthead, so it is set at reading
+   size rather than as a caption: it is what tells the reader in a glance that
+   the words under it were published somewhere they can check. */
+.tp-mark{display:flex;align-items:center;gap:.4rem;font-size:1.02rem;font-weight:600;letter-spacing:-.028em;color:#191919}
+.tp-mark svg{display:block;flex:none;width:1.15rem;height:1.15rem}
 .tp-text{flex:1;font-size:.98rem;line-height:1.55}
 .tp-text:before{content:'\201C'}
 .tp-text:after{content:'\201D'}
@@ -382,11 +427,20 @@ section{padding:3.75rem 0}
 .mkt-plan__period{font-size:.8125rem;font-weight:450;color:#94a3b8}
 .mkt-plan__billing-note{margin-top:.4rem;width:100%;min-height:2.9em;font-size:.75rem;line-height:1.45;color:#64748b}
 .mkt-plan__blurb{margin-top:.65rem;width:100%;min-height:2.5em;font-size:.8125rem;line-height:1.5;color:#64748b}
-.mkt-plan__cta{width:100%;margin-top:1rem;display:inline-flex;align-items:center;justify-content:center;min-height:2.6rem;padding:0 1rem;border-radius:9999px;font-size:.8125rem;font-weight:550;text-decoration:none;transition:background .15s,border-color .15s,box-shadow .15s}
+/* The plan buttons are the same object as the hero button, one size down:
+   same lift, same press, same arrow, same sheen. */
+.mkt-plan__cta{position:relative;overflow:hidden;isolation:isolate;width:100%;margin-top:1rem;display:inline-flex;align-items:center;justify-content:center;gap:.45rem;min-height:2.85rem;padding:0 1rem;border-radius:9999px;font-size:.84rem;font-weight:550;text-decoration:none;transition:background .15s,border-color .15s,box-shadow .25s var(--e),transform .18s var(--e)}
+.mkt-plan__cta:hover{transform:translateY(-2px)}
+.mkt-plan__cta:active{transform:translateY(0) scale(.985);transition-duration:.06s}
+.mkt-plan__cta>span[aria-hidden]{display:inline-block;transition:transform .25s var(--e)}
+.mkt-plan__cta:hover>span[aria-hidden]{transform:translateX(3px)}
+.mkt-plan__cta:after{content:'';position:absolute;z-index:-1;inset:0;background:linear-gradient(105deg,transparent 36%,rgba(255,255,255,.4) 50%,transparent 64%);transform:translateX(-130%);transition:transform .62s var(--e);pointer-events:none}
+.mkt-plan__cta:hover:after{transform:translateX(130%)}
 .mkt-plan__cta--solid{border:1px solid #6d28d9;background:linear-gradient(180deg,#8b5cf6 0,#7c3aed 100%);color:#fff;box-shadow:0 8px 22px -10px rgba(124,58,237,.55)}
-.mkt-plan__cta--solid:hover{background:linear-gradient(180deg,#7c3aed 0,#6d28d9 100%);border-color:#5b21b6}
+.mkt-plan__cta--solid:hover{background:linear-gradient(180deg,#7c3aed 0,#6d28d9 100%);border-color:#5b21b6;box-shadow:0 16px 34px -14px rgba(124,58,237,.7)}
 .mkt-plan__cta--ghost{border:1px solid #e2e8f0;background:#fff;color:var(--ink);box-shadow:0 2px 10px -4px rgba(15,23,42,.1)}
-.mkt-plan__cta--ghost:hover{background:#f8fafc;border-color:#cbd5e1}
+.mkt-plan__cta--ghost:hover{background:#fff;border-color:#c4b5fd;box-shadow:0 14px 28px -16px rgba(76,29,149,.45)}
+.mkt-plan__cta--ghost:after{background:linear-gradient(105deg,transparent 36%,rgba(124,58,237,.12) 50%,transparent 64%)}
 .mkt-plan__cta:focus-visible{outline:3px solid #c4b5fd;outline-offset:2px}
 .mkt-plan__features{flex:1;display:flex;flex-direction:column;padding:.85rem .55rem .35rem}
 .mkt-plan__kicker{margin-bottom:.65rem;padding:0 .35rem;font-size:.8125rem;font-weight:600;letter-spacing:-.02em;color:var(--ink)}
@@ -450,7 +504,10 @@ section{padding:3.75rem 0}
  .pane--aud{position:static;width:max-content;margin:.7rem 0 0 auto}
  .orbit{height:auto;min-height:11.5rem}
  .bx:hover .pane--wa,.bx:hover .pane--ask,.bx:hover .pane--aud{transform:none}
- .trust-marks{width:100%;flex-wrap:wrap;justify-content:center;gap:1.5rem 3rem;animation:none}
+ /* No marquee below 900px, so the per-item margin that keeps the track's
+    loop seamless goes back to being a gap, or each mark takes its own row. */
+ .trust-marks{width:100%;flex-wrap:wrap;justify-content:center;gap:1.4rem 2.6rem;animation:none}
+ .trust-marks li{margin-right:0}
  .trust-marks li[aria-hidden]{display:none}
  .mq{-webkit-mask-image:none;mask-image:none}
 }
@@ -524,22 +581,29 @@ section{padding:3.75rem 0}
  .cmp-row:last-child .cmp-v{border-radius:0 0 16px 16px}
  .cmp-row:not(.cmp-row--head) .cmp-t,.cmp-row:not(.cmp-row--head) .cmp-x,.cmp-row:not(.cmp-row--head) .cmp-v{border-top:1px solid #f3eefb}
  .cmp-row:nth-child(2) .cmp-t,.cmp-row:nth-child(2) .cmp-x,.cmp-row:nth-child(2) .cmp-v{border-top:0}
- .hero{height:100svh;min-height:36rem;align-items:stretch;padding:8.5rem 0 2rem}
+ /* The hero no longer fits a viewport and should not pretend to: the film
+    still clears the first screen, and the ticker and the anchors are the
+    reward for the first scroll rather than three things squeezed above it. */
+ .hero{padding:7.5rem 0 4.5rem}
  .hero h1{max-width:none;font-size:clamp(2.4rem,3.9vw,3.1rem)}
- .hero-in{flex:1;min-height:0;justify-content:center}
- .film-wrap{flex:1;min-height:12rem;display:flex;align-items:center;justify-content:center}
- .film{height:100%;width:auto;max-width:100%;max-height:none}
+ .film{max-height:min(46svh,28rem)}
+ .pil{grid-template-columns:repeat(3,1fr);gap:1.1rem;margin-top:3rem}
+ .pil li{padding:1.7rem 1.6rem}
+ .tk{margin-top:3rem}
  section{padding:5.25rem 0}
  .mkt-plan--emphasis{transform:translateY(-.5rem)}
 }
 @media(prefers-reduced-motion:reduce){
  *{transition:none!important;animation:none!important}
+ .btn:after,.mkt-plan__cta:after{display:none}
+ .btn:hover,.mkt-plan__cta:hover{transform:none}
  .path:hover .ch:nth-child(2){transform:rotate(5deg)}
  .path:hover .ch:nth-child(3){transform:rotate(-6deg)}
  .path:hover .ch:nth-child(4){transform:rotate(4deg)}
  .path:hover .ch:nth-child(5){transform:rotate(-3deg)}
  html{scroll-behavior:auto}
- .trust-marks{width:100%;flex-wrap:wrap;justify-content:center;gap:1.5rem 3rem}
+ .trust-marks{width:100%;flex-wrap:wrap;justify-content:center;gap:1.4rem 2.6rem}
+ .trust-marks li{margin-right:0}
  .trust-marks li[aria-hidden]{display:none}
 }
 /* ---- 2026-10-11 audit rebuild ----
@@ -557,6 +621,8 @@ section{padding:3.75rem 0}
    used to be a flat white box that belonged to no system on the page. */
 .pf-stat{position:relative;overflow:hidden;isolation:isolate;display:grid;gap:.5rem;padding:1.9rem 1.7rem;border-radius:26px;background:#fff;border:1px solid #ece4fb;box-shadow:0 1px 2px rgba(16,24,40,.03),0 14px 36px -18px rgba(76,29,149,.14)}
 .pf-stat:before{content:'';position:absolute;z-index:-1;top:-55%;left:-30%;width:85%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(167,139,250,.32),rgba(167,139,250,0) 68%)}
+.pf-fig{display:flex;align-items:center;gap:.6rem}
+.pf-fig img{display:block;flex:none;width:auto;height:1.95rem}
 .pf-stat b{font-size:clamp(2rem,4.8vw,2.9rem);font-weight:500;letter-spacing:-.045em;line-height:1;color:var(--chip-ink);font-variant-numeric:tabular-nums}
 .pf-stat span{font-size:.88rem;line-height:1.5;color:var(--muted);text-wrap:pretty}
 .pf-copy h2{font-size:clamp(1.4rem,3.2vw,1.95rem);font-weight:400;letter-spacing:-.032em;line-height:1.22;text-wrap:balance}
@@ -586,7 +652,16 @@ html[data-v="switch"] .mig{display:block}
 /* Going live, numbered. */
 .steps{counter-reset:s;list-style:none;margin:0 auto;padding:0;display:grid;gap:1.25rem;width:min(100%,62rem)}
 .stp{padding:1.5rem 1.4rem;border-radius:20px;background:#fff;border:1px solid #ece4fb;box-shadow:0 1px 2px rgba(16,24,40,.03),0 14px 34px -20px rgba(76,29,149,.18)}
-.stp b{display:grid;place-items:center;width:2.1rem;height:2.1rem;border-radius:12px;background:#f3eeff;color:var(--chip-ink);font-size:.88rem;font-weight:600}
+/* No chip, no tinted square: a partner's logo inside a box in our brand colour
+   reads as our badge for their product rather than as theirs. The marks are
+   set on the card, larger than the numbers they replace. */
+.stp-m{display:flex;align-items:center;height:2.9rem;color:var(--violet)}
+.stp-m img,.stp-m svg{display:block;width:auto;height:100%}
+/* Optical sizing, not equal heights: the Shopify bag is taller than it is
+   wide and the Meta symbol is twice as wide as it is tall, so matching their
+   heights makes the bag look half the size of the mark beside it. */
+.stp:nth-child(2) .stp-m{height:2.4rem}
+.stp-m svg{height:2.6rem}
 .stp h3{margin-top:.95rem;font-size:1.05rem;font-weight:500;letter-spacing:-.02em}
 .stp p{margin-top:.4rem;font-size:.95rem;line-height:1.55;color:var(--muted);text-wrap:pretty}
 /* The seven questions, native details so they cost nothing until opened. */

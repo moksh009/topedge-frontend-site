@@ -2,11 +2,11 @@
 
 <header class="hero" id="hero">
   <div class="hero-in">
-    <h1 id="hero-h1"><span id="hero-lead">{{HERO_LEAD}}</span><mark class="chip" id="hero-mark">{{HERO_MARK}}</mark></h1>
+    <h1 id="hero-h1"><span id="hero-lead">{{HERO_LEAD}}</span><mark class="chip" id="hero-mark"><img class="hero-bm" src="/brand-mark-56.webp" width="112" height="112" alt="" decoding="async"><span id="hero-mark-t">{{HERO_MARK}}</span></mark></h1>
     <p class="sub" id="hero-sub">{{HERO_SUB}}</p>
     <script>
     (function(){try{var V={{HERO_VARIANTS_JSON}};var c=(new URLSearchParams(location.search).get('utm_content')||'').toLowerCase();
-    for(var k in V){if(c.indexOf(k)===0){document.documentElement.setAttribute('data-v',k);document.getElementById('hero-lead').textContent=V[k].lead;document.getElementById('hero-mark').textContent=V[k].mark;document.getElementById('hero-sub').textContent=V[k].sub;break}}}catch(e){}})();
+    for(var k in V){if(c.indexOf(k)===0){document.documentElement.setAttribute('data-v',k);document.getElementById('hero-lead').textContent=V[k].lead;document.getElementById('hero-mark-t').textContent=V[k].mark;document.getElementById('hero-sub').textContent=V[k].sub;break}}}catch(e){}})();
     </script>
     <div class="cta-row" id="hero-cta">
       <a class="btn" data-cta="trial" href="{{SIGNUP_FALLBACK}}">Start free trial <span aria-hidden="true">&rarr;</span></a>
@@ -15,6 +15,8 @@
     {{HERO_PROOF}}
     {{FILM}}
   </div>
+  {{TICKER}}
+  {{PILLARS}}
 </header>
 
 <div class="trust">
@@ -33,7 +35,7 @@
 
 <section class="dark" id="compare">
   <div class="wrap">
-    <div class="head"><h2>The four things that make people <span class="chip">switch</span></h2></div>
+    <div class="head"><h2>Why high-growth Shopify brands <span class="chip">switch to TopEdge AI</span></h2></div>
     <div class="cmp" data-rv>
       <div class="cmp-row cmp-row--head" aria-hidden="true">
         <p class="cmp-t"></p>
@@ -86,7 +88,7 @@
 
 <section id="pricing">
   <div class="wrap">
-    <div class="head"><h2>Priced on volume, not on <span class="chip">features</span></h2><p>Every plan runs everything above. The number that changes is how many orders and sends it covers.</p></div>
+    <div class="head"><h2>Priced on volume, not on <span class="chip">features</span></h2><p>30+ features included on every plan, with unlimited usage. The number that changes is how many orders and sends it covers.</p></div>
     <div class="cycle" role="tablist" aria-label="Billing cycle">
       <button type="button" role="tab" aria-selected="false" data-cycle="monthly">Monthly</button>
       <button type="button" role="tab" aria-selected="true" data-cycle="yearly" class="on">Yearly</button>

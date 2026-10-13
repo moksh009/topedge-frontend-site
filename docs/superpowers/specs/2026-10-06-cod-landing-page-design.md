@@ -1214,6 +1214,79 @@ centred to within 2px, and the ribbon's stride longer than its window at every
 width where it scrolls. Five negative tests on the new rules. All gates green.
 86.7 KB against the 88 KB budget.
 
+## Revision 22 — the owner's copy pass, and a taller hero (2026-10-13)
+
+A long written brief, implemented. The reference screenshots it mentions did
+not come through, so the layout decisions below are read from the prose.
+
+### Hero
+The default headline is `Shopify Growth Suite [TopEdge]`, the brand mark set
+inside the highlight so the line is a lockup rather than a product name with
+ours bolted on. The mark belongs to that headline only: four ad variants mark
+a phrase ("ship them", "twice") a logo would make nonsense of, and the hero
+script now writes into a span inside the highlight rather than over the
+highlight, which would have taken the logo with it. The sub lists the suite.
+
+The hero runs past one viewport now, which is the point of it. Below the film:
+
+- **A value ticker**, six claims scrolling right to left in two copies.
+- **Three anchors**, white cards on the violet the gradient ends on, carrying
+  the three claims that decide whether the rest of the page earns a scroll.
+
+Both marquees on this page space their items with a margin on the item, not a
+gap on the track. A gap is laid between items and not after the last one, so
+an N-item track carries N-1 gaps and a one-copy translate lands half a gap
+short of the frame it left: a visible jump, every lap. The logo ribbon has had
+that bug since revision 15 and nobody caught it; `check:lp` now asserts the
+margin on both, and the responsive sweep measures one copy against the travel
+distance at every width where either animates.
+
+### Marks that belong to other people
+Shopify's bag and Meta's symbol replace the step numbers, with our own
+workflow glyph on the third. They were cut out of the partner badges already
+in the repo (luminance knockout, 8 KB each as webp) rather than redrawn from
+memory, which is how a wordmark ends up subtly wrong. They carry no chip and
+no tinted square: a partner's logo inside a box in our brand colour reads as
+our badge for their product. They are sized optically, not to equal heights —
+the bag is taller than wide and the Meta symbol twice as wide as tall, so
+matching heights makes the bag look half the size of the mark beside it.
+
+Meta's symbol also sits beside the 0% figure, on the one proof block whose
+number is about who bills you. The three platform badges beside the price went
+from 40px to 96px.
+
+### Buttons
+One behaviour for every CTA, because a page where one button is alive and the
+next is a flat rectangle teaches the reader only one of them is real. Each
+lifts 2px under the pointer, takes the press (the missing half of a hover
+state is what makes a button feel like a picture of a button), moves its arrow
+the way the click is about to, and runs a single sheen across itself per
+hover. Nothing blinks at rest. The plan buttons read "Start with Growth →"
+rather than "Choose Growth": the verb is the action, not the deliberation.
+Under reduced motion the lift and the sheen are off.
+
+### Copy
+Comparison title and all four rows, the ownership block, the entry card, the
+pricing line, and two review texts. The reviews are the sensitive ones: the
+page tells the reader they are quoted as published, so `check:lp` pins all
+three strings and a reword in the generator that nobody checked against
+Trustpilot fails the build. Both edits read as corrections to our own
+transcription — one had an ellipsis where a clause had been dropped — but
+Trustpilot is unreachable from the build container, so the owner is the only
+one who can confirm them against the live page.
+
+### The byte budget moved, 88 KB to 100 KB
+The page is 95.5 KB. The budget moves because the page was asked to carry
+more, never to make room for slack: the last three times it bound, what paid
+for the content was finding waste. That is still the first thing to try.
+
+### Verified
+Six hero states driven with a gclid, including no `utm_content` at all:
+headline, brand mark shown or hidden, proof block, Meta mark on the billing
+figure only, and the attribution handoff. Eleven widths with no horizontal
+scroll, every block centred to within 2px, neither marquee doubling or
+seaming. Five negative tests on the new rules. All gates green.
+
 ## Testing
 Repo has no JS test runner, so verification is a node script:
 `scripts/check-landing-pages.mjs` (`npm run check:lp`) reads the generated HTML and asserts: size budget, noindex, no em dashes, no competitor names, no invented rating, the three quotes verbatim, plan prices equal `FALLBACK_CATALOG`, each plan's COD-to-prepaid lock state agrees with the catalog, `TRIAL` numbers appear, the ported navbar and footer, every CTA kind present, no external script or stylesheet. Revision 9 adds: no `<video>` or `<img>` in the hero, a film section that exists, three entry-point cards that each link somewhere real, five bento panels with no image inside them, a marked phrase in every `<h2>`, three going-live steps, and three blog cards whose slugs resolve against `blogPosts.ts`. Browser checks with Playwright (installed): 360px and 1280px screenshots, H1 at most 3 lines on mobile, sticky bar behaviour, toggle, hero variant swap by `?utm_content=`.
