@@ -1437,6 +1437,43 @@ Twelve widths from 320 to 2560, both marquees measured for direction, speed,
 seam and track length. Five negative tests on the new rules. All gates green.
 97.1 KB against the 100 KB budget.
 
+## Revision 26 — the CTA glint runs at rest (2026-10-13)
+
+Revision 22 gave every button a sheen that swept on hover. A touch device has
+no pointer to hover with, so on the traffic this page is actually bought for
+the one thing on the button that catches an eye never fired once. It runs at
+rest now, on every primary CTA: the hero button, the mid-page button, the
+sticky bar's trial button and all three plan buttons.
+
+A glint, not a pulse. The sweep is under a second of a six second cycle and
+the button sits still for the rest, so it reads as light crossing a surface
+rather than something asking to be looked at. It starts 1.4s in, late enough
+not to compete with first paint.
+
+Two things had to be fixed before it read as anything at all, and neither was
+visible without measuring. The sweep inherited the page's ease-out curve, and
+on that curve the whole travel is over inside 0.15s: a flash, not a glint, and
+too fast to catch in a screenshot, which is why the first five frames I
+captured were identical. It is `linear` now and crosses the button in about
+0.36s. And the streak was 28% of the button's width at .38 alpha, which reads
+as the whole button briefly getting lighter rather than as a highlight; it is
+half as wide and half again as bright, measured at a 172/255 peak against a
+106 baseline across the button's face.
+
+The outline button keeps its hover-only sheen, and the three plan buttons are
+staggered rather than firing together: two things glinting side by side in the
+mobile bar is a decision the reader has to make rather than one they are being
+helped towards, and three at once is a blink where one after another is one
+object. Reduced motion removes the element outright.
+
+### Verified
+Driven in a touch context with no pointer at all, confirming the animation
+runs unhovered on all six primary CTAs and not on the outline button; the
+sweep pinned at five points across its cycle and the streak's brightness and
+position measured at each; reduced motion confirmed to remove it. Eight widths
+to 2560 with the glint clipped inside every button. All gates green. 97.4 KB
+against the 100 KB budget.
+
 ## Testing
 Repo has no JS test runner, so verification is a node script:
 `scripts/check-landing-pages.mjs` (`npm run check:lp`) reads the generated HTML and asserts: size budget, noindex, no em dashes, no competitor names, no invented rating, the three quotes verbatim, plan prices equal `FALLBACK_CATALOG`, each plan's COD-to-prepaid lock state agrees with the catalog, `TRIAL` numbers appear, the ported navbar and footer, every CTA kind present, no external script or stylesheet. Revision 9 adds: no `<video>` or `<img>` in the hero, a film section that exists, three entry-point cards that each link somewhere real, five bento panels with no image inside them, a marked phrase in every `<h2>`, three going-live steps, and three blog cards whose slugs resolve against `blogPosts.ts`. Browser checks with Playwright (installed): 360px and 1280px screenshots, H1 at most 3 lines on mobile, sticky bar behaviour, toggle, hero variant swap by `?utm_content=`.

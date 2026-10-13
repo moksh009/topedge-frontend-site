@@ -106,11 +106,20 @@ html[data-v]:not([data-v="platform"]) .hero-bm{display:none}
 .btn:focus-visible{outline:3px solid #c4b5fd;outline-offset:2px}
 .btn>span[aria-hidden]{display:inline-block;transition:transform .25s var(--e)}
 .btn:hover>span[aria-hidden],.btn:focus-visible>span[aria-hidden]{transform:translateX(3px)}
-.btn:after{content:'';position:absolute;z-index:-1;inset:0;background:linear-gradient(105deg,transparent 36%,rgba(255,255,255,.4) 50%,transparent 64%);transform:translateX(-130%);transition:transform .62s var(--e);pointer-events:none}
-.btn:hover:after,.btn:focus-visible:after{transform:translateX(130%)}
+/* The sheen runs at rest, not on hover. On hover it was invisible to every
+   phone on earth, which is most of the traffic this page is bought for: a
+   touch device has no pointer to hover with, so the one thing on the button
+   that catches an eye never fired. It is a glint, not a pulse. The sweep
+   takes under a second and then the button sits still for five, so it reads
+   as light crossing a surface rather than something asking to be looked at,
+   and it starts late enough that it is not competing with first paint.
+   Reduced motion kills it outright, two rules down. */
+.btn:after{content:'';position:absolute;z-index:-1;inset:0;background:linear-gradient(104deg,transparent 43%,rgba(255,255,255,.58) 50%,transparent 57%);transform:translateX(-130%);animation:shine 6s linear 1.4s infinite;pointer-events:none}
+@keyframes shine{0%{transform:translateX(-130%)}14%,100%{transform:translateX(130%)}}
 .btn-out{background:rgba(255,255,255,.9);color:var(--chip-ink);box-shadow:inset 0 0 0 1.5px #ded1fb}
 .btn-out:hover,.btn-out:focus-visible{background:#fff;box-shadow:inset 0 0 0 1.5px #c4b5fd,0 14px 30px -16px rgba(76,29,149,.5)}
-.btn-out:after{background:linear-gradient(105deg,transparent 36%,rgba(124,58,237,.12) 50%,transparent 64%)}
+.btn-out:after{background:linear-gradient(105deg,transparent 36%,rgba(124,58,237,.12) 50%,transparent 64%);animation:none;transition:transform .62s var(--e)}
+.btn-out:hover:after,.btn-out:focus-visible:after{transform:translateX(130%)}
 /* The hand-drawn aside beside the primary button. It is decoration and it is the
    first thing to go when the row runs out of room, so it is absolutely positioned
    out of flow and hidden below 1100px rather than allowed to wrap. */
@@ -489,13 +498,19 @@ section{padding:3.75rem 0}
 .mkt-plan__cta:active{transform:translateY(0) scale(.985);transition-duration:.06s}
 .mkt-plan__cta>span[aria-hidden]{display:inline-block;transition:transform .25s var(--e)}
 .mkt-plan__cta:hover>span[aria-hidden]{transform:translateX(3px)}
-.mkt-plan__cta:after{content:'';position:absolute;z-index:-1;inset:0;background:linear-gradient(105deg,transparent 36%,rgba(255,255,255,.4) 50%,transparent 64%);transform:translateX(-130%);transition:transform .62s var(--e);pointer-events:none}
-.mkt-plan__cta:hover:after{transform:translateX(130%)}
+.mkt-plan__cta:after{content:'';position:absolute;z-index:-1;inset:0;background:linear-gradient(104deg,transparent 43%,rgba(255,255,255,.58) 50%,transparent 57%);transform:translateX(-130%);animation:shine 6s linear 1.4s infinite;pointer-events:none}
+/* The three are on screen together, so they glint in sequence rather than in
+   unison: one after another reads as one object, three at once as a blink.
+   Source order, which is left to right on desktop; below 760px Growth is
+   hoisted to the top and the sequence runs down the column instead. */
+.mkt-plan--launch .mkt-plan__cta:after{animation-delay:1.4s}
+.mkt-plan--growth .mkt-plan__cta:after{animation-delay:2.1s}
+.mkt-plan--scale .mkt-plan__cta:after{animation-delay:2.8s}
 .mkt-plan__cta--solid{border:1px solid #6d28d9;background:linear-gradient(180deg,#8b5cf6 0,#7c3aed 100%);color:#fff;box-shadow:0 8px 22px -10px rgba(124,58,237,.55)}
 .mkt-plan__cta--solid:hover{background:linear-gradient(180deg,#7c3aed 0,#6d28d9 100%);border-color:#5b21b6;box-shadow:0 16px 34px -14px rgba(124,58,237,.7)}
 .mkt-plan__cta--ghost{border:1px solid #e2e8f0;background:#fff;color:var(--ink);box-shadow:0 2px 10px -4px rgba(15,23,42,.1)}
 .mkt-plan__cta--ghost:hover{background:#fff;border-color:#c4b5fd;box-shadow:0 14px 28px -16px rgba(76,29,149,.45)}
-.mkt-plan__cta--ghost:after{background:linear-gradient(105deg,transparent 36%,rgba(124,58,237,.12) 50%,transparent 64%)}
+.mkt-plan__cta--ghost:after{background:linear-gradient(104deg,transparent 43%,rgba(124,58,237,.26) 50%,transparent 57%)}
 .mkt-plan__cta:focus-visible{outline:3px solid #c4b5fd;outline-offset:2px}
 .mkt-plan__features{flex:1;display:flex;flex-direction:column;padding:.85rem .55rem .35rem}
 .mkt-plan__kicker{margin-bottom:.65rem;padding:0 .35rem;font-size:.8125rem;font-weight:600;letter-spacing:-.02em;color:var(--ink)}

@@ -166,6 +166,23 @@ must(
   'the hero no longer centres its column; as a row with no justify-content it put the whole fold against the left edge below 900px',
 );
 
+// --- The CTA glint runs at rest ---
+// It used to run on hover only, which meant no phone ever saw it, and phones
+// are most of what this page is bought for. A glint, not a pulse: the sweep
+// is under a second of a six second cycle, it is linear (on the page's
+// ease-out curve the whole sweep was over inside 0.15s, which is a flash),
+// and reduced motion removes the element entirely.
+must(/@keyframes shine\{0%\{transform:translateX\(-130%\)\}14%,100%\{transform:translateX\(130%\)\}\}/.test(html), 'the glint keyframes are gone or no longer rest between sweeps');
+for (const sel of ['\\.btn', '\\.mkt-plan__cta']) {
+  must(new RegExp(`${sel}:after\\{[^}]*animation:shine 6s linear`).test(html), `${sel} does not glint at rest, so no touch device will ever see it`);
+  must(!new RegExp(`${sel}:hover:after`).test(html), `${sel} is back to a hover-only sheen`);
+}
+// The secondary of the pair keeps hover only: two things glinting side by side
+// in the mobile bar is a decision to make rather than one to be helped towards.
+must(/\.btn-out:after\{[^}]*animation:none/.test(html), 'the outline button glints too; only the primary should');
+must(/\.mkt-plan--launch \.mkt-plan__cta:after\{animation-delay/.test(html), 'the plan buttons glint in unison again');
+must(/prefers-reduced-motion[\s\S]*?\.btn:after,\.mkt-plan__cta:after\{display:none\}/.test(html), 'the glint survives reduced motion');
+
 // --- Marks inside the heading chips ---
 // Two headings end on a name rather than a phrase, so the chip carries the
 // mark as well as the word and the pair reads as one thing.
