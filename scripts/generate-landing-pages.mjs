@@ -166,11 +166,23 @@ const QUOTES = [
   { text: "In 2 days their team built me everything on the software... I'm on their ₹1,999 base plan, and mostly every feature is unlocked on every plan.", author: 'Robin' },
 ];
 
+/**
+ * One glyph per comparison row, redrawn 13 Oct 2026. The old set was drawn by
+ * hand and it showed at 20px: the dollar was an open S that did not close on
+ * its stem, and the refresh arrows were two bare right angles floating off the
+ * ends of the curves, which read as a squiggle rather than a loop. These are
+ * the Lucide shapes at Lucide's own proportions, two or three paths each, all
+ * on the same 24px grid and the same stroke.
+ */
 const ICONS = {
-  coin: '<path d="M12 3v18M16 7.5c0-1.4-1.8-2.5-4-2.5s-4 1.1-4 2.5 1.8 2.5 4 2.5 4 1.1 4 2.5-1.8 2.5-4 2.5-4-1.1-4-2.5"/>',
-  user: '<circle cx="12" cy="8" r="3.5"/><path d="M5 20c.6-3.6 3.4-5.5 7-5.5s6.4 1.9 7 5.5"/>',
-  card: '<rect x="3" y="6" width="18" height="12" rx="2.5"/><path d="M3 10.5h18M7 15h3"/>',
-  loop: '<path d="M17 8a6 6 0 0 0-10.5 1.5M7 16a6 6 0 0 0 10.5-1.5M17 4v4h-4M7 20v-4h4"/>',
+  // percent, not a currency sign: the row is about a markup, and the markup is
+  // the number a reader is checking for.
+  percent: '<line x1="19" y1="5" x2="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/>',
+  // the same workflow glyph the setup step uses, because it is the same idea
+  flow: '<rect x="3" y="3" width="8" height="8" rx="2"/><path d="M7 11v4a2 2 0 0 0 2 2h4"/><rect x="13" y="13" width="8" height="8" rx="2"/>',
+  identity: '<circle cx="10" cy="8" r="4.5"/><path d="M2.5 20.5a8 8 0 0 1 12.2-5.2"/><path d="m16 19 2 2 4-4"/>',
+  // a return arrow: RTO is the parcel coming back, and recovery is stopping it
+  ret: '<path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/>',
 };
 
 /**
@@ -240,28 +252,28 @@ const PROOF_VARIANTS = {
  */
 const SWITCH = [
   {
-    icon: 'coin',
+    icon: 'percent',
     topic: 'WhatsApp API pricing',
     them: 'A hidden 20% to 30% per-message tax on top of the official Meta conversation rate',
     us: '0% Meta API markup. Meta bills you directly, and the number and templates stay yours.',
   },
   {
-    icon: 'loop',
+    icon: 'flow',
     topic: 'Flow automation',
     them: 'Metered flow runs, charged for again once you pass the allowance',
     us: 'Unlimited journey runs, cart recovery triggers and workflows, on every plan.',
   },
   {
-    icon: 'user',
-    topic: 'Customer profile syncing',
+    icon: 'identity',
+    topic: 'Unified identity',
     them: 'A duplicate record every time a buyer checks out with a different number or email',
-    us: 'One profile, stitched live across browsing sessions, numbers and past Shopify orders.',
+    us: 'One customer profile holding primary and alternate numbers and emails, stitched live across browsing sessions and past Shopify orders.',
   },
   {
-    icon: 'card',
-    topic: 'COD verification and RTO',
+    icon: 'ret',
+    topic: 'RTO recovery',
     them: 'A delayed text notification that tells the buyer nothing is changing',
-    us: 'Instant WhatsApp COD confirmation, with a discounted prepaid link into Shopify checkout.',
+    us: 'Confirm COD orders on WhatsApp, run a COD to prepaid conversion journey, and more.',
   },
 ];
 
@@ -1232,6 +1244,7 @@ for (const page of PAGES) {
     BENTO: bentoHtml,
     POSTS: postsHtml,
     SWITCH_ROWS: switchHtml,
+    TP_STAR,
     INCLUDED_LIST: includedHtml,
     TICKER: tickerHtml,
     PILLARS: pillarsHtml,

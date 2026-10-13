@@ -166,6 +166,35 @@ must(
   'the hero no longer centres its column; as a row with no justify-content it put the whole fold against the left edge below 900px',
 );
 
+// --- Marks inside the heading chips ---
+// Two headings end on a name rather than a phrase, so the chip carries the
+// mark as well as the word and the pair reads as one thing.
+const tpHead = (markup.match(/<h2[^>]*>[^<]*What sellers[\s\S]*?<\/h2>/) || [''])[0];
+must(/class="chip chip--mark"[^>]*>\s*<svg[\s\S]*?#00b67a/.test(tpHead), "the Trustpilot heading no longer carries Trustpilot's star");
+const swHead = (markup.match(/<h2[^>]*>[\s\S]*?Switch to[\s\S]*?<\/h2>/) || [''])[0];
+must(/<img class="chip-bm"[^>]*src="\/brand-mark-56\.webp"[^>]*alt="TopEdge AI"/.test(swHead), 'the comparison heading no longer ends on the brand mark, or the mark has no alt');
+must(!/switch to TopEdge AI<\/span>/.test(markup), 'the comparison heading is spelling the brand out again instead of showing it');
+
+// --- The ticker runs left to right ---
+must(/@keyframes tk\{from\{transform:translateX\(-50%\)\}to\{transform:translateX\(0\)\}\}/.test(html), 'the value ticker is running right to left again');
+must(/@media\(max-width:759px\)[\s\S]*?\.tk-track\{animation-duration:22s\}/.test(html), 'the ticker lost its faster duration on a phone');
+
+// --- The figure has no plate ---
+// It was a bento panel, which gave a two-line statement the furniture of a
+// feature card and made the number read as a label rather than the point.
+must(!/\.pf-stat\{[^}]*background:/.test(html), 'the 0% figure is back inside a card');
+must(!/\.pf-stat:before/.test(html), 'the gradient blob is back behind the 0% figure');
+must(/\.pf-stat b\{font-size:clamp\(2\.9rem/.test(html), 'the 0% figure shrank back');
+
+// --- The comparison icons ---
+// Redrawn: the old dollar was an open S that did not close on its stem and
+// the refresh arrows were two bare right angles floating off the curves.
+for (const name of ['percent', 'flow', 'identity', 'ret']) {
+  must(new RegExp(`${name}:`).test(genSrc), `the ${name} comparison icon is gone`);
+}
+must(!/d="M12 3v18M16 7\.5c0-1\.4/.test(html), 'the hand-drawn dollar is back in the comparison');
+must(!/M17 4v4h-4M7 20v-4h4/.test(html), 'the floating right-angle arrowheads are back in the comparison');
+
 // --- One surface for every illustration ---
 // The panels were three diagonal washes with a differently coloured blob in
 // each, which read as three unrelated pictures. One vertical gradient now,
@@ -453,7 +482,7 @@ for (const r of rows) {
 }
 must(/<section class="dark" id="compare">/.test(markup), 'the comparison is no longer the inverted band');
 must(/\.dark\{background:/.test(html), 'the dark band has no background');
-for (const h of ['0% Meta API markup', 'Unlimited journey runs', 'One profile, stitched live', 'discounted prepaid link into Shopify checkout']) {
+for (const h of ['0% Meta API markup', 'Unlimited journey runs', 'stitched live across browsing sessions', 'COD to prepaid conversion journey']) {
   must(((markup.match(/<div class="cmp"[\s\S]*?<\/section>/) || [''])[0]).includes(h), `the comparison no longer makes the claim: ${h}`);
 }
 // The migration offer is the whole argument for switch traffic and noise for

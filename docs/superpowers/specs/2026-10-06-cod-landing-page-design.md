@@ -1390,6 +1390,53 @@ within 2px, both marquees travelling exactly one copy per lap with track left
 to cover the window, and the film still rendering at 16:9. All gates green.
 96.8 KB against the 100 KB budget.
 
+## Revision 25 — marks in the heading chips, and the icons redrawn (2026-10-13)
+
+### Two headings end on a name, so the chip carries the mark
+"What sellers say on [star]Trustpilot" and "Why high-growth Shopify brands
+[Switch to TopEdge-mark]". The mark sits on the text baseline inside the chip
+rather than in a box of its own, so each pair reads as one phrase. The brand
+mark carries `alt="TopEdge AI"`, because it is the last word of the sentence
+and a screen reader would otherwise hear the heading stop at "Switch to".
+
+### The comparison icons were drawn badly and it showed at 20px
+The dollar was an open S that never closed on its stem, and the refresh arrows
+were two bare right angles floating off the ends of the curves, which reads as
+a squiggle rather than a loop. All four are Lucide shapes at Lucide's own
+proportions now, two or three paths each, on one grid at one stroke weight:
+percent (the row is about a markup, which is the number a reader is checking
+for), the same workflow glyph the setup step uses, an identity mark with a
+tick, and a return arrow for RTO. `check:lp` fails on the two old paths by
+their `d` attribute, so they cannot come back by accident.
+
+### Copy
+Two rows renamed, Unified identity and RTO recovery, and both of their
+TopEdge-side claims rewritten to say what the product actually does rather
+than what it is not.
+
+### The figure stands on the page
+"0% added to what Meta charges you" was a bento panel with a gradient blob
+behind it, which gave a two-line statement the furniture of a feature card and
+made the number read as a label on a product rather than the point of the
+sentence beside it. No plate, no blob, and the figure is up from 2.9rem to
+4.2rem at the top of its clamp.
+
+### The ticker
+Runs left to right now: the keyframe starts at -50% and ends at 0. Half the
+duration below 760px, because fewer pills are in view at once there and the
+same pixels per second reads as a queue that has stalled.
+
+### One thing that needed no work
+The brief asked for the three hero anchors to lose their descriptions and
+become a mark and a title. Revision 23 did that; the screenshot in the brief
+was of the deploy before it, which is the one the catalog-drift failure
+stopped from shipping.
+
+### Verified
+Twelve widths from 320 to 2560, both marquees measured for direction, speed,
+seam and track length. Five negative tests on the new rules. All gates green.
+97.1 KB against the 100 KB budget.
+
 ## Testing
 Repo has no JS test runner, so verification is a node script:
 `scripts/check-landing-pages.mjs` (`npm run check:lp`) reads the generated HTML and asserts: size budget, noindex, no em dashes, no competitor names, no invented rating, the three quotes verbatim, plan prices equal `FALLBACK_CATALOG`, each plan's COD-to-prepaid lock state agrees with the catalog, `TRIAL` numbers appear, the ported navbar and footer, every CTA kind present, no external script or stylesheet. Revision 9 adds: no `<video>` or `<img>` in the hero, a film section that exists, three entry-point cards that each link somewhere real, five bento panels with no image inside them, a marked phrase in every `<h2>`, three going-live steps, and three blog cards whose slugs resolve against `blogPosts.ts`. Browser checks with Playwright (installed): 360px and 1280px screenshots, H1 at most 3 lines on mobile, sticky bar behaviour, toggle, hero variant swap by `?utm_content=`.
