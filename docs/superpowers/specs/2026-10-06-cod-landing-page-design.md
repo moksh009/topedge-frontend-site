@@ -1474,6 +1474,53 @@ position measured at each; reduced motion confirmed to remove it. Eight widths
 to 2560 with the glint clipped inside every button. All gates green. 97.4 KB
 against the 100 KB budget.
 
+## Revision 27 — the inventory tells the truth, and the reviews move up (2026-10-13)
+
+### "Included on every plan" listed six things under a heading that said thirty
+Two inches apart, on the one section where someone is deciding whether to pay.
+It is the catalog's own `universalFeatures` now, all eighteen of them, grouped
+Messaging / Commerce / WhatsApp exactly as the pricing page groups them and
+renamed by the same map, so the two pages cannot drift. `check:lp` counts the
+rendered items against the catalog and fails if a group match stops matching
+and quietly drops one.
+
+### The reviews move above the platform grid
+A reader who has just been told why people switch should hear from the people
+who did, before being shown the five things they get.
+
+### The two marquees are 70% of the page, faded at both ends
+Full bleed read as two bars running off the page rather than as a band the
+page contains. Desktop only: 70% of a 390px phone is too narrow for a pill.
+The narrower window also keeps the track longer than the window at every size,
+which is the thing that stops a blank opening mid-lap.
+
+### The comparison
+The chip carries the mark and the name, "Switch to [mark] TopEdge AI", with
+the mark's alt emptied so a screen reader does not hear the brand twice. The
+topic column went from 13rem to 16rem so every row label sits on one line (at
+13rem two of them wrapped, and a two-line label against one-line prose makes
+the row look misaligned), the table from 58rem to 70rem, and the cells from
+1.05rem to 1.35rem of padding.
+
+### The setup steps are centred
+Three short cards in a row with their marks hard left read as a list that lost
+its bullets.
+
+### Two silent no-ops, both caught
+A `replace` that inserted the reviews-order rule matched nothing, so the rule
+was never in the file and the negative test passed for the wrong reason. It is
+asserted now. Separately, a `git checkout` during negative testing reverted
+this revision's three body edits; they were re-applied from a scratch backup
+rather than from git, which is the second time that has happened and the
+reason the backups are taken outside the repo.
+
+### Verified
+Ten widths from 320 to 2560: no horizontal scroll, every block centred to
+within 2px, both marquees travelling exactly one copy with track to spare, no
+row label wrapping (counted from the text's own line boxes, not the padded
+cell), and the film at 16:9. Four negative tests. All gates green. 98.1 KB
+against the 100 KB budget.
+
 ## Testing
 Repo has no JS test runner, so verification is a node script:
 `scripts/check-landing-pages.mjs` (`npm run check:lp`) reads the generated HTML and asserts: size budget, noindex, no em dashes, no competitor names, no invented rating, the three quotes verbatim, plan prices equal `FALLBACK_CATALOG`, each plan's COD-to-prepaid lock state agrees with the catalog, `TRIAL` numbers appear, the ported navbar and footer, every CTA kind present, no external script or stylesheet. Revision 9 adds: no `<video>` or `<img>` in the hero, a film section that exists, three entry-point cards that each link somewhere real, five bento panels with no image inside them, a marked phrase in every `<h2>`, three going-live steps, and three blog cards whose slugs resolve against `blogPosts.ts`. Browser checks with Playwright (installed): 360px and 1280px screenshots, H1 at most 3 lines on mobile, sticky bar behaviour, toggle, hero variant swap by `?utm_content=`.

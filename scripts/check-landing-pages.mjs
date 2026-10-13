@@ -166,6 +166,28 @@ must(
   'the hero no longer centres its column; as a row with no justify-content it put the whole fold against the left edge below 900px',
 );
 
+// --- The included inventory ---
+// It listed six things while the heading two inches above said thirty, which
+// is the page arguing with itself in front of someone deciding whether to
+// pay. It is the catalog's own universalFeatures now, grouped the way the
+// pricing page groups them, so the two pages cannot drift apart.
+const incl = (markup.match(/<div class="incl-gs">[\s\S]*?<\/div>\s*<\/div>/) || [''])[0];
+must(incl !== '', 'the included inventory is gone');
+must((incl.match(/<div class="incl-g">/g) || []).length === 3, 'the inventory is no longer grouped in three');
+const listed = [...incl.matchAll(/<li>([^<]+)<\/li>/g)].map((m) => m[1]);
+must(
+  listed.length === FALLBACK_CATALOG.universalFeatures.length,
+  `the inventory lists ${listed.length} of the catalog's ${FALLBACK_CATALOG.universalFeatures.length} universal features`,
+);
+// Every catalog feature has to come out the other side, renamed or not: a
+// group match that stops matching silently drops a feature off the page.
+const RENAMED = new Set(['Cart recovery', 'Audience CRM', 'Campaigns', 'Orders', 'Warranty']);
+for (const f of FALLBACK_CATALOG.universalFeatures) {
+  const hit = listed.some((l) => l === f || RENAMED.has(l));
+  must(hit, `the inventory dropped a universal feature: ${f}`);
+}
+must(copy.includes('30+ features included on every plan'), 'the pricing lead no longer claims the number the inventory shows');
+
 // --- The CTA glint runs at rest ---
 // It used to run on hover only, which meant no phone ever saw it, and phones
 // are most of what this page is bought for. A glint, not a pulse: the sweep
@@ -189,8 +211,10 @@ must(/prefers-reduced-motion[\s\S]*?\.btn:after,\.mkt-plan__cta:after\{display:n
 const tpHead = (markup.match(/<h2[^>]*>[^<]*What sellers[\s\S]*?<\/h2>/) || [''])[0];
 must(/class="chip chip--mark"[^>]*>\s*<svg[\s\S]*?#00b67a/.test(tpHead), "the Trustpilot heading no longer carries Trustpilot's star");
 const swHead = (markup.match(/<h2[^>]*>[\s\S]*?Switch to[\s\S]*?<\/h2>/) || [''])[0];
-must(/<img class="chip-bm"[^>]*src="\/brand-mark-56\.webp"[^>]*alt="TopEdge AI"/.test(swHead), 'the comparison heading no longer ends on the brand mark, or the mark has no alt');
-must(!/switch to TopEdge AI<\/span>/.test(markup), 'the comparison heading is spelling the brand out again instead of showing it');
+// The chip carries the mark and the name, so the mark's alt is empty: with
+// both set a screen reader hears "TopEdge AI TopEdge AI".
+must(/<img class="chip-bm"[^>]*src="\/brand-mark-56\.webp"[^>]*alt=""/.test(swHead), 'the comparison heading no longer carries the brand mark');
+must(/<img class="chip-bm"[^>]*>TopEdge AI<\/span>/.test(swHead), 'the comparison heading shows the mark without the name beside it');
 
 // --- The ticker runs left to right ---
 must(/@keyframes tk\{from\{transform:translateX\(-50%\)\}to\{transform:translateX\(0\)\}\}/.test(html), 'the value ticker is running right to left again');
@@ -436,8 +460,14 @@ must(/prefers-reduced-motion[\s\S]*?\.trust-marks\{[^}]*flex-wrap:wrap/.test(htm
 // cost: four logos in a capped window is a huddle in the middle of an empty
 // band. What still has to hold is that the track travels exactly one copy, so
 // the loop has no seam, which the sweep measures at every width.
-must(/\.mq\{[^}]*width:min\(100%,120rem\)/.test(html), 'the ribbon is no longer full bleed, or its window is no longer capped');
-must(/\.tk\{[^}]*width:min\(100%,120rem\)/.test(html), 'the ticker window is no longer capped; past ~2500px the track runs out mid-lap');
+// 70% of the page on desktop, faded at both ends. Full bleed read as two
+// bars running off the page rather than as a band the page contains, and the
+// narrower window also keeps the track longer than the window at every size,
+// which is what stops a blank opening mid-lap. The sweep measures that.
+must(/@media\(min-width:900px\)[\s\S]*?\.mq,\.tk\{width:70%\}/.test(html), 'the two marquees are no longer 70% of the page on desktop');
+for (const sel of ['\\.mq', '\\.tk']) {
+  must(new RegExp(`${sel}\\{[^}]*mask-image:linear-gradient\\(90deg,transparent,#000 9%,#000 91%,transparent\\)`).test(html), `${sel} is not faded at both ends`);
+}
 must(/@keyframes mq\{from\{transform:translateX\(0\)\}to\{transform:translateX\(-25%\)\}\}/.test(html), 'the ribbon travel no longer matches its four copies; the loop will jump');
 // The band is flat white and the hero's gradient stops on its own edge, so the
 // two meet on a line. The owner asked for the line after seeing the version
@@ -648,6 +678,9 @@ must(outbound.length === 0, `these links leave the ad page for the marketing sit
 must(at(/<section id="proof">/) < at(/<section class="dark" id="compare">/), 'the variant proof block belongs directly under the hero');
 must(at(/<section class="dark" id="compare">/) < at(/<section id="start">/), 'the comparison belongs before the entry points');
 must(at(/<section[^>]*id="platform"/) < at(/<section id="setup">/), 'the platform section belongs before the setup steps');
+// A reader who has just been told why people switch should hear from the
+// people who did, before being shown the five things they get.
+must(at(/What sellers say on/) < at(/<section[^>]*id="platform"/), 'the reviews belong above the platform grid');
 must(at(/<section[^>]*id="pricing"/) < at(/<section[^>]*id="faq"/), 'the FAQ belongs after the price, where the hesitation is');
 must(at(/<ul class="trust-marks/) < at(/<section id="proof">/), 'the platform marks belong under the hero');
 

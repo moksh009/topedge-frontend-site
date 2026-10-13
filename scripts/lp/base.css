@@ -135,7 +135,7 @@ html[data-v]:not([data-v="platform"]) .hero-bm{display:none}
    last one, so a track of N items carries N-1 gaps and a 50% translate lands
    half a gap short of the frame it left, which is a visible jump every lap.
    It runs left to right: the keyframe starts at -50% and ends at 0. */
-.tk{position:relative;width:min(100%,120rem);margin:2.4rem auto 0;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 11%,#000 89%,transparent);mask-image:linear-gradient(90deg,transparent,#000 11%,#000 89%,transparent)}
+.tk{position:relative;width:calc(100% - 2.5rem);margin:2.4rem auto 0;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent)}
 .tk-track{display:flex;width:max-content;align-items:center;list-style:none;margin:0;padding:0;animation:tk 44s linear infinite}
 .tk:hover .tk-track{animation-play-state:paused}
 .tk-track li{flex:none;display:inline-flex;align-items:center;gap:.55rem;margin-right:.7rem;padding:.58rem .5rem .58rem .58rem;border-radius:9999px;background:rgba(255,255,255,.9);box-shadow:inset 0 0 0 1px rgba(124,58,237,.14),0 8px 20px -14px rgba(46,16,101,.5);font-size:.9rem;font-weight:500;letter-spacing:-.014em;color:#2e1065;white-space:nowrap}
@@ -425,7 +425,7 @@ section{padding:3.75rem 0}
    at every point in the lap. Past about 2500px the four copies run out and a
    blank opens at the right edge mid-lap. Capping the window fixes it at any
    viewport, where adding copies only pushes the failure wider. */
-.mq{position:relative;width:min(100%,120rem);margin:.9rem auto 0;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
+.mq{position:relative;width:calc(100% - 2.5rem);margin:.9rem auto 0;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent)}
 .trust-marks{display:flex;width:max-content;align-items:center;list-style:none;margin:0;padding:0;animation:mq 42s linear infinite}
 .trust-marks li{flex:none;margin-right:7rem}
 .mq:hover .trust-marks{animation-play-state:paused}
@@ -443,12 +443,12 @@ section{padding:3.75rem 0}
    anything shouting, and the rows share one grid so the three lines of each
    row sit on the same baseline. Below 760px each row becomes its own card,
    because a three-column table at 390px is unreadable at any type size. */
-.cmp{width:min(100%,58rem);margin:0 auto;display:grid;gap:.6rem}
+.cmp{width:min(100%,70rem);margin:0 auto;display:grid;gap:.6rem}
 .cmp-row{display:grid;gap:.45rem;padding:1.1rem 1.15rem;border-radius:18px;background:#fff;border:1px solid #ece4fb;box-shadow:0 1px 2px rgba(16,24,40,.03),0 12px 30px -20px rgba(76,29,149,.16)}
 .cmp-row--head{display:none}
-.cmp-t{display:flex;align-items:center;gap:.6rem;font-size:1rem;font-weight:500;letter-spacing:-.015em;color:var(--ink)}
-.cmp-x,.cmp-v{display:flex;align-items:flex-start;gap:.5rem;font-size:.93rem;line-height:1.45;text-wrap:pretty}
-.cmp-x i,.cmp-v i{display:inline-flex;align-items:center;justify-content:center;flex:none;width:1.25rem;height:1.25rem;margin-top:.1rem;border-radius:999px}
+.cmp-t{display:flex;align-items:center;gap:.7rem;font-size:1rem;font-weight:500;letter-spacing:-.015em;color:var(--ink);text-wrap:nowrap}
+.cmp-x,.cmp-v{display:flex;align-items:flex-start;gap:.65rem;font-size:.93rem;line-height:1.5;text-wrap:pretty}
+.cmp-x i,.cmp-v i{display:inline-flex;align-items:center;justify-content:center;flex:none;width:1.3rem;height:1.3rem;margin-top:.12rem;border-radius:999px}
 .cmp-x{color:#94a0b0}
 .cmp-x i{background:#f1f3f7;color:#9aa6b4}
 .cmp-v{color:var(--ink)}
@@ -526,10 +526,13 @@ section{padding:3.75rem 0}
 .cycle-note{margin:-.9rem auto 1.8rem;text-align:center;font-size:.86rem;color:var(--muted)}
 #plans[data-cycle="yearly"] .p-monthly,#plans[data-cycle="monthly"] .p-yearly{display:none}
 #plans .p-yearly,#plans .p-monthly{display:inline}
-.incl{width:min(100%,52rem);margin:2.2rem auto 0;padding:1.5rem 1.6rem;border-radius:20px;background:var(--wash);box-shadow:inset 0 0 0 1px #ece5fd}
+.incl{width:min(100%,62rem);margin:2.2rem auto 0;padding:1.75rem 1.9rem;border-radius:20px;background:var(--wash);box-shadow:inset 0 0 0 1px #ece5fd}
 .incl-h{font-size:.9rem;font-weight:600;letter-spacing:-.01em;color:var(--chip-ink);text-align:center}
-.ticks{list-style:none;padding:0;margin-top:1rem;display:grid;gap:.55rem}
-.ticks li{position:relative;padding-left:1.6rem;font-size:.98rem}
+.incl-gs{display:grid;gap:1.5rem;margin-top:1.25rem}
+.incl-g{display:grid;align-content:start;gap:.1rem}
+.incl-t{font-size:.72rem;font-weight:600;letter-spacing:.07em;text-transform:none;color:#9b8cb8}
+.ticks{list-style:none;padding:0;margin-top:.6rem;display:grid;align-content:start;gap:.5rem}
+.ticks li{position:relative;padding-left:1.6rem;font-size:.95rem}
 .ticks li:before{content:'';position:absolute;left:.15rem;top:.48rem;width:.7rem;height:.38rem;border-left:2px solid var(--ok);border-bottom:2px solid var(--ok);transform:rotate(-45deg)}
 /* The badge files carry their own white background, which on a lavender section
    reads as three stray white rectangles. Giving each one a card of its own makes
@@ -623,7 +626,7 @@ section{padding:3.75rem 0}
     beside it cannot stretch the row the heading sits in. */
  .plans{grid-template-columns:repeat(3,1fr)}
  .quotes{grid-template-columns:repeat(3,1fr)}
- .ticks.two{grid-template-columns:repeat(2,1fr);gap:.6rem 2rem}
+ .incl-gs{grid-template-columns:repeat(3,minmax(0,1fr));gap:2.25rem}
  .mkt-foot__top{grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:3rem}
 }
 @media(min-width:1024px){
@@ -645,9 +648,12 @@ section{padding:3.75rem 0}
  /* The comparison becomes one table. `display:contents` on each row hands its
     three cells to the parent grid, so the columns line up across rows and the
     tinted column can be painted cell by cell without a wrapper to position. */
- .cmp{display:grid;gap:0;padding:.5rem;border-radius:22px;background:#fff;border:1px solid #ece4fb;box-shadow:0 1px 2px rgba(16,24,40,.03),0 18px 44px -24px rgba(76,29,149,.2);grid-template-columns:minmax(0,13rem) minmax(0,1fr) minmax(0,1fr)}
+ /* 16rem for the topic column, so every row label sits on one line: at 13rem
+    "WhatsApp API pricing" and "Customer profile syncing" both wrapped, and a
+    two-line label against one-line prose makes the row look misaligned. */
+ .cmp{display:grid;gap:0;padding:.5rem;border-radius:22px;background:#fff;border:1px solid #ece4fb;box-shadow:0 1px 2px rgba(16,24,40,.03),0 18px 44px -24px rgba(76,29,149,.2);grid-template-columns:minmax(0,16rem) minmax(0,1fr) minmax(0,1fr)}
  .cmp-row,.cmp-row--head{display:contents}
- .cmp-t,.cmp-x,.cmp-v{padding:1.05rem 1.25rem;align-items:center;border-radius:0}
+ .cmp-t,.cmp-x,.cmp-v{padding:1.35rem 1.5rem;align-items:center;border-radius:0}
  .cmp-v{background:#f8f4ff}
  .cmp-row--head .cmp-x,.cmp-row--head .cmp-v{padding-top:.9rem;padding-bottom:.7rem;font-size:.82rem;font-weight:600;color:#8b7ba8}
  .cmp-row--head .cmp-v{color:var(--chip-ink);border-radius:16px 16px 0 0}
@@ -660,6 +666,10 @@ section{padding:3.75rem 0}
  .hero{padding:7.5rem 0 4.5rem}
  .hero h1{max-width:none;font-size:clamp(2.4rem,3.9vw,3.1rem)}
  .film{width:min(100%,calc(min(46svh,28rem) * 16 / 9))}
+ /* 70%, faded at both ends: full bleed read as two bars running off the page
+    rather than as a band the page contains. Only on desktop, since 70% of a
+    390px phone is too narrow for a pill to read. */
+ .mq,.tk{width:70%}
  .pil{grid-template-columns:repeat(3,1fr);gap:2.75rem;margin-top:3.25rem}
  .tk{margin-top:3rem}
  section{padding:5.25rem 0}
@@ -726,19 +736,21 @@ section{padding:3.75rem 0}
 html[data-v="switch"] .mig{display:block}
 /* Going live, numbered. */
 .steps{counter-reset:s;list-style:none;margin:0 auto;padding:0;display:grid;gap:1.25rem;width:min(100%,62rem)}
-.stp{padding:1.5rem 1.4rem;border-radius:20px;background:#fff;border:1px solid #ece4fb;box-shadow:0 1px 2px rgba(16,24,40,.03),0 14px 34px -20px rgba(76,29,149,.18)}
+/* Centred, like the entry cards two sections up: three short cards in a row
+   with their marks hard left read as a list that lost its bullets. */
+.stp{display:flex;flex-direction:column;align-items:center;padding:1.9rem 1.5rem;border-radius:20px;background:#fff;border:1px solid #ece4fb;box-shadow:0 1px 2px rgba(16,24,40,.03),0 14px 34px -20px rgba(76,29,149,.18);text-align:center}
 /* No chip, no tinted square: a partner's logo inside a box in our brand colour
    reads as our badge for their product rather than as theirs. The marks are
    set on the card, larger than the numbers they replace. */
-.stp-m{display:flex;align-items:center;height:2.9rem;color:var(--violet)}
+.stp-m{display:flex;align-items:center;justify-content:center;height:2.9rem;color:var(--violet)}
 .stp-m img,.stp-m svg{display:block;width:auto;height:100%}
 /* Optical sizing, not equal heights: the Shopify bag is taller than it is
    wide and the Meta symbol is twice as wide as it is tall, so matching their
    heights makes the bag look half the size of the mark beside it. */
 .stp:nth-child(2) .stp-m{height:2.4rem}
 .stp-m svg{height:2.6rem}
-.stp h3{margin-top:.95rem;font-size:1.05rem;font-weight:500;letter-spacing:-.02em}
-.stp p{margin-top:.4rem;font-size:.95rem;line-height:1.55;color:var(--muted);text-wrap:pretty}
+.stp h3{margin-top:1.15rem;font-size:1.05rem;font-weight:500;letter-spacing:-.02em;text-wrap:balance}
+.stp p{margin-top:.5rem;max-width:22rem;font-size:.95rem;line-height:1.55;color:var(--muted);text-wrap:pretty}
 /* The seven questions, native details so they cost nothing until opened. */
 .narrow{width:min(100% - 2.5rem,48rem)}
 .fqs{display:grid;gap:.6rem}

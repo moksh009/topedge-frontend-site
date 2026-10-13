@@ -446,14 +446,33 @@ const POST_SLUGS = [
  * those, and seeing them again as a tick list is the thing that makes a page
  * feel padded. These are the parts that never got a panel.
  */
-const INCLUDED = [
-  'Unlimited flow runs',
-  'Customer CRM and segments',
-  'Shopify tracking pixel',
-  'Help getting your Meta templates approved',
-  'GST invoices, issued automatically',
-  'A person on WhatsApp when you need one',
+/**
+ * Grouped exactly as the pricing page groups it, and read from the catalog's
+ * universalFeatures rather than retyped here: this list said six things while
+ * the heading two inches above it said thirty, which is the page arguing with
+ * itself in front of someone deciding whether to pay.
+ *
+ * The labels are the catalog's own, shortened only where the catalog is
+ * verbose about a thing it names plainly elsewhere.
+ */
+const INCLUDED_GROUPS = [
+  { title: 'Messaging', match: ['live chat', 'customer crm', 'flow builder', 'segments', 'broadcast campaigns', 'opt-in tools', 'intent detection', 'byok ai'] },
+  { title: 'Commerce', match: ['order management', 'p&l analytics', 'discount codes', 'abandoned cart', 'website pixel', 'stock tracking', 'warranty assignment'] },
+  { title: 'WhatsApp', match: ['meta templates', 'whatsapp qr', 'gst invoices'] },
 ];
+
+// Keyed on the normalised label, and the same renames the pricing page makes
+// in its own displayLabel, so a reader who checks both pages sees one product.
+const INCLUDED_LABELS = {
+  'abandoned cart 3-message': 'Cart recovery',
+  'customer crm': 'Audience CRM',
+  'broadcast campaigns': 'Campaigns',
+  'order management': 'Orders',
+  'warranty assignment': 'Warranty',
+  'p&l analytics': 'P&L analytics',
+  'discount codes': 'Discount codes',
+  'intent detection': 'Intent detection',
+};
 
 // Marks that already sit in the site footer. An ad visitor has never heard of us.
 const BADGES = [
@@ -689,7 +708,33 @@ const bentoHtml = BENTO.map(
 ).join('\n');
 
 
-const includedHtml = INCLUDED.map((i) => `<li>${esc(i)}</li>`).join('');
+const includedHtml = (() => {
+  const norm = (s) => String(s).toLowerCase().replace(/[()]/g, '').replace(/\s+/g, ' ').trim();
+  const left = [...(FALLBACK_CATALOG.universalFeatures || [])];
+  const used = new Set();
+  const groups = INCLUDED_GROUPS.map((g) => ({
+    title: g.title,
+    list: left.filter((f) => {
+      const k = norm(f);
+      if (used.has(k)) return false;
+      if (!g.match.some((m) => k === m || k.includes(m))) return false;
+      used.add(k);
+      return true;
+    }),
+  })).filter((g) => g.list.length);
+  // Anything the catalog adds that no group claims still has to appear, or a
+  // new feature goes live and the page quietly stops listing it.
+  const rest = left.filter((f) => !used.has(norm(f)));
+  if (rest.length) groups[groups.length - 1].list.push(...rest);
+  return groups
+    .map(
+      (g) =>
+        `<div class="incl-g"><p class="incl-t">${esc(g.title)}</p><ul class="ticks">${g.list
+          .map((f) => `<li>${esc(INCLUDED_LABELS[norm(f)] || f)}</li>`)
+          .join('')}</ul></div>`,
+    )
+    .join('');
+})();
 
 
 

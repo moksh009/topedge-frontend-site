@@ -35,7 +35,7 @@
 
 <section class="dark" id="compare">
   <div class="wrap">
-    <div class="head"><h2>Why high-growth Shopify brands <span class="chip chip--mark">Switch to <img class="chip-bm" src="/brand-mark-56.webp" width="112" height="112" alt="TopEdge AI" decoding="async"></span></h2></div>
+    <div class="head"><h2>Why high-growth Shopify brands <span class="chip chip--mark">Switch to <img class="chip-bm" src="/brand-mark-56.webp" width="112" height="112" alt="" decoding="async">TopEdge AI</span></h2></div>
     <div class="cmp" data-rv>
       <div class="cmp-row cmp-row--head" aria-hidden="true">
         <p class="cmp-t"></p>
@@ -60,7 +60,15 @@
   </div>
 </section>
 
-<section class="alt" id="platform">
+<section class="alt">
+  <div class="wrap">
+    <div class="head"><h2>What sellers say on <span class="chip chip--mark">{{TP_STAR}}Trustpilot</span></h2></div>
+{{QUOTES}}
+    <p class="q-note">Quoted as published on <a href="https://www.trustpilot.com/review/topedgeai.com" target="_blank" rel="noopener">Trustpilot</a>, retrieved 6 October 2026. Launched on the Shopify App Store on 30 September 2026.</p>
+  </div>
+</section>
+
+<section id="platform">
   <div class="wrap">
     <div class="head"><h2>One subscription, the <span class="chip">whole stack</span></h2><p>Every plan runs all of it. Nothing below is an add-on, and nothing is metered by us.</p></div>
     <div class="bento-grid">
@@ -78,14 +86,6 @@
   </div>
 </section>
 
-<section class="alt">
-  <div class="wrap">
-    <div class="head"><h2>What sellers say on <span class="chip chip--mark">{{TP_STAR}}Trustpilot</span></h2></div>
-{{QUOTES}}
-    <p class="q-note">Quoted as published on <a href="https://www.trustpilot.com/review/topedgeai.com" target="_blank" rel="noopener">Trustpilot</a>, retrieved 6 October 2026. Launched on the Shopify App Store on 30 September 2026.</p>
-  </div>
-</section>
-
 <section id="pricing">
   <div class="wrap">
     <div class="head"><h2>Priced on volume, not on <span class="chip">features</span></h2><p>30+ features included on every plan, with unlimited usage. The number that changes is how many orders and sends it covers.</p></div>
@@ -99,7 +99,7 @@
     </div>
     <div class="incl">
       <p class="incl-h">Included on every plan</p>
-      <ul class="ticks two">{{INCLUDED_LIST}}</ul>
+      <div class="incl-gs">{{INCLUDED_LIST}}</div>
     </div>
     <ul class="badges">{{STRIP_BADGES}}</ul>
     <p class="foot-note">Meta bills its own WhatsApp message fees to your Meta Business account. TopEdge adds 0% markup, and GST invoices are issued automatically. Templates are approved by Meta on your own Business account, so nothing sends without your sign-off.</p>
