@@ -16,6 +16,15 @@ export type PlanPricing = {
 
 export type CatalogPlanFeatures = {
   journeyBranch: boolean;
+  /**
+   * Added to the live catalog on 13 Oct 2026, true on every plan. It is a
+   * capability the whole product has, not a gate, so nothing renders it: the
+   * plan cards and the feature matrix name the flags that differ between
+   * plans. It is carried here because check-catalog-drift compares the two
+   * catalogs key by key, and a flag the live API returns and this one does not
+   * fails the build.
+   */
+  journeyCodConfirm: boolean;
   journeyCodPrepaid: boolean;
   dispatchPriority: string;
   metaAdsAudiencePush: boolean;
@@ -152,6 +161,7 @@ export const FALLBACK_CATALOG: BillingCatalog = {
       yearlyPriceLabel: '₹19,188',
       features: {
         journeyBranch: false,
+        journeyCodConfirm: true,
         journeyCodPrepaid: false,
         dispatchPriority: 'standard',
         metaAdsAudiencePush: false,
@@ -174,6 +184,7 @@ export const FALLBACK_CATALOG: BillingCatalog = {
       yearlyPriceLabel: '₹38,388',
       features: {
         journeyBranch: true,
+        journeyCodConfirm: true,
         journeyCodPrepaid: true,
         dispatchPriority: 'priority',
         metaAdsAudiencePush: false,
@@ -196,6 +207,7 @@ export const FALLBACK_CATALOG: BillingCatalog = {
       yearlyPriceLabel: '₹62,388',
       features: {
         journeyBranch: true,
+        journeyCodConfirm: true,
         journeyCodPrepaid: true,
         dispatchPriority: 'highest',
         metaAdsAudiencePush: false,
@@ -283,6 +295,7 @@ function asPlan(raw: CatalogPlan): CatalogPlan {
     yearlyPriceLabel: raw.yearlyPriceLabel || (raw as { annualPriceLabel?: string }).annualPriceLabel || '',
     features: {
       journeyBranch: !!raw.features?.journeyBranch,
+      journeyCodConfirm: !!raw.features?.journeyCodConfirm,
       journeyCodPrepaid: !!raw.features?.journeyCodPrepaid,
       dispatchPriority: raw.features?.dispatchPriority || 'standard',
       metaAdsAudiencePush: !!raw.features?.metaAdsAudiencePush,
