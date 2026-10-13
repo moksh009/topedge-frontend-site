@@ -1,4 +1,18 @@
-:root{--violet:#7c3aed;--violet-hover:#6d28d9;--ink:#0c1222;--muted:#5b6677;--line:#eef0f4;--wash:#f8f6ff;--chip-bg:#e4d4ff;--chip-ink:#5b21b6;--ok:#0f9d6a;--font:-apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display','Inter',system-ui,'Segoe UI',Roboto,sans-serif}
+/* Plus Jakarta Sans, self-hosted. The owner asked for the face humanto.io uses;
+   that site reads as Satoshi (Fontshare) and neither the site nor Fontshare is
+   reachable from the build container, so this is the closest match on a source
+   that is: same geometric grotesque, single-storey g, angled t, large x-height.
+   Swap the two files and this block if the real face is ever supplied.
+
+   Self-hosted on purpose. The page contract bans an external stylesheet or
+   webfont because an ad page that waits on fonts.googleapis is an ad page that
+   paints late; these are two files on our own origin, subset to the printable
+   ASCII range plus the punctuation this page sets, 16 KB for both. The arrow
+   and tick glyphs are not in the family at all and fall back, which is
+   invisible: a geometric arrow is a geometric arrow. */
+@font-face{font-family:'Plus Jakarta Sans';font-style:normal;font-weight:400 600;font-display:swap;src:url(/fonts/pjs-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2122,U+2212,U+FEFF,U+FFFD}
+@font-face{font-family:'Plus Jakarta Sans';font-style:normal;font-weight:400 600;font-display:swap;src:url(/fonts/pjs-latin-ext.woff2) format('woff2');unicode-range:U+0100-024F,U+20A0-20CF}
+:root{--violet:#7c3aed;--violet-hover:#6d28d9;--ink:#0c1222;--muted:#5b6677;--line:#eef0f4;--wash:#f8f6ff;--chip-bg:#e4d4ff;--chip-ink:#5b21b6;--ok:#0f9d6a;--font:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,'Inter',system-ui,'Segoe UI',Roboto,sans-serif}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
 body{margin:0;font-family:var(--font);color:var(--ink);background:#fff;line-height:1.5;-webkit-font-smoothing:antialiased}
@@ -69,7 +83,7 @@ mark.chip{background:var(--chip-bg)}
    would make nonsense of, and data-v is set before the body parses. */
 .hero-bm{display:inline-block;width:.92em;height:.92em;margin:0 .22em -.1em 0;vertical-align:baseline}
 html[data-v]:not([data-v="platform"]) .hero-bm{display:none}
-.hero h1{margin:0;max-width:19ch;font-size:clamp(2rem,5.2vw,3.4rem);font-weight:400;letter-spacing:-.042em;line-height:1.12;text-wrap:balance}
+.hero h1{margin:0;max-width:19ch;font-size:clamp(2rem,5.2vw,3.4rem);font-weight:500;letter-spacing:-.042em;line-height:1.12;text-wrap:balance}
 .sub{margin:.95rem 0 0;max-width:40rem;font-size:clamp(1rem,2.1vw,1.13rem);color:var(--muted);text-wrap:pretty}
 .cta-row{position:relative;margin-top:1.5rem;display:flex;flex-wrap:wrap;justify-content:center;gap:.7rem}
 /* Every button on the page behaves the same way, because a page where one CTA
@@ -105,22 +119,30 @@ html[data-v]:not([data-v="platform"]) .hero-bm{display:none}
    item, not a gap on the track: a gap is laid between items and not after the
    last one, so a track of N items carries N-1 gaps and a 50% translate lands
    half a gap short of the frame it left, which is a visible jump every lap. */
-.tk{position:relative;width:100%;margin-top:2.4rem;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.tk{position:relative;width:100%;margin-top:2.4rem;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 11%,#000 89%,transparent);mask-image:linear-gradient(90deg,transparent,#000 11%,#000 89%,transparent)}
 .tk-track{display:flex;width:max-content;align-items:center;list-style:none;margin:0;padding:0;animation:tk 44s linear infinite}
 .tk:hover .tk-track{animation-play-state:paused}
-.tk-track li{flex:none;display:inline-flex;align-items:center;gap:.45rem;margin-right:.7rem;padding:.55rem 1.1rem;border-radius:9999px;background:rgba(255,255,255,.86);box-shadow:0 0 0 1px rgba(124,58,237,.12),0 8px 20px -12px rgba(46,16,101,.55);font-size:.88rem;font-weight:500;letter-spacing:-.012em;color:#2e1065;white-space:nowrap}
-.tk-track svg{flex:none;color:var(--violet)}
+.tk-track li{flex:none;display:inline-flex;align-items:center;gap:.55rem;margin-right:.7rem;padding:.58rem .5rem .58rem .58rem;border-radius:9999px;background:rgba(255,255,255,.9);box-shadow:inset 0 0 0 1px rgba(124,58,237,.14),0 8px 20px -14px rgba(46,16,101,.5);font-size:.9rem;font-weight:500;letter-spacing:-.014em;color:#2e1065;white-space:nowrap}
+.tk-track li:after{content:'';width:.5rem}
+/* The tick in a soft disc of its own, the way the reference sets it: a bare
+   glyph beside the words reads as a bullet, a disc reads as a mark. */
+.tk-t{flex:none;display:grid;place-items:center;width:1.4rem;height:1.4rem;border-radius:50%;background:#ede9fe;color:var(--violet)}
+.tk-t svg{display:block}
 @keyframes tk{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-/* The three anchors that close the hero, on the violet the gradient ends on. */
-.pil{display:grid;gap:.85rem;width:min(100% - 2.5rem,70rem);margin:2.4rem auto 0;padding:0;list-style:none;text-align:left}
-.pil li{padding:1.45rem 1.4rem;border-radius:22px;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 0 0 1px rgba(255,255,255,.55),0 20px 44px -26px rgba(46,16,101,.7)}
-.pil h3{margin:0;font-size:1.02rem;font-weight:500;letter-spacing:-.024em;line-height:1.32;color:var(--ink);text-wrap:balance}
-.pil p{margin:.5rem 0 0;font-size:.9rem;line-height:1.55;color:var(--muted);text-wrap:pretty}
+/* The three anchors that close the hero, set straight on the violet the
+   gradient ends on: a tick in a filled disc, then the claim. No card. The ink
+   is the deep violet rather than white, which is the readable way round on a
+   mid-tone ground, and is how the reference does it on its own tint. */
+.pil{display:grid;gap:1.6rem 2.5rem;width:min(100% - 2.5rem,70rem);margin:2.6rem auto 0;padding:0;list-style:none;text-align:left}
+.pil li{display:grid;gap:.85rem;justify-items:start}
+.pil-t{display:grid;place-items:center;width:1.8rem;height:1.8rem;border-radius:50%;background:#2e1065;color:#fff}
+.pil-t svg{display:block;width:.8rem;height:.8rem}
+.pil h3{margin:0;max-width:22ch;font-size:1.08rem;font-weight:500;letter-spacing:-.026em;line-height:1.34;color:#2e1065;text-wrap:pretty}
 /* Faces on the left, the rating over the line that reads it, on the right:
    the shape of the proof block the owner sent as the reference. */
 .hp{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.6rem 1.25rem;margin-top:1.75rem}
 .hp-col{display:flex;flex-direction:column;align-items:flex-start;gap:.25rem}
-.hp-faces{display:flex;padding-left:.78rem}
+.hp-faces{display:flex;padding-left:.7rem}
 /* Ved in front, code CLINIC at the back. Without this the DOM order puts the
    last avatar on top, which is the opposite of the order the owner asked for. */
 .hp-faces>span:nth-child(1){z-index:5}
@@ -128,7 +150,7 @@ html[data-v]:not([data-v="platform"]) .hero-bm{display:none}
 .hp-faces>span:nth-child(3){z-index:3}
 .hp-faces>span:nth-child(4){z-index:2}
 .hp-faces>span:nth-child(5){z-index:1}
-.hp-faces>span{position:relative;display:block;width:3.3rem;height:3.3rem;margin-left:-.78rem;border-radius:50%;background:#ede9fe;box-shadow:0 0 0 3px #fff,0 6px 14px -7px rgba(46,16,101,.6);transition:transform .25s var(--e)}
+.hp-faces>span{position:relative;display:block;width:2.8rem;height:2.8rem;margin-left:-.7rem;border-radius:50%;background:#ede9fe;box-shadow:0 0 0 3px #fff,0 6px 14px -7px rgba(46,16,101,.6);transition:transform .25s var(--e)}
 .hp-faces>span:hover{z-index:6;transform:translateY(-3px) scale(1.04)}
 .hp-ph{display:block;width:100%;height:100%;border-radius:50%;object-fit:cover}
 .hp-tip{position:absolute;bottom:calc(100% + .55rem);left:50%;transform:translateX(-50%);display:grid;gap:.1rem;padding:.4rem .7rem;border-radius:10px;background:#2e1065;color:#fff;font-size:.74rem;font-weight:500;line-height:1.3;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s}
@@ -159,7 +181,7 @@ section{padding:3.75rem 0}
    separated by space and by the cards sitting on them, not by fills. */
 .alt{background:#fff}
 .head{text-align:center;margin-bottom:2.3rem}
-.head h2{max-width:24ch;margin:0 auto;font-size:clamp(1.65rem,4.2vw,2.5rem);font-weight:400;letter-spacing:-.036em;line-height:1.18;text-wrap:balance}
+.head h2{max-width:24ch;margin:0 auto;font-size:clamp(1.65rem,4.2vw,2.5rem);font-weight:500;letter-spacing:-.036em;line-height:1.18;text-wrap:balance}
 .head p{margin:.85rem auto 0;max-width:36rem;color:var(--muted);font-size:1.02rem;text-wrap:pretty}
 .card{border-radius:20px;background:#fff;box-shadow:var(--ring),var(--lift)}
 /* ---- the three entry points, the panel this page is built around ----
@@ -350,7 +372,13 @@ section{padding:3.75rem 0}
 .film-wrap{width:min(100%,64rem);margin:1.6rem auto 0}
 /* No drop shadow behind the film: the owner wants the frame flat against the
    gradient. A hairline keeps the dark poster from bleeding into the wash. */
-.film{display:block;width:100%;height:auto;aspect-ratio:16/9;max-height:min(44svh,29rem);margin:0 auto;border-radius:20px;background:#ece7fa;border:1px solid rgba(124,58,237,.16)}
+/* No drop shadow behind the film: the owner wants the frame flat against the
+   gradient. A hairline keeps the dark poster from bleeding into the wash.
+   The width is derived from the height cap rather than set to 100%: with both
+   a full width and a max-height the box goes wider than 16:9 as soon as the
+   height clamps, and a 16:9 file then letterboxes itself inside it, which is
+   the grey bars either side the owner saw. */
+.film{display:block;width:min(100%,calc(min(44svh,29rem) * 16 / 9));height:auto;aspect-ratio:16/9;margin:0 auto;border-radius:20px;background:#ece7fa;border:1px solid rgba(124,58,237,.16);object-fit:cover}
 .trust-l{text-align:center;font-size:.78rem;font-weight:500;letter-spacing:.01em;color:#9b8cb8}
 /* The logo ribbon. The track holds three copies of the four marks and travels
    exactly one copy, so the frame it lands on is identical to the one it left
@@ -514,10 +542,10 @@ section{padding:3.75rem 0}
 /* What gives on a short phone is the film, which is the one thing still
    legible at any size. */
 @media(max-width:430px){
- .film{max-height:30svh}
+ .film{width:min(100%,calc(30svh * 16 / 9))}
 }
 @media(max-width:380px){
- .film{max-height:24svh}
+ .film{width:min(100%,calc(24svh * 16 / 9))}
  .hero h1{font-size:1.8rem}
 }
 @media(max-width:759px){
@@ -586,9 +614,8 @@ section{padding:3.75rem 0}
     reward for the first scroll rather than three things squeezed above it. */
  .hero{padding:7.5rem 0 4.5rem}
  .hero h1{max-width:none;font-size:clamp(2.4rem,3.9vw,3.1rem)}
- .film{max-height:min(46svh,28rem)}
- .pil{grid-template-columns:repeat(3,1fr);gap:1.1rem;margin-top:3rem}
- .pil li{padding:1.7rem 1.6rem}
+ .film{width:min(100%,calc(min(46svh,28rem) * 16 / 9))}
+ .pil{grid-template-columns:repeat(3,1fr);gap:2.75rem;margin-top:3.25rem}
  .tk{margin-top:3rem}
  section{padding:5.25rem 0}
  .mkt-plan--emphasis{transform:translateY(-.5rem)}

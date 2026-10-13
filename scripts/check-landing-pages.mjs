@@ -96,7 +96,7 @@ for (const v of videos) {
 }
 must(!/<source\b/.test(markup), 'use data-lg/data-sm + page.js, not a source element (media= is ignored inside video)');
 must(/film\.play\(\)/.test(html), 'nothing starts the hero film; it would sit on its poster');
-must(/\.film\{[^}]*max-height:/.test(html), 'the hero film has no max-height, so it can push the buttons off the first screen');
+must(/\.film\{[^}]*calc\(min\(\d+svh/.test(html), 'the hero film is no longer bounded by a fraction of the viewport, so it can push the buttons off the first screen');
 must(!/\.film\{[^}]*box-shadow:/.test(html), 'the film has a drop shadow again; the owner asked for it flat');
 
 // --- Nav and hero ---
@@ -126,7 +126,11 @@ must(/<video\b/.test(heroBlock), 'the hero has no film; the first screen is mean
 // the hero rather than loose sections under it.
 must(/<div class="tk"/.test(heroBlock), 'the value ticker is not in the hero');
 must(/<ul class="pil">/.test(heroBlock), 'the three anchors are not in the hero');
-must(/\.film\{[^}]*max-height:min\(4\dsvh/.test(html), 'the film is no longer capped to a fraction of the viewport, so it can push itself below the fold');
+// The cap is on the width, derived from the height the film may take: setting
+// a full width and a max-height instead makes the box wider than 16:9 once the
+// height clamps, and the 16:9 file then pillarboxes itself inside it.
+must(/\.film\{[^}]*width:min\(100%,calc\(min\(4\dsvh,\d+rem\) \* 16 \/ 9\)\)/.test(html), 'the film is no longer capped to a fraction of the viewport, so it can push itself below the fold');
+must(!/\.film\{[^}]*width:100%/.test(html), 'the film is full width with a height cap again; it will show grey bars either side');
 // One button above the fold. The App Store is still offered, on the mobile bar.
 const heroCtas = heroBlock.match(/data-cta="[a-z]+"/g) || [];
 must(heroCtas.length === 1 && heroCtas[0] === 'data-cta="trial"', `the hero should offer one button, the trial; found ${heroCtas.join(', ') || 'none'}`);
@@ -160,6 +164,40 @@ must(at(/<span class="free"/) < at(/class="hp-faces"/), 'the arrow belongs in th
 must(
   /\.hero\{[^}]*flex-direction:column[^}]*align-items:center/.test(html),
   'the hero no longer centres its column; as a row with no justify-content it put the whole fold against the left edge below 900px',
+);
+
+// --- The self-hosted face ---
+// Two files on our own origin, not fonts.googleapis: an ad page that waits on
+// a third party to paint is an ad page that loses the click it just paid for.
+// The contract rule above already bans the external link; these say the
+// replacement is actually wired up.
+must(/@font-face\{[^}]*font-family:'Plus Jakarta Sans'[^}]*url\(\/fonts\/pjs-latin\.woff2\)/.test(html), 'the page is no longer self-hosting its face');
+must(/@font-face\{[^}]*url\(\/fonts\/pjs-latin-ext\.woff2\)/.test(html), 'the latin-ext file is gone; the rupee sign will fall back mid-price');
+must(/--font:'Plus Jakarta Sans'/.test(html), 'the face is loaded but nothing is set in it');
+must(/font-display:swap/.test(html), 'the face blocks first paint');
+// The files are subset. Everything the page paints has to be inside that
+// subset, or a letter in the middle of a headline silently comes from another
+// font. Rather than parse the woff2 here, pin the character set the subset was
+// cut to: new copy outside it fails here, and the fix is to re-cut the subset.
+const COVERED = new Set([
+  ...Array.from({ length: 0x7f - 0x20 }, (_, i) => String.fromCharCode(0x20 + i)),
+  ...'\u00a0\u00a9\u00b7\u00d7\u00e9\u2013\u2014\u2018\u2019\u201c\u201d\u2026\u20b9',
+  // Not in the family at all, and deliberately left to fall back: a geometric
+  // arrow or tick is the same shape in every sans on the fallback stack.
+  '\u2192',
+  '\u2713',
+  '\n',
+]);
+const painted = new Set(
+  // The variant headlines never appear as markup, so read them off the script
+  // the hero carries: they are painted the moment a gclid lands with a
+  // utm_content, and a glyph missing there is missing on a real ad click.
+  (copy + ' ' + ((html.match(/var V=(\{.*?\});var c=/) || [])[1] || '')).split(''),
+);
+const uncovered = [...painted].filter((c) => !COVERED.has(c));
+must(
+  uncovered.length === 0,
+  `these characters are outside the font subset and will fall back: ${uncovered.map((c) => JSON.stringify(c) + ' U+' + c.codePointAt(0).toString(16).toUpperCase()).join(', ')}`,
 );
 
 // --- The hero extension: the ticker and the three anchors ---

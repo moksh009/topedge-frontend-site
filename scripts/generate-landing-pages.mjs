@@ -963,7 +963,7 @@ const tickerHtml = `<div class="tk" aria-label="What is included">
         .flatMap((copy) =>
           TICKER.map(
             (v) =>
-              `<li${copy ? ' aria-hidden="true"' : ''}><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>${esc(v)}</li>`,
+              `<li${copy ? ' aria-hidden="true"' : ''}><i class="tk-t">${TICK}</i>${esc(v)}</li>`,
           ),
         )
         .join('')}</ul>
@@ -974,24 +974,20 @@ const tickerHtml = `<div class="tk" aria-label="What is included">
  * it searched for; these are the three claims that decide whether the rest of
  * the page is worth a scroll, so they are the last thing in the first screen
  * rather than a section somewhere below it.
+ *
+ * A tick and a line, with no card around it and no paragraph under it. They
+ * were cards with subtext and read as a third feature grid two screens before
+ * the feature grid; the claim is the whole content, and the parenthetical is
+ * what makes each one an argument rather than a label.
  */
 const PILLARS = [
-  {
-    h: 'Enterprise e-commerce OS, not a basic WhatsApp chat app',
-    p: 'Real-time intent tracking, automated WhatsApp recovery, COD verification and CRM workflows in one dashboard.',
-  },
-  {
-    h: 'Immediate RTO reduction: confirm COD, convert to prepaid',
-    p: 'Catch fake addresses and unverified cash orders on WhatsApp before you ship, instead of paying freight both ways.',
-  },
-  {
-    h: 'Zero message markup, and the number stays yours',
-    p: 'Your own Meta WhatsApp Business API, billed to you at cost. No agency surcharge, and the subscriber data never leaves your account.',
-  },
+  'Enterprise e-commerce OS (not just a basic WhatsApp chat app)',
+  'Immediate RTO reduction: confirm COD and boost prepaid conversions',
+  'Zero message markup (keep total asset and phone number ownership)',
 ];
 
 const pillarsHtml = `<ul class="pil">${PILLARS.map(
-  (x) => `<li><h3>${esc(x.h)}</h3><p>${esc(x.p)}</p></li>`,
+  (x) => `<li><i class="pil-t">${TICK}</i><h3>${esc(x)}</h3></li>`,
 ).join('')}</ul>`;
 
 /**

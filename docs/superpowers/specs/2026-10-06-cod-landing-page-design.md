@@ -1287,6 +1287,65 @@ figure only, and the attribution handoff. Eleven widths with no horizontal
 scroll, every block centred to within 2px, neither marquee doubling or
 seaming. Five negative tests on the new rules. All gates green.
 
+## Revision 23 — the reference's face, and the film stops letterboxing (2026-10-13)
+
+### The film was pillarboxed and it was our CSS doing it
+`.film` had `width:100%`, `aspect-ratio:16/9` and `max-height`. Once the
+height cap binds, the box goes wider than 16:9 while the file stays 16:9, so
+the browser letterboxes a 1920x1080 video inside it: the grey bars either side
+the owner photographed. The width is derived from the height cap now
+(`width:min(100%,calc(min(44svh,29rem) * 16 / 9))`), so the box is always the
+film's own shape. The sweep measures the rendered aspect at every width.
+
+### The three anchors are a tick and a line
+They were cards with a heading and a paragraph, which read as a third feature
+grid two screens before the feature grid. The reference sets them as a filled
+disc with a tick and one line of claim, no card and no subtext, and it is
+right: the claim is the whole content, and the parenthetical is what makes it
+an argument rather than a label. Deep violet ink on the violet rather than
+white, which is the readable way round on a mid-tone ground.
+
+The ticker pills took the same treatment: the tick moved into a soft disc,
+because a bare glyph beside the words reads as a bullet and a disc reads as a
+mark. The end fade went from 6% to 11%.
+
+### The face
+The owner asked for the one humanto.io uses. That site reads as Satoshi
+(Fontshare) to my eye, and neither humanto.io nor Fontshare is reachable
+through the build container's proxy, so this is a judgement from a screenshot
+and not a verified match. Plus Jakarta Sans is the nearest face on a source
+that is reachable: the same geometric grotesque, single-storey g, angled t,
+large x-height. If the real file is ever supplied, two woff2s and one CSS
+block change and nothing else does.
+
+Self-hosted, not linked. The contract bans an external stylesheet or webfont
+because a page bought by the click cannot wait on fonts.googleapis to paint.
+The two files are subset to printable ASCII plus the punctuation this page
+sets: 16 KB for both, `font-display:swap`, same origin.
+
+The subset is the fragile part, so `check:lp` pins the character set it was
+cut to and fails on any character outside it, naming the codepoint. The first
+cut was made by scraping the current copy and it silently missed the curly
+quotes, which come from a CSS `content` rule and not from the markup; the
+second is a fixed range that does not care what the copy says this week. The
+arrow and tick are not in the family at all and fall back deliberately, which
+is invisible: a geometric arrow is a geometric arrow.
+
+Headline and section headings went from 400 to 500. At 3.4rem the new face is
+noticeably lighter than the old stack and the reference sets its headline
+heavier still.
+
+### Also
+The founder photographs are 2.8rem rather than 3.3rem.
+
+### Verified
+Both font files served from our own origin with no third-party request, both
+weights resolving, and the rupee sign measured against a fallback to confirm
+it comes from our file. Eleven widths: no horizontal scroll, every block
+centred to within 2px, neither marquee seaming, and the film rendering at
+16:9 at all of them. Four negative tests on the new rules, including copy
+outside the subset. All gates green. 96.6 KB against the 100 KB budget.
+
 ## Testing
 Repo has no JS test runner, so verification is a node script:
 `scripts/check-landing-pages.mjs` (`npm run check:lp`) reads the generated HTML and asserts: size budget, noindex, no em dashes, no competitor names, no invented rating, the three quotes verbatim, plan prices equal `FALLBACK_CATALOG`, each plan's COD-to-prepaid lock state agrees with the catalog, `TRIAL` numbers appear, the ported navbar and footer, every CTA kind present, no external script or stylesheet. Revision 9 adds: no `<video>` or `<img>` in the hero, a film section that exists, three entry-point cards that each link somewhere real, five bento panels with no image inside them, a marked phrase in every `<h2>`, three going-live steps, and three blog cards whose slugs resolve against `blogPosts.ts`. Browser checks with Playwright (installed): 360px and 1280px screenshots, H1 at most 3 lines on mobile, sticky bar behaviour, toggle, hero variant swap by `?utm_content=`.
