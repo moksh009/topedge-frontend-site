@@ -54,7 +54,7 @@ img{max-width:100%}
    to sit behind the headline made the top of the page as busy as the bottom and
    gave the hero two focal points; the page now starts white and darkens into
    the band below it, which is the single thing the gradient is for. */
-.hero{position:relative;overflow:hidden;min-height:100svh;display:flex;align-items:center;padding:7.25rem 0 2.25rem;text-align:center;background:linear-gradient(180deg,#fff 0,#fdfcff 34%,rgba(196,181,253,.34) 72%,rgba(167,139,250,.56) 88%,rgba(139,92,246,.7) 100%)}
+.hero{position:relative;overflow:hidden;min-height:100svh;display:flex;align-items:center;justify-content:center;padding:5.75rem 0 2.25rem;text-align:center;background:linear-gradient(180deg,#fff 0,#fdfcff 34%,rgba(196,181,253,.34) 72%,rgba(167,139,250,.56) 88%,rgba(139,92,246,.7) 100%)}
 .hero-in{display:flex;flex-direction:column;align-items:center;width:min(100% - 2.5rem,70rem)}
 .chip{color:var(--chip-ink);background:var(--chip-bg);border-radius:.38em;padding:.02em .22em .06em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
 mark.chip{background:var(--chip-bg)}
@@ -77,7 +77,7 @@ mark.chip{background:var(--chip-bg)}
 }
 /* Faces on the left, the rating over the line that reads it, on the right:
    the shape of the proof block the owner sent as the reference. */
-.hp{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.6rem 1.1rem;margin-top:1.5rem}
+.hp{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.6rem 1.25rem;margin-top:1.75rem}
 .hp-col{display:flex;flex-direction:column;align-items:flex-start;gap:.25rem}
 .hp-faces{display:flex;padding-left:.78rem}
 /* Ved in front, code CLINIC at the back. Without this the DOM order puts the
@@ -100,9 +100,12 @@ mark.chip{background:var(--chip-bg)}
 .hp-stars .st{display:block}
 .hp-stars span{display:inline-flex;align-items:center;gap:.3rem;margin-left:.55rem}
 .hp-stars b{font-weight:600;color:#2e1065}
-.hp-stars a{font-weight:500;text-decoration:none}
-.hp-stars a:hover{text-decoration:underline}
-.hp-t{font-size:.95rem;color:#4b3a6e}
+/* Trustpilot's mark, not ours: their green star and their ink, set tight so
+   the star and the word read as one lockup rather than an icon beside a link. */
+.tp{display:inline-flex;align-items:center;gap:.22rem;color:#191919;font-weight:600;letter-spacing:-.025em;text-decoration:none;white-space:nowrap}
+.tp svg{display:block;flex:none;margin-bottom:.06em}
+.tp:hover{text-decoration:underline;text-underline-offset:2px}
+.hp-t{font-size:.88rem;color:#7c6b99}
 /* sections */
 section{padding:3.75rem 0}
 /* Two surfaces on the whole page: white, and the one inverted band. Alternating
@@ -344,7 +347,7 @@ section{padding:3.75rem 0}
 /* proof: review cards in Trustpilot's visual language */
 .quotes{display:grid;gap:1rem}
 .quote{margin:0;padding:1.3rem 1.3rem 1.2rem;display:flex;flex-direction:column;gap:.75rem}
-.tp-mark{display:flex;align-items:center;gap:.35rem;font-size:.78rem;font-weight:600;letter-spacing:-.01em;color:#0c1222}
+.tp-mark{display:flex;align-items:center;gap:.3rem;font-size:.78rem;font-weight:600;letter-spacing:-.025em;color:#191919}
 .tp-mark svg{display:block}
 .tp-text{flex:1;font-size:.98rem;line-height:1.55}
 .tp-text:before{content:'\201C'}
@@ -427,6 +430,9 @@ section{padding:3.75rem 0}
 .mkt-foot__legal-links{display:flex;flex-wrap:wrap;gap:.75rem 1rem}
 .mkt-foot__legal-links a{color:#94a3b8;text-decoration:none}
 .mkt-foot__legal-links a:hover{color:var(--violet)}
+/* The social marks are set in currentColor, not in LinkedIn blue, Instagram
+   magenta and YouTube red: three loud brand colours in the quietest part of
+   the page, and the hover the button defines could never take effect. */
 /* the trust strip, restyled to the brand gradient rather than flat ink */
 .trust{padding:2.75rem 1.25rem 1.75rem;background:linear-gradient(180deg,rgba(139,92,246,.7) 0,rgba(167,139,250,.3) 22%,rgba(237,233,254,.45) 48%,#fff 78%)}
 /* sticky mobile cta */
@@ -457,7 +463,13 @@ section{padding:3.75rem 0}
  .mkt-plan--emphasis{order:-1}
  body{padding-bottom:6rem}
  .hero h1{max-width:16ch}
- /* Dashboard detail is unreadable at 390px in a 16:9 box, so crop in and scale up. */
+ /* The row stacks here: faces on one line, the rating under them. The column
+    is left-aligned beside the faces on desktop, which under them reads as a
+    block of text shoved against the gutter. */
+ .hp{gap:.85rem}
+ .hp-col{align-items:center;text-align:center;gap:.35rem}
+ .hp-stars{flex-wrap:wrap;justify-content:center;row-gap:.15rem}
+ .hp-stars span{margin-left:0}
  /* Both ways in, side by side: the trial is the page's job, but a Shopify
     merchant who would rather install from the App Store should not have to
     scroll back up to find that. Equal halves, the trial weighted by colour. */
@@ -535,9 +547,14 @@ section{padding:3.75rem 0}
    than no number at all. */
 .pf{display:none;gap:1.5rem 2.75rem;align-items:center;width:min(100%,62rem);margin:0 auto}
 .pf[data-pf="platform"]{display:grid}
-.pf-stat{display:grid;gap:.35rem;padding:1.4rem 1.5rem;border-radius:20px;background:#fff;border:1px solid #ece4fb;box-shadow:0 1px 2px rgba(16,24,40,.03),0 16px 38px -22px rgba(76,29,149,.3)}
-.pf-stat b{font-size:clamp(1.9rem,4.4vw,2.6rem);font-weight:500;letter-spacing:-.04em;line-height:1;color:var(--chip-ink);font-variant-numeric:tabular-nums}
-.pf-stat span{font-size:.85rem;line-height:1.45;color:var(--muted);text-wrap:pretty}
+/* The figure plate. It is the same object as a bento panel, down to the radius,
+   the hairline and the two-layer shadow, with the subject replaced by a number:
+   a page reads as premium when its surfaces are the same surface, and this one
+   used to be a flat white box that belonged to no system on the page. */
+.pf-stat{position:relative;overflow:hidden;isolation:isolate;display:grid;gap:.5rem;padding:1.9rem 1.7rem;border-radius:26px;background:#fff;border:1px solid #ece4fb;box-shadow:0 1px 2px rgba(16,24,40,.03),0 14px 36px -18px rgba(76,29,149,.14)}
+.pf-stat:before{content:'';position:absolute;z-index:-1;top:-55%;left:-30%;width:85%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(167,139,250,.32),rgba(167,139,250,0) 68%)}
+.pf-stat b{font-size:clamp(2rem,4.8vw,2.9rem);font-weight:500;letter-spacing:-.045em;line-height:1;color:var(--chip-ink);font-variant-numeric:tabular-nums}
+.pf-stat span{font-size:.88rem;line-height:1.5;color:var(--muted);text-wrap:pretty}
 .pf-copy h2{font-size:clamp(1.4rem,3.2vw,1.95rem);font-weight:400;letter-spacing:-.032em;line-height:1.22;text-wrap:balance}
 .pf-copy p{margin-top:.75rem;font-size:1.02rem;line-height:1.6;color:var(--muted);text-wrap:pretty}
 .pf-src{margin-top:.7rem;font-size:.78rem;line-height:1.5;color:#9b8cb8}

@@ -143,6 +143,13 @@ must(free.includes('/lp/free-arrow.webp'), 'the arrow is not the owner\'s own fi
 must(new RegExp(`Free for ${TRIAL.days} days`).test(free), 'the arrow no longer says how long the trial is');
 must(at(/<span class="free"/) < at(/class="hp-faces"/), 'the arrow belongs in the button row, above the faces');
 
+// The hero's inner column is a flex item in a row container. Without an
+// explicit justify-content it sits at flex-start, which on desktop is hidden
+// by the column stretching and below 900px put the whole fold against the
+// left edge with the entire 2.5rem gutter on the right. The owner caught that
+// one in a screenshot; this is the rule that would have caught it here.
+must(/\.hero\{[^}]*justify-content:center/.test(html), 'the hero no longer centres its column; below 900px the fold will sit against the left edge');
+
 // --- One gradient, two surfaces ---
 // The owner's note was that the page read as three different purples chosen by
 // accident. It now has exactly two surfaces, white and the one inverted band,
@@ -207,17 +214,26 @@ must(/Trustpilot/.test(starRow), 'the star row does not say where the rating com
 // next to a 4.0 is the misrepresentation this rule exists for. All five boxes
 // share one <svg> and one <path>, so the count is of boxes, not of svgs.
 must(count(/class="st"/g) === 1, 'expected one five-star row, drawn by starRow');
-const boxes = (starRow.match(/<rect /g) || []).length;
-const filled = (starRow.match(/fill="#00b67a"/g) || []).length;
-const partial = (starRow.match(/clip-path="inset\(/g) || []).length;
+// Scoped to the row's own svg: the Trustpilot lockup beside it draws the same
+// green star, and counting that one as a sixth filled box reads the score wrong.
+const starSvg = (starRow.match(/<svg class="st"[\s\S]*?<\/svg>/) || [''])[0];
+const boxes = (starSvg.match(/<rect /g) || []).length;
+const filled = (starSvg.match(/fill="#00b67a"/g) || []).length;
+const partial = (starSvg.match(/clip-path="inset\(/g) || []).length;
 must(boxes - filled === 5, `the row draws ${boxes - filled} of 5 star boxes`);
 must(
   filled - partial === Math.floor(Number(TRUSTPILOT_SCORE)) && partial === (Number(TRUSTPILOT_SCORE) % 1 ? 1 : 0),
   `the star row shows ${filled} filled of 5, which does not read as ${TRUSTPILOT_SCORE}`,
 );
-must(/#dcdce6/.test(starRow), 'the unfilled stars are missing; a 4.0 drawn as four stars alone reads as four out of four');
+must(/#dcdce6/.test(starSvg), 'the unfilled stars are missing; a 4.0 drawn as four stars alone reads as four out of four');
 must(new RegExp(`from ${TRUSTPILOT_REVIEWS} reviews`).test(markup), 'the rating does not say how many reviews it is from');
 must(/trustpilot\.com\/review\/topedgeai\.com/.test(starRow), 'the rating does not link to the page it came from');
+// Trustpilot's name carries Trustpilot's mark, not a violet text link: the
+// green star is the half of the lockup a reader recognises without reading.
+const lockup = (starRow.match(/<a class="tp"[\s\S]*?<\/a>/) || [''])[0];
+must(lockup !== '', 'the Trustpilot name is not set as its lockup');
+must(/<svg[\s\S]*fill="#00b67a"/.test(lockup), 'the lockup has lost the green star');
+must(/\.tp\{[^}]*color:#191919/.test(html), 'the Trustpilot wordmark is painted in a colour that is not theirs');
 must(!/[❤♥💖]|&#10084;/.test(markup), 'an emoji is back in the trust copy');
 
 // --- The band under the hero ---

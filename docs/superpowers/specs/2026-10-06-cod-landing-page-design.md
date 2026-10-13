@@ -1121,6 +1121,56 @@ are the `.orb` glows, which their panels clip by design. `check:lp`,
 `check:blog`, `check:pricing`, `seo:contracts`, `tsc`, `lint` and
 `build:netlify` green.
 
+## Revision 20 — the mobile fold, and Trustpilot's mark (2026-10-13)
+
+### The fold sat against the left edge below 900px
+`.hero` is `display:flex` with `align-items:center` and no `justify-content`,
+so its one child sat at flex-start. On desktop that is invisible, because the
+900px block gives the child `flex:1` and it fills the row. Below 900px it does
+not, so the column took `min(100% - 2.5rem, 70rem)` and the entire 2.5rem
+gutter landed on the right: the title, the buttons and the film all 20px from
+the left edge and 40px from the right. The owner saw it in a screenshot before
+any check did. `justify-content:center`, and a rule in `check:lp` so the next
+one is caught here.
+
+The proof row had the same shape of bug one level down. It stacks below 760px,
+and its column is `align-items:flex-start` because beside the faces on desktop
+that is right; under them it read as a block of text shoved against the
+gutter. It centres below 760px now.
+
+### The fold starts higher
+Hero top padding went from 7.25rem to 5.75rem. The owner's note was to bring
+the review row and the film up, and the gap under the fixed navbar was the
+whole of it: 104px of nothing between the bar and the headline. 78px now, and
+the film clears the fold at 320x720.
+
+### Trustpilot's name carries Trustpilot's mark
+It was the word set as a violet text link, which reads as our word rather than
+their platform. It is their lockup now: their green star, their ink (#191919),
+the page's own face for the wordmark. The star is the same glyph the rating row
+and the review cards already draw — `TP_STAR` is built from `STAR_PATH` and
+`TP_GREEN` and all three places use it, so the mark cannot drift between them.
+`check:lp` reads the star count inside the rating's own `<svg>` rather than the
+whole paragraph, since the lockup beside it draws the same green star and
+counting that one made a 4.0 read as a 5.
+
+### Two things that were not asked for and were wrong anyway
+The figure plate beside the proof copy was a flat white box with a tight
+shadow: the only surface on the page belonging to no system. It is a bento
+panel now, same radius, same hairline, same two-layer shadow, with the subject
+replaced by the number and the orb behind it that every other panel has.
+
+The footer's social marks carried hardcoded brand fills — LinkedIn blue,
+Instagram magenta, YouTube red — three loud colours in the quietest part of the
+page. The button they sit in sets `color` and a hover colour and could never
+reach them. They are `currentColor` now and the hover works.
+
+### Verified
+Eleven widths from 320 to 1920: no horizontal scroll, and every major block
+centred to within 2px of its own gutters (a sweep added for this revision,
+after the hero bug). Five variants driven with a gclid. All gates green.
+86.6 KB against the 88 KB budget.
+
 ## Testing
 Repo has no JS test runner, so verification is a node script:
 `scripts/check-landing-pages.mjs` (`npm run check:lp`) reads the generated HTML and asserts: size budget, noindex, no em dashes, no competitor names, no invented rating, the three quotes verbatim, plan prices equal `FALLBACK_CATALOG`, each plan's COD-to-prepaid lock state agrees with the catalog, `TRIAL` numbers appear, the ported navbar and footer, every CTA kind present, no external script or stylesheet. Revision 9 adds: no `<video>` or `<img>` in the hero, a film section that exists, three entry-point cards that each link somewhere real, five bento panels with no image inside them, a marked phrase in every `<h2>`, three going-live steps, and three blog cards whose slugs resolve against `blogPosts.ts`. Browser checks with Playwright (installed): 360px and 1280px screenshots, H1 at most 3 lines on mobile, sticky bar behaviour, toggle, hero variant swap by `?utm_content=`.

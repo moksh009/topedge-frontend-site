@@ -482,7 +482,6 @@ const FOOT_COLUMNS = [];
 
 // Same brand fills the site footer uses. Instagram's real mark is a radial gradient;
 // a single mid-gradient magenta reads the same at 16px and costs no gradient def.
-const SOCIAL_FILL = { linkedin: '#0A66C2', instagram: '#d6249f', youtube: '#FF0000' };
 const SOCIAL_ICONS = {
   linkedin: '<path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.73V1.73C24 .77 23.21 0 22.23 0z"/>',
   instagram: '<path d="M12 2.16c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85C2.38 3.92 3.9 2.38 7.15 2.23 8.42 2.17 8.8 2.16 12 2.16zM12 0C8.74 0 8.33.01 7.05.07 2.7.27.27 2.69.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.2 4.36 2.62 6.78 6.98 6.98C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c4.35-.2 6.78-2.62 6.98-6.98.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95C23.73 2.7 21.31.27 16.95.07 15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-11.85a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/>',
@@ -607,8 +606,12 @@ const TRUSTPILOT = {
   reviewUrl: 'https://www.trustpilot.com/review/topedgeai.com',
 };
 
-const TP_STAR =
-  '<svg viewBox="0 0 24 24" width="14" height="14" fill="#00b67a" aria-hidden="true"><path d="M12 1.6l3.1 7.2 7.8.6-5.9 5.1 1.8 7.6L12 18l-6.8 4.1 1.8-7.6L1.1 9.4l7.8-.6z"/></svg>';
+const TP_GREEN = '#00b67a';
+const TP_GREY = '#dcdce6';
+const STAR_PATH = 'M12 1.6l3.1 7.2 7.8.6-5.9 5.1 1.8 7.6L12 18l-6.8 4.1 1.8-7.6L1.1 9.4l7.8-.6z';
+// One star glyph for the whole page: the review cards mark and the lockup next
+// to the rating draw the same file, so the mark cannot drift between them.
+const TP_STAR = `<svg viewBox="0 0 24 24" width="14" height="14" fill="${TP_GREEN}" aria-hidden="true"><path d="${STAR_PATH}"/></svg>`;
 
 function iconChip(name) {
   return `<span class="ic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name]}</svg></span>`;
@@ -803,7 +806,7 @@ function footHtml() {
   ).join('\n');
   const socials = Object.entries(SOCIAL)
     .filter(([k]) => SOCIAL_ICONS[k])
-    .map(([k, href]) => `<li><a class="mkt-foot__social-btn" href="${esc(href)}" target="_blank" rel="noopener" aria-label="${k[0].toUpperCase() + k.slice(1)}"><svg viewBox="0 0 24 24" width="16" height="16" fill="${SOCIAL_FILL[k]}" aria-hidden="true">${SOCIAL_ICONS[k]}</svg></a></li>`)
+    .map(([k, href]) => `<li><a class="mkt-foot__social-btn" href="${esc(href)}" target="_blank" rel="noopener" aria-label="${k[0].toUpperCase() + k.slice(1)}"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true">${SOCIAL_ICONS[k]}</svg></a></li>`)
     .join('');
   return `<footer class="mkt-foot" aria-label="Site footer">
   <div class="mkt-foot__shell">
@@ -841,9 +844,6 @@ ${cols}
  * fill count is computed, a half is drawn as a half, and `check:lp` counts
  * the filled boxes against the number.
  */
-const TP_GREEN = '#00b67a';
-const TP_GREY = '#dcdce6';
-const STAR_PATH = 'M12 1.6l3.1 7.2 7.8.6-5.9 5.1 1.8 7.6L12 18l-6.8 4.1 1.8-7.6L1.1 9.4l7.8-.6z';
 // A Trustpilot star is a white star knocked out of a coloured box, not a
 // coloured star on the page background. The box is drawn inside the svg so a
 // partial score can clip the green one and still show the white star on top.
@@ -855,6 +855,15 @@ const star = (fill, i) =>
       ? `<rect width="24" height="24" rx="2" fill="${TP_GREEN}"${fill < 1 ? ` clip-path="inset(0 ${Math.round((1 - fill) * 100)}% 0 0)"` : ''}/>`
       : ''
   }<use href="#tps"/></g>`;
+
+/**
+ * Trustpilot's own lockup, in place of the word set as a link. Their star is
+ * the recognisable half of it and it is the same glyph the rating row already
+ * draws, so it costs one more <use> and no new file. The wordmark is set in
+ * the page's own face at Trustpilot's ink rather than ours: a brand name
+ * rendered in our violet reads as our word, not theirs.
+ */
+const TP_LOCKUP = `<a class="tp" href="${TRUSTPILOT.reviewUrl}" target="_blank" rel="noopener">${TP_STAR}Trustpilot</a>`;
 
 function starRow(score) {
   const n = Number(score);
@@ -884,8 +893,8 @@ function heroProof() {
   ).join('');
   const who = PEOPLE.map((p2) => (p2.name ? `${p2.name} of ${p2.company}` : p2.company)).join(', ');
   const stars = TRUSTPILOT.score
-    ? `<p class="hp-stars">${starRow(TRUSTPILOT.score)}<span><b>${esc(TRUSTPILOT.score)}</b> from ${esc(TRUSTPILOT.reviews)} reviews on <a href="${TRUSTPILOT.reviewUrl}" target="_blank" rel="noopener">Trustpilot</a></span></p>`
-    : `<p class="hp-stars hp-stars--none"><a href="${TRUSTPILOT.reviewUrl}" target="_blank" rel="noopener">Read the reviews on Trustpilot</a></p>`;
+    ? `<p class="hp-stars">${starRow(TRUSTPILOT.score)}<span><b>${esc(TRUSTPILOT.score)}</b> from ${esc(TRUSTPILOT.reviews)} reviews on ${TP_LOCKUP}</span></p>`
+    : `<p class="hp-stars hp-stars--none">${TP_LOCKUP} &mdash; read the reviews</p>`;
   return `<div class="hp">
         <div class="hp-faces" role="img" aria-label="Running on TopEdge: ${esc(who)}">${faces}</div>
         <div class="hp-col">
