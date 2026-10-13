@@ -1346,6 +1346,50 @@ centred to within 2px, neither marquee seaming, and the film rendering at
 16:9 at all of them. Four negative tests on the new rules, including copy
 outside the subset. All gates green. 96.6 KB against the 100 KB budget.
 
+## Revision 24 — the ribbon full bleed, one surface for every panel (2026-10-13)
+
+### The ribbon was a huddle
+The window was capped at 44rem so one copy always outran it and no mark could
+appear twice. Four logos in a 44rem box on a 1920px screen is four marks
+bunched in the middle of an empty white band, which is what the owner was
+looking at next to a reference that runs edge to edge. Full bleed now, four
+copies, 7rem apart, and the marks painted at .92 rather than .55, which is
+what "properly black" asked for.
+
+A mark does appear twice on a wide screen. So does the reference's, twice
+over. That is the trade and it is the right way round: a ribbon reads as a
+ribbon, and a capped one reads as a short list someone forgot to finish.
+
+The window is still capped, at 120rem, for a different reason. A marquee needs
+`(copies - 1) x one copy` of track to cover its window at every point in the
+lap; past about 2500px four copies run out and a blank opens at the right edge
+mid-lap. Capping the window fixes that at every viewport, where adding copies
+only pushes the failure wider. The sweep measures it now, at 2560 as well as
+the eleven widths below it, against the masked window rather than the
+viewport, and the same cap went on the value ticker, which had the same hole.
+
+### One surface for every illustration
+The entry cards and the bento panels each had their own diagonal wash and
+their own coloured blob: violet, purple, rose, green. Five panels that way
+read as five products. They share one vertical gradient now, near-white at the
+top so the subject has somewhere to sit and violet at the foot, and the orbs
+are all violet at low opacity: light, not colour. No hairline, because the
+gradient is the edge.
+
+The chips in the first entry card are full pills with a soft rose mark rather
+than rounded rectangles with a saturated red one, which is how the reference
+draws the same idea.
+
+This is the third pass over these panels and the first two were both about
+drawing more. What was actually wrong was that no two of them were the same
+object.
+
+### Verified
+Twelve widths from 320 to 2560: no horizontal scroll, every block centred to
+within 2px, both marquees travelling exactly one copy per lap with track left
+to cover the window, and the film still rendering at 16:9. All gates green.
+96.8 KB against the 100 KB budget.
+
 ## Testing
 Repo has no JS test runner, so verification is a node script:
 `scripts/check-landing-pages.mjs` (`npm run check:lp`) reads the generated HTML and asserts: size budget, noindex, no em dashes, no competitor names, no invented rating, the three quotes verbatim, plan prices equal `FALLBACK_CATALOG`, each plan's COD-to-prepaid lock state agrees with the catalog, `TRIAL` numbers appear, the ported navbar and footer, every CTA kind present, no external script or stylesheet. Revision 9 adds: no `<video>` or `<img>` in the hero, a film section that exists, three entry-point cards that each link somewhere real, five bento panels with no image inside them, a marked phrase in every `<h2>`, three going-live steps, and three blog cards whose slugs resolve against `blogPosts.ts`. Browser checks with Playwright (installed): 360px and 1280px screenshots, H1 at most 3 lines on mobile, sticky bar behaviour, toggle, hero variant swap by `?utm_content=`.

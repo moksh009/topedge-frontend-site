@@ -991,16 +991,17 @@ const pillarsHtml = `<ul class="pil">${PILLARS.map(
 ).join('')}</ul>`;
 
 /**
- * The customer ribbon. Three copies of the four marks: the track travels exactly
- * one copy, so the frame it lands on is identical to the one it left and the
- * loop has no seam. Only the first copy is announced; the rest are aria-hidden,
- * or a screen reader reads the same four companies three times.
+ * The customer ribbon. Four copies of the four marks: the band runs full
+ * bleed now, so the track has to be long enough to fill any viewport and still
+ * travel exactly one copy per lap, which is what keeps the loop seamless. Only
+ * the first copy is announced; the rest are aria-hidden, or a screen reader
+ * reads the same four companies four times.
  */
-const stripHtml = [0, 1, 2]
+const stripHtml = [0, 1, 2, 3]
   .flatMap((copy) =>
     TRUST_LOGOS.map(
       (l) =>
-        `<li${copy ? ' aria-hidden="true"' : ''}><img src="${l.src}" alt="${copy ? '' : esc(l.alt)}" height="32" loading="lazy" decoding="async"></li>`,
+        `<li${copy ? ' aria-hidden="true"' : ''}><img src="${l.src}" alt="${copy ? '' : esc(l.alt)}" height="34" loading="lazy" decoding="async"></li>`,
     ),
   )
   .join('');

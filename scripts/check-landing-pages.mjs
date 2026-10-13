@@ -166,6 +166,15 @@ must(
   'the hero no longer centres its column; as a row with no justify-content it put the whole fold against the left edge below 900px',
 );
 
+// --- One surface for every illustration ---
+// The panels were three diagonal washes with a differently coloured blob in
+// each, which read as three unrelated pictures. One vertical gradient now,
+// near-white at the top and violet at the foot, shared by the entry cards and
+// the bento, and no hairline: the gradient is the edge.
+must(/\.art,\.viz\{--p1:[^}]*linear-gradient\(180deg/.test(html), 'the illustration panels no longer share one vertical surface');
+must(!/\.(art|viz)\{[^}]*box-shadow:inset 0 0 0 1px/.test(html), 'the illustration panels have their hairline back; the gradient is the edge');
+must(!/\.orb--(warn|wa)\{[^}]*rgba\((244,63,94|37,211,102)/.test(html), 'an orb is colour-coding a panel again; they are light, not colour');
+
 // --- The self-hosted face ---
 // Two files on our own origin, not fonts.googleapis: an ad page that waits on
 // a third party to paint is an ad page that loses the click it just paid for.
@@ -365,7 +374,7 @@ for (const logo of ['delitech', 'apex', 'codeclinic', 'choicesalon']) {
 // Exactly one copy is announced: a screen reader hearing the same four
 // companies three times is worse than hearing them none.
 const marks = strip.match(/<li[^>]*>\s*<img [^>]*>/g) || [];
-must(marks.length === 12, `expected three copies of four logos in the ribbon, found ${marks.length}`);
+must(marks.length === 16, `expected four copies of four logos in the ribbon, found ${marks.length}`);
 const named = marks.filter((m) => !/aria-hidden/.test(m));
 must(named.length === 4, `${named.length} logo copies are announced; exactly one copy should be`);
 for (const m of named) must(/\balt="[^"]{4,}"/.test(m), 'an announced logo in the ribbon has no alt text');
@@ -377,13 +386,20 @@ must(/@keyframes mq\{/.test(html) && /animation:mq /.test(html), 'the ribbon doe
 must(/prefers-reduced-motion[\s\S]*?\.trust-marks\{[^}]*flex-wrap:wrap/.test(html), 'the ribbon still scrolls under reduced motion');
 // Four marks are narrower than a desktop viewport, so one copy has to be longer
 // than the widest window the ribbon gets or the same mark shows twice at once.
-must(/\.mq\{[^}]*width:min\(100% - 2\.5rem,44rem\)/.test(html), 'the ribbon window is no longer capped to less than one copy');
+// Full bleed, and the duplicate marks that come with it are the accepted
+// cost: four logos in a capped window is a huddle in the middle of an empty
+// band. What still has to hold is that the track travels exactly one copy, so
+// the loop has no seam, which the sweep measures at every width.
+must(/\.mq\{[^}]*width:min\(100%,120rem\)/.test(html), 'the ribbon is no longer full bleed, or its window is no longer capped');
+must(/\.tk\{[^}]*width:min\(100%,120rem\)/.test(html), 'the ticker window is no longer capped; past ~2500px the track runs out mid-lap');
+must(/@keyframes mq\{from\{transform:translateX\(0\)\}to\{transform:translateX\(-25%\)\}\}/.test(html), 'the ribbon travel no longer matches its four copies; the loop will jump');
 // The band is flat white and the hero's gradient stops on its own edge, so the
 // two meet on a line. The owner asked for the line after seeing the version
 // where the violet bled down into the band and neither surface had an edge.
 must(/\.trust\{[^}]*background:#fff\}/.test(html), 'the band is not flat white; the hero gradient is bleeding into it again');
 must(/\.hero\{[^}]*#a78bfa 82%,#a78bfa 100%\)/.test(html), 'the hero gradient no longer ends on a flat violet, so it has no bottom edge');
-must(/\.trust-marks img\{[^}]*height:32px/.test(html), 'the ribbon marks changed size; check they still outrun the window');
+must(/\.trust-marks img\{[^}]*height:34px/.test(html), 'the ribbon marks changed size');
+must(/\.trust-marks img\{[^}]*opacity:\.9\d/.test(html), 'the customer marks faded out again; the owner asked for them properly black');
 must(/\.trust-marks img\{[^}]*filter:brightness\(0\)/.test(html), 'the logos are not painted dark for the white band');
 // The platform marks answer "who bills me", which is a question asked at a price.
 const badgeRow = (markup.match(/<ul class="badges">[\s\S]*?<\/ul>/) || [''])[0];

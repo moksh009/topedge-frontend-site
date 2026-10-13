@@ -119,7 +119,7 @@ html[data-v]:not([data-v="platform"]) .hero-bm{display:none}
    item, not a gap on the track: a gap is laid between items and not after the
    last one, so a track of N items carries N-1 gaps and a 50% translate lands
    half a gap short of the frame it left, which is a visible jump every lap. */
-.tk{position:relative;width:100%;margin-top:2.4rem;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 11%,#000 89%,transparent);mask-image:linear-gradient(90deg,transparent,#000 11%,#000 89%,transparent)}
+.tk{position:relative;width:min(100%,120rem);margin:2.4rem auto 0;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 11%,#000 89%,transparent);mask-image:linear-gradient(90deg,transparent,#000 11%,#000 89%,transparent)}
 .tk-track{display:flex;width:max-content;align-items:center;list-style:none;margin:0;padding:0;animation:tk 44s linear infinite}
 .tk:hover .tk-track{animation-play-state:paused}
 .tk-track li{flex:none;display:inline-flex;align-items:center;gap:.55rem;margin-right:.7rem;padding:.58rem .5rem .58rem .58rem;border-radius:9999px;background:rgba(255,255,255,.9);box-shadow:inset 0 0 0 1px rgba(124,58,237,.14),0 8px 20px -14px rgba(46,16,101,.5);font-size:.9rem;font-weight:500;letter-spacing:-.014em;color:#2e1065;white-space:nowrap}
@@ -196,7 +196,7 @@ section{padding:3.75rem 0}
 /* The entry-point cards answer to the same hover as the bento panels: the card
    lifts, and the pieces inside it move a little further than the card does, so
    the artwork reads as sitting above the surface rather than printed on it. */
-.path{display:flex;flex-direction:column;padding:1.75rem 1.4rem 1.4rem;border-radius:26px;background:#fff;border:1px solid #ece4fb;box-shadow:0 1px 2px rgba(16,24,40,.03),0 14px 36px -18px rgba(76,29,149,.14);text-align:center;transition:border-color .35s var(--e),box-shadow .35s var(--e)}
+.path{display:flex;flex-direction:column;padding:1.75rem 1.4rem 1.4rem;border-radius:26px;background:#fff;border:1px solid #efe9fb;box-shadow:0 1px 2px rgba(16,24,40,.03),0 18px 44px -22px rgba(76,29,149,.2);text-align:center;transition:border-color .35s var(--e),box-shadow .35s var(--e)}
 .path:hover{border-color:#d9c8fa;box-shadow:0 1px 2px rgba(16,24,40,.04),0 18px 42px -20px rgba(76,29,149,.26)}
 .ch,.rw,.cq span{transition:transform .45s cubic-bezier(.22,1,.36,1),box-shadow .45s}
 .path:hover .ch:nth-child(2){transform:rotate(5deg) translate(-.3rem,-.25rem)}
@@ -219,10 +219,17 @@ section{padding:3.75rem 0}
 .go:focus-visible{outline:3px solid #c4b5fd;outline-offset:2px}
 /* min-height, not height: at 320px and in a cramped three-up the thread inside
    wraps one line further, and a fixed box clipped it. */
-.art{position:relative;margin-top:1.5rem;min-height:17.75rem;border-radius:20px;overflow:hidden;isolation:isolate;background:linear-gradient(170deg,#fdfcff 0,#f7f3ff 52%,#f0e8ff 100%);box-shadow:inset 0 0 0 1px #efe7fd}
+/* One surface for every illustration on the page, and the colour is all at the
+   bottom. It used to be a diagonal wash with a differently coloured blob in
+   each panel, which read as three unrelated pictures; the reference looks
+   clean because all of its panels are the same panel. Vertical, near-white at
+   the top so the subject has somewhere to sit, rising to violet at the foot.
+   No hairline: the gradient is the edge. */
+.art,.viz{--p1:#fcfbff;--p2:#f6f2ff;--p3:#e9dfff;--p4:#dccdfb;background:linear-gradient(180deg,var(--p1) 0,var(--p2) 34%,var(--p3) 74%,var(--p4) 100%)}
+.art{position:relative;margin-top:1.5rem;min-height:17.75rem;border-radius:20px;overflow:hidden;isolation:isolate}
 /* art 1: what a refused parcel actually costs, as the chips a seller would list */
-.ch{position:absolute;z-index:1;display:inline-flex;align-items:center;padding:.62rem 1rem;border-radius:13px;background:rgba(255,255,255,.95);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);box-shadow:0 0 0 1px rgba(124,58,237,.06),0 2px 4px rgba(16,24,40,.04),0 16px 30px -14px rgba(46,16,101,.5);font-size:.85rem;color:#3b2d5c;white-space:nowrap}
-.ch i{position:absolute;right:-.4rem;top:-.4rem;display:grid;place-items:center;width:1.2rem;height:1.2rem;border-radius:50%;background:#f43f5e;color:#fff;font-size:.62rem;font-style:normal;line-height:1}
+.ch{position:absolute;z-index:1;display:inline-flex;align-items:center;padding:.66rem 1.1rem;border-radius:9999px;background:rgba(255,255,255,.95);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);box-shadow:0 0 0 1px rgba(124,58,237,.06),0 2px 4px rgba(16,24,40,.04),0 16px 30px -14px rgba(46,16,101,.5);font-size:.85rem;color:#3b2d5c;white-space:nowrap}
+.ch i{position:absolute;right:-.45rem;top:-.45rem;display:grid;place-items:center;width:1.35rem;height:1.35rem;border-radius:50%;background:#fecdd3;color:#be123c;font-size:.68rem;font-style:normal;line-height:1}
 /* Indices start at 2: the orb is the first child of the panel. */
 .ch:nth-child(2){top:1.8rem;right:1.1rem;transform:rotate(5deg)}
 .ch:nth-child(3){top:5.2rem;left:.9rem;transform:rotate(-6deg)}
@@ -257,10 +264,9 @@ section{padding:3.75rem 0}
 .bento-grid{display:grid;gap:1.1rem}
 /* The panel itself is quiet: a white card with one soft shadow. The depth is in the
    pieces inside it, which float on their own, the way the reference boards do. */
-.bx{display:flex;flex-direction:column;padding:1.6rem 1.5rem;border-radius:26px;background:#fff;border:1px solid #ece4fb;box-shadow:0 1px 2px rgba(16,24,40,.03),0 14px 36px -18px rgba(76,29,149,.14);transition:border-color .35s var(--e),box-shadow .35s var(--e)}
+.bx{display:flex;flex-direction:column;padding:1.7rem 1.6rem;border-radius:26px;background:#fff;border:1px solid #efe9fb;box-shadow:0 1px 2px rgba(16,24,40,.03),0 18px 44px -22px rgba(76,29,149,.2);transition:border-color .35s var(--e),box-shadow .35s var(--e)}
 .bx h3{font-size:1.14rem;font-weight:450;letter-spacing:-.024em;line-height:1.3}
 .bx p{margin-top:.5rem;font-size:.95rem;color:var(--muted);text-wrap:pretty}
-.viz{position:relative;flex:1;margin-top:1.3rem;min-height:9.5rem;padding:1.05rem;border-radius:19px;overflow:hidden;background:linear-gradient(170deg,#fcfbff 0,#f5f0ff 55%,#efe6ff 100%);box-shadow:inset 0 0 0 1px #efe7fd}
 /* A soft wash that only shows on hover, so the panel warms up rather than jumping. */
 .viz:after{content:'';position:absolute;inset:0;border-radius:inherit;background:radial-gradient(18rem 12rem at 80% 0,rgba(168,85,247,.16),transparent 70%);opacity:0;transition:opacity .4s}
 /* The card itself holds still on hover, as asked. Only its contents move. */
@@ -275,17 +281,19 @@ section{padding:3.75rem 0}
    clearly the subject, a coloured orb behind the group, and shadows deep
    enough that a card looks like it is above the surface rather than printed
    on it. Nothing here is an image. */
-.viz{position:relative;flex:1;margin-top:1.3rem;min-height:12.5rem;padding:1.15rem;border-radius:19px;overflow:hidden;isolation:isolate;background:linear-gradient(170deg,#fdfcff 0,#f7f3ff 52%,#f0e8ff 100%);box-shadow:inset 0 0 0 1px #efe7fd}
+.viz{position:relative;flex:1;margin-top:1.35rem;min-height:13.25rem;padding:1.25rem;border-radius:20px;overflow:hidden;isolation:isolate}
 .viz--mid{min-height:14rem}
 /* The orb is the whole reason the group reads as lit rather than stuck on. */
 .orb{position:absolute;z-index:0;border-radius:50%;pointer-events:none;transition:transform .7s var(--e),opacity .7s var(--e)}
-.orb--l{left:-14%;bottom:-38%;width:70%;padding-top:70%;background:radial-gradient(circle,rgba(139,92,246,.4),transparent 68%)}
-.orb--r{right:-12%;top:-32%;width:62%;padding-top:62%;background:radial-gradient(circle,rgba(168,85,247,.36),transparent 68%)}
-.orb--warn{left:-10%;top:-26%;width:76%;padding-top:76%;background:radial-gradient(circle,rgba(244,63,94,.22),transparent 68%)}
-.orb--wa{left:-12%;bottom:-30%;width:76%;padding-top:76%;background:radial-gradient(circle,rgba(37,211,102,.26),transparent 68%)}
+/* The orbs are light, not colour. They used to be violet, purple, rose and
+   green, one per panel, which made five panels look like five products. */
+.orb--l{left:-14%;bottom:-34%;width:70%;padding-top:70%;background:radial-gradient(circle,rgba(167,139,250,.3),transparent 68%)}
+.orb--r{right:-12%;top:-28%;width:62%;padding-top:62%;background:radial-gradient(circle,rgba(167,139,250,.26),transparent 68%)}
+.orb--warn{left:-10%;top:-22%;width:76%;padding-top:76%;background:radial-gradient(circle,rgba(167,139,250,.24),transparent 68%)}
+.orb--wa{left:-12%;bottom:-26%;width:76%;padding-top:76%;background:radial-gradient(circle,rgba(167,139,250,.26),transparent 68%)}
 .path:hover .orb{transform:scale(1.12);opacity:.85}
 .path:hover .orb--c{transform:translate(-50%,-50%) scale(1.12)}
-.orb--c{left:50%;top:46%;width:86%;padding-top:86%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(139,92,246,.3),transparent 66%)}
+.orb--c{left:50%;top:46%;width:86%;padding-top:86%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(167,139,250,.26),transparent 66%)}
 .bx:hover .orb{transform:scale(1.12);opacity:.85}
 .bx:hover .orb--c{transform:translate(-50%,-50%) scale(1.12)}
 /* Two deep shadows and a hairline: the difference between floating and flat. */
@@ -389,15 +397,27 @@ section{padding:3.75rem 0}
    longer than the window or the same mark shows twice at once. The window is
    what gives, not the spacing: a 14rem gap bought the guarantee and left the
    band looking like four logos lost on a white field. */
-.mq{position:relative;width:min(100% - 2.5rem,44rem);margin:.9rem auto 0;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
-.trust-marks{display:flex;width:max-content;align-items:center;list-style:none;margin:0;padding:0;animation:mq 26s linear infinite}
-.trust-marks li{flex:none;margin-right:6rem}
+/* Full bleed, the way the reference runs it. The window used to be capped at
+   44rem so one copy always outran it and no mark could appear twice; four
+   logos in a 44rem box on a 1920px screen is a huddle in the middle of an
+   empty band, which is what the owner was looking at. Four copies instead, so
+   the track is long enough to fill any viewport and still travel exactly one
+   copy per lap. A mark does show twice on a wide screen. So does the
+   reference's, twice over, and it reads as a ribbon rather than a list. */
+/* The window is capped at 120rem, not because the band should be narrow but
+   because a marquee needs (copies - 1) x one copy of track to cover the window
+   at every point in the lap. Past about 2500px the four copies run out and a
+   blank opens at the right edge mid-lap. Capping the window fixes it at any
+   viewport, where adding copies only pushes the failure wider. */
+.mq{position:relative;width:min(100%,120rem);margin:.9rem auto 0;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
+.trust-marks{display:flex;width:max-content;align-items:center;list-style:none;margin:0;padding:0;animation:mq 42s linear infinite}
+.trust-marks li{flex:none;margin-right:7rem}
 .mq:hover .trust-marks{animation-play-state:paused}
 /* The files are white-on-transparent, made for a dark band. brightness(0) gives
    the flat dark mark a logo wall on white wants, with the alpha intact. */
-.trust-marks img{display:block;height:32px;width:auto;max-width:9rem;object-fit:contain;filter:brightness(0);opacity:.55;transition:opacity .25s}
-.trust-marks img:hover{opacity:.9}
-@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-33.3333%)}}
+.trust-marks img{display:block;height:34px;width:auto;max-width:9.5rem;object-fit:contain;filter:brightness(0);opacity:.92;transition:opacity .25s}
+.trust-marks img:hover{opacity:1}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-25%)}}
 /* The platform marks, under the price. */
 .badges{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:1.4rem 3.2rem;list-style:none;margin:2.4rem auto 0;padding:0}
 .badges img{display:block;height:96px;width:auto;object-fit:contain}
