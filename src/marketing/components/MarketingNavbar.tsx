@@ -24,6 +24,7 @@ import {
 import { cn } from '@/lib/utils';
 import { useLenis } from 'lenis/react';
 import BrandMark from './BrandMark';
+import MarketingAnnouncement from './MarketingAnnouncement';
 
 type NavIcon = ComponentType<LucideProps>;
 
@@ -35,6 +36,9 @@ type NavLink = {
 
 type NavColumn = {
   id: string;
+  /** Heads the column. The reference labels every group and it is the thing
+   *  that turns four lists of links into one map of the product. */
+  title: string;
   items: NavLink[];
 };
 
@@ -42,6 +46,7 @@ type NavColumn = {
 const productColumns: NavColumn[] = [
   {
     id: 'journey',
+    title: 'Journeys & COD',
     items: [
       { label: 'Journey', href: '/features/journeys', icon: MapPin },
       { label: 'Abandoned Cart', href: '/features/journeys#abandoned-cart', icon: ShoppingBag },
@@ -52,6 +57,7 @@ const productColumns: NavColumn[] = [
   },
   {
     id: 'engage',
+    title: 'Outreach & audience',
     items: [
       { label: 'Flow + Shopify Tools', href: '/features/flow-builder', icon: Workflow },
       { label: 'Opt-in tools', href: '/features/opt-in-tools', icon: Wand2 },
@@ -62,6 +68,7 @@ const productColumns: NavColumn[] = [
   },
   {
     id: 'intelligence',
+    title: 'Data & intelligence',
     items: [
       { label: 'Tracking Pixel', href: '/features/analytics', icon: Crosshair },
       { label: 'Intent detection', href: '/features/intent-detection', icon: Radio },
@@ -168,6 +175,7 @@ export default function MarketingNavbar() {
 
   return (
     <header className="mkt-nav pointer-events-none fixed inset-x-0 top-0 z-50">
+      <MarketingAnnouncement />
       <div className="mkt-nav__shell pointer-events-none">
         <div
           className={cn(
@@ -221,6 +229,7 @@ export default function MarketingNavbar() {
                     <div className="mkt-nav__mega-cols">
                       {productColumns.map((col) => (
                         <div key={col.id} className="mkt-nav__mega-col">
+                          <p className="mkt-nav__mega-title">{col.title}</p>
                           <ul className="mkt-nav__mega-links">
                             {col.items.map((item, itemIndex) => {
                               const Icon = item.icon;
@@ -344,8 +353,11 @@ export default function MarketingNavbar() {
                           transition={{ duration: 0.36, ease: easeSoft }}
                         >
                           <div className="mkt-nav__mobile-products">
-                            {productColumns.flatMap((col) =>
-                              col.items.map((item, itemIndex) => {
+                            {productColumns.flatMap((col, colIndex) => [
+                              <p className="mkt-nav__mobile-grouphead" key={`${col.id}-title`}>
+                                {col.title}
+                              </p>,
+                              ...col.items.map((item, itemIndex) => {
                                 const Icon = item.icon;
                                 return (
                                   <motion.div
@@ -371,7 +383,7 @@ export default function MarketingNavbar() {
                                   </motion.div>
                                 );
                               }),
-                            )}
+                            ])}
                           </div>
                         </motion.div>
                       ) : null}

@@ -330,6 +330,131 @@ body::-webkit-scrollbar {
   box-sizing: border-box;
 }
 
+/* ---- the announcement strip -------------------------------------------
+   A full-width band at the very top of the fixed header, on every marketing
+   page. White on black rather than the reference's saturated blue: this site
+   has one accent and it is already spent on the buttons, so a second loud
+   band at the top would be two things shouting at each other.
+
+   The strip publishes its own height to --mkt-ann-h and marks the document
+   with .mkt-has-ann. Every page already clears the header with
+   calc(var(--marketing-nav-h) + ...), so adding the strip's height to that
+   one variable moves all of them at once, rather than each page needing to
+   know the strip exists. */
+.mkt-ann {
+  pointer-events: auto;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.62rem 2.75rem;
+  background: #ffffff;
+  border-bottom: 1px solid #ecebf3;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
+}
+
+.mkt-ann__text {
+  margin: 0;
+  font-family: var(--mkt-font);
+  font-size: 0.875rem;
+  line-height: 1.4;
+  letter-spacing: -0.012em;
+  color: #0c1222;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.mkt-ann__text s {
+  color: #8b93a4;
+  text-decoration-thickness: 1.5px;
+}
+
+.mkt-ann__text strong {
+  font-weight: 600;
+}
+
+.mkt-ann__link {
+  color: inherit;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 2.5px;
+  text-decoration-thickness: 1.5px;
+}
+
+.mkt-ann__link:hover {
+  color: var(--mkt-violet, #7c3aed);
+}
+
+.mkt-ann__close {
+  position: absolute;
+  top: 50%;
+  right: 0.65rem;
+  translate: 0 -50%;
+  display: grid;
+  place-items: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #6b7280;
+  cursor: pointer;
+  transition: background 0.18s ease, color 0.18s ease;
+}
+
+.mkt-ann__close:hover {
+  background: #f3f4f6;
+  color: #0c1222;
+}
+
+.mkt-ann__close:focus-visible {
+  outline: 2px solid var(--mkt-violet, #7c3aed);
+  outline-offset: 2px;
+}
+
+.mkt-ann__close svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Set by the pre-paint script in index.html for a reader who already closed
+   the strip: the prerendered HTML still contains it, and this keeps it from
+   painting for the moment before React takes it out of the DOM. */
+html.mkt-ann-off .mkt-ann {
+  display: none;
+}
+
+html.mkt-has-ann {
+  --marketing-nav-h: calc(76px + var(--mkt-ann-h, 0px));
+}
+
+/* The header is fixed, so the strip sits over the page rather than above it.
+   Most pages clear the navbar with their own hardcoded top padding and only a
+   few read --marketing-nav-h, so rather than find and change every one of
+   them, the document itself moves down by exactly the strip's height. Every
+   page's existing clearance then stays correct relative to the capsule. */
+html.mkt-has-ann body {
+  padding-top: var(--mkt-ann-h, 0px);
+}
+
+/* The scroll lock pins the body with a negative top offset while the mobile
+   sheet is open; the strip's offset has to survive that. */
+html.mkt-has-ann.mkt-nav-locked body {
+  padding-top: var(--mkt-ann-h, 0px);
+}
+
+@media (max-width: 640px) {
+  .mkt-ann {
+    padding: 0.55rem 2.4rem;
+  }
+
+  .mkt-ann__text {
+    font-size: 0.78rem;
+  }
+}
+
 .mkt-nav {
   background: transparent !important;
   border: 0 !important;
@@ -731,6 +856,19 @@ body::-webkit-scrollbar {
   display: none;
 }
 
+/* Heads each column of the mega panel. Small, quiet and not uppercase: the
+   reference sets these in sentence case at caption size, and they are a map
+   legend rather than a heading anyone reads on purpose. */
+.mkt-nav__mega-title {
+  margin: 0 0 0.45rem;
+  padding: 0 0.55rem;
+  font-family: var(--mkt-font);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: #9098a8;
+}
+
 .mkt-nav__mega-links {
   list-style: none;
   margin: 0;
@@ -1003,6 +1141,23 @@ body::-webkit-scrollbar {
   line-height: 1;
 }
 
+/* Heads each group inside the open mobile sheet, matching the mega panel's
+   column headings. Not .mkt-nav__mobile-group, which is already a flex
+   container for the items themselves. */
+.mkt-nav__mobile-grouphead {
+  margin: 0.9rem 0 0.3rem;
+  padding: 0 0.8rem;
+  font-family: var(--mkt-font);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: #9098a8;
+}
+
+.mkt-nav__mobile-grouphead:first-child {
+  margin-top: 0.2rem;
+}
+
 .mkt-nav__mobile-group {
   display: flex;
   flex-direction: column;
@@ -1204,6 +1359,70 @@ html.mkt-nav-locked .mkt-nav__mobile-scroll {
 
   .mkt-nav__mobile.is-product-open .mkt-nav__mobile-scroll {
     max-height: min(70dvh, 36rem);
+  }
+}
+
+/* ---- mobile: a full-screen sheet, and the CTA stays reachable -----------
+   The open menu was a rounded card inset from the edges with a short scroll
+   window inside it, so the product list was a 14rem porthole onto twenty
+   links. The reference opens the whole screen, and it is right: on a phone
+   the menu is the page while it is open, and anything less makes the list
+   feel like a drawer that will not open all the way.
+
+   The primary CTA also moves into the top bar beside the burger. It used to
+   live only at the bottom of the open sheet, which means a reader who never
+   opens the menu never sees it. */
+@media (max-width: 1023px) {
+  .mkt-nav__actions {
+    display: flex;
+  }
+
+  .mkt-nav__actions .mkt-nav__link {
+    display: none;
+  }
+
+  .mkt-nav__actions .mkt-nav__cta {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  .mkt-nav__capsule--open {
+    position: fixed;
+    inset: 0;
+    max-width: none;
+    max-height: none;
+    height: 100dvh;
+    border: 0;
+    border-radius: 0 !important;
+    box-shadow: none;
+    background: #ffffff;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .mkt-nav__capsule--open .mkt-nav__bar {
+    padding-inline: 1.1rem;
+    border-bottom: 1px solid #f1eefb;
+  }
+
+  .mkt-nav__capsule--open .mkt-nav__mobile,
+  .mkt-nav__capsule--open .mkt-nav__mobile-scroll,
+  .mkt-nav__mobile.is-product-open .mkt-nav__mobile-scroll {
+    max-height: none;
+    flex: 1 1 auto;
+  }
+
+  .mkt-nav__capsule--open .mkt-nav__mobile-scroll {
+    padding: 0.5rem 0.9rem 1.25rem;
+  }
+
+  .mkt-nav__capsule--open .mkt-nav__mobile {
+    border-top: 0;
+  }
+
+  .mkt-nav__capsule--open .mkt-nav__mobile-cta {
+    padding-bottom: max(0.9rem, env(safe-area-inset-bottom));
+    border-top: 1px solid #f1eefb;
   }
 }
 

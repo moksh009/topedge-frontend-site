@@ -35,6 +35,25 @@
       />
     </noscript>
     <title>TopEdge</title>
+    <!--
+      The announcement strip is in the prerendered HTML, along with the class
+      and the custom property that pad the page for it, so a first-time
+      visitor gets no layout shift. Someone who already dismissed it would
+      otherwise see the bar paint and then jump away, so this undoes all three
+      before the body is parsed. The key is MESSAGE_KEY in
+      src/marketing/components/MarketingAnnouncement.tsx and the two have to
+      agree; the component asserts nothing, so changing one means changing both.
+    -->
+    <script>
+      try {
+        if (localStorage.getItem('te:ann:d2c-suite-trial') === '1') {
+          var r = document.documentElement;
+          r.classList.add('mkt-ann-off');
+          r.classList.remove('mkt-has-ann');
+          r.style.removeProperty('--mkt-ann-h');
+        }
+      } catch (e) {}
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </head>
   <body>
