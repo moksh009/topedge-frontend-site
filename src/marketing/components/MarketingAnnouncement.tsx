@@ -66,7 +66,7 @@ export default function MarketingAnnouncement() {
     <div ref={ref} className="mkt-ann" role="region" aria-label="Announcement">
       <p className="mkt-ann__text">
         <s>Multiple Apps</s> <strong>Complete D2C Suite</strong>{' '}
-        <span aria-hidden="true">&rarr;</span>{' '}
+        <span className="mkt-ann__arrow" aria-hidden="true">&rarr;</span>{' '}
         <Link className="mkt-ann__link" to="/pricing">
           Signup 14-days trial
         </Link>{' '}

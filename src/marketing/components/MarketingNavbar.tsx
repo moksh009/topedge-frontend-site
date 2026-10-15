@@ -250,6 +250,13 @@ export default function MarketingNavbar() {
                           </ul>
                         </div>
                       ))}
+                      <Link to="/pricing" className="mkt-nav__mega-promo">
+                        <p className="mkt-nav__mega-promo-k">Every plan</p>
+                        <p className="mkt-nav__mega-promo-h">All of it, on every plan</p>
+                        <p className="mkt-nav__mega-promo-p">
+                          The price changes with your order volume, never with the feature list.
+                        </p>
+                      </Link>
                     </div>
                   </div>
                 </div>
