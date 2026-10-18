@@ -5660,3 +5660,35 @@
     height: 1.85rem;
   }
 }
+
+/* ==================================================================== *
+   Hero inset
+   --------------------------------------------------------------------
+   The mesh used to run to the edges of the window, so the page began
+   with a full-bleed colour field and the white body only started after
+   it. The reference floats its hero on the page instead: a gutter down
+   both sides and rounded corners, which reads as a panel the page is
+   holding rather than as the page itself.
+
+   The board already clips its own overflow, so the mesh follows the
+   radius without any further masking.
+ * ==================================================================== */
+.home-hero {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+.home-hero__board {
+  border-radius: 22px;
+}
+
+@media (min-width: 768px) {
+  .home-hero {
+    padding-left: 1.15rem;
+    padding-right: 1.15rem;
+  }
+
+  .home-hero__board {
+    border-radius: 30px;
+  }
+}

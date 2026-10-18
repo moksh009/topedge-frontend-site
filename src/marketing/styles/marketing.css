@@ -2351,3 +2351,46 @@ a.mkt-foot__partner:hover {
 .mkt-nav__mega-col + .mkt-nav__mega-col::before {
   display: none;
 }
+
+/* --- Nav, a size up -------------------------------------------------- *
+   Links at 14px looked small against a band this wide. 15px, a taller
+   band, and a chevron big enough to read as a control rather than a
+   speck. */
+@media (min-width: 1024px) {
+  .mkt-nav__bar {
+    height: 4.5rem;
+    min-height: 4.5rem;
+  }
+
+  .mkt-nav__desktop .mkt-nav__link {
+    font-size: 0.9375rem;
+    min-height: 2.35rem;
+    padding: 0.45rem 0.8rem;
+  }
+
+  /* Log in gets a border rather than being a third weight of plain text
+     next to two other plain words. The reference does the same with its
+     secondary action; the outline is ours rather than its black. */
+  .mkt-nav__actions .mkt-nav__link {
+    height: 2.4rem;
+    min-height: 2.4rem;
+    padding: 0 1.15rem;
+    border: 1px solid rgba(124, 58, 237, 0.28);
+    border-radius: 999px;
+    color: #4c1d95;
+    background: #ffffff;
+  }
+
+  .mkt-nav__actions .mkt-nav__link:hover,
+  .mkt-nav__actions .mkt-nav__link:focus-visible {
+    background: rgba(124, 58, 237, 0.06);
+    border-color: rgba(124, 58, 237, 0.45);
+    color: #4c1d95;
+  }
+}
+
+.mkt-nav__chev {
+  width: 0.95rem;
+  height: 0.95rem;
+  transition: transform 0.26s cubic-bezier(0.22, 1, 0.36, 1);
+}
