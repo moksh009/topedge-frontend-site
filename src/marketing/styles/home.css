@@ -5692,3 +5692,235 @@
     border-radius: 30px;
   }
 }
+
+/* ==================================================================== *
+   Hero — below the band, one viewport tall, one rhythm
+   --------------------------------------------------------------------
+   Four faults, one cause between them: the board was laid out as if the
+   navbar were not there.
+
+   1. It started at the top of the document and used 6rem of its own top
+      padding to push the copy clear of the fixed band, so the mesh ran
+      *under* the nav. Nothing showed through — the band is opaque white
+      — but the panel's rounded top corners were hidden behind it and
+      the first thing on the page was a seam rather than an edge. The
+      reference starts its panel below the bar, corners and all. So the
+      section pushes the board down by the band's height and the board
+      keeps only the padding it needs as breathing room.
+
+   2. Height. Mobile asked for 80dvh and desktop for 100svh — but 100svh
+      measured from the document top, which the band already ate 72px
+      of, and neither counted the announcement strip. Every size came up
+      short or long. One expression now: the viewport, less the strip,
+      less the band. That is the whole of what is left.
+
+   3. The film then has to fit in what the copy leaves, or the "full
+      height" hero is a full height hero you have to scroll. Its box is
+      driven by the leftover height and takes its width from 16/9, so it
+      grows on a tall window and never letterboxes. A floor keeps it
+      sensible on a short laptop; below that the board runs past the
+      fold, which is the better of two bad options.
+
+   4. The headline wrapped to three lines because the copy column was
+      42rem wide — narrow enough to break "Recover abandoned carts."
+      onto its own line. Widened on desktop so the sentence sets in two:
+      the statement, then the channel.
+ * ==================================================================== */
+
+:root {
+  /* What the hero board has to work with: the window, less the strip,
+     less the band. Both are published by the navbar / the strip itself. */
+  --hero-avail-h: calc(100svh - var(--mkt-ann-h, 0px) - var(--mkt-nav-h, 4rem));
+}
+
+/* The band is fixed and opaque; the board starts under its bottom edge. */
+.home-hero {
+  padding-top: var(--mkt-nav-h, 4rem);
+}
+
+.home-hero__board {
+  min-height: var(--hero-avail-h);
+  /* No longer clearing a navbar — this is just air above the headline. */
+  padding-top: 2.25rem;
+}
+
+@media (min-width: 768px) {
+  .home-hero__board {
+    padding-top: 2rem;
+  }
+}
+
+/* ---- desktop: two lines, and a film sized by what is left ----------- */
+@media (min-width: 960px) {
+  /* 42rem broke the sentence in three. The copy column is wide enough for
+     the statement to set on one line; the sub keeps its own narrower
+     measure so it does not stretch into a single thin line with it. */
+  .home-hero__copy {
+    max-width: 58rem;
+  }
+
+  .home-hero__title--job .home-hero__title-text--job {
+    max-width: min(100%, 56rem);
+  }
+
+  .home-hero__sub {
+    max-width: 40rem;
+    margin-top: 1rem;
+  }
+
+  /* The copy block is the film's budget: every rem it gives back is a rem
+     the picture grows by, and the picture is the thing people came to
+     look at. Tightened to the point where the steps still read as steps. */
+  .home-hero__actions {
+    margin-top: 1.3rem;
+  }
+
+  .home-hero__trust {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  /* The film keeps its own width. Sizing it to whatever the copy left
+     over made the hero fit the fold exactly, but at the price of a
+     636px-wide product film on a laptop — a picture of a dashboard too
+     small to read the dashboard in. The board is still a full viewport
+     at minimum; when the film needs more than that, it takes it and the
+     last inch of the frame sits below the fold, which is what the
+     bottom-clipped frame was drawn for in the first place.
+
+     The auto top margin only does anything when there IS slack — on a
+     tall window the picture still settles on the board's bottom edge
+     rather than leaving a white band under itself. */
+  .home-hero__shot--film {
+    width: min(1040px, 92%);
+    margin: auto auto 0;
+    flex: 0 0 auto;
+  }
+}
+
+/* ---- mobile: one rhythm, not one per handset ------------------------ *
+   The blocks above tune the hero per device — 0.45rem under the buttons
+   at 479px, 3.15rem at 390x844, 1.35rem at 430x932, and three different
+   copy paddings. That is why the spacing jumped between one phone and
+   the next: each was fitted to its own screen rather than to a scale.
+
+   One scale instead, in four steps that hold at every width. The board
+   is a full viewport, the shot still sits on its bottom edge, and the
+   slack between them goes where it always did — into the mesh above the
+   picture, not into a different gap on every phone.
+ * -------------------------------------------------------------------- */
+@media (max-width: 959px) {
+  .home-hero__copy {
+    --hero-step: 0.85rem;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .home-hero__sub {
+    margin-top: var(--hero-step);
+  }
+
+  .home-hero__actions {
+    margin-top: calc(var(--hero-step) * 1.4);
+  }
+
+  .home-hero__trust {
+    margin-top: calc(var(--hero-step) * 1.7);
+    margin-bottom: calc(var(--hero-step) * 1.4);
+  }
+
+  .home-hero__shot {
+    padding-top: 0;
+  }
+}
+
+@media (max-width: 479px) {
+  .home-hero__copy {
+    --hero-step: 0.7rem;
+  }
+}
+
+/* A hero that is exactly one viewport tall has slack left over, and how
+   much depends on the handset — 25px on an SE, 250px on a Pro Max. Pinned
+   to the bottom of the board, all of it landed in one place: the gap
+   between the logos and the picture, which is the gap that looked wrong
+   on a big phone and absent on a small one.
+
+   The copy takes auto margins instead, so the slack splits above and
+   below it. The picture still sits on the board's bottom edge, and what
+   is left reads as air around the copy rather than as one oversized gap
+   in the middle of it. */
+@media (max-width: 959px) {
+  .home-hero__board {
+    padding-top: 1.25rem;
+  }
+
+  .home-hero__copy {
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+
+  .home-hero__shot {
+    margin-top: 0;
+  }
+}
+
+/* The buttons were a row at 375px, a row one size up at 390px, and a
+   stacked column at 430px. Three layouts across a 55px span of phone
+   widths is the spacing complaint in another form — one row, two sizes. */
+@media (max-width: 959px) {
+  .home-hero__actions {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    max-width: none;
+  }
+
+  .home-hero__actions .mkt-btn-primary,
+  .home-hero__actions .mkt-btn-ghost,
+  .home-hero__actions .home-hero__shopify-btn,
+  .home-hero__ghost {
+    width: auto;
+    flex: 0 1 auto;
+    justify-content: center;
+    height: 2.6rem;
+    min-height: 2.6rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    font-size: 0.8125rem;
+  }
+
+  .home-hero__shopify-btn {
+    height: 2.6rem !important;
+    min-height: 2.6rem;
+    padding: 0 1rem;
+    font-size: 0.8125rem;
+  }
+}
+
+@media (max-width: 479px) {
+  .home-hero__actions {
+    gap: 0.4rem;
+  }
+
+  .home-hero__actions .mkt-btn-primary,
+  .home-hero__actions .mkt-btn-ghost,
+  .home-hero__actions .home-hero__shopify-btn,
+  .home-hero__ghost {
+    height: 2.4rem;
+    min-height: 2.4rem;
+    padding-left: 0.8rem;
+    padding-right: 0.8rem;
+    font-size: 0.75rem;
+  }
+
+  .home-hero__shopify-btn {
+    height: 2.4rem !important;
+    min-height: 2.4rem;
+    padding: 0 0.8rem;
+    font-size: 0.75rem;
+  }
+}

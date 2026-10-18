@@ -78,6 +78,20 @@ const productColumns: NavColumn[] = [
   },
 ];
 
+/**
+ * The fourth cell of the product panel. One post, named here rather than
+ * pulled from the blog index, because this is an editorial pick — the
+ * newest post is not automatically the one worth a permanent slot in the
+ * navigation.
+ */
+const NAV_PROMO = {
+  href: '/blog/cod-rto-benchmark-india-2026',
+  title: 'Read the 2026 COD & RTO Report',
+  blurb: 'See where your return rate stands',
+  image: '/marketing/solutions/sol-cod-hero.png',
+  imageAlt: 'COD and RTO benchmark report for Indian D2C brands on Shopify',
+} as const;
+
 const primaryLinks = [
   { label: 'Pricing', href: '/pricing' },
   { label: 'Docs', href: 'https://dash.topedgeai.com/docs' },
@@ -251,11 +265,26 @@ export default function MarketingNavbar() {
                           </ul>
                         </div>
                       ))}
-                      <Link to="/pricing" className="mkt-nav__mega-promo">
+                      {/*
+                        The fourth cell used to point at /pricing, which is
+                        already a link in the bar two inches above it. A menu
+                        of features is a poor place to ask for the sale and a
+                        good place to hand over the numbers the features are
+                        argued from — so it carries the RTO benchmark instead.
+
+                        Picture, a title, one line. The reference's cell is
+                        two thirds picture, and it is right: four columns of
+                        small type with a fifth block of small type in the
+                        corner is not a promo, it is a footnote. The kicker
+                        and the "Read the report →" line are gone — the title
+                        starts with "Read the" and the cursor is already a
+                        pointer, so both were saying what the link says.
+                      */}
+                      <Link to={NAV_PROMO.href} className="mkt-nav__mega-promo">
                         <span className="mkt-nav__mega-promo-media">
                           <img
-                            src="/website-pixel.webp"
-                            alt="TopEdge shopper journey and tracking dashboard"
+                            src={NAV_PROMO.image}
+                            alt={NAV_PROMO.imageAlt}
                             loading="lazy"
                             decoding="async"
                             width={400}
@@ -263,11 +292,8 @@ export default function MarketingNavbar() {
                           />
                         </span>
                         <span className="mkt-nav__mega-promo-body">
-                          <span className="mkt-nav__mega-promo-k">Every plan</span>
-                          <span className="mkt-nav__mega-promo-h">All of it, on every plan</span>
-                          <span className="mkt-nav__mega-promo-p">
-                            The price changes with your order volume, never with the feature list.
-                          </span>
+                          <span className="mkt-nav__mega-promo-h">{NAV_PROMO.title}</span>
+                          <span className="mkt-nav__mega-promo-p">{NAV_PROMO.blurb}</span>
                         </span>
                       </Link>
                     </div>
