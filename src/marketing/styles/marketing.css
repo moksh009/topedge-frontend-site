@@ -2113,3 +2113,105 @@ a.mkt-foot__partner:hover {
     gap: 0.55rem;
   }
 }
+
+
+/* ------------------------------------------------------------------ *
+   Nav menu, matched to the reference: no icons, one continuous white
+   surface from the capsule through the open panel, and a promo cell
+   that leads with a picture.
+ * ------------------------------------------------------------------ */
+
+/* The reference lists plain words. The violet pill in front of every row
+   halved the space the label had and gave fifteen equal items fifteen equal
+   badges, which is decoration doing no sorting. */
+.mkt-nav__mega-link-icon,
+.mkt-nav__mobile-item-icon {
+  display: none !important;
+}
+
+.mkt-nav__mega-link {
+  padding-left: 0.65rem;
+  padding-right: 0.65rem;
+}
+
+.mkt-nav__mobile-item {
+  padding-left: 0.25rem;
+}
+
+/* --- One surface ---------------------------------------------------- *
+   The panel used to float 0.7rem clear of the capsule, so the menu read as
+   a second object hanging under the navbar. The reference keeps nav and
+   panel on one sheet, which a floating capsule can do by squaring the join:
+   the capsule rounds its top corners only while open, the panel rounds its
+   bottom ones, and the seam between them disappears. */
+@media (min-width: 1024px) {
+  .mkt-nav__capsule--mega {
+    background: #ffffff;
+    border-color: rgba(232, 228, 245, 0.98);
+    border-bottom-color: transparent;
+    border-radius: 28px 28px 0 0;
+    box-shadow: 0 -1px 0 0 rgba(15, 23, 42, 0.02);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .mkt-nav__capsule--mega .mkt-nav__mega {
+    top: 100%;
+  }
+
+  .mkt-nav__capsule--mega .mkt-nav__mega-card {
+    border-radius: 0 0 28px 28px;
+    border-top-color: transparent;
+    background: #ffffff;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow:
+      0 24px 48px -24px rgba(76, 29, 149, 0.26),
+      0 12px 28px -18px rgba(15, 23, 42, 0.12);
+  }
+}
+
+/* --- Promo cell ----------------------------------------------------- *
+   Picture first, then the line. A card that is only small type next to
+   three columns of small type is just a fourth column. */
+.mkt-nav__mega-promo {
+  justify-content: flex-start;
+  gap: 0;
+  padding: 0;
+  overflow: hidden;
+  background: linear-gradient(165deg, #efe7ff 0%, #e4d7ff 55%, #d8c6fb 100%);
+}
+
+.mkt-nav__mega-promo-media {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: linear-gradient(165deg, #ddd0ff 0%, #c9b4f7 100%);
+}
+
+.mkt-nav__mega-promo-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+
+.mkt-nav__mega-promo-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.85rem 1rem 1rem;
+}
+
+.mkt-nav__mega-promo-k,
+.mkt-nav__mega-promo-h,
+.mkt-nav__mega-promo-p {
+  display: block;
+}
+
+.mkt-nav__mega-promo-h {
+  font-size: 1rem;
+  font-weight: 700;
+}

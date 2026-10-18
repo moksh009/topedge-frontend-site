@@ -27,7 +27,6 @@ export type CatalogPlanFeatures = {
   journeyCodConfirm: boolean;
   journeyCodPrepaid: boolean;
   /** COD order confirmation. On every plan since Oct 2026 — the ads promise it. */
-  journeyCodConfirm: boolean;
   dispatchPriority: string;
   metaAdsAudiencePush: boolean;
   gstInvoices: boolean;
@@ -165,7 +164,6 @@ export const FALLBACK_CATALOG: BillingCatalog = {
         journeyBranch: false,
         journeyCodConfirm: true,
         journeyCodPrepaid: false,
-        journeyCodConfirm: true,
         dispatchPriority: 'standard',
         metaAdsAudiencePush: false,
         gstInvoices: true,
@@ -189,7 +187,6 @@ export const FALLBACK_CATALOG: BillingCatalog = {
         journeyBranch: true,
         journeyCodConfirm: true,
         journeyCodPrepaid: true,
-        journeyCodConfirm: true,
         dispatchPriority: 'priority',
         metaAdsAudiencePush: false,
         gstInvoices: true,
@@ -213,7 +210,6 @@ export const FALLBACK_CATALOG: BillingCatalog = {
         journeyBranch: true,
         journeyCodConfirm: true,
         journeyCodPrepaid: true,
-        journeyCodConfirm: true,
         dispatchPriority: 'highest',
         metaAdsAudiencePush: false,
         gstInvoices: true,
@@ -302,7 +298,6 @@ function asPlan(raw: CatalogPlan): CatalogPlan {
       journeyBranch: !!raw.features?.journeyBranch,
       journeyCodConfirm: !!raw.features?.journeyCodConfirm,
       journeyCodPrepaid: !!raw.features?.journeyCodPrepaid,
-      journeyCodConfirm: !!raw.features?.journeyCodConfirm,
       dispatchPriority: raw.features?.dispatchPriority || 'standard',
       metaAdsAudiencePush: !!raw.features?.metaAdsAudiencePush,
       gstInvoices: !!raw.features?.gstInvoices,

@@ -182,6 +182,7 @@ export default function MarketingNavbar() {
             'pointer-events-auto relative mx-auto w-full',
             capsule ? 'mkt-nav__capsule mkt-nav__capsule--solid' : 'mkt-nav__capsule mkt-nav__capsule--ghost',
             open && 'mkt-nav__capsule--open',
+            productOpen && 'mkt-nav__capsule--mega',
           )}
         >
           <div className="mkt-nav__bar">
@@ -251,11 +252,23 @@ export default function MarketingNavbar() {
                         </div>
                       ))}
                       <Link to="/pricing" className="mkt-nav__mega-promo">
-                        <p className="mkt-nav__mega-promo-k">Every plan</p>
-                        <p className="mkt-nav__mega-promo-h">All of it, on every plan</p>
-                        <p className="mkt-nav__mega-promo-p">
-                          The price changes with your order volume, never with the feature list.
-                        </p>
+                        <span className="mkt-nav__mega-promo-media">
+                          <img
+                            src="/campaignn.webp"
+                            alt="TopEdge WhatsApp campaigns running on a phone"
+                            loading="lazy"
+                            decoding="async"
+                            width={320}
+                            height={200}
+                          />
+                        </span>
+                        <span className="mkt-nav__mega-promo-body">
+                          <span className="mkt-nav__mega-promo-k">Every plan</span>
+                          <span className="mkt-nav__mega-promo-h">All of it, on every plan</span>
+                          <span className="mkt-nav__mega-promo-p">
+                            The price changes with your order volume, never with the feature list.
+                          </span>
+                        </span>
                       </Link>
                     </div>
                   </div>
