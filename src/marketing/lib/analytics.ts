@@ -5,7 +5,8 @@
  * until the owner supplies one:
  *   VITE_GA_MEASUREMENT_ID    G-XXXXXXXXXX  (GA4)
  *   VITE_GOOGLE_ADS_ID        AW-XXXXXXXXX  (Google Ads: remarketing + conversions)
- *   VITE_GOOGLE_ADS_SIGNUP_LABEL  the conversion label for "reached signup"
+ *   VITE_GOOGLE_ADS_LP_CTA_LABEL  the conversion label for "reached signup" (NOT the
+ *                                 dashboard's account-created label — see below)
  *
  * - gtag.js loads after the window `load` event (never on the critical path).
  * - Page views are sent manually on every SPA route change.
@@ -45,8 +46,22 @@ const RAW_ADS = env('VITE_GOOGLE_ADS_ID');
 export const GA_ID = /^G-[A-Z0-9]{4,}$/.test(RAW_GA) ? RAW_GA : '';
 /** Google Ads account tag. Drives remarketing audiences and conversion sends. */
 export const ADS_ID = /^AW-[0-9]{6,}$/.test(RAW_ADS) ? RAW_ADS : '';
-/** Conversion label for the "reached signup" action, from the Google Ads UI. */
-export const ADS_SIGNUP_LABEL = env('VITE_GOOGLE_ADS_SIGNUP_LABEL').slice(0, 40);
+/**
+ * Conversion label for "clicked through to signup" — a DIFFERENT Google Ads conversion
+ * action from the one the dashboard fires when an account is actually created.
+ *
+ * These were the same label until 18 Oct 2026, and it silently corrupted the account:
+ * every click of the trial button counted as a "Sign-up" in Google Ads, so the campaign
+ * reported 3 conversions while the admin panel showed zero new accounts. Google cannot
+ * tell two sends apart when they share a label.
+ *
+ * Deliberately no fallback to VITE_GOOGLE_ADS_SIGNUP_LABEL: if this is unset the page
+ * sends nothing, which is correct. Sending a CTA click under the real signup label is
+ * worse than sending nothing, because it poisons the number the business is judged on
+ * and — since Sign-up is the account-default goal — would teach Smart Bidding to buy
+ * button clicks instead of customers.
+ */
+export const ADS_LP_CTA_LABEL = env('VITE_GOOGLE_ADS_LP_CTA_LABEL').slice(0, 40);
 
 /** The tag loads if either product is configured. */
 const TAG_ID = GA_ID || ADS_ID;
@@ -143,7 +158,7 @@ function onClick(e: MouseEvent): void {
     const plan = new URLSearchParams(href.split('?')[1] || '').get('plan') || undefined;
     trackEvent('signup_click', { link_text: label, page_path: page, plan });
     // Secondary conversion: reached signup. The account may not get created.
-    trackAdsConversion(ADS_SIGNUP_LABEL, { page_path: page, plan });
+    trackAdsConversion(ADS_LP_CTA_LABEL, { page_path: page, plan });
   } else if (/^https:\/\/(wa\.me|api\.whatsapp\.com)\//.test(href)) {
     trackEvent('whatsapp_sales_click', { link_text: label, page_path: page });
   }

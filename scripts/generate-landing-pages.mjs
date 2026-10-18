@@ -1195,8 +1195,11 @@ const DENY_REGION =
   "['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES','SE','IS','LI','NO','GB','CH']";
 // `AW-xxx/label` for the "reached signup" conversion, or '' to send nothing.
 // Both halves must be present: a send_to without a label is not a valid conversion.
-const adsSignupLabel = String(viteEnv.VITE_GOOGLE_ADS_SIGNUP_LABEL || '').trim();
-const ADS_SEND_TO = ADS_OK && adsSignupLabel ? `${adsId}/${adsSignupLabel}` : '';
+// NOT VITE_GOOGLE_ADS_SIGNUP_LABEL. That label belongs to the dashboard's
+// "account created" conversion; sharing it made every trial-button click count as a
+// signup in Google Ads (3 reported conversions, 0 real accounts, 18 Oct 2026).
+const adsLpCtaLabel = String(viteEnv.VITE_GOOGLE_ADS_LP_CTA_LABEL || '').trim();
+const ADS_SEND_TO = ADS_OK && adsLpCtaLabel ? `${adsId}/${adsLpCtaLabel}` : '';
 const analytics = tagId
   ? `<script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}window.gtag=gtag;
