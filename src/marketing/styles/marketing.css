@@ -2219,7 +2219,10 @@ a.mkt-foot__partner:hover {
 
 /* Column headings removed at the owner's request: with the icons gone the
    three lists read as three lists on their own, and the labels were naming
-   groupings the links already imply. */
-.mkt-nav__mega-title {
+   groupings the links already imply. The mobile sheet loses its equivalents
+   for the same reason — one flat list of features rather than three named
+   ones. */
+.mkt-nav__mega-title,
+.mkt-nav__mobile-grouphead {
   display: none;
 }
