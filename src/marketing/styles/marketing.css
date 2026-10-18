@@ -332,9 +332,10 @@ body::-webkit-scrollbar {
 
 /* ---- the announcement strip -------------------------------------------
    A full-width band at the very top of the fixed header, on every marketing
-   page. White on black rather than the reference's saturated blue: this site
+   page. Black on white rather than the reference's saturated blue: this site
    has one accent and it is already spent on the buttons, so a second loud
-   band at the top would be two things shouting at each other.
+   band at the top would be two things shouting at each other. A hairline rule
+   does the separating that the colour used to do.
 
    The strip publishes its own height to --mkt-ann-h and marks the document
    with .mkt-has-ann. Every page already clears the header with
@@ -348,58 +349,59 @@ body::-webkit-scrollbar {
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
-  padding: 0.58rem 2.6rem;
-  background: linear-gradient(90deg, #6d28d9 0%, #7c3aed 52%, #8b5cf6 100%);
+  padding: 0.85rem 2.75rem;
+  background: #ffffff;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
 }
 
-/* Nothing here is bold. The hierarchy is three weights of white against one
-   violet, which on a saturated ground is more than enough separation: a bold
-   face on a coloured band reads as a shout, and the band is already loud. */
+/* On a white ground the separation has to come from weight rather than from
+   three tints of white, so the claim is genuinely bold against a regular rest
+   of sentence — the same balance the reference strikes. */
 .mkt-ann__text {
   margin: 0;
   font-family: var(--mkt-font);
-  font-size: 0.8125rem;
+  font-size: 0.9375rem;
   font-weight: 400;
   line-height: 1.45;
   letter-spacing: -0.004em;
-  color: rgba(255, 255, 255, 0.86);
+  color: #0f172a;
   text-align: center;
   text-wrap: balance;
 }
 
 .mkt-ann__text s {
-  color: rgba(255, 255, 255, 0.52);
+  color: rgba(15, 23, 42, 0.42);
   text-decoration-thickness: 1px;
 }
 
 .mkt-ann__text strong {
-  font-weight: 500;
-  color: #ffffff;
+  font-weight: 700;
+  color: #0f172a;
 }
 
 .mkt-ann__arrow {
   margin: 0 0.1rem;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(15, 23, 42, 0.5);
 }
 
 .mkt-ann__link {
-  color: #ffffff;
+  color: #0f172a;
   font-weight: 500;
   text-decoration: underline;
-  text-decoration-color: rgba(255, 255, 255, 0.55);
+  text-decoration-color: rgba(15, 23, 42, 0.55);
   text-underline-offset: 3px;
   text-decoration-thickness: 1px;
   transition: text-decoration-color 0.18s ease;
 }
 
 .mkt-ann__link:hover {
-  text-decoration-color: #ffffff;
+  text-decoration-color: #0f172a;
 }
 
 .mkt-ann__close {
   position: absolute;
   top: 50%;
-  right: 0.5rem;
+  right: 0.75rem;
   translate: 0 -50%;
   display: grid;
   place-items: center;
@@ -409,23 +411,23 @@ body::-webkit-scrollbar {
   border: 0;
   border-radius: 999px;
   background: transparent;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(15, 23, 42, 0.55);
   cursor: pointer;
   transition: background 0.18s ease, color 0.18s ease;
 }
 
 .mkt-ann__close:hover {
-  background: rgba(255, 255, 255, 0.16);
-  color: #ffffff;
+  background: rgba(15, 23, 42, 0.07);
+  color: #0f172a;
 }
 
 .mkt-ann__close:focus-visible {
-  outline: 2px solid #ffffff;
+  outline: 2px solid #0f172a;
   outline-offset: 1px;
 }
 
 .mkt-ann__link:focus-visible {
-  outline: 2px solid #ffffff;
+  outline: 2px solid #0f172a;
   outline-offset: 2px;
   border-radius: 3px;
 }
@@ -463,11 +465,11 @@ html.mkt-has-ann.mkt-nav-locked body {
 
 @media (max-width: 640px) {
   .mkt-ann {
-    padding: 0.5rem 2.3rem;
+    padding: 0.72rem 2.4rem;
   }
 
   .mkt-ann__text {
-    font-size: 0.745rem;
+    font-size: 0.8125rem;
     line-height: 1.42;
   }
 }
@@ -927,10 +929,10 @@ html.mkt-has-ann.mkt-nav-locked body {
    reference sets these in sentence case at caption size, and they are a map
    legend rather than a heading anyone reads on purpose. */
 .mkt-nav__mega-title {
-  margin: 0 0 0.45rem;
+  margin: 0 0 0.6rem;
   padding: 0 0.55rem;
   font-family: var(--mkt-font);
-  font-size: 0.72rem;
+  font-size: 0.8rem;
   font-weight: 500;
   letter-spacing: 0.01em;
   color: #9098a8;
@@ -999,8 +1001,8 @@ html.mkt-has-ann.mkt-nav-locked body {
 .mkt-nav__mega-link-text,
 .mkt-nav__mega-link-label {
   min-width: 0;
-  font-size: 0.875rem;
-  font-weight: 500;
+  font-size: 1rem;
+  font-weight: 700;
   letter-spacing: -0.022em;
   line-height: 1.25;
   color: #1c1c1e;
@@ -1145,8 +1147,8 @@ html.mkt-has-ann.mkt-nav-locked body {
   background: transparent;
   cursor: pointer;
   font-family: var(--mkt-font);
-  font-size: 0.98rem;
-  font-weight: 500;
+  font-size: 1.35rem;
+  font-weight: 700;
   letter-spacing: -0.02em;
   color: #0c1222;
   line-height: 1.2;
@@ -1200,7 +1202,7 @@ html.mkt-has-ann.mkt-nav-locked body {
   margin: 0.7rem 0 0.25rem;
   padding: 0 0.75rem;
   font-family: var(--mkt-font);
-  font-size: 0.6875rem;
+  font-size: 0.82rem;
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -1215,7 +1217,7 @@ html.mkt-has-ann.mkt-nav-locked body {
   margin: 0.9rem 0 0.3rem;
   padding: 0 0.8rem;
   font-family: var(--mkt-font);
-  font-size: 0.72rem;
+  font-size: 0.82rem;
   font-weight: 500;
   letter-spacing: 0.01em;
   color: #9098a8;
@@ -1272,6 +1274,8 @@ html.mkt-has-ann.mkt-nav-locked body {
 }
 
 .mkt-nav__mobile-item-label {
+  font-size: 1.05rem;
+  font-weight: 500;
   min-width: 0;
 }
 
@@ -1297,8 +1301,8 @@ html.mkt-has-ann.mkt-nav-locked body {
   padding: 0.8rem 0.95rem;
   border-radius: 999px;
   font-family: var(--mkt-font);
-  font-size: 0.98rem;
-  font-weight: 500;
+  font-size: 1.35rem;
+  font-weight: 700;
   letter-spacing: -0.02em;
   color: #0c1222;
   text-decoration: none;
