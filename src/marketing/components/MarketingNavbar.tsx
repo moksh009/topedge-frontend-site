@@ -254,12 +254,12 @@ export default function MarketingNavbar() {
                       <Link to="/pricing" className="mkt-nav__mega-promo">
                         <span className="mkt-nav__mega-promo-media">
                           <img
-                            src="/campaignn.webp"
-                            alt="TopEdge WhatsApp campaigns running on a phone"
+                            src="/website-pixel.webp"
+                            alt="TopEdge shopper journey and tracking dashboard"
                             loading="lazy"
                             decoding="async"
-                            width={320}
-                            height={200}
+                            width={400}
+                            height={225}
                           />
                         </span>
                         <span className="mkt-nav__mega-promo-body">

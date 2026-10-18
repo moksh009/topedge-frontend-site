@@ -332,10 +332,9 @@ body::-webkit-scrollbar {
 
 /* ---- the announcement strip -------------------------------------------
    A full-width band at the very top of the fixed header, on every marketing
-   page. Black on white rather than the reference's saturated blue: this site
-   has one accent and it is already spent on the buttons, so a second loud
-   band at the top would be two things shouting at each other. A hairline rule
-   does the separating that the colour used to do.
+   page. Violet rather than the reference's saturated blue, but the same idea:
+   a band that is unmistakably not the page. Three weights of white on it do
+   the sorting that bold would do on a white ground.
 
    The strip publishes its own height to --mkt-ann-h and marks the document
    with .mkt-has-ann. Every page already clears the header with
@@ -350,13 +349,11 @@ body::-webkit-scrollbar {
   justify-content: center;
   gap: 0.75rem;
   padding: 0.85rem 2.75rem;
-  background: #ffffff;
-  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  background: linear-gradient(90deg, #6d28d9 0%, #7c3aed 52%, #8b5cf6 100%);
 }
 
-/* On a white ground the separation has to come from weight rather than from
-   three tints of white, so the claim is genuinely bold against a regular rest
-   of sentence — the same balance the reference strikes. */
+/* The hierarchy is three weights of white against one violet, which on a
+   saturated ground is separation enough. */
 .mkt-ann__text {
   margin: 0;
   font-family: var(--mkt-font);
@@ -364,38 +361,38 @@ body::-webkit-scrollbar {
   font-weight: 400;
   line-height: 1.45;
   letter-spacing: -0.004em;
-  color: #0f172a;
+  color: rgba(255, 255, 255, 0.86);
   text-align: center;
   text-wrap: balance;
 }
 
 .mkt-ann__text s {
-  color: rgba(15, 23, 42, 0.42);
+  color: rgba(255, 255, 255, 0.52);
   text-decoration-thickness: 1px;
 }
 
 .mkt-ann__text strong {
   font-weight: 700;
-  color: #0f172a;
+  color: #ffffff;
 }
 
 .mkt-ann__arrow {
   margin: 0 0.1rem;
-  color: rgba(15, 23, 42, 0.5);
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .mkt-ann__link {
-  color: #0f172a;
+  color: #ffffff;
   font-weight: 500;
   text-decoration: underline;
-  text-decoration-color: rgba(15, 23, 42, 0.55);
+  text-decoration-color: rgba(255, 255, 255, 0.55);
   text-underline-offset: 3px;
   text-decoration-thickness: 1px;
   transition: text-decoration-color 0.18s ease;
 }
 
 .mkt-ann__link:hover {
-  text-decoration-color: #0f172a;
+  text-decoration-color: #ffffff;
 }
 
 .mkt-ann__close {
@@ -411,23 +408,23 @@ body::-webkit-scrollbar {
   border: 0;
   border-radius: 999px;
   background: transparent;
-  color: rgba(15, 23, 42, 0.55);
+  color: rgba(255, 255, 255, 0.7);
   cursor: pointer;
   transition: background 0.18s ease, color 0.18s ease;
 }
 
 .mkt-ann__close:hover {
-  background: rgba(15, 23, 42, 0.07);
-  color: #0f172a;
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
 }
 
 .mkt-ann__close:focus-visible {
-  outline: 2px solid #0f172a;
+  outline: 2px solid #ffffff;
   outline-offset: 1px;
 }
 
 .mkt-ann__link:focus-visible {
-  outline: 2px solid #0f172a;
+  outline: 2px solid #ffffff;
   outline-offset: 2px;
   border-radius: 3px;
 }
@@ -1002,7 +999,7 @@ html.mkt-has-ann.mkt-nav-locked body {
 .mkt-nav__mega-link-label {
   min-width: 0;
   font-size: 1rem;
-  font-weight: 700;
+  font-weight: 500;
   letter-spacing: -0.022em;
   line-height: 1.25;
   color: #1c1c1e;
@@ -2185,16 +2182,19 @@ a.mkt-foot__partner:hover {
 .mkt-nav__mega-promo-media {
   display: block;
   width: 100%;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   background: linear-gradient(165deg, #ddd0ff 0%, #c9b4f7 100%);
 }
 
+/* The panel is the full width of the capsule, so this cell crops tall and
+   narrow. Anchoring the crop to the top keeps the dashboard's header row —
+   the part with the numbers on it — rather than centring on empty chart. */
 .mkt-nav__mega-promo-media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: top center;
+  object-position: 50% 18%;
   display: block;
 }
 
@@ -2214,4 +2214,12 @@ a.mkt-foot__partner:hover {
 .mkt-nav__mega-promo-h {
   font-size: 1rem;
   font-weight: 700;
+}
+
+
+/* Column headings removed at the owner's request: with the icons gone the
+   three lists read as three lists on their own, and the labels were naming
+   groupings the links already imply. */
+.mkt-nav__mega-title {
+  display: none;
 }
