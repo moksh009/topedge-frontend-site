@@ -297,3 +297,33 @@ proxy blocks (`ENOTFOUND`). Not a code failure; re-run it on a networked machine
   cards' text is clipped. Pre-existing and identical before this batch (verified against the
   prior build) — flagging it as a design call, not touched.
 
+## Batch 5 — SERP reconnaissance and the pricing rewrite — 2026-10-19
+
+**New evidence: `seo-audit/SERP-RECON-2026-10-19.md`.** Four neutral commercial SERPs tested in
+a no-account context. TopEdge appeared in **none** of them — including COD/RTO, our own money
+page. The SERPs are owned by listicle publishers, Shopify App Store listings and vendor pages
+that answer with itemised numbers.
+
+Root cause identified, and it is not technical: **our pages are accurate, honest and unquotable.**
+The rule "never invent a statistic" was applied without its other half, "cite someone who did
+measure it", so an answer engine has nothing to lift. The 0-of-49 unbranded-citation result from
+the GEO baseline is the same problem measured downstream, not a separate one.
+
+**Fixed:** `whatsapp-business-api-pricing-india` rewritten. It had **zero rupee figures in a post
+about pricing** — now 11, with a category rate table, the 1 Jan 2026 India rate change, the
+retired free tier, a worked example showing utility is ~4% of a typical bill, the BSP-markup-
+printed-as-Meta-rate explanation (our differentiated angle), and the Business-Manager-vs-invoice
+test that actually verifies a 0% markup claim. Person author, 5 FAQs, exact-match title,
+authoritative outbound link to Meta's pricing docs.
+
+**Gates:** `build:netlify` exit 0 (68 prerendered, 0 failed) · `seo:audit` passed ·
+`check:blog` 32 posts clean · `check:lp` passed · `check:pricing` passed · `seo:contracts` passed.
+
+**Needs one human check before it matters:** the Meta rates in that post are third-party tracker
+figures, not Meta's own rate card. Outbound fetches are blocked in this sandbox
+(`developers.facebook.com` → ENOTFOUND), so they could not be verified at source. Confirm in
+Business Manager.
+
+**Still blocked, unchanged:** Search Console (no login), Semrush (`no_api_units`, retried today),
+AI assistants (need a signed-in browser this environment cannot open).
+

@@ -8,7 +8,7 @@ export const CONTENT_DATES = {
   /** Last edit of 3-way compare page (+ feature matrix). */
   compareThreeWay: '2026-10-05',
   /** Last edit of blogPosts.ts (used as Article dateModified fallback). */
-  blogPosts: '2026-10-09',
+  blogPosts: '2026-10-19',
   /** Last edit of feature / product page content. */
   featurePages: '2026-10-09',
   /** Last edit of published plan catalog (pricing Offers). */
@@ -31,7 +31,7 @@ export const BLOG_DATES_BY_SLUG = {
   "getgabs-alternative-shopify-whatsapp": "2026-10-04",
   "kanal-whatsapp-alternative-shopify": "2026-10-04",
   "how-to-choose-whatsapp-app-shopify-app-store": "2026-10-04",
-  "whatsapp-business-api-pricing-india": "2026-09-20",
+  "whatsapp-business-api-pricing-india": "2026-10-19",
   "dondy-alternative-shopify-india": "2026-09-21",
   "whatsapp-automation-for-shopify": "2026-09-22",
   "ai-chatbot-for-shopify": "2026-09-21",
