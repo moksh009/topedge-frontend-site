@@ -2645,3 +2645,20 @@ a.mkt-foot__partner:hover {
 .mkt-nav__mega-promo:focus-visible .mkt-nav__mega-promo-h {
   color: #7c3aed;
 }
+
+/* The wordmark was set at the same size as the nav links, so the company
+   name read as one more item in the row. */
+.mkt-nav__brand-text {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.mkt-nav__brand-text span {
+  font-weight: 600;
+}
+
+@media (min-width: 1024px) {
+  .mkt-nav__brand-text {
+    font-size: 1.3rem;
+  }
+}
