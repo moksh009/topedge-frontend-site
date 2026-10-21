@@ -1,6 +1,10 @@
 import { SITE_URL } from './marketingSeo';
 import { TRUSTPILOT } from './socialProof';
-import { COMPANY_LEGAL_NAME, COMPANY_SHOPIFY_APP_URL } from '../legal/companyIdentity';
+import {
+  COMPANY_GSTIN,
+  COMPANY_LEGAL_NAME,
+  COMPANY_SHOPIFY_APP_URL,
+} from '../legal/companyIdentity';
 import {
   catalogDefaultCycleOffersJsonLd,
   offerPriceValidUntil,
@@ -33,26 +37,26 @@ export type PageSeoEntry = {
 
 export const PAGE_SEO = {
   home: {
-    title: 'WhatsApp COD Confirmation & Cart Recovery | TopEdge AI',
+    title: 'WhatsApp Automation for Shopify India | COD & Carts | TopEdge AI',
     description:
-      'Confirm COD orders and recover abandoned carts on WhatsApp for Shopify. 14-day free trial, no card. Plans from ₹1,999/mo + GST. Built for Indian D2C.',
+      'Automate Shopify WhatsApp cart recovery and COD confirmation to prepaid in India. 0% Meta markup, flat INR plans from ₹1,999/mo, 14-day free trial.',
     keywords:
-      'WhatsApp automation, Shopify automation, ecommerce automation, cart recovery, abandoned cart WhatsApp, WhatsApp for Shopify India, COD WhatsApp, D2C automation',
+      'whatsapp automation for shopify india, shopify whatsapp cod confirmation, cod to prepaid shopify, whatsapp abandoned cart recovery shopify india, whatsapp business api 0% markup india, shopify whatsapp app india',
     path: '/',
     noSuffix: true,
   },
   pricing: {
-    title: 'TopEdge AI Pricing: From ₹1,999/mo, 14-Day Free Trial',
+    title: 'Shopify WhatsApp Pricing India: ₹1,999/mo, 0% Markup',
     description:
-      'Launch ₹1,999, Growth ₹3,999, Scale ₹6,499 a month + GST. Yearly saves 20%. Meta fees are billed by Meta at 0% markup. GST invoices, no card for trial.',
+      'Flat INR Shopify WhatsApp pricing: Launch ₹1,999, Growth ₹3,999, Scale ₹6,499 a month + GST. Yearly saves 20%. 0% Meta Cloud API markup, 14-day free trial.',
     keywords:
-      'WhatsApp automation pricing, Shopify WhatsApp pricing, ecommerce automation cost India, cart recovery software pricing',
+      'shopify whatsapp pricing india, whatsapp automation price india, whatsapp business api 0% markup, cod confirmation app pricing shopify, whatsapp cart recovery cost india, flat inr whatsapp plans',
     path: '/pricing',
   },
   features: {
-    title: 'Shopify WhatsApp Features | Journeys, AI & Pixel',
+    title: 'Shopify WhatsApp Features: Journeys, COD, AI & Pixel',
     description:
-      'Shopify WhatsApp features: journeys, Live Chat, AI Brain, Flow Builder, pixel, opt-in, campaigns, Instagram, and Meta templates.',
+      'Every Shopify WhatsApp workspace in TopEdge: visual cart and COD journeys, BYOK AI Brain, visitor pixel, shared order inbox, warranty hub and India P&L.',
     keywords:
       'Shopify WhatsApp features, WhatsApp journeys India, AI Brain BYOK Shopify, tracking pixel WhatsApp, WhatsApp opt-in Shopify, Profit and costs ecommerce, Live Chat Shopify WhatsApp',
     path: '/features',
@@ -66,41 +70,41 @@ export const PAGE_SEO = {
     path: '/integrations',
   },
   customers: {
-    title: 'Shopify WhatsApp Case Studies, India | TopEdge AI',
+    title: 'Indian Shopify D2C Case Studies & Stories',
     description:
-      'How Indian D2C brands run WhatsApp abandoned cart recovery and COD confirmation on Shopify with TopEdge, in their own words, plus published Trustpilot reviews.',
+      'How Indian Shopify D2C brands like Delitech Smart Home and Apex Light run WhatsApp cart recovery, COD confirmation and a shared inbox, plus Trustpilot reviews.',
     keywords:
       'Shopify WhatsApp case study India, WhatsApp cart recovery results, D2C WhatsApp automation customers, TopEdge AI reviews',
     path: '/customers',
   },
   compare: {
-    title: 'TopEdge AI vs WATI, AiSensy, Zoko & More | WhatsApp',
+    title: 'Compare TopEdge AI vs WATI, Interakt, AiSensy & Zoko',
     description:
-      'Compare TopEdge with WATI, AiSensy, Interakt, Bitespeed, Zoko, Getgabs, Kanal, Dondy, Updatrr, and Gupshup for Shopify WhatsApp India brands.',
+      'Side-by-side Shopify India WhatsApp comparisons: TopEdge AI vs WATI, Interakt, AiSensy, Bitespeed, Zoko, Gupshup, Dondy, Kanal, Getgabs and Updatrr.',
     keywords:
       'TopEdge vs WATI, TopEdge vs AiSensy, TopEdge vs Zoko, TopEdge vs Dondy, TopEdge vs Updatrr, TopEdge vs Gupshup, TopEdge vs Interakt, TopEdge vs Bitespeed, WhatsApp template markup, COD prepaid WhatsApp comparison, WATI alternative India',
     path: '/compare',
   },
   blog: {
-    title: 'WhatsApp Shopify Playbooks | Cart, COD & Meta',
+    title: 'Shopify India WhatsApp Playbooks: Cart, COD & RTO',
     description:
-      'Playbooks for WhatsApp on Shopify India: cart recovery, COD to cut RTO, Meta templates, shared inbox, and catalog-grounded AI.',
+      'Operator guides for Indian Shopify D2C brands: WhatsApp abandoned cart recovery, COD confirmation to cut RTO, Meta Cloud API templates, BYOK AI and P&L math.',
     keywords:
       'WhatsApp Shopify playbooks, abandoned cart recovery WhatsApp India, COD confirmation WhatsApp, Meta WhatsApp templates Shopify, ecommerce automation blog India, WhatsApp shared inbox Shopify',
     path: '/blog',
   },
   about: {
-    title: 'About the Shopify WhatsApp Platform, India | TopEdge AI',
+    title: 'About TopEdge AI: Shopify WhatsApp Platform, India',
     description:
-      'TopEdge AI is the WhatsApp growth OS for Shopify India, founded by Moksh Patel and Smit Tilva. Cart recovery, COD, and Meta templates.',
+      'Founded in Ahmedabad by Moksh Patel and Smit Tilva, TopEdge AI is the WhatsApp automation and COD growth OS for Indian Shopify D2C brands. Cart recovery to RTO.',
     keywords:
       'About TopEdge AI, Moksh Patel TopEdge, Smit Tilva TopEdge, WhatsApp Shopify platform India, ecommerce automation company Ahmedabad, Delitech Smart Home WhatsApp, Apex Light Shopify WhatsApp',
     path: '/about',
   },
   contact: {
-    title: 'Contact TopEdge AI on WhatsApp | Shopify Automation',
+    title: 'Contact TopEdge AI: Shopify WhatsApp Onboarding, India',
     description:
-      'Message us on WhatsApp or Instagram about Shopify WhatsApp automation, abandoned cart recovery and COD confirmation. No form, India-based team, same-day replies.',
+      'Message us on WhatsApp or Instagram about Shopify WhatsApp automation, cart recovery and COD confirmation. No form, Ahmedabad team, same-day replies.',
     keywords:
       'contact TopEdge AI, WhatsApp automation support India, Shopify WhatsApp consultation, cart recovery setup India',
     path: '/contact',
@@ -336,6 +340,11 @@ export function organizationJsonLd() {
     name: 'TopEdge AI',
     // The short brand and the legal entity name used on the Shopify listing.
     alternateName: ['TopEdge', COMPANY_LEGAL_NAME],
+    legalName: COMPANY_LEGAL_NAME,
+    // The registration number on our own invoices. It is the strongest
+    // identifier an Indian entity can give a knowledge graph, and it is the one
+    // thing no similarly named company can also claim.
+    taxID: COMPANY_GSTIN,
     url: SITE_URL,
     logo: {
       '@type': 'ImageObject',
@@ -360,6 +369,15 @@ export function organizationJsonLd() {
       addressCountry: 'IN',
     },
     areaServed: { '@type': 'Country', name: 'India' },
+    // Entry price for the cheapest paid plan through the top of Scale, so an
+    // answer engine quoting a price range quotes ours instead of guessing.
+    priceRange: '₹1,599-₹6,499 per month',
+    openingHoursSpecification: {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+      opens: '10:00',
+      closes: '19:00',
+    },
     knowsAbout: [
       'WhatsApp Business API',
       'Shopify abandoned cart recovery',

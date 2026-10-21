@@ -141,7 +141,7 @@ export default function CustomersPage() {
       <MarketingPage className="mkt-customers">
         <header className="mkt-customers__hero">
           <h1 className="mkt-customers__title">
-            Shopify brands recovering carts on{' '}
+            How Indian Shopify brands recover carts and cut COD RTO on{' '}
             <span className="mkt-customers__title-accent">WhatsApp</span>
           </h1>
           <p className="mkt-customers__sub">

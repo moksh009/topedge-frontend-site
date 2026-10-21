@@ -72,7 +72,8 @@ https://www.topedgeai.com/*  https://topedgeai.com/:splat  301!
 /agency  /customers  301!
 /agency/  /customers  301!
 /security  /features  301!
-/roi  /features/journeys  301!
+/roi  /pricing  301!
+/roi/  /pricing  301!
 /solutions  /features  301!
 /solutions/*  /features  301!
 /ecommerce  /  301!
@@ -93,6 +94,23 @@ https://www.topedgeai.com/*  https://topedgeai.com/:splat  301!
 /blog/topedge-ai-banking-solutions-automation-security-2024/  /blog  301!
 /blog/evolution-of-ai-business-communication  /blog/ai-whatsapp-chatbot-for-shopify-india  301!
 /blog/evolution-of-ai-business-communication/  /blog/ai-whatsapp-chatbot-for-shopify-india  301!
+/blog/topedge-ai-voice-agents-vs-human-agents-2024  /blog/ai-whatsapp-chatbot-for-shopify-india  301!
+/blog/topedge-ai-voice-agents-vs-human-agents-2024/  /blog/ai-whatsapp-chatbot-for-shopify-india  301!
+
+# Cannibalisation consolidation (21 Oct 2026). Each pair targeted one query with
+# two URLs, so Google indexed neither well. The unique sections of the retired
+# post were merged into the survivor before the slug was redirected, so nothing
+# was thrown away; the equity and the internal links now point at one page.
+#
+# "AI Chatbot for Shopify: Support and Sales Guide" (21 Sep, never indexed)
+#   -> "AI WhatsApp Chatbot for Shopify India" (ranked #3 for the query)
+/blog/ai-chatbot-for-shopify  /blog/ai-whatsapp-chatbot-for-shopify-india  301!
+/blog/ai-chatbot-for-shopify/  /blog/ai-whatsapp-chatbot-for-shopify-india  301!
+#
+# "COD Confirmation on WhatsApp for Shopify" (3 Sep primer)
+#   -> "How to Reduce RTO on Shopify COD Orders" (the step-by-step SOP)
+/blog/cod-confirmation-whatsapp-reduce-rto-shopify  /blog/how-to-reduce-rto-with-whatsapp-cod-confirmation  301!
+/blog/cod-confirmation-whatsapp-reduce-rto-shopify/  /blog/how-to-reduce-rto-with-whatsapp-cod-confirmation  301!
 
 # BEGIN GENERATED — do not edit (scripts/generate-redirects.mjs)
 # Client-only SPA shells (must stay above the 404 catch-all)

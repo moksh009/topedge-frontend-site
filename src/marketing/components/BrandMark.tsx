@@ -29,6 +29,10 @@ export default function BrandMark({
       <img
         src={STATIC_PNG}
         alt={alt}
+        // An empty alt means the caller has a wordmark beside this and the
+        // name is already in the text. Pair it with aria-hidden so the mark is
+        // decorative to assistive tech and to the head audit, not just silent.
+        aria-hidden={alt === '' || undefined}
         width={width}
         height={height}
         className={className}

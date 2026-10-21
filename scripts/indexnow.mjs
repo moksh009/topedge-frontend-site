@@ -61,7 +61,7 @@ const CHANGED_PHASE_E = [
   '/blog/best-whatsapp-automation-tools-shopify-india',
   '/blog/how-to-choose-whatsapp-app-shopify-app-store',
   '/blog/whatsapp-business-api-pricing-india',
-  '/blog/cod-confirmation-whatsapp-reduce-rto-shopify',
+  '/blog/how-to-reduce-rto-with-whatsapp-cod-confirmation',
 ];
 
 /**

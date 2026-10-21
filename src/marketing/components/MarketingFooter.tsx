@@ -132,7 +132,8 @@ export default function MarketingFooter() {
             <Link to="/" className="mkt-foot__logo" aria-label={`${COMPANY_BRAND_NAME} home`}>
               <img
                 src="/logo.png"
-                alt="TopEdge AI"
+                alt=""
+                aria-hidden
                 width={28}
                 height={28}
                 className="mkt-foot__logo-mark"

@@ -201,7 +201,10 @@ export default function MarketingNavbar() {
         >
           <div className="mkt-nav__bar">
             <Link to="/" className="mkt-nav__brand" onClick={() => setOpen(false)}>
-              <BrandMark className="mkt-nav__brand-mark" width={40} height={40} />
+              {/* alt="" on purpose: the wordmark beside it already says the name,
+                  so a described mark made every page's text start
+                  "TopEdge AI TopEdge AI". */}
+              <BrandMark className="mkt-nav__brand-mark" width={40} height={40} alt="" />
               <span className="mkt-nav__brand-text">
                 TopEdge <span>AI</span>
               </span>

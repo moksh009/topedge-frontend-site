@@ -472,12 +472,6 @@
   text-align: center;
 }
 
-.mkt-pf__shot-hint {
-  font-size: 0.75rem;
-  color: var(--pf-soft);
-  text-align: center;
-}
-
 /* Showcases — image + text beside it (no card chrome) */
 .mkt-pf__showcases {
   display: flex;

@@ -59,7 +59,8 @@ export const LEGACY_COMPARE_FEATURE_MATRIX: CompareFeatureRow[] = [
     id: 'ai-llm',
     name: 'AI LLM Integration / AI Messages',
     description: 'How AI replies are powered and what they cost per conversation.',
-    topedge: 'BYOK & built-in RAG pipeline, optimised token usage est. ₹0.2-₹0.3 / message',
+    topedge:
+      'BYOK & built-in RAG pipeline, optimised token usage est. ~₹0.10-₹0.30 per AI message',
     wati: 'Requires Astra / higher-tier plan',
     aisensy: 'Per-message AI add-on fee structure',
     interakt: 'AI Agents on Enterprise App (~$99) or ~$74.99 add-on on Growth/Advanced',
@@ -112,7 +113,7 @@ export const LEGACY_COMPARE_FEATURE_MATRIX: CompareFeatureRow[] = [
     id: 'cod-prepaid',
     name: 'Cash On Delivery → Prepaid Funnel Builder',
     description: 'Convert COD risk into prepaid checkouts from WhatsApp.',
-    topedge: 'Shopify-native checkout (GoKwik & other checkout partners compatible)',
+    topedge: 'Shopify-native checkout (GoKwik & other checkout partners compatible). COD confirmation is on every plan; automated COD to prepaid is on Growth and Scale.',
     wati: 'Requires manual developer API setup',
     aisensy: 'Requires API setup to map payment links to WhatsApp templates',
     interakt: 'WhatsApp Pay COD → prepaid (Razorpay / PayU), documented',
@@ -244,7 +245,7 @@ export const THREE_WAY_FEATURE_MATRIX: ThreeWayFeatureRow[] = [
     id: 'cod-prepaid',
     name: 'COD to Prepaid Conversion Funnel',
     topedge:
-      'Shopify-native checkout integration (Compatible with 3rd-party checkouts like GoKwik)',
+      'Shopify-native checkout integration (Compatible with 3rd-party checkouts like GoKwik). COD confirmation is on every plan; automated COD to prepaid is on Growth and Scale.',
     wati: 'Requires manual developer APIs setup',
     aisensy: 'Requires API setup to map payment links to WhatsApp templates.',
   },
@@ -304,6 +305,16 @@ export const THREE_WAY_FEATURE_MATRIX: ThreeWayFeatureRow[] = [
 /** TopEdge Ai vs WATI — verbatim board. */
 export const WATI_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
   {
+    id: 'subscription',
+    label: 'Subscription Model',
+    description:
+      'Entry cost and trial, as published. The row every buyer opens first, and the one most boards leave out.',
+    topedge:
+      '14-day free trial, then flat INR plans from ₹1,999/month (₹1,599/month billed yearly) + 18% GST',
+    competitor:
+      'Published plan tiers plus per-conversation charges; WATI does not publish a single all-in India entry price, so price your own volume before comparing',
+  },
+  {
     id: 'template-markup',
     label: 'WhatsApp API Template Message Markup %',
     topedge: '0% WhatsApp API markup (Direct Meta API Billing on your own Meta Business Account)',
@@ -351,7 +362,7 @@ export const WATI_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
   {
     id: 'cod-prepaid',
     label: 'Automated COD-to-Prepaid Funnel',
-    topedge: 'Shopify-native checkout compatibility (Supports GoKwik & other checkouts)',
+    topedge: 'Shopify-native checkout compatibility (Supports GoKwik & other checkouts). COD confirmation is on every plan; automated COD to prepaid is on Growth and Scale.',
     competitor: 'Requires custom developer API setup and webhook mapping',
   },
   {
@@ -403,6 +414,16 @@ export const WATI_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
 
 /** TopEdge Ai vs AiSensy — verbatim board. */
 export const AISENSY_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
+  {
+    id: 'subscription',
+    label: 'Subscription Model',
+    description:
+      'Entry cost and trial, as published. The row every buyer opens first, and the one most boards leave out.',
+    topedge:
+      '14-day free trial, then flat INR plans from ₹1,999/month (₹1,599/month billed yearly) + 18% GST',
+    competitor:
+      'Platform plan plus Meta conversation charges and metered AI credits; confirm the current India tier on aisensy.com, which is not fixed per order volume',
+  },
   {
     id: 'template-markup',
     label: 'WhatsApp API Message Markup',
@@ -458,7 +479,7 @@ export const AISENSY_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
     description:
       'Automated post-checkout messaging sequences designed to convert cash-on-delivery orders to prepaid status across custom checkout stacks.',
     topedge:
-      'Shopify-native checkout integration (Fully compatible with 3rd-party checkout stacks like GoKwik)',
+      'Shopify-native checkout integration (Fully compatible with 3rd-party checkout stacks like GoKwik). COD confirmation is on every plan; automated COD to prepaid is on Growth and Scale.',
     competitor:
       'Requires API integration and manual mapping of payment links to WhatsApp templates',
   },
@@ -517,7 +538,8 @@ export const BITESPEED_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
   {
     id: 'subscription',
     label: 'Subscription Model',
-    topedge: '14 Days free trial, then starts from ~₹1,800',
+    topedge:
+      '14-day free trial, then flat INR plans from ₹1,999/month (₹1,599/month billed yearly) + 18% GST',
     competitor:
       'Requires stores to generate a minimum of ₹5,00,000 MRR to qualify for onboarding, with baseline plans starting at ~₹15,000/month',
   },
@@ -592,7 +614,7 @@ export const BITESPEED_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
     description:
       'Automated post-checkout messaging sequences designed to convert cash-on-delivery (COD) orders to prepaid status.',
     topedge:
-      'Flexible Native integration for Shopify and 3rd-party checkout stacks (GoKwik, Razorpay, etc.)',
+      'Flexible Native integration for Shopify and 3rd-party checkout stacks (GoKwik, Razorpay, etc.). COD confirmation is on every plan; automated COD to prepaid is on Growth and Scale.',
     competitor: 'Native',
   },
   {
@@ -634,6 +656,16 @@ export const BITESPEED_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
 /** TopEdge vs Zoko — verified against zoko.io/pricing (Sep 2026). */
 export const ZOKO_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
   {
+    id: 'subscription',
+    label: 'Subscription Model',
+    description:
+      'Entry cost and trial, as published. The row every buyer opens first, and the one most boards leave out.',
+    topedge:
+      '14-day free trial, then flat INR plans from ₹1,999/month (₹1,599/month billed yearly) + 18% GST',
+    competitor:
+      'Starter $49.99 · Plus $79.99 · Elite $139.99 · Max $499.99 per month (Sep 2026), in USD, plus per-conversation metering on top',
+  },
+  {
     id: 'template-markup',
     label: 'WhatsApp conversation economics',
     description: 'How platform fees sit on top of Meta rates.',
@@ -645,7 +677,7 @@ export const ZOKO_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
     id: 'ai-llm',
     label: 'AI / auto order agents',
     description: 'How AI replies and order collection are priced.',
-    topedge: 'BYOK + RAG on core plans (~₹0.2–₹0.3 / message)',
+    topedge: 'BYOK + RAG on core plans (est. ~₹0.10-₹0.30 per AI message)',
     competitor: 'AI agents billed per resolution (e.g. ~$0.09/resolution on Guru/WISMO; Sello % of order value; verify live)',
   },
   {
@@ -666,7 +698,7 @@ export const ZOKO_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
     id: 'cod-prepaid',
     label: 'COD confirm & COD → prepaid',
     description: 'India COD risk tools on WhatsApp.',
-    topedge: 'Native journeys + Shopify checkout partners',
+    topedge: 'Native journeys + Shopify checkout partners. COD confirmation is on every plan; automated COD to prepaid is on Growth and Scale.',
     competitor: 'Essential free flows include double-confirm COD and convert COD → prepaid (zoko.io)',
   },
   {
@@ -710,6 +742,16 @@ export const ZOKO_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
 /** TopEdge vs Getgabs — verified against getgabs.com/pricing + Shopify App Store listing. */
 export const GETGABS_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
   {
+    id: 'subscription',
+    label: 'Subscription Model',
+    description:
+      'Entry cost and trial, as published. The row every buyer opens first, and the one most boards leave out.',
+    topedge:
+      '14-day free trial, then flat INR plans from ₹1,999/month (₹1,599/month billed yearly) + 18% GST',
+    competitor:
+      'Free to install, then Plus $11/mo and Pro $59/mo on the Shopify listing, or Basic $15 · Plus $21 · Pro $59 on getgabs.com (Sep 2026); surfaces disagree',
+  },
+  {
     id: 'template-markup',
     label: 'Meta markup',
     description: 'Platform fee above Meta conversation rates.',
@@ -734,7 +776,7 @@ export const GETGABS_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
     id: 'cod-prepaid',
     label: 'COD → prepaid conversion',
     description: 'Distinct COD risk conversion, not only COD confirm texts.',
-    topedge: 'Native COD → prepaid journeys with checkout partners',
+    topedge: 'Native COD → prepaid journeys with checkout partners. COD confirmation is on every plan; automated COD to prepaid is on Growth and Scale.',
     competitor: 'COD verification / confirmations listed; COD→prepaid builder depth verify live',
   },
   {
@@ -777,6 +819,16 @@ export const GETGABS_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
 /** TopEdge vs Kanal — verified against getkanal.com/pricing (EUR). */
 export const KANAL_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
   {
+    id: 'subscription',
+    label: 'Subscription Model',
+    description:
+      'Entry cost and trial, as published. The row every buyer opens first, and the one most boards leave out.',
+    topedge:
+      '14-day free trial, then flat INR plans from ₹1,999/month (₹1,599/month billed yearly) + 18% GST',
+    competitor:
+      'Pro €89 · Scale €149 · Business €350 · Agency €1,900 per month (Sep 2026), billed in EUR, so the India cost moves with the exchange rate',
+  },
+  {
     id: 'template-markup',
     label: 'Pricing currency / model',
     description: 'How the platform fee is published.',
@@ -801,7 +853,7 @@ export const KANAL_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
     id: 'cod-prepaid',
     label: 'India COD workflows',
     description: 'COD confirm and COD → prepaid for Indian D2C.',
-    topedge: 'Native COD journeys for India checkout patterns',
+    topedge: 'Native COD journeys for India checkout patterns. COD confirmation is on every plan; automated COD to prepaid is on Growth and Scale.',
     competitor: 'No India-specific COD positioning found on public marketing',
   },
   {
@@ -844,6 +896,16 @@ export const KANAL_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
 /** TopEdge vs Dondy — verified Sep 21 2026 against apps.shopify.com/dondy-marketing-ai and dondy.net/dondy-pricing. */
 export const DONDYY_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
   {
+    id: 'subscription',
+    label: 'Subscription Model',
+    description:
+      'Entry cost and trial, as published. The row every buyer opens first, and the one most boards leave out.',
+    topedge:
+      '14-day free trial, then flat INR plans from ₹1,999/month (₹1,599/month billed yearly) + 18% GST',
+    competitor:
+      'Free widget, Pro $6.99, Power Automation $79.99, Elite $159.99 per month (21 Sep 2026), in USD, on top of a per-message India rate of $0.01888',
+  },
+  {
     id: 'template-markup',
     label: 'Meta messaging markup',
     description: 'What you pay versus Meta’s own marketing rate.',
@@ -862,7 +924,7 @@ export const DONDYY_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
     id: 'cod-prepaid',
     label: 'COD → prepaid',
     description: 'India COD risk conversion, not only a verification tag.',
-    topedge: 'Native COD → prepaid journeys',
+    topedge: 'Native COD → prepaid journeys. COD confirmation is on every plan; automated COD to prepaid is on Growth and Scale.',
     competitor: 'COD verification is a listed Shopify feature; COD→prepaid builder depth not shown as India-native',
   },
   {
@@ -916,7 +978,8 @@ export const UPDATRR_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
   {
     id: 'subscription',
     label: 'Subscription Model',
-    topedge: '14 Days free trial, then starts from ~₹1,800',
+    topedge:
+      '14-day free trial, then flat INR plans from ₹1,999/month (₹1,599/month billed yearly) + 18% GST',
     competitor: '7 Days free trial, then starts from ~$19.99 (₹1,900)',
   },
   {
@@ -988,7 +1051,7 @@ export const UPDATRR_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
     description:
       'Post-checkout automated messaging sequences designed to verify Cash-on-Delivery (COD) orders and convert them to prepaid status.',
     topedge:
-      'Native integration for Shopify and 3rd-party checkout compatible (e.g. GoKwik, Razorpay, etc.)',
+      'Native integration for Shopify and 3rd-party checkout compatible (e.g. GoKwik, Razorpay, etc.). COD confirmation is on every plan; automated COD to prepaid is on Growth and Scale.',
     competitor: 'Native.',
   },
   {
@@ -1053,7 +1116,8 @@ export const GUPSHUP_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
     label: 'Subscription Model',
     description:
       'Baseline platform entry cost, billing structure, and trial availability for e-commerce businesses looking to adopt the software.',
-    topedge: '14-day free trial, with accessible SaaS plans starting from ~₹1,800/month',
+    topedge:
+      '14-day free trial, then flat INR plans from ₹1,999/month (₹1,599/month billed yearly) + 18% GST',
     competitor:
       'Pay-as-you-go model with no fixed entry-level SaaS tiers or public free trial (verify live / sales quote)',
   },
@@ -1109,7 +1173,7 @@ export const GUPSHUP_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
     description:
       'Automated post-checkout messaging sequences designed to convert cash-on-delivery (COD) orders to prepaid which decrease the RTO.',
     topedge:
-      'Native integration for Shopify, compatible with 3rd-party checkout stacks (GoKwik, Razorpay, etc.)',
+      'Native integration for Shopify, compatible with 3rd-party checkout stacks (GoKwik, Razorpay, etc.). COD confirmation is on every plan; automated COD to prepaid is on Growth and Scale.',
     competitor:
       'Requires custom developer integration or 3rd-party middleware (like n8n) to map payment links',
   },
@@ -1154,7 +1218,8 @@ export const INTERAKT_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
   {
     id: 'subscription',
     label: 'Subscription Model',
-    topedge: '14 Days free trial, then starts from ~₹1,800',
+    topedge:
+      '14-day free trial, then flat INR plans from ₹1,999/month (₹1,599/month billed yearly) + 18% GST',
     competitor:
       '14 Days free trial, then starts from ~₹2,799 (plan which includes WhatsApp channel)',
   },
@@ -1214,7 +1279,7 @@ export const INTERAKT_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
     description:
       'Automated post-checkout messaging sequences designed to convert cash-on-delivery orders to prepaid status across custom checkout stacks.',
     topedge:
-      'Shopify-native checkout integration (compatible with 3rd-party checkout stacks like GoKwik, Razorpay, etc...)',
+      'Shopify-native checkout integration (compatible with 3rd-party checkout stacks like GoKwik, Razorpay, etc...). COD confirmation is on every plan; automated COD to prepaid is on Growth and Scale.',
     competitor:
       'Supported natively but locked behind the Advanced Shopify integration on higher-tier plans',
   },

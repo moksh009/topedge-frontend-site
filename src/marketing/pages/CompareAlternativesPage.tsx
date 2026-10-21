@@ -9,9 +9,9 @@ import { compareTwoWayModifiedIso, updatedKicker } from '../data/contentDates';
 import '../styles/compare.css';
 
 const PATH = '/compare/alternatives';
-const TITLE = 'WhatsApp Alternatives for Shopify | TopEdge AI';
+const TITLE = 'Top 10 WhatsApp Alternatives for Shopify India (2026)';
 const DESCRIPTION =
-  'Fair index of Shopify WhatsApp alternatives: WATI, AiSensy, Interakt, Bitespeed, Zoko, Getgabs, Kanal, and Dondy, with full TopEdge comparisons.';
+  'Compare 10 WhatsApp Business API platforms for Shopify India: WATI, AiSensy, Interakt, Bitespeed, Zoko, Gupshup, Getgabs, Kanal, Dondy and Updatrr.';
 
 export default function CompareAlternativesPage() {
   const modifiedIso = compareTwoWayModifiedIso();
@@ -52,7 +52,8 @@ export default function CompareAlternativesPage() {
             <span className="mkt-cmp__h1-brand">
               <img
                 src="/brand-mark.png"
-                alt="TopEdge AI"
+                alt=""
+                aria-hidden
                 width={28}
                 height={28}
                 className="mkt-cmp__h1-mark"
@@ -63,7 +64,7 @@ export default function CompareAlternativesPage() {
               </span>
             </span>
             <span className="mkt-cmp__h1-vs">·</span>
-            <span className="mkt-cmp__h1-rest">Alternatives</span>
+            <span className="mkt-cmp__h1-rest">All 10 Shopify India alternatives</span>
           </h1>
         </header>
 

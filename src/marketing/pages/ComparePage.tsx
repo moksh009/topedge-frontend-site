@@ -11,6 +11,7 @@ import {
   type CompareScoreRow,
 } from '../data/compareCompetitors';
 import { planDuelFeatures, type MatrixCompetitor } from '../data/compareFeatureMatrix';
+import { FALLBACK_CATALOG, GST_FOOTNOTE, TRIAL } from '../lib/billingCatalog';
 import { breadcrumbJsonLd, organizationJsonLd, webPageJsonLd } from '../data/pageSeo';
 import {
   compareTwoWayModifiedIso,
@@ -33,6 +34,77 @@ const VERBATIM_ONLY = new Set([
   'dondy',
   'gupshup',
 ]);
+
+/**
+ * The ten pairwise boards are VERBATIM_ONLY: no verdict, no scorecard, no
+ * paraphrased competitor copy. That left them with no FAQ at all, so ten
+ * commercial pages shipped without FAQPage markup and had nothing an AI answer
+ * could quote.
+ *
+ * These five questions are about our own product only, and every number is read
+ * from the billing catalog that /pricing renders, so nothing here is a claim
+ * about a competitor and nothing can drift from the price page. Template
+ * portability is a property of the WhatsApp Business Account, documented by
+ * Meta, not a claim about any one platform.
+ */
+function ownProductFaqs() {
+  const plan = (slug: string) => FALLBACK_CATALOG.plans.find((p) => p.slug === slug);
+  const launch = plan('launch');
+  const growth = plan('growth');
+  const scale = plan('scale');
+  const price = (slug: string) => plan(slug)?.monthlyPriceLabel ?? '';
+  const yearly = (slug: string) => plan(slug)?.pricing?.yearly?.effectiveMonthlyLabel ?? '';
+  const gated = FALLBACK_CATALOG.plans
+    .filter((p) => p.features.journeyCodPrepaid)
+    .map((p) => p.displayName)
+    .join(' and ');
+
+  return [
+    {
+      question: 'What does TopEdge AI cost for a Shopify store in India?',
+      answer:
+        `Flat INR plans: Launch ${price('launch')}/mo, Growth ${price('growth')}/mo and ` +
+        `Scale ${price('scale')}/mo, ${GST_FOOTNOTE} Billed yearly it is ` +
+        `${yearly('launch')}, ${yearly('growth')} and ${yearly('scale')} a month. ` +
+        `The plan is sized by Shopify orders a month: ` +
+        `${launch?.ordersPerCycle.toLocaleString('en-IN')}, ` +
+        `${growth?.ordersPerCycle.toLocaleString('en-IN')} and ` +
+        `${scale?.ordersPerCycle.toLocaleString('en-IN')}.`,
+    },
+    {
+      question: 'Does TopEdge AI add a markup on WhatsApp message rates?',
+      answer:
+        'No. Meta bills WhatsApp conversations to your own Meta Business Account at its ' +
+        'published India rate card, and TopEdge adds 0% on top. The platform plan and the ' +
+        'messaging cost are two separate invoices, so you can read Meta\u2019s number yourself ' +
+        'in Business Manager rather than taking ours.',
+    },
+    {
+      question: 'Which plans include automated COD to prepaid conversion?',
+      answer:
+        `COD confirmation before dispatch is on every plan. Automated COD to prepaid ` +
+        `conversion and Journey Branch are on ${gated}, not on Launch. If converting COD to ` +
+        `prepaid is the reason you are switching, size the plan on that, not on order count ` +
+        `alone.`,
+    },
+    {
+      question: 'Do my approved WhatsApp templates move if I switch platform?',
+      answer:
+        'Your approved templates belong to your WhatsApp Business Account, not to the ' +
+        'platform that submitted them. If the new tool connects to the same WABA, the ' +
+        'templates come with it. Check which WABA a new tool has bound before assuming ' +
+        'anything was lost, and keep the Meta Business Account in your own name.',
+    },
+    {
+      question: 'Can I test it before paying?',
+      answer:
+        `Yes. The trial is ${TRIAL.days} days with ${TRIAL.orders} orders and ` +
+        `${TRIAL.sends} campaign plus email sends, and no card on this site. That is enough ` +
+        `to connect Shopify, get one utility template approved and watch a real cart recovery ` +
+        `and COD confirmation fire on your own orders.`,
+    },
+  ];
+}
 
 function brandLabel(text: string) {
   return text.replace(/\bTopEdge\b(?! AI)/g, 'TopEdge AI');
@@ -63,8 +135,11 @@ export default function ComparePage({ competitor: competitorProp }: Props) {
 
   const path = `/compare/${data.slug}`;
   const lean = VERBATIM_ONLY.has(data.slug);
+  const leanFaqs = lean ? ownProductFaqs() : [];
   const faqSchema =
-    lean || !data.faqs?.length
+    lean
+      ? leanFaqs
+      : !data.faqs?.length
       ? undefined
       : data.faqs.map((f) => ({ question: f.question, answer: f.answer }));
   const hasScorecard = !lean && Boolean(data.scorecard?.length);
@@ -119,7 +194,8 @@ export default function ComparePage({ competitor: competitorProp }: Props) {
             <span className="mkt-cmp__h1-brand">
               <img
                 src="/brand-mark.png"
-                alt="TopEdge AI"
+                alt=""
+                aria-hidden
                 width={28}
                 height={28}
                 className="mkt-cmp__h1-mark"
@@ -401,7 +477,7 @@ export default function ComparePage({ competitor: competitorProp }: Props) {
         ) : null}
 
         <section className="mkt-cmp__block mkt-cmp__block--faq" aria-labelledby="cmp-faq">
-          {!lean && data.faqs?.length ? (
+          {(lean ? leanFaqs.length : data.faqs?.length) ? (
             <>
               <div className="mkt-cmp__block-head">
                 <h2 id="cmp-faq">
@@ -409,7 +485,7 @@ export default function ComparePage({ competitor: competitorProp }: Props) {
                 </h2>
               </div>
               <CompareFaq
-                items={data.faqs.map((f) => ({
+                items={(lean ? leanFaqs : data.faqs!).map((f) => ({
                   question: brandLabel(f.question),
                   answer: brandLabel(f.answer),
                 }))}

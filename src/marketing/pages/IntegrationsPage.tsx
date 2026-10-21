@@ -166,7 +166,7 @@ function Hub() {
       </div>
       <span className="mkt-int-hub__wire" />
       <span className="mkt-int-hub__core">
-        <img src="/brand-mark.png" alt="TopEdge AI logo" width={44} height={44} />
+        <img src="/brand-mark.png" alt="" aria-hidden width={44} height={44} />
         <span>
           TopEdge <em>AI</em>
         </span>

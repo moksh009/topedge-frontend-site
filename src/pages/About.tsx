@@ -123,13 +123,14 @@ export default function About() {
       <MarketingPage className="mkt-about">
         <header className="mkt-about__hero">
           <p className="mkt-about__brand">
-            <img src="/brand-mark.png" alt="TopEdge AI" width={26} height={26} decoding="async" />
+            <img src="/brand-mark.png" alt="" aria-hidden width={26} height={26} decoding="async" />
             <span>
               TopEdge <span>AI</span>
             </span>
           </p>
           <h1 className="mkt-about__h1">
-            WhatsApp growth OS for <span className="mkt-about__h1-accent">Shopify India</span>
+            WhatsApp growth OS for <span className="mkt-about__h1-accent">Shopify India</span>,
+            built in Ahmedabad
           </h1>
           <p className="mkt-about__lede">
             Shopify data, Meta-approved templates, and AI in one workspace, so D2C teams sell and

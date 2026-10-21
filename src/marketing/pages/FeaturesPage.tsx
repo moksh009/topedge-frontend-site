@@ -137,7 +137,8 @@ export default function FeaturesPage() {
         <header className="mkt-fx__hero">
           <p className="mkt-fx__eyebrow">Features</p>
           <h1 className="mkt-fx__h1">
-            Every hub your operators <span className="mkt-fx__hl">actually open</span>
+            Shopify WhatsApp features: every hub your operators{' '}
+            <span className="mkt-fx__hl">actually open</span>
           </h1>
           <p className="mkt-fx__sub">
             Not a feature dump. Each capability maps to a workspace you run on dash.topedgeai.com.

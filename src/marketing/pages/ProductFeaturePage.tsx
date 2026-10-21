@@ -40,11 +40,15 @@ function ShotFrame({
   const [failed, setFailed] = useState(false);
   const empty = failed || !src;
 
+  // The empty frame deliberately carries no "add dashboard screenshot" note.
+  // That was an instruction to us and it shipped into the crawlable text of
+  // every page whose shot was missing or failed to load. The caption stays,
+  // because the caption is real copy.
+
   if (empty) {
     return (
       <div className={`mkt-pf__shot${wide ? ' is-wide' : ''} is-empty`} role="img" aria-label={label}>
         <span className="mkt-pf__shot-label">{label}</span>
-        <span className="mkt-pf__shot-hint">Add dashboard screenshot</span>
       </div>
     );
   }

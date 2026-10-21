@@ -62,7 +62,7 @@ export default function HomeHero() {
                     decoding="async"
                     aria-hidden
                   />
-                  On WhatsApp.
+                  On WhatsApp, for Shopify India.
                 </span>
               </h1>
               <p className="home-hero__sub">

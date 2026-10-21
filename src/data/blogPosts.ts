@@ -8,7 +8,7 @@ import { blogPostsQ4 } from './blogPostsQ4';
 export const blogPosts: BlogPost[] = [
   {
     id: 1,
-    title: 'WhatsApp Abandoned Cart Recovery for Shopify',
+    title: 'Shopify Abandoned Cart Recovery on WhatsApp (India)',
     description:
       'WhatsApp abandoned cart recovery for Shopify: cart vs checkout, message timing, templates, opt-in rules and what to look for in a recovery tool.',
     slug: 'whatsapp-abandoned-cart-recovery-shopify',
@@ -16,7 +16,7 @@ export const blogPosts: BlogPost[] = [
     updated: '2026-10-21',
     readTime: '14 min',
     category: 'Cart recovery',
-    author: 'TopEdge',
+    author: 'Moksh Patel',
     image: '/marketing/solutions/sol-fashion-cart-saas.png',
     imageAlt:
       'Diagram-style Shopify abandoned cart recovered on WhatsApp with product and checkout context',
@@ -354,14 +354,14 @@ export const blogPosts: BlogPost[] = [
 
 
 <p>Shopify abandoned cart recovery is not a single email template. Detect the right abandonment event, message on channels customers actually use, respect WhatsApp consent and template rules, suppress completed purchases, and answer replies like a store, not a broadcast tool.</p>
-<p>Put a WhatsApp recovery journey live from <a href="/features/journeys">Journeys</a>, review <a href="/pricing">pricing</a>, or <a href="/signup">start free</a>. Related: <a href="/blog/whatsapp-automation-for-shopify">WhatsApp automation for Shopify</a> (pillar), <a href="/blog/best-whatsapp-apps-for-shopify">best WhatsApp apps for Shopify</a>, <a href="/blog/shopify-whatsapp-automation-what-to-automate-first">what to automate first</a>, <a href="/blog/cod-confirmation-whatsapp-reduce-rto-shopify">COD confirmation</a>, <a href="/blog/whatsapp-shared-inbox-shopify-order-context">shared inbox with Shopify orders</a>.</p>
+<p>Put a WhatsApp recovery journey live from <a href="/features/journeys">Journeys</a>, review <a href="/pricing">pricing</a>, or <a href="/signup">start free</a>. Related: <a href="/blog/whatsapp-automation-for-shopify">WhatsApp automation for Shopify</a> (pillar), <a href="/blog/best-whatsapp-apps-for-shopify">best WhatsApp apps for Shopify</a>, <a href="/blog/shopify-whatsapp-automation-what-to-automate-first">what to automate first</a>, <a href="/blog/how-to-reduce-rto-with-whatsapp-cod-confirmation">COD confirmation</a>, <a href="/blog/whatsapp-shared-inbox-shopify-order-context">shared inbox with Shopify orders</a>.</p>
 <p>Before you send a single reminder, set up consent properly: <a href="/blog/whatsapp-opt-in-shopify-india">WhatsApp opt-in for Shopify India</a>.</p>
 <p class="mkt-blog-footnote">Baymard average cart abandonment rate (70.22%) from <a href="https://baymard.com/lists/cart-abandonment-rate" target="_blank" rel="noopener noreferrer">baymard.com/lists/cart-abandonment-rate</a> (updated Sep 22, 2025). Shopify abandoned-checkout timing and suppression rules from <a href="https://help.shopify.com/manual/orders/abandoned-checkouts" target="_blank" rel="noopener noreferrer">Shopify Help Center</a>. WhatsApp opt-in, templates, and marketing category examples from Meta WhatsApp Business Platform docs. Re-check Meta and Shopify docs before production launches. Policies and defaults change.</p>
 `,
   },
   {
     id: 2,
-    title: 'Shopify WhatsApp: What to Automate First',
+    title: 'Shopify WhatsApp Automation: What to Automate First',
     description:
       'Prioritize Shopify WhatsApp automation that pays: abandoned cart, COD confirmation, order updates, then campaigns: a rollout order for Indian D2C ecommerce.',
     slug: 'shopify-whatsapp-automation-what-to-automate-first',
@@ -369,7 +369,7 @@ export const blogPosts: BlogPost[] = [
     updated: '2026-10-21',
     readTime: '11 min',
     category: 'Ecommerce automation',
-    author: 'TopEdge',
+    author: 'Moksh Patel',
     image: '/marketing/features/shopify-whatsapp.png',
     imageWebp: '/marketing/features/shopify-whatsapp.webp',
     imageAlt: 'Shopify connected to WhatsApp automation for Indian D2C brands',
@@ -450,140 +450,8 @@ export const blogPosts: BlogPost[] = [
 `,
   },
   {
-    id: 3,
-    title: 'COD Confirmation on WhatsApp for Shopify',
-    description:
-      'Step-by-step COD confirmation on WhatsApp for Shopify India: when to send, template wording, no-reply handling, human takeover and the metrics to track.',
-    slug: 'cod-confirmation-whatsapp-reduce-rto-shopify',
-    date: '2026-09-03',
-    updated: '2026-10-21',
-    readTime: '12 min',
-    category: 'COD',
-    author: 'TopEdge',
-    image: '/marketing/solutions/sol-cod-confirm-saas.png',
-    imageAlt: 'WhatsApp COD confirmation message with confirm, reschedule, and cancel options',
-    keywords: [
-      'COD confirmation WhatsApp',
-      'reduce RTO Shopify',
-      'COD WhatsApp automation',
-      'Cash on Delivery confirmation India',
-      'ecommerce automation India',
-    ],
-    faqs: [
-      {
-        question: 'How does COD confirmation on WhatsApp reduce RTO?',
-        answer:
-          'You confirm buyer intent on WhatsApp before pick/pack. Confirmed COD ships; cancel/reschedule/no-reply follow a written hold policy, so fewer phantom orders enter reverse logistics.',
-      },
-      {
-        question: 'When should the COD confirmation message send?',
-        answer:
-          'Soon after order creation while the purchase is fresh, typically within minutes to a few hours, using an APPROVED utility template with order number, items, and ₹ total from Shopify.',
-      },
-      {
-        question: 'What replies should the journey accept?',
-        answer:
-          'At minimum: confirm, reschedule, and cancel. Silence needs one reminder, then your hold/cancel SOP. Disputes and partial cancels should escalate to Live Chat with order context.',
-      },
-      {
-        question: 'Which metrics prove COD confirmation works?',
-        answer:
-          'Confirmation rate, ship rate of confirmed COD, RTO %, and reverse-logistics cost avoided. Message opens are a leading indicator only. Finance cares about ship/RTO outcomes.',
-      },
-    ],
-    content: `
-<details class="mkt-blog-verdict" open>
-<summary>Direct answer</summary>
-<p><strong>COD confirmation on WhatsApp</strong> reduces RTO on Shopify India by verifying buyer intent before warehouse release. Send an APPROVED utility template with order identity and ₹ total, branch on confirm / reschedule / cancel, and hold or cancel on silence, so you do not pay reverse logistics for phantom demand.</p>
-</details>
-
-<h2>Why does COD confirmation cut RTO?</h2>
-<p>Cash on delivery wins conversion and loses margin when return-to-origin spikes. Confirming intent on WhatsApp, where Indian shoppers already reply, filters fake or hesitant orders before pick, pack, and courier cost. Pair this with <a href="/features/journeys">Journeys</a> so payment method = COD is a real branch, not a one-tone blast.</p>
-
-<h2>When should you send the confirmation?</h2>
-<p>Trigger soon after order creation, while the buyer still remembers the purchase. Use clear utility copy: order number, items, and ₹ total from Shopify. Offer three honest paths: confirm, reschedule, or cancel. Silence is a signal. Run one reminder, then apply your hold/cancel policy.</p>
-<ol>
-<li>Order created with payment method = COD</li>
-<li>Send confirmation template (APPROVED only)</li>
-<li>Branch on reply → fulfill / update address-time / cancel</li>
-<li>No reply → reminder → hold or cancel per your SOP</li>
-</ol>
-
-<h2>What should the utility template say?</h2>
-<p>Keep copy factual: order identity, amount, delivery window, and next step. Avoid stuffing marketing offers into the same template. Track approval and quality in <a href="/features/meta-manager">Meta Manager</a>, and build the branch logic in <a href="/features/journeys">Journeys</a>.</p>
-<div class="mkt-blog-callout"><p><strong>Tip:</strong> Prepaid and COD must not share one recovery tone. Condition journeys on payment method so automation stays honest.</p></div>
-
-<h2>How should warehouse and CX handle replies?</h2>
-<div class="mkt-blog-table-wrap">
-<table>
-<thead>
-<tr>
-<th>Buyer reply</th>
-<th>Ops action</th>
-<th>Shopify sync</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Confirm</strong></td>
-<td>Release to pick/pack</td>
-<td>Keep COD; mark ready to fulfill</td>
-</tr>
-<tr>
-<td><strong>Reschedule</strong></td>
-<td>Update delivery slot; do not ship until reconfirmed if RTO is high</td>
-<td>Note new window on the order</td>
-</tr>
-<tr>
-<td><strong>Cancel</strong></td>
-<td>Stop fulfillment immediately</td>
-<td>Cancel / void status</td>
-</tr>
-<tr>
-<td><strong>No reply</strong></td>
-<td>Hold N hours per SOP, then cancel</td>
-<td>Apply policy consistently across shifts</td>
-</tr>
-</tbody>
-</table>
-</div>
-
-<h2>When should humans take over?</h2>
-<p>Automation should pause when an agent joins. Escalate when the buyer disputes the amount, asks for partial cancel, reports a wrong address, or sounds like a complaint. Put those threads in <a href="/features">Live Chat</a> with full order context. Agents should never ask for an order ID the system already knows.</p>
-
-<h2>Which metrics will finance trust?</h2>
-<p>Track confirmation rate, ship rate of confirmed COD, RTO %, and cost per recovered order vs. reverse logistics cost. Opens alone do not prove the program works. For a deeper RTO playbook, read <a href="/blog/how-to-reduce-rto-with-whatsapp-cod-confirmation">how to reduce RTO with WhatsApp COD confirmation</a>. For cart recovery timing on the same canvas, see <a href="/blog/whatsapp-abandoned-cart-recovery-shopify">abandoned cart recovery</a>.</p>
-
-<h2>Common questions</h2>
-<div class="mkt-blog-faq">
-<details>
-<summary>How does COD confirmation on WhatsApp reduce RTO?</summary>
-<p>You confirm buyer intent on WhatsApp before pick/pack. Confirmed COD ships; cancel/reschedule/no-reply follow a written hold policy, so fewer phantom orders enter reverse logistics.</p>
-</details>
-<details>
-<summary>When should the COD confirmation message send?</summary>
-<p>Soon after order creation while the purchase is fresh, typically within minutes to a few hours, using an APPROVED utility template with order number, items, and ₹ total from Shopify.</p>
-</details>
-<details>
-<summary>What replies should the journey accept?</summary>
-<p>At minimum: confirm, reschedule, and cancel. Silence needs one reminder, then your hold/cancel SOP. Disputes and partial cancels should escalate to Live Chat with order context.</p>
-</details>
-<details>
-<summary>Which metrics prove COD confirmation works?</summary>
-<p>Confirmation rate, ship rate of confirmed COD, RTO %, and reverse-logistics cost avoided. Message opens are a leading indicator only. Finance cares about ship/RTO outcomes.</p>
-</details>
-</div>
-
-<p>Ship this with <a href="/features/cod-confirmation">COD confirmation journeys</a>, keep templates clean in <a href="/features/meta-manager">Meta Manager</a>, and see how other brands operate on <a href="/customers">customers</a>. Questions? <a href="/contact">Contact us</a> or review <a href="/pricing">pricing</a>.</p>
-
-<p>See the full 2026 India RTO benchmark data → <a href="/blog/cod-rto-benchmark-india-2026">COD &amp; RTO in Indian D2C: the 2026 benchmark report</a>.</p>
-<p>Related: <a href="/blog/whatsapp-opt-in-shopify-india">WhatsApp opt-in for Shopify India</a> and <a href="/blog/whatsapp-template-rejected-meta-shopify-fix">fixing rejected templates</a>.</p>
-<p class="mkt-blog-footnote">Sources and further reading. India RTO benchmarks (410M+ shipments, 6,000+ brands): <a href="https://unicommerce.com/india-d2c-report-2026-april/" target="_blank" rel="noopener noreferrer">Unicommerce’s India D2C Report 2026</a>. Opt-in requirements: <a href="https://whatsappbusiness.com/policy/" target="_blank" rel="noopener noreferrer">the WhatsApp Business Messaging Policy</a>. How Shopify defines and recovers an abandoned checkout: <a href="https://help.shopify.com/manual/orders/abandoned-checkouts" target="_blank" rel="noopener noreferrer">Shopify’s abandoned checkout documentation</a>.</p>
-`,
-  },
-  {
     id: 4,
-    title: 'WhatsApp vs Email Automation for D2C India',
+    title: 'WhatsApp vs Email Marketing Automation for D2C India',
     description:
       'Compare WhatsApp ecommerce automation vs email for cart recovery, order updates, and campaigns: when to use each channel on Shopify in India.',
     slug: 'ecommerce-automation-whatsapp-vs-email-india',
@@ -591,7 +459,7 @@ export const blogPosts: BlogPost[] = [
     updated: '2026-10-21',
     readTime: '11 min',
     category: 'Strategy',
-    author: 'TopEdge',
+    author: 'Smit Tilva',
     image: '/marketing/features/intent-detection-flow.png',
     imageAlt: 'Intent-aware ecommerce automation flow across WhatsApp and other channels',
     keywords: [
@@ -682,7 +550,7 @@ export const blogPosts: BlogPost[] = [
     updated: '2026-10-21',
     readTime: '13 min',
     category: 'Meta',
-    author: 'TopEdge',
+    author: 'Moksh Patel',
     image: '/marketing/customers/customers-outcome-template.png',
     imageAlt: 'Approved WhatsApp Cloud API templates used in Shopify customer journeys',
     keywords: [
@@ -774,7 +642,7 @@ export const blogPosts: BlogPost[] = [
     updated: '2026-10-21',
     readTime: '11 min',
     category: 'Inbox',
-    author: 'TopEdge',
+    author: 'Moksh Patel',
     image: '/marketing/solutions/sol-fashion-inbox-saas.png',
     imageAlt: 'Shared WhatsApp inbox showing Shopify order context beside the conversation',
     keywords: [
@@ -851,13 +719,13 @@ export const blogPosts: BlogPost[] = [
 
 <p>Explore <a href="/features">Live Chat</a>, compare inbox-centric tools like <a href="/compare/wati">WATI</a> on our <a href="/compare">compare hub</a>, and get Shopify wiring right via <a href="/shopify-whatsapp-integration">Shopify WhatsApp integration</a>. Ready to talk setup? <a href="/contact">Contact</a>.</p>
 
-<p>Related: <a href="/blog/cod-confirmation-whatsapp-reduce-rto-shopify">COD confirmation on WhatsApp</a>, <a href="/blog/whatsapp-abandoned-cart-recovery-shopify">WhatsApp abandoned cart recovery for Shopify</a> and <a href="/blog/ai-whatsapp-chatbot-for-shopify-india">AI WhatsApp chatbots for Shopify India</a>.</p>
+<p>Related: <a href="/blog/how-to-reduce-rto-with-whatsapp-cod-confirmation">COD confirmation on WhatsApp</a>, <a href="/blog/whatsapp-abandoned-cart-recovery-shopify">WhatsApp abandoned cart recovery for Shopify</a> and <a href="/blog/ai-whatsapp-chatbot-for-shopify-india">AI WhatsApp chatbots for Shopify India</a>.</p>
 <p class="mkt-blog-footnote">Sources and further reading. Opt-in requirements: <a href="https://whatsappbusiness.com/policy/" target="_blank" rel="noopener noreferrer">the WhatsApp Business Messaging Policy</a>. How Shopify defines and recovers an abandoned checkout: <a href="https://help.shopify.com/manual/orders/abandoned-checkouts" target="_blank" rel="noopener noreferrer">Shopify’s abandoned checkout documentation</a>.</p>
 `,
   },
   {
     id: 7,
-    title: 'Shopify WhatsApp Automation Checklist',
+    title: 'Shopify WhatsApp Automation Go-Live Checklist (India)',
     description:
       'A fast Shopify automation checklist to connect WhatsApp, approve Meta templates, publish cart recovery, turn on COD paths, and open a shared inbox.',
     slug: 'shopify-automation-checklist-whatsapp-cart-recovery',
@@ -865,7 +733,7 @@ export const blogPosts: BlogPost[] = [
     updated: '2026-10-21',
     readTime: '10 min',
     category: 'Checklist',
-    author: 'TopEdge',
+    author: 'Moksh Patel',
     image: '/marketing/solutions/sol-beauty-cart-saas.png',
     imageAlt: 'Checklist-style Shopify WhatsApp setup for cart recovery and inbox',
     keywords: [
@@ -963,7 +831,7 @@ export const blogPosts: BlogPost[] = [
     updated: '2026-10-21',
     readTime: '16 min',
     category: 'Comparisons',
-    author: 'TopEdge',
+    author: 'Moksh Patel',
     image: '/marketing/features/unified-identity.png',
     imageAlt: 'Unified customer identity across Shopify and WhatsApp automation tools',
     keywords: [
@@ -1129,7 +997,7 @@ export const blogPosts: BlogPost[] = [
 </ul>
 
 <h2>Which playbooks should you pair with the shortlist?</h2>
-<p>Read <a href="/blog/whatsapp-abandoned-cart-recovery-shopify">cart recovery</a>, <a href="/blog/cod-confirmation-whatsapp-reduce-rto-shopify">COD confirmation</a>, and <a href="/blog/meta-whatsapp-cloud-api-shopify-templates">Meta templates</a> before you sign an annual. Global commercial shortlist: <a href="/blog/best-whatsapp-apps-for-shopify">best WhatsApp apps for Shopify</a>. Ecosystem hub: <a href="/blog/whatsapp-automation-for-shopify">WhatsApp automation for Shopify</a>. Build those flows on <a href="/features/journeys">Journeys</a> with template hygiene in <a href="/features/meta-manager">Meta Manager</a>. The tool should make those playbooks easy, not force you to invent them in spreadsheets.</p>
+<p>Read <a href="/blog/whatsapp-abandoned-cart-recovery-shopify">cart recovery</a>, <a href="/blog/how-to-reduce-rto-with-whatsapp-cod-confirmation">COD confirmation</a>, and <a href="/blog/meta-whatsapp-cloud-api-shopify-templates">Meta templates</a> before you sign an annual. Global commercial shortlist: <a href="/blog/best-whatsapp-apps-for-shopify">best WhatsApp apps for Shopify</a>. Ecosystem hub: <a href="/blog/whatsapp-automation-for-shopify">WhatsApp automation for Shopify</a>. Build those flows on <a href="/features/journeys">Journeys</a> with template hygiene in <a href="/features/meta-manager">Meta Manager</a>. The tool should make those playbooks easy, not force you to invent them in spreadsheets.</p>
 
 <h2>Common questions</h2>
 <div class="mkt-blog-faq">
@@ -1159,15 +1027,15 @@ export const blogPosts: BlogPost[] = [
   },
   {
     id: 9,
-    title: 'How to Reduce RTO on Shopify COD Orders',
+    title: 'How to Reduce COD RTO on Shopify India: WhatsApp SOP',
     description:
-      'How to reduce RTO on Indian Shopify stores: why COD orders come back, a practical WhatsApp confirmation flow, reminder timing and what to measure.',
+      'A step-by-step SOP to cut Shopify India RTO: utility template timing, confirm, reschedule and cancel branches, warehouse hold rules and what finance measures.',
     slug: 'how-to-reduce-rto-with-whatsapp-cod-confirmation',
     date: '2026-09-09',
     updated: '2026-10-21',
-    readTime: '13 min',
+    readTime: '16 min',
     category: 'COD',
-    author: 'TopEdge',
+    author: 'Moksh Patel',
     image: '/marketing/solutions/sol-cod-rto-saas.png',
     imageAlt: 'Reducing Shopify RTO with WhatsApp COD confirmation before shipment',
     keywords: [
@@ -1192,6 +1060,11 @@ export const blogPosts: BlogPost[] = [
         question: 'What if the warehouse packs before confirmation?',
         answer:
           'You lose the margin protection. Warehouse SOP should not pick COD orders until confirmation state is green, or you will confirm after reverse-logistics cost is already locked in.',
+      },
+      {
+        question: 'What replies should the journey accept?',
+        answer:
+          'At minimum confirm, reschedule and cancel. Silence gets one reminder, then your written hold or cancel policy. Amount disputes, partial cancels and wrong addresses should escalate to Live Chat with the order already on screen.',
       },
       {
         question: 'Which metrics prove COD confirmation is working?',
@@ -1224,8 +1097,51 @@ export const blogPosts: BlogPost[] = [
 <h2>Timing and reminder strategy</h2>
 <p>Send the first confirmation within minutes of checkout while intent is warm. If no reply, one reminder in 6–12 hours (tune to your category). After that, follow a written policy shared with CX and warehouse. Inconsistent holds across shifts recreate RTO.</p>
 
+<h2>What the utility template should say</h2>
+<p>Keep the copy factual: order identity, amount, delivery window, next step. Do not stuff a marketing offer into the same template, because that is the fastest way to get a utility template recategorised or rejected. Track approval and quality rating in <a href="/features/meta-manager">Meta Manager</a>, and build the branch logic in <a href="/features/journeys">Journeys</a>.</p>
+<div class="mkt-blog-callout"><p><strong>Tip:</strong> Prepaid and COD must not share one recovery tone. Condition the journey on payment method so the automation stays honest.</p></div>
+
+<h2>How warehouse and CX should handle each reply</h2>
+<p>This is the part that decides whether the program works. The message is easy; agreeing what happens on each reply, and holding to it across shifts, is the actual project.</p>
+<div class="mkt-blog-table-wrap">
+<table>
+<thead>
+<tr>
+<th>Buyer reply</th>
+<th>Ops action</th>
+<th>Shopify sync</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Confirm</strong></td>
+<td>Release to pick and pack</td>
+<td>Keep COD; mark ready to fulfill</td>
+</tr>
+<tr>
+<td><strong>Reschedule</strong></td>
+<td>Update the delivery slot; do not ship until reconfirmed if RTO is high in that pincode</td>
+<td>Note the new window on the order</td>
+</tr>
+<tr>
+<td><strong>Cancel</strong></td>
+<td>Stop fulfillment immediately</td>
+<td>Cancel or void status</td>
+</tr>
+<tr>
+<td><strong>No reply</strong></td>
+<td>Hold N hours per SOP, then cancel</td>
+<td>Apply the policy identically on every shift</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h2>When humans should take over</h2>
+<p>Automation pauses when an agent joins the thread. Escalate when the buyer disputes the amount, asks for a partial cancel, reports a wrong address, or sounds like a complaint rather than a question. Those threads belong in <a href="/features">Live Chat</a> with the order already loaded. An agent should never have to ask for an order number the system already knows.</p>
+
 <h2>Measure what finance cares about</h2>
-<p>Track confirmation rate, ship rate of confirmed COD, RTO % before/after, and reverse logistics cost saved. Message opens are a leading indicator only. Pair with the shorter primer on <a href="/blog/cod-confirmation-whatsapp-reduce-rto-shopify">COD confirmation for Shopify India</a>.</p>
+<p>Track confirmation rate, ship rate of confirmed COD, RTO % before/after, and reverse logistics cost saved. Message opens are a leading indicator only. Pair with the <a href="/blog/cod-rto-benchmark-india-2026">2026 India RTO benchmark</a> so you know whether your number is good or merely familiar.</p>
 
 <h2>Layer adjacent automations</h2>
 <ul>
@@ -1238,7 +1154,7 @@ export const blogPosts: BlogPost[] = [
 
 <p>See the full 2026 India RTO benchmark data → <a href="/blog/cod-rto-benchmark-india-2026">COD &amp; RTO in Indian D2C: the 2026 benchmark report</a>.</p>
 
-<p>Related: <a href="/blog/cod-rto-benchmark-india-2026">the 2026 India RTO benchmark</a>, <a href="/blog/cod-confirmation-whatsapp-reduce-rto-shopify">COD confirmation on WhatsApp</a> and <a href="/blog/profitable-ecommerce-business-india">what RTO does to net margin</a>.</p>
+<p>Related: <a href="/blog/cod-rto-benchmark-india-2026">the 2026 India RTO benchmark</a>, <a href="/blog/whatsapp-abandoned-cart-recovery-shopify">cart recovery on the same canvas</a> and <a href="/blog/profitable-ecommerce-business-india">what RTO does to net margin</a>.</p>
 <p class="mkt-blog-footnote">Sources and further reading. India RTO benchmarks (410M+ shipments, 6,000+ brands): <a href="https://unicommerce.com/india-d2c-report-2026-april/" target="_blank" rel="noopener noreferrer">Unicommerce’s India D2C Report 2026</a>. Template categories, review and the reasons templates get rejected: <a href="https://developers.facebook.com/docs/whatsapp/message-templates/guidelines/" target="_blank" rel="noopener noreferrer">Meta’s message template guidelines</a>.</p>
 `,
   },
@@ -1252,7 +1168,7 @@ export const blogPosts: BlogPost[] = [
     updated: '2026-10-21',
     readTime: '12 min',
     category: 'Basics',
-    author: 'TopEdge',
+    author: 'Moksh Patel',
     image: '/marketing/solutions/sol-cod-prepaid-saas.png',
     imageAlt: 'Ecommerce automation covering COD and prepaid Shopify orders on WhatsApp',
     keywords: [
@@ -1298,7 +1214,7 @@ export const blogPosts: BlogPost[] = [
 <li>COD confirmation before ship</li>
 <li>Order and shipping updates</li>
 <li>Campaigns / drops (after template hygiene)</li>
-<li>AI answers grounded in catalog truth + human handoff; see <a href="/blog/ai-chatbot-for-shopify">AI chatbot for Shopify</a></li>
+<li>AI answers grounded in catalog truth + human handoff; see <a href="/blog/ai-whatsapp-chatbot-for-shopify-india">the AI WhatsApp chatbot playbook</a></li>
 </ul>
 <p>These map to <a href="/features/journeys">Journeys</a>, <a href="/features">Live Chat</a>, <a href="/features/ai-brain">AI Brain</a>, and <a href="/features/meta-manager">Meta Manager</a>.</p>
 
@@ -1344,7 +1260,7 @@ export const blogPosts: BlogPost[] = [
     updated: '2026-10-21',
     readTime: '12 min',
     category: 'AI',
-    author: 'TopEdge',
+    author: 'Moksh Patel',
     image: '/marketing/solutions/sol-electronics-inbox-saas.png',
     imageAlt: 'AI WhatsApp chatbot answering Shopify catalog questions with human handoff',
     keywords: [
@@ -1383,7 +1299,7 @@ export const blogPosts: BlogPost[] = [
       },
     ],
     content: `
-<p>An <strong>AI WhatsApp chatbot for Shopify India</strong> should answer from live catalog data (SKUs, sizes, ₹ prices) then hand off to humans when intent is purchase risk, COD doubt, or complaint. Hallucinated inventory destroys trust faster than slow replies. For the broader pillar (support + sales AI across Shopify channels), read <a href="/blog/ai-chatbot-for-shopify">AI chatbot for Shopify</a>.</p>
+<p>An <strong>AI WhatsApp chatbot for Shopify India</strong> should answer from live catalog data (SKUs, sizes, ₹ prices) then hand off to humans when intent is purchase risk, COD doubt, or complaint. Hallucinated inventory destroys trust faster than slow replies.</p>
 
 <h2>Must-have behaviors</h2>
 <ol>
@@ -1408,6 +1324,39 @@ export const blogPosts: BlogPost[] = [
 <h2>Build flows around AI, not instead of it</h2>
 <p>Use <a href="/features/flow-builder">Flow Builder</a> for deterministic paths (exchange policy steps, address update forms). Use AI for open-ended catalog questions. Deterministic beats clever when money moves.</p>
 
+<h2>When should an AI chatbot hand off to a human?</h2>
+<p>Hand off when any of these are true:</p>
+<ul>
+<li>The customer asks for a person</li>
+<li>Confidence is low, or retrieval found nothing solid</li>
+<li>Tone is angry, threatening or distressed</li>
+<li>Payment failed, chargeback risk, or an address dispute</li>
+<li>Custom quotes, wholesale or B2B exceptions</li>
+<li>Medical, legal or regulated claims</li>
+<li>High-value orders, where a wrong answer is expensive</li>
+</ul>
+<p>Handover is not a failure metric if it is fast and carries context. It is a failure when the bot loops, invents facts, or keeps talking after an agent joins. Takeover in <a href="/features">Live Chat</a> pauses AI and Flow Builder on that thread until it is released.</p>
+
+<h2>Guardrails that stop invented answers</h2>
+<p>A model with no stated return window will invent one. The limits are what stop invention, so write down what you do not offer as carefully as what you do.</p>
+<ul>
+<li>If the model cannot see live price or stock, it should say so and hand off, not guess. Hallucinated "in stock" costs more than "let me get a specialist".</li>
+<li>No invented discount codes, and no shipping promise operations cannot keep.</li>
+<li>Write actions like cancel and refund stay behind rules until read-only answers have earned trust.</li>
+<li>Measure wrong-answer rate, not only deflection rate. Deflection alone rewards a bot that answers everything badly.</li>
+<li>Re-test after a returns-window or policy change. Training on last quarter's policy is the most common cause of a confidently wrong reply.</li>
+</ul>
+
+<h2>What to look for in a tool</h2>
+<ol>
+<li><strong>Shopify grounding</strong>: catalog, policies and orders, not only a website scrape</li>
+<li><strong>Handover that pauses the bot</strong>, not a handover that leaves it talking</li>
+<li><strong>Intent routing</strong>, so shipping, returns and COD questions get answered without spending tokens on every message</li>
+<li><strong>Transcript review tools</strong>, because you will tune this weekly</li>
+<li><strong>A cost model you can predict</strong>: included AI, bring-your-own-key, or a per-message add-on</li>
+<li><strong>Journeys alongside it</strong>. Chatbots answer; journeys still recover carts and confirm COD.</li>
+</ol>
+
 <h2>Quality loop for operators</h2>
 <ol>
 <li>Sample 50 AI transcripts weekly</li>
@@ -1416,15 +1365,15 @@ export const blogPosts: BlogPost[] = [
 <li>Re-test after catalog or policy changes</li>
 </ol>
 
-<p>See AI beside the rest of the stack on <a href="/features/ai-brain">AI Brain</a>, connect store data via <a href="/shopify-whatsapp-integration">Shopify WhatsApp integration</a>, and compare platforms on <a href="/compare">compare</a>. Broader guide: <a href="/blog/ai-chatbot-for-shopify">AI chatbot for Shopify</a>. For tool selection criteria, read <a href="/blog/best-whatsapp-automation-tools-shopify-india">best WhatsApp automation tools</a>. Questions? <a href="/contact">Contact</a> or view <a href="/pricing">pricing</a>.</p>
+<p>See AI beside the rest of the stack on <a href="/features/ai-brain">AI Brain</a>, connect store data via <a href="/shopify-whatsapp-integration">Shopify WhatsApp integration</a>, and compare platforms on <a href="/compare">compare</a>. For tool selection criteria, read <a href="/blog/best-whatsapp-automation-tools-shopify-india">best WhatsApp automation tools</a>. Questions? <a href="/contact">Contact</a> or view <a href="/pricing">pricing</a>.</p>
 
-<p>Related: <a href="/blog/whatsapp-shared-inbox-shopify-order-context">the shared inbox with Shopify order context</a> and <a href="/blog/ai-chatbot-for-shopify">AI chatbots for Shopify</a>.</p>
+<p>Related: <a href="/blog/whatsapp-shared-inbox-shopify-order-context">the shared inbox with Shopify order context</a> and <a href="/blog/what-is-ecommerce-automation-shopify-whatsapp">what ecommerce automation on WhatsApp actually covers</a>.</p>
 <p class="mkt-blog-footnote">Sources and further reading. Template categories, review and the reasons templates get rejected: <a href="https://developers.facebook.com/docs/whatsapp/message-templates/guidelines/" target="_blank" rel="noopener noreferrer">Meta’s message template guidelines</a>. Opt-in requirements: <a href="https://whatsappbusiness.com/policy/" target="_blank" rel="noopener noreferrer">the WhatsApp Business Messaging Policy</a>.</p>
 `,
   },
   {
     id: 12,
-    title: 'Zoko Alternative for Shopify India (2026)',
+    title: 'Best Zoko Alternative for Shopify India (2026)',
     description:
       'Why Shopify India teams look for a Zoko alternative, what to require in a replacement (COD, templates, Meta billing) and how to test a switch in a day.',
     slug: 'zoko-alternative-shopify-india',
@@ -1432,7 +1381,7 @@ export const blogPosts: BlogPost[] = [
     updated: '2026-10-21',
     readTime: '10 min',
     category: 'Comparisons',
-    author: 'TopEdge',
+    author: 'Moksh Patel',
     image: '/marketing/features/unified-identity.png',
     imageAlt: 'Shopify India team evaluating a Zoko alternative for WhatsApp commerce',
     keywords: [
@@ -1487,6 +1436,27 @@ export const blogPosts: BlogPost[] = [
 <p>TopEdge is built as a Shopify-native WhatsApp growth OS for India: flat INR plans by order volume, Meta pass-through without a Zoko-style conversation platform markup on the published catalog, plus COD journeys, warranty, and unified identity in the core stack. We do <em>not</em> claim to out-India Zoko on catalog-in-chat heritage. That is their strength. We compete on predictable platform cost and India ops depth.</p>
 <p>For the scorecard, plan table, and verify-live footnotes, open the full board: <a href="/compare/zoko">TopEdge vs Zoko</a>. For a fair one-liner index of other tools, see <a href="/compare/alternatives">alternatives</a>.</p>
 
+<h2>Zoko vs TopEdge AI, side by side</h2>
+<div class="mkt-blog-table-wrap">
+<table>
+<thead>
+<tr>
+<th>What you are comparing</th>
+<th>Zoko</th>
+<th>TopEdge AI</th>
+</tr>
+</thead>
+<tbody>
+<tr><td><strong>Entry price</strong></td><td>Starter $49.99/mo, then Plus $79.99, Elite $139.99, Max $499.99 (Sep 2026)</td><td>Launch ₹1,999/mo, or ₹1,599/mo billed yearly, + 18% GST</td></tr>
+<tr><td><strong>Billing unit</strong></td><td>USD, plus per-conversation metering on top of the plan</td><td>INR, sized by Shopify orders a month (100, 800 or 1,500)</td></tr>
+<tr><td><strong>Meta message cost</strong></td><td>Platform markup on top of Meta’s published rate</td><td>0% markup, billed by Meta to your own Business Account</td></tr>
+<tr><td><strong>COD to prepaid</strong></td><td>Not a named native workflow on the published listing</td><td>Native journey on Growth and Scale; COD confirmation on every plan</td></tr>
+<tr><td><strong>What it is best at</strong></td><td>Catalog in chat and conversational selling, which it has done longest</td><td>Predictable INR cost and India COD and RTO operations</td></tr>
+</tbody>
+</table>
+</div>
+<p class="mkt-blog-footnote">Zoko figures as published on zoko.io/pricing and its Shopify App Store listing in September 2026. Re-check both before you buy, because the tiers move.</p>
+
 <h2>How do you evaluate a switch in one afternoon?</h2>
 <ol>
 <li>Export or screenshot your peak-month conversation count and Meta bill</li>
@@ -1504,7 +1474,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     id: 13,
-    title: 'Getgabs Alternative for Shopify WhatsApp',
+    title: 'Best Getgabs Alternative for Shopify India (2026)',
     description:
       'Getgabs wins on entry price. When Shopify India teams outgrow free-to-install WhatsApp apps: and how to judge depth without a price fight.',
     slug: 'getgabs-alternative-shopify-whatsapp',
@@ -1512,7 +1482,7 @@ export const blogPosts: BlogPost[] = [
     updated: '2026-10-21',
     readTime: '9 min',
     category: 'Comparisons',
-    author: 'TopEdge',
+    author: 'Moksh Patel',
     image: '/marketing/solutions/sol-fashion-inbox-saas.png',
     imageAlt: 'Merchant comparing Getgabs entry pricing with deeper Shopify WhatsApp stacks',
     keywords: [
@@ -1563,6 +1533,27 @@ export const blogPosts: BlogPost[] = [
 <p>Pick TopEdge when you want COD → prepaid, warranty, unified customer identity, and visual journeys on published INR plans from day one, not as later add-ons. Pick Getgabs when budget is the binding constraint and depth can wait. That is the same concessive framing as our compare page.</p>
 <p>Full board (plans, scorecard, footnotes): <a href="/compare/getgabs">TopEdge vs Getgabs</a>. Index of other options: <a href="/compare/alternatives">alternatives</a>.</p>
 
+<h2>Getgabs vs TopEdge AI, side by side</h2>
+<div class="mkt-blog-table-wrap">
+<table>
+<thead>
+<tr>
+<th>What you are comparing</th>
+<th>Getgabs</th>
+<th>TopEdge AI</th>
+</tr>
+</thead>
+<tbody>
+<tr><td><strong>Entry price</strong></td><td>Free to install, then Plus $11/mo and Pro $59/mo on the Shopify listing, or Basic $15, Plus $21, Pro $59 on getgabs.com (Sep 2026)</td><td>Launch ₹1,999/mo, or ₹1,599/mo billed yearly, + 18% GST</td></tr>
+<tr><td><strong>Price consistency</strong></td><td>The two surfaces disagree, so confirm which one your account is on</td><td>One published catalog, the same on /pricing and in the dashboard</td></tr>
+<tr><td><strong>Meta message cost</strong></td><td>0% markup claimed on getgabs.com; verify against your own rate card</td><td>0% markup, billed by Meta to your own Business Account</td></tr>
+<tr><td><strong>COD to prepaid</strong></td><td>Not a named native workflow on the listing</td><td>Native journey on Growth and Scale; COD confirmation on every plan</td></tr>
+<tr><td><strong>Depth past messaging</strong></td><td>Chatbot and API messaging</td><td>Unified customer identity, warranty hub, visitor pixel and India P&L in the same workspace</td></tr>
+</tbody>
+</table>
+</div>
+<p class="mkt-blog-footnote">Getgabs figures as published on getgabs.com and its Shopify App Store listing in September 2026. The two surfaces disagreed at the time of checking, so confirm yours.</p>
+
 <h2>How do you evaluate Getgabs vs TopEdge fairly?</h2>
 <ol>
 <li>Write the three workflows that cost you money this month (e.g. COD no-shows, warranty WhatsApps, duplicate profiles)</li>
@@ -1579,7 +1570,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     id: 14,
-    title: 'Kanal WhatsApp Alternative for Shopify India Brands',
+    title: 'Best Kanal Alternative for Shopify India: INR vs EUR',
     description:
       'Kanal is strong for global WhatsApp + Klaviyo stacks. When India COD and INR pricing matter more than an EUR floor, here is how to evaluate alternatives.',
     slug: 'kanal-whatsapp-alternative-shopify',
@@ -1587,7 +1578,7 @@ export const blogPosts: BlogPost[] = [
     updated: '2026-10-21',
     readTime: '9 min',
     category: 'Comparisons',
-    author: 'TopEdge',
+    author: 'Moksh Patel',
     image: '/marketing/customers/customers-outcome-template.png',
     imageAlt: 'Shopify India brand evaluating Kanal as a WhatsApp alternative',
     keywords: [
@@ -1636,6 +1627,27 @@ export const blogPosts: BlogPost[] = [
 <p>TopEdge publishes flat INR Launch / Growth / Scale by Shopify order volume, ships COD-oriented journeys, and keeps Meta fees as pass-through. We do not try to replace Klaviyo. Keep your ESP if you have one.</p>
 <p>Scorecard and plan comparison: <a href="/compare/kanal">TopEdge vs Kanal</a>. Broader index: <a href="/compare/alternatives">alternatives</a>.</p>
 
+<h2>Kanal vs TopEdge AI, side by side</h2>
+<div class="mkt-blog-table-wrap">
+<table>
+<thead>
+<tr>
+<th>What you are comparing</th>
+<th>Kanal</th>
+<th>TopEdge AI</th>
+</tr>
+</thead>
+<tbody>
+<tr><td><strong>Entry price</strong></td><td>Pro €89/mo, Scale €149, Business €350, Agency €1,900 (Sep 2026)</td><td>Launch ₹1,999/mo, or ₹1,599/mo billed yearly, + 18% GST</td></tr>
+<tr><td><strong>Currency risk</strong></td><td>EUR, so your India cost moves with the exchange rate</td><td>INR, so the number on the invoice is the number you budgeted</td></tr>
+<tr><td><strong>Meta message cost</strong></td><td>Plan fee plus Meta conversation charges</td><td>0% markup, billed by Meta to your own Business Account</td></tr>
+<tr><td><strong>COD and RTO</strong></td><td>Built for global WhatsApp and Klaviyo, not for cash on delivery</td><td>COD confirmation on every plan, COD to prepaid on Growth and Scale</td></tr>
+<tr><td><strong>What it is best at</strong></td><td>Global brands running WhatsApp alongside Klaviyo email</td><td>India-only stores where COD is most of the order book</td></tr>
+</tbody>
+</table>
+</div>
+<p class="mkt-blog-footnote">Kanal figures as published on getkanal.com/pricing in September 2026; its Shopify App Store listing showed the same tiers in USD. Currency display differs by surface.</p>
+
 <h2>How do you decide between Kanal and TopEdge?</h2>
 <p>Choose Kanal when Klaviyo-first global WhatsApp is the product you want. Choose TopEdge when Shopify India recovery, COD, and INR forecasting are the product you want.</p>
 
@@ -1655,7 +1667,7 @@ export const blogPosts: BlogPost[] = [
     updated: '2026-10-21',
     readTime: '12 min',
     category: 'Guides',
-    author: 'TopEdge',
+    author: 'Smit Tilva',
     image: '/marketing/features/optin-popup.png',
     imageAlt: 'Shopify merchant evaluating WhatsApp apps in the App Store',
     keywords: [
@@ -1738,7 +1750,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     id: 16,
-    title: 'WhatsApp Business API Pricing India 2026',
+    title: 'WhatsApp Business API Pricing India 2026: Meta Rate Card',
     description:
       'What a WhatsApp message costs in India after the 1 January 2026 rate change, why every article quotes a different number, and how to read your own rate card.',
     slug: 'whatsapp-business-api-pricing-india',
@@ -1867,7 +1879,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     id: 17,
-    title: 'Dondy Alternative for Shopify India: The Meta Markup',
+    title: 'Best Dondy Alternative for Shopify India (2026)',
     description:
       'Dondy’s WhatsApp rate table sits ~60% above Meta marketing rates. When that math matters for Shopify India: and when Dondy’s toolkit still fits.',
     slug: 'dondy-alternative-shopify-india',
@@ -1875,7 +1887,7 @@ export const blogPosts: BlogPost[] = [
     updated: '2026-10-21',
     readTime: '9 min',
     category: 'Comparisons',
-    author: 'TopEdge',
+    author: 'Moksh Patel',
     image: '/marketing/features/unified-identity.png',
     imageAlt: 'Shopify India operator comparing Dondy WhatsApp rates with Meta pass-through pricing',
     keywords: [
@@ -1947,7 +1959,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     id: 18,
-    title: 'WhatsApp Automation for Shopify: Complete Guide',
+    title: 'WhatsApp Automation for Shopify India: Complete Guide',
     description:
       'WhatsApp automation for Shopify: store events to journeys, lifecycle workflows, App vs Cloud API, opt-in, India COD, and cost.',
     slug: 'whatsapp-automation-for-shopify',
@@ -1955,7 +1967,7 @@ export const blogPosts: BlogPost[] = [
     updated: '2026-10-21',
     readTime: '18 min',
     category: 'Ecommerce automation',
-    author: 'TopEdge',
+    author: 'Moksh Patel',
     image: '/marketing/features/shopify-whatsapp.png',
     imageWebp: '/marketing/features/shopify-whatsapp.webp',
     imageAlt:
@@ -2093,7 +2105,7 @@ export const blogPosts: BlogPost[] = [
 <p>Trigger on abandoned cart or abandoned checkout; send opted-in marketing templates with live line items and a resume link; suppress on purchase; answer replies. Deep timing and copy: <a href="/blog/whatsapp-abandoned-cart-recovery-shopify">Shopify abandoned cart recovery</a>.</p>
 
 <h3>2. COD Confirmation</h3>
-<p>When payment method is cash on delivery, confirm before pick-pack: YES / reschedule / cancel. Cuts false orders and reverse logistics. Playbook: <a href="/blog/cod-confirmation-whatsapp-reduce-rto-shopify">COD confirmation on WhatsApp</a>.</p>
+<p>When payment method is cash on delivery, confirm before pick-pack: YES / reschedule / cancel. Cuts false orders and reverse logistics. Playbook: <a href="/blog/how-to-reduce-rto-with-whatsapp-cod-confirmation">COD confirmation on WhatsApp</a>.</p>
 
 <h3>3. Order Confirmation</h3>
 <p>Order created / paid → utility message with order number, items, and ₹ total. Sets expectations and opens a clean reply path for address fixes.</p>
@@ -2105,7 +2117,7 @@ export const blogPosts: BlogPost[] = [
 <p>Inbound WhatsApp into a shared inbox with order/cart context, assignment, and human takeover that pauses bots. Detail: <a href="/blog/whatsapp-shared-inbox-shopify-order-context">shared inbox with Shopify orders</a>.</p>
 
 <h3>6. Product Questions &amp; Recommendations</h3>
-<p>Flow menus or catalog-grounded AI for size, shade, shipping windows, and COD policy, then hand off when confidence is low. Related: <a href="/blog/ai-chatbot-for-shopify">AI chatbot for Shopify</a>.</p>
+<p>Flow menus or catalog-grounded AI for size, shade, shipping windows, and COD policy, then hand off when confidence is low. Related: <a href="/blog/ai-whatsapp-chatbot-for-shopify-india">AI WhatsApp chatbot for Shopify India</a>.</p>
 
 <h3>7. Reviews</h3>
 <p>After delivery (and quiet support), request a review or UGC with a short utility/marketing-compliant path. Suppress unhappy tickets.</p>
@@ -2313,7 +2325,7 @@ export const blogPosts: BlogPost[] = [
 </details>
 <details>
 <summary>How can Shopify stores automate COD confirmation?</summary>
-<p>Trigger a utility template when a COD order is created, offer confirm / reschedule / cancel, suppress after response, and hold fulfillment until confirmed. Deep playbook: <a href="/blog/cod-confirmation-whatsapp-reduce-rto-shopify">COD confirmation on WhatsApp</a>.</p>
+<p>Trigger a utility template when a COD order is created, offer confirm / reschedule / cancel, suppress after response, and hold fulfillment until confirmed. Deep playbook: <a href="/blog/how-to-reduce-rto-with-whatsapp-cod-confirmation">COD confirmation on WhatsApp</a>.</p>
 </details>
 <details>
 <summary>How can I send Shopify order updates on WhatsApp?</summary>
@@ -2345,316 +2357,6 @@ export const blogPosts: BlogPost[] = [
 `,
   },
   {
-    id: 19,
-    title: 'AI Chatbot for Shopify: Support and Sales Guide',
-    description:
-      'What an AI chatbot for Shopify actually does: catalog answers, order lookups, sales assist, human handover rules, and how to avoid invented prices or stock.',
-    slug: 'ai-chatbot-for-shopify',
-    date: '2026-09-21',
-    updated: '2026-10-21',
-    readTime: '14 min',
-    category: 'AI',
-    author: 'TopEdge',
-    image: '/marketing/solutions/sol-electronics-inbox-saas.png',
-    imageAlt:
-      'AI chatbot for Shopify answering product and order questions with human handover to Live Chat',
-    keywords: [
-      'AI chatbot for Shopify',
-      'Shopify AI chatbot',
-      'AI chatbot for ecommerce',
-      'ecommerce AI chatbot',
-      'AI customer support Shopify',
-      'AI customer service Shopify',
-      'AI sales assistant Shopify',
-      'AI shopping assistant Shopify',
-      'WhatsApp AI chatbot',
-      'AI customer support automation',
-      'Shopify chatbot',
-      'AI product recommendation chatbot',
-      'AI sales agent Shopify',
-      'ecommerce customer service automation',
-      'Shopify support automation',
-    ],
-    faqs: [
-      {
-        question: 'What is an AI chatbot for Shopify?',
-        answer:
-          'An AI chatbot for Shopify is software that answers shopper questions using store knowledge (catalog, policies, and often live order data) then escalates to a human when confidence is low or the request is high risk. It can live on-site, in WhatsApp, or inside a shared inbox.',
-      },
-      {
-        question: 'How does a Shopify AI chatbot work?',
-        answer:
-          'It connects to Shopify (and usually help content), retrieves relevant product/order/policy context, generates or selects a reply, and applies rules for when to stay automated versus hand off. Better systems ground answers in your catalog and pause AI when an agent takes over.',
-      },
-      {
-        question: 'Can an AI chatbot answer product questions?',
-        answer:
-          'Yes, when it can read product titles, variants, attributes, and policies. Without grounding, it may invent fabric, ingredients, or availability. Deterministic FAQs and catalog retrieval beat freeform guessing for money-moving details.',
-      },
-      {
-        question: 'Can AI handle Shopify customer support?',
-        answer:
-          'It can handle high-volume, repeatable intents like order status, shipping windows, size charts, and policy FAQs. Refunds, damage claims, angry customers, and edge-case exceptions should escalate to humans with full conversation context.',
-      },
-      {
-        question: 'Can an AI chatbot access Shopify product information?',
-        answer:
-          'A useful ecommerce AI chatbot should. Access may mean synced catalog embeddings, live Admin API lookups, or both. If the bot cannot see SKUs, prices, and stock truth, treat it as a marketing widget, not support infrastructure.',
-      },
-      {
-        question: 'Can AI recommend products?',
-        answer:
-          'Yes, as a shopping assistant: clarify need, filter catalog attributes, and present a small set of matches with links. Recommendations should respect inventory and avoid promising discounts ops cannot honor.',
-      },
-      {
-        question: 'When should an AI chatbot hand a customer to a human?',
-        answer:
-          'Hand over on low confidence, complaints, payment failures, custom pricing, medical/legal claims, high-AOV disputes, and anytime the customer asks for a person. Takeover should pause the bot so humans and AI never talk over each other.',
-      },
-      {
-        question: 'Can AI help increase ecommerce conversions?',
-        answer:
-          'It can remove friction (answering size, shipping, COD, and product-fit questions while intent is warm) and assist agents with suggested replies. Conversion lift depends on answer quality, speed, and channel fit; it is not guaranteed by installing a model.',
-      },
-      {
-        question: 'Is Shopify Inbox enough, or do I need a third-party AI chatbot?',
-        answer:
-          'Shopify Inbox offers free storefront chat, Instant Answers, and AI-assisted reply features for many merchants starting out. Third-party tools matter when you need WhatsApp-native AI, deeper journey/inbox automation, BYOK models, or stricter grounding and handover controls across channels.',
-      },
-    ],
-    content: `
-<details class="mkt-blog-verdict" open>
-<summary>Direct answer</summary>
-<p>An <strong>AI chatbot for Shopify</strong> uses AI plus your store data to answer shopper questions, recommend products, look up orders, and escalate to humans when risk or uncertainty is high. It works well for repeatable support and sales assist; it fails when it invents prices, stock, or promises your ops cannot keep.</p>
-</details>
-
-<p>Shopify merchants do not need “more chat widgets.” They need fewer unanswered product questions, fewer WISMO tickets, and a clean path from bot to human when money or emotion is on the line. An AI chatbot for Shopify is one way to do that, if it is grounded in catalog and order truth, not a generic LLM wearing your logo.</p>
-<p>This guide explains what these bots actually do, how they work, where they help sales vs support, when to hand off, how to choose a tool, and where TopEdge fits. For the broader messaging stack, see <a href="/blog/whatsapp-automation-for-shopify">WhatsApp automation for Shopify</a>. For WhatsApp-India specifics (COD tone, Meta-safe behavior), see <a href="/blog/ai-whatsapp-chatbot-for-shopify-india">AI WhatsApp chatbot for Shopify India</a>.</p>
-
-<h2>What is an AI chatbot for Shopify?</h2>
-<p>An AI chatbot for Shopify is software that converses with shoppers using artificial intelligence and, critically, store context: products, variants, policies, and often live order or cart data. It may sit on the storefront (for example via Shopify Inbox), in WhatsApp, Instagram, or inside an agent inbox as a drafting assistant.</p>
-<p>Three related ideas get mixed up:</p>
-<div class="mkt-blog-table-wrap">
-<table>
-<thead>
-<tr>
-<th>Type</th>
-<th>How it answers</th>
-<th>Best for</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Rule / FAQ chatbot</strong></td>
-<td>Button trees, keyword macros, Instant Answers</td>
-<td>Rigid policies and predictable FAQs</td>
-</tr>
-<tr>
-<td><strong>AI chatbot / shopping assistant</strong></td>
-<td>Natural language + catalog/policy grounding</td>
-<td>Open product questions, recommendations, first-line support</td>
-</tr>
-<tr>
-<td><strong>AI sales / support agent</strong></td>
-<td>AI plus tools (order lookup, sometimes write actions)</td>
-<td>Resolving tickets and assisting checkout, with strict guardrails</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>Shopify’s own Inbox tooling documents Instant Answers (predefined Q&amp;A) and AI-assisted experiences that can use store policies and conversation context. That is a valid starting point. Deeper ecommerce AI usually adds multichannel delivery, stronger retrieval over catalog/orders, journey integration, and explicit human takeover.</p>
-
-<h2>Why AI chatbots matter for Shopify stores</h2>
-<p>Support and sales questions cluster in the same places: size and fit, shipping time, COD or payment options, “where is my order?”, returns windows, and “which product is right for me?” Humans should spend time on exceptions, not typing the same shipping paragraph at midnight.</p>
-<p>Practical upsides when the bot is grounded:</p>
-<ul>
-<li><strong>Faster answers while purchase intent is warm</strong></li>
-<li><strong>After-hours coverage</strong> without pretending a human is online</li>
-<li><strong>Consistent policy language</strong> across agents and shifts</li>
-<li><strong>Agent assist</strong>: suggested replies that staff edit, not only fully autonomous chat</li>
-</ul>
-<p>Practical limits:</p>
-<ul>
-<li>Bad grounding creates wrong stock/price answers that cost more than slow replies</li>
-<li>Autonomous refunds or cancellations without rules create finance risk</li>
-<li>AI does not replace cart recovery journeys or COD confirmation workflows. Those remain event-driven systems (see <a href="/blog/whatsapp-abandoned-cart-recovery-shopify">abandoned cart recovery</a> and <a href="/blog/cod-confirmation-whatsapp-reduce-rto-shopify">COD confirmation</a>)</li>
-</ul>
-
-<h2>How a Shopify AI chatbot works</h2>
-<ol>
-<li><strong>Connect store data</strong>: catalog, policies, and ideally orders/customers via Shopify.</li>
-<li><strong>Ground knowledge</strong>: retrieve relevant products, shipping/return text, or order status before generating an answer.</li>
-<li><strong>Classify intent</strong>: shipping vs returns vs product advice vs “talk to a human,” sometimes with cheap phrase matching before an expensive model call.</li>
-<li><strong>Reply or act</strong>: answer FAQs, recommend products, return tracking links; only take write actions if you explicitly allow them.</li>
-<li><strong>Hand off</strong>: escalate with full transcript and order context; pause the bot while a human owns the thread.</li>
-<li><strong>Review</strong>: sample transcripts, fix wrong answers, update knowledge when policies or SKUs change.</li>
-</ol>
-<div class="mkt-blog-callout"><p><strong>Operator tip:</strong> Deterministic flows beat clever AI when money moves. Use Flow Builder–style menus for address updates and exchange steps; reserve open AI for catalog questions and messy language.</p></div>
-
-<h2>Support vs sales: what AI should automate</h2>
-<div class="mkt-blog-table-wrap">
-<table>
-<thead>
-<tr>
-<th>Job</th>
-<th>Automate?</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Order status (WISMO)</strong></td>
-<td>Usually yes</td>
-<td>Needs live order/fulfillment data, not a generic “check your email”</td>
-</tr>
-<tr>
-<td><strong>Shipping / returns policy FAQs</strong></td>
-<td>Yes</td>
-<td>Cite policy text; update when ops changes windows</td>
-</tr>
-<tr>
-<td><strong>Size charts &amp; product comparisons</strong></td>
-<td>Yes, with catalog grounding</td>
-<td>Escalate medical claims or custom fit disputes</td>
-</tr>
-<tr>
-<td><strong>Product recommendations</strong></td>
-<td>Yes, carefully</td>
-<td>Small set of matches + PDP links; respect stock</td>
-</tr>
-<tr>
-<td><strong>Discount hunting</strong></td>
-<td>Sometimes</td>
-<td>Only offers finance approved; do not invent codes</td>
-</tr>
-<tr>
-<td><strong>Refunds / cancellations</strong></td>
-<td>Rules only</td>
-<td>Thresholds, windows, and human approval for edge cases</td>
-</tr>
-<tr>
-<td><strong>Angry / legal / damage claims</strong></td>
-<td>No, hand off</td>
-<td>Humans with order context</td>
-</tr>
-</tbody>
-</table>
-</div>
-
-<h2>Can AI recommend products and answer catalog questions?</h2>
-<p>Yes. This is where an AI shopping assistant earns its keep. A useful pattern:</p>
-<ol>
-<li>Clarify the shopper’s constraint (budget, size, skin type, use case).</li>
-<li>Retrieve matching Shopify products/variants.</li>
-<li>Present 2–4 options with honest differences and links.</li>
-<li>Offer human help if nothing fits or the shopper hesitates on high AOV.</li>
-</ol>
-<p>If the model cannot see live prices or inventory, say so and hand off, or fall back to a static FAQ, rather than guessing. Hallucinated “in stock” is worse than “let me get a specialist.”</p>
-
-<h2>When should an AI chatbot hand off to a human?</h2>
-<p>Hand off when any of these are true:</p>
-<ul>
-<li>The customer asks for a person</li>
-<li>Confidence is low or retrieval found nothing solid</li>
-<li>Tone is angry, threatening, or distressed</li>
-<li>Payment failed, chargeback risk, or address disputes</li>
-<li>Custom quotes, wholesale, or B2B exceptions</li>
-<li>Medical, legal, or regulated claims</li>
-<li>High-value orders where a wrong answer is expensive</li>
-</ul>
-<p>Handover is not a failure metric if it is fast and contextual. It is a failure when the bot loops, invents facts, or keeps talking after an agent joins. On TopEdge, Live Chat takeover is designed to pause AI and Flow Builder on that thread until release.</p>
-
-<h2>Hypothetical examples</h2>
-<h3>Example A: Skincare storefront assist</h3>
-<p>Shopper: “Something gentle for oily skin under ₹1,500.” Bot retrieves matching SKUs, asks about fragrance sensitivity, shares two PDPs, and offers a human if they want routine building. It does not invent a festival code.</p>
-<h3>Example B: WISMO on WhatsApp</h3>
-<p>Shopper sends order number. Bot reads Shopify fulfillment state, returns carrier + tracking, and escalates if the shipment is delayed beyond policy. It does not argue about courier blame.</p>
-<h3>Example C: What not to automate day one</h3>
-<p>A brand turns on open AI with empty knowledge, allows refunds without limits, and leaves no human coverage overnight. One wrong “yes, free overnight shipping” message creates ops debt for a week. Start with FAQs + order status + hard handoff; expand intents after transcript review.</p>
-
-<h2>What to look for in an AI chatbot tool</h2>
-<ol>
-<li><strong>Shopify grounding</strong>: catalog, policies, orders, not only a website scrape</li>
-<li><strong>Channel fit</strong>: storefront widget, WhatsApp, Instagram, or agent copilot as needed</li>
-<li><strong>Handover that pauses the bot</strong></li>
-<li><strong>Intent routing</strong>: cheap routing for shipping/returns/COD before every message burns tokens</li>
-<li><strong>Guardrails</strong>: no invented discounts; write-actions behind rules</li>
-<li><strong>Transcript review tools</strong>: you will tune weekly</li>
-<li><strong>Cost model you understand</strong>: included AI vs bring-your-own-key (BYOK) vs per-message add-ons</li>
-<li><strong>Works with journeys</strong>: chatbots answer; journeys still recover carts and confirm COD</li>
-</ol>
-
-<h2>Common mistakes</h2>
-<ol>
-<li><strong>Launching ungrounded AI</strong> on a live catalog</li>
-<li><strong>No handoff path</strong> (or handoff that does not pause the bot)</li>
-<li><strong>Letting AI promise shipping or discounts ops cannot keep</strong></li>
-<li><strong>Replacing journeys with chat nudges only</strong></li>
-<li><strong>Measuring deflection rate while ignoring wrong-answer rate</strong></li>
-<li><strong>Training on outdated policies</strong> after a returns-window change</li>
-<li><strong>Turning on write access (cancel/refund) before read-only trust exists</strong></li>
-<li><strong>One global personality for every market and COD vs prepaid shopper</strong></li>
-</ol>
-
-<h2>How TopEdge AI approaches AI chatbots for Shopify</h2>
-<p>TopEdge AI is ecommerce automation software. For Shopify merchants who need AI inside WhatsApp customer conversations (not a generic website widget alone), TopEdge approaches this through grounded AI plus explicit human control.</p>
-<p>Within TopEdge AI:</p>
-<ul>
-<li><a href="/features/ai-brain">AI Brain</a>: bring-your-own-key models (OpenAI, Claude, or Gemini), store knowledge/RAG over policies and docs, bot persona, and activation controls so spend stays on your provider bill</li>
-<li><a href="/features/intent-detection">Intent Detection</a>: route shipping, returns, COD, and handoff intents before spending model tokens on every message</li>
-<li><a href="/features/flow-builder">Flow Builder</a>: deterministic WhatsApp trees with Shopify tools and AI nodes where open language helps</li>
-<li><a href="/features">Live Chat</a>: agents see order context; takeover pauses AI and flows on that thread</li>
-<li><a href="/shopify-whatsapp-integration">Shopify WhatsApp integration</a>: catalog/order sync so answers can stay store-aware</li>
-</ul>
-<p>AI here is a layer on customer engagement automation, not a replacement for <a href="/features/journeys">Journeys</a> or Meta template hygiene in <a href="/features/meta-manager">Meta Manager</a>. Plans: <a href="/pricing">Pricing</a>.</p>
-
-<h2>Common questions</h2>
-<div class="mkt-blog-faq">
-<details open>
-<summary>What is an AI chatbot for Shopify?</summary>
-<p>An AI chatbot for Shopify is software that answers shopper questions using store knowledge (catalog, policies, and often live order data) then escalates to a human when confidence is low or the request is high risk. It can live on-site, in WhatsApp, or inside a shared inbox.</p>
-</details>
-<details>
-<summary>How does a Shopify AI chatbot work?</summary>
-<p>It connects to Shopify (and usually help content), retrieves relevant product/order/policy context, generates or selects a reply, and applies rules for when to stay automated versus hand off. Better systems ground answers in your catalog and pause AI when an agent takes over.</p>
-</details>
-<details>
-<summary>Can an AI chatbot answer product questions?</summary>
-<p>Yes, when it can read product titles, variants, attributes, and policies. Without grounding, it may invent fabric, ingredients, or availability. Deterministic FAQs and catalog retrieval beat freeform guessing for money-moving details.</p>
-</details>
-<details>
-<summary>Can AI handle Shopify customer support?</summary>
-<p>It can handle high-volume, repeatable intents like order status, shipping windows, size charts, and policy FAQs. Refunds, damage claims, angry customers, and edge-case exceptions should escalate to humans with full conversation context.</p>
-</details>
-<details>
-<summary>Can an AI chatbot access Shopify product information?</summary>
-<p>A useful ecommerce AI chatbot should. Access may mean synced catalog embeddings, live Admin API lookups, or both. If the bot cannot see SKUs, prices, and stock truth, treat it as a marketing widget, not support infrastructure.</p>
-</details>
-<details>
-<summary>Can AI recommend products?</summary>
-<p>Yes, as a shopping assistant: clarify need, filter catalog attributes, and present a small set of matches with links. Recommendations should respect inventory and avoid promising discounts ops cannot honor.</p>
-</details>
-<details>
-<summary>When should an AI chatbot hand a customer to a human?</summary>
-<p>Hand over on low confidence, complaints, payment failures, custom pricing, medical/legal claims, high-AOV disputes, and anytime the customer asks for a person. Takeover should pause the bot so humans and AI never talk over each other.</p>
-</details>
-<details>
-<summary>Can AI help increase ecommerce conversions?</summary>
-<p>It can remove friction (answering size, shipping, COD, and product-fit questions while intent is warm) and assist agents with suggested replies. Conversion lift depends on answer quality, speed, and channel fit; it is not guaranteed by installing a model.</p>
-</details>
-<details>
-<summary>Is Shopify Inbox enough, or do I need a third-party AI chatbot?</summary>
-<p>Shopify Inbox offers free storefront chat, Instant Answers, and AI-assisted reply features for many merchants starting out. Third-party tools matter when you need WhatsApp-native AI, deeper journey/inbox automation, BYOK models, or stricter grounding and handover controls across channels.</p>
-</details>
-</div>
-
-
-<p>An AI chatbot for Shopify is useful when it is store-aware, limited where money moves, and quick to hand off. Start with grounded FAQs and order status, review transcripts weekly, then expand sales assist.</p>
-<p>Next steps: <a href="/features/ai-brain">AI Brain</a>, <a href="/features">Live Chat</a>, <a href="/pricing">pricing</a>, or <a href="/signup">start free</a>. Cluster links: <a href="/blog/whatsapp-automation-for-shopify">WhatsApp automation for Shopify</a>, <a href="/blog/ai-whatsapp-chatbot-for-shopify-india">AI WhatsApp chatbot (India)</a>, <a href="/blog/whatsapp-shared-inbox-shopify-order-context">shared inbox</a>.</p>
-<p class="mkt-blog-footnote">Shopify Inbox Instant Answers behavior referenced from <a href="https://help.shopify.com/manual/orders/abandoned-checkouts" target="_blank" rel="noopener noreferrer">Shopify Help Center</a>. Competitive market context informed by public Shopify and third-party explainers; no conversion percentages invented. TopEdge AI Brain / Intent Detection / Live Chat capabilities from TopEdge product pages. Re-check Shopify Inbox and Meta policies before production launches.</p>
-`,
-  },
-  {
     id: 20,
     title: 'Best WhatsApp Apps for Shopify in 2026',
     description:
@@ -2664,7 +2366,7 @@ export const blogPosts: BlogPost[] = [
     updated: '2026-10-21',
     readTime: '17 min',
     category: 'Comparisons',
-    author: 'TopEdge',
+    author: 'Smit Tilva',
     image: '/marketing/features/unified-identity.png',
     imageAlt:
       'Comparison board of Shopify WhatsApp apps for cart recovery, COD, marketing, and support',
@@ -3087,7 +2789,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     id: 21,
-    title: 'Organic vs Paid Ecommerce Marketing (2026 Framework)',
+    title: 'Organic vs Paid Ecommerce Marketing in India (2026)',
     description:
       'Phased ecommerce playbook: validate without ad spend, build organic momentum, deploy paid ads, and recover lost sales with TopEdge AI WhatsApp automation.',
     slug: 'organic-vs-paid-ecommerce-marketing-2026',
@@ -3095,7 +2797,7 @@ export const blogPosts: BlogPost[] = [
     updated: '2026-10-21',
     readTime: '9 min',
     category: 'Growth',
-    author: 'TopEdge',
+    author: 'Smit Tilva',
     image: '/marketing/solutions/sol-beauty-cart-saas.png',
     imageAlt:
       'Ecommerce brand balancing organic content and paid ads with WhatsApp recovery on TopEdge AI',
@@ -3303,7 +3005,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     id: 22,
-    title: 'COD & RTO in Indian D2C: The 2026 Benchmark Report',
+    title: 'India D2C COD & RTO Benchmark Report 2026',
     description:
       'RTO rate India ecommerce 2026: COD vs prepaid return benchmarks, RTO by category, and how each verification method changes RTO for Shopify D2C.',
     slug: 'cod-rto-benchmark-india-2026',
@@ -3311,7 +3013,7 @@ export const blogPosts: BlogPost[] = [
     updated: '2026-10-21',
     readTime: '6 min',
     category: 'COD',
-    author: 'TopEdge',
+    author: 'Moksh Patel',
     image: '/marketing/solutions/sol-cod-hero.png',
     imageAlt: 'Indian D2C COD and RTO benchmark report 2026 for Shopify brands',
     keywords: [
@@ -3430,7 +3132,7 @@ export const blogPosts: BlogPost[] = [
 <h2 id="the-fix">The fix, in brief</h2>
 <p>Confirm intent before pick and pack. Send one approved WhatsApp utility template with the order number and ₹ total, branch on confirm / reschedule / cancel, send one reminder, then apply a written hold-or-cancel policy. The cost is friction: some genuine buyers will never reply, and your policy decides whether you lose them or ship the risk.</p>
 <p>The direct cost is Meta's per-message fee for each utility template, plus your WhatsApp platform's plan. Meta's current India rates are in our <a href="/blog/whatsapp-business-api-pricing-india">WhatsApp Business API pricing guide for India</a>.</p>
-<p>The setup detail lives in two playbooks: <a href="/blog/cod-confirmation-whatsapp-reduce-rto-shopify">WhatsApp COD confirmation setup for Shopify</a> and the <a href="/blog/how-to-reduce-rto-with-whatsapp-cod-confirmation">step-by-step RTO reduction playbook</a>. Build the flow with <a href="/features/cod-confirmation">COD confirmation journeys</a>, then <a href="/features/profit-loss">measure your own RTO %</a> against the benchmarks above.</p>
+<p>The setup detail lives in two playbooks: <a href="/blog/how-to-reduce-rto-with-whatsapp-cod-confirmation">WhatsApp COD confirmation setup for Shopify</a> and the <a href="/blog/how-to-reduce-rto-with-whatsapp-cod-confirmation">step-by-step RTO reduction playbook</a>. Build the flow with <a href="/features/cod-confirmation">COD confirmation journeys</a>, then <a href="/features/profit-loss">measure your own RTO %</a> against the benchmarks above.</p>
 
 <h2 id="faq">Common questions</h2>
 <div class="mkt-blog-faq">
@@ -3469,7 +3171,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     id: 23,
-    title: 'How to Run a Profitable Ecommerce Business in India',
+    title: 'Ecommerce Profit Margins in India 2026: CAC, RTO & COD',
     description:
       'What ecommerce profit margins in India actually look like in 2026, what it costs to start, and how to protect margin against RTO, CAC and shipping.',
     slug: 'profitable-ecommerce-business-india',
@@ -3477,7 +3179,7 @@ export const blogPosts: BlogPost[] = [
     updated: '2026-10-21',
     readTime: '14 min',
     category: 'Strategy',
-    author: 'TopEdge',
+    author: 'Smit Tilva',
     image: '/marketing/solutions/sol-fashion-hero.png',
     imageAlt:
       'Indian D2C operator reviewing cost per order, margin and RTO figures for an ecommerce business',
@@ -3848,7 +3550,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     id: 24,
-    title: 'How to Automate Your Ecommerce Store in India',
+    title: 'How to Automate Your Shopify Store in India (2026)',
     description:
       'A step-by-step guide to ecommerce automation for Indian store owners: order processing, inventory, support, WhatsApp and email workflows, and the tool stack.',
     slug: 'how-to-automate-ecommerce-store-india',
@@ -3856,7 +3558,7 @@ export const blogPosts: BlogPost[] = [
     updated: '2026-10-21',
     readTime: '14 min',
     category: 'Ecommerce automation',
-    author: 'TopEdge',
+    author: 'Moksh Patel',
     image: '/marketing/solutions/sol-electronics-hero.png',
     imageAlt:
       'Automated ecommerce workflow connecting a Shopify store to WhatsApp, shipping and inventory systems',
@@ -4103,7 +3805,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     id: 25,
-    title: 'Organic Ecommerce Leads from Reels and Shorts',
+    title: 'Turn Instagram Reels & YouTube Shorts into Ecommerce Leads',
     description:
       'How to turn Instagram Reels and YouTube Shorts into trackable ecommerce leads in 2026: hooks, posting cadence, comment-to-DM capture, UTMs and follow-up.',
     slug: 'organic-ecommerce-leads-short-form-video',
@@ -4111,7 +3813,7 @@ export const blogPosts: BlogPost[] = [
     updated: '2026-10-21',
     readTime: '13 min',
     category: 'Growth',
-    author: 'TopEdge',
+    author: 'Smit Tilva',
     image: '/marketing/solutions/sol-beauty-hero.png',
     imageAlt:
       'Short-form video funnel turning Instagram Reels and YouTube Shorts views into ecommerce leads',
@@ -4280,7 +3982,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     id: 26,
-    title: 'Top 5 Product Categories to Sell Online in 2026',
+    title: 'Top 5 Product Categories to Sell Online in India 2026',
     description:
       'The five highest-demand ecommerce categories for 2026 with realistic margins: smart home, eco-friendly, health and wellness, pet care and athleisure.',
     slug: 'trending-products-to-sell-online-india-2026',
@@ -4288,7 +3990,7 @@ export const blogPosts: BlogPost[] = [
     updated: '2026-10-21',
     readTime: '12 min',
     category: 'Guides',
-    author: 'TopEdge',
+    author: 'Smit Tilva',
     image: '/marketing/solutions/sol-beauty-catalog-saas.png',
     imageAlt:
       'Product catalogue view showing high-margin ecommerce categories for an Indian online store',

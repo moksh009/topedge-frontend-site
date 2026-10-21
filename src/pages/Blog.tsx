@@ -54,13 +54,14 @@ export default function Blog() {
       <MarketingPage className="mkt-blog-index">
         <header className="mkt-blog-index__hero">
           <p className="mkt-blog-index__brand">
-            <img src="/brand-mark.png" alt="TopEdge AI" width={22} height={22} decoding="async" />
+            <img src="/brand-mark.png" alt="" aria-hidden width={22} height={22} decoding="async" />
             <span>
               TopEdge <span>AI</span> playbooks
             </span>
           </p>
           <h1 className="mkt-blog-index__title">
-            Operator guides for <span className="mkt-blog-index__title-accent">WhatsApp growth</span>
+            Shopify India operator guides for{' '}
+            <span className="mkt-blog-index__title-accent">WhatsApp growth</span>
           </h1>
           <p className="mkt-blog-index__sub">
             Deep Shopify + WhatsApp playbooks for Indian D2C: cart recovery, COD confirmation, Meta

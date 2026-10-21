@@ -18,7 +18,6 @@ export const CONTENT_DATES = {
 export const BLOG_DATES_BY_SLUG = {
   "whatsapp-abandoned-cart-recovery-shopify": "2026-10-21",
   "shopify-whatsapp-automation-what-to-automate-first": "2026-10-21",
-  "cod-confirmation-whatsapp-reduce-rto-shopify": "2026-10-21",
   "ecommerce-automation-whatsapp-vs-email-india": "2026-10-21",
   "meta-whatsapp-cloud-api-shopify-templates": "2026-10-21",
   "whatsapp-shared-inbox-shopify-order-context": "2026-10-21",
@@ -34,7 +33,6 @@ export const BLOG_DATES_BY_SLUG = {
   "whatsapp-business-api-pricing-india": "2026-10-21",
   "dondy-alternative-shopify-india": "2026-10-21",
   "whatsapp-automation-for-shopify": "2026-10-21",
-  "ai-chatbot-for-shopify": "2026-10-21",
   "best-whatsapp-apps-for-shopify": "2026-10-21",
   "organic-vs-paid-ecommerce-marketing-2026": "2026-10-21",
   "cod-rto-benchmark-india-2026": "2026-10-21",

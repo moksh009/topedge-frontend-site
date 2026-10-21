@@ -174,10 +174,11 @@ function TestimonialCard({
             <em>{item.role}</em>
           </span>
         </div>
-        <div className="home-voices__biz" aria-label="TopEdge AI">
+        <div className="home-voices__biz">
           <img
             src="/brand-mark.png"
-            alt="TopEdge AI"
+            alt=""
+            aria-hidden
             width={22}
             height={22}
             loading="lazy"

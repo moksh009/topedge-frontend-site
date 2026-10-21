@@ -441,7 +441,7 @@ const BENTO = [
  * None of these name a competitor, which this page may not do.
  */
 const POST_SLUGS = [
-  'cod-confirmation-whatsapp-reduce-rto-shopify',
+  'how-to-reduce-rto-with-whatsapp-cod-confirmation',
   'whatsapp-abandoned-cart-recovery-shopify',
   'whatsapp-business-api-pricing-india',
 ];

@@ -109,7 +109,8 @@ export default function CompareIndexPage() {
             <span className="mkt-cmp__h1-brand">
               <img
                 src="/brand-mark.png"
-                alt="TopEdge AI"
+                alt=""
+                aria-hidden
                 width={28}
                 height={28}
                 className="mkt-cmp__h1-mark"
@@ -120,7 +121,7 @@ export default function CompareIndexPage() {
               </span>
             </span>
             <span className="mkt-cmp__h1-vs">vs</span>
-            <span className="mkt-cmp__h1-rest">WhatsApp tools</span>
+            <span className="mkt-cmp__h1-rest">WhatsApp tools for Shopify India</span>
           </h1>
           <p className="mkt-cmpx__sub">
             Side-by-side boards on Meta markup, AI cost, COD → prepaid, and Shopify depth, built

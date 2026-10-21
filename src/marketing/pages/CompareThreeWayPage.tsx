@@ -14,9 +14,9 @@ import '../styles/compare.css';
 
 const PATH = '/compare/topedge-vs-wati-vs-aisensy';
 
-const TITLE = 'TopEdge AI vs WATI vs AiSensy (2026) | WhatsApp Comparison';
+const TITLE = 'TopEdge AI vs WATI vs AiSensy (2026): Shopify India';
 const DESCRIPTION =
-  'TopEdge vs WATI vs AiSensy: template markup, AI cost, COD to prepaid, identity, warranty, and chatflow limits.';
+  '3-way Shopify India WhatsApp comparison: TopEdge AI vs WATI vs AiSensy on Meta template markup, BYOK AI cost, COD to prepaid funnels and chatflow limits.';
 
 const THREE_WAY_FAQS = [
   {
@@ -79,7 +79,8 @@ export default function CompareThreeWayPage() {
             <span className="mkt-cmp__h1-brand">
               <img
                 src="/brand-mark.png"
-                alt="TopEdge AI"
+                alt=""
+                aria-hidden
                 width={28}
                 height={28}
                 className="mkt-cmp__h1-mark"

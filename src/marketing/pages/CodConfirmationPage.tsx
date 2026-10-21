@@ -78,7 +78,7 @@ const READING = [
   { label: 'Profit & costs: measure your own RTO', href: '/features/profit-loss' },
   {
     label: 'COD confirmation on WhatsApp for Shopify',
-    href: '/blog/cod-confirmation-whatsapp-reduce-rto-shopify',
+    href: '/blog/how-to-reduce-rto-with-whatsapp-cod-confirmation',
   },
   {
     label: 'How to reduce RTO on Shopify COD orders',

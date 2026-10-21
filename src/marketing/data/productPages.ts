@@ -694,7 +694,7 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
           'No. TopEdge gates live sends on APPROVED templates so drafts and rejected copy cannot go out and damage quality rating.',
       },
     ],
-    seoTitle: 'WhatsApp Cart Recovery & COD Flows for Shopify | TopEdge AI',
+    seoTitle: 'WhatsApp Cart Recovery & COD Journeys | Shopify India',
     seoDescription:
       'Build WhatsApp journeys for abandoned carts and COD confirmation in a visual editor. Meta approval gating, recovered revenue tracked in ₹. Try free.',
     keywords:
@@ -808,7 +808,7 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     related: [
       { label: 'Cart recovery playbook', href: '/blog/whatsapp-abandoned-cart-recovery-shopify' },
       { label: 'COD confirmation on WhatsApp', href: '/features/cod-confirmation' },
-      { label: 'COD confirmation & RTO', href: '/blog/cod-confirmation-whatsapp-reduce-rto-shopify' },
+      { label: 'COD confirmation & RTO', href: '/blog/how-to-reduce-rto-with-whatsapp-cod-confirmation' },
       { label: 'Meta templates', href: '/features/meta-manager' },
       { label: 'Pricing', href: '/pricing' },
     ],
@@ -839,9 +839,9 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
           'Browse and cart events feed journey triggers and audiences (for example viewed 3×, never bought) when a WhatsApp number is already known or later attached at checkout.',
       },
     ],
-    seoTitle: 'Shopify WhatsApp Tracking Pixel | TopEdge AI',
+    seoTitle: 'Shopify WhatsApp Visitor Identity Tracking Pixel',
     seoDescription:
-      'Shopify tracking pixel: theme embed, product and cart intent matched to WhatsApp, consent-aware events, and pixel health.',
+      'One-click Shopify theme app embed that matches live product views, add-to-cart and browse drop-offs to consented WhatsApp numbers for retargeting journeys.',
     keywords:
       'WhatsApp tracking pixel Shopify, website intent WhatsApp India, Shopify theme app embed tracking, cart recovery analytics WhatsApp',
     hero: {
@@ -1074,7 +1074,7 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     relatedTitle: 'Related in this',
     relatedAccent: 'cluster',
     related: [
-      { label: 'AI chatbot for Shopify', href: '/blog/ai-chatbot-for-shopify' },
+      { label: 'AI WhatsApp chatbot for Shopify India', href: '/blog/ai-whatsapp-chatbot-for-shopify-india' },
       { label: 'AI chatbot playbook (India WhatsApp)', href: '/blog/ai-whatsapp-chatbot-for-shopify-india' },
       { label: 'Intent detection', href: '/features/intent-detection' },
       { label: 'Live Chat', href: '/features' },
@@ -1363,7 +1363,7 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     related: [
       { label: 'Live Chat', href: '/features' },
       { label: 'Intent detection', href: '/features/intent-detection' },
-      { label: 'COD confirmation', href: '/blog/cod-confirmation-whatsapp-reduce-rto-shopify' },
+      { label: 'COD confirmation', href: '/blog/how-to-reduce-rto-with-whatsapp-cod-confirmation' },
       { label: 'Shared inbox playbook', href: '/blog/whatsapp-shared-inbox-shopify-order-context' },
     ],
     ctaTitle: 'Keep Live Chat calm at peak',
@@ -1490,7 +1490,7 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
           'No. It is unit-economics analytics that sits beside WhatsApp growth so teams do not optimize send volume while losing money on COD returns.',
       },
     ],
-    seoTitle: 'Shopify P&L Analytics India | COGS, COD & Net Profit',
+    seoTitle: 'Shopify P&L India: Net Profit After COD, RTO & Ads',
     seoDescription:
       'TopEdge Profit & costs for Shopify India D2C: COGS, packaging, payment fees, COD RTO, marketing, true net profit with a cost waterfall and product margins in ₹.',
     keywords:
@@ -1579,7 +1579,7 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     relatedTitle: 'Works with',
     relatedAccent: 'growth',
     related: [
-      { label: 'COD confirmation', href: '/blog/cod-confirmation-whatsapp-reduce-rto-shopify' },
+      { label: 'COD confirmation', href: '/blog/how-to-reduce-rto-with-whatsapp-cod-confirmation' },
       { label: 'Cart recovery', href: '/features/journeys#abandoned-cart' },
       { label: 'Audience CRM', href: '/features/audience-crm' },
       { label: 'Pricing', href: '/pricing' },

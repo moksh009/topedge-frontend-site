@@ -67,7 +67,7 @@ const INTERAKT_FAQS: Faq[] = [
   {
     question: 'What is the best Interakt alternative for Shopify India?',
     answer:
-      'For a COD-heavy Shopify store that wants flat INR plans, native cart recovery and a COD-to-prepaid path on every plan, TopEdge AI is a close fit. If you already rely on Interakt’s broader catalog and campaign tooling and only want cheaper AI, compare the add-on cost first before moving anything.',
+      'For a COD-heavy Shopify store that wants flat INR plans, 0% Meta markup and native cart recovery on every plan, TopEdge AI is a close fit. Automated COD-to-prepaid conversion sits on Growth and Scale, not on Launch, so check that against your order volume first. If you already rely on Interakt’s broader catalog and campaign tooling and only want cheaper AI, compare the add-on cost before moving anything.',
   },
   {
     question: 'How much does Interakt cost in India?',
@@ -158,7 +158,7 @@ const OPTIN_FAQS: Faq[] = [
 export const blogPostsQ4: BlogPost[] = [
   {
     id: 27,
-    title: 'WATI Alternative for Shopify India (2026)',
+    title: 'Best WATI Alternative for Shopify India (2026)',
     description:
       'Looking for a WATI alternative for Shopify India? What to keep, what to fix (markup, AI access, COD), and how to test a switch in one afternoon.',
     slug: 'wati-alternative-shopify-india',
@@ -231,7 +231,7 @@ ${faqHtml(WATI_FAQS)}
   },
   {
     id: 28,
-    title: 'AiSensy Alternative for Shopify India (2026)',
+    title: 'Best AiSensy Alternative for Shopify India (2026)',
     description:
       'An AiSensy alternative for Shopify India: what AiSensy does well, where COD, AI credits and flow limits bite, and what to test before you switch.',
     slug: 'aisensy-alternative-shopify-india',
@@ -292,13 +292,13 @@ ${faqHtml(AISENSY_FAQS)}
 
 <p>Also compare: <a href="/blog/wati-alternative-shopify-india">WATI alternative</a>, <a href="/blog/interakt-alternative-shopify-india">Interakt alternative</a>, <a href="/blog/bitespeed-alternative-shopify-india">Bitespeed alternative</a>, <a href="/blog/zoko-alternative-shopify-india">Zoko alternative</a>, <a href="/blog/getgabs-alternative-shopify-whatsapp">Getgabs alternative</a>, <a href="/blog/kanal-whatsapp-alternative-shopify">Kanal alternative</a> and <a href="/blog/dondy-alternative-shopify-india">Dondy alternative</a>.</p>
 
-<p>Related: <a href="/blog/whatsapp-business-api-pricing-india">WhatsApp Business API pricing in India</a>, <a href="/pricing">TopEdge pricing</a>, <a href="/blog/cod-confirmation-whatsapp-reduce-rto-shopify">COD confirmation on WhatsApp</a>.</p>
+<p>Related: <a href="/blog/whatsapp-business-api-pricing-india">WhatsApp Business API pricing in India</a>, <a href="/pricing">TopEdge pricing</a>, <a href="/blog/how-to-reduce-rto-with-whatsapp-cod-confirmation">COD confirmation on WhatsApp</a>.</p>
 <p class="mkt-blog-footnote">AiSensy statements reflect public listings and our September 2026 research. Confirm plan limits, credits and fees on aisensy.com before purchase. Per-message rates, categories and volume tiers: <a href="https://developers.facebook.com/docs/whatsapp/pricing/" target="_blank" rel="noopener noreferrer">Meta’s WhatsApp Business Platform pricing documentation</a>. Template categories, review and the reasons templates get rejected: <a href="https://developers.facebook.com/docs/whatsapp/message-templates/guidelines/" target="_blank" rel="noopener noreferrer">Meta’s message template guidelines</a>.</p>
 `,
   },
   {
     id: 29,
-    title: 'Interakt Alternative for Shopify India (2026)',
+    title: 'Best Interakt Alternative for Shopify India (2026)',
     description:
       'An Interakt alternative for Shopify India: pricing from about ₹2,799, AI add-on cost, COD-to-prepaid on higher tiers, and a one-day switch test.',
     slug: 'interakt-alternative-shopify-india',
@@ -363,7 +363,7 @@ ${faqHtml(INTERAKT_FAQS)}
   },
   {
     id: 30,
-    title: 'Bitespeed Alternative for Shopify India (2026)',
+    title: 'Best Bitespeed Alternative for Shopify India (2026)',
     description:
       'A Bitespeed alternative for Shopify India: revenue minimums, USD-style pricing and AI add-ons, versus a flat INR plan sized to your order volume.',
     slug: 'bitespeed-alternative-shopify-india',
@@ -486,7 +486,7 @@ ${faqHtml(TEMPLATE_FAQS)}
   },
   {
     id: 32,
-    title: 'WhatsApp Opt-In for Shopify India: Do It Right',
+    title: 'WhatsApp Opt-In for Shopify India: Checkout, Popups & DPDP',
     description:
       'How to collect WhatsApp opt-in on Shopify in India: checkout, popups, QR and chat, what to record, and how to keep your quality rating healthy.',
     slug: 'whatsapp-opt-in-shopify-india',
@@ -550,7 +550,7 @@ ${faqHtml(OPTIN_FAQS)}
 
 <p>Related: <a href="/blog/meta-whatsapp-cloud-api-shopify-templates">Meta Cloud API templates for Shopify</a>, <a href="/blog/whatsapp-abandoned-cart-recovery-shopify">WhatsApp abandoned cart recovery</a> and <a href="/blog/best-whatsapp-apps-for-shopify">the best WhatsApp apps for Shopify</a>.</p>
 
-<p>Related: <a href="/blog/cod-confirmation-whatsapp-reduce-rto-shopify">COD confirmation on WhatsApp</a>, <a href="https://dash.topedgeai.com/docs" target="_blank" rel="noopener">quickstart</a>.</p>
+<p>Related: <a href="/blog/how-to-reduce-rto-with-whatsapp-cod-confirmation">COD confirmation on WhatsApp</a>, <a href="https://dash.topedgeai.com/docs" target="_blank" rel="noopener">quickstart</a>.</p>
 <p class="mkt-blog-footnote">This article is general information, not legal advice. Check <a href="https://whatsappbusiness.com/policy/" target="_blank" rel="noopener noreferrer">Meta’s current WhatsApp Business Platform policy</a> and take advice on India’s data protection rules for your own flows.</p>
 `,
   },

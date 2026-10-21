@@ -108,8 +108,8 @@ export default function PricingPage() {
             <motion.div {...rise(0)}>
               <PricingSectionHead
                 as="h1"
-                title="Priced by orders,"
-                highlight="not guesswork."
+                title="Shopify WhatsApp pricing, priced by orders,"
+                highlight="with 0% Meta markup."
                 sub={
                   <>
                     Three plans built around how many orders you actually process:{' '}
