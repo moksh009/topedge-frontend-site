@@ -1,0 +1,78 @@
+{
+  "_comment": [
+    "Third-party proof, in one place. Read by the React site (socialProof.ts),",
+    "by scripts/generate-landing-pages.mjs, and asserted by",
+    "scripts/check-landing-pages.mjs.",
+    "",
+    "Nothing in this file may be written from memory. Every field is either read",
+    "off the third-party page by a human on the date in `asOf` / `retrieved`, or",
+    "it does not go in. The review texts are verbatim: they are published on",
+    "Trustpilot under these authors' names, so a tidy-up here is a misquote of a",
+    "real person. check-landing-pages.mjs keeps its own second copy of the three",
+    "texts on purpose, so an edit here that nobody checked against the live page",
+    "fails the build rather than shipping."
+  ],
+  "trustpilot": {
+    "score": "4.0",
+    "reviews": "5",
+    "asOf": "10 October 2026",
+    "retrieved": "6 October 2026",
+    "reviewUrl": "https://www.trustpilot.com/review/topedgeai.com",
+    "profileUrl": "https://www.trustpilot.com/review/topedgeai.com",
+    "businessUnitId": "",
+    "templateId": "53aa8912dec7e10d38f59f36",
+    "locale": "en-IN",
+    "height": "350px",
+    "quotes": [
+      {
+        "text": "The overall software experience is top-notch, it's Indian software but feels like US Grade software quality.",
+        "author": "Tirth P."
+      },
+      {
+        "text": "Topedge helped me a lot to solve issues with my ecomm business like abandoned cart followups, complete tracing of what a lead did and where it dropped off. Their support team is very helpful.",
+        "author": "Shubham P."
+      },
+      {
+        "text": "In 2 days their team built me everything on the software... I'm on their ₹1,999 base plan, and mostly every feature is unlocked on every plan.",
+        "author": "Robin"
+      }
+    ]
+  },
+  "customers": [
+    {
+      "slug": "delitech",
+      "name": "Delitech Smart Home",
+      "logo": "/trust/delitech-white.png",
+      "logoColor": "/trust/delitech.png",
+      "href": "https://delitechsmarthome.in/",
+      "category": "Smart home hardware",
+      "person": "Ved Patel",
+      "role": "Founder, Delitech Smart Home",
+      "headline": "Live in the same week they asked",
+      "quote": "Moksh got our Shopify WhatsApp live the same week we asked. Abandoned carts and COD confirms on one stack — for a smart-home catalog with real AOV, that inbox with order context is what we actually needed.",
+      "facts": [
+        "Shopify + WhatsApp Cloud API connected in the first week",
+        "Abandoned cart and COD confirmation running on one stack",
+        "Order context beside every chat in the shared inbox"
+      ],
+      "art": "/marketing/customers/customers-outcome-cart.png"
+    },
+    {
+      "slug": "apex-light",
+      "name": "Apex Light",
+      "logo": "/trust/apex-white.png",
+      "href": "https://apexlight.in/",
+      "category": "Lighting",
+      "person": "Shubham",
+      "role": "Apex Light",
+      "headline": "One inbox instead of WhatsApp Web and Shopify admin",
+      "quote": "We were juggling WhatsApp Web and Shopify admin for every order question. TopEdge puts the SKU and COD status beside the chat. Recovery sequences finally feel like Apex, not a generic blast.",
+      "facts": [
+        "SKU and COD status surfaced next to the conversation",
+        "Recovery sequences written in the brand's own voice",
+        "One inbox in place of WhatsApp Web plus the Shopify admin"
+      ],
+      "art": "/marketing/customers/customers-outcome-inbox.png"
+    }
+  ]
+}

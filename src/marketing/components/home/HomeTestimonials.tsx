@@ -164,16 +164,11 @@ function TestimonialCard({
       </blockquote>
 
       <footer className="home-voices__person">
+        {/* No portrait here. The slot held the company logo squeezed into a
+            40px circle, which brightness(0) rendered as a featureless black
+            disc; the mark is already at the top of the card at a size it can
+            actually be read at. */}
         <div className="home-voices__who">
-          <img
-            className="home-voices__avatar"
-            src={item.avatar}
-            alt={`Portrait of ${item.name}`}
-            width={40}
-            height={40}
-            loading="lazy"
-            decoding="async"
-          />
           <span>
             <strong>{item.name}</strong>
             <em>{item.role}</em>

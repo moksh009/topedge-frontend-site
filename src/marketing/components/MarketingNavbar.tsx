@@ -201,12 +201,7 @@ export default function MarketingNavbar() {
         >
           <div className="mkt-nav__bar">
             <Link to="/" className="mkt-nav__brand" onClick={() => setOpen(false)}>
-              <BrandMark
-                className="mkt-nav__brand-mark"
-                width={40}
-                height={40}
-                size="md"
-              />
+              <BrandMark className="mkt-nav__brand-mark" width={40} height={40} />
               <span className="mkt-nav__brand-text">
                 TopEdge <span>AI</span>
               </span>

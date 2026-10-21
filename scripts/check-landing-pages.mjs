@@ -27,13 +27,15 @@ const file = path.join(__dirname, '..', 'public', 'lp', 'shopify-whatsapp', 'ind
 const html = fs.readFileSync(file, 'utf8');
 const { FALLBACK_CATALOG, TRIAL } = await loadBillingCatalog();
 
-// The rating assertions compare the page against the generator's TRUSTPILOT
-// block rather than against a number typed in here, so there is one place a
-// refreshed score has to be edited and the check follows it.
+// The rating assertions compare the page against socialProof.json rather than
+// against a number typed in here, so there is one place a refreshed score has
+// to be edited and the check follows it.
 const genSrc = fs.readFileSync(path.join(__dirname, 'generate-landing-pages.mjs'), 'utf8');
-const trustpilot = (key) => (genSrc.match(new RegExp(`^  ${key}: '([^']*)',`, 'm')) || [])[1];
-const TRUSTPILOT_SCORE = trustpilot('score');
-const TRUSTPILOT_REVIEWS = trustpilot('reviews');
+const SOCIAL_PROOF = JSON.parse(
+  fs.readFileSync(path.join(__dirname, '..', 'src', 'marketing', 'data', 'socialProof.json'), 'utf8'),
+);
+const TRUSTPILOT_SCORE = SOCIAL_PROOF.trustpilot.score;
+const TRUSTPILOT_REVIEWS = SOCIAL_PROOF.trustpilot.reviews;
 
 const failures = [];
 const must = (ok, msg) => {
@@ -348,37 +350,40 @@ must(!/\.hero\{[^}]*radial-gradient/.test(html), 'a radial wash is back at the t
 must(/\.alt\{background:#fff\}/.test(html), 'the alternating section tint is back; the page has two surfaces');
 
 // --- The proof row under the hero button ---
-// The paid-traffic audit replaced the faces with a price line and a pull quote.
-// That version was wrong and the owner said so: a row of faces reads as "other
-// founders already did this" in a glance, which is the job above the fold,
-// where a price line reads as a disclaimer. The price still appears, in the
-// pricing section, where someone goes looking for it.
+// The paid-traffic audit replaced this row with a price line and a pull quote.
+// That version was wrong and the owner said so: a row of real businesses reads
+// as "other founders already did this" in a glance, which is the job above the
+// fold, where a price line reads as a disclaimer. The price still appears, in
+// the pricing section, where someone goes looking for it.
+//
+// The row held the founders' photographs until the owner asked for faces off
+// the page; it carries the company marks now, same companies, same order.
 must(/class="hp-faces"/.test(markup), 'the hero proof row is missing');
 const proofRow = (markup.match(/<div class="hp-faces"[\s\S]*?<\/div>/) || [''])[0];
-// Five faces, in the order the owner set: Delitech, then the two Apex Light
-// founders, then Choice Salon and code CLINIC.
-must(count(/class="hp-tip"/g) === 5, 'expected five customer faces, each with a tooltip');
-const photos = [...proofRow.matchAll(/<img [^>]*src="([^"]+)"/g)].map((m) => m[1]);
-must(photos.length === 5, `expected five photographs in the hero stack, found ${photos.length}`);
-// Every face is a file the owner supplied, cropped into the repo. A face loaded
-// from anywhere else is a stock photograph until proven otherwise.
-for (const src of photos) must(src.startsWith('/trust/people/'), `a hero face is not one of the owner's photographs: ${src}`);
-must(!/<img [^>]*alt="[^"]/.test(proofRow), 'a face carries its own alt; the row is already labelled');
+// Five companies, in the order the owner set, matching the ribbon below.
+must(count(/class="hp-tip"/g) === 5, 'expected five customer chips, each with a tooltip');
+const chipMarks = [...proofRow.matchAll(/<img [^>]*src="([^"]+)"/g)].map((m) => m[1]);
+must(chipMarks.length === 5, `expected five company marks in the hero row, found ${chipMarks.length}`);
+// No face may come back here by accident: /trust/people/* is the photograph
+// directory and nothing on this page is allowed to point into it any more.
+for (const src of chipMarks) {
+  must(src.startsWith('/trust/'), `a hero chip is not one of the customer marks: ${src}`);
+  must(!src.startsWith('/trust/people/'), `a founder's photograph is back in the hero row: ${src}`);
+}
+must(!/\/trust\/people\//.test(markup), 'a founder photograph is still on the page');
+must(!/<img [^>]*alt="[^"]/.test(proofRow), 'a chip carries its own alt; the row is already labelled');
 const order = [...proofRow.matchAll(/class="hp-tip">([^<]+)/g)].map((m) => m[1]);
 must(
-  order.join('|') === 'Delitech|Apex Light|Apex Light|Choice Salon|code CLINIC',
-  `the faces are in the wrong order: ${order.join(', ')}`,
+  order.join('|') === 'Delitech|Apex Light|ajeeb|Ecom|Oleez Online',
+  `the hero chips are in the wrong order: ${order.join(', ')}`,
 );
-must(/aria-label="[^"]*Ved Patel of Delitech[^"]*code CLINIC[^"]*"/.test(proofRow), 'the hero face row no longer names the people to a screen reader');
-for (const [brand, person] of [
-  ['Delitech', 'Ved Patel'],
-  ['Choice Salon', 'Shubhash'],
-]) {
+must(/aria-label="[^"]*Ved Patel of Delitech[^"]*Oleez Online[^"]*"/.test(proofRow), 'the hero chip row no longer names the companies to a screen reader');
+for (const [brand, person] of [['Delitech', 'Ved Patel']]) {
   must(proofRow.includes(`${brand}<em>${person}</em>`), `the tooltip does not name ${person} under ${brand}`);
 }
-// Descending z-index, or DOM order puts the last avatar in front, which is the
-// opposite of the order above.
-must(/\.hp-faces>span:nth-child\(1\)\{z-index:5\}/.test(html), 'the avatar stack is no longer ordered front to back');
+// The chips sit side by side at their own widths, so a wordmark is never
+// cropped into a circle. No overlap means no z-index ladder to order.
+must(/\.hp-ph\{[^}]*object-fit:contain/.test(html), 'a hero chip mark is being cropped rather than fitted');
 
 // --- No invented or misleading rating ---
 // A rating was banned outright while the only one available would have been
@@ -431,22 +436,28 @@ must(/\.tp\{[^}]*color:#191919/.test(html), 'the Trustpilot wordmark is painted 
 must(!/[❤♥💖]|&#10084;/.test(markup), 'an emoji is back in the trust copy');
 
 // --- The band under the hero ---
-// The band is where a customer wordmark can actually be read; the hero shows
-// the same four as people. Each mark needs its own alt there. A logo chip on
-// the avatar itself was tried and removed: these files are 2:1 to 4:1
-// wordmarks and a chip that fits a 56px circle crops them to a grey smudge.
+// The band is where a customer wordmark can be read at full size; the hero row
+// above shows the same five companies as chips. Each mark needs its own alt
+// here. Older marks are white-on-transparent and newer ones black; the band
+// paints both with brightness(0), so the suffix differs by file.
 const strip = (markup.match(/<ul class="trust-marks[^"]*">[\s\S]*?<\/ul>/) || [''])[0];
 must(strip !== '', 'the band under the hero is gone');
-for (const logo of ['delitech', 'apex', 'codeclinic', 'choicesalon']) {
-  must(strip.includes(`/trust/${logo}-white.png`), `the band is not showing the ${logo} logo`);
+for (const logo of [
+  'delitech-white',
+  'apex-white',
+  'ajeeb-black',
+  'ecom-black',
+  'oleez-black',
+]) {
+  must(strip.includes(`/trust/${logo}.png`), `the band is not showing the ${logo} logo`);
 }
-// The ribbon holds three copies of the four marks so the loop has no seam.
-// Exactly one copy is announced: a screen reader hearing the same four
-// companies three times is worse than hearing them none.
+// The ribbon holds four copies of the five marks so the loop has no seam.
+// Exactly one copy is announced: a screen reader hearing the same five
+// companies four times is worse than hearing them none.
 const marks = strip.match(/<li[^>]*>\s*<img [^>]*>/g) || [];
-must(marks.length === 16, `expected four copies of four logos in the ribbon, found ${marks.length}`);
+must(marks.length === 20, `expected four copies of five logos in the ribbon, found ${marks.length}`);
 const named = marks.filter((m) => !/aria-hidden/.test(m));
-must(named.length === 4, `${named.length} logo copies are announced; exactly one copy should be`);
+must(named.length === 5, `${named.length} logo copies are announced; exactly one copy should be`);
 for (const m of named) must(/\balt="[^"]{4,}"/.test(m), 'an announced logo in the ribbon has no alt text');
 for (const m of marks.filter((m) => /aria-hidden/.test(m))) {
   must(/\balt=""/.test(m), 'a duplicated logo in the ribbon has alt text; the copies are decoration');

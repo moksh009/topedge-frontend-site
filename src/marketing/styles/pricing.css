@@ -2085,3 +2085,45 @@
     text-align: left;
   }
 }
+
+/* ——— Hero proof: rating, then the customer marks ——— */
+.mkt-pricing__proof {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.35rem;
+  width: min(100%, 1360px);
+  margin: 1.75rem auto 0;
+  padding: 0 1rem;
+}
+
+.mkt-pricing__proof-logos {
+  width: min(100%, 44rem);
+}
+
+/* HomeTrust ships its own "TRUSTED BY" label and marquee; here it only needs
+   to sit quieter than the headline above it. */
+.mkt-pricing__proof-logos .home-trust-logos {
+  max-width: none;
+}
+
+.mkt-pricing__proof-logos .home-trust-logos__label,
+.mkt-pricing__proof-logos .home-trust-logos--on-stage .home-trust-logos__label {
+  margin-bottom: 0.65rem;
+  font-size: 0.625rem;
+  letter-spacing: 0.14em;
+  color: #94a3b8;
+  text-shadow: none;
+}
+
+.mkt-pricing__proof-logos .home-trust-logos__track {
+  gap: 2.75rem;
+}
+
+.mkt-pricing__proof-logos .home-trust-logos--on-stage .home-trust-logos__item img,
+.mkt-pricing__proof-logos .home-trust-logos__item img {
+  height: 19px;
+  max-width: 104px;
+  filter: brightness(0) opacity(0.42);
+  opacity: 1;
+}

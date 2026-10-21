@@ -2,7 +2,6 @@ import { Suspense, lazy, useEffect, useState } from 'react';
 import '../marketing/styles/home.css';
 import MarketingSEO from '../marketing/components/MarketingSEO';
 import { OG_IMAGES } from '../marketing/data/marketingSeo';
-import { faqs } from '../marketing/data/home';
 import {
   organizationJsonLd,
   PAGE_SEO,
@@ -16,7 +15,6 @@ import HomeHero from '../marketing/components/home/HomeHero';
 const HomeStickyStories = lazy(() => import('../marketing/components/home/HomeStickyStories'));
 const HomeCrmSurface = lazy(() => import('../marketing/components/home/HomeCrmSurface'));
 const HomeTestimonials = lazy(() => import('../marketing/components/home/HomeTestimonials'));
-const HomeFaq = lazy(() => import('../marketing/components/home/HomeFaq'));
 const HomeClose = lazy(() => import('../marketing/components/home/HomeClose'));
 
 /**
@@ -65,7 +63,12 @@ export default function Home() {
         image={OG_IMAGES.home}
         path={seo.path}
         noSuffix
-        faqSchema={faqs}
+        // No faqSchema here. The Q&A block came off the homepage (the owner's
+        // call, 21 Oct 2026) and FAQPage markup has to describe content the
+        // reader can actually see on the page it is on, so the schema left
+        // with it. The questions still have a home: /pricing answers the
+        // billing ones and the feature pages answer the product ones, each
+        // with its own visible FAQ and its own schema.
         jsonLd={[organizationJsonLd(), softwareApplicationJsonLd(), websiteJsonLd()]}
         // The hero is now a film (HomeHeroVideo), so its poster frame is the
         // LCP element, not the old product still. Preloading the still here
@@ -87,7 +90,6 @@ export default function Home() {
             <HomeStickyStories />
             <HomeCrmSurface />
             <HomeTestimonials />
-            <HomeFaq />
             <HomeClose />
           </Suspense>
         ) : null}

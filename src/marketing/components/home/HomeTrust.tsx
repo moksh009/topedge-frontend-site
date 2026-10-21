@@ -10,18 +10,23 @@ const logos = [
     href: 'https://apexlight.in/',
   },
   {
-    name: 'code CLINIC',
-    src: '/trust/codeclinic-white.png',
+    name: 'ajeeb',
+    src: '/trust/ajeeb-black.png',
     href: '#',
   },
   {
-    name: 'Choice Salon',
-    src: '/trust/choicesalon-white.png',
+    name: 'Ecom',
+    src: '/trust/ecom-black.png',
+    href: '#',
+  },
+  {
+    name: 'Oleez Online',
+    src: '/trust/oleez-black.png',
     href: '#',
   },
 ];
 
-/** Trusted-logo marquee, white marks only, no wordmark duplicates */
+/** Trusted-logo marquee, black marks only, no wordmark duplicates */
 export default function HomeTrust({ onStage = false }: { onStage?: boolean }) {
   // Two copies are enough for seamless marquee CSS; four bloated the DOM.
   const track = [...logos, ...logos];

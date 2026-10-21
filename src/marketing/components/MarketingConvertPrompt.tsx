@@ -30,8 +30,9 @@ const SKIP_PREFIXES = [
 const BRANDS = [
   { name: 'Delitech Smart Home', src: '/trust/delitech-white.png' },
   { name: 'Apex Light', src: '/trust/apex-white.png' },
-  { name: 'code CLINIC', src: '/trust/codeclinic-white.png' },
-  { name: 'Choice Salon', src: '/trust/choicesalon-white.png' },
+  { name: 'ajeeb', src: '/trust/ajeeb-black.png' },
+  { name: 'Ecom', src: '/trust/ecom-black.png' },
+  { name: 'Oleez Online', src: '/trust/oleez-black.png' },
 ];
 
 function shouldSkipPath(pathname: string) {

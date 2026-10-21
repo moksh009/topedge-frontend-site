@@ -1,0 +1,193 @@
+/* Trustpilot proof — owned by TrustpilotProof.tsx, which imports this file.
+
+   These rules started out in pricing.css and the customers page rendered the
+   same component with none of them: a component that ships markup has to ship
+   the stylesheet for it, or the second page to use it is the one that breaks. */
+
+/* Set as type, not as cards. A boxed quote reads as the designed testimonial
+   every pricing page has and nobody believes; these sit in the page's own
+   column rhythm with a hairline between them, so the words carry it and the
+   attribution is what a reader checks. */
+
+.mkt-tp {
+  margin-top: 3.5rem;
+  padding-top: 2.25rem;
+  border-top: 1px solid var(--mkt-plan-border, #eef0f4);
+}
+
+.mkt-tp__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.85rem 1.75rem;
+  margin-bottom: 1.85rem;
+}
+
+.mkt-tp__title {
+  margin: 0;
+  font-size: clamp(1.15rem, 1.9vw, 1.5rem);
+  font-weight: 400;
+  letter-spacing: -0.028em;
+  line-height: 1.2;
+  color: var(--mkt-plan-ink, #0c1222);
+}
+
+.mkt-tp__intro {
+  margin: 0.4rem 0 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--mkt-plan-muted, #64748b);
+}
+
+/* ——— The score, as Trustpilot draws it ——— */
+.mkt-tp__score {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex-shrink: 0;
+  text-decoration: none;
+  color: inherit;
+}
+
+.mkt-tp__stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.14rem;
+}
+
+.mkt-tp__star {
+  display: block;
+  border-radius: 1px;
+}
+
+.mkt-tp__score-text {
+  font-size: 0.875rem;
+  color: var(--mkt-plan-muted, #64748b);
+  white-space: nowrap;
+}
+
+.mkt-tp__score-text b {
+  font-weight: 600;
+  color: var(--mkt-plan-ink, #0c1222);
+}
+
+/* Trustpilot's name takes Trustpilot's mark and Trustpilot's ink, never
+   our violet: it is their rating, and a recoloured wordmark reads as ours. */
+.mkt-tp__word {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  font-weight: 600;
+  color: #191919;
+}
+
+.mkt-tp__count {
+  font-size: 0.8125rem;
+  color: #94a3b8;
+  white-space: nowrap;
+}
+
+.mkt-tp__score:hover .mkt-tp__score-text b,
+.mkt-tp__score:hover .mkt-tp__word {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ——— The reviews ——— */
+.mkt-tp__list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0 2.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Column, so the three attributions line up along the bottom however long
+   the quotes above them run. Ragged bylines read as three loose paragraphs
+   rather than one row of evidence. */
+.mkt-tp__item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding-left: 2.5rem;
+  border-left: 1px solid var(--mkt-plan-border, #eef0f4);
+}
+
+.mkt-tp__item .mkt-tp__quote {
+  flex: 1 1 auto;
+}
+
+.mkt-tp__item:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+
+.mkt-tp__quote {
+  margin: 0;
+}
+
+.mkt-tp__quote p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #334155;
+  text-wrap: pretty;
+}
+
+.mkt-tp__author {
+  margin: 0.85rem 0 0;
+  font-size: 0.8125rem;
+  font-weight: 550;
+  color: var(--mkt-plan-ink, #0c1222);
+}
+
+.mkt-tp__note {
+  margin: 1.85rem 0 0;
+  font-size: 0.8125rem;
+  color: #94a3b8;
+}
+
+.mkt-tp__note a {
+  color: var(--mkt-plan-muted, #64748b);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.mkt-tp__note a:hover {
+  color: var(--mkt-plan-ink, #0c1222);
+}
+
+@media (max-width: 900px) {
+  .mkt-tp__list {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  /* Stacked, the rule belongs above each quote rather than beside it. */
+  .mkt-tp__item {
+    padding-left: 0;
+    padding-top: 1.5rem;
+    border-left: 0;
+    border-top: 1px solid var(--mkt-plan-border, #eef0f4);
+  }
+
+  .mkt-tp__item:first-child {
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  .mkt-tp__item .mkt-tp__quote {
+    flex: 0 0 auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .mkt-tp__head {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+

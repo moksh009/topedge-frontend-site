@@ -25,6 +25,11 @@ import { loadBillingCatalog, resolveViteEnv } from './load-billing-catalog.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
+
+/** Third-party proof, shared with the React site. See the file's own _comment. */
+const SOCIAL_PROOF = JSON.parse(
+  fs.readFileSync(path.join(root, 'src/marketing/data/socialProof.json'), 'utf8'),
+);
 const lpDir = path.join(__dirname, 'lp');
 /**
  * Byte budget for the whole page, inline CSS and inline JS included.
@@ -159,12 +164,13 @@ const HERO_VARIANTS = {
   },
 };
 
-// Verbatim Trustpilot reviews, retrieved 6 Oct 2026. Do not edit the text.
-const QUOTES = [
-  { text: "The overall software experience is top-notch, it's Indian software but feels like US Grade software quality.", author: 'Tirth P.' },
-  { text: 'Topedge helped me a lot to solve issues with my ecomm business like abandoned cart followups, complete tracing of what a lead did and where it dropped off. Their support team is very helpful.', author: 'Shubham P.' },
-  { text: "In 2 days their team built me everything on the software... I'm on their ₹1,999 base plan, and mostly every feature is unlocked on every plan.", author: 'Robin' },
-];
+/**
+ * Verbatim Trustpilot reviews, retrieved 6 Oct 2026. Do not edit the text: they
+ * are published under these authors' names, so a tidy-up is a misquote of a
+ * real person. check-landing-pages.mjs holds its own second copy and fails the
+ * build if the two diverge.
+ */
+const QUOTES = SOCIAL_PROOF.trustpilot.quotes;
 
 /**
  * One glyph per comparison row, redrawn 13 Oct 2026. The old set was drawn by
@@ -482,37 +488,38 @@ const BADGES = [
 ];
 
 /**
- * The four customers this page may name, as companies. The logo files are
- * white-on-transparent; base.css paints them dark for the light band, and
- * nothing recolours them into our own violet.
+ * The five customers this page may name, as companies. The older files are
+ * white-on-transparent and the newer ones black-on-transparent; base.css runs
+ * every mark through brightness(0) for the light band either way, and nothing
+ * recolours them into our own violet.
  */
 const TRUST_LOGOS = [
   { src: '/trust/delitech-white.png', alt: 'Delitech' },
   { src: '/trust/apex-white.png', alt: 'Apex Light' },
-  { src: '/trust/codeclinic-white.png', alt: 'code CLINIC' },
-  { src: '/trust/choicesalon-white.png', alt: 'Choice Salon' },
+  { src: '/trust/ajeeb-black.png', alt: 'ajeeb' },
+  { src: '/trust/ecom-black.png', alt: 'Ecom' },
+  { src: '/trust/oleez-black.png', alt: 'Oleez Online' },
 ];
 
 /**
- * The same customers as people, for the hero stack. Photographs supplied by the
- * owner on 10 Oct 2026 and cropped to head-and-shoulders squares at 128px; they
- * are the only faces on this site and none of them is stock.
+ * The same customers for the hero row, as company marks rather than faces.
+ * The owner asked for the founders' photographs to come off the page: a logo
+ * says which business is running this, which is the thing a cold Google click
+ * is weighing, and it costs nobody their face on an ad landing page.
  *
- * Order is the owner's: Delitech first, then the two Apex Light founders, with
- * Choice Salon and code CLINIC behind them.
+ * Order matches TRUST_LOGOS, so the hero row and the ribbon below it name the
+ * same companies in the same order. One chip per company — the two Apex Light
+ * founders were two faces but they are one logo.
  *
- * Two names are deliberately blank. The Apex Light photograph shows Shubham
- * Patel and Sanket Patel together and nothing in it says which man is which,
- * so both tooltips name the company only rather than risk putting the wrong
- * name under a real person's face. Fill `name` in and the tooltip picks it up.
- * The same is true of code CLINIC, whose founder's name we were not given.
+ * `name` is optional and only filled where we were actually given one; the
+ * tooltip falls back to the company alone rather than invent a person.
  */
-const PEOPLE = [
-  { photo: '/trust/people/ved-patel.webp', name: 'Ved Patel', company: 'Delitech' },
-  { photo: '/trust/people/apex-a.webp', name: '', company: 'Apex Light' },
-  { photo: '/trust/people/apex-b.webp', name: '', company: 'Apex Light' },
-  { photo: '/trust/people/subhash.webp', name: 'Shubhash', company: 'Choice Salon' },
-  { photo: '/trust/people/codeclinic.webp', name: '', company: 'code CLINIC' },
+const BRAND_CHIPS = [
+  { logo: '/trust/delitech-white.png', name: 'Ved Patel', company: 'Delitech' },
+  { logo: '/trust/apex-white.png', name: '', company: 'Apex Light' },
+  { logo: '/trust/ajeeb-black.png', name: '', company: 'ajeeb' },
+  { logo: '/trust/ecom-black.png', name: '', company: 'Ecom' },
+  { logo: '/trust/oleez-black.png', name: '', company: 'Oleez Online' },
 ];
 
 // The site footer, minus the Compare column (this page may not name a competitor, and
@@ -624,28 +631,13 @@ function planCards(slug) {
  * Once it is set, the cards become the widget's fallback content: they are what shows
  * before the script lands and if it never does, so the proof never disappears.
  */
-const TRUSTPILOT = {
-  /**
-   * The live TrustScore, read off trustpilot.com/review/topedgeai.com by the
-   * owner on 10 Oct 2026 and pasted here. It could not be fetched from the
-   * build container: trustpilot.com does not resolve through the egress proxy
-   * at all, ENOTFOUND on the hostname rather than a refused request, checked
-   * by curl, by fetch and by web search.
-   *
-   * `reviews` ships with it on purpose. A score with no count invites the
-   * reader to assume a large one, and a visitor who follows the link sees the
-   * real number a second later; saying it first costs nothing and buys the
-   * rest of the page some credit. `asOf` is when a human last looked.
-   */
-  score: '4.0',
-  reviews: '5',
-  asOf: '10 October 2026',
-  businessUnitId: '',
-  templateId: '53aa8912dec7e10d38f59f36',
-  locale: 'en-IN',
-  height: '350px',
-  reviewUrl: 'https://www.trustpilot.com/review/topedgeai.com',
-};
+/**
+ * The live TrustScore and the published reviews now live in
+ * src/marketing/data/socialProof.json, because the pricing and customers pages
+ * show the same numbers and the same three reviews. Two copies of a sourced
+ * figure is one copy that goes stale; `asOf` is when a human last looked.
+ */
+const TRUSTPILOT = SOCIAL_PROOF.trustpilot;
 
 const TP_GREEN = '#00b67a';
 const TP_GREY = '#dcdce6';
@@ -958,14 +950,14 @@ function starRow(score) {
 }
 
 /**
- * The proof row under the hero button: the five customers as people, the
- * Trustpilot rating, and one line.
+ * The proof row under the hero button: the five customers as company marks,
+ * the Trustpilot rating, and one line.
  *
  * The paid-traffic audit wanted this replaced by a price line and a pull
  * quote. That version tested worse to the owner's eye and it was right to say
- * so: a row of faces reads as "other founders did this" in a glance, which is
- * the job above the fold, where a price line reads as a disclaimer. The price
- * still appears, in the pricing section where someone goes looking for it.
+ * so: a row of real businesses reads as "other founders did this" in a glance,
+ * which is the job above the fold, where a price line reads as a disclaimer.
+ * The price still appears, in the pricing section where someone goes looking.
  *
  * The review count is not on the visible line. It is the owner's call and the
  * number is one click away on the Trustpilot page the rating links to, so it
@@ -973,17 +965,16 @@ function starRow(score) {
  * it from here. It stays in the accessible text, because a screen reader
  * cannot glance at the link to find it.
  *
- * The company mark was tried on each face and removed: the logo files are 2:1
- * to 4:1 wordmarks, so a chip small enough to sit on a 56px avatar crops
- * DELITECH to a grey smear. The company is named on hover, and shown at a
- * readable size in the ribbon below.
+ * The marks are 2:1 to 4:1 wordmarks, so these are pill chips sitting side by
+ * side rather than the overlapping round avatars the faces used: a wordmark in
+ * a 45px circle crops DELITECH to a grey smear.
  */
 function heroProof() {
-  const faces = PEOPLE.map(
+  const faces = BRAND_CHIPS.map(
     (p2) =>
-      `<span><img class="hp-ph" src="${p2.photo}" alt="" width="128" height="128" decoding="async"><i class="hp-tip">${esc(p2.company)}${p2.name ? `<em>${esc(p2.name)}</em>` : ''}</i></span>`,
+      `<span><img class="hp-ph" src="${p2.logo}" alt="" height="34" decoding="async"><i class="hp-tip">${esc(p2.company)}${p2.name ? `<em>${esc(p2.name)}</em>` : ''}</i></span>`,
   ).join('');
-  const who = PEOPLE.map((p2) => (p2.name ? `${p2.name} of ${p2.company}` : p2.company)).join(', ');
+  const who = BRAND_CHIPS.map((p2) => (p2.name ? `${p2.name} of ${p2.company}` : p2.company)).join(', ');
   const stars = TRUSTPILOT.score
     ? `<p class="hp-stars">${starRow(TRUSTPILOT.score)}<span><b>${esc(TRUSTPILOT.score)}</b> on ${TP_LOCKUP}<i class="vh"> from ${esc(TRUSTPILOT.reviews)} reviews</i></span></p>`
     : `<p class="hp-stars hp-stars--none">${TP_LOCKUP} &mdash; read the reviews</p>`;
@@ -1048,11 +1039,11 @@ const pillarsHtml = `<ul class="pil">${PILLARS.map(
 ).join('')}</ul>`;
 
 /**
- * The customer ribbon. Four copies of the four marks: the band runs full
+ * The customer ribbon. Four copies of the five marks: the band runs full
  * bleed now, so the track has to be long enough to fill any viewport and still
  * travel exactly one copy per lap, which is what keeps the loop seamless. Only
  * the first copy is announced; the rest are aria-hidden, or a screen reader
- * reads the same four companies four times.
+ * reads the same five companies four times.
  */
 const stripHtml = [0, 1, 2, 3]
   .flatMap((copy) =>

@@ -1,4 +1,3 @@
-import { FormEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, MapPin, Phone } from 'lucide-react';
 import {
@@ -11,6 +10,10 @@ import {
   COMPANY_SOCIAL,
   COMPANY_WHATSAPP_URL,
 } from '../legal/companyIdentity';
+
+/** The Meta and Shopify badges each link to the programme they name; this is
+ *  the equivalent page for the third. */
+const WHATSAPP_PLATFORM_URL = 'https://business.whatsapp.com/products/business-platform';
 
 type FootLink = { label: string; href: string; badge?: string };
 
@@ -114,156 +117,111 @@ const socials = [
 ];
 
 /**
- * Minimal site footer, brand + contact first, then sitemap + newsletter.
+ * Minimal site footer: brand, contact and the social row on the left, sitemap
+ * on the right. The newsletter form came out at the owner's request — it was
+ * the only thing in the footer asking for something rather than giving a way
+ * through, and the social links now sit under the WhatsApp line where someone
+ * already looking for a way to reach us will find them.
  */
 export default function MarketingFooter() {
-  const [email, setEmail] = useState('');
-  const [sent, setSent] = useState(false);
-
-  const onSubscribe = (e: FormEvent) => {
-    e.preventDefault();
-    if (!email.trim()) return;
-    setSent(true);
-  };
-
   return (
     <footer className="mkt-foot" aria-label="Site footer">
       <div className="mkt-foot__shell">
-        <div className="mkt-foot__top">
-          <div className="mkt-foot__main">
-            <div className="mkt-foot__brand" aria-label="Company details">
-              <Link to="/" className="mkt-foot__logo" aria-label={`${COMPANY_BRAND_NAME} home`}>
-                <img
-                  src="/logo.png"
-                  alt="TopEdge AI"
-                  width={28}
-                  height={28}
-                  className="mkt-foot__logo-mark"
-                  decoding="async"
-                />
-                <span className="mkt-foot__logo-text">
-                  TopEdge <span>AI</span>
-                </span>
-              </Link>
-              <div className="mkt-foot__company-rows">
-                <p className="mkt-foot__company-row">
-                  <MapPin size={14} strokeWidth={1.75} aria-hidden />
-                  <span className="mkt-foot__company-text">
-                    {COMPANY_ADDRESS_LINES.map((line, i) => (
-                      <span key={line}>
-                        {i > 0 ? <br /> : null}
-                        {line}
-                      </span>
-                    ))}
-                  </span>
-                </p>
-                <p className="mkt-foot__company-row">
-                  <Mail size={14} strokeWidth={1.75} aria-hidden />
-                  <span className="mkt-foot__company-text">
-                    <a href={`mailto:${COMPANY_EMAIL}`}>{COMPANY_EMAIL}</a>
-                  </span>
-                </p>
-                <p className="mkt-foot__company-row">
-                  <Phone size={14} strokeWidth={1.75} aria-hidden />
-                  <span className="mkt-foot__company-text">
-                    <a href={`tel:+${COMPANY_PHONE_E164}`}>{COMPANY_PHONE}</a>
-                    <span className="mkt-foot__company-sep" aria-hidden>
-                      ·
+        <div className="mkt-foot__main">
+          <div className="mkt-foot__brand" aria-label="Company details">
+            <Link to="/" className="mkt-foot__logo" aria-label={`${COMPANY_BRAND_NAME} home`}>
+              <img
+                src="/logo.png"
+                alt="TopEdge AI"
+                width={28}
+                height={28}
+                className="mkt-foot__logo-mark"
+                decoding="async"
+              />
+              <span className="mkt-foot__logo-text">
+                TopEdge <span>AI</span>
+              </span>
+            </Link>
+            <div className="mkt-foot__company-rows">
+              <p className="mkt-foot__company-row">
+                <MapPin size={14} strokeWidth={1.75} aria-hidden />
+                <span className="mkt-foot__company-text">
+                  {COMPANY_ADDRESS_LINES.map((line, i) => (
+                    <span key={line}>
+                      {i > 0 ? <br /> : null}
+                      {line}
                     </span>
-                    <a href={COMPANY_WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
-                      WhatsApp
-                    </a>
+                  ))}
+                </span>
+              </p>
+              <p className="mkt-foot__company-row">
+                <Mail size={14} strokeWidth={1.75} aria-hidden />
+                <span className="mkt-foot__company-text">
+                  <a href={`mailto:${COMPANY_EMAIL}`}>{COMPANY_EMAIL}</a>
+                </span>
+              </p>
+              <p className="mkt-foot__company-row">
+                <Phone size={14} strokeWidth={1.75} aria-hidden />
+                <span className="mkt-foot__company-text">
+                  <a href={`tel:+${COMPANY_PHONE_E164}`}>{COMPANY_PHONE}</a>
+                  <span className="mkt-foot__company-sep" aria-hidden>
+                    ·
                   </span>
-                </p>
-              </div>
+                  <a href={COMPANY_WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+                    WhatsApp
+                  </a>
+                </span>
+              </p>
             </div>
 
-            <nav className="mkt-foot__sitemap" aria-label="Sitemap">
-              {columns.map((col) => (
-                <div key={col.title} className="mkt-foot__col">
-                  <p className="mkt-foot__capsule">{col.title}</p>
-                  <ul className="mkt-foot__list">
-                    {col.links.map((l) => (
-                      <li key={l.href + l.label}>
-                        {l.href.startsWith('http') ? (
-                          <a
-                            href={l.href}
-                            className="mkt-foot__link"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            {l.label}
-                          </a>
-                        ) : (
-                          <Link to={l.href} className="mkt-foot__link">
-                            {l.label}
-                            {l.badge ? <span className="mkt-foot__badge">{l.badge}</span> : null}
-                          </Link>
-                        )}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </nav>
+            <div className="mkt-foot__social">
+              <p className="mkt-foot__social-label">Follow</p>
+              <ul className="mkt-foot__social-list">
+                {socials.map(({ label, href, Icon }) => (
+                  <li key={label}>
+                    <a
+                      href={href}
+                      className="mkt-foot__social-btn"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={label}
+                    >
+                      <Icon />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
 
-          <aside className="mkt-foot__aside">
-            <div className="mkt-foot__news">
-              <p className="mkt-foot__news-eyebrow">Newsletter</p>
-              <h3 className="mkt-foot__news-title">Recovery playbooks in your inbox</h3>
-              <p className="mkt-foot__news-sub">
-                Short WhatsApp + Shopify tips, no fluff.
-              </p>
-              {sent ? (
-                <p className="mkt-foot__news-ok" role="status">
-                  Thanks, you&apos;re on the list. Meanwhile,{' '}
-                  <Link to="/blog">browse the blog</Link>.
-                </p>
-              ) : (
-                <form className="mkt-foot__form" onSubmit={onSubscribe}>
-                  <label className="sr-only" htmlFor="mkt-foot-email">
-                    Email
-                  </label>
-                  <div className="mkt-foot__field">
-                    <input
-                      id="mkt-foot-email"
-                      type="email"
-                      name="email"
-                      required
-                      autoComplete="email"
-                      placeholder="Enter your email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="mkt-foot__input"
-                    />
-                    <button type="submit" className="mkt-foot__subscribe">
-                      Subscribe
-                    </button>
-                  </div>
-                </form>
-              )}
-
-              <div className="mkt-foot__social">
-                <p className="mkt-foot__social-label">Follow</p>
-                <ul className="mkt-foot__social-list">
-                  {socials.map(({ label, href, Icon }) => (
-                    <li key={label}>
-                      <a
-                        href={href}
-                        className="mkt-foot__social-btn"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={label}
-                      >
-                        <Icon />
-                      </a>
+          <nav className="mkt-foot__sitemap" aria-label="Sitemap">
+            {columns.map((col) => (
+              <div key={col.title} className="mkt-foot__col">
+                <p className="mkt-foot__capsule">{col.title}</p>
+                <ul className="mkt-foot__list">
+                  {col.links.map((l) => (
+                    <li key={l.href + l.label}>
+                      {l.href.startsWith('http') ? (
+                        <a
+                          href={l.href}
+                          className="mkt-foot__link"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {l.label}
+                        </a>
+                      ) : (
+                        <Link to={l.href} className="mkt-foot__link">
+                          {l.label}
+                          {l.badge ? <span className="mkt-foot__badge">{l.badge}</span> : null}
+                        </Link>
+                      )}
                     </li>
                   ))}
                 </ul>
               </div>
-            </div>
-          </aside>
+            ))}
+          </nav>
         </div>
 
         <div className="mkt-foot__trust" aria-label="Platform partnerships">
@@ -306,7 +264,13 @@ export default function MarketingFooter() {
               </a>
             </li>
             <li>
-              <span className="mkt-foot__partner" aria-label="WhatsApp Business Partner">
+              <a
+                className="mkt-foot__partner"
+                href={WHATSAPP_PLATFORM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="WhatsApp Business Partner"
+              >
                 <img
                   src="/badges/whatsapp-cloud-api.png?v=5"
                   alt="WhatsApp Business Partner"
@@ -315,7 +279,7 @@ export default function MarketingFooter() {
                   loading="lazy"
                   decoding="async"
                 />
-              </span>
+              </a>
             </li>
           </ul>
         </div>

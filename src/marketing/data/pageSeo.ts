@@ -1,4 +1,5 @@
 import { SITE_URL } from './marketingSeo';
+import { TRUSTPILOT } from './socialProof';
 import { COMPANY_LEGAL_NAME, COMPANY_SHOPIFY_APP_URL } from '../legal/companyIdentity';
 import {
   catalogDefaultCycleOffersJsonLd,
@@ -65,11 +66,11 @@ export const PAGE_SEO = {
     path: '/integrations',
   },
   customers: {
-    title: 'Indian Shopify Brands & Customer Stories | TopEdge AI',
+    title: 'Shopify WhatsApp Case Studies, India | TopEdge AI',
     description:
-      'Customer stories from Indian D2C brands running WhatsApp cart recovery and COD flows with TopEdge on Shopify.',
+      'How Indian D2C brands run WhatsApp abandoned cart recovery and COD confirmation on Shopify with TopEdge, in their own words, plus published Trustpilot reviews.',
     keywords:
-      'WhatsApp marketing Shopify case study, cart recovery results India, D2C WhatsApp automation',
+      'Shopify WhatsApp case study India, WhatsApp cart recovery results, D2C WhatsApp automation customers, TopEdge AI reviews',
     path: '/customers',
   },
   compare: {
@@ -97,11 +98,11 @@ export const PAGE_SEO = {
     path: '/about',
   },
   contact: {
-    title: 'Contact Us for Shopify WhatsApp Automation | TopEdge AI',
+    title: 'Contact TopEdge AI on WhatsApp | Shopify Automation',
     description:
-      'Talk to us about WhatsApp automation, abandoned cart recovery, COD flows, or fully managed setup for your Shopify store in India.',
+      'Message us on WhatsApp or Instagram about Shopify WhatsApp automation, abandoned cart recovery and COD confirmation. No form, India-based team, same-day replies.',
     keywords:
-      'WhatsApp automation demo, Shopify WhatsApp consultation, cart recovery setup India',
+      'contact TopEdge AI, WhatsApp automation support India, Shopify WhatsApp consultation, cart recovery setup India',
     path: '/contact',
   },
 } as const satisfies Record<string, PageSeoEntry>;
@@ -371,6 +372,10 @@ export function organizationJsonLd() {
       'https://www.instagram.com/topedge_ai/',
       'https://www.youtube.com/@topedge_ai',
       COMPANY_SHOPIFY_APP_URL,
+      // Listed because it exists and the site links to it from /pricing and
+      // /customers. Gemini and Perplexity both surfaced the Trustpilot profile
+      // while sameAs did not name it, which is how an entity gets split.
+      TRUSTPILOT.profileUrl,
     ],
     contactPoint: {
       '@type': 'ContactPoint',

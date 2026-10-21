@@ -1,0 +1,248 @@
+/* Contact — two channels, then the things that are not a sales question.
+   No form: the old one posted its fields into a WhatsApp message anyway, so
+   it was four inputs standing in front of the channel it was going to use. */
+
+.mkt-contact {
+  background: #fff;
+  color: #0c1222;
+}
+
+.mkt-contact__hero {
+  width: min(100%, 48rem);
+  margin: 0 auto;
+  padding: clamp(5.75rem, 11vw, 7.75rem) 1.25rem 0;
+  text-align: center;
+}
+
+.mkt-contact__eyebrow {
+  margin: 0 0 0.75rem;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #7c3aed;
+}
+
+.mkt-contact__title {
+  margin: 0;
+  font-size: clamp(1.5rem, 3.4vw, 2.45rem);
+  font-weight: 400;
+  letter-spacing: -0.034em;
+  line-height: 1.16;
+  color: #0c1222;
+  text-wrap: balance;
+}
+
+.mkt-contact__title-accent {
+  font-weight: 400;
+  color: #5b21b6;
+  background: #ede9fe;
+  border-radius: 0.5em;
+  padding: 0.04em 0.22em 0.06em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.mkt-contact__sub {
+  margin: 0.95rem auto 0;
+  max-width: 38rem;
+  font-size: clamp(0.95rem, 1.5vw, 1.05rem);
+  line-height: 1.6;
+  color: #64748b;
+  text-wrap: pretty;
+}
+
+.mkt-contact__score {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.35rem;
+}
+
+/* ——— The two channels ———
+   Wide targets rather than cards in a sidebar: these are the page, so they
+   get the page's width and its first screen. */
+.mkt-contact__channels {
+  width: min(100%, 56rem);
+  margin: clamp(2.25rem, 4.5vw, 3.25rem) auto 0;
+  padding: 0 1.25rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.mkt-contact__channel {
+  --channel-ink: #7c3aed;
+  --channel-wash: #f5f3ff;
+  display: flex;
+  gap: 1rem;
+  padding: 1.5rem;
+  border: 1px solid #eef0f4;
+  border-radius: 1.1rem;
+  background: #fff;
+  text-decoration: none;
+  color: inherit;
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease;
+}
+
+.mkt-contact__channel:hover {
+  transform: translateY(-2px);
+  border-color: #ddd6fe;
+  box-shadow: 0 18px 32px -24px rgba(46, 16, 101, 0.45);
+}
+
+/* Each channel wears its own colour, because that is the thing being
+   recognised: a violet WhatsApp tile reads as our button, not as WhatsApp. */
+.mkt-contact__channel--whatsapp {
+  --channel-ink: #1da851;
+  --channel-wash: #e9f8ef;
+}
+
+.mkt-contact__channel--whatsapp:hover {
+  border-color: #b7e4c9;
+  box-shadow: 0 18px 32px -24px rgba(16, 92, 51, 0.4);
+}
+
+.mkt-contact__channel--instagram {
+  --channel-ink: #c13584;
+  --channel-wash: #fdf0f7;
+}
+
+.mkt-contact__channel--instagram:hover {
+  border-color: #f4c7e2;
+  box-shadow: 0 18px 32px -24px rgba(145, 32, 97, 0.38);
+}
+
+.mkt-contact__channel-mark {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 2.85rem;
+  height: 2.85rem;
+  border-radius: 0.85rem;
+  background: var(--channel-wash);
+  color: var(--channel-ink);
+}
+
+.mkt-contact__channel-body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.mkt-contact__channel-head {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: #0c1222;
+}
+
+.mkt-contact__channel-label {
+  font-size: 1.05rem;
+  font-weight: 550;
+  letter-spacing: -0.018em;
+}
+
+.mkt-contact__channel-head svg {
+  color: #cbd5e1;
+  transition: color 0.18s ease, transform 0.18s ease;
+}
+
+.mkt-contact__channel:hover .mkt-contact__channel-head svg {
+  color: var(--channel-ink);
+  transform: translate(1px, -1px);
+}
+
+.mkt-contact__channel-lede {
+  margin-top: 0.3rem;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: #64748b;
+  text-wrap: pretty;
+}
+
+.mkt-contact__channel-action {
+  margin-top: 0.85rem;
+  font-size: 0.9375rem;
+  font-weight: 550;
+  color: var(--channel-ink);
+}
+
+.mkt-contact__channel-note {
+  margin-top: 0.3rem;
+  font-size: 0.78125rem;
+  color: #94a3b8;
+}
+
+/* ——— Everything that is not a sales question ——— */
+.mkt-contact__rest {
+  width: min(100%, 56rem);
+  margin: clamp(3rem, 6vw, 4.25rem) auto 0;
+  padding: clamp(2.25rem, 4.5vw, 3rem) 1.25rem clamp(4rem, 8vw, 6rem);
+  border-top: 1px solid #eef0f4;
+}
+
+.mkt-contact__rest-head {
+  margin: 0 0 1.5rem;
+  font-size: clamp(1.1rem, 2.1vw, 1.4rem);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  color: #0c1222;
+}
+
+.mkt-contact__rows {
+  margin: 0;
+  display: grid;
+  gap: 0;
+}
+
+.mkt-contact__row {
+  display: grid;
+  grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+  gap: 0.35rem 2rem;
+  padding: 1rem 0;
+  border-top: 1px solid #f1f5f9;
+}
+
+.mkt-contact__row:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.mkt-contact__row dt {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #0c1222;
+}
+
+.mkt-contact__row dd {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: #64748b;
+  text-wrap: pretty;
+}
+
+.mkt-contact__row a {
+  color: #7c3aed;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.mkt-contact__row a:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+@media (max-width: 760px) {
+  .mkt-contact__channels {
+    grid-template-columns: 1fr;
+  }
+
+  .mkt-contact__row {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+  }
+}

@@ -18,15 +18,14 @@ import IncludedFeatures from '../components/pricing/IncludedFeatures';
 import PricingFaq, { PRICING_FAQS } from '../components/pricing/PricingFaq';
 import PricingSectionHead from '../components/pricing/PricingSectionHead';
 import PricingSalesCta from '../components/pricing/PricingSalesCta';
+import TrustpilotProof, { TrustpilotScore } from '../components/TrustpilotProof';
+import HomeTrust from '../components/home/HomeTrust';
 import {
   BillingCatalog,
   BillingCycle,
   FALLBACK_CATALOG,
   GST_FOOTNOTE,
-  TRIAL,
-  dispatchLabel,
   fetchBillingCatalog,
-  planPricing,
 } from '../lib/billingCatalog';
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -119,6 +118,17 @@ export default function PricingPage() {
                 }
               />
             </motion.div>
+
+            {/* The rating and the customer marks sit with the headline rather
+                than at the bottom of the page. Someone who lands on /pricing
+                from an ad has already decided to judge the number; who else is
+                paying it is the question they ask in the same breath. */}
+            <motion.div className="mkt-pricing__proof" {...rise(0.1)}>
+              <TrustpilotScore compact />
+              <div className="mkt-pricing__proof-logos">
+                <HomeTrust onStage />
+              </div>
+            </motion.div>
           </header>
 
           <motion.div
@@ -145,63 +155,7 @@ export default function PricingPage() {
 
             <IncludedFeatures items={catalog.universalFeatures} />
 
-            {/*
-              Plain-text plan summary. Every value is read from the catalog, so it
-              cannot drift from the cards above, and it stays in the DOM at every
-              breakpoint for crawlers and LLMs that do not run the cycle toggle.
-            */}
-            <section className="mkt-pricing__plan-text" aria-labelledby="plan-summary-head">
-              <h2 className="mkt-pricing__plan-text-head" id="plan-summary-head">
-                Plan summary
-              </h2>
-              <div className="mkt-pricing__text-table-wrap">
-                <table className="mkt-pricing__text-table">
-                  <thead>
-                    <tr>
-                      <th scope="col">Plan</th>
-                      <th scope="col">Monthly</th>
-                      <th scope="col">Yearly (per month)</th>
-                      <th scope="col">Orders / month</th>
-                      <th scope="col">Journey Branch</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {catalog.plans.map((p) => (
-                      <tr key={p.slug}>
-                        <th scope="row">{p.displayName}</th>
-                        <td data-label="Monthly">{p.monthlyPriceLabel}/mo</td>
-                        <td data-label="Yearly (per month)">
-                          {planPricing(p, 'yearly').effectiveMonthlyLabel}/mo ({p.yearlyPriceLabel}
-                          /yr)
-                        </td>
-                        <td data-label="Orders / month">
-                          {Number(p.ordersPerCycle).toLocaleString('en-IN')}
-                        </td>
-                        <td data-label="Journey Branch">
-                          {p.features.journeyBranch ? 'Yes' : 'No — Growth and Scale only'}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              <ul className="mkt-pricing__plan-text-list">
-                {catalog.plans.map((p) => (
-                  <li key={p.slug}>
-                    <strong>{p.displayName}:</strong>{' '}
-                    {Number(p.campaignEmailSendsPerCycle).toLocaleString('en-IN')} campaign + email
-                    sends / month · COD → prepaid:{' '}
-                    {p.features.journeyCodPrepaid ? 'Yes' : 'No'} ·{' '}
-                    {dispatchLabel(p.features.dispatchPriority)}
-                  </li>
-                ))}
-              </ul>
-              <p className="mkt-pricing__plan-text-note">
-                Every plan includes a {catalog.trialDays || TRIAL.days}-day free trial. {GST_FOOTNOTE} Meta WhatsApp
-                Cloud API messaging is billed separately at Meta&rsquo;s published per-message
-                rates, passed through at 0% markup.
-              </p>
-            </section>
+            <TrustpilotProof intro="Published reviews from merchants running TopEdge on Shopify." />
 
             <FeatureMatrix plans={catalog.plans} cycle={cycle} />
 

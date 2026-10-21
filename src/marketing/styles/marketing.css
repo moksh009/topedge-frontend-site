@@ -1567,25 +1567,29 @@ html.mkt-nav-locked .mkt-nav__mobile-scroll {
   }
 }
 
+/* Full bleed on the nav band's own gutter. This was a 1180px column with a
+   ~1rem inset, which on a wide screen left the footer floating in the middle
+   with far more air at the edges than the navbar above it. The clamp here is
+   the one in .mkt-nav__bar; change them together. */
 .mkt-foot__shell {
   position: relative;
   z-index: 2;
-  width: min(100%, 1180px);
-  margin: 0 auto;
-  padding: clamp(2.25rem, 3.5vw, 2.85rem) clamp(0.85rem, 2vw, 1.35rem) 1.25rem;
+  width: 100%;
+  margin: 0;
+  padding: clamp(2.25rem, 3.5vw, 2.85rem) clamp(1rem, 4vw, 2rem) 1.25rem;
 }
 
-.mkt-foot__top {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(16.5rem, 18.75rem);
-  gap: clamp(1.25rem, 2.2vw, 1.75rem);
-  align-items: start;
+@media (min-width: 1024px) {
+  .mkt-foot__shell {
+    padding-left: clamp(2rem, 8vw, 10rem);
+    padding-right: clamp(2rem, 8vw, 10rem);
+  }
 }
 
 .mkt-foot__main {
   display: grid;
-  grid-template-columns: minmax(11.75rem, 13.25rem) minmax(0, 1fr);
-  gap: clamp(1.25rem, 2.2vw, 1.85rem);
+  grid-template-columns: minmax(13rem, 17rem) minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
   align-items: start;
   min-width: 0;
 }
@@ -1697,148 +1701,20 @@ html.mkt-nav-locked .mkt-nav__mobile-scroll {
   border: none;
 }
 
-.mkt-foot__aside {
-  display: flex;
-  flex-direction: column;
-}
-
-.mkt-foot__news {
-  display: flex;
-  flex-direction: column;
-  padding: 0.9rem 0.95rem 0.85rem;
-  border-radius: 0.85rem;
-  overflow: hidden;
-  background: #fafafa;
-  border: 1px solid #e8edf3;
-  box-shadow: none;
-}
-
-.mkt-foot__news-head {
-  display: none;
-}
-
-.mkt-foot__news-art {
-  display: none;
-}
-
-.mkt-foot__news-art img {
-  display: none;
-}
-
-.mkt-foot__news-eyebrow {
-  margin: 0;
-  padding: 0;
-  border: none;
-  border-radius: 0;
-  font-size: 0.625rem;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: #94a3b8;
-  background: transparent;
-}
-
-.mkt-foot__news-title {
-  margin: 0.4rem 0 0;
-  font-size: 0.875rem;
-  font-weight: 500;
-  letter-spacing: -0.025em;
-  line-height: 1.3;
-  color: #0c1222;
-  white-space: normal;
-}
-
-.mkt-foot__news-sub {
-  margin: 0.28rem 0 0;
-  font-size: 0.75rem;
-  line-height: 1.4;
-  color: #64748b;
-}
-
-.mkt-foot__news-ok {
-  margin: 0.7rem 0 0;
-  font-size: 0.78rem;
-  line-height: 1.4;
-  color: #475569;
-}
-
-.mkt-foot__news-ok a {
-  color: #7c3aed;
-  font-weight: 450;
-  text-decoration: none;
-}
-
-.mkt-foot__form {
-  margin: 0.75rem 0 0;
-}
-
-.mkt-foot__field {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  min-height: 2.35rem;
-  padding: 0.2rem 0.2rem 0.2rem 0.7rem;
-  border-radius: 999px;
-  background: #fff;
-  border: 1px solid #e8edf3;
-  box-shadow: none;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
-}
-
-.mkt-foot__field:focus-within {
-  border-color: #c4b5fd;
-  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
-}
-
-.mkt-foot__input {
-  flex: 1;
-  min-width: 0;
-  min-height: 1.9rem;
-  padding: 0;
-  border: none;
-  background: transparent;
-  font-size: 0.78rem;
-  color: #0c1222;
-  outline: none;
-}
-
-.mkt-foot__input::placeholder {
-  color: #94a3b8;
-}
-
-.mkt-foot__input:focus {
-  border: none;
-  box-shadow: none;
-}
-
-.mkt-foot__subscribe {
-  flex-shrink: 0;
-  min-height: 1.9rem;
-  padding: 0 0.8rem;
-  border-radius: 999px;
-  border: none;
-  background: #7c3aed;
-  color: #fff;
-  font-size: 0.75rem;
-  font-weight: 450;
-  cursor: pointer;
-  transition: background 0.15s ease;
-}
-
-.mkt-foot__subscribe:hover {
-  background: #6d28d9;
-}
-
+/* Under the WhatsApp line in the brand column: the two are the same thing —
+   ways to reach us — so they read as one block with a rule between them
+   rather than as a card off to the side. */
 .mkt-foot__social {
   display: flex;
   align-items: center;
-  gap: 0.55rem;
-  margin-top: 0.75rem;
+  gap: 0.6rem;
+  margin-top: 0.25rem;
   min-height: 0;
-  padding: 0.7rem 0 0;
+  padding: 0.85rem 0 0;
   background: transparent;
   color: #64748b;
   border-top: 1px solid #f1f5f9;
+  align-self: stretch;
 }
 
 .mkt-foot__social-label {
@@ -2025,58 +1901,16 @@ a.mkt-foot__partner:hover {
 }
 
 @media (max-width: 980px) {
-  .mkt-foot__top {
-    grid-template-columns: 1fr;
-  }
-
   .mkt-foot__main {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
-
-  .mkt-foot__aside {
-    max-width: 28rem;
-  }
-
-  .mkt-foot__news-title {
-    white-space: normal;
-  }
 }
 
 @media (max-width: 720px) {
-  .mkt-foot__shell {
-    padding-left: 0.85rem;
-    padding-right: 0.85rem;
-  }
-
   .mkt-foot__sitemap {
     grid-template-columns: 1fr;
     gap: 1.35rem;
-  }
-
-  .mkt-foot__aside {
-    max-width: none;
-  }
-
-  .mkt-foot__news-title {
-    white-space: normal;
-  }
-
-  .mkt-foot__field {
-    flex-wrap: wrap;
-    border-radius: 1rem;
-    padding: 0.4rem;
-  }
-
-  .mkt-foot__input {
-    width: 100%;
-    min-height: 2.35rem;
-    padding: 0 0.5rem;
-  }
-
-  .mkt-foot__subscribe {
-    width: 100%;
-    min-height: 2.35rem;
   }
 
   .mkt-foot__trust {
@@ -2101,16 +1935,7 @@ a.mkt-foot__partner:hover {
     grid-template-columns: 1fr;
     gap: 1.25rem;
   }
-
-  .mkt-foot__social {
-    flex-direction: row;
-    align-items: center;
-    border-radius: 0;
-    padding: 0.85rem 0 0;
-    gap: 0.55rem;
-  }
 }
-
 
 /* ------------------------------------------------------------------ *
    Nav menu, matched to the reference: no icons, one continuous white
@@ -2215,7 +2040,6 @@ a.mkt-foot__partner:hover {
   font-size: 1rem;
   font-weight: 700;
 }
-
 
 /* The sheet's own "Explore" label stays hidden — it names the sheet rather
    than a group inside it. The column headings are back; see the block at

@@ -1,41 +1,3 @@
-export const faqs = [
-  {
-    question: 'What is WhatsApp automation for Shopify?',
-    answer:
-      'TopEdge connects your Shopify store to Meta WhatsApp Cloud API so you can run abandoned cart recovery, COD confirmations, order updates, and campaigns from one ecommerce automation workspace.',
-  },
-  {
-    question: 'How does abandoned cart recovery on WhatsApp work?',
-    answer:
-      'When a shopper leaves items in cart, Journey triggers Meta-approved WhatsApp nudges with product context. Most merchants go live after template approval, typically 24 to 48 hours.',
-  },
-  {
-    question: 'How long does Shopify WhatsApp setup take?',
-    answer:
-      'Most brands connect Shopify and WhatsApp in about 15 minutes. Nothing sends until you approve each Meta template.',
-  },
-  {
-    question: 'Do I need a developer for ecommerce automation?',
-    answer:
-      'No. Connect Shopify via OAuth, add WhatsApp credentials, generate flows from an AI form, and publish cart recovery journeys without code.',
-  },
-  {
-    question: 'Can TopEdge handle COD confirmation on WhatsApp?',
-    answer:
-      'Yes. Journeys branch on COD status, rupee totals, and RTO-aware copy, built for Indian D2C checkout patterns.',
-  },
-  {
-    question: 'How does Meta WhatsApp billing work?',
-    answer:
-      'Meta charges per message category. TopEdge shows transparent rates and passes through Cloud API costs with no markup.',
-  },
-  {
-    question: 'Is there a free trial for WhatsApp automation?',
-    answer:
-      'Start free with a 14-day trial, 20 orders, and 200 campaign + email sends. Pick Launch, Growth, or Scale after signup.',
-  },
-];
-
 /** Homepage only: Instantly-style stories, crisp copy, no filler */
 export const homeStories = [
   {
@@ -195,7 +157,6 @@ export const testimonials = [
     brandLogo: '/trust/delitech.png',
     brandLogoAlt: 'Delitech Smart Home',
     metric: 'Same-week go-live',
-    avatar: '/trust/delitech.png',
     tone: 'violet' as const,
   },
   {
@@ -208,40 +169,11 @@ export const testimonials = [
     brandLogo: '/trust/apex-white.png',
     brandLogoAlt: 'Apex Light',
     metric: 'Inbox + orders',
-    avatar: '/trust/apex-white.png',
     tone: 'amber' as const,
-  },
-  {
-    quote:
-      'Choice Salon runs on WhatsApp more than email. Cart nudges and follow-ups go out without the team copy-pasting all evening. The TopEdge boys know how Indian shops actually work.',
-    name: 'Shubhash Bhai',
-    role: 'Choice Salon',
-    company: 'Choice Salon',
-    brand: 'CHOICE',
-    brandLogo: '/trust/choicesalon-white.png',
-    brandLogoAlt: 'Choice Salon',
-    metric: 'WhatsApp-first ops',
-    avatar: '/trust/choicesalon-white.png',
-    tone: 'rose' as const,
-  },
-  {
-    quote:
-      'Flow Builder drafted our first WhatsApp bot in minutes — we tweaked a few nodes and went live before the weekend rush. No agency sprint. That’s why we stuck with Moksh’s team.',
-    name: 'Steven Mugabe',
-    role: 'code CLINIC',
-    company: 'code CLINIC',
-    brand: 'code CLINIC',
-    brandLogo: '/trust/codeclinic-white.png',
-    brandLogoAlt: 'code CLINIC',
-    metric: 'Minutes to first flow',
-    avatar: '/trust/codeclinic-white.png',
-    tone: 'emerald' as const,
   },
 ];
 
 export const recoveryToasts = [
   { store: 'Delitech Smart Home', amount: '₹4,299', item: 'Smart switch kit', time: '2m ago' },
   { store: 'Apex Light', amount: '₹2,499', item: 'LED panel light', time: '5m ago' },
-  { store: 'Choice Salon', amount: '₹1,899', item: 'Hair care bundle', time: '8m ago' },
-  { store: 'code CLINIC', amount: '₹3,150', item: 'Care package', time: '12m ago' },
 ];
