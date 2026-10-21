@@ -259,7 +259,7 @@ export default function HomeTestimonials({ hideHeader = false }: { hideHeader?: 
               <span className="home-voices__hl">we work with</span>
             </h2>
             <p className="home-voices__sub">
-              Cart recovery, COD confirms, and inbox wins — in their words.
+              Cart recovery, COD confirms, and inbox wins, in their words.
             </p>
           </header>
         )}

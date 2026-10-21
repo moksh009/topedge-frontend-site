@@ -84,6 +84,13 @@ const blogPosts = maxIso(
 const features = isoDateFromMtime('src/marketing/data/features.ts');
 const productPages = isoDateFromMtime('src/marketing/data/productPages.ts');
 const billingCatalog = isoDateFromMtime('src/marketing/lib/billingCatalog.ts');
+// The published Offers and the page that presents them change independently.
+// lastmod is about the page a crawler fetches, so it follows the later of the two.
+const pricingPage = maxIso(
+  billingCatalog,
+  isoDateFromMtime('src/marketing/pages/PricingPage.tsx'),
+  isoDateFromMtime('src/marketing/styles/pricing.css'),
+);
 
 const compareTwoWay = maxIso(compareCompetitors, compareFeatureMatrix);
 const compareThreeWay = maxIso(compareThreeWayPage, compareFeatureMatrix);
@@ -97,13 +104,43 @@ for (const [slug, d] of Object.entries(blogBySlug)) {
   if (!d) blogBySlug[slug] = blogPosts;
 }
 
+/**
+ * Standalone pages, each tracking its own source.
+ *
+ * These used to fall through to `featurePages`, which is the mtime of
+ * features.ts / productPages.ts. So editing a product page moved the lastmod
+ * on /privacy and /terms, whose text had not changed at all. Repeatedly
+ * moving lastmod without changing content teaches Google to ignore the field,
+ * which costs us the only thing it is good for (audit TE-022).
+ */
+const legal = maxIso(
+  isoDateFromMtime('src/pages/PrivacyPolicy.tsx'),
+  isoDateFromMtime('src/marketing/pages/TermsPage.tsx'),
+);
+const customers = maxIso(
+  isoDateFromMtime('src/marketing/pages/CustomersPage.tsx'),
+  isoDateFromMtime('src/marketing/data/socialProof.json'),
+  isoDateFromMtime('src/marketing/styles/customers.css'),
+);
+const contact = maxIso(
+  isoDateFromMtime('src/pages/Contact.tsx'),
+  isoDateFromMtime('src/marketing/styles/contact.css'),
+);
+const about = isoDateFromMtime('src/pages/About.tsx');
+const integrations = isoDateFromMtime('src/marketing/pages/IntegrationsPage.tsx');
+
 const payload = {
   compareTwoWay,
   compareThreeWay,
   blogPosts,
   featurePages,
-  pricing: billingCatalog,
+  pricing: pricingPage,
   home,
+  legal,
+  customers,
+  contact,
+  about,
+  integrations,
   blogBySlug,
 };
 
@@ -121,7 +158,7 @@ export const CONTENT_DATES = {
   /** Last edit of feature / product page content. */
   featurePages: '${featurePages}',
   /** Last edit of published plan catalog (pricing Offers). */
-  pricing: '${billingCatalog}',
+  pricing: '${pricingPage}',
 } as const;
 
 export const BLOG_DATES_BY_SLUG = ${JSON.stringify(blogBySlug, null, 2)} as const;
@@ -135,5 +172,5 @@ fs.writeFileSync(outJson, JSON.stringify(payload, null, 2) + '\n', 'utf8');
 console.log(`✅ Wrote ${outFile}`);
 console.log(`✅ Wrote ${outJson} (${Object.keys(blogBySlug).length} blog lastmods)`);
 console.log(
-  `   compareTwoWay=${compareTwoWay}  compareThreeWay=${compareThreeWay}  blogPosts=${blogPosts}  featurePages=${featurePages}  pricing=${billingCatalog}`,
+  `   compareTwoWay=${compareTwoWay}  compareThreeWay=${compareThreeWay}  blogPosts=${blogPosts}  featurePages=${featurePages}  pricing=${pricingPage}`,
 );

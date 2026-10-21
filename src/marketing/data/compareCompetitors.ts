@@ -271,7 +271,7 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
       competitor,
     })),
     matrixNote:
-      'Zoko plans and conversation rates as of September 2026 from zoko.io/pricing and apps.shopify.com/whatsapp-button-chat (Starter $49.99 · Plus $79.99 · Elite $139.99 · Max $499.99; Shopify reviews ~445). Confirm live before purchase — figures change.',
+      'Zoko plans and conversation rates as of September 2026 from zoko.io/pricing and apps.shopify.com/whatsapp-button-chat (Starter $49.99 · Plus $79.99 · Elite $139.99 · Max $499.99; Shopify reviews ~445). Confirm live before purchase; figures change.',
     related: [
       { label: 'Alternatives index', href: '/compare/alternatives' },
       { label: 'vs Bitespeed', href: '/compare/bitespeed' },
@@ -306,7 +306,7 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
       competitor,
     })),
     matrixNote:
-      'Getgabs pricing as of September 2026: getgabs.com lists Basic $15 · Plus $21 · Pro $59 (0% Meta markup claimed). Shopify App Store (apps.shopify.com/getgabs-whatsapp-chatbot-api) shows free to install, Plus $11/mo, Pro $59/mo, ~15 reviews. Figures disagree across surfaces — confirm live before purchase.',
+      'Getgabs pricing as of September 2026: getgabs.com lists Basic $15 · Plus $21 · Pro $59 (0% Meta markup claimed). Shopify App Store (apps.shopify.com/getgabs-whatsapp-chatbot-api) shows free to install, Plus $11/mo, Pro $59/mo, ~15 reviews. Figures disagree across surfaces, so confirm live before purchase.',
     related: [
       { label: 'Alternatives index', href: '/compare/alternatives' },
       { label: 'vs Zoko', href: '/compare/zoko' },
@@ -341,7 +341,7 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
       competitor,
     })),
     matrixNote:
-      'Kanal plans as of September 2026 from getkanal.com/pricing: Pro €89 · Scale €149 · Business €350 · Agency €1,900 /mo. Shopify App Store (apps.shopify.com/kanal-marketing-ai) shows Pro/Scale in USD (~$89/$149) and ~97 reviews @ 5.0 — verify live; currency display differs by surface.',
+      'Kanal plans as of September 2026 from getkanal.com/pricing: Pro €89 · Scale €149 · Business €350 · Agency €1,900 /mo. Shopify App Store (apps.shopify.com/kanal-marketing-ai) shows Pro/Scale in USD (~$89/$149) and ~97 reviews @ 5.0. Verify live; currency display differs by surface.',
     related: [
       { label: 'Alternatives index', href: '/compare/alternatives' },
       { label: 'vs Bitespeed', href: '/compare/bitespeed' },
@@ -446,7 +446,7 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
       competitor,
     })),
     matrixNote:
-      'Board compiled Sep 2026 from TopEdge product positioning vs publicly described Gupshup CPaaS / Conversation Studio / Auto Bot patterns. Gupshup enterprise quotes and fee cards move—verify messaging fees, AI packaging, and module gates on gupshup.io (and any regional sales deck) before purchase.',
+      'Board compiled Sep 2026 from TopEdge product positioning vs publicly described Gupshup CPaaS / Conversation Studio / Auto Bot patterns. Gupshup enterprise quotes and fee cards move, so verify messaging fees, AI packaging, and module gates on gupshup.io (and any regional sales deck) before purchase.',
     related: [
       { label: 'All comparisons', href: '/compare' },
       { label: 'Alternatives index', href: '/compare/alternatives' },

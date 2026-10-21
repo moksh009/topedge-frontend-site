@@ -26,7 +26,7 @@ export const PRICING_FAQS = [
   },
   {
     q: 'Which plans include Journey Branch?',
-    a: 'Journey Branch — routing a WhatsApp journey down a different path based on a condition — is available on Growth and Scale only. Launch does not include it.',
+    a: 'Journey Branch, which routes a WhatsApp journey down a different path based on a condition, is available on Growth and Scale only. Launch does not include it.',
   },
 ];
 

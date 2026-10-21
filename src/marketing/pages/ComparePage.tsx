@@ -319,7 +319,7 @@ export default function ComparePage({ competitor: competitorProp }: Props) {
                     Plan fit
                   </th>
                   <td className="mkt-cmp__duel-cell is-te">{teBest.note}</td>
-                  <td className="mkt-cmp__duel-cell">{compBest.note || '—'}</td>
+                  <td className="mkt-cmp__duel-cell">{compBest.note || 'n/a'}</td>
                 </tr>
 
                 {duelFeatures.map((row) => (

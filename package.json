@@ -27,7 +27,14 @@
     "lint": "eslint . --fix",
     "preview": "vite preview",
     "capture-showcases": "node scripts/capture-showcases.mjs",
-    "check:blog": "node scripts/check-blog-links.mjs"
+    "check:blog": "node scripts/check-blog-links.mjs && node scripts/check-blog-sources.mjs",
+    "check:blog-sources": "node scripts/check-blog-sources.mjs",
+    "index:submit": "node scripts/submit-index.mjs",
+    "index:changed": "node scripts/submit-index.mjs --changed",
+    "index:list": "node scripts/submit-index.mjs --dry-run",
+    "gsc:auth": "node scripts/gsc-auth.mjs",
+    "index:after-deploy": "node scripts/submit-index.mjs --wait",
+    "index:queues": "node scripts/index-queues.mjs"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.17",

@@ -646,7 +646,7 @@ export const ZOKO_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
     label: 'AI / auto order agents',
     description: 'How AI replies and order collection are priced.',
     topedge: 'BYOK + RAG on core plans (~₹0.2–₹0.3 / message)',
-    competitor: 'AI agents billed per resolution (e.g. ~$0.09/resolution on Guru/WISMO; Sello % of order value) — verify live',
+    competitor: 'AI agents billed per resolution (e.g. ~$0.09/resolution on Guru/WISMO; Sello % of order value; verify live)',
   },
   {
     id: 'intent-routing',
@@ -703,7 +703,7 @@ export const ZOKO_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
     label: 'India payment / commerce hooks',
     description: 'UPI / Razorpay / in-chat commerce patterns.',
     topedge: 'Shopify checkout partners + WhatsApp journeys',
-    competitor: 'Strong India commerce positioning (UPI/Razorpay, catalog, CTWA) — verify live',
+    competitor: 'Strong India commerce positioning (UPI/Razorpay, catalog, CTWA; verify live)',
   },
 ];
 
@@ -721,7 +721,7 @@ export const GETGABS_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
     label: 'AI chatbot',
     description: 'AI replies included vs metered.',
     topedge: 'BYOK + RAG on core plans',
-    competitor: 'AI AnswerNode included on website plans with crawl limits / add-ons — verify live',
+    competitor: 'AI AnswerNode included on website plans with crawl limits / add-ons (verify live)',
   },
   {
     id: 'unified-identity',
@@ -770,7 +770,7 @@ export const GETGABS_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
     label: 'Entry pricing',
     description: 'Cost to start.',
     topedge: 'Launch ₹1,999/mo (published INR)',
-    competitor: 'Free to install on Shopify; paid from ~$11–$15/mo (App Store / getgabs.com — verify live)',
+    competitor: 'Free to install on Shopify; paid from ~$11–$15/mo (App Store / getgabs.com; verify live)',
   },
 ];
 
@@ -788,7 +788,7 @@ export const KANAL_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
     label: 'AI agent',
     description: 'Where AI unlocks.',
     topedge: 'BYOK + RAG on core plans',
-    competitor: 'AI Agent on Scale+ (€149+) — verify live',
+    competitor: 'AI Agent on Scale+ (€149+; verify live)',
   },
   {
     id: 'klaviyo',
@@ -849,14 +849,14 @@ export const DONDYY_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
     description: 'What you pay versus Meta’s own marketing rate.',
     topedge: '0% markup; Meta pass-through on flat INR plans',
     competitor:
-      'Published rate table is ~60% above Meta marketing rates (India $0.01888/msg on dondy.net — verify Meta’s card live)',
+      'Published rate table is ~60% above Meta marketing rates (India $0.01888/msg on dondy.net; verify Meta’s card live)',
   },
   {
     id: 'ai-llm',
     label: 'AI sales / support agent',
     description: 'Where AI unlocks.',
     topedge: 'Intelligence / BYOK on core plans',
-    competitor: 'AI chatbot for sales & support on Elite ($159.99/mo) — Shopify listing',
+    competitor: 'AI chatbot for sales & support on Elite ($159.99/mo, per the Shopify listing)',
   },
   {
     id: 'cod-prepaid',
@@ -899,7 +899,7 @@ export const DONDYY_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
     label: 'India / INR positioning',
     description: 'Built for Indian D2C operators.',
     topedge: 'India-first: INR pricing, COD, Meta gating',
-    competitor: 'USD plans; public languages are EN/ES/IT/PT-BR/FR — not India-specific',
+    competitor: 'USD plans; public languages are EN/ES/IT/PT-BR/FR, not India-specific',
   },
   {
     id: 'flow-cap',
@@ -907,7 +907,7 @@ export const DONDYY_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
     description: 'Concrete message-line math, before subscription.',
     topedge: '1,000 India marketing messages ≈ Meta’s own rate (0% platform markup)',
     competitor:
-      '1,000 × India table rate $0.01888 ≈ $18.88 vs ~$11.80 at Meta $0.0118 — about $7.08 / 60% more on the message line',
+      '1,000 × India table rate $0.01888 ≈ $18.88 vs ~$11.80 at Meta $0.0118, about $7.08 / 60% more on the message line',
   },
 ];
 
@@ -1065,7 +1065,7 @@ export const GUPSHUP_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
     topedge:
       '0% WhatsApp API platform markup (Direct Meta API Billing on your Meta Business Account)',
     competitor:
-      'Applies a platform processing markup (Gupshup Fee) on every single template message sent — confirm current fee card live',
+      'Applies a platform processing markup (Gupshup Fee) on every single template message sent; confirm the current fee card live',
   },
   {
     id: 'opt-in-widgets',

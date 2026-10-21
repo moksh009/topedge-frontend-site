@@ -67,7 +67,7 @@ export default function HomeHero() {
               </h1>
               <p className="home-hero__sub">
                 Live Chat with Shopify order context, Meta-approved journeys, and a 14-day free
-                trial—typically live in about fifteen minutes.
+                trial, typically live in about fifteen minutes.
               </p>
               <div className="home-hero__actions">
                 <PrimaryButton to="/signup">

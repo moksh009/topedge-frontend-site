@@ -58,7 +58,7 @@ export const COMPARE_ALTERNATIVES: AlternativeEntry[] = [
     href: '/compare/getgabs',
     logo: '/marketing/compare/compare-logo-getgabs.svg',
     logoAlt: 'Getgabs logo',
-    oneLiner: 'Low-cost WhatsApp entry (free to install; paid from ~$11–$15/mo) — check tier gates for depth.',
+    oneLiner: 'Low-cost WhatsApp entry (free to install; paid from ~$11–$15/mo). Check tier gates for depth.',
   },
   {
     slug: 'kanal',

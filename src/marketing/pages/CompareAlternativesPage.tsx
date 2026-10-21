@@ -75,7 +75,7 @@ export default function CompareAlternativesPage() {
           </div>
           <p className="mkt-cmp__fine" style={{ maxWidth: '42rem', marginBottom: '1.25rem' }}>
             One honest line per competitor. Open the full board for pricing footnotes, scorecards,
-            and plan tables — figures are verified against each vendor’s live pricing or Shopify
+            and plan tables. Figures are verified against each vendor’s live pricing or Shopify
             listing when we publish, and still need a live check before you buy.
           </p>
 

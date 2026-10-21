@@ -22,6 +22,11 @@ function loadContentDates() {
     blogPosts: today,
     featurePages: today,
     pricing: today,
+    legal: today,
+    customers: today,
+    contact: today,
+    about: today,
+    integrations: today,
     blogBySlug: {},
   };
 }
@@ -41,7 +46,11 @@ const priorityFor = (p) => {
 function lastmodFor(p) {
   if (p === '/') return dates.home || dates.featurePages;
   if (p === '/pricing') return dates.pricing;
-  if (p === '/privacy' || p === '/terms') return dates.featurePages;
+  if (p === '/privacy' || p === '/terms') return dates.legal || dates.featurePages;
+  if (p === '/customers') return dates.customers || dates.featurePages;
+  if (p === '/contact') return dates.contact || dates.featurePages;
+  if (p === '/about') return dates.about || dates.featurePages;
+  if (p === '/integrations') return dates.integrations || dates.featurePages;
   if (p === '/compare/topedge-vs-wati-vs-aisensy') return dates.compareThreeWay;
   if (p.startsWith('/compare/')) return dates.compareTwoWay;
   if (p.startsWith('/blog/')) {

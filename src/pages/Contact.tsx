@@ -101,8 +101,8 @@ export default function Contact() {
             <span className="mkt-contact__title-accent">message everyone</span>
           </h1>
           <p className="mkt-contact__sub">
-            No form, no callback queue. Send us the store and what you want automated first —
-            WhatsApp cart recovery, COD confirmation, or the whole rollout — and you will be
+            No form, no callback queue. Send us the store and what you want automated first:
+            WhatsApp cart recovery, COD confirmation, or the whole rollout, and you will be
             talking to the people who build it.
           </p>
           <div className="mkt-contact__score">

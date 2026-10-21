@@ -11,7 +11,7 @@ export const DESC_MAX = 165;
 /** Default OG image dimensions for public/og-share.jpg (measured 2026-09-27). */
 export const OG_IMAGE_WIDTH = 1280;
 export const OG_IMAGE_HEIGHT = 720;
-export const OG_IMAGE_ALT_DEFAULT = 'TopEdge — WhatsApp automation for Shopify India';
+export const OG_IMAGE_ALT_DEFAULT = 'TopEdge: WhatsApp automation for Shopify India';
 
 export type SnippetBudgetResult = {
   ok: boolean;
