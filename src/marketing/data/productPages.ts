@@ -46,6 +46,31 @@ export type ProductShowcase = {
   anchor?: string;
 };
 
+/**
+ * A sourced data table rendered under the showcases.
+ *
+ * Added for /features/profit-loss, where the 2026-10-21 research pass found the
+ * page asserting that COD and RTO eat margin without ever showing the rupee
+ * lines. An AI engine will not repeat a claim it cannot read a number off, and
+ * a worked table is also the thing an operator links to. `note` carries the
+ * citation, so no figure here is published without the page it was read from.
+ */
+export type ProductProofTable = {
+  title: string;
+  titleAccent?: string;
+  /** Short lead-in above the table. */
+  intro?: string;
+  columns: string[];
+  /** First cell of each row renders as a row header. */
+  rows: string[][];
+  /** Rows to render emphasised (0-indexed into `rows`). */
+  emphasise?: number[];
+  /** Sourcing footnote. Required in practice: cite or do not publish. */
+  note: string;
+  /** Optional closing paragraphs under the note. */
+  takeaways?: string[];
+};
+
 export type ProductPage = {
   id: ProductPageId;
   /** Canonical public path */
@@ -79,6 +104,8 @@ export type ProductPage = {
   showcasesAccent: string;
   showcasesSub?: string;
   showcases: ProductShowcase[];
+  /** Sourced worked example, rendered after the showcases. */
+  proofTable?: ProductProofTable;
   stepsTitle: string;
   stepsAccent: string;
   steps: { title: string; body: string }[];
@@ -113,8 +140,8 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     path: '/features/flow-builder',
     featureSlug: 'flow-builder',
     eyebrow: 'Flow Builder',
-    title: 'WhatsApp flows that',
-    titleAccent: 'know Shopify',
+    title: 'WhatsApp flow builder for Shopify:',
+    titleAccent: 'flows that know your store',
     subtitle:
       'Look up orders, update addresses, and hand off to Live Chat.\nShopify sync built for India D2C WhatsApp support.',
     answerFirst:
@@ -129,6 +156,16 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
         question: 'Can flows hand off to a human with order context?',
         answer:
           'Yes. Escalate into Live Chat so agents see the same Shopify order beside the thread, and takeover pauses automation on that chat.',
+      },
+      {
+        question: 'Do I need to write code to build a flow?',
+        answer:
+          'No. Flows are built on a canvas with Shopify tools as nodes, so order lookup, address capture and Live Chat handoff are drag and drop. Developers are not in the loop for a normal flow change.',
+      },
+      {
+        question: 'What should stay a flow instead of becoming AI?',
+        answer:
+          'Anything where a wrong answer costs money. Exchange steps, address updates and refund paths should be deterministic flows; open-ended catalog questions are where AI earns its place.',
       },
     ],
     seoTitle: 'WhatsApp Flow Builder for Shopify India | TopEdge AI',
@@ -254,8 +291,8 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     path: '/features/opt-in-tools',
     featureSlug: 'opt-in-tools',
     eyebrow: 'Opt-in tools',
-    title: 'Capture WhatsApp numbers',
-    titleAccent: 'on your storefront',
+    title: 'Shopify WhatsApp opt-in popups,',
+    titleAccent: 'spin wheel and widgets',
     subtitle:
       'Capture consented WhatsApp numbers on your storefront.\nThen run campaigns and journeys from one list.',
     answerFirst:
@@ -270,6 +307,16 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
         question: 'Can I run journeys only to consented shoppers?',
         answer:
           'Yes. Use the consented list as the audience for campaigns and journey eligibility so Meta marketing sends stay tied to real opt-in.',
+      },
+      {
+        question: 'Which opt-in tools are included, and on which plan?',
+        answer:
+          'Pulse Drop, the welcome popup, spin the wheel, the mystery discount and the chat widget are on every plan, including Launch. There is no separate opt-in add-on.',
+      },
+      {
+        question: 'Does a spin wheel or popup count as valid WhatsApp consent?',
+        answer:
+          'Only if the shopper actively opts in and you log it. Keep the box unticked by default, record what was agreed and when, and keep that record, because Meta judges your quality rating on who complains.',
       },
     ],
     seoTitle: 'WhatsApp Opt-in Tools for Shopify India | TopEdge AI',
@@ -382,8 +429,8 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     path: '/features/campaigns',
     featureSlug: 'campaigns',
     eyebrow: 'Campaigns',
-    title: 'Audience campaigns',
-    titleAccent: 'that attribute revenue',
+    title: 'WhatsApp campaigns for Shopify India',
+    titleAccent: 'that attribute revenue in ₹',
     subtitle:
       'Segment shoppers, send Meta-approved templates, and measure revenue.\nProfit after fees, not vanity send counts.',
     answerFirst:
@@ -398,6 +445,16 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
         question: 'How do you measure campaign success?',
         answer:
           'Attribute clicks and orders back to the send, then read net-of-Meta ₹ where available, so finance sees profit, not only delivery counts.',
+      },
+      {
+        question: 'How many campaign sends does each plan include?',
+        answer:
+          'Launch includes 3,000 campaign plus email sends a month, Growth 15,000 and Scale 30,000. The trial includes 200. Meta charges its own per-message rate on top, billed to your Business Account.',
+      },
+      {
+        question: 'Can a campaign send to a template Meta has not approved yet?',
+        answer:
+          'No. Anything not APPROVED is blocked from sending rather than queued, because a rejected template that goes out anyway is how a WhatsApp number loses its quality rating.',
       },
     ],
     seoTitle: 'WhatsApp Campaigns for Shopify India | Meta-Safe Sends',
@@ -524,8 +581,8 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     path: '/features/audience-crm',
     featureSlug: 'audience-crm',
     eyebrow: 'Audience CRM',
-    title: 'One shopper across',
-    titleAccent: 'chats, orders & care',
+    title: 'WhatsApp audience CRM for Shopify:',
+    titleAccent: 'one shopper, every order',
     subtitle:
       'One timeline for WhatsApp chats, Shopify orders, and care.\nScore leads and build segments in-product.',
     answerFirst:
@@ -540,6 +597,16 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
         question: 'Can segments feed campaigns and journeys?',
         answer:
           'Yes. Build segments from purchase and engagement signals, then use them in Campaigns or journey eligibility without exporting CSVs.',
+      },
+      {
+        question: 'How many customer profiles can I keep?',
+        answer:
+          'Profiles are not metered on any plan. The plan is sized by Shopify orders a month, 100 on Launch, 800 on Growth and 1,500 on Scale, so growing your list does not change the bill.',
+      },
+      {
+        question: 'What happens when the same buyer has two phone numbers?',
+        answer:
+          'They merge into one profile, with both numbers, past orders and conversation history on a single timeline. That is what stops the same person getting the same campaign twice.',
       },
     ],
     seoTitle: 'WhatsApp Audience CRM for Shopify India | Segments',
@@ -666,8 +733,8 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     path: '/features/journeys',
     featureSlug: 'journeys',
     eyebrow: 'Journey',
-    title: 'Build WhatsApp journeys for cart recovery and',
-    titleAccent: 'COD confirmation',
+    title: 'Shopify abandoned cart recovery and',
+    titleAccent: 'COD confirmation on WhatsApp',
     subtitle:
       'Abandoned cart, COD confirm, and shipping on a visual canvas.\nMeta-approved templates, recovered ₹, not vanity sends.',
     answerFirst:
@@ -821,8 +888,8 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     path: '/features/analytics',
     featureSlug: 'analytics',
     eyebrow: 'Tracking Pixel',
-    title: 'Website intent,',
-    titleAccent: 'matched to WhatsApp',
+    title: 'Shopify visitor identity pixel:',
+    titleAccent: 'match browse intent to WhatsApp',
     subtitle:
       'One-click Shopify embed for views, carts, and checkout.\nFeed journeys with consent-aware site intent.',
     answerFirst:
@@ -837,6 +904,16 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
         question: 'How does the pixel help cart recovery?',
         answer:
           'Browse and cart events feed journey triggers and audiences (for example viewed 3×, never bought) when a WhatsApp number is already known or later attached at checkout.',
+      },
+      {
+        question: 'Is the pixel on every plan?',
+        answer:
+          'Yes, including Launch. It installs as a Shopify theme app embed, so it is a settings toggle rather than a code change, and it is not a paid add-on.',
+      },
+      {
+        question: 'What happens if a visitor has not given a WhatsApp number yet?',
+        answer:
+          'The browse and cart events are held against the anonymous visitor and attach to the profile later, at checkout or at opt-in. Nothing is messaged to someone who has not consented.',
       },
     ],
     seoTitle: 'Shopify WhatsApp Visitor Identity Tracking Pixel',
@@ -962,8 +1039,8 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     path: '/features/ai-brain',
     featureSlug: 'ai-brain',
     eyebrow: 'AI Brain',
-    title: 'WhatsApp AI on your',
-    titleAccent: 'own API keys',
+    title: 'BYOK AI WhatsApp chatbot for',
+    titleAccent: 'Shopify India',
     subtitle:
       'Bring your own OpenAI or Claude keys.\nGround replies in catalog and policies, takeover pauses AI.',
     answerFirst:
@@ -983,6 +1060,11 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
         question: 'Can AI invent prices or stock?',
         answer:
           'It should not. Load store knowledge and policies first, keep Quick FAQs for rigid answers, and escalate disputes to Live Chat with order context.',
+      },
+      {
+        question: 'Who pays for the AI tokens?',
+        answer:
+          'You do, directly to OpenAI, Anthropic or Google, because you connect your own key. There is no per-message AI charge from us on any plan, and the estimated cost is roughly ₹0.10 to ₹0.30 per AI reply depending on the model.',
       },
     ],
     seoTitle: 'WhatsApp AI for Shopify India (BYOK) | TopEdge AI',
@@ -1089,8 +1171,8 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     path: '/features/meta-manager',
     featureSlug: 'meta-manager',
     eyebrow: 'Meta Manager',
-    title: 'Approve templates',
-    titleAccent: 'before anything sends',
+    title: 'Meta WhatsApp templates for Shopify:',
+    titleAccent: 'approve before anything sends',
     subtitle:
       'Templates, Blueprints, catalog, and QR in one place.\nOnly APPROVED copy ever reaches Journeys and campaigns.',
     answerFirst:
@@ -1110,6 +1192,11 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
         question: 'Where do approved templates get used?',
         answer:
           'Pick APPROVED templates in Journeys, Flow Builder, Campaigns, and Live Chat composer when outside the 24h customer care window.',
+      },
+      {
+        question: 'Do my approved templates survive a platform change?',
+        answer:
+          'Yes. Templates belong to your WhatsApp Business Account, not to the platform that submitted them. Keep the Meta Business Account in your own name and the library follows you.',
       },
     ],
     seoTitle: 'Meta WhatsApp Templates for Shopify India | Approvals',
@@ -1235,8 +1322,8 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     path: '/features/chat-rules',
     featureSlug: 'chat-rules',
     eyebrow: 'Chat rules',
-    title: 'Route the right chats',
-    titleAccent: 'to the right people',
+    title: 'WhatsApp chat routing rules for',
+    titleAccent: 'Shopify support teams',
     subtitle:
       'Route COD, refunds, and VIP chats to the right people.\nKeep Live Chat calm when volume spikes.',
     answerFirst:
@@ -1251,6 +1338,16 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
         question: 'Do rules work with AI takeover?',
         answer:
           'Yes. Routing lands the chat correctly; Live Chat takeover still pauses AI/flows when an agent takes control.',
+      },
+      {
+        question: 'Are chat rules available on Launch?',
+        answer:
+          'Yes. Keyword and intent routing, assignment and escalation are on every plan. What Growth and Scale add is Journey Branch and automated COD to prepaid, not inbox routing.',
+      },
+      {
+        question: 'Does a rule keep firing after an agent takes the chat?',
+        answer:
+          'No. Takeover pauses automation and AI on that thread until it is released, so a customer never gets a bot reply in the middle of a human conversation.',
       },
     ],
     seoTitle: 'WhatsApp Chat Rules for Shopify India | Auto-Route',
@@ -1375,8 +1472,8 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     path: '/features/warranty',
     featureSlug: 'warranty',
     eyebrow: 'Warranty',
-    title: 'Digital warranty',
-    titleAccent: 'workspace',
+    title: 'Shopify digital warranty registration',
+    titleAccent: 'on WhatsApp',
     subtitle:
       'Warranty records tied to Shopify orders in one hub.\nAssign, track, and close, no spreadsheet chase.',
     answerFirst:
@@ -1392,12 +1489,37 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
         answer:
           'India D2C brands that sell products needing post-purchase warranty tracking without a separate spreadsheet workflow.',
       },
+      {
+        question: 'Does the customer need an app or a login to register a warranty?',
+        answer:
+          'No. Registration and claim status run through a mobile page with a WhatsApp OTP, so the buyer uses the number they already ordered with.',
+      },
+      {
+        question: 'Is the warranty hub on every plan?',
+        answer:
+          'Yes, on Launch, Growth and Scale. It is part of the workspace rather than a paid module.',
+      },
+      {
+        question: 'What does WhatsApp OTP warranty registration cost per customer?',
+        answer:
+          'One Meta authentication template, which is ₹0.1150 per delivered message on Meta’s published India rate card before 18% GST, billed by Meta directly to your own account at 0% TopEdge markup. Claim status updates sent as utility templates cost the same ₹0.1150. Registering 1,000 warranties therefore costs about ₹115 in Meta fees.',
+      },
+      {
+        question: 'Which kinds of brands get the most out of a warranty hub?',
+        answer:
+          'High-ticket categories where the product outlives the order: electronics, appliances, smart home and lighting. ClickPost puts electronics RTO at 10% to 15%, the lower end of Indian category bands, because these are considered purchases with a higher prepaid share. That same buyer expects a warranty record, and WhatsApp is where they will ask for it rather than an email thread.',
+      },
+      {
+        question: 'Do competing WhatsApp platforms include warranty management?',
+        answer:
+          'Not natively, on our reading of their public product surfaces as of 21 October 2026. WATI, AiSensy, Interakt, Bitespeed, Zoko and Updatrr route warranty work to an external CRM, a spreadsheet or custom webhooks. That is why warranty appears as a TopEdge row on every pairwise comparison board. Verify against each vendor’s live documentation before you rely on it.',
+      },
     ],
-    seoTitle: 'Digital Warranty for Shopify India | Assign & Track',
+    seoTitle: 'Shopify Digital Warranty on WhatsApp with OTP Signup',
     seoDescription:
-      'Warranty workspace for Shopify India brands: hub list with status badges, unassigned queue, and assign to orders or teammates beside WhatsApp Live Chat.',
+      'Automate Shopify warranty batches, QR registration with WhatsApp OTP at ₹0.115 a message, and claim status updates tied to unified customer profiles.',
     keywords:
-      'digital warranty Shopify India, product warranty ecommerce, warranty assignment Shopify, WhatsApp warranty aftercare D2C',
+      'shopify digital warranty registration whatsapp otp india, digital warranty Shopify India, product warranty ecommerce, warranty assignment Shopify, WhatsApp warranty aftercare D2C, warranty OTP WhatsApp India',
     hero: {
       kind: 'image',
       src: '/warranty-sub-feature/manual-assign.png',
@@ -1472,8 +1594,8 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     path: '/features/profit-loss',
     featureSlug: 'profit-loss',
     eyebrow: 'Profit & costs',
-    title: 'After Indian D2C costs,',
-    titleAccent: 'what did I keep?',
+    title: 'Shopify P&L after COD, RTO and ads:',
+    titleAccent: 'what did I actually keep?',
     subtitle:
       'India-aware P&L with COGS, COD, RTO, fees, and ads.\nSee net profit, not vanity revenue.',
     answerFirst:
@@ -1489,12 +1611,37 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
         answer:
           'No. It is unit-economics analytics that sits beside WhatsApp growth so teams do not optimize send volume while losing money on COD returns.',
       },
+      {
+        question: 'Which costs does it subtract before showing net profit?',
+        answer:
+          'Cost of goods, packaging, payment gateway fees, shipping, COD RTO losses and ad spend. That is the gap between revenue and what finance actually banks, which is why ROAS can look healthy while margin is gone.',
+      },
+      {
+        question: 'Can I see margin per product rather than per store?',
+        answer:
+          'Yes. The product table shows margin percentage per SKU, which is usually where a single loss-making variant is hiding behind a profitable average.',
+      },
+      {
+        question: 'How do you calculate true net profit per order for an Indian D2C brand?',
+        answer:
+          'Subtract the India-specific cost lines from net sales rather than from revenue: product COGS, packaging at roughly ₹12 to ₹24 a box, forward freight priced on volumetric weight (length x width x height / 5,000), the COD remittance fee at about ₹30 a parcel, amortised RTO loss of around ₹38 per shipped order at a 30% COD RTO rate, payment gateway fees, and acquisition cost. On Amazon Shipping India’s worked ₹799 kurta example those lines turn ₹85 of visible freight into ₹179 of true cost. Profit & costs builds that waterfall from your own Shopify data.',
+      },
+      {
+        question: 'How much does one RTO order actually cost?',
+        answer:
+          '₹180 to ₹240 in direct logistics per returned parcel, per Amazon Shipping India: ₹60 to ₹100 forward shipping, ₹50 to ₹80 reverse logistics, ₹20 to ₹40 repackaging and quality check, and ₹10 to ₹20 inventory holding. ClickPost puts the fully loaded loss at ₹450 to ₹900 once written-off acquisition spend is counted. Because RTO amortises across every parcel you ship, cutting it improves margin on all orders at once, not just the returned ones.',
+      },
+      {
+        question: 'Why is Shopify admin revenue misleading for a COD brand?',
+        answer:
+          'Because it reports the order, not the outcome. A COD order that is refused at the door still appears as revenue in the admin view until it is cancelled, while the forward freight, reverse logistics and acquisition spend behind it are already gone. Unicommerce recorded festive-quarter COD return rates near 58% against under 15% for prepaid, so a COD-heavy store can show healthy revenue and ROAS while contribution margin has already been spent on returns.',
+      },
     ],
     seoTitle: 'Shopify P&L India: Net Profit After COD, RTO & Ads',
     seoDescription:
-      'TopEdge Profit & costs for Shopify India D2C: COGS, packaging, payment fees, COD RTO, marketing, true net profit with a cost waterfall and product margins in ₹.',
+      'Track true Indian D2C net profit on Shopify after COGS, ₹12-₹24 packaging, ₹30 COD fees, ₹180-₹240 RTO losses, gateway fees and ad spend, in one cost waterfall.',
     keywords:
-      'Shopify P&L India, ecommerce COGS RTO analytics, COD profit calculator Shopify, Indian D2C net profit, WhatsApp D2C unit economics',
+      'Shopify P&L India, shopify india p&l analytics cogs cod rto net profit, ecommerce COGS RTO analytics, COD profit calculator Shopify, true cost per order india, Indian D2C net profit, WhatsApp D2C unit economics',
     hero: {
       kind: 'image',
       src: '/pnl/39.png',
@@ -1556,6 +1703,38 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
         imageLabel: 'Product profit table with margin % per SKU for Shopify India',
       },
     ],
+    proofTable: {
+      title: 'The ₹799 kurta:',
+      titleAccent: 'what one order really costs',
+      intro:
+        'Five cost lines separate the freight number you see from the one you pay. Amazon Shipping India works it through on a ₹799 women’s cotton kurta weighing 300g, and this is the waterfall Profit & costs builds from your own Shopify data.',
+      columns: ['Cost line', 'Amount', 'How it is arrived at'],
+      rows: [
+        ['Packaging materials', '₹13', '₹10 poly mailer, ₹2 tape, ₹1 label'],
+        [
+          'National freight',
+          '₹85',
+          'Volumetric weight (32 x 25 x 5) / 5,000 = 0.80 kg, billed at the 1 kg slab on a 300g product',
+        ],
+        ['COD remittance fee', '₹30', 'Standard charge on a cash on delivery order'],
+        ['Visible cost', '₹128', 'The three lines above, the ones that appear on an invoice'],
+        ['Amortised RTO cost', '₹38', '30% RTO rate x ₹125 incremental reverse cost per return'],
+        [
+          'Customer support time',
+          '₹13',
+          '40% touch rate x ₹32 per interaction (20 minutes at ₹96/hr)',
+        ],
+        ['True total', '₹179', 'More than double the ₹85 the seller thinks they are paying'],
+      ],
+      emphasise: [3, 6],
+      note:
+        'Every line read off Amazon Shipping India’s true cost per order breakdown (shipping.amazon.in/blog/true-cost-of-shipping-per-order-india, published 15 July 2026, read 21 October 2026). The 30% RTO assumption sits inside the fashion and apparel band of 25% to 40% published by ClickPost. These are national indicative figures, not your rate card: your courier contract, category and parcel dimensions move every line, which is the reason to compute it from your own data rather than ours.',
+      takeaways: [
+        'A 300g product gets billed at 1 kg. Volumetric weight did that, not an unfair courier. Rightsizing the mailer is the cheapest margin win available to most apparel brands, and it needs no negotiation with anyone.',
+        'RTO is a cost on every order you ship, not only the ones that come back. At a 30% RTO rate each parcel carries ₹38 of amortised return cost, so cutting RTO improves margin on all of your orders at once.',
+        'Support time is a real line. ₹32 per WISMO interaction at a 40% touch rate adds ₹13 to every order, which is a margin argument for proactive shipping updates rather than a convenience one.',
+      ],
+    },
     stepsTitle: 'How Profit & costs',
     stepsAccent: 'gets honest',
     steps: [
@@ -1580,6 +1759,7 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     relatedAccent: 'growth',
     related: [
       { label: 'COD confirmation', href: '/blog/how-to-reduce-rto-with-whatsapp-cod-confirmation' },
+      { label: '2026 RTO benchmark', href: '/blog/cod-rto-benchmark-india-2026' },
       { label: 'Cart recovery', href: '/features/journeys#abandoned-cart' },
       { label: 'Audience CRM', href: '/features/audience-crm' },
       { label: 'Pricing', href: '/pricing' },
@@ -1593,8 +1773,8 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     path: '/features/intent-detection',
     featureSlug: 'intent-detection',
     eyebrow: 'Intent detection',
-    title: 'Route chats by',
-    titleAccent: 'what they mean',
+    title: 'WhatsApp intent routing for Shopify:',
+    titleAccent: 'route before you spend AI tokens',
     subtitle:
       'Detect shipping, returns, COD, and human handoff intent.\nRoute flows before you spend AI tokens.',
     answerFirst:
@@ -1609,6 +1789,16 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
         question: 'Can intents escalate to Live Chat?',
         answer:
           'Yes. Configure handoff intents to assign humans, and Live Chat takeover still pauses bots on that thread.',
+      },
+      {
+        question: 'How does this reduce AI cost?',
+        answer:
+          'Shipping, returns and COD questions are matched by intent and answered by a flow, so the model is only called for questions that genuinely need it. On a typical Indian store those three categories are most of the inbound volume.',
+      },
+      {
+        question: 'What happens when no intent matches?',
+        answer:
+          'It falls through to AI Brain if AI is on, or to Live Chat if it is not. Nothing is answered by guessing, and nothing is left unanswered.',
       },
     ],
     seoTitle: 'WhatsApp Intent Detection for Shopify India | TopEdge AI',

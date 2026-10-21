@@ -50,6 +50,10 @@ const columns: { title: string; links: FootLink[] }[] = [
       { label: 'TopEdge vs WATI', href: '/compare/wati' },
       { label: 'TopEdge vs AiSensy', href: '/compare/aisensy' },
       { label: 'TopEdge vs WATI vs AiSensy', href: '/compare/topedge-vs-wati-vs-aisensy' },
+      {
+        label: 'WATI vs Interakt vs AiSensy',
+        href: '/compare/topedge-vs-wati-vs-interakt-vs-aisensy',
+      },
       { label: 'TopEdge vs Interakt', href: '/compare/interakt' },
       { label: 'TopEdge vs Bitespeed', href: '/compare/bitespeed' },
       // Zoko, Gupshup, Kanal and Getgabs were "Discovered – currently not

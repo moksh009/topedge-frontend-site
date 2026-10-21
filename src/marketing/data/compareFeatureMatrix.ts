@@ -201,7 +201,7 @@ export const THREE_WAY_FEATURE_MATRIX: ThreeWayFeatureRow[] = [
     id: 'ai-llm',
     name: 'Generative AI Chat messages',
     topedge:
-      'Bring Your Own Key (BYOK) & Built-in RAG Pipeline (Optimized token usage est. ₹0.1-₹0.3 per AI response, depends on selected AI Model)',
+      'Bring Your Own Key (BYOK) & Built-in RAG Pipeline (Optimized token usage est. ~₹0.10-₹0.30 per AI response, depends on selected AI Model)',
     wati: 'Requires Astra / Higher Tier Plan for AI capabilities',
     aisensy: 'Per-message AI add-on fee structure',
   },
@@ -1336,6 +1336,33 @@ export const INTERAKT_PAIRWISE_MATRIX: PairwiseFeatureRow[] = [
       'Account limits for custom fields, custom events, and tags are capped based on your specific pricing tier',
   },
 ];
+
+export type FourWayFeatureRow = ThreeWayFeatureRow & { interakt: string };
+
+/**
+ * TopEdge Ai vs WATI vs Interakt vs AiSensy.
+ *
+ * Built by joining the approved three-way board to the Interakt column that
+ * /compare/interakt already publishes, matched on row id. Nothing here is
+ * written by hand, so this board cannot say anything about Interakt that the
+ * pairwise board does not already say, and editing the pairwise cell edits this
+ * one. That is what keeps a four-way board inside VERBATIM_ONLY.
+ *
+ * "wati vs aisensy vs interakt" is the query; the three-way board omitted
+ * Interakt and could never answer it.
+ */
+export const FOUR_WAY_FEATURE_MATRIX: FourWayFeatureRow[] = THREE_WAY_FEATURE_MATRIX.map(
+  (row) => {
+    const interakt = INTERAKT_PAIRWISE_MATRIX.find((r) => r.id === row.id)?.competitor;
+    if (!interakt) {
+      throw new Error(
+        `FOUR_WAY_FEATURE_MATRIX: no approved Interakt cell for row "${row.id}". ` +
+          'Add it to INTERAKT_PAIRWISE_MATRIX rather than writing one here.',
+      );
+    }
+    return { ...row, interakt };
+  },
+);
 
 export function pairwiseMatrix(
   competitor: MatrixCompetitor,

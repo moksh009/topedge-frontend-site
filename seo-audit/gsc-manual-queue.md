@@ -14,7 +14,7 @@ it spends quota and changes nothing.
 **Deploy before submitting.** A URL submitted ahead of the deploy gets crawled
 as the old page and the fetch is wasted.
 
-## Changed in this release — 65 URLs
+## Changed in this release — 66 URLs
 
 ### Day 1
 
@@ -76,13 +76,14 @@ as the old page and the fetch is wasted.
 - [ ] https://topedgeai.com/compare/interakt
 - [ ] https://topedgeai.com/compare/kanal
 - [ ] https://topedgeai.com/compare/topedge-vs-wati-vs-aisensy
+- [ ] https://topedgeai.com/compare/topedge-vs-wati-vs-interakt-vs-aisensy
 - [ ] https://topedgeai.com/compare/updatrr
 - [ ] https://topedgeai.com/compare/wati
 - [ ] https://topedgeai.com/compare/zoko
-- [ ] https://topedgeai.com/features/ai-brain
 
 ### Day 6
 
+- [ ] https://topedgeai.com/features/ai-brain
 - [ ] https://topedgeai.com/features/analytics
 - [ ] https://topedgeai.com/features/audience-crm
 - [ ] https://topedgeai.com/features/campaigns
@@ -92,10 +93,10 @@ as the old page and the fetch is wasted.
 - [ ] https://topedgeai.com/features/intent-detection
 - [ ] https://topedgeai.com/features/meta-manager
 - [ ] https://topedgeai.com/features/opt-in-tools
-- [ ] https://topedgeai.com/features/profit-loss
 
 ### Day 7
 
+- [ ] https://topedgeai.com/features/profit-loss
 - [ ] https://topedgeai.com/features/warranty
 - [ ] https://topedgeai.com/about
 - [ ] https://topedgeai.com/compare

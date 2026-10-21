@@ -5,7 +5,12 @@ import MarketingPage from '../components/MarketingPage';
 import MarketingCtaBand from '../components/MarketingCtaBand';
 import FeatureMeshStage from '../components/effects/FeatureMeshStage';
 import { PrimaryButton, GhostButton } from '../components/ui';
-import { organizationJsonLd, breadcrumbJsonLd, webPageJsonLd } from '../data/pageSeo';
+import {
+  breadcrumbJsonLd,
+  featureSoftwareJsonLd,
+  organizationJsonLd,
+  webPageJsonLd,
+} from '../data/pageSeo';
 import { featurePagesModifiedIso } from '../data/contentDates';
 import { FALLBACK_CATALOG, GST_FOOTNOTE, TRIAL } from '../lib/billingCatalog';
 import '../styles/product-feature.css';
@@ -13,9 +18,9 @@ import '../styles/cod-confirmation.css';
 
 const PATH = '/features/cod-confirmation';
 
-const SEO_TITLE = 'WhatsApp COD Confirmation for Shopify India | TopEdge AI';
+const SEO_TITLE = 'Shopify WhatsApp COD Confirmation to Cut RTO | TopEdge';
 const SEO_DESCRIPTION =
-  'Confirm every COD order on WhatsApp before dispatch. Cut fake orders and RTO. Growth plan adds COD-to-prepaid links. 14-day free trial, no card.';
+  'Confirm every Shopify COD order on WhatsApp before dispatch at ₹0.115 a message, against ₹180-₹240 lost per RTO parcel. COD-to-prepaid on Growth. 14-day trial.';
 
 const STEPS = [
   {
@@ -61,7 +66,17 @@ const FAQS = [
   {
     question: 'How much does COD confirmation cost?',
     answer:
-      `Basic COD confirmation is included on every plan, from ${FALLBACK_CATALOG.plans[0].monthlyPriceLabel} a month plus GST on monthly billing. Meta charges its own per-message WhatsApp fees directly on your Meta account, and TopEdge adds 0% markup to them.`,
+      `Basic COD confirmation is included on every plan, from ${FALLBACK_CATALOG.plans[0].monthlyPriceLabel} a month plus GST on monthly billing. Meta charges its own per-message WhatsApp fees directly on your Meta account, and TopEdge adds 0% markup to them. On Meta's India rate card a COD confirmation is a utility template at ₹0.1150 per delivered message before GST, so confirming 500 COD orders costs ₹57.50 against ₹180 to ₹240 of direct logistics loss on each returned parcel.`,
+  },
+  {
+    question: 'Why does adding a prepaid discount make the message cost 7.5x more?',
+    answer:
+      'Because it changes the Meta template category. A plain confirm-or-cancel message is a utility template at ₹0.1150. Add a prepaid discount or an offer to the same message and Meta reclassifies it as marketing at ₹0.8631, which is 7.5 times the cost on every COD order you ship. Send the utility confirmation to everyone, then make the prepaid offer as a separate marketing send only to the segment whose margin supports it.',
+  },
+  {
+    question: 'How long do I have once a delivery fails?',
+    answer:
+      'About 36 hours. Amazon Shipping India states that nearly every failed delivery not resolved within 36 hours of the NDR being raised ends in cancellation and RTO, and that Indian couriers typically allow 24 to 48 hours between attempts across two or three attempts in total. Its guidance is to reach the buyer within 2 to 4 hours of the NDR, which is a WhatsApp-shaped window rather than a call-centre one.',
   },
 ] as const;
 
@@ -131,14 +146,19 @@ export default function CodConfirmationPage() {
             { name: 'Features', path: '/features' },
             { name: 'COD confirmation', path: PATH },
           ]),
+          featureSoftwareJsonLd({
+            name: 'COD confirmation and COD to prepaid',
+            description: SEO_DESCRIPTION,
+            path: PATH,
+          }),
         ]}
       />
       <MarketingPage className="mkt-pf mkt-cod">
         <FeatureMeshStage mesh="journeys">
           <header className="mkt-pf__hero">
             <h1 className="mkt-pf__title">
-              Confirm every COD order on WhatsApp{' '}
-              <span className="mkt-pf__title-accent">before it ships</span>
+              Confirm COD orders on WhatsApp to cut RTO{' '}
+              <span className="mkt-pf__title-accent">and convert COD to prepaid</span>
             </h1>
             <p className="mkt-pf__sub">
               A returned COD parcel costs you shipping both ways and a lost sale. TopEdge messages
@@ -211,20 +231,52 @@ export default function CodConfirmationPage() {
             </h2>
             <p className="mkt-pf__head-sub">
               Every returned COD parcel pays for the trip out, the trip back and the handling in
-              between, and you earn nothing.
+              between, and you earn nothing. Amazon Shipping India itemises it.
             </p>
           </div>
           <div className="mkt-cod__card mkt-cod__maths">
             <p className="mkt-cod__maths-line">
-              <span>₹80 out</span> + <span>₹80 back</span> + <span>₹20 handling</span> ={' '}
-              <strong>₹180 per returned parcel</strong>
+              <span>₹60 to ₹100 forward</span> + <span>₹50 to ₹80 reverse</span> +{' '}
+              <span>₹20 to ₹40 repackaging</span> + <span>₹10 to ₹20 holding</span> ={' '}
+              <strong>₹180 to ₹240 per returned parcel</strong>
             </p>
             <p className="mkt-cod__maths-line">
-              50 returns in a month = <strong>₹9,000 gone</strong>
+              Add the acquisition spend behind that order, at ₹450 to ₹680 per customer, and
+              ClickPost puts the fully loaded loss at <strong>₹450 to ₹900</strong>
+            </p>
+            <p className="mkt-cod__maths-line">
+              One WhatsApp utility confirmation costs <strong>₹0.1150</strong> on Meta&rsquo;s India
+              rate card, so confirming 500 COD orders costs <strong>₹57.50</strong>
+            </p>
+            <p className="mkt-cod__maths-line">
+              500 COD orders at 25% RTO = 125 returns = <strong>₹25,000 gone</strong> at ₹200 a
+              parcel, before any ad spend is written off
             </p>
             <p className="mkt-cod__note">
-              Illustrative numbers, not customer results. Use your own courier rates and RTO count;{' '}
-              <Link to="/features/profit-loss">Profit &amp; costs</Link> shows your real RTO loss.
+              Cost lines from{' '}
+              <a
+                href="https://shipping.amazon.in/blog/what-is-rto-how-to-reduce-return-to-origin"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Amazon Shipping India
+              </a>{' '}
+              and ClickPost via First Resort, read 21 October 2026, with Meta&rsquo;s India utility
+              rate from its{' '}
+              <a
+                href="https://developers.facebook.com/docs/whatsapp/pricing/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                pricing documentation
+              </a>
+              . These are national indicative ranges, not customer results and not your rate card.
+              One warning: bundling a prepaid discount into the confirmation reclassifies it from
+              utility to marketing, at ₹0.8631, which is 7.5x. Use your own courier rates and RTO
+              count; <Link to="/features/profit-loss">Profit &amp; costs</Link> shows your real RTO
+              loss, and the{' '}
+              <Link to="/blog/cod-rto-benchmark-india-2026">2026 India RTO benchmark</Link> has the
+              category bands.
             </p>
           </div>
         </section>

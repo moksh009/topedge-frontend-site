@@ -13,6 +13,7 @@ import {
   type ProductShowcase,
 } from '../data/productPages';
 import {
+  featureSoftwareJsonLd,
   organizationJsonLd,
   breadcrumbJsonLd,
   webPageJsonLd,
@@ -121,6 +122,7 @@ function ProductFeatureView({ page }: { page: ProductPage }) {
   const hasShowcases = Boolean(page.showcases?.length);
   const hasFaqs = Boolean(page.faqs?.length);
   const hasRelated = Boolean(page.related?.length);
+  const proof = page.proofTable;
   const modifiedIso = featurePagesModifiedIso();
   const heroDemo = page.hero.kind === 'video' ? demoAssetBySrc(page.hero.src) : undefined;
 
@@ -155,6 +157,14 @@ function ProductFeatureView({ page }: { page: ProductPage }) {
             { name: 'Product', path: '/features' },
             { name: page.eyebrow, path: page.path },
           ]),
+          // This page is one capability of one application. Pointing every
+          // feature page at the same @id keeps a single product entity instead
+          // of thirteen near-duplicates.
+          featureSoftwareJsonLd({
+            name: page.eyebrow,
+            description: page.seoDescription,
+            path: page.path,
+          }),
           // Hero demo is the page's lead visual, so it is main content and
           // eligible for a video result. Only pages whose clip this catalog
           // describes get markup — no invented names or dates.
@@ -225,6 +235,62 @@ function ProductFeatureView({ page }: { page: ProductPage }) {
               {page.showcases!.map((item, i) => (
                 <ShowcaseRow key={`${item.title}-${i}`} item={item} index={i} />
               ))}
+            </div>
+          </section>
+        ) : null}
+
+        {proof ? (
+          <section className="mkt-pf__section" aria-labelledby="mkt-pf-proof">
+            <div className="mkt-pf__head">
+              <h2 id="mkt-pf-proof" className="mkt-pf__head-title">
+                {proof.title} {proof.titleAccent ? <span>{proof.titleAccent}</span> : null}
+              </h2>
+              {proof.intro ? <p className="mkt-pf__head-sub">{proof.intro}</p> : null}
+            </div>
+            <div className="mkt-pf__proof">
+              <div className="mkt-pf__proof-scroll">
+                <table className="mkt-pf__proof-table">
+                  <thead>
+                    <tr>
+                      {proof.columns.map((c) => (
+                        <th key={c} scope="col">
+                          {c}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {proof.rows.map((row, ri) => (
+                      <tr
+                        key={row[0]}
+                        className={
+                          proof.emphasise?.includes(ri) ? 'mkt-pf__proof-row--strong' : undefined
+                        }
+                      >
+                        {row.map((cell, ci) =>
+                          ci === 0 ? (
+                            <th key={ci} scope="row">
+                              {cell}
+                            </th>
+                          ) : (
+                            <td key={ci} data-label={proof.columns[ci]}>
+                              {cell}
+                            </td>
+                          ),
+                        )}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              {proof.takeaways?.length ? (
+                <ul className="mkt-pf__proof-list">
+                  {proof.takeaways.map((t) => (
+                    <li key={t.slice(0, 40)}>{t}</li>
+                  ))}
+                </ul>
+              ) : null}
+              <p className="mkt-pf__proof-note">{proof.note}</p>
             </div>
           </section>
         ) : null}

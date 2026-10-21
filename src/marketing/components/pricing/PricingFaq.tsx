@@ -21,6 +21,18 @@ export const PRICING_FAQS = [
     a: 'No. Meta Cloud API messaging is pass-through only, at Meta’s published per-message rates, passed through at 0% markup. We don’t markup conversations.',
   },
   {
+    q: 'What does Meta charge per message in India?',
+    a: 'On Meta’s published India rate card: ₹0.8631 per delivered marketing template and ₹0.1150 per delivered utility or authentication template, before 18% GST. Since 1 October 2026 each business phone number also gets 1,000 free service messages a month, then ₹0.1150 per reply. Meta bills that to your own Business Account and we add nothing to it.',
+  },
+  {
+    q: 'What does 0% markup save me in rupees?',
+    a: 'It depends on your send volume, which is the point. On 10,000 marketing messages a month, Meta’s card is ₹8,631. A platform charging Dondy’s published $0.01888 India rate bills about ₹13,810 for the same sends, so ₹5,179 more. On service replies, AiSensy publishes ₹0.145 against Meta’s ₹0.1150, which is ₹3,000 extra on 100,000 replies. Our margin is in the subscription instead, so your message bill does not grow when a campaign works.',
+  },
+  {
+    q: 'Do I need to migrate my WhatsApp account to INR billing?',
+    a: 'If your WhatsApp Business Account is still billed in a currency other than INR, yes. Meta requires every eligible Indian WABA to be on INR billing by 31 December 2026 and stops delivering messages on non-INR accounts from 1 January 2027. An existing USD account cannot be flipped in place, so it needs a new WABA created with INR billing. Check your billing currency in Meta Business Manager now rather than in December.',
+  },
+  {
     q: 'Can I cancel anytime?',
     a: 'Yes. Cancel in the dashboard at period end. Access continues until the cycle finishes.',
   },

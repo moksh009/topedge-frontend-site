@@ -22,9 +22,14 @@ https://www.topedgeai.com/*  https://topedgeai.com/:splat  301!
 # at topedgeai.com/docs, which is duplicate content and two places to keep correct.
 # Every old marketing docs URL, and the older dashboard aliases that used to point
 # into it, now land on the dashboard documentation.
+#
+# :splat, not a collapse onto the index. /docs/connect-whatsapp used to land on
+# the docs root, which threw away the one thing the old link knew. The dashboard
+# serves the deep paths (checked 21 Oct 2026), so the path is passed through and
+# an old inbound link keeps its page.
 /docs  https://dash.topedgeai.com/docs  301!
 /docs/  https://dash.topedgeai.com/docs  301!
-/docs/*  https://dash.topedgeai.com/docs  301!
+/docs/*  https://dash.topedgeai.com/docs/:splat  301!
 
 # Feature aliases → canonical hubs
 # Removed 2026-10-09. Live Chat has no replacement page, so it lands on the hub;
@@ -115,7 +120,7 @@ https://www.topedgeai.com/*  https://topedgeai.com/:splat  301!
 # BEGIN GENERATED — do not edit (scripts/generate-redirects.mjs)
 # Client-only SPA shells (must stay above the 404 catch-all)
 # login/signup: noindex shells from build-static.js (never the homepage prerender)
-# /docs is NOT here — it is prerendered, indexable HTML (see marketing-urls.mjs).
+# /docs is not here and is not prerendered: it 301s to dash.topedgeai.com/docs.
 /login  /login.html  200
 /login/  /login.html  200
 /signup  /signup.html  200

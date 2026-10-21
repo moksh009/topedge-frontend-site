@@ -51,7 +51,9 @@ function lastmodFor(p) {
   if (p === '/contact') return dates.contact || dates.featurePages;
   if (p === '/about') return dates.about || dates.featurePages;
   if (p === '/integrations') return dates.integrations || dates.featurePages;
-  if (p === '/compare/topedge-vs-wati-vs-aisensy') return dates.compareThreeWay;
+  // Both multi-vendor boards are built from the same approved cells, so they
+  // share one content date.
+  if (p.startsWith('/compare/topedge-vs-')) return dates.compareThreeWay;
   if (p.startsWith('/compare/')) return dates.compareTwoWay;
   if (p.startsWith('/blog/')) {
     const slug = p.slice('/blog/'.length);

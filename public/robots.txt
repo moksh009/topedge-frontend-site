@@ -39,3 +39,8 @@ Disallow: /login
 # disallowed here so crawlers can fetch it and read the noindex / retirement.
 
 Sitemap: https://topedgeai.com/sitemap.xml
+
+# Entity, pricing and the canonical URL directory, as plain text, generated from
+# the same billing catalog and route manifest the pages render from.
+# LLM Context: https://topedgeai.com/llms.txt
+# LLM Context (expanded): https://topedgeai.com/llms-full.txt

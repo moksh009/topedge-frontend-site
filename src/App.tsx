@@ -33,6 +33,9 @@ const CompareAlternativesPage = React.lazy(
   () => import('./marketing/pages/CompareAlternativesPage'),
 );
 const CompareThreeWayPage = React.lazy(() => import('./marketing/pages/CompareThreeWayPage'));
+const CompareFourWayPage = React.lazy(() =>
+  import('./marketing/pages/CompareThreeWayPage').then((m) => ({ default: m.CompareFourWayPage })),
+);
 const SeoTopicPage = React.lazy(() => import('./marketing/pages/SeoTopicPage'));
 const NotFoundPage = React.lazy(() => import('./marketing/pages/NotFoundPage'));
 const PrivacyPolicy = React.lazy(() => import('./pages/PrivacyPolicy'));
@@ -179,6 +182,11 @@ const AnimatedRoutes = () => {
           <Route path="/customers" element={<CustomersPage />} />
           <Route path="/compare" element={<CompareIndexPage />} />
           <Route path="/compare/topedge-vs-wati-vs-aisensy" element={<CompareThreeWayPage />} />
+          {/* Explicit, so it never falls through to /compare/:competitor. */}
+          <Route
+            path="/compare/topedge-vs-wati-vs-interakt-vs-aisensy"
+            element={<CompareFourWayPage />}
+          />
           <Route path="/compare/alternatives" element={<CompareAlternativesPage />} />
           <Route path="/compare/:competitor" element={<ComparePage />} />
           <Route path="/blog" element={<Blog />} />

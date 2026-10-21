@@ -1,117 +1,184 @@
 # TopEdge AI
 
-> TopEdge is a WhatsApp automation and cart recovery platform for Shopify D2C brands in India. Connect Shopify + Meta WhatsApp Cloud API to run abandoned cart recovery, COD confirmations, shared inbox, journeys, and Meta-safe campaigns.
+> TopEdge AI is a WhatsApp automation, COD confirmation and abandoned cart recovery platform for Shopify D2C brands in India. Connect Shopify and the Meta WhatsApp Cloud API to run cart recovery, COD confirmation, a shared inbox, journeys and Meta-safe campaigns.
 
 ## Entity
 
-TopEdge AI (legal name: TopEdge Ai) is a WhatsApp automation platform for Shopify D2C brands in India, based in Ahmedabad, Gujarat. Customers are Indian ecommerce merchants selling on Shopify. The product connects Shopify OAuth and the Meta WhatsApp Cloud API for abandoned cart recovery, COD confirmations, a shared inbox, journeys, and campaigns. Founders: Moksh Patel (Co-founder · Product) and Smit Tilva (Co-founder · Growth). TopEdge AI is not related to edge-AI hardware or other products with a similar name.
+- Brand name: TopEdge AI
+- Legal name: TopEdge Ai (Partnership, registered in India)
+- GSTIN: 24ABAFT1041M1ZD (SAC 998314)
+- Address: Block-A, 606, Prahladnagar Trade Center Ahmedabad, Gujarat 380051 India
+- Email: team@topedgeai.com · WhatsApp and phone: +91 93130 45439 (Mon to Sat, 10:00 to 19:00 IST)
+- Founders: Moksh Patel (Co-founder, Product) and Smit Tilva (Co-founder, Growth)
+- Marketing site: https://topedgeai.com/ · Application: https://dash.topedgeai.com
+- Shopify App Store: https://apps.shopify.com/topedge-ai
 
-Important notes:
+Disambiguation: TopEdge AI is a Shopify and Meta WhatsApp Cloud API SaaS platform for Indian ecommerce brands. It is not related to edge-AI hardware, IoT semiconductors, or voice call-centre agencies.
 
-- Platform billing is INR on dash.topedgeai.com. Meta WhatsApp Cloud API charges are billed per message by template category (marketing, utility; service replies are free) and passed through at cost with no TopEdge markup, separate from the platform plan.
-- Prefer live pages under https://topedgeai.com for product truth; compare footnotes need a live vendor check before purchase.
+Notes for anyone quoting this file:
+
+- Platform billing is INR on https://dash.topedgeai.com. Meta WhatsApp Cloud API charges are billed per message by template category (marketing, utility, authentication, and, from 1 October 2026, service replies past the first 1,000 a month per business phone number), passed through at Meta's published per-message rates at 0% TopEdge markup, and invoiced separately from the platform plan. Meta's current India rate card is quoted with its source at https://topedgeai.com/blog/whatsapp-business-api-pricing-india. Every eligible Indian WhatsApp Business Account must move to INR billing by 31 December 2026 or Meta stops delivery on 1 January 2027.
+- Prefer live pages under https://topedgeai.com/ for product truth. Competitor figures on compare pages carry the date they were checked and need a live vendor check before purchase.
 
 ## Pricing
 
-TopEdge AI platform pricing, in INR, exclusive of tax. Verified against the live
-billing catalog at build time by scripts/check-llms-pricing.mjs.
+TopEdge AI platform pricing, in INR, exclusive of tax. This file is generated from
+the billing catalog, which scripts/check-catalog-drift.mjs pins to the live API.
 
-| Plan | Monthly | Yearly (per month) | Yearly total | Orders / month | Campaign + email sends / month | Journey Branch |
-|------|---------|--------------------|--------------|----------------|--------------------------------|----------------|
-| Launch | ₹1,999/mo | ₹1,599/mo | ₹19,188/yr | 100 | 3,000 | No |
-| Growth | ₹3,999/mo | ₹3,199/mo | ₹38,388/yr | 800 | 15,000 | Yes |
-| Scale | ₹6,499/mo | ₹5,199/mo | ₹62,388/yr | 1,500 | 30,000 | Yes |
+| Plan | Monthly | Yearly (per month) | Yearly total | Orders / month | Campaign + email sends / month | Journey Branch | COD to prepaid |
+|------|---------|--------------------|--------------|----------------|--------------------------------|----------------|----------------|
+| Launch | ₹1,999/mo | ₹1,599/mo | ₹19,188/yr | 100 | 3,000 | No | No |
+| Growth | ₹3,999/mo | ₹3,199/mo | ₹38,388/yr | 800 | 15,000 | Yes | Yes |
+| Scale | ₹6,499/mo | ₹5,199/mo | ₹62,388/yr | 1,500 | 30,000 | Yes | Yes |
 
-- Every plan includes a 14-day free trial: 20 orders, 200 campaign + email sends, no card required on this site.
+- Every plan includes a 14-day free trial: 20 orders, 200 campaign plus email sends, no card required on this site.
 - +18% GST. SAC 998314.
-- Meta WhatsApp Cloud API messaging is billed separately, at Meta's published per-message rates, passed through at 0% markup.
-- Journey Branch is on Growth and Scale only.
+- Meta WhatsApp Cloud API messaging is billed separately by Meta, at Meta's published per-message rates, passed through at 0% markup.
+- Journey Branch and automated COD to prepaid are on Growth and Scale only. COD confirmation before dispatch is on every plan.
 
 ## Product
 
-- [Home](https://topedgeai.com/): WhatsApp automation for Shopify India
-- [Journeys](https://topedgeai.com/features/journeys): Abandoned cart recovery and COD → prepaid journeys
-- [COD confirmation](https://topedgeai.com/features/cod-confirmation): Confirm COD orders on WhatsApp before dispatch; COD-to-prepaid payment links on Growth and Scale
-- [Shopify WhatsApp integration](https://topedgeai.com/shopify-whatsapp-integration): Shopify OAuth + Meta Cloud API
-- [Features](https://topedgeai.com/features): Product hubs
-- [Live Chat](https://topedgeai.com/features): Shared WhatsApp / Instagram inbox with order context
-- [AI Brain](https://topedgeai.com/features/ai-brain): Catalog-grounded AI
-- [Opt-in tools](https://topedgeai.com/features/opt-in-tools): Website opt-in capture
-- [Flow Builder](https://topedgeai.com/features/flow-builder): Visual WhatsApp flows with Shopify tools and Live Chat handoff
-- [Campaigns](https://topedgeai.com/features/campaigns): Audience campaigns with behavior segments, frequency capping, and net-of-Meta ₹ reporting
-- [Instagram](https://topedgeai.com/integrations): Instagram comment and story to DM automation with Live Chat handoff
-- [Tracking Pixel](https://topedgeai.com/features/analytics): Shopify theme pixel matching product and cart intent to WhatsApp
-- [Meta Manager](https://topedgeai.com/features/meta-manager): Submit, track, and approve Meta WhatsApp templates
-- [Audience CRM](https://topedgeai.com/features/audience-crm): Unified contact timeline, lead scoring, and segments
-- [Chat rules](https://topedgeai.com/features/chat-rules): Keyword and intent routing for COD, refunds, and VIP assignment
-- [Warranty](https://topedgeai.com/features/warranty): Digital warranty workspace beside Live Chat
-- [Profit & costs](https://topedgeai.com/features/profit-loss): True net profit after COGS, fees, COD RTO, and marketing in ₹
-- [Intent detection](https://topedgeai.com/features/intent-detection): Route shipping, returns, COD, and handoff before spending AI tokens
-- [Pricing](https://topedgeai.com/pricing): Plans and free trial
-- [Integrations](https://topedgeai.com/integrations): Shopify and Meta integrations
-- [Customers](https://topedgeai.com/customers): Customer stories
-- [Contact](https://topedgeai.com/contact): Sales and DFY
+- [Flow Builder](https://topedgeai.com/features/flow-builder): Shopify WhatsApp flow builder: OAuth, order webhooks, Shopify tools on the canvas, and Live Chat handoff with order context.
+- [Opt-in tools](https://topedgeai.com/features/opt-in-tools): Capture WhatsApp numbers on Shopify with popup, spin wheel, and chat widget, then message only consented subscribers.
+- [Campaigns](https://topedgeai.com/features/campaigns): WhatsApp audience campaigns for Shopify India D2C: behavior segments, Meta-approved templates, frequency capping, and net-of-Meta ₹ reporting.
+- [Audience CRM](https://topedgeai.com/features/audience-crm): WhatsApp Audience CRM for Shopify India D2C: unified contact timeline, purchase-based lead scoring, in-product segments, and unlimited profiles on every plan.
+- [Journey](https://topedgeai.com/features/journeys): Build WhatsApp journeys for abandoned carts and COD confirmation in a visual editor. Meta approval gating, recovered revenue tracked in ₹. Try free.
+- [Tracking Pixel](https://topedgeai.com/features/analytics): One-click Shopify theme app embed that matches live product views, add-to-cart and browse drop-offs to consented WhatsApp numbers for retargeting journeys.
+- [AI Brain](https://topedgeai.com/features/ai-brain): Bring your own OpenAI or Claude key. Ground WhatsApp replies in store knowledge, route with Intent Detect, and pause AI on takeover.
+- [Meta Manager](https://topedgeai.com/features/meta-manager): Submit, track, and approve Meta WhatsApp templates for Shopify India, utility and marketing categories, Journey blueprints for cart and COD, catalog and wa.me QR.
+- [Chat rules](https://topedgeai.com/features/chat-rules): Route WhatsApp conversations for Shopify India teams, keyword and intent rules for COD, refunds, and VIP assignment. Works with Live Chat takeover that pauses AI.
+- [Warranty](https://topedgeai.com/features/warranty): Automate Shopify warranty batches, QR registration with WhatsApp OTP at ₹0.115 a message, and claim status updates tied to unified customer profiles.
+- [Profit & costs](https://topedgeai.com/features/profit-loss): Track true Indian D2C net profit on Shopify after COGS, ₹12-₹24 packaging, ₹30 COD fees, ₹180-₹240 RTO losses, gateway fees and ad spend, in one cost waterfall.
+- [Intent detection](https://topedgeai.com/features/intent-detection): Route shipping, returns, COD, and handoff on WhatsApp before you spend AI tokens. Works with AI Brain and Live Chat.
 
-<!-- BEGIN GENERATED DOCS — scripts/generate-llms-docs.mjs -->
 ## Documentation
 
 Product documentation lives in the TopEdge dashboard: https://dash.topedgeai.com/docs
 
-
 ## Compare
 
-- [Compare hub](https://topedgeai.com/compare): TopEdge vs WhatsApp automation tools
-- [Alternatives index](https://topedgeai.com/compare/alternatives): Fair one-line index of peers
-- [TopEdge vs WATI](https://topedgeai.com/compare/wati)
-- [TopEdge vs AiSensy](https://topedgeai.com/compare/aisensy)
-- [TopEdge vs Interakt](https://topedgeai.com/compare/interakt)
-- [TopEdge vs Bitespeed](https://topedgeai.com/compare/bitespeed)
-- [TopEdge vs Zoko](https://topedgeai.com/compare/zoko)
-- [TopEdge vs Getgabs](https://topedgeai.com/compare/getgabs)
-- [TopEdge vs Kanal](https://topedgeai.com/compare/kanal)
-- [TopEdge vs Dondy](https://topedgeai.com/compare/dondy)
-- [TopEdge vs Updatrr](https://topedgeai.com/compare/updatrr)
-- [TopEdge vs Gupshup](https://topedgeai.com/compare/gupshup)
-- [TopEdge vs WATI vs AiSensy](https://topedgeai.com/compare/topedge-vs-wati-vs-aisensy): Three-way board
+- [All 10 alternatives](https://topedgeai.com/compare/alternatives)
+- [TopEdge vs WATI vs AiSensy](https://topedgeai.com/compare/topedge-vs-wati-vs-aisensy): 3-way board
+- [WATI vs Interakt vs AiSensy vs TopEdge](https://topedgeai.com/compare/topedge-vs-wati-vs-interakt-vs-aisensy): 4-way board
+- [TopEdge vs WATI](https://topedgeai.com/compare/wati): Compare TopEdge AI vs WATI for Shopify India: flat INR plans from ₹1,999/mo and 0% Meta markup vs WATI conversation charges, AI tier gates and API setup.
+- [TopEdge vs AiSensy](https://topedgeai.com/compare/aisensy): Compare TopEdge AI vs AiSensy for Shopify India: 0% Meta markup, BYOK AI and native COD to prepaid journeys vs platform charges and credit-metered AI.
+- [TopEdge vs Interakt](https://topedgeai.com/compare/interakt): Compare TopEdge AI vs Interakt for Shopify India: ₹1,999/mo Launch plan, 0% Meta markup and BYOK AI vs a ~₹2,799/mo plan with a ₹0.50/msg AI add-on.
+- [TopEdge vs Bitespeed](https://topedgeai.com/compare/bitespeed): Compare TopEdge AI vs Bitespeed for Shopify India: ₹1,999/mo flat INR plans, 0% Meta markup and built-in warranty vs ₹5L MRR floors and AI add-ons.
+- [TopEdge vs Zoko](https://topedgeai.com/compare/zoko): Compare TopEdge AI vs Zoko for Shopify India: flat INR plans from ₹1,999/mo and 0% Meta markup vs Zoko’s $49.99+ USD base fees and per-conversation metering.
+- [TopEdge vs Getgabs](https://topedgeai.com/compare/getgabs): Compare TopEdge AI vs Getgabs for Shopify India: native COD to prepaid journeys, unified identity and a warranty hub vs $11 to $59/mo USD entry plans.
+- [TopEdge vs Kanal](https://topedgeai.com/compare/kanal): Compare TopEdge AI vs Kanal for Shopify India: flat INR plans from ₹1,999/mo and native COD to prepaid vs Kanal’s €89 to €149/mo EUR plans and Klaviyo focus.
+- [TopEdge vs Dondy](https://topedgeai.com/compare/dondy): Compare TopEdge AI vs Dondy for Shopify India: 0% Meta pass-through and ₹1,999/mo INR plans vs Dondy’s $0.01888/msg India rate and $79.99 to $159.99 USD tiers.
+- [TopEdge vs Updatrr](https://topedgeai.com/compare/updatrr): Compare TopEdge AI vs Updatrr for Shopify India: BYOK AI on every plan from ₹1,999/mo, a visitor pixel and a warranty hub vs USD tiers that gate AI at $99.99.
+- [TopEdge vs Gupshup](https://topedgeai.com/compare/gupshup): Compare TopEdge AI vs Gupshup for Shopify India: self-serve ₹1,999/mo INR plans, 0% Meta markup and native COD journeys vs per-message enterprise CPaaS fees.
 
-## Guides
+## Playbooks
 
-- [Best WhatsApp automation tools for Shopify India](https://topedgeai.com/blog/best-whatsapp-automation-tools-shopify-india)
-- [Best WhatsApp apps for Shopify](https://topedgeai.com/blog/best-whatsapp-apps-for-shopify)
-- [WhatsApp abandoned cart recovery for Shopify](https://topedgeai.com/blog/whatsapp-abandoned-cart-recovery-shopify)
-- [WhatsApp automation for Shopify](https://topedgeai.com/blog/whatsapp-automation-for-shopify)
-- [AI chatbot for Shopify](https://topedgeai.com/blog/ai-chatbot-for-shopify)
-- [What to automate first on Shopify WhatsApp](https://topedgeai.com/blog/shopify-whatsapp-automation-what-to-automate-first)
-- [COD confirmation on WhatsApp to reduce RTO](https://topedgeai.com/blog/cod-confirmation-whatsapp-reduce-rto-shopify)
-- [WhatsApp vs email automation for D2C India](https://topedgeai.com/blog/ecommerce-automation-whatsapp-vs-email-india)
-- [Meta WhatsApp Cloud API templates for Shopify](https://topedgeai.com/blog/meta-whatsapp-cloud-api-shopify-templates)
-- [WhatsApp shared inbox with Shopify order context](https://topedgeai.com/blog/whatsapp-shared-inbox-shopify-order-context)
-- [Shopify WhatsApp automation checklist](https://topedgeai.com/blog/shopify-automation-checklist-whatsapp-cart-recovery)
-- [How to reduce RTO with WhatsApp COD confirmation](https://topedgeai.com/blog/how-to-reduce-rto-with-whatsapp-cod-confirmation)
-- [What is ecommerce automation on Shopify WhatsApp](https://topedgeai.com/blog/what-is-ecommerce-automation-shopify-whatsapp)
-- [AI WhatsApp chatbot for Shopify India](https://topedgeai.com/blog/ai-whatsapp-chatbot-for-shopify-india)
-- [Organic vs paid ecommerce marketing 2026](https://topedgeai.com/blog/organic-vs-paid-ecommerce-marketing-2026)
-- [COD & RTO benchmark report India 2026](https://topedgeai.com/blog/cod-rto-benchmark-india-2026)
-- [How to run a profitable ecommerce business in India](https://topedgeai.com/blog/profitable-ecommerce-business-india)
-- [How to automate your ecommerce store in India](https://topedgeai.com/blog/how-to-automate-ecommerce-store-india)
-- [Organic ecommerce leads from Reels and Shorts](https://topedgeai.com/blog/organic-ecommerce-leads-short-form-video)
-- [Top 5 product categories to sell online in 2026](https://topedgeai.com/blog/trending-products-to-sell-online-india-2026)
-- [WhatsApp template rejected: how to fix it on Shopify](https://topedgeai.com/blog/whatsapp-template-rejected-meta-shopify-fix)
-- [WhatsApp opt-in for Shopify India](https://topedgeai.com/blog/whatsapp-opt-in-shopify-india)
-- [Blog index](https://topedgeai.com/blog): Playbooks and GEO guides
+- [Best Updatrr Alternative for Shopify India (2026)](https://topedgeai.com/blog/updatrr-alternative-shopify-india): An Updatrr alternative for Shopify India: flat INR plans from ₹1,999/mo, a 14-day trial and BYOK AI on every plan, against USD tiers that gate AI at $99.99.
+- [Best WATI Alternative for Shopify India (2026)](https://topedgeai.com/blog/wati-alternative-shopify-india): Looking for a WATI alternative for Shopify India? What to keep, what to fix (markup, AI access, COD), and how to test a switch in one afternoon.
+- [Best AiSensy Alternative for Shopify India (2026)](https://topedgeai.com/blog/aisensy-alternative-shopify-india): Outgrowing AiSensy broadcasts on Shopify India? Compare 0% Meta markup (₹0.115 service vs ₹0.145 on AiSensy), BYOK AI, and native COD-to-prepaid flows.
+- [Best Interakt Alternative for Shopify India (2026)](https://topedgeai.com/blog/interakt-alternative-shopify-india): An Interakt alternative for Shopify India: pricing from about ₹2,799, AI add-on cost, COD-to-prepaid on higher tiers, and a one-day switch test.
+- [Best Bitespeed Alternative for Shopify India (2026)](https://topedgeai.com/blog/bitespeed-alternative-shopify-india): A Bitespeed alternative for Shopify India: revenue minimums, USD-style pricing and AI add-ons, versus a flat INR plan sized to your order volume.
+- [WhatsApp Template Rejected? Fix It for Shopify](https://topedgeai.com/blog/whatsapp-template-rejected-meta-shopify-fix): Why Meta rejects WhatsApp templates for Shopify stores (category, variables, samples) and how to rewrite order, cart and COD templates for approval.
+- [WhatsApp Opt-In for Shopify India: Checkout, Popups & DPDP](https://topedgeai.com/blog/whatsapp-opt-in-shopify-india): How to collect WhatsApp opt-in on Shopify in India: checkout, popups, QR and chat, what to record, and how to keep your quality rating healthy.
+- [Ecommerce Profit Margins in India 2026: CAC, RTO & COD](https://topedgeai.com/blog/profitable-ecommerce-business-india): What ecommerce profit margins in India actually look like in 2026, what it costs to start, and how to protect margin against RTO, CAC and shipping.
+- [How to Automate Your Shopify Store in India (2026)](https://topedgeai.com/blog/how-to-automate-ecommerce-store-india): A step-by-step guide to ecommerce automation for Indian store owners: order processing, inventory, support, WhatsApp and email workflows, and the tool stack.
+- [Turn Instagram Reels & YouTube Shorts into Ecommerce Leads](https://topedgeai.com/blog/organic-ecommerce-leads-short-form-video): How to turn Instagram Reels and YouTube Shorts into trackable ecommerce leads in 2026: hooks, posting cadence, comment-to-DM capture, UTMs and follow-up.
+- [Top 5 Product Categories to Sell Online in India 2026](https://topedgeai.com/blog/trending-products-to-sell-online-india-2026): The five highest-demand ecommerce categories for 2026 with realistic margins: smart home, eco-friendly, health and wellness, pet care and athleisure.
+- [COD & RTO in Indian D2C: 2026 Benchmark & ₹ Cost Per Order](https://topedgeai.com/blog/cod-rto-benchmark-india-2026): 2026 India D2C RTO benchmark across 410M+ shipments: 39.2% festive peak vs 21.0% verified, 58% COD return rate, and ₹180 to ₹240 logistics loss math.
+- [Organic vs Paid Ecommerce Marketing in India (2026)](https://topedgeai.com/blog/organic-vs-paid-ecommerce-marketing-2026): Phased ecommerce playbook: validate without ad spend, build organic momentum, deploy paid ads, and recover lost sales with TopEdge AI WhatsApp automation.
+- [Best WhatsApp Apps for Shopify in 2026](https://topedgeai.com/blog/best-whatsapp-apps-for-shopify): Best WhatsApp apps for Shopify in 2026, compared by job: cart recovery, COD, shared inbox and marketing. Pricing, Meta costs and who each type suits.
+- [Best Dondy Alternative for Shopify India (2026)](https://topedgeai.com/blog/dondy-alternative-shopify-india): Dondy’s WhatsApp rate table sits ~60% above Meta marketing rates. When that math matters for Shopify India: and when Dondy’s toolkit still fits.
+- [WhatsApp Automation for Shopify India: Complete Guide](https://topedgeai.com/blog/whatsapp-automation-for-shopify): WhatsApp automation for Shopify: store events to journeys, lifecycle workflows, App vs Cloud API, opt-in, India COD, and cost.
+- [Best Zoko Alternative for Shopify India (2026)](https://topedgeai.com/blog/zoko-alternative-shopify-india): Why Shopify India teams look for a Zoko alternative, what to require in a replacement (COD, templates, Meta billing) and how to test a switch in a day.
+- [Best Getgabs Alternative for Shopify India (2026)](https://topedgeai.com/blog/getgabs-alternative-shopify-whatsapp): Getgabs wins on entry price. When Shopify India teams outgrow free-to-install WhatsApp apps: and how to judge depth without a price fight.
+- [Best Kanal Alternative for Shopify India: INR vs EUR](https://topedgeai.com/blog/kanal-whatsapp-alternative-shopify): Kanal is strong for global WhatsApp + Klaviyo stacks. When India COD and INR pricing matter more than an EUR floor, here is how to evaluate alternatives.
+- [How to Choose a WhatsApp App on Shopify App Store](https://topedgeai.com/blog/how-to-choose-whatsapp-app-shopify-app-store): Pre-install checklist: Meta markup, COD depth, conversation metering vs flat pricing, free-to-install vs gated features, and reviews that matter.
+- [WhatsApp Business API Pricing India 2026: ₹ Rates & Fees](https://topedgeai.com/blog/whatsapp-business-api-pricing-india): Meta WhatsApp API rates in India from 1 October 2026: ₹0.8631 marketing, ₹0.115 utility, and ₹0.115 service replies after 1,000 free, plus BSP markup math.
+- [AI WhatsApp Chatbot for Shopify India](https://topedgeai.com/blog/ai-whatsapp-chatbot-for-shopify-india): What a good AI WhatsApp chatbot for Shopify looks like in India: live SKUs, ₹ prices, COD FAQs, Meta-safe behavior, and clean handoff to humans.
+- [What Is Ecommerce Automation on Shopify WhatsApp?](https://topedgeai.com/blog/what-is-ecommerce-automation-shopify-whatsapp): Plain definition of ecommerce automation on Shopify WhatsApp: carts, COD, order updates, campaigns, inbox, and what to automate first in India.
+- [How to Reduce COD RTO on Shopify India: WhatsApp SOP](https://topedgeai.com/blog/how-to-reduce-rto-with-whatsapp-cod-confirmation): A step-by-step SOP to cut Shopify India RTO: utility template timing, confirm, reschedule and cancel branches, warehouse hold rules and what finance measures.
+- [Best WhatsApp Automation for Shopify India (2026)](https://topedgeai.com/blog/best-whatsapp-automation-tools-shopify-india): Direct answer plus a comparison table of WhatsApp automation tools for Shopify India: WATI, AiSensy, Interakt, Bitespeed, Zoko, Getgabs, Kanal, Dondy, TopEdge.
+- [Shopify WhatsApp Automation Go-Live Checklist (India)](https://topedgeai.com/blog/shopify-automation-checklist-whatsapp-cart-recovery): A fast Shopify automation checklist to connect WhatsApp, approve Meta templates, publish cart recovery, turn on COD paths, and open a shared inbox.
+- [WhatsApp Shared Inbox with Shopify Orders](https://topedgeai.com/blog/whatsapp-shared-inbox-shopify-order-context): Why ecommerce teams need a WhatsApp shared inbox with Shopify order context: assignment, AI handoff, tags, and Instagram in one place.
+- [Meta WhatsApp Cloud API Templates for Shopify](https://topedgeai.com/blog/meta-whatsapp-cloud-api-shopify-templates): A plain-English guide to Meta WhatsApp Cloud API templates for Shopify ecommerce: categories, approval tips, journey gating, and transparent rates.
+- [WhatsApp vs Email Marketing Automation for D2C India](https://topedgeai.com/blog/ecommerce-automation-whatsapp-vs-email-india): Compare WhatsApp ecommerce automation vs email for cart recovery, order updates, and campaigns: when to use each channel on Shopify in India.
+- [Shopify WhatsApp Automation: What to Automate First](https://topedgeai.com/blog/shopify-whatsapp-automation-what-to-automate-first): Prioritize Shopify WhatsApp automation that pays: abandoned cart, COD confirmation, order updates, then campaigns: a rollout order for Indian D2C ecommerce.
+- [Shopify Abandoned Cart Recovery on WhatsApp (India)](https://topedgeai.com/blog/whatsapp-abandoned-cart-recovery-shopify): WhatsApp abandoned cart recovery for Shopify: cart vs checkout, message timing, templates, opt-in rules and what to look for in a recovery tool.
 
-## Optional
+## Canonical URL directory
 
-- [Zoko alternative](https://topedgeai.com/blog/zoko-alternative-shopify-india)
-- [Getgabs alternative](https://topedgeai.com/blog/getgabs-alternative-shopify-whatsapp)
-- [Kanal alternative](https://topedgeai.com/blog/kanal-whatsapp-alternative-shopify)
-- [Dondy alternative](https://topedgeai.com/blog/dondy-alternative-shopify-india)
-- [WATI alternative](https://topedgeai.com/blog/wati-alternative-shopify-india)
-- [AiSensy alternative](https://topedgeai.com/blog/aisensy-alternative-shopify-india)
-- [Interakt alternative](https://topedgeai.com/blog/interakt-alternative-shopify-india)
-- [Bitespeed alternative](https://topedgeai.com/blog/bitespeed-alternative-shopify-india)
-- [How to choose a Shopify WhatsApp app](https://topedgeai.com/blog/how-to-choose-whatsapp-app-shopify-app-store)
-- [WhatsApp Business API pricing India](https://topedgeai.com/blog/whatsapp-business-api-pricing-india)
-- [About](https://topedgeai.com/about)
-- [Privacy](https://topedgeai.com/privacy)
-- [Terms](https://topedgeai.com/terms)
+All 69 indexable URLs on this domain, no trailing slash except the root.
+
+- https://topedgeai.com/
+- https://topedgeai.com/pricing
+- https://topedgeai.com/features
+- https://topedgeai.com/integrations
+- https://topedgeai.com/customers
+- https://topedgeai.com/compare
+- https://topedgeai.com/compare/topedge-vs-wati-vs-aisensy
+- https://topedgeai.com/compare/topedge-vs-wati-vs-interakt-vs-aisensy
+- https://topedgeai.com/about
+- https://topedgeai.com/contact
+- https://topedgeai.com/blog
+- https://topedgeai.com/features/journeys
+- https://topedgeai.com/features/flow-builder
+- https://topedgeai.com/features/ai-brain
+- https://topedgeai.com/features/campaigns
+- https://topedgeai.com/features/analytics
+- https://topedgeai.com/features/meta-manager
+- https://topedgeai.com/features/audience-crm
+- https://topedgeai.com/features/chat-rules
+- https://topedgeai.com/features/warranty
+- https://topedgeai.com/features/opt-in-tools
+- https://topedgeai.com/features/profit-loss
+- https://topedgeai.com/features/intent-detection
+- https://topedgeai.com/features/cod-confirmation
+- https://topedgeai.com/compare/wati
+- https://topedgeai.com/compare/aisensy
+- https://topedgeai.com/compare/interakt
+- https://topedgeai.com/compare/bitespeed
+- https://topedgeai.com/compare/zoko
+- https://topedgeai.com/compare/getgabs
+- https://topedgeai.com/compare/kanal
+- https://topedgeai.com/compare/dondy
+- https://topedgeai.com/compare/updatrr
+- https://topedgeai.com/compare/gupshup
+- https://topedgeai.com/compare/alternatives
+- https://topedgeai.com/shopify-whatsapp-integration
+- https://topedgeai.com/blog/whatsapp-abandoned-cart-recovery-shopify
+- https://topedgeai.com/blog/whatsapp-automation-for-shopify
+- https://topedgeai.com/blog/best-whatsapp-apps-for-shopify
+- https://topedgeai.com/blog/shopify-whatsapp-automation-what-to-automate-first
+- https://topedgeai.com/blog/ecommerce-automation-whatsapp-vs-email-india
+- https://topedgeai.com/blog/meta-whatsapp-cloud-api-shopify-templates
+- https://topedgeai.com/blog/whatsapp-shared-inbox-shopify-order-context
+- https://topedgeai.com/blog/shopify-automation-checklist-whatsapp-cart-recovery
+- https://topedgeai.com/blog/best-whatsapp-automation-tools-shopify-india
+- https://topedgeai.com/blog/how-to-reduce-rto-with-whatsapp-cod-confirmation
+- https://topedgeai.com/blog/what-is-ecommerce-automation-shopify-whatsapp
+- https://topedgeai.com/blog/ai-whatsapp-chatbot-for-shopify-india
+- https://topedgeai.com/blog/zoko-alternative-shopify-india
+- https://topedgeai.com/blog/getgabs-alternative-shopify-whatsapp
+- https://topedgeai.com/blog/kanal-whatsapp-alternative-shopify
+- https://topedgeai.com/blog/how-to-choose-whatsapp-app-shopify-app-store
+- https://topedgeai.com/blog/whatsapp-business-api-pricing-india
+- https://topedgeai.com/blog/dondy-alternative-shopify-india
+- https://topedgeai.com/blog/organic-vs-paid-ecommerce-marketing-2026
+- https://topedgeai.com/blog/cod-rto-benchmark-india-2026
+- https://topedgeai.com/blog/profitable-ecommerce-business-india
+- https://topedgeai.com/blog/how-to-automate-ecommerce-store-india
+- https://topedgeai.com/blog/organic-ecommerce-leads-short-form-video
+- https://topedgeai.com/blog/trending-products-to-sell-online-india-2026
+- https://topedgeai.com/blog/wati-alternative-shopify-india
+- https://topedgeai.com/blog/aisensy-alternative-shopify-india
+- https://topedgeai.com/blog/interakt-alternative-shopify-india
+- https://topedgeai.com/blog/bitespeed-alternative-shopify-india
+- https://topedgeai.com/blog/whatsapp-template-rejected-meta-shopify-fix
+- https://topedgeai.com/blog/whatsapp-opt-in-shopify-india
+- https://topedgeai.com/blog/updatrr-alternative-shopify-india
+- https://topedgeai.com/privacy
+- https://topedgeai.com/terms
+
+## Full version
+
+- [llms-full.txt](https://topedgeai.com/llms-full.txt): expanded capabilities, every compare board summary, and every playbook direct answer and FAQ.

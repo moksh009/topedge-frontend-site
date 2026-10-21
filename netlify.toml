@@ -59,8 +59,31 @@
   [headers.values]
     Cache-Control = "public, max-age=2592000, stale-while-revalidate=86400"
 
+# Plain-text and XML crawl surfaces. These had no explicit rule, so they
+# inherited the default and a crawler could be handed a stale copy after a
+# deploy while the HTML it describes was already new. One hour, same for every
+# user agent: there is no UA branching anywhere in this repo and these three
+# files are the ones AI answer engines fetch directly.
 [[headers]]
   for = "/llms.txt"
   [headers.values]
     Content-Type = "text/plain; charset=utf-8"
+    Cache-Control = "public, max-age=3600"
+
+[[headers]]
+  for = "/llms-full.txt"
+  [headers.values]
+    Content-Type = "text/plain; charset=utf-8"
+    Cache-Control = "public, max-age=3600"
+
+[[headers]]
+  for = "/robots.txt"
+  [headers.values]
+    Content-Type = "text/plain; charset=utf-8"
+    Cache-Control = "public, max-age=3600"
+
+[[headers]]
+  for = "/sitemap.xml"
+  [headers.values]
+    Content-Type = "application/xml; charset=utf-8"
     Cache-Control = "public, max-age=3600"

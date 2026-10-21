@@ -48,9 +48,9 @@ export const PAGE_SEO = {
   pricing: {
     title: 'Shopify WhatsApp Pricing India: ₹1,999/mo, 0% Markup',
     description:
-      'Flat INR Shopify WhatsApp pricing: Launch ₹1,999, Growth ₹3,999, Scale ₹6,499 a month + GST. Yearly saves 20%. 0% Meta Cloud API markup, 14-day free trial.',
+      'Flat INR Shopify WhatsApp plans from ₹1,999/mo + GST, yearly saves 20%. 0% markup on Meta India rates: ₹0.8631 marketing, ₹0.115 utility. 14-day free trial.',
     keywords:
-      'shopify whatsapp pricing india, whatsapp automation price india, whatsapp business api 0% markup, cod confirmation app pricing shopify, whatsapp cart recovery cost india, flat inr whatsapp plans',
+      'shopify whatsapp pricing india, whatsapp automation price india, whatsapp business api 0% markup, whatsapp api rates india 2026, meta whatsapp india rate card inr, cod confirmation app pricing shopify, whatsapp cart recovery cost india, flat inr whatsapp plans',
     path: '/pricing',
   },
   features: {
@@ -294,6 +294,7 @@ export const SOLUTION_SEO: Record<
  * "TopEdge AI" node. See seo-audit/ TE-004.
  */
 export const ORG_ID = `${SITE_URL}/#organization`;
+export const SOFTWARE_ID = `${SITE_URL}/#software`;
 export const WEBSITE_ID = `${SITE_URL}/#website`;
 export const ORG_LOGO_URL = `${SITE_URL}/og-image.png`;
 
@@ -427,6 +428,7 @@ export function softwareApplicationJsonLd() {
     // Dual type: keeps SoftwareApplication semantics while satisfying Product
     // merchant-listing validators that require `image` on Product.
     '@type': ['SoftwareApplication', 'Product'],
+    '@id': SOFTWARE_ID,
     name: 'TopEdge AI',
     alternateName: 'TopEdge',
     applicationCategory: 'BusinessApplication',
@@ -503,6 +505,31 @@ export function videoObjectJsonLd(demo: {
     publisher: ORG_REF,
     isFamilyFriendly: true,
     inLanguage: 'en-IN',
+  };
+}
+
+export function featureSoftwareJsonLd(opts: { name: string; description: string; path: string }) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    '@id': SOFTWARE_ID,
+    name: 'TopEdge AI',
+    alternateName: 'TopEdge',
+    applicationCategory: 'BusinessApplication',
+    applicationSubCategory: opts.name,
+    operatingSystem: 'Web, Shopify, Meta WhatsApp Cloud API',
+    url: SITE_URL,
+    image: [ORG_LOGO_URL],
+    description: opts.description,
+    featureList: [opts.name],
+    publisher: ORG_REF,
+    provider: ORG_REF,
+    // Where the plans and the prices actually live.
+    subjectOf: { '@type': 'WebPage', url: `${SITE_URL}/pricing` },
+    audience: {
+      '@type': 'Audience',
+      audienceType: 'Shopify D2C merchants and ecommerce agencies in India',
+    },
   };
 }
 

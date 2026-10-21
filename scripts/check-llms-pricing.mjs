@@ -62,6 +62,7 @@ for (const slug of PUBLIC_PLANS) {
       Number(plan.campaignEmailSendsPerCycle).toLocaleString('en-IN'),
     ],
     ['Journey Branch', plan.features.journeyBranch ? 'Yes' : 'No'],
+    ['COD to prepaid', plan.features.journeyCodPrepaid ? 'Yes' : 'No'],
   ];
   if (cells.length !== expected.length) {
     errors.push(
@@ -90,7 +91,7 @@ for (const name of rows.keys()) {
 }
 
 // Prose lines that carry numbers or capability claims must stay sourced too.
-const trialLine = `a ${TRIAL.days}-day free trial: ${TRIAL.orders} orders, ${TRIAL.sends} campaign + email sends`;
+const trialLine = `a ${TRIAL.days}-day free trial: ${TRIAL.orders} orders, ${TRIAL.sends} campaign plus email sends`;
 if (!section.includes(trialLine)) {
   errors.push(`trial line missing or stale — expected to contain: "${trialLine}"`);
 }
@@ -102,9 +103,11 @@ if (!section.includes(GST_FOOTNOTE)) {
 const branchPlans = FALLBACK_CATALOG.plans
   .filter((p) => PUBLIC_PLANS.includes(p.slug) && p.features.journeyBranch)
   .map((p) => p.displayName);
-const branchClaim = `Journey Branch is on ${branchPlans.join(' and ')} only.`;
+const branchClaim =
+  `Journey Branch and automated COD to prepaid are on ${branchPlans.join(' and ')} only. ` +
+  'COD confirmation before dispatch is on every plan.';
 if (!section.includes(branchClaim)) {
-  errors.push(`Journey Branch claim missing or stale — expected: "${branchClaim}"`);
+  errors.push(`plan gating claim missing or stale — expected: "${branchClaim}"`);
 }
 const MARKUP_CLAIM = 'passed through at 0% markup';
 if (!section.includes(MARKUP_CLAIM)) {
@@ -117,10 +120,17 @@ if (!section.includes(MARKUP_CLAIM)) {
 // never carry paise, so any decimal money amount is a per-message rate.
 const MONEY_WITH_PAISE =
   /(?:₹|Rs\.?|INR)\s*\d+\.\d+|\b\d+\.\d+\s*(?:₹|Rs\.?|INR)\b/i;
-const rate = text.match(MONEY_WITH_PAISE);
+// Everything above "## Product" is TopEdge speaking about its own prices: the
+// entity block, the notes and the plan table. Below that line the file quotes
+// other vendors (an AI add-on at ₹0.50 a message, for one) and each of those
+// carries the date it was checked, so a decimal amount there is accurate rather
+// than a leaked rate of ours. Plan prices never carry paise, which is why any
+// decimal in our own block is still treated as a per-message rate.
+const ourProse = text.split('\n## Product')[0];
+const rate = ourProse.match(MONEY_WITH_PAISE);
 if (rate) {
   errors.push(
-    `a per-message rate (${rate[0].trim()}) is quoted in llms.txt — ` +
+    `a per-message rate (${rate[0].trim()}) is quoted as ours in llms.txt — ` +
       `say "Meta's published per-message rates, passed through at 0% markup" instead`,
   );
 }

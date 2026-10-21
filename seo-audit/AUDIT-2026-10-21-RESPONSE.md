@@ -158,3 +158,181 @@ release just removed.
 `npm run build:netlify`: 66 prerendered pages, 0 failures, dist check green.
 `check:pricing`, `check:blog`, `check:blog-sources` all pass, including the em dash rule.
 Sitemap: 67 URLs, 65 honestly dated today, 2 honestly unchanged.
+
+---
+
+# Phase 2 hardening pass (same day)
+
+Phase 1 is deployed: the live home page carries its title and H1, and all three
+consolidation redirects answer 301 in production. Everything below is pending
+deploy.
+
+## 1. llms.txt and llms-full.txt are generated now
+
+The question was fair and the answer was no, I had not updated it. It was worse
+than stale: `public/llms.txt` was hand-written, and after the two consolidations
+it still listed `/blog/ai-chatbot-for-shopify` and
+`/blog/cod-confirmation-whatsapp-reduce-rto-shopify`, both of which 301. A file
+whose entire purpose is to be read literally by a model had two dead URLs in it
+and nothing in the build could notice. It also carried a
+`<!-- BEGIN GENERATED DOCS - scripts/generate-llms-docs.mjs -->` marker naming a
+script that does not exist in the repo.
+
+`scripts/generate-llms.mjs` now builds both files from the sources the pages use:
+the billing catalog, `getSitemapPaths()`, `blogPosts`, `COMPARE_COMPETITORS`,
+`PRODUCT_PAGES` and `companyIdentity`. It throws if any path it is about to emit
+is not in the canonical set, so a retired slug fails the build rather than
+shipping.
+
+- `public/llms.txt`, 19.3 KB: entity with GSTIN and SAC, catalog pricing table
+  now including a COD-to-prepaid column, 12 feature pages, 12 compare boards, 30
+  playbooks, and the full 68-URL canonical directory.
+- `public/llms-full.txt`, 86.9 KB: every feature page with its answer-first block
+  and FAQs, every board with its dated sourcing note and published entry prices,
+  and every playbook with its direct answer and FAQs.
+
+`scripts/check-llms.mjs` asserts both exist in `public/` and in `dist/`, that
+every `topedgeai.com` URL in them is canonical, no trailing slashes except the
+root, no `/roi`, no `topedgeai.com/docs`, and that llms.txt carries the GSTIN,
+the GST line, the 0% markup statement and the trial length. Wired into
+`build:netlify` as `check:llms`, plus `npm run llms` to regenerate.
+
+Two scoping decisions worth recording. The ₹-figure check runs only on
+`llms.txt` and only above `## Product`, because everything below that line quotes
+other people's numbers on purpose: competitor entry tiers, Meta per-message
+rates, and the ₹80 to ₹300 courier cost of one RTO. `llms-full.txt` is almost
+entirely made of those. The same applies to the pre-existing no-paise rule in
+`check-llms-pricing.mjs`, which previously scanned the whole file and now scans
+only the part that speaks for us. That checker also gained the COD-to-prepaid
+column, so the gate the Interakt FAQ and four compare boards all got wrong is
+now asserted against the catalog on every build.
+
+`robots.txt` gained the pointer, and `netlify.toml` gained explicit
+`Content-Type` and one-hour `Cache-Control` rules for `llms-full.txt`,
+`robots.txt` and `sitemap.xml`, which had none at all.
+
+On value: Google's own AI-optimization guidance says llms.txt is not a ranking
+signal. This is kept because it is cheap, because some answer engines do fetch
+it, and because being generated means it can no longer be wrong. It is not a
+ranking lever and should not be treated as one.
+
+## 2. The dashboard subdomain: diagnosed, specified, not fixable from here
+
+Full detail in `seo-audit/DASHBOARD-SUBDOMAIN-SPEC.md`. The dashboard is a
+separate repo and is not in this workspace or any sibling directory.
+
+The audit said external crawlers were blocked. They are not. Every URL answers
+200 to every agent. Measured live:
+
+- `/docs` and `/docs/connect-whatsapp` both return the **identical 4,072-byte
+  client-side shell**, 0 characters of rendered text, the same generic title, and
+  `<link rel="canonical" href="https://dash.topedgeai.com/" />`. All 36
+  documentation URLs are telling Google in a canonical tag that they are
+  duplicates of the sign-in page. That is why zero are indexed.
+- `dash.topedgeai.com/sitemap.xml` contains exactly three URLs: `/login` at
+  priority 1.0, `/signup` at 0.8 and `/` at 0.5, all with a 2024-04-03 lastmod.
+  Zero docs URLs. Those three are precisely the three Google indexed.
+- `Disallow: /settings/*` **cannot match** `/settings?tab=billing`: the pattern
+  needs a `/` after `settings` and the live URL has `?` there. That is the exact
+  reason that URL is indexed. `Allow: /login` and `Allow: /signup` make it worse
+  by singling those paths out as wanted.
+- No `<meta name="robots">` on any authenticated route.
+- `dash/privacy` and `dash/terms` return 200 with self-referencing canonicals, so
+  both compete with the marketing originals.
+
+**Decided: the docs stay on `dash.topedgeai.com/docs`.** They were split across
+two domains once and that duplication is what the 9 Oct move removed. So the
+spec is the whole job and all five sections apply in the dashboard repo.
+
+One change made here to match: `/docs/*` now redirects with `:splat` rather than
+collapsing every deep path onto the docs index, so an old link to
+`/docs/connect-whatsapp` lands on that page. The dashboard serves the deep paths
+(all 200, checked 21 Oct). Nothing on this domain claims to own documentation any
+more, and `check-llms.mjs` fails the build if a generated file ever references
+`topedgeai.com/docs` again.
+
+## 3. All 13 feature pages audited
+
+Correcting the premise: all 13 are prerendered, in `sitemap.xml`, and were
+already inside the character contract with FAQPage, Organization, WebPage and
+BreadcrumbList. Only 3 changed in Phase 1 because only those 3 were named in the
+audit; the other 10 already carried India in the title.
+
+The real gap was the H1s and the FAQ depth.
+
+- **12 H1s rewritten.** They were product slogans that read well and carried none
+  of the terms a merchant types: "WhatsApp AI on your own API keys", "Website
+  intent, matched to WhatsApp", "Digital warranty workspace". Each now leads with
+  the job and the platform.
+- **FAQs raised to 4 or more on all 13** (from 2 on eight pages and 3 on two).
+  Every addition is about our own product and the plan gates on `/pricing`, with
+  no competitor named and no number invented.
+- **`SoftwareApplication` added to all 13**, via `featureSoftwareJsonLd()`, which
+  points every feature page at one `@id`. Deliberately unpriced: a priced
+  `SoftwareApplication` on 13 pages would enter 13 competing merchant listings for
+  one product, which is why `PAGE_TYPE_SCHEMA.feature` never asked for it. It
+  grounds the entity and leaves the offers on the page that sells.
+- **COD page**: title now carries "Cut RTO", H1 now carries confirmation, RTO and
+  prepaid conversion in one line.
+
+One thing deliberately not done. The brief asked for a page targeting "WhatsApp
+Shared Inbox with Shopify Order Context" in a title and H1. The blog post that
+ranks **#1 in Google** for that exact query already owns it, and `/features/live-chat`
+301s to the hub. Building a feature page on that phrase would split the only #1
+the site has. `chat-rules` was given routing language instead.
+
+## 4. The four-way board exists
+
+`/compare/topedge-vs-wati-vs-interakt-vs-aisensy`
+
+The suggestion was right and it cost no new competitor claims. All 13 row ids on
+the approved three-way board have a verbatim Interakt cell already published on
+`/compare/interakt`, so `FOUR_WAY_FEATURE_MATRIX` is derived by joining them on
+id at module load, and throws if a cell is ever missing. It cannot say anything
+about Interakt that the pairwise board does not already say, and editing the
+pairwise cell edits this one. That is what keeps a four-way board inside
+`VERBATIM_ONLY`.
+
+`CompareThreeWayPage` held its 200 lines of markup inline, so a four-way board
+would have been a copy that drifts. Both boards now render through
+`CompareMultiWayPage`, with the peer list as data.
+
+- Title leads with the query: "WATI vs Interakt vs AiSensy vs TopEdge AI (2026)".
+- 13 rows, 4 columns, 5 FAQs, FAQPage + WebPage + BreadcrumbList.
+- Cross-linked from the compare hub (as the first featured card), the footer, the
+  three-way board, and the WATI, AiSensy and Interakt pairwise boards. Interakt
+  had no multi-way link at all before, which was the gap.
+
+68 URLs now, up from 67.
+
+## 5. There is no user-agent branching, and now it is proven per deploy
+
+Inspected `netlify.toml`, `public/_redirects`, `public/_headers` (absent),
+`vite.config`, `build-static.js` and the prerender server. No UA branching, no
+bot challenge, no edge function or middleware of any kind. `vercel.json` does not
+exist; this deploys on Netlify.
+
+`npm run verify:live-aeo` (`scripts/verify-live-aeo.mjs`) proves it rather than
+asserting it. For 14 pages and 4 text surfaces it fetches as Googlebot,
+OAI-SearchBot, PerplexityBot and ClaudeBot, then requires 200 from all four and
+**byte-identical bodies**, checks that the strings this release removed are gone,
+and checks the four consolidated slugs 301 rather than 200.
+
+Run against production before deploying Phase 2:
+
+    13 pages, all 200, all byte-identical across the four agents
+    robots.txt, sitemap.xml, llms.txt all 200 as text
+    /roi, /blog/ai-chatbot-for-shopify, /blog/cod-confirmation-whatsapp-reduce-rto-shopify
+      and /blog/topedge-ai-voice-agents-vs-human-agents-2024 all 301 correctly
+    2 expected failures: the four-way board and llms-full.txt are 404 until deploy
+
+So the audit's "crawlers blocked" finding was its own crawler. The two 404s are
+the script working as intended: it fails until the new build is live.
+
+## Build state after Phase 2
+
+`npm run build:netlify`: 67 prerendered pages, 0 failures, dist check green.
+`check:pricing`, `check:blog`, `check:llms`, `check:lp`, `seo:contracts`,
+`sitemap:validate` all pass. `tsc --noEmit` clean. `eslint`: 0 errors, 5
+pre-existing react-refresh warnings in files untouched by this work.
+Sitemap: 68 URLs.

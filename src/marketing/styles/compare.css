@@ -156,6 +156,14 @@
   font-size: clamp(1.2rem, 2.4vw, 1.85rem);
 }
 
+/* Keeps "vs <peer>" together, so a four-column H1 never breaks between the
+   word and the logo it belongs to. */
+.mkt-cmp__h1-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem 0.45rem;
+}
+
 .mkt-cmp__lede {
   margin: 0.85rem auto 0;
   max-width: 32rem;
@@ -1341,6 +1349,10 @@
 
 /* 3-way mobile must come AFTER base triple rules (same specificity) */
 @media (max-width: 719px) {
+  .mkt-cmp__h1-group {
+    gap: 0.35rem;
+  }
+
   .mkt-cmp__h1--trio {
     flex-direction: column;
     gap: 0.45rem;

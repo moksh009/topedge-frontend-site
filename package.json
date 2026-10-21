@@ -6,9 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "build:netlify": "npm run check:pricing && npm run check:blog && node scripts/generate-content-dates.mjs && node scripts/generate-landing-pages.mjs && node scripts/generate-sitemap.mjs && node scripts/generate-redirects.mjs && vite build && node build-static.js && node scripts/prerender-marketing.mjs && node scripts/check-dist.mjs",
-    "build:firebase": "npm run check:pricing && npm run check:blog && node scripts/generate-content-dates.mjs && node scripts/generate-landing-pages.mjs && vite build && node build-static.js && node scripts/prerender-marketing.mjs && node scripts/check-dist.mjs",
-    "build:static": "npm run check:pricing && npm run check:blog && node scripts/generate-content-dates.mjs && node scripts/generate-landing-pages.mjs && vite build && node build-static.js && node scripts/prerender-marketing.mjs && node scripts/check-dist.mjs",
+    "build:netlify": "npm run check:pricing && npm run check:blog && node scripts/generate-content-dates.mjs && node scripts/generate-landing-pages.mjs && node scripts/generate-sitemap.mjs && node scripts/generate-llms.mjs && node scripts/generate-redirects.mjs && vite build && node build-static.js && node scripts/prerender-marketing.mjs && node scripts/check-dist.mjs && node scripts/check-llms.mjs",
+    "build:firebase": "npm run check:pricing && npm run check:blog && node scripts/generate-content-dates.mjs && node scripts/generate-landing-pages.mjs && node scripts/generate-llms.mjs && vite build && node build-static.js && node scripts/prerender-marketing.mjs && node scripts/check-dist.mjs && node scripts/check-llms.mjs",
+    "build:static": "npm run check:pricing && npm run check:blog && node scripts/generate-content-dates.mjs && node scripts/generate-landing-pages.mjs && node scripts/generate-llms.mjs && vite build && node build-static.js && node scripts/prerender-marketing.mjs && node scripts/check-dist.mjs && node scripts/check-llms.mjs",
     "prerender": "node scripts/prerender-marketing.mjs",
     "sitemap": "node scripts/generate-sitemap.mjs",
     "redirects": "node scripts/generate-redirects.mjs",
@@ -34,7 +34,10 @@
     "index:list": "node scripts/submit-index.mjs --dry-run",
     "gsc:auth": "node scripts/gsc-auth.mjs",
     "index:after-deploy": "node scripts/submit-index.mjs --wait",
-    "index:queues": "node scripts/index-queues.mjs"
+    "index:queues": "node scripts/index-queues.mjs",
+    "llms": "node scripts/generate-llms.mjs",
+    "check:llms": "node scripts/check-llms.mjs",
+    "verify:live-aeo": "node scripts/verify-live-aeo.mjs"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.17",

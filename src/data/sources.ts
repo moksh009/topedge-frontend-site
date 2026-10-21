@@ -40,7 +40,7 @@ export const SOURCES = {
     label: 'Meta’s WhatsApp Business Platform pricing documentation',
     publisher: 'Meta',
     claim:
-      'Per-message pricing since 1 July 2025, charged on delivery, by message category (marketing, utility, authentication, service) and the recipient’s country calling code. Carries the live rate card and the volume tiers.',
+      'Per-message pricing since 1 July 2025, charged on delivery, by message category (marketing, utility, authentication, service) and the recipient’s country calling code. Carries the live rate card and the volume tiers. Effective 1 October 2026 by messaging account timezone, every business phone number gets a free tier of 1,000 service messages a month and Meta charges from the 1,001st service message onward. Meta Business Agent moved to token billing on 1 August 2026 at $2.00 per million tokens. Utility and authentication volume tiers start at 25,000,000 and 750,000 messages a month.',
     verified: '2026-10-21',
   },
   metaTemplates: {
@@ -86,6 +86,69 @@ export const SOURCES = {
     publisher: 'Unicommerce',
     claim:
       'RTO of 39.2% at the November 2025 festive peak falling to 21.0% by March 2026, built from 410M+ shipments across 6,000+ brands. Festive-quarter COD returns around 58% against under 15% for prepaid.',
+    verified: '2026-10-21',
+  },
+  amazonShippingRto: {
+    id: 'amazonShippingRto',
+    url: 'https://shipping.amazon.in/blog/what-is-rto-how-to-reduce-return-to-origin',
+    label: 'Amazon Shipping India’s RTO cost breakdown',
+    publisher: 'Amazon Shipping India',
+    claim:
+      'One RTO parcel costs ₹180 to ₹240 in direct logistics: forward shipping ₹60 to ₹100, reverse logistics ₹50 to ₹80, repackaging and quality check ₹20 to ₹40, inventory holding in transit ₹10 to ₹20. That total excludes acquisition cost, and the page notes ₹450 to ₹680 spent acquiring a customer who then refuses at the door. Orders attempted within 1 to 2 days had 22% RTO, rising to 35% when attempted after 5+ days. Vadodara recorded the lowest city RTO at 18%.',
+    verified: '2026-10-21',
+  },
+  amazonShippingTrueCost: {
+    id: 'amazonShippingTrueCost',
+    url: 'https://shipping.amazon.in/blog/true-cost-of-shipping-per-order-india',
+    label: 'Amazon Shipping India’s true cost per order breakdown',
+    publisher: 'Amazon Shipping India',
+    claim:
+      'Worked ₹799 women’s cotton kurta example. Packaging ₹13 (₹10 mailer, ₹2 tape, ₹1 label). Volumetric weight (32 x 25 x 5) / 5,000 = 0.80 kg billed at the 1 kg slab, so ₹85 national freight on a 300g product. COD remittance fee ₹30. Amortised RTO cost ₹38 (30% x ₹125 incremental reverse cost). Support time ₹13 (40% touch rate x ₹32 per interaction, being 20 minutes at ₹96/hr). Visible costs ₹128, true total ₹179 against the ₹85 the seller sees.',
+    verified: '2026-10-21',
+  },
+  amazonShippingNdr: {
+    id: 'amazonShippingNdr',
+    url: 'https://shipping.amazon.in/blog/what-is-ndr-in-shipping-india',
+    label: 'Amazon Shipping India’s NDR resolution guide',
+    publisher: 'Amazon Shipping India',
+    claim:
+      'Nearly every failed delivery not resolved within 36 hours of the NDR being raised ends in cancellation and RTO. Indian courier SLAs typically allow 24 to 48 hours between delivery attempts, most couriers make two to three attempts, and the page advises contacting the buyer within 2 to 4 hours of the NDR.',
+    verified: '2026-10-21',
+  },
+  firstResortReturns: {
+    id: 'firstResortReturns',
+    url: 'https://www.firstresort.in/blogs/research/fashion-ecommerce-returns-rto-india-2026',
+    label: 'First Resort’s 2026 India fashion returns and RTO research',
+    publisher: 'First Resort',
+    claim:
+      'Citing ClickPost: ₹150 to ₹300 direct logistics per RTO parcel and ₹450 to ₹900 fully loaded once written-off acquisition spend is counted. Category RTO bands: fashion and apparel 25% to 40%, beauty and personal care 18% to 25%, furniture and large goods 15% to 20%, electronics 10% to 15%, FMCG and consumables 8% to 12%. Citing GoKwik: COD RTO near 26% against prepaid under 2%, with 60% to 70% of RTOs stemming from low buying intent rather than logistics failure.',
+    verified: '2026-10-21',
+  },
+  aisensyPricing: {
+    id: 'aisensyPricing',
+    url: 'https://aisensy.com/pricing',
+    label: 'AiSensy’s published pricing page',
+    publisher: 'AiSensy',
+    claim:
+      'From 1 October 2026 every WhatsApp Business number gets 1,000 free service messages a month, after which AiSensy charges service messages at ₹0.145 each for Indian users. That sits above Meta’s own ₹0.1150 India service and utility rate.',
+    verified: '2026-10-21',
+  },
+  interaktPricing: {
+    id: 'interaktPricing',
+    url: 'https://www.interakt.shop/pricing/',
+    label: 'Interakt’s published pricing page',
+    publisher: 'Interakt',
+    claim:
+      'Starter ₹999/month (Instagram only), Growth ₹2,799/month and Advanced ₹3,799/month for WhatsApp plus Instagram, Enterprise on request. Sales CRM ₹2,499/month for 5 agents then ₹499 per extra agent. WhatsApp AI Agents sold as a ₹3,000 add-on on Growth and Advanced, with 100 free AI messages a month and ₹0.50 per AI message beyond 100.',
+    verified: '2026-10-21',
+  },
+  updatrrPricing: {
+    id: 'updatrrPricing',
+    url: 'https://www.updatrr.com/pricing',
+    label: 'Updatrr’s published pricing page',
+    publisher: 'Updatrr',
+    claim:
+      'Growth $29.99/month, Pro $49.99/month, Pro AI $99.99/month, all with a 7-day free trial and no card required. Updatrr states it does not add a markup on Meta’s conversation fees and that Meta bills WhatsApp conversations separately. The page publishes no per-conversation AI fee, and AI sits on the $99.99 Pro AI tier.',
     verified: '2026-10-21',
   },
 } as const satisfies Record<string, Source>;

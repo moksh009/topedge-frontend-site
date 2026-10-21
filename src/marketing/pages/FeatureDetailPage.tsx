@@ -6,6 +6,7 @@ import { PageHero, Section, MarketingCard, PrimaryButton, GhostButton } from '..
 import { getFeatureBySlug, MARKETING_FEATURES, resolveFeatureSlug } from '../data/features';
 import {
   FEATURE_SEO,
+  featureSoftwareJsonLd,
   organizationJsonLd,
   breadcrumbJsonLd,
   webPageJsonLd,
@@ -67,6 +68,11 @@ export default function FeatureDetailPage() {
             { name: 'Features', path: '/features' },
             { name: feature.title, path: `/features/${feature.slug}` },
           ]),
+          featureSoftwareJsonLd({
+            name: feature.title,
+            description: featureSeo?.description ?? feature.body,
+            path: `/features/${feature.slug}`,
+          }),
           // The demo sits directly under the hero and shows this feature, so it
           // is main content and eligible for a video result.
           videoObjectJsonLd(demo),

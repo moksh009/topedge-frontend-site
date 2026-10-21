@@ -10,6 +10,19 @@ import '../styles/compare.css';
 
 const FEATURED = [
   {
+    href: '/compare/topedge-vs-wati-vs-interakt-vs-aisensy',
+    title: 'WATI vs Interakt vs AiSensy vs TopEdge AI',
+    body: 'The four names on most Indian shortlists on one board: markup, AI cost, COD → prepaid gating, flow caps.',
+    logos: [
+      { src: '/logo.png', alt: 'TopEdge AI' },
+      { src: '/marketing/compare/compare-logo-wati.png', alt: 'WATI' },
+      { src: '/marketing/compare/compare-logo-interakt.png', alt: 'Interakt' },
+      { src: '/marketing/compare/compare-logo-aisensy.png', alt: 'AiSensy' },
+    ],
+    badge: '4-way board',
+    tone: 'violet',
+  },
+  {
     href: '/compare/topedge-vs-wati-vs-aisensy',
     title: 'TopEdge AI vs WATI vs AiSensy',
     body: 'Markup, AI cost, identity, COD → prepaid, and chatflow caps, one board.',
@@ -19,7 +32,7 @@ const FEATURED = [
       { src: '/marketing/compare/compare-logo-aisensy.png', alt: 'AiSensy' },
     ],
     badge: '3-way board',
-    tone: 'violet',
+    tone: 'sky',
   },
   {
     href: '/compare/alternatives',

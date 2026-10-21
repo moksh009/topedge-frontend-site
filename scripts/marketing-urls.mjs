@@ -39,6 +39,15 @@ export const COMPARE_SLUGS = [
   'alternatives',
 ];
 
+/**
+ * Multi-vendor boards. These are explicit routes, not /compare/:competitor, so
+ * they live here rather than in COMPARE_SLUGS.
+ */
+export const COMPARE_MULTIWAY_SLUGS = [
+  'topedge-vs-wati-vs-aisensy',
+  'topedge-vs-wati-vs-interakt-vs-aisensy',
+];
+
 export const TOPIC_SLUGS = ['shopify-whatsapp-integration'];
 
 export const BLOG_SLUGS = [
@@ -72,6 +81,7 @@ export const BLOG_SLUGS = [
   'bitespeed-alternative-shopify-india',
   'whatsapp-template-rejected-meta-shopify-fix',
   'whatsapp-opt-in-shopify-india',
+  'updatrr-alternative-shopify-india',
 ];
 
 /** Soft-404 shell — prerendered to dist/404.html (Netlify 404 document). Not in sitemap. */
@@ -87,7 +97,7 @@ export function getMarketingPrerenderPaths() {
     '/integrations',
     '/customers',
     '/compare',
-    '/compare/topedge-vs-wati-vs-aisensy',
+    ...COMPARE_MULTIWAY_SLUGS.map((s) => `/compare/${s}`),
     '/about',
     '/contact',
     '/blog',

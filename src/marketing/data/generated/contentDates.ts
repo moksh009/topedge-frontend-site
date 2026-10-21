@@ -45,7 +45,8 @@ export const BLOG_DATES_BY_SLUG = {
   "interakt-alternative-shopify-india": "2026-10-21",
   "bitespeed-alternative-shopify-india": "2026-10-21",
   "whatsapp-template-rejected-meta-shopify-fix": "2026-10-21",
-  "whatsapp-opt-in-shopify-india": "2026-10-21"
+  "whatsapp-opt-in-shopify-india": "2026-10-21",
+  "updatrr-alternative-shopify-india": "2026-10-21"
 } as const;
 
 export type ContentDateKey = keyof typeof CONTENT_DATES;

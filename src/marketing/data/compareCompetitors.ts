@@ -135,6 +135,7 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
       { label: 'vs AiSensy', href: '/compare/aisensy' },
       { label: 'vs Bitespeed', href: '/compare/bitespeed' },
       { label: '3-way board', href: '/compare/topedge-vs-wati-vs-aisensy' },
+      { label: '4-way board', href: '/compare/topedge-vs-wati-vs-interakt-vs-aisensy' },
       { label: 'TopEdge pricing', href: '/pricing' },
     ],
   },
@@ -162,14 +163,15 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
       competitor,
     })),
     matrixNote:
-      'Capability claims reflect TopEdge product positioning vs publicly described AiSensy platform patterns. Confirm live plan limits, credits, and fees on aisensy.com before purchase.',
-    researchAsOf: 'Sep 2026',
+      'Read off aisensy.com/pricing on 21 Oct 2026: from 1 Oct 2026 every WhatsApp Business number gets 1,000 free service messages a month, then AiSensy charges ₹0.145 per service message for Indian users. Meta’s own published India service and utility rate is ₹0.1150, so that is a 26.1% markup on every support or bot reply past the free thousand. Remaining capability claims reflect TopEdge product positioning vs publicly described AiSensy platform patterns. Confirm live plan limits, credits and fees on aisensy.com before purchase.',
+    researchAsOf: 'Oct 2026',
     related: [
       { label: 'AiSensy alternative guide', href: '/blog/aisensy-alternative-shopify-india' },
       { label: 'All comparisons', href: '/compare' },
       { label: 'vs WATI', href: '/compare/wati' },
       { label: 'vs Bitespeed', href: '/compare/bitespeed' },
       { label: '3-way board', href: '/compare/topedge-vs-wati-vs-aisensy' },
+      { label: '4-way board', href: '/compare/topedge-vs-wati-vs-interakt-vs-aisensy' },
       { label: 'TopEdge pricing', href: '/pricing' },
     ],
   },
@@ -197,10 +199,11 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
       competitor,
     })),
     matrixNote:
-      'Capability board uses TopEdge product positioning vs publicly described Interakt plan patterns. Confirm live App vs India website tiers, AI add-ons (₹0.50 / message after 100 free), and Meta fees on interakt.shop before purchase.',
-    researchAsOf: 'Sep 2026',
+      'Read off interakt.shop/pricing on 21 Oct 2026: Starter ₹999/mo (Instagram only), Growth ₹2,799/mo and Advanced ₹3,799/mo for WhatsApp plus Instagram, Sales CRM ₹2,499/mo for 5 agents then ₹499 per extra agent. WhatsApp AI Agents is a ₹3,000 add-on on Growth and Advanced with 100 free AI messages a month, then ₹0.50 per AI message. Remaining capability rows reflect TopEdge product positioning vs publicly described Interakt plan patterns. Confirm live App vs India website tiers and Meta fees on interakt.shop before purchase.',
+    researchAsOf: 'Oct 2026',
     related: [
       { label: 'Interakt alternative guide', href: '/blog/interakt-alternative-shopify-india' },
+      { label: 'WATI vs Interakt vs AiSensy', href: '/compare/topedge-vs-wati-vs-interakt-vs-aisensy' },
       { label: 'All comparisons', href: '/compare' },
       { label: 'vs WATI', href: '/compare/wati' },
       { label: 'vs AiSensy', href: '/compare/aisensy' },
@@ -263,7 +266,7 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
       'TopEdge vs Zoko, Zoko alternative Shopify, Zoko pricing conversations, Shopify WhatsApp India Zoko, Zoko vs TopEdge',
     h1: 'TopEdge vs Zoko',
     subtitle: 'TopEdge AI vs Zoko for Shopify India D2C brands, checked for 2026.',
-    researchAsOf: 'Sep 2026',
+    researchAsOf: 'Oct 2026',
     matrix: ZOKO_PAIRWISE_MATRIX.map(({ label, description, topedge, competitor }) => ({
       label,
       description,
@@ -271,7 +274,7 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
       competitor,
     })),
     matrixNote:
-      'Zoko plans and conversation rates as of September 2026 from zoko.io/pricing and apps.shopify.com/whatsapp-button-chat (Starter $49.99 · Plus $79.99 · Elite $139.99 · Max $499.99; Shopify reviews ~445). Confirm live before purchase; figures change.',
+      'Read off apps.shopify.com/whatsapp-button-chat on 21 Oct 2026. Starter $49.99/mo meters $0.015 per conversation with no cap. Plus $79.99/mo includes 5,000 conversations then $0.00199 each, with 5 agents and $15 per extra agent. Elite $139.99/mo includes 100,000 then $0.00099, 10 agents at $12 each. Max $499.99/mo includes 5M then $0.00049, 30 agents at $9 each. AI bot add-ons from $24.99/mo, custom flows $5.99 per flow per month, Instagram $9.99/mo. Confirm live on zoko.io/pricing before purchase; figures change.',
     related: [
       { label: 'Alternatives index', href: '/compare/alternatives' },
       { label: 'vs Bitespeed', href: '/compare/bitespeed' },
@@ -376,7 +379,7 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
       competitor,
     })),
     matrixNote:
-      'Checked 21 Sep 2026: Shopify listing apps.shopify.com/dondy-marketing-ai shows 4.9★ / 821 reviews, Free widget, Pro $6.99, Power Automation $79.99, Elite $159.99. dondy.net/dondy-pricing also lists an Advanced $14.99 tier and the per-market rate table (India $0.01888). Surfaces disagree on agent seats (listing: 5 on Elite; site: unlimited) and on the US floor (“from $0.0158” on the listing vs North America $0.04 on the table). Verify both before purchase.',
+      'Checked 21 Sep 2026: Shopify listing apps.shopify.com/dondy-marketing-ai shows 4.9★ / 821 reviews, Free widget, Pro $6.99, Power Automation $79.99, Elite $159.99. dondy.net/dondy-pricing also lists an Advanced $14.99 tier and the per-market rate table (India $0.01888). Surfaces disagree on agent seats (listing: 5 on Elite; site: unlimited) and on the US floor (“from $0.0158” on the listing vs North America $0.04 on the table). In rupees, that India row works out near ₹1.38 a message against Meta’s published ₹0.8631 India marketing rate (read 21 Oct 2026), so about ₹0.52 extra per send, or ₹5,179 on 10,000 marketing messages. Verify both before purchase.',
     related: [
       { label: 'Dondy alternative (markup)', href: '/blog/dondy-alternative-shopify-india' },
       { label: 'Best WhatsApp tools India', href: '/blog/best-whatsapp-automation-tools-shopify-india' },
@@ -398,7 +401,7 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
     brandTag: 'Shopify-only WhatsApp automation',
     title: 'TopEdge AI vs Updatrr (2026): BYOK AI & CRM vs Shopify App',
     description:
-      'Compare TopEdge AI vs Updatrr for Shopify India: BYOK AI at ~₹0.10-₹0.30/msg, a visitor identity pixel and a warranty hub vs a $19.99/mo Shopify-only app.',
+      'Compare TopEdge AI vs Updatrr for Shopify India: BYOK AI on every plan from ₹1,999/mo, a visitor pixel and a warranty hub vs USD tiers that gate AI at $99.99.',
     keywords:
       'TopEdge vs Updatrr, Updatrr alternative India, Updatrr WhatsApp Shopify, Updatrr pricing, TopEdge vs Updatrr COD prepaid, Updatrr AI conversation cost',
     h1: 'TopEdge vs Updatrr',
@@ -410,11 +413,12 @@ export const COMPARE_COMPETITORS: Record<string, CompareCompetitor> = {
       competitor,
     })),
     matrixNote:
-      'Capability board uses TopEdge product positioning vs publicly described Updatrr Shopify-app patterns. Confirm live plan limits, AI fees, and Meta billing on updatrr.com and apps.shopify.com/prizma-updatrr before purchase.',
-    researchAsOf: 'Sep 2026',
+      'Read off updatrr.com/pricing on 21 Oct 2026: Growth $29.99/mo, Pro $49.99/mo, Pro AI $99.99/mo, 7-day no-card trial, and Updatrr states it adds no markup on Meta conversation fees (so the Meta line matches ours). Capability rows reflect its publicly described Shopify-app surface on that date, not its roadmap. Confirm live plan limits, AI fees and Meta billing on updatrr.com and apps.shopify.com/prizma-updatrr before purchase.',
+    researchAsOf: 'Oct 2026',
     related: [
       { label: 'All comparisons', href: '/compare' },
       { label: 'Alternatives index', href: '/compare/alternatives' },
+      { label: 'Updatrr alternative playbook', href: '/blog/updatrr-alternative-shopify-india' },
       { label: 'vs Dondy', href: '/compare/dondy' },
       { label: 'vs Bitespeed', href: '/compare/bitespeed' },
       { label: 'vs Zoko', href: '/compare/zoko' },
