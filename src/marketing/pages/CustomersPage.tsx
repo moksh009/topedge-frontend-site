@@ -194,8 +194,8 @@ export default function CustomersPage() {
 
         <div className="mkt-customers__reviews">
           <TrustpilotProof
-            heading="Reviews merchants left on Trustpilot"
-            intro="Published under their own names, quoted as written."
+            heading="In their own words"
+            intro="Published under their own names on Trustpilot, quoted as written."
           />
         </div>
 

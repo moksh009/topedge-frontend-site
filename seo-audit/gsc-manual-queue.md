@@ -22,7 +22,7 @@ as the old page and the fetch is wasted.
 - [ ] https://topedgeai.com/blog
 - [ ] https://topedgeai.com/blog/cod-to-prepaid-whatsapp-shopify-india
 
-## Unchanged in this release — 67 URLs
+## Unchanged in this release — 68 URLs
 
 These did not change, so the sitemap already carries their real date and a
 manual request buys nothing. Submit only if Search Console reports them as
@@ -92,6 +92,7 @@ missing from the index.
 - https://topedgeai.com/about  (lastmod 2026-10-21)
 - https://topedgeai.com/compare  (lastmod 2026-10-21)
 - https://topedgeai.com/integrations  (lastmod 2026-10-21)
+- https://topedgeai.com/pricing/meta-rates  (lastmod 2026-10-21)
 - https://topedgeai.com/shopify-whatsapp-integration  (lastmod 2026-10-21)
 - https://topedgeai.com/privacy  (lastmod 2026-10-05)
 - https://topedgeai.com/terms  (lastmod 2026-10-05)

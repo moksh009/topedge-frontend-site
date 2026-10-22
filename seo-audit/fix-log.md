@@ -403,3 +403,59 @@ one pre-existing unused-variable error in `MarketingNavbar.tsx`.
 blocked in this sandbox. Same caveat as Batch 5 applies to every competitor and benchmark figure
 above. They come from the 2026-10-21 research pass, which states it read each page live that day.
 Nothing here was fetched from source.
+
+---
+
+## Batch 7 — /pricing decluttered, the rate card gets its own page — 2026-10-22
+
+The owner's note on the pricing page, verbatim in substance: it reads cluttered, no serious
+brand shows this much working, and the SEO proof should live somewhere else and be linked.
+Agreed on the placement, not on deleting it: the Meta rate card is the proof behind the single
+claim the page is built on, and `whatsapp business api 0% markup india shopify` is a target
+keyword. So it moved rather than went.
+
+### Moved
+
+**`/pricing/meta-rates`** is new. It carries what `/pricing` was carrying: the four-category
+India rate card, the markup board, the cost calculator, the Business-Manager-against-invoice
+test, and the sourcing footnote. None of it is a table any more. Two four-column tables were
+exactly what made the section read as a spreadsheet, and the same facts as cards need no
+horizontal scroll on a phone and no `data-label` trickery to stay readable.
+
+**`/pricing` keeps three figures and a link**: ₹0.8631, ₹0.1150, ₹0, one sentence, and
+"See the full rate card, markup comparison and cost calculator". The commercial keyword stays
+on the page that converts, the evidence sits one click away on the page that proves it, and the
+two are linked both ways.
+
+Registered in `App.tsx`, `pageSeo.ts`, `marketing-urls.mjs`, the sitemap, `llms.txt` and the
+index queues. 70 prerendered pages, up from 69.
+
+### Refined
+
+**Reviews.** They were set as bare type with a hairline between them, on the argument that a
+boxed quote reads as the testimonial nobody believes. On a page that is otherwise all cards it
+read as three loose paragraphs instead. Now: a centred head with an eyebrow and the Trustpilot
+score as a badge, three cards with aligned bylines, an initial avatar and "Published on
+Trustpilot" under each name. Heading is "What merchants say" on `/pricing` and "In their own
+words" on `/customers`. What did not change: no stock portraits, and no per-review star row,
+because 4.0 is an aggregate Trustpilot publishes and we do not get to split it three ways.
+
+**The mobile trust strip**, which was the "icon not aligned" complaint on the landing page. Five
+marks on a 1,058px marquee track inside a 304px column meant the first and last were sliced
+mid-letter at every frame, and a 6% mask at 360px is 21px of fade, so a cut logo read as a
+broken image. On phones the marquee now stops, the strip breaks out of the copy column's 24rem
+measure, and all five marks hold one centred row at 360px and 390px. Verified: one row, five
+items, no document-level horizontal scroll at either width.
+
+### Removed
+
+A dead `.mkt-rates` / `.mkt-rate*` block in `pricing.css`, ~40 lines, referenced by no JSX in the
+repo. It was found the hard way: it set `display: grid` on the new page's root class and laid the
+whole page out in columns.
+
+### Gates
+
+`vite build` + `build-static` + prerender: 70 prerendered, 0 failed · `check:dist` passed ·
+`check:blog` 32 posts clean · `check:llms` passed · `check:lp` passed · `seo:contracts` passed ·
+`eslint` 0 errors · `tsc` clean apart from the pre-existing unused variable in
+`MarketingNavbar.tsx`.

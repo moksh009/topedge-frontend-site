@@ -17,6 +17,7 @@ import Home from './pages/Home';
 const About = React.lazy(() => import('./pages/About'));
 const Contact = React.lazy(() => import('./pages/Contact'));
 const Pricing = React.lazy(() => import('./marketing/pages/PricingPage'));
+const MetaRatesPage = React.lazy(() => import('./marketing/pages/MetaRatesPage'));
 const FeaturesPage = React.lazy(() => import('./marketing/pages/FeaturesPage'));
 const FeatureDetailPage = React.lazy(() => import('./marketing/pages/FeatureDetailPage'));
 const CodConfirmationPage = React.lazy(() => import('./marketing/pages/CodConfirmationPage'));
@@ -175,6 +176,7 @@ const AnimatedRoutes = () => {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/pricing" element={<Pricing />} />
+          <Route path="/pricing/meta-rates" element={<MetaRatesPage />} />
           <Route path="/features" element={<FeaturesPage />} />
           <Route path="/features/cod-confirmation" element={<CodConfirmationPage />} />
           <Route path="/features/:slug" element={<FeatureDetailPage />} />

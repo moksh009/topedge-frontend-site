@@ -94,6 +94,7 @@ export function getMarketingPrerenderPaths() {
   return [
     '/',
     '/pricing',
+    '/pricing/meta-rates',
     '/features',
     '/integrations',
     '/customers',

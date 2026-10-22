@@ -78,39 +78,58 @@ export function TrustpilotScore({ compact = false }: { compact?: boolean }) {
 }
 
 /**
- * The three published reviews, set as type rather than as cards.
+ * The three published reviews.
  *
- * Boxing a quote makes it read as a designed testimonial — the thing every
- * pricing page has and nobody believes. These sit in the page's own column
- * rhythm, separated by a hairline, with the author and the retrieval date
- * under them so a reader can go and check the claim.
+ * They were set as bare type with a hairline between them, on the argument
+ * that a boxed quote reads as the designed testimonial nobody believes. On a
+ * page that is otherwise all cards, what it actually read as was three loose
+ * paragraphs the layout had forgotten. These are cards now, but the restraint
+ * stays where it mattered: no stock portraits, no five-star row invented per
+ * review (the score is an aggregate, and Trustpilot publishes it, not us),
+ * and the retrieval date under them so a reader can go and check.
  */
 export default function TrustpilotProof({
-  heading = 'What merchants wrote on Trustpilot',
+  eyebrow = 'TRUSTPILOT',
+  heading = 'What merchants say',
   intro,
 }: {
+  eyebrow?: string;
   heading?: string;
   intro?: string;
 }) {
   return (
     <section className="mkt-tp" aria-labelledby="mkt-tp-head">
-      <div className="mkt-tp__head">
-        <div>
-          <h2 className="mkt-tp__title" id="mkt-tp-head">
-            {heading}
-          </h2>
-          {intro ? <p className="mkt-tp__intro">{intro}</p> : null}
+      <header className="mkt-tp__head">
+        {eyebrow ? <p className="mkt-tp__eyebrow">{eyebrow}</p> : null}
+        <h2 className="mkt-tp__title" id="mkt-tp-head">
+          {heading}
+        </h2>
+        {intro ? <p className="mkt-tp__intro">{intro}</p> : null}
+        <div className="mkt-tp__score-wrap">
+          <TrustpilotScore />
         </div>
-        <TrustpilotScore />
-      </div>
+      </header>
 
       <ul className="mkt-tp__list">
         {TRUSTPILOT_QUOTES.map((q) => (
           <li className="mkt-tp__item" key={q.author}>
+            <span className="mkt-tp__mark" aria-hidden>
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                <path d="M9.6 5.2c-3.3 1.5-5.4 4.3-5.4 7.9 0 3.3 2 5.7 4.8 5.7 2.3 0 4-1.7 4-3.9 0-2.1-1.5-3.7-3.5-3.7-.4 0-.9.1-1 .1.3-1.6 1.9-3.4 3.6-4.3zm9.1 0c-3.3 1.5-5.4 4.3-5.4 7.9 0 3.3 2 5.7 4.8 5.7 2.3 0 4-1.7 4-3.9 0-2.1-1.5-3.7-3.5-3.7-.4 0-.9.1-1 .1.3-1.6 1.9-3.4 3.6-4.3z" />
+              </svg>
+            </span>
             <blockquote className="mkt-tp__quote">
               <p>{q.text}</p>
             </blockquote>
-            <p className="mkt-tp__author">{q.author}</p>
+            <footer className="mkt-tp__by">
+              <span className="mkt-tp__avatar" aria-hidden>
+                {q.author.trim().charAt(0)}
+              </span>
+              <span className="mkt-tp__by-text">
+                <b className="mkt-tp__author">{q.author}</b>
+                <span className="mkt-tp__by-src">Published on Trustpilot</span>
+              </span>
+            </footer>
           </li>
         ))}
       </ul>

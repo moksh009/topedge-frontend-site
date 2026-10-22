@@ -108,10 +108,11 @@ Product documentation lives in the TopEdge dashboard: https://dash.topedgeai.com
 
 ## Canonical URL directory
 
-All 70 indexable URLs on this domain, no trailing slash except the root.
+All 71 indexable URLs on this domain, no trailing slash except the root.
 
 - https://topedgeai.com/
 - https://topedgeai.com/pricing
+- https://topedgeai.com/pricing/meta-rates
 - https://topedgeai.com/features
 - https://topedgeai.com/integrations
 - https://topedgeai.com/customers

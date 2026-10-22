@@ -53,6 +53,14 @@ export const PAGE_SEO = {
       'shopify whatsapp pricing india, whatsapp automation price india, whatsapp business api 0% markup, whatsapp api rates india 2026, meta whatsapp india rate card inr, cod confirmation app pricing shopify, whatsapp cart recovery cost india, flat inr whatsapp plans',
     path: '/pricing',
   },
+  metaRates: {
+    title: 'Meta WhatsApp Rates India 2026: ₹0.8631 & ₹0.115',
+    description:
+      'Meta’s published India WhatsApp rate card, what a platform markup adds to it, and a free calculator for your own monthly volume. TopEdge adds 0% to every line.',
+    keywords:
+      'meta whatsapp rate card india, whatsapp api rates india 2026, whatsapp business api 0% markup india, whatsapp message cost calculator india, meta india inr rate card, whatsapp marketing template rate india',
+    path: '/pricing/meta-rates',
+  },
   features: {
     title: 'Shopify WhatsApp Features: Journeys, COD, AI & Pixel',
     description:

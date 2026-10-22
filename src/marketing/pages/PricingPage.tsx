@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
 import '../styles/pricing.css';
 import MarketingSEO from '../components/MarketingSEO';
@@ -20,7 +21,6 @@ import PricingSectionHead from '../components/pricing/PricingSectionHead';
 import PricingSalesCta from '../components/pricing/PricingSalesCta';
 import TrustpilotProof, { TrustpilotScore } from '../components/TrustpilotProof';
 import HomeTrust from '../components/home/HomeTrust';
-import CostCalculator from '../components/CostCalculator';
 import {
   BillingCatalog,
   BillingCycle,
@@ -156,127 +156,45 @@ export default function PricingPage() {
 
             <IncludedFeatures items={catalog.universalFeatures} />
 
-            <TrustpilotProof intro="Published reviews from merchants running TopEdge on Shopify." />
+            <TrustpilotProof intro="Published reviews from Shopify brands running TopEdge, quoted as written." />
 
             <FeatureMatrix plans={catalog.plans} cycle={cycle} />
 
-            <section className="mkt-pricing__block">
+            {/* The Meta rate card used to live here in full: two four-column
+                tables, a markup board, a calculator and a sourcing footnote.
+                It is the right proof and it was in the wrong place, between a
+                plan grid and a buy button. Three figures and a link now, the
+                detail on /pricing/meta-rates. */}
+            <section className="mkt-pricing__block" aria-labelledby="meta-fees">
               <PricingSectionHead
+                id="meta-fees"
                 eyebrow="META FEES"
-                title="What 0% markup means"
-                highlight="in rupees."
-                sub="Meta bills your own Business Account at its published India rates. We add nothing to that line."
+                title="Meta bills you directly."
+                highlight="We add ₹0."
+                sub="Your WhatsApp messages are charged by Meta to your own Business Account at its published India rates. We never sit in the middle of that line."
               />
-              <div className="mkt-pricing__plan-text">
-                <p className="mkt-pricing__plan-text-head">
-                  Meta&rsquo;s India rate card, passed through at cost
-                </p>
-                <div className="mkt-pricing__text-table-wrap">
-                  <table className="mkt-pricing__text-table">
-                    <thead>
-                      <tr>
-                        <th scope="col">Message category</th>
-                        <th scope="col">What it covers</th>
-                        <th scope="col">Meta India rate</th>
-                        <th scope="col">What TopEdge adds</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <th scope="row">Marketing</th>
-                        <td data-label="Covers">Campaigns, cart recovery, win-backs</td>
-                        <td data-label="Meta rate">&#8377;0.8631 per delivered message</td>
-                        <td data-label="We add">&#8377;0</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Utility</th>
-                        <td data-label="Covers">Order, shipping and COD confirmations</td>
-                        <td data-label="Meta rate">&#8377;0.1150 per delivered message</td>
-                        <td data-label="We add">&#8377;0</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Authentication</th>
-                        <td data-label="Covers">OTPs and verification codes</td>
-                        <td data-label="Meta rate">&#8377;0.1150 per delivered message</td>
-                        <td data-label="We add">&#8377;0</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Service</th>
-                        <td data-label="Covers">Your replies inside the 24-hour window</td>
-                        <td data-label="Meta rate">
-                          First 1,000 a month free per number, then &#8377;0.1150
-                        </td>
-                        <td data-label="We add">&#8377;0</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <p className="mkt-pricing__plan-text-head" style={{ marginTop: '1.75rem' }}>
-                  What a markup costs at 10,000 marketing messages a month
-                </p>
-                <div className="mkt-pricing__text-table-wrap">
-                  <table className="mkt-pricing__text-table">
-                    <thead>
-                      <tr>
-                        <th scope="col">Billing approach</th>
-                        <th scope="col">Rate applied</th>
-                        <th scope="col">Your Meta-side bill</th>
-                        <th scope="col">Difference</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <th scope="row">Meta&rsquo;s card at 0% markup</th>
-                        <td data-label="Rate">&#8377;0.8631 per message</td>
-                        <td data-label="Bill">&#8377;8,631</td>
-                        <td data-label="Difference">Baseline</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Dondy&rsquo;s published India rate</th>
-                        <td data-label="Rate">$0.01888 per message (about &#8377;1.38)</td>
-                        <td data-label="Bill">About &#8377;13,810</td>
-                        <td data-label="Difference">+&#8377;5,179 (+60%)</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">AiSensy&rsquo;s published service rate</th>
-                        <td data-label="Rate">
-                          &#8377;0.145 per service reply after 1,000 free, against Meta&rsquo;s
-                          &#8377;0.1150
-                        </td>
-                        <td data-label="Bill">+&#8377;3,000 on 100,000 replies</td>
-                        <td data-label="Difference">+26.1% on that line</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <CostCalculator calc="whatsapp-bill">
-                  <p>
-                    At 10,000 marketing, 10,000 utility and 5,000 service replies a month,
-                    Meta&rsquo;s own bill is &#8377;10,241 before GST, or about &#8377;12,084 with
-                    18% GST. We add &#8377;0 to every line of it.
-                  </p>
-                </CostCalculator>
-                <p className="mkt-pricing__plan-text-note">
-                  Meta rates read off{' '}
-                  <a
-                    href="https://developers.facebook.com/docs/whatsapp/pricing/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Meta&rsquo;s WhatsApp pricing documentation
-                  </a>{' '}
-                  on 21 October 2026, before 18% GST. Competitor figures come from each
-                  vendor&rsquo;s own published pricing page on the same date and apply only to the
-                  line each one publishes a rate for. Meta can revise rates up to four times a
-                  year, and the card inside your own Business Manager is the number that will match
-                  your invoice. Separately, every eligible Indian WhatsApp Business Account must be
-                  on INR billing by 31 December 2026 or Meta stops delivery on 1 January 2027.{' '}
-                  <a href="/blog/whatsapp-business-api-pricing-india">
-                    Full India rate breakdown
-                  </a>
-                  .
-                </p>
-              </div>
+              <ul className="mkt-pricing__meta-figures">
+                <li>
+                  <b>₹0.8631</b>
+                  <span>Marketing, per delivered message</span>
+                </li>
+                <li>
+                  <b>₹0.1150</b>
+                  <span>Utility, authentication and service</span>
+                </li>
+                <li className="is-accent">
+                  <b>₹0</b>
+                  <span>Our markup on either</span>
+                </li>
+              </ul>
+              <p className="mkt-pricing__meta-link">
+                <Link to="/pricing/meta-rates">
+                  See the full rate card, markup comparison and cost calculator
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                    <path d="M5 12h14M13 6l6 6-6 6" />
+                  </svg>
+                </Link>
+              </p>
             </section>
 
             <section className="mkt-pricing__block">

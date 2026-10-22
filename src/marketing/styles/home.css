@@ -2661,8 +2661,12 @@
     padding: 0;
     /* tight under CTAs — leftover height goes into the shot, not blank margin */
     margin: 0.5rem auto 0;
-    max-width: 100%;
-    width: 100%;
+    /* The copy column caps at 24rem for line length. The logo row is not
+       prose: let it use the board's full width so all five marks hold one
+       line instead of wrapping the last one onto a row of its own. */
+    width: 100vw;
+    max-width: 100vw;
+    margin-inline: calc(50% - 50vw);
   }
 
   .home-trust-logos--on-stage .home-trust-logos__label {
@@ -2824,14 +2828,36 @@
     letter-spacing: 0.12em;
   }
 
+  /* Five marks fit a phone row. Stop the marquee and centre them: the scroll
+     was slicing the first and last logo mid-letter at every frame, and a 6%
+     mask at 360px is 21px of fade, which reads as a broken image rather than
+     as motion. The clones are hidden so no mark is announced twice. */
+  .home-trust-logos__viewport {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
   .home-trust-logos__track {
-    gap: 2.75rem;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.45rem 0.95rem;
+    animation: none;
+  }
+
+  .home-trust-logos__item[aria-hidden='true'] {
+    display: none;
+  }
+
+  .home-trust-logos--on-stage .home-trust-logos__item {
+    padding: 0.3rem 0.2rem;
+    min-width: 0;
   }
 
   .home-trust-logos--on-stage .home-trust-logos__item img {
-    height: 18px;
+    height: 15px;
     width: auto;
-    max-width: 100px;
+    max-width: 68px;
   }
 
   .home-hero__ask-text {

@@ -1,0 +1,443 @@
+/**
+ * /pricing/meta-rates — the rate card that used to sit inside /pricing.
+ *
+ * It reuses the pricing sheet's section heads and CTA, so only the page frame
+ * and the three display patterns that are new here live in this file: the
+ * rate cards, the markup rows and the two forward links. Nothing is a table:
+ * a four-column table was what made this read as a spreadsheet on /pricing,
+ * and the same four facts in a card stack need no horizontal scroll on a
+ * phone and no data-label trickery to stay readable.
+ */
+
+.mkt-rates {
+  --rates-violet: #7c3aed;
+  --rates-ink: #0c1222;
+  --rates-muted: #64748b;
+  --rates-border: #eceaf5;
+  background: #fff;
+  color: var(--rates-ink);
+}
+
+.mkt-rates__hero {
+  max-width: min(100%, 56rem);
+  margin: 0 auto;
+  padding: clamp(5.25rem, 9vw, 7rem) 1.25rem 0;
+  text-align: center;
+}
+
+.mkt-rates__crumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  margin-bottom: 1.1rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.01em;
+  color: var(--rates-muted);
+}
+
+.mkt-rates__crumb a {
+  color: var(--rates-violet);
+  text-decoration: none;
+  font-weight: 550;
+}
+
+.mkt-rates__crumb a:hover {
+  text-decoration: underline;
+}
+
+.mkt-rates__crumb span[aria-hidden] {
+  color: #cbd5e1;
+}
+
+.mkt-rates__hero .mkt-psec__title--hero {
+  font-size: clamp(1.75rem, 4.4vw, 2.6rem);
+  font-weight: 400;
+  letter-spacing: -0.034em;
+  line-height: 1.14;
+  text-wrap: balance;
+}
+
+.mkt-rates__hero .mkt-psec__title--hero .mkt-psec__hl {
+  padding: 0.12em 0.3em 0.16em;
+  border-radius: 0.35em;
+  background: #e4d4ff;
+  color: var(--rates-ink);
+  font-weight: 400;
+}
+
+/* ——— Three figures, straight under the headline ——— */
+.mkt-rates__stats {
+  display: grid;
+  gap: 0.75rem;
+  width: min(100%, 44rem);
+  margin: 2.25rem auto 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 720px) {
+  .mkt-rates__stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.mkt-rates__stats li {
+  display: grid;
+  gap: 0.3rem;
+  padding: 1rem 1.1rem 1.1rem;
+  border: 1px solid var(--rates-border);
+  border-radius: 14px;
+  background: #fcfbff;
+  text-align: center;
+}
+
+.mkt-rates__stats li.is-accent {
+  border-color: #ddd0f8;
+  background: linear-gradient(180deg, #f6f1ff, #fff);
+}
+
+.mkt-rates__stats b {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.mkt-rates__stats li.is-accent b {
+  color: var(--rates-violet);
+}
+
+.mkt-rates__stats span {
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--rates-muted);
+  text-wrap: pretty;
+}
+
+/* ——— Body ——— */
+.mkt-rates__inner {
+  width: min(100%, 1080px);
+  margin: 0 auto;
+  padding: 0 1.25rem 4.5rem;
+}
+
+.mkt-rates__block {
+  margin-top: clamp(3.25rem, 7vw, 4.75rem);
+}
+
+.mkt-rates__note {
+  max-width: 44rem;
+  margin: 1.1rem auto 0;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: #94a3b8;
+  text-align: center;
+  text-wrap: pretty;
+}
+
+.mkt-rates__note--source {
+  max-width: 52rem;
+  margin-top: 2rem;
+  text-align: left;
+}
+
+.mkt-rates__note a {
+  color: var(--rates-muted);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ——— Rate cards ——— */
+.mkt-rates__cards {
+  display: grid;
+  gap: 0.85rem;
+  margin: 1.75rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 560px) {
+  .mkt-rates__cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1000px) {
+  .mkt-rates__cards {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.mkt-rates__card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 1.15rem 1.2rem 1.25rem;
+  border: 1px solid var(--rates-border);
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(12, 18, 34, 0.04);
+}
+
+.mkt-rates__card-cat {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--rates-violet);
+}
+
+.mkt-rates__card-rate {
+  display: grid;
+  gap: 0.15rem;
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.mkt-rates__card-rate span {
+  font-size: 0.74rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: #94a3b8;
+}
+
+.mkt-rates__card-covers {
+  flex: 1 1 auto;
+  margin: 0.15rem 0 0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--rates-muted);
+  text-wrap: pretty;
+}
+
+.mkt-rates__card-add {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0.55rem 0 0;
+  padding-top: 0.7rem;
+  border-top: 1px solid #f3f1fa;
+  font-size: 0.82rem;
+  font-weight: 550;
+  color: var(--rates-ink);
+}
+
+.mkt-rates__tick {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 1.05rem;
+  height: 1.05rem;
+  border-radius: 999px;
+  background: #ede9fe;
+  color: var(--rates-violet);
+}
+
+/* ——— Markup rows ——— */
+.mkt-rates__markups {
+  display: grid;
+  gap: 0.6rem;
+  width: min(100%, 48rem);
+  margin: 1.75rem auto 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mkt-rates__markup {
+  display: grid;
+  gap: 0.35rem 1rem;
+  align-items: center;
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--rates-border);
+  border-radius: 14px;
+  background: #fff;
+}
+
+@media (min-width: 640px) {
+  .mkt-rates__markup {
+    grid-template-columns: 1fr auto auto;
+    gap: 1.25rem;
+  }
+}
+
+.mkt-rates__markup.is-good {
+  border-color: #ddd0f8;
+  background: linear-gradient(180deg, #f8f4ff, #fff);
+}
+
+.mkt-rates__markup-who p {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.mkt-rates__markup-who span {
+  display: block;
+  margin-top: 0.1rem;
+  font-size: 0.78rem;
+  color: #94a3b8;
+}
+
+.mkt-rates__markup-rate {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--rates-muted);
+}
+
+.mkt-rates__markup-delta {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: #b91c1c;
+}
+
+@media (min-width: 640px) {
+  .mkt-rates__markup-delta {
+    min-width: 4.5rem;
+    text-align: right;
+  }
+}
+
+.mkt-rates__markup.is-good .mkt-rates__markup-delta {
+  color: var(--rates-violet);
+}
+
+/* ——— Verify steps ——— */
+.mkt-rates__steps {
+  display: grid;
+  gap: 0.6rem;
+  width: min(100%, 48rem);
+  margin: 1.75rem auto 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: rates-step;
+}
+
+.mkt-rates__steps li {
+  position: relative;
+  padding: 1rem 1.15rem 1.1rem 3.1rem;
+  border: 1px solid var(--rates-border);
+  border-radius: 14px;
+  background: #fff;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--rates-muted);
+  counter-increment: rates-step;
+  text-wrap: pretty;
+}
+
+.mkt-rates__steps li::before {
+  content: counter(rates-step);
+  position: absolute;
+  top: 1rem;
+  left: 1.1rem;
+  display: grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 999px;
+  background: #ede9fe;
+  color: var(--rates-violet);
+  font-size: 0.78rem;
+  font-weight: 650;
+}
+
+.mkt-rates__steps b {
+  color: var(--rates-ink);
+  font-weight: 600;
+}
+
+/* ——— Forward links ——— */
+.mkt-rates__links {
+  display: grid;
+  gap: 0.85rem;
+  width: min(100%, 48rem);
+  margin: 0 auto;
+}
+
+@media (min-width: 720px) {
+  .mkt-rates__links {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.mkt-rates__link {
+  display: grid;
+  align-content: start;
+  gap: 0.3rem;
+  padding: 1.25rem 1.3rem 1.35rem;
+  border: 1px solid var(--rates-border);
+  border-radius: 16px;
+  background: #fff;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mkt-rates__link:hover {
+  border-color: #ddd0f8;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px -20px rgba(46, 16, 101, 0.5);
+}
+
+.mkt-rates__link-eyebrow {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--rates-violet);
+}
+
+.mkt-rates__link-title {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--rates-ink);
+}
+
+.mkt-rates__link-sub {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--rates-muted);
+  text-wrap: pretty;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mkt-rates__link:hover {
+    transform: none;
+  }
+}
+
+/* Phones: the three figures are a summary, not three sections. Stacked at the
+   desktop padding they filled most of a screen before the rate card started. */
+@media (max-width: 719px) {
+  .mkt-rates__stats {
+    gap: 0.5rem;
+    margin-top: 1.75rem;
+  }
+
+  .mkt-rates__stats li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 0.15rem 0.9rem;
+    padding: 0.85rem 1rem;
+    text-align: left;
+  }
+
+  .mkt-rates__stats b {
+    font-size: 1.3rem;
+  }
+
+  .mkt-rates__stats span {
+    font-size: 0.82rem;
+  }
+}
