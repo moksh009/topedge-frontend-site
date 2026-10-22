@@ -82,6 +82,7 @@ export const BLOG_SLUGS = [
   'whatsapp-template-rejected-meta-shopify-fix',
   'whatsapp-opt-in-shopify-india',
   'updatrr-alternative-shopify-india',
+  'cod-to-prepaid-whatsapp-shopify-india',
 ];
 
 /** Soft-404 shell — prerendered to dist/404.html (Netlify 404 document). Not in sitemap. */

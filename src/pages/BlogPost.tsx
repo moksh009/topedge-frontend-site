@@ -15,7 +15,9 @@ import {
   articleDatePublishedIso,
 } from '../marketing/data/contentDates';
 import { bindBlogTables, enhanceBlogHtml, splitNumericRanges } from '../marketing/lib/blogHtml';
+import { bindCalculators } from '../marketing/lib/blogCalculators';
 import '../marketing/styles/blog.css';
+import '../marketing/styles/calculator.css';
 
 const allBlogPosts = filterMarketingBlogPosts([...blogPosts] as BlogPostModel[]);
 
@@ -37,7 +39,13 @@ export default function BlogPost() {
 
   useLayoutEffect(() => {
     if (!proseRef.current) return undefined;
-    return bindBlogTables(proseRef.current);
+    const unbindTables = bindBlogTables(proseRef.current);
+    // Calculators render their own table, outside the responsive table pass.
+    const unbindCalcs = bindCalculators(proseRef.current);
+    return () => {
+      unbindCalcs();
+      unbindTables();
+    };
   }, [contentHtml]);
 
   if (!post) {

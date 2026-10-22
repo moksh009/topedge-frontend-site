@@ -996,7 +996,7 @@ export const blogPosts: BlogPost[] = [
 
 <h2>Total monthly cost in rupees at 500 orders and 10,000 marketing messages (October 2026 Meta rates)</h2>
 <p>Plan pages compare subscriptions. Your invoice does not. Here is the same month costed end to end for a store doing <strong>500 Shopify orders</strong> and sending <strong>10,000 marketing messages</strong>, with 1,500 utility templates for order and COD updates and 3,000 agent replies, of which 2,000 are billable past Meta's free 1,000.</p>
-<p>Meta's side is identical on every row, because Meta charges the sender, not the software: ₹8,631 marketing, ₹172.50 utility, ₹230 service, so <strong>₹9,033.50</strong>. What changes is the platform column.</p>
+<p>Meta's side is identical on every row, because Meta charges the sender, not the software. At Meta's India card of <strong>₹0.8631</strong> a marketing template and <strong>₹0.1150</strong> a utility or service message, that is ₹8,631 marketing, ₹172.50 utility and ₹230 service, so <strong>₹9,033.50</strong>. What changes is the platform column.</p>
 <div class="mkt-blog-table-wrap">
 <table>
 <thead><tr><th>Tool</th><th>Platform fee a month</th><th>Published markup on Meta's lines</th><th>Indicative all-in before GST</th></tr></thead>
@@ -1228,6 +1228,12 @@ export const blogPosts: BlogPost[] = [
 </table>
 </div>
 
+<h2>Price it against your own COD volume</h2>
+<p>The confirmation pass costs ₹0.1150 an order. What it is set against is your own RTO loss, so put your numbers in rather than ours.</p>
+<div class="mkt-calc" data-calc="rto-cost">
+<p>At 500 COD orders a month and a 25% RTO rate, 125 parcels come back: <strong>₹22,500 to ₹30,000</strong> in direct logistics, or <strong>₹56,250 to ₹1,12,500</strong> once written-off acquisition spend is counted. Confirming all 500 at ₹0.1150 costs <strong>₹57.50</strong>.</p>
+</div>
+
 <h2>When humans should take over</h2>
 <p>Automation pauses when an agent joins the thread. Escalate when the buyer disputes the amount, asks for a partial cancel, reports a wrong address, or sounds like a complaint rather than a question. Those threads belong in <a href="/features">Live Chat</a> with the order already loaded. An agent should never have to ask for an order number the system already knows.</p>
 
@@ -1242,7 +1248,7 @@ export const blogPosts: BlogPost[] = [
 </ul>
 
 <h2>Hinglish WhatsApp COD confirmation templates for Tier-2 and Tier-3 buyers</h2>
-<p>Most of your COD risk is not in the metros. If your buyer reads Hinglish faster than English, a Hinglish confirmation gets a reply and an English one gets ignored, and an ignored confirmation is an unverified order.</p>
+<p>Most of your COD risk is not in the metros. Unicommerce puts <strong>66%</strong> of FY26's incremental D2C order volume in Tier-2 and Tier-3 cities, which is the same place COD share is highest. If your buyer reads Hinglish faster than English, a Hinglish confirmation gets a reply and an English one gets ignored, and an ignored confirmation is an unverified order.</p>
 <p>Write the template in the language the buyer actually uses, keep it factual so it stays a utility template, and never bundle an offer into it. Approved-style copy, with Meta variables in place:</p>
 <div class="mkt-blog-table-wrap">
 <table>
@@ -1267,6 +1273,8 @@ export const blogPosts: BlogPost[] = [
 <li><strong>Delivery fail hone par 36 ghante</strong> ke andar buyer se baat karein, warna order RTO ban jata hai.</li>
 </ol>
 <p>Yeh paanch steps hi Unicommerce ke 39.2% se 21.0% wale gap ke peeche hain. Pura benchmark data <a href="/blog/cod-rto-benchmark-india-2026">2026 COD aur RTO benchmark report</a> mein hai, aur Meta ke rates <a href="/blog/whatsapp-business-api-pricing-india">India WhatsApp API pricing guide</a> mein.</p>
+
+<p>Once confirmation is running, the next step is converting the orders worth converting: <a href="/blog/cod-to-prepaid-whatsapp-shopify-india">COD to prepaid on WhatsApp</a> covers the ₹68 a prepaid order saves and why the offer has to be a second message.</p>
 
 <p>Start with the <a href="/features/cod-confirmation">WhatsApp COD confirmation feature</a>, build the rest on <a href="/features/journeys">Journeys</a>, wire Shopify via <a href="/shopify-whatsapp-integration">Shopify WhatsApp integration</a>, and review <a href="/pricing">pricing</a>. See outcomes on <a href="/customers">customers</a> or <a href="/contact">contact</a> the team.</p>
 
@@ -1486,10 +1494,12 @@ export const blogPosts: BlogPost[] = [
 <tr><td><strong>Bring your own key</strong> (OpenAI or Gemini direct)</td><td>About <strong>₹0.10 to ₹0.30</strong></td><td>₹0.1150</td><td><strong>₹960 to ₹1,960</strong></td></tr>
 <tr><td><strong>Interakt AI Agents</strong></td><td><strong>₹0.50</strong> after 100 free, plus a ₹3,000 add-on</td><td>₹0.1150</td><td><strong>₹5,910</strong></td></tr>
 <tr><td><strong>Meta Business Agent</strong> (token billed since 1 Aug 2026)</td><td><strong>₹3.40 to ₹4.25</strong> ($2.00 per 1M tokens at 20k to 25k tokens a reply)</td><td>Bundled into the token rate</td><td><strong>₹17,000 to ₹21,250</strong></td></tr>
+<tr><td><strong>Per-resolution bots</strong> (Zoko Guru and similar)</td><td>Billed per resolved conversation rather than per reply, about <strong>$0.09</strong> a resolution on Zoko's published listing</td><td>₹0.1150 per reply</td><td><strong>Depends on replies per resolution</strong></td></tr>
+<tr><td><strong>AI behind a plan tier</strong> (Updatrr and similar)</td><td>No per-message fee published; AI sits on the top tier, $99.99 a month on Updatrr</td><td>₹0.1150 per reply</td><td><strong>About ₹8,500 in tier cost</strong></td></tr>
 </tbody>
 </table>
 </div>
-<p>That is a <strong>10x to 20x spread</strong> on the same job, which is why the cost model deserves as much scrutiny as the answer quality. Two things make the gap real rather than theoretical:</p>
+<p>That is a <strong>10x to 20x spread</strong> on the same job, which is why the cost model deserves as much scrutiny as the answer quality. Note also that the bottom two rows are not priced per message at all: a per-resolution bot gets cheaper the more replies it takes to resolve a ticket, which is the opposite incentive to yours, and a tier-gated AI costs the same whether you send 50 replies or 5,000. Compare the shape before the rate. Two things make the gap real rather than theoretical:</p>
 <ul>
 <li><strong>Intent routing cuts the model bill to zero on the easy half.</strong> "Where is my order" and "what is your return policy" do not need a language model at all: they need a lookup. Routing those deterministically means you only pay model tokens on questions that genuinely need reasoning, and the Meta ₹0.1150 is the same either way.</li>
 <li><strong>Token cost is falling, per-message pricing is not.</strong> A bring-your-own-key setup inherits every price cut the model providers make. A ₹0.50 per message contract does not.</li>
@@ -1507,7 +1517,7 @@ export const blogPosts: BlogPost[] = [
 <p>See AI beside the rest of the stack on <a href="/features/ai-brain">AI Brain</a>, connect store data via <a href="/shopify-whatsapp-integration">Shopify WhatsApp integration</a>, and compare platforms on <a href="/compare">compare</a>. For tool selection criteria, read <a href="/blog/best-whatsapp-automation-tools-shopify-india">best WhatsApp automation tools</a>. Questions? <a href="/contact">Contact</a> or view <a href="/pricing">pricing</a>.</p>
 
 <p>Related: <a href="/blog/whatsapp-shared-inbox-shopify-order-context">the shared inbox with Shopify order context</a> and <a href="/blog/what-is-ecommerce-automation-shopify-whatsapp">what ecommerce automation on WhatsApp actually covers</a>.</p>
-<p class="mkt-blog-footnote">Sources and further reading, read 21 October 2026. The 1,000 free service messages a month per phone number (effective 1 October 2026), the India ₹0.1150 service rate and Meta Business Agent token billing at $2.00 per million tokens (effective 1 August 2026): <a href="https://developers.facebook.com/docs/whatsapp/pricing/" target="_blank" rel="noopener noreferrer">Meta’s WhatsApp Business Platform pricing documentation</a>. Interakt’s ₹3,000 AI add-on, 100 free AI messages and ₹0.50 per AI message: <a href="https://www.interakt.shop/pricing/" target="_blank" rel="noopener noreferrer">Interakt’s pricing page</a>. The ₹0.10 to ₹0.30 bring-your-own-key range is our own estimate of model token cost per reply, not a published price. Template categories, review and the reasons templates get rejected: <a href="https://developers.facebook.com/docs/whatsapp/message-templates/guidelines/" target="_blank" rel="noopener noreferrer">Meta’s message template guidelines</a>. Opt-in requirements: <a href="https://whatsappbusiness.com/policy/" target="_blank" rel="noopener noreferrer">the WhatsApp Business Messaging Policy</a>.</p>
+<p class="mkt-blog-footnote">Sources and further reading, read 21 October 2026. The 1,000 free service messages a month per phone number (effective 1 October 2026), the India ₹0.1150 service rate and Meta Business Agent token billing at $2.00 per million tokens (effective 1 August 2026): <a href="https://developers.facebook.com/docs/whatsapp/pricing/" target="_blank" rel="noopener noreferrer">Meta’s WhatsApp Business Platform pricing documentation</a>. Interakt’s ₹3,000 AI add-on, 100 free AI messages and ₹0.50 per AI message: <a href="https://www.interakt.shop/pricing/" target="_blank" rel="noopener noreferrer">Interakt’s pricing page</a>. Zoko’s per-resolution AI pricing was read off <a href="https://apps.shopify.com/whatsapp-button-chat" target="_blank" rel="noopener noreferrer">its Shopify App Store listing</a> and Updatrr’s $99.99 Pro AI tier off <a href="https://www.updatrr.com/pricing" target="_blank" rel="noopener noreferrer">its pricing page</a>; both vendors move their tiers, so confirm before you compare. The ₹0.10 to ₹0.30 bring-your-own-key range is our own estimate of model token cost per reply, not a published price. Template categories, review and the reasons templates get rejected: <a href="https://developers.facebook.com/docs/whatsapp/message-templates/guidelines/" target="_blank" rel="noopener noreferrer">Meta’s message template guidelines</a>. Opt-in requirements: <a href="https://whatsappbusiness.com/policy/" target="_blank" rel="noopener noreferrer">the WhatsApp Business Messaging Policy</a>.</p>
 `,
   },
   {
@@ -1560,6 +1570,7 @@ export const blogPosts: BlogPost[] = [
 <li>Higher tiers with included conversation buckets, then overage: Plus includes 5,000 conversations a month, Elite 100,000, Max 5 million</li>
 <li>Per-seat charges above the plan's included agents: <strong>$15 per extra agent</strong> a month above the 5 included on Plus</li>
 <li>AI bots and custom flows billed as add-ons: AI from <strong>$24.99/mo</strong>, custom flows <strong>$5.99 per flow per month</strong></li>
+<li>AI billed per resolved conversation on the Guru and WISMO agents, published at about <strong>$0.09 a resolution</strong>, so the fee rises with ticket volume rather than with your plan</li>
 </ul>
 <p>Those are the figures on <a href="https://apps.shopify.com/whatsapp-button-chat" rel="noopener noreferrer" target="_blank">Zoko's Shopify App Store listing</a>, read on 21 October 2026. Worth doing the sum for a festive month: a 7-agent support team on Plus pays $79.99 plus $30 for the two seats above the five included, and adding an AI bot ($24.99) and three custom flows ($17.97) takes it to <strong>$152.95 a month</strong>, or roughly ₹13,000, before a single Meta message is sent. Confirm on <a href="https://www.zoko.io/pricing" rel="noopener noreferrer" target="_blank">zoko.io/pricing</a> and the App Store listing before you decide, because the tiers move.</p>
 
@@ -1591,7 +1602,7 @@ export const blogPosts: BlogPost[] = [
 <tr><td><strong>Billing unit</strong></td><td>USD, plus per-conversation metering on top of the plan</td><td>INR, sized by Shopify orders a month (100, 800 or 1,500)</td></tr>
 <tr><td><strong>Agent seats</strong></td><td>5 on Plus, then <strong>$15 per extra agent</strong> a month (10 on Elite at $12, 30 on Max at $9)</td><td>No per-seat charge on any plan</td></tr>
 <tr><td><strong>Conversation bucket</strong></td><td>Starter has none and meters <strong>$0.015 per conversation</strong>; Plus includes 5,000/mo then $0.00199 each</td><td>No conversation metering</td></tr>
-<tr><td><strong>AI and custom flows</strong></td><td>AI bot add-ons from <strong>$24.99/mo</strong>; custom flows <strong>$5.99 per flow per month</strong>; Instagram $9.99/mo</td><td>BYOK AI and unlimited flows included; Instagram included</td></tr>
+<tr><td><strong>AI and custom flows</strong></td><td>AI bot add-ons from <strong>$24.99/mo</strong>, plus about <strong>$0.09 per resolved conversation</strong> on the Guru agent; custom flows <strong>$5.99 per flow per month</strong>; Instagram $9.99/mo</td><td>BYOK AI at about ₹0.10 to ₹0.30 a reply and unlimited flows included; Instagram included</td></tr>
 <tr><td><strong>Meta message cost</strong></td><td>Platform markup on top of Meta’s published rate</td><td>0% markup, billed by Meta to your own Business Account</td></tr>
 <tr><td><strong>COD to prepaid</strong></td><td>Not a named native workflow on the published listing</td><td>Native journey on Growth and Scale; COD confirmation on every plan</td></tr>
 <tr><td><strong>What it is best at</strong></td><td>Catalog in chat and conversational selling, which it has done longest</td><td>Predictable INR cost and India COD and RTO operations</td></tr>
@@ -1970,7 +1981,8 @@ export const blogPosts: BlogPost[] = [
 </table>
 </div>
 <p>Read that table twice, because the ratio matters more than the absolute numbers. Marketing costs <strong>7.5 times</strong> what utility costs. A store that sends its order updates as marketing templates because nobody checked the category is paying 7.5x too much for the same message.</p>
-<p>Add 18 percent GST on top of all of it. A ₹0.8631 marketing message lands at about ₹1.02 on the invoice. Volume tiers exist but they start high: utility tiers begin at 25,000,000 messages a month and authentication at 750,000, so almost no Indian D2C brand will ever reach them.</p>
+<p>Add 18 percent GST on top of all of it. A ₹0.8631 marketing message lands at about ₹1.02 on the invoice. Volume tiers exist but they start high: the utility rate only drops to <strong>₹0.1081</strong> above 25,000,000 messages a month, and authentication tiers begin at 750,000, so almost no Indian D2C brand will ever reach either.</p>
+<p>One row that is not in the table because it is not an India row: <strong>Authentication-International</strong>, the category Meta uses when you send an OTP to a number outside your own market, is <strong>₹2.4971</strong> per delivered message. That is 21 times the domestic authentication rate, and it is worth knowing before you switch on OTP login for a store that also ships abroad.</p>
 <p class="mkt-blog-footnote">Rates and effective dates read off <a href="https://developers.facebook.com/docs/whatsapp/pricing/" target="_blank" rel="noopener noreferrer">Meta's WhatsApp Business Platform pricing documentation</a> on 21 October 2026. Meta can revise rates up to four times a year, and the rate card inside your own Business Manager is the only number that will match your invoice.</p>
 
 <h2>What changed on 1 October 2026 (the update most articles missed)</h2>
@@ -1985,7 +1997,7 @@ export const blogPosts: BlogPost[] = [
 <h3>The ₹0.115 to ₹0.8631 trap: never bundle a discount into a COD confirmation</h3>
 <p>This is the most expensive formatting mistake in Indian D2C WhatsApp, and it costs 7.5x.</p>
 <p>A COD confirmation that asks the buyer to confirm or cancel the order is a <strong>utility</strong> template: ₹0.1150. Add "pay now and get ₹50 off" to that same message and Meta reclassifies it as <strong>marketing</strong>: ₹0.8631. One line of copy, 7.5 times the cost, on every single COD order you ship.</p>
-<p>The fix is sequencing, not avoidance. Send the plain utility confirmation to everyone, then send the prepaid offer as a deliberate marketing message only to the segment worth converting. You pay ₹0.8631 on the orders where the upgrade is worth it instead of on all of them. The flow is laid out in <a href="/blog/how-to-reduce-rto-with-whatsapp-cod-confirmation">reducing RTO with WhatsApp COD confirmation</a>.</p>
+<p>The fix is sequencing, not avoidance. Send the plain utility confirmation to everyone, then send the prepaid offer as a deliberate marketing message only to the segment worth converting. You pay ₹0.8631 on the orders where the upgrade is worth it instead of on all of them. The flow is laid out in <a href="/blog/how-to-reduce-rto-with-whatsapp-cod-confirmation">reducing RTO with WhatsApp COD confirmation</a>, and the two-send version is costed in <a href="/blog/cod-to-prepaid-whatsapp-shopify-india">converting COD to prepaid on WhatsApp</a>.</p>
 
 <h3>Meta Business Agent moved to token billing on 1 August 2026</h3>
 <p>If you use Meta's own built-in AI agent rather than your own model, the pricing shape changed completely. Meta Business Agent is billed at <strong>$2.00 per million tokens</strong> as of 1 August 2026, bundling AI processing and message delivery into one rate. A typical reply consumes roughly 20,000 to 25,000 tokens, which works out to about <strong>$0.04 to $0.05, or ₹3.40 to ₹4.25, per reply</strong>.</p>
@@ -2041,6 +2053,23 @@ export const blogPosts: BlogPost[] = [
 </div>
 <p><a href="https://aisensy.com/pricing" target="_blank" rel="noopener noreferrer">AiSensy's pricing page</a> states that from 1 October 2026 every WhatsApp Business number gets 1,000 free service messages a month, and that service messages are then charged at ₹0.145 each for Indian users. Meta's own India service rate is ₹0.1150. That is ₹0.030 more per reply, a <strong>26.1% markup</strong> on every support and bot reply past the free thousand. Dondy's published India rate of $0.01888 per message sits about 60 percent above Meta's $0.0118 marketing card, which at the INR card works out near ₹1.38 against ₹0.8631 a message; that one is broken down in <a href="/blog/dondy-alternative-shopify-india">the Dondy alternative post</a>, and the AiSensy gap in <a href="/blog/aisensy-alternative-shopify-india">the AiSensy alternative post</a>.</p>
 <p class="mkt-blog-footnote">Competitor rates read off each vendor's own published pricing page on 21 October 2026, and applied only to the line each vendor publishes a rate for. Subscription fees are excluded from these tables on purpose: they isolate the Meta line, which is the only line a markup can hide in. Verify both against the vendor's live page before you sign anything.</p>
+
+<h2>Work it out on your own volume</h2>
+<p>The tables above are one month at one volume. Put your own numbers in and the same arithmetic runs on them, including what each published markup would add. Nothing is gated and nothing is sent anywhere: it is the same rate card doing the multiplication.</p>
+<div class="mkt-calc" data-calc="whatsapp-bill">
+<p><strong>At 10,000 marketing, 10,000 utility and 5,000 service replies a month, Meta's own bill is ₹10,241 before GST</strong>, or about ₹12,084 with 18% GST. A 26.1% markup on the service line adds ₹120 to that month and a 60% markup on the marketing line adds ₹5,179, before any software subscription.</p>
+<div class="mkt-blog-table-wrap">
+<table>
+<thead><tr><th>Line</th><th>Volume</th><th>Meta India rate</th><th>Month at 0% markup</th></tr></thead>
+<tbody>
+<tr><td>Marketing templates</td><td>10,000</td><td>₹0.8631</td><td>₹8,631</td></tr>
+<tr><td>Utility templates</td><td>10,000</td><td>₹0.1150</td><td>₹1,150</td></tr>
+<tr><td>Service replies</td><td>4,000 billable</td><td>₹0.1150</td><td>₹460</td></tr>
+<tr><td><strong>Meta bill, ex GST</strong></td><td></td><td></td><td><strong>₹10,241</strong></td></tr>
+</tbody>
+</table>
+</div>
+</div>
 
 <h2>Working out your own monthly bill</h2>
 <p>Most forecasting goes wrong because people model one blended rate. Model the categories separately instead, because they differ by 7.5x.</p>
@@ -3358,6 +3387,11 @@ export const blogPosts: BlogPost[] = [
 <td>Same source</td>
 </tr>
 <tr>
+<td><strong>Tier-2 and Tier-3 share of incremental order volume, FY26</strong></td>
+<td><strong>66%</strong></td>
+<td>Same source</td>
+</tr>
+<tr>
 <td><strong>Sample size</strong></td>
 <td>410M+ shipments, 6,000+ brands</td>
 <td>Same source</td>
@@ -3366,6 +3400,7 @@ export const blogPosts: BlogPost[] = [
 </table>
 </div>
 <p>Unicommerce attributes the gap to three levers: stronger order verification before dispatch, better prepaid incentives, and smarter courier selection by pincode, not a single silver bullet.</p>
+<p>That last row is the one most RTO plans ignore. Two thirds of the incremental order volume in FY26 came from Tier-2 and Tier-3 cities, which is also where COD share is highest and where an English-only confirmation message gets read the least. Growth and RTO risk are arriving in the same parcels.</p>
 <p>Use the national average as a sanity check, not a budget line. Blended RTO hides wide spread by pincode, courier partner, and order value. Two brands with the same average can have completely different problem pincodes. And because your COD share alone shifts your blended figure, compare COD to COD and prepaid to prepaid.</p>
 
 <h2 id="cod-vs-prepaid">COD against prepaid: 58% versus under 15%</h2>
@@ -3422,8 +3457,9 @@ export const blogPosts: BlogPost[] = [
 </div>
 <p>ClickPost's own figure for the same line is ₹150 to ₹300 per parcel, so treat ₹180 to ₹240 as the middle of a consistent range rather than a precise constant.</p>
 <p>Then add the part that actually hurts. Amazon Shipping India notes that this total "does not include the impact on customer acquisition cost", and that a brand may have spent <strong>₹450 to ₹680</strong> acquiring the customer who then refuses the order at the door. ClickPost puts the fully loaded loss at <strong>₹450 to ₹900 per RTO order</strong> once written-off acquisition spend is counted.</p>
-<div class="mkt-blog-callout">
-<p>Run it on your own volume. A store shipping 500 COD orders a month at a 25% RTO rate loses 125 parcels. At ₹200 direct that is <strong>₹25,000 a month</strong> gone before any ad spend is written off. Confirming all 500 orders with a WhatsApp utility template at ₹0.1150 costs <strong>₹57.50</strong>. The message is not the expensive part of this problem.</p>
+<p>Run it on your own volume. The calculator below multiplies your order count and COD mix against the published bands, and prices one WhatsApp confirmation pass over the same orders. It is un-gated and nothing is sent anywhere.</p>
+<div class="mkt-calc" data-calc="rto-cost">
+<p>A store shipping 500 COD orders a month at a 25% RTO rate loses 125 parcels. At ₹200 direct that is <strong>₹25,000 a month</strong> gone before any ad spend is written off, or <strong>₹56,250 to ₹1,12,500</strong> fully loaded. Confirming all 500 orders with a WhatsApp utility template at ₹0.1150 costs <strong>₹57.50</strong>. The message is not the expensive part of this problem.</p>
 </div>
 <p class="mkt-blog-footnote">Cost lines read off <a href="https://shipping.amazon.in/blog/true-cost-of-shipping-per-order-india" target="_blank" rel="noopener noreferrer">Amazon Shipping India's true cost per order breakdown</a> and its <a href="https://shipping.amazon.in/blog/what-is-rto-how-to-reduce-return-to-origin" target="_blank" rel="noopener noreferrer">RTO guide</a> on 21 October 2026, and ClickPost's figures as compiled by First Resort. They are national indicative ranges, not your rate card. Your own courier contract, category and average parcel weight will move every line.</p>
 
@@ -3432,7 +3468,7 @@ export const blogPosts: BlogPost[] = [
 <h2 id="the-fix">The fix, in brief</h2>
 <p>Confirm intent before pick and pack. Send one approved WhatsApp utility template with the order number and ₹ total, branch on confirm / reschedule / cancel, send one reminder, then apply a written hold-or-cancel policy. The cost is friction: some genuine buyers will never reply, and your policy decides whether you lose them or ship the risk.</p>
 <p>The direct cost is Meta's per-message fee for each utility template, plus your WhatsApp platform's plan. In India that template is <strong>₹0.1150</strong> per delivered message against a <strong>₹180 to ₹240</strong> loss on every parcel it prevents, a ratio of more than 1,500 to 1 in your favour on each avoided RTO. One warning: adding a prepaid discount to that confirmation reclassifies it from utility to marketing and the price jumps to ₹0.8631, which is 7.5x. Full rate card in our <a href="/blog/whatsapp-business-api-pricing-india">WhatsApp Business API pricing guide for India</a>.</p>
-<p>The setup detail lives in two playbooks: <a href="/blog/how-to-reduce-rto-with-whatsapp-cod-confirmation">WhatsApp COD confirmation setup for Shopify</a> and the <a href="/blog/how-to-reduce-rto-with-whatsapp-cod-confirmation">step-by-step RTO reduction playbook</a>. Build the flow with <a href="/features/cod-confirmation">COD confirmation journeys</a>, then <a href="/features/profit-loss">measure your own RTO %</a> against the benchmarks above.</p>
+<p>The setup detail lives in two playbooks: <a href="/blog/how-to-reduce-rto-with-whatsapp-cod-confirmation">WhatsApp COD confirmation setup for Shopify</a> and <a href="/blog/cod-to-prepaid-whatsapp-shopify-india">converting COD orders to prepaid on WhatsApp</a> and the <a href="/blog/how-to-reduce-rto-with-whatsapp-cod-confirmation">step-by-step RTO reduction playbook</a>. Build the flow with <a href="/features/cod-confirmation">COD confirmation journeys</a>, then <a href="/features/profit-loss">measure your own RTO %</a> against the benchmarks above.</p>
 
 <h2 id="faq">Common questions</h2>
 <div class="mkt-blog-faq">

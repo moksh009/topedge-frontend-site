@@ -73,6 +73,7 @@ Product documentation lives in the TopEdge dashboard: https://dash.topedgeai.com
 
 ## Playbooks
 
+- [COD to Prepaid on WhatsApp for Shopify India 2026](https://topedgeai.com/blog/cod-to-prepaid-whatsapp-shopify-india): Convert Shopify India COD orders to UPI prepaid on WhatsApp before dispatch: the ₹68 saved per order, the ₹0.1150 against ₹0.8631 template split, and the flow.
 - [Best Updatrr Alternative for Shopify India (2026)](https://topedgeai.com/blog/updatrr-alternative-shopify-india): An Updatrr alternative for Shopify India: flat INR plans from ₹1,999/mo, a 14-day trial and BYOK AI on every plan, against USD tiers that gate AI at $99.99.
 - [Best WATI Alternative for Shopify India (2026)](https://topedgeai.com/blog/wati-alternative-shopify-india): Looking for a WATI alternative for Shopify India? What to keep, what to fix (markup, AI access, COD), and how to test a switch in one afternoon.
 - [Best AiSensy Alternative for Shopify India (2026)](https://topedgeai.com/blog/aisensy-alternative-shopify-india): Outgrowing AiSensy broadcasts on Shopify India? Compare 0% Meta markup (₹0.115 service vs ₹0.145 on AiSensy), BYOK AI, and native COD-to-prepaid flows.
@@ -107,7 +108,7 @@ Product documentation lives in the TopEdge dashboard: https://dash.topedgeai.com
 
 ## Canonical URL directory
 
-All 69 indexable URLs on this domain, no trailing slash except the root.
+All 70 indexable URLs on this domain, no trailing slash except the root.
 
 - https://topedgeai.com/
 - https://topedgeai.com/pricing
@@ -176,6 +177,7 @@ All 69 indexable URLs on this domain, no trailing slash except the root.
 - https://topedgeai.com/blog/whatsapp-template-rejected-meta-shopify-fix
 - https://topedgeai.com/blog/whatsapp-opt-in-shopify-india
 - https://topedgeai.com/blog/updatrr-alternative-shopify-india
+- https://topedgeai.com/blog/cod-to-prepaid-whatsapp-shopify-india
 - https://topedgeai.com/privacy
 - https://topedgeai.com/terms
 

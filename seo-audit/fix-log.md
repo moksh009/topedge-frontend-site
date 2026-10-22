@@ -327,3 +327,79 @@ Business Manager.
 **Still blocked, unchanged:** Search Console (no login), Semrush (`no_api_units`, retried today),
 AI assistants (need a signed-in browser this environment cannot open).
 
+
+---
+
+## Batch 6 — the 2026-10-21 research pass, calculators, and the COD-to-prepaid gap — 2026-10-22
+
+Worked the deep-research deliverable dated 2026-10-21 (Sections 4b to 4f plus its ready-to-paste
+implementation prompt) against what the repo already carries, rather than applying it blind. Most
+of the numerical upgrade was already shipped on 21 October: the Meta India rate card, the
+1 October 2026 service-reply change, the itemised RTO tables, the Hinglish SOP section, the
+₹799 kurta waterfall and the Updatrr playbook were all in place. Audited each spec against the
+stored content and built only what was genuinely missing.
+
+### Built
+
+**Two un-gated calculators** (`src/marketing/lib/blogCalculators.ts`), which is the research
+pass's second and fourth priority actions and the one thing none of the pages had. A post stores
+an inert `data-calc` placeholder with a real static table inside it; the widget replaces that
+once it binds. Because the prerender runs Playwright, the default state ships as crawlable HTML
+with every figure already computed, so the calculator is readable by an answer engine and not
+just by a browser.
+
+- `whatsapp-bill` on `/blog/whatsapp-business-api-pricing-india` and `/pricing`: a month's
+  marketing, utility and service volume against Meta's India card, with GST, then the same month
+  under the two markups competitors publish (AiSensy ₹0.1450 a service reply, Dondy's $0.01888).
+- `rto-cost` on `/blog/cod-rto-benchmark-india-2026`, the COD SOP and the new playbook: orders,
+  COD share and RTO rate against the published ₹180-₹240 and ₹450-₹900 bands, priced against one
+  ₹0.1150 confirmation pass over the same orders.
+
+No email gate on either. The point is the answer and the citation, not a lead capture that stops
+an engine reading the result.
+
+**`/blog/cod-to-prepaid-whatsapp-shopify-india`** (Spec 4). The only target URL in the research
+that had no page: COD-to-prepaid was buried inside `/features/journeys` and the COD SOP while
+Mark360 and Interakt own the organic guide. Leads on the figure nobody publishes, that a prepaid
+order saves about ₹68 before it ships (₹30 COD remittance plus ₹38 amortised RTO), which is the
+budget for the incentive, and on why the offer has to be a second send (₹0.1150 utility against
+₹0.8631 marketing, 7.5x). Linked in from the COD SOP, the RTO benchmark and the pricing post.
+
+### Filled in
+
+- Rate-card figures the pricing post was missing: the ₹0.1081 utility rate above the 25M tier and
+  Authentication-International at ₹2.4971.
+- Unicommerce's 66% Tier-2 and Tier-3 share of FY26 incremental volume, on the RTO benchmark
+  (national table) and on the SOP's Hinglish section, which is the argument for that section.
+- Two AI pricing shapes the chatbot cost table did not model: per-resolution billing (Zoko Guru,
+  about $0.09 a resolution) and AI gated behind a plan tier (Updatrr Pro AI at $99.99). Added the
+  per-resolution figure to the Zoko alternative post too.
+- `₹0.8631` and `₹0.1150` stated as rates, not only as monthly totals, on the best-tools table.
+
+### Deliberately not done
+
+**Updatrr's "~₹4.50 per AI conversation".** The research prompt asks for it twice, and it traces
+back to our own compare board, where it is labelled an estimate. `src/data/sources.ts` records
+what Updatrr's pricing page actually publishes: three plans, AI on the $99.99 tier, and no
+per-conversation AI fee at all. Printing ₹4.50 as a sourced competitor rate would be the exact
+thing the source registry exists to stop, so the chatbot table models the tier instead.
+
+**A "20% to 30% COD-to-prepaid conversion" benchmark.** Attributed to Unicommerce in the
+research, absent from what that report is recorded as saying here. The new post says so in a
+section of its own rather than quietly repeating it.
+
+**Sections 4d to 4f** (the GSC operating manual, the self-service link sources, the Shopify App
+Store review plan). Nothing in them is code. They need a Search Console login, directory
+submissions and customer asks.
+
+### Gates
+
+`vite build` + `build-static` + prerender: 69 prerendered, 0 failed · `check:dist` passed ·
+`check:blog` 32 posts, 14 external hosts, 0 em dashes · `check:llms` passed · `check:lp` passed ·
+`check:llms-pricing` passed · `seo:contracts` passed · `eslint` 0 errors · `tsc` clean apart from
+one pre-existing unused-variable error in `MarketingNavbar.tsx`.
+
+`check:catalog-drift` and `validate-sitemap` skipped: both fetch live hosts, and outbound is
+blocked in this sandbox. Same caveat as Batch 5 applies to every competitor and benchmark figure
+above. They come from the 2026-10-21 research pass, which states it read each page live that day.
+Nothing here was fetched from source.

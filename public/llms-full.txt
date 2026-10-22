@@ -314,6 +314,18 @@ Sourcing: Board compiled Sep 2026 from TopEdge product positioning vs publicly d
 
 ## Playbooks
 
+### COD to Prepaid on WhatsApp for Shopify India 2026
+
+https://topedgeai.com/blog/cod-to-prepaid-whatsapp-shopify-india · published 2026-10-22 · updated 2026-10-22 · by Moksh Patel
+
+A Cash on Delivery order that becomes a prepaid order saves roughly ₹68 before it ships: about ₹30 of courier COD remittance fee and about ₹38 of amortised RTO cost. That is the budget for your incentive. Send the ₹0.1150 utility confirmation to every COD order first, then the ₹0.8631 marketing offer with a UPI link only to the segment worth converting, and hold dispatch until one of the two comes back.
+
+- **How do you convert COD orders to prepaid on WhatsApp in Shopify India?** Send a plain utility confirmation the moment the Cash on Delivery order is placed, at ₹0.1150 on Meta’s India rate card. Branch on the reply, then send a separate marketing template with a UPI payment link and a small incentive only to the orders worth converting, at ₹0.8631. Hold dispatch until the payment clears or the buyer confirms COD, and sync the paid status back to the Shopify order.
+- **How big a prepaid discount can I offer without losing money?** Work from what a prepaid order saves you rather than from a round number. Amazon Shipping India puts the COD remittance fee at about ₹30 a parcel (or 1.5% of order value) and amortised RTO cost at about ₹38 per shipped COD order at a 30% RTO rate. That is roughly ₹68 of cost that disappears when the same order goes prepaid, so an incentive below ₹68 is already paid for before you count the parcels that no longer come back at ₹180 to ₹240 each.
+- **Why not just put the prepaid discount inside the COD confirmation?** Because it changes the Meta template category. A confirm-or-cancel message is a utility template at ₹0.1150. Add a discount to the same message and Meta reclassifies it as marketing at ₹0.8631, which is 7.5 times the cost on every COD order you ship, including the ones that were never going to convert. Two sends cost less than one when only part of your COD base is worth an offer.
+- **Does converting COD to prepaid actually reduce RTO?** The payment method gap is the largest published one in Indian D2C. Unicommerce reports festive-quarter COD returns around 58% against under 15% for prepaid, and GoKwik reports COD RTO near 26% against prepaid under 2% across its shopper network, with 60% to 70% of RTOs coming from low buying intent rather than logistics failure. What no one publishes is a verified conversion rate for WhatsApp prepaid offers, so model the saving per converted order and measure your own rate.
+- **Which TopEdge plan includes COD to prepaid?** COD confirmation runs on every plan, including Launch at ₹1,999 a month. The automated COD-to-prepaid journey sits on Growth (₹3,999 a month, or ₹3,199 billed yearly) and Scale. TopEdge is Shopify-native and compatible with third-party checkout stacks such as GoKwik and Razorpay, and Meta bills your own WhatsApp account directly at 0% markup either way.
+
 ### Best Updatrr Alternative for Shopify India (2026)
 
 https://topedgeai.com/blog/updatrr-alternative-shopify-india · published 2026-10-21 · updated 2026-10-21 · by Moksh Patel

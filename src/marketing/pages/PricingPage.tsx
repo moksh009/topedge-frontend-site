@@ -20,6 +20,7 @@ import PricingSectionHead from '../components/pricing/PricingSectionHead';
 import PricingSalesCta from '../components/pricing/PricingSalesCta';
 import TrustpilotProof, { TrustpilotScore } from '../components/TrustpilotProof';
 import HomeTrust from '../components/home/HomeTrust';
+import CostCalculator from '../components/CostCalculator';
 import {
   BillingCatalog,
   BillingCycle,
@@ -248,6 +249,13 @@ export default function PricingPage() {
                     </tbody>
                   </table>
                 </div>
+                <CostCalculator calc="whatsapp-bill">
+                  <p>
+                    At 10,000 marketing, 10,000 utility and 5,000 service replies a month,
+                    Meta&rsquo;s own bill is &#8377;10,241 before GST, or about &#8377;12,084 with
+                    18% GST. We add &#8377;0 to every line of it.
+                  </p>
+                </CostCalculator>
                 <p className="mkt-pricing__plan-text-note">
                   Meta rates read off{' '}
                   <a

@@ -1,0 +1,213 @@
+/**
+ * Embedded rupee calculators (src/marketing/lib/blogCalculators.ts).
+ *
+ * Scoped to `.mkt-calc` rather than to the blog prose, because the same widget
+ * is mounted on /pricing where none of the prose rules apply. The static
+ * fallback inside the placeholder is styled by whatever surrounds it until the
+ * widget binds and adds `.is-live`, so nothing here assumes the live markup.
+ */
+
+.mkt-calc {
+  margin: 1.75rem 0;
+  padding: 1.25rem;
+  border: 1px solid #e6e0f8;
+  border-radius: 16px;
+  background: linear-gradient(180deg, #fbfaff, #fff 60%);
+}
+
+@media (min-width: 640px) {
+  .mkt-calc {
+    padding: 1.6rem 1.75rem;
+  }
+}
+
+.mkt-calc__title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 650;
+  letter-spacing: -0.015em;
+  line-height: 1.35;
+  color: var(--mkt-ink, #0c1222);
+}
+
+.mkt-calc__lead {
+  margin: 0.45rem 0 0;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: #475569;
+}
+
+.mkt-calc__fields {
+  display: grid;
+  gap: 0.9rem;
+  margin-top: 1.1rem;
+}
+
+@media (min-width: 720px) {
+  .mkt-calc__fields {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+}
+
+.mkt-calc__field {
+  display: grid;
+  gap: 0.35rem;
+  align-content: start;
+}
+
+.mkt-calc__label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--mkt-ink, #0c1222);
+}
+
+.mkt-calc__input {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0 0.7rem;
+  border: 1px solid #ddd5f3;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.mkt-calc__input:focus-within {
+  border-color: var(--mkt-violet, #7c3aed);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.14);
+}
+
+.mkt-calc__input input {
+  width: 100%;
+  /* 16px or iOS zooms the page on focus. */
+  min-height: 2.75rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-size: 1rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--mkt-ink, #0c1222);
+}
+
+.mkt-calc__input input:focus {
+  outline: none;
+}
+
+.mkt-calc__suffix {
+  flex: none;
+  font-size: 0.9rem;
+  color: #64748b;
+}
+
+.mkt-calc__hint {
+  font-size: 0.76rem;
+  line-height: 1.45;
+  color: #64748b;
+}
+
+.mkt-calc__out {
+  margin-top: 1.15rem;
+  overflow: hidden;
+  border: 1px solid #e6e0f8;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.mkt-calc__out table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.mkt-calc__out :is(th, td) {
+  padding: 0.7rem 0.85rem;
+  text-align: left;
+  vertical-align: top;
+  /* The prose sheet keeps header cells on one line; these are sentences. */
+  white-space: normal;
+  background: none;
+  border-bottom: 1px solid var(--mkt-border, #efeaf8);
+}
+
+.mkt-calc__out td {
+  width: 1%;
+  text-align: right;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: var(--mkt-ink, #0c1222);
+}
+
+.mkt-calc__out tr:last-child :is(th, td) {
+  border-bottom: none;
+}
+
+.mkt-calc__out tr.is-total :is(th, td) {
+  background: #faf8ff;
+}
+
+.mkt-calc__out tr.is-total td {
+  color: var(--mkt-violet, #7c3aed);
+}
+
+.mkt-calc__rowLabel {
+  display: block;
+  font-weight: 600;
+  color: var(--mkt-ink, #0c1222);
+}
+
+.mkt-calc__rowDetail {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.8rem;
+  font-weight: 400;
+  line-height: 1.45;
+  color: #64748b;
+}
+
+.mkt-calc__verdict {
+  margin: 1rem 0 0;
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: var(--mkt-ink, #0c1222);
+}
+
+.mkt-calc__note {
+  margin: 0.75rem 0 0;
+  font-size: 0.76rem;
+  line-height: 1.55;
+  color: #64748b;
+}
+
+/* Below 520px a two-column row squeezes the label to three words a line, so
+   the figure moves under its own label instead. */
+@media (max-width: 519px) {
+  .mkt-calc__out :is(table, tbody, tr, th, td) {
+    display: block;
+    width: auto;
+  }
+
+  .mkt-calc__out tr {
+    padding: 0.7rem 0.8rem;
+    border-bottom: 1px solid var(--mkt-border, #efeaf8);
+  }
+
+  .mkt-calc__out tr:last-child {
+    border-bottom: none;
+  }
+
+  .mkt-calc__out :is(th, td) {
+    padding: 0;
+    border-bottom: none;
+  }
+
+  .mkt-calc__out td {
+    margin-top: 0.35rem;
+    text-align: left;
+    font-size: 1.05rem;
+    white-space: normal;
+  }
+}

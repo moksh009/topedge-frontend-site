@@ -40,7 +40,7 @@ export const SOURCES = {
     label: 'Meta’s WhatsApp Business Platform pricing documentation',
     publisher: 'Meta',
     claim:
-      'Per-message pricing since 1 July 2025, charged on delivery, by message category (marketing, utility, authentication, service) and the recipient’s country calling code. Carries the live rate card and the volume tiers. Effective 1 October 2026 by messaging account timezone, every business phone number gets a free tier of 1,000 service messages a month and Meta charges from the 1,001st service message onward. Meta Business Agent moved to token billing on 1 August 2026 at $2.00 per million tokens. Utility and authentication volume tiers start at 25,000,000 and 750,000 messages a month.',
+      'Per-message pricing since 1 July 2025, charged on delivery, by message category (marketing, utility, authentication, service) and the recipient’s country calling code. Carries the live rate card and the volume tiers. Effective 1 October 2026 by messaging account timezone, every business phone number gets a free tier of 1,000 service messages a month and Meta charges from the 1,001st service message onward. Meta Business Agent moved to token billing on 1 August 2026 at $2.00 per million tokens. Utility and authentication volume tiers start at 25,000,000 and 750,000 messages a month, with the India utility rate falling to ₹0.1081 above the utility tier. India card: ₹0.8631 marketing, ₹0.1150 utility and authentication, ₹2.4971 authentication-international, all per delivered message.',
     verified: '2026-10-21',
   },
   metaTemplates: {
@@ -85,7 +85,7 @@ export const SOURCES = {
     label: 'Unicommerce’s India D2C Report 2026',
     publisher: 'Unicommerce',
     claim:
-      'RTO of 39.2% at the November 2025 festive peak falling to 21.0% by March 2026, built from 410M+ shipments across 6,000+ brands. Festive-quarter COD returns around 58% against under 15% for prepaid.',
+      'RTO of 39.2% at the November 2025 festive peak falling to 25.6% in January 2026 and 21.0% by March 2026 among brands running prepaid incentives, pincode-level courier routing and pre-dispatch address verification, built from 410M+ shipments across 6,000+ brands. Festive-quarter COD returns around 58% against under 15% for prepaid. Tier-2 and Tier-3 cities drove 66% of incremental order volume in FY26.',
     verified: '2026-10-21',
   },
   amazonShippingRto: {
