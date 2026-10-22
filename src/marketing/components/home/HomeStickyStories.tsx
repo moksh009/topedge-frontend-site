@@ -25,6 +25,34 @@ type Story = {
   | { kind: 'pixel' }
 );
 
+
+/**
+ * One line on desktop; on a phone the line breaks once, at the clause or
+ * sentence boundary nearest the middle, so neither half is a stranded word.
+ */
+function splitBody(body: string) {
+  const mid = body.length / 2;
+  let best = -1;
+  for (const m of body.matchAll(/[.,] /g)) {
+    const i = (m.index ?? 0) + 1;
+    if (best < 0 || Math.abs(i - mid) < Math.abs(best - mid)) best = i;
+  }
+  if (best < 0) {
+    for (const m of body.matchAll(/ /g)) {
+      const i = m.index ?? 0;
+      if (best < 0 || Math.abs(i - mid) < Math.abs(best - mid)) best = i;
+    }
+  }
+  if (best < 0) return body;
+  return (
+    <>
+      {body.slice(0, best).trimEnd()}{" "}
+      <br className="home-sticky__br" />
+      {body.slice(best).trimStart()}
+    </>
+  );
+}
+
 const STORIES: Story[] = [
   {
     id: 'cod-prepaid',
@@ -141,7 +169,7 @@ function FeatureMoment({ story }: { story: Story }) {
             {story.titleLead}{' '}
             <span className="home-sticky__title-accent">{story.titleAccent}</span>
           </h2>
-          <p className="home-sticky__body">{story.body}</p>
+          <p className="home-sticky__body">{splitBody(story.body)}</p>
           <Link className="mkt-btn-primary home-sticky__cta-btn" to={story.href}>
             {story.cta}
             <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>

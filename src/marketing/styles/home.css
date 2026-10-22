@@ -5898,3 +5898,42 @@
     font-size: 0.75rem;
   }
 }
+
+/* ---- Sub-feature copy: one-line description, crisp button ---------------
+   The copy layer sets a white text-shadow for the title; the button inherited
+   it and its label smeared. The button also sat flush against the body. */
+html body .home-sticky .home-sticky__static-copy .home-sticky__cta-btn {
+  text-shadow: none;
+  margin-top: 1.6rem;
+  align-self: center;
+}
+html body .home-sticky .home-sticky__static-copy {
+  max-width: 64rem;
+}
+html body .home-sticky .home-sticky__static-copy .home-sticky__body {
+  max-width: none;
+  width: auto;
+  margin-top: 0.8rem;
+  text-wrap: balance;
+}
+.home-sticky__br {
+  display: none;
+}
+@media (min-width: 900px) {
+  html body .home-sticky .home-sticky__static-copy .home-sticky__body {
+    white-space: nowrap;
+    font-size: 1.0625rem;
+  }
+}
+/* Phones: break once, at the join between the two halves. */
+@media (max-width: 759px) {
+  .home-sticky__br {
+    display: block;
+  }
+  html body .home-sticky .home-sticky__static-copy .home-sticky__body {
+    max-width: 22rem;
+    margin-inline: auto;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+}
