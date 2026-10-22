@@ -122,11 +122,11 @@ must(/Log in</.test(html), 'nav missing "Log in"');
 const heroBlock = (markup.match(/<header class="hero"[\s\S]*?<\/header>/) || [''])[0];
 must(heroBlock !== '', 'the hero header is gone');
 must(/<video\b/.test(heroBlock), 'the hero has no film; the first screen is meant to be the product moving');
-// The hero runs past one viewport now: it carries the value ticker and the
-// three anchors below the film. What still has to hold is that the film is in
-// the first screen on a laptop, and that the ticker and the anchors are inside
-// the hero rather than loose sections under it.
-must(/<div class="tk"/.test(heroBlock), 'the value ticker is not in the hero');
+// The hero runs past one viewport now: it carries the three anchors below the
+// film. What still has to hold is that the film is in the first screen on a
+// laptop, and that the anchors are inside the hero rather than a loose section
+// under it.
+must(!/class="tk/.test(html), 'the value ticker is back under the film; the owner asked for it gone');
 must(/<ul class="pil">/.test(heroBlock), 'the three anchors are not in the hero');
 // The cap is on the width, derived from the height the film may take: setting
 // a full width and a max-height instead makes the box wider than 16:9 once the
@@ -218,10 +218,6 @@ const swHead = (markup.match(/<h2[^>]*>[\s\S]*?Switch to[\s\S]*?<\/h2>/) || ['']
 must(/<img class="chip-bm"[^>]*src="\/brand-mark-56\.webp"[^>]*alt=""/.test(swHead), 'the comparison heading no longer carries the brand mark');
 must(/<img class="chip-bm"[^>]*>TopEdge AI<\/span>/.test(swHead), 'the comparison heading shows the mark without the name beside it');
 
-// --- The ticker runs left to right ---
-must(/@keyframes tk\{from\{transform:translateX\(-50%\)\}to\{transform:translateX\(0\)\}\}/.test(html), 'the value ticker is running right to left again');
-must(/@media\(max-width:759px\)[\s\S]*?\.tk-track\{animation-duration:22s\}/.test(html), 'the ticker lost its faster duration on a phone');
-
 // --- The figure has no plate ---
 // It was a bento panel, which gave a two-line statement the furniture of a
 // feature card and made the number read as a label rather than the point.
@@ -281,28 +277,21 @@ must(
   `these characters are outside the font subset and will fall back: ${uncovered.map((c) => JSON.stringify(c) + ' U+' + c.codePointAt(0).toString(16).toUpperCase()).join(', ')}`,
 );
 
-// --- The hero extension: the ticker and the three anchors ---
-// Six claims, two copies, and the spacing on the item rather than the track: a
-// gap sits between items and not after the last one, so an N-item track holds
-// N-1 gaps and a 50% translate lands half a gap short of the frame it left.
-// Both marquees on this page are built the same way for the same reason.
-const tk = (markup.match(/<div class="tk"[\s\S]*?<\/div>/) || [''])[0];
-must(tk !== '', 'the value ticker is gone');
-const tkItems = tk.match(/<li[^>]*>/g) || [];
-must(tkItems.length === 12, `expected two copies of six pills, found ${tkItems.length}`);
-must(tkItems.filter((l) => /aria-hidden/.test(l)).length === 6, 'exactly one copy of the ticker should be announced');
-must(/\.tk-track li\{[^}]*margin-right:/.test(html), 'the ticker spacing is back on the track as a gap; the loop will jump every lap');
-must(!/\.tk-track\{[^}]*gap:/.test(html), 'the ticker track has a gap again; it breaks the one-copy translate');
-must(/\.trust-marks li\{[^}]*margin-right:/.test(html), 'the logo ribbon spacing is back on the track as a gap; same jump');
-for (const claim of ['abandoned checkout revenue', 'convert cash on delivery to prepaid', '0% Meta WhatsApp API markup', 'identity capture pixel', '+20 more features included']) {
-  must(tk.includes(claim), `the ticker no longer claims: ${claim}`);
-}
+// --- The hero extension: the three anchors ---
+// The logo ribbon carries its spacing on the item rather than the track: a gap
+// sits between items and not after the last one, so an N-item track holds N-1
+// gaps and a translate of one copy lands a gap short of the frame it left.
+must(/\.trust-marks li\{[^}]*margin-right:/.test(html), 'the logo ribbon spacing is back on the track as a gap; the loop will jump every lap');
 const pil = (markup.match(/<ul class="pil">[\s\S]*?<\/ul>/) || [''])[0];
 must((pil.match(/<li>/g) || []).length === 3, 'expected three anchors closing the hero');
 must((pil.match(/<h3>/g) || []).length === 3, 'an anchor has no heading');
 // h3, not h2: every h2 on this page carries a marked phrase, and these are
 // three claims rather than a section heading.
 must(!/<h2/.test(pil), 'the anchors are using section headings');
+// Stacked to one column on a phone, so they centre under a centred headline
+// rather than hanging off the left gutter.
+must(/@media\(max-width:759px\)[\s\S]*?\.pil\{[^}]*text-align:center/.test(html), 'the hero anchors are left-aligned on a phone again');
+must(/@media\(max-width:759px\)[\s\S]*?\.pil li\{[^}]*justify-items:center/.test(html), 'the anchor ticks are not centred over their claims on a phone');
 
 // --- Marks that belong to other people ---
 // Shopify's bag, Meta's symbol and our own workflow glyph, in place of the
@@ -475,10 +464,8 @@ must(/prefers-reduced-motion[\s\S]*?\.trust-marks\{[^}]*flex-wrap:wrap/.test(htm
 // bars running off the page rather than as a band the page contains, and the
 // narrower window also keeps the track longer than the window at every size,
 // which is what stops a blank opening mid-lap. The sweep measures that.
-must(/@media\(min-width:900px\)[\s\S]*?\.mq,\.tk\{width:70%\}/.test(html), 'the two marquees are no longer 70% of the page on desktop');
-for (const sel of ['\\.mq', '\\.tk']) {
-  must(new RegExp(`${sel}\\{[^}]*mask-image:linear-gradient\\(90deg,transparent,#000 9%,#000 91%,transparent\\)`).test(html), `${sel} is not faded at both ends`);
-}
+must(/@media\(min-width:900px\)[\s\S]*?\.mq\{width:70%\}/.test(html), 'the logo ribbon is no longer 70% of the page on desktop');
+must(/\.mq\{[^}]*mask-image:linear-gradient\(90deg,transparent,#000 9%,#000 91%,transparent\)/.test(html), '.mq is not faded at both ends');
 must(/@keyframes mq\{from\{transform:translateX\(0\)\}to\{transform:translateX\(-25%\)\}\}/.test(html), 'the ribbon travel no longer matches its four copies; the loop will jump');
 // The band is flat white and the hero's gradient stops on its own edge, so the
 // two meet on a line. The owner asked for the line after seeing the version

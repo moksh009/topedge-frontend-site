@@ -68,8 +68,8 @@ img{max-width:100%}
    to sit behind the headline made the top of the page as busy as the bottom and
    gave the hero two focal points; the page now starts white and darkens into
    the band below it, which is the single thing the gradient is for. */
-/* The hero is taller than one screen now: headline, film, the value ticker and
-   the three anchors all live inside it. It is a column, so the gutter falls on
+/* The hero is taller than one screen now: headline, film and the three
+   anchors all live inside it. It is a column, so the gutter falls on
    both sides (as a row with no justify-content it put the whole fold against
    the left edge below 900px, which is the bug this comment is standing on).
    The gradient still ends on a flat violet and stops at the hero's own edge. */
@@ -129,22 +129,6 @@ html[data-v]:not([data-v="platform"]) .hero-bm{display:none}
  .free img{display:block;flex:none;width:5rem;height:auto}
  .free b{font-weight:600;font-size:.86rem;transform:rotate(-8deg) translateY(-.32rem);color:#2e1065;letter-spacing:-.015em}
 }
-/* The value ticker under the film. Two copies of six pills, the track moving
-   exactly one copy so the loop has no seam. The spacing is a margin on the
-   item, not a gap on the track: a gap is laid between items and not after the
-   last one, so a track of N items carries N-1 gaps and a 50% translate lands
-   half a gap short of the frame it left, which is a visible jump every lap.
-   It runs left to right: the keyframe starts at -50% and ends at 0. */
-.tk{position:relative;width:calc(100% - 2.5rem);margin:2.4rem auto 0;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent)}
-.tk-track{display:flex;width:max-content;align-items:center;list-style:none;margin:0;padding:0;animation:tk 44s linear infinite}
-.tk:hover .tk-track{animation-play-state:paused}
-.tk-track li{flex:none;display:inline-flex;align-items:center;gap:.55rem;margin-right:.7rem;padding:.58rem .5rem .58rem .58rem;border-radius:9999px;background:rgba(255,255,255,.9);box-shadow:inset 0 0 0 1px rgba(124,58,237,.14),0 8px 20px -14px rgba(46,16,101,.5);font-size:.9rem;font-weight:500;letter-spacing:-.014em;color:#2e1065;white-space:nowrap}
-.tk-track li:after{content:'';width:.5rem}
-/* The tick in a soft disc of its own, the way the reference sets it: a bare
-   glyph beside the words reads as a bullet, a disc reads as a mark. */
-.tk-t{flex:none;display:grid;place-items:center;width:1.4rem;height:1.4rem;border-radius:50%;background:#ede9fe;color:var(--violet)}
-.tk-t svg{display:block}
-@keyframes tk{from{transform:translateX(-50%)}to{transform:translateX(0)}}
 /* The three anchors that close the hero, set straight on the violet the
    gradient ends on: a tick in a filled disc, then the claim. No card. The ink
    is the deep violet rather than white, which is the readable way round on a
@@ -603,9 +587,13 @@ section{padding:3.75rem 0}
  .hp-col{align-items:center;text-align:center;gap:.35rem}
  .hp-stars{flex-wrap:wrap;justify-content:center;row-gap:.15rem}
  .hp-stars span{margin-left:0}
- /* Half the duration below 760px: fewer pills are in view at once, so the
-    same pixels per second reads as a queue that has stalled. */
- .tk-track{animation-duration:22s}
+ /* The three anchors stack to one column on a phone, and a left-aligned
+    column under a centred headline and a centred film reads as a list that
+    slid off the middle of the page. Disc over claim, both centred, with the
+    measure capped so a three-line claim does not run gutter to gutter. */
+ .pil{gap:1.5rem;margin-top:2.2rem;justify-items:center;text-align:center}
+ .pil li{justify-items:center;gap:.6rem;max-width:30rem}
+ .pil h3{max-width:24ch;margin-inline:auto}
  /* Both ways in, side by side: the trial is the page's job, but a Shopify
     merchant who would rather install from the App Store should not have to
     scroll back up to find that. Equal halves, the trial weighted by colour. */
@@ -660,17 +648,16 @@ section{padding:3.75rem 0}
  .cmp-row:not(.cmp-row--head) .cmp-t,.cmp-row:not(.cmp-row--head) .cmp-x,.cmp-row:not(.cmp-row--head) .cmp-v{border-top:1px solid #f3eefb}
  .cmp-row:nth-child(2) .cmp-t,.cmp-row:nth-child(2) .cmp-x,.cmp-row:nth-child(2) .cmp-v{border-top:0}
  /* The hero no longer fits a viewport and should not pretend to: the film
-    still clears the first screen, and the ticker and the anchors are the
-    reward for the first scroll rather than three things squeezed above it. */
+    still clears the first screen, and the anchors are the reward for the
+    first scroll rather than two things squeezed above it. */
  .hero{padding:7.5rem 0 4.5rem}
  .hero h1{max-width:none;font-size:clamp(2.4rem,3.9vw,3.1rem)}
  .film{width:min(100%,calc(min(46svh,28rem) * 16 / 9))}
  /* 70%, faded at both ends: full bleed read as two bars running off the page
-    rather than as a band the page contains. Only on desktop, since 70% of a
-    390px phone is too narrow for a pill to read. */
- .mq,.tk{width:70%}
+    rather than as a band the page contains. Desktop only, since 70% of a
+    390px phone is too narrow for a mark to read. */
+ .mq{width:70%}
  .pil{grid-template-columns:repeat(3,1fr);gap:2.75rem;margin-top:3.25rem}
- .tk{margin-top:3rem}
  section{padding:5.25rem 0}
  .mkt-plan--emphasis{transform:translateY(-.5rem)}
 }
@@ -796,12 +783,6 @@ html[data-v="switch"] .mig{display:block}
 
   /* Card headings centred over the two rows they introduce, rather than
      hanging left of an icon with the comparison text below it. */
-  /* The three hero pillars stack to one column here, and a left-aligned
-     column under a centred headline reads as a list that fell off the
-     middle of the page. */
-  .pil{text-align:center}
-  .pil li{justify-items:center}
-
   .cmp-t{justify-content:center;text-align:center;text-wrap:balance}
   .cmp-row{padding:1.15rem 1rem;text-align:center}
   .cmp-x,.cmp-v{text-align:center}

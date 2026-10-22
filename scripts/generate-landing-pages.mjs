@@ -988,36 +988,6 @@ function heroProof() {
 }
 
 /**
- * The value ticker, under the film. Six claims a merchant can weigh in the
- * second it takes one to cross, scrolling right to left. Two copies of the
- * list, the track travelling exactly one copy, so the loop has no seam; the
- * second copy is aria-hidden, or a screen reader reads all six twice.
- *
- * It sits inside the hero on purpose. The first screen sells one idea and the
- * ticker sells the breadth behind it, which is the thing a Google click has no
- * way of knowing: the ad bought one feature and the suite has twenty more.
- */
-const TICKER = [
-  'Recover 15 to 25% of abandoned checkout revenue automatically',
-  'Verify COD orders and convert cash on delivery to prepaid',
-  '0% Meta WhatsApp API markup, pay Meta directly at cost',
-  'Website identity capture pixel',
-  'Visual multi-channel customer journey and chatbot builder',
-  '+20 more features included',
-];
-
-const tickerHtml = `<div class="tk" aria-label="What is included">
-      <ul class="tk-track">${[0, 1]
-        .flatMap((copy) =>
-          TICKER.map(
-            (v) =>
-              `<li${copy ? ' aria-hidden="true"' : ''}><i class="tk-t">${TICK}</i>${esc(v)}</li>`,
-          ),
-        )
-        .join('')}</ul>
-    </div>`;
-
-/**
  * The three anchors that close the hero. A paid click lands knowing one thing
  * it searched for; these are the three claims that decide whether the rest of
  * the page is worth a scroll, so they are the last thing in the first screen
@@ -1285,7 +1255,6 @@ for (const page of PAGES) {
     SWITCH_ROWS: switchHtml,
     TP_STAR,
     INCLUDED_LIST: includedHtml,
-    TICKER: tickerHtml,
     PILLARS: pillarsHtml,
     STRIP_LOGOS: stripHtml,
     STRIP_BADGES: badgesHtml,
