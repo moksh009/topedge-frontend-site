@@ -142,7 +142,7 @@ function FeatureMoment({ story }: { story: Story }) {
             <span className="home-sticky__title-accent">{story.titleAccent}</span>
           </h2>
           <p className="home-sticky__body">{story.body}</p>
-          <Link className="home-sticky__cta" to={story.href}>
+          <Link className="mkt-btn-primary home-sticky__cta-btn" to={story.href}>
             {story.cta}
             <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
               <path d="M5 12h14M13 6l6 6-6 6" />

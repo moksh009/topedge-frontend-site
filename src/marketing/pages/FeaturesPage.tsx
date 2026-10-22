@@ -145,7 +145,7 @@ export default function FeaturesPage() {
             Store data syncs from Shopify; you edit it in the dashboard.
           </p>
           <div className="mkt-fx__actions">
-            <Link to="/signup" className="mkt-fx__btn mkt-fx__btn--solid">
+            <Link to="/signup" className="mkt-btn-primary">
               Start free
               <ArrowRight size={16} aria-hidden />
             </Link>

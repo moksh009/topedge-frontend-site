@@ -220,7 +220,7 @@ export default function IntegrationsPage() {
             from one workspace.
           </p>
           <div className="mkt-int__actions">
-            <Link to="/signup" className="mkt-int__btn mkt-int__btn--solid">
+            <Link to="/signup" className="mkt-btn-primary">
               Start free
               <ArrowRight size={16} aria-hidden />
             </Link>
