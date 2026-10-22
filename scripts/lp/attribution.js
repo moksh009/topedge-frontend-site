@@ -62,8 +62,14 @@
       a.addEventListener('click',function(){
         if(!window.gtag)return;
         if(a.getAttribute('data-cta')==='shopify'){window.gtag('event','shopify_install_click',{page:location.pathname});return}
-        window.gtag('event','cta_click',{page:location.pathname,cta:'trial'});
-        if(SEND_TO)window.gtag('event','conversion',{send_to:SEND_TO,page_path:location.pathname});
+        // transport_type:'beacon' is load-bearing, not a nicety. This link
+        // navigates to dash.topedgeai.com on the same tab, and without a beacon
+        // gtag's request is cancelled the moment the page unloads — the click
+        // happens, PostHog records it (it beacons by default), and Google never
+        // hears about it. That is exactly what happened between 18 and 21 Oct:
+        // seven recorded CTA clicks, zero conversions reported.
+        window.gtag('event','cta_click',{page:location.pathname,cta:'trial',transport_type:'beacon'});
+        if(SEND_TO)window.gtag('event','conversion',{send_to:SEND_TO,page_path:location.pathname,transport_type:'beacon'});
       });
     });
   }catch(e){}

@@ -129,7 +129,14 @@ export function trackAdsConversion(
 ): void {
   if (!live() || !ADS_ID || !label) return;
   ensureGtag();
-  window.gtag!('event', 'conversion', { send_to: `${ADS_ID}/${label}`, ...params });
+  // Every caller of this fires on a click that then navigates away, so the
+  // request has to outlive the page. Without a beacon gtag's ping is cancelled
+  // on unload and the conversion is simply lost.
+  window.gtag!('event', 'conversion', {
+    send_to: `${ADS_ID}/${label}`,
+    transport_type: 'beacon',
+    ...params,
+  });
 }
 
 /**
