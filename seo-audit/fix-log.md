@@ -531,3 +531,53 @@ taller frame reveals. Proper mobile crops are a per-asset job, not a CSS one.
 70 prerendered, 0 failed · `check:dist`, `check:llms`, `check:llms-pricing`, `check:blog`,
 `check:lp`, `seo:contracts` all passed · `eslint` 0 errors · `tsc` clean apart from the
 pre-existing unused variable in `MarketingNavbar.tsx`.
+
+---
+
+## Batch 9 — real mobile crops, a button that is a button, and a type scale — 2026-10-22
+
+### Crops, generated rather than guessed
+
+Batch 8 cropped the product stills with CSS: a 4:3 frame and `object-fit: cover`, which can
+only guess where the content is. `scripts/make-mobile-crops.mjs` now cuts them from the real
+image. It finds the white UI panel inside the decorative frame (column and row coverage of
+near-white pixels), then takes the left 4:3 of it at full height for a wide dashboard, or the
+middle 4:3 for the handful that are illustrations rather than screenshots and have no sidebar
+worth keeping. Output is 960px WebP at q82, 23 to 56 KB each.
+
+Eight crops, served below 768px through `<picture>`. `npm run check:crops` fails the build when
+one is missing or older than its source, and it runs in all three build scripts, so a replaced
+screenshot cannot ship with last month's crop beside it.
+
+One real bug fell out of this. `.demo-video-glow__still` carries `aspect-ratio: 16/9` below
+640px, and its `height: 100%` is a percentage of a box whose own height comes from an
+aspect-ratio, which the engine treats as indefinite. The declared ratio won, so the image sat
+16:9 inside a 4:3 frame with white under it: measured 349x196 in a 349x262 box. That is what
+the white band under the P&L still was, not the asset. `aspect-ratio: auto` in the crop block
+fixes it, and the image now fills the frame to the pixel.
+
+### The CTA
+
+The home showcase CTA Batch 8 added was a violet text link with an arrow. A text link is a
+"learn more"; these are the page's nine chances to send someone into the product. It is a
+filled pill now, the same one the hero uses: 3rem tall, violet, shadowed, with the arrow
+nudging on hover.
+
+### Type scale and rhythm
+
+Section heads capped at 1.5rem and showcase heads at 1.35rem, which is body copy doing a
+heading's job. On a 1440px screen "Automation with store context" was barely larger than the
+sentence under it and the page read as one column with no hierarchy. Heads now run to 2.25rem
+and showcase titles to 1.85rem, both fluid, with tile titles, step titles and body sizes moved
+with them.
+
+Sections sat 2.75rem apart, which is a paragraph break rather than a section break, so a heading
+looked attached to the block above it instead of the one it introduces. Now `clamp(3.75rem, 7vw,
+6rem)`, and the head's own bottom margin grew with it. Scale and spacing moved together: a
+bigger heading in the same gap is just a bigger crowd.
+
+### Gates
+
+70 prerendered, 0 failed · `check:dist`, `check:llms`, `check:crops`, `check:blog`, `check:lp`,
+`seo:contracts` all passed · `eslint` 0 errors · `tsc` clean apart from the pre-existing unused
+variable in `MarketingNavbar.tsx` · no horizontal scroll on home or a feature page at 390px.

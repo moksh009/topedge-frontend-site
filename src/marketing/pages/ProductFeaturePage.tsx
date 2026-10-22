@@ -5,6 +5,7 @@ import MarketingPage from '../components/MarketingPage';
 import MarketingCtaBand from '../components/MarketingCtaBand';
 import DemoProductVideoFrame from '../components/home/demo/DemoProductVideoFrame';
 import DemoProductImageFrame from '../components/home/demo/DemoProductImageFrame';
+import { mobileCropFor } from '../data/mobileCrops';
 import {
   getProductPage,
   type ProductPage,
@@ -212,6 +213,7 @@ function ProductFeatureView({ page }: { page: ProductPage }) {
             ) : (
               <DemoProductImageFrame
                 src={page.hero.src}
+                mobileSrc={mobileCropFor(page.hero.src)}
                 alt={page.hero.alt}
                 glow={page.hero.glow ?? 'violet'}
               />

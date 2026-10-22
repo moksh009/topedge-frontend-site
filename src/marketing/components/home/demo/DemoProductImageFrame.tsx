@@ -11,6 +11,12 @@ export type DemoImageGlow =
 type DemoProductImageFrameProps = {
   src: string;
   alt: string;
+  /**
+   * 4:3 crop served below 768px. Cut from the still's real UI panel by
+   * scripts/make-mobile-crops.mjs, because a 1400px dashboard scaled into a
+   * 350px frame is a picture of a product too small to read the product in.
+   */
+  mobileSrc?: string;
   glow?: DemoImageGlow;
   className?: string;
 };
@@ -23,6 +29,7 @@ type DemoProductImageFrameProps = {
 export default function DemoProductImageFrame({
   src,
   alt,
+  mobileSrc,
   glow = 'violet',
   className,
 }: DemoProductImageFrameProps) {
@@ -32,16 +39,19 @@ export default function DemoProductImageFrame({
       data-glow={glow}
     >
       <div className="demo-video-glow__frame is-ready">
-        <img
-          className="demo-video-glow__el demo-video-glow__still"
-          src={src}
-          alt={alt}
-          width={1400}
-          height={780}
-          loading="lazy"
-          decoding="async"
-          fetchPriority="low"
-        />
+        <picture>
+          {mobileSrc ? <source media="(max-width: 767px)" srcSet={mobileSrc} /> : null}
+          <img
+            className="demo-video-glow__el demo-video-glow__still"
+            src={src}
+            alt={alt}
+            width={1400}
+            height={780}
+            loading="lazy"
+            decoding="async"
+            fetchPriority="low"
+          />
+        </picture>
       </div>
     </div>
   );
