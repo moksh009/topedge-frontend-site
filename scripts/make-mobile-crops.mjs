@@ -13,7 +13,7 @@
  * this set the sidebar, the heading and the first rows live there.
  *
  * Usage: node scripts/make-mobile-crops.mjs [--check]
- * --check fails when a crop is missing or older than its source, so the build
+ * --check fails when a crop is missing (or, locally, older than its source), so the build
  * can tell you the source moved without regenerating binaries behind your back.
  */
 import { spawnSync } from 'node:child_process';
@@ -104,8 +104,12 @@ for (const { src, focus } of MOBILE_CROP_SOURCES) {
     console.error(`✖ source missing: ${src}`);
     process.exit(1);
   }
+  // mtimes are meaningless in a fresh git clone (checkout order is arbitrary),
+  // so in CI only require that the committed crop exists.
+  const inCI = Boolean(process.env.CI || process.env.NETLIFY);
   const fresh =
-    fs.existsSync(to) && fs.statSync(to).mtimeMs >= fs.statSync(from).mtimeMs;
+    fs.existsSync(to) &&
+    (inCI || fs.statSync(to).mtimeMs >= fs.statSync(from).mtimeMs);
   if (!fresh) stale.push(src);
   jobs.push([from, to, focus]);
 }
