@@ -14,7 +14,7 @@ export default function HomeClose() {
           on WhatsApp
         </>
       }
-      subtitle="Connect Shopify, approve Meta templates, and publish your first recovery journey, usually the same afternoon."
+      subtitle="Connect Shopify, approve your templates, publish the first journey. Most stores do all three the same afternoon."
       primaryLabel="Start free"
       secondaryLabel="See pricing"
       secondaryTo="/pricing"

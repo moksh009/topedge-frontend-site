@@ -2661,12 +2661,8 @@
     padding: 0;
     /* tight under CTAs — leftover height goes into the shot, not blank margin */
     margin: 0.5rem auto 0;
-    /* The copy column caps at 24rem for line length. The logo row is not
-       prose: let it use the board's full width so all five marks hold one
-       line instead of wrapping the last one onto a row of its own. */
-    width: 100vw;
-    max-width: 100vw;
-    margin-inline: calc(50% - 50vw);
+    width: 100%;
+    max-width: 100%;
   }
 
   .home-trust-logos--on-stage .home-trust-logos__label {
@@ -4016,7 +4012,37 @@
 }
 
 .home-sticky--moments .home-sticky__static-copy .home-sticky__cta {
-  display: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1.15rem;
+  min-height: 2.75rem;
+  padding: 0 0.3rem;
+  font-size: 0.95rem;
+  font-weight: 550;
+  letter-spacing: -0.01em;
+  color: var(--mkt-violet, #7c3aed);
+  text-decoration: none;
+}
+
+.home-sticky--moments .home-sticky__static-copy .home-sticky__cta svg {
+  flex: none;
+  transition: transform 0.2s ease;
+}
+
+.home-sticky--moments .home-sticky__static-copy .home-sticky__cta:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.home-sticky--moments .home-sticky__static-copy .home-sticky__cta:hover svg {
+  transform: translateX(3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-sticky--moments .home-sticky__static-copy .home-sticky__cta:hover svg {
+    transform: none;
+  }
 }
 
 .home-sticky--static .home-sticky__title {

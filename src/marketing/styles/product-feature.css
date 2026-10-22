@@ -185,7 +185,7 @@
     transform: translateX(0);
   }
   to {
-    transform: translateX(-25%);
+    transform: translateX(-50%);
   }
 }
 
@@ -1152,5 +1152,149 @@
     font-weight: 600;
     color: var(--pf-ink);
     text-align: left;
+  }
+}
+
+/* ==================================================================== *
+   The stage, set the way the homepage sets its board
+   --------------------------------------------------------------------
+   The mesh ran full bleed from the top of the document, so it passed
+   under the fixed nav and its top corners were never seen: the first
+   thing on a feature page was a seam where the homepage shows an edge.
+   The film then started wherever the copy left off and was cut by the
+   fold rather than sized to fit above it.
+
+   Same three rules as the home board, so the two pages read as one
+   product: start below the band, inset from the page edge with a
+   radius, and give the film the height the copy did not use.
+ * ==================================================================== */
+.mkt-pf {
+  /* The window, less the announcement strip, less the fixed band. Both
+     publish their own height; the fallbacks are the CSS defaults. */
+  --pf-stage-h: calc(100svh - var(--mkt-ann-h, 0px) - var(--mkt-nav-h, 4rem));
+}
+
+.mkt-pf .mkt-pf__stage {
+  display: flex;
+  flex-direction: column;
+  margin: var(--mkt-nav-h, 4rem) 0.75rem 0;
+  min-height: var(--pf-stage-h);
+  border-radius: 22px;
+}
+
+.mkt-pf .mkt-pf__stage--compact {
+  min-height: 0;
+}
+
+.mkt-pf .mkt-pf__stage-content {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* No longer clearing a navbar: this is air above the headline. */
+.mkt-pf .mkt-pf__hero {
+  flex: 0 0 auto;
+  padding-top: clamp(2rem, 4.5vw, 3rem);
+  padding-bottom: 0;
+}
+
+.mkt-pf__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  margin-top: 1.5rem;
+}
+
+.mkt-pf .mkt-pf__trust {
+  margin-top: 1.5rem;
+}
+
+/* The homepage shot is drawn to be cut by the fold: square bottom corners
+   and no bottom border. This frame is rounded on all four sides, so the
+   same clip reads as broken. The board grows past one viewport instead and
+   the film sits whole inside it, with air under it. */
+.mkt-pf .mkt-pf__media {
+  flex: 0 0 auto;
+  margin-top: auto;
+  padding-top: clamp(1.25rem, 2.5vw, 2rem);
+  padding-bottom: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+@media (min-width: 768px) {
+  .mkt-pf .mkt-pf__stage {
+    margin-inline: 1.15rem;
+    border-radius: 30px;
+  }
+}
+
+/* Phones: the stage is a band rather than a full screen, so it ends under
+   the film instead of stretching empty mesh below it. */
+@media (max-width: 899px) {
+  .mkt-pf .mkt-pf__stage {
+    min-height: 0;
+    padding-bottom: 1.15rem;
+  }
+
+  .mkt-pf .mkt-pf__hero {
+    padding-top: clamp(1.75rem, 6vw, 2.5rem);
+  }
+
+  .mkt-pf .mkt-pf__actions {
+    margin-top: 1.15rem;
+  }
+
+  .mkt-pf .mkt-pf__trust {
+    margin-top: 1.1rem;
+  }
+
+  .mkt-pf .mkt-pf__media {
+    margin-top: 1.15rem;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+/* The five marks, static on a phone.
+   The marquee slices the first and last logo mid-letter inside a 360px
+   window, and a mask that narrow reads as a broken image rather than as
+   motion. Same rule lives in home.css and pricing.css: the component's
+   styles are duplicated per page sheet, so a fix in one does not reach
+   the others. */
+@media (max-width: 767px) {
+  .mkt-pf__trust {
+    width: 100%;
+    max-width: none;
+  }
+
+  .mkt-pf__trust .home-trust-logos__viewport {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .mkt-pf__trust .home-trust-logos__track {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.45rem 0.95rem;
+    animation: none;
+  }
+
+  .mkt-pf__trust .home-trust-logos__item[aria-hidden='true'] {
+    display: none;
+  }
+
+  .mkt-pf__trust .home-trust-logos__item {
+    padding: 0.3rem 0.2rem;
+    min-width: 0;
+  }
+
+  .mkt-pf__trust .home-trust-logos__item img,
+  .mkt-pf__trust .home-trust-logos--on-stage .home-trust-logos__item img {
+    height: 15px;
+    max-width: 68px;
   }
 }

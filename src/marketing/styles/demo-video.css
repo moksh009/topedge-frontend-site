@@ -302,3 +302,20 @@
     opacity: 0.7;
   }
 }
+
+/* ——— Stills, cropped rather than shrunk, on a phone ———
+   A 1400px dashboard inside a 350px 16:9 frame is a picture of a product
+   too small to read the product in. Videos are exempt: the ones that
+   matter ship a `mobileSrc` recomposed for the width. Stills have no such
+   variant, so the frame goes taller and crops from the top left, which is
+   where the sidebar, the heading and the first rows of every one of these
+   screens live. 75% of the width at 133% the size. */
+@media (max-width: 767px) {
+  .demo-video-glow--still .demo-video-glow__frame {
+    aspect-ratio: 4 / 3;
+  }
+
+  .demo-video-glow--still .demo-video-glow__still {
+    object-position: left top;
+  }
+}

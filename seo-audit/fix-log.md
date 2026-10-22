@@ -459,3 +459,75 @@ whole page out in columns.
 `check:blog` 32 posts clean · `check:llms` passed · `check:lp` passed · `seo:contracts` passed ·
 `eslint` 0 errors · `tsc` clean apart from the pre-existing unused variable in
 `MarketingNavbar.tsx`.
+
+---
+
+## Batch 8 — feature pages get the home board, a CTA and shorter copy — 2026-10-22
+
+Four complaints, worked in order.
+
+### The board
+
+Feature pages ran their mesh full bleed from the top of the document, so it passed under the
+fixed nav and its top corners were never seen: the first thing on the page was a seam where
+the homepage shows an edge. The film then started wherever the copy ended and was cut by the
+fold. The stage now follows the same three rules as the home board: start below the band, inset
+from the page edge with a radius (22px, 30px from 768px), and size to the viewport less the
+strip and the band.
+
+One difference from home, on purpose. The homepage shot is drawn to be clipped, with square
+bottom corners and no bottom border. This frame is rounded on all four sides, so the same clip
+reads as broken. The board grows past one viewport instead and the film sits whole inside it.
+Measured: 38 to 40px of board below the film on desktop, 18px on a phone, no overflow at any
+width tested.
+
+### The CTA
+
+Twelve product pages sold a capability and offered nowhere to go: the first button was three
+sections down. "Start free trial" and "See pricing" now sit under the hero sub, where the
+homepage puts them.
+
+The nine home feature showcases had the same hole, and worse: `.home-sticky__cta` was styled
+`display: none` because the moments carried no link at all. Each one now names the page it
+belongs to.
+
+### The copy
+
+All twelve product-page H1s were SEO titles pasted into a headline: "Shopify abandoned cart
+recovery and COD confirmation on WhatsApp" set four lines deep on a phone with a three-line
+highlight. `seoTitle` and `seoDescription` are separate fields and keep every query term, so
+the H1 is free to be a headline. It is now "Recover the cart. Confirm the COD."
+
+Subtitles lost their hard line breaks with it. A `\n` placed for a desktop measure broke
+"Abandoned cart, COD confirm, / and shipping on a visual canvas." mid-clause on a phone.
+
+The nine home showcases were cut to one line each, and the home hero sub, the CRM section head
+and the CTA band were rewritten the same way. Nothing in `scripts/lp/` or
+`public/lp/shopify-whatsapp/` was touched.
+
+### The marks, again
+
+Batch 7 fixed the clipped trust strip in `home.css`. The component's styles are duplicated in
+`product-feature.css` and `pricing.css`, so the fix reached neither: the marquee was still
+slicing logos mid-letter on every feature and pricing page. Both now carry the rule, each with
+a note pointing at the other two. Found while there: the feature-page marquee animated to -25%
+while `HomeTrust` renders two copies, so it snapped back mid-row on every lap. It travels -50%
+now.
+
+The strip is also centred again. The 100vw breakout Batch 7 added was needed at 18px marks;
+at 15px the five of them measure ~287px and fit the 304px copy column, so it sits inside it.
+Verified symmetric at 360, 390 and 430px.
+
+### Stills, cropped
+
+A 1400px dashboard inside a 350px 16:9 frame is a picture of a product too small to read the
+product in. Videos are exempt, since the ones that matter ship a `mobileSrc` recomposed for the
+width. Stills go to a 4:3 frame cropped from the top left: 75% of the width at 133% the size.
+Honest limit: a few of these stills carry their own whitespace at the bottom edge, which a
+taller frame reveals. Proper mobile crops are a per-asset job, not a CSS one.
+
+### Gates
+
+70 prerendered, 0 failed · `check:dist`, `check:llms`, `check:llms-pricing`, `check:blog`,
+`check:lp`, `seo:contracts` all passed · `eslint` 0 errors · `tsc` clean apart from the
+pre-existing unused variable in `MarketingNavbar.tsx`.

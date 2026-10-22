@@ -140,10 +140,10 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     path: '/features/flow-builder',
     featureSlug: 'flow-builder',
     eyebrow: 'Flow Builder',
-    title: 'WhatsApp flow builder for Shopify:',
-    titleAccent: 'flows that know your store',
+    title: 'Flows that know',
+    titleAccent: 'your store',
     subtitle:
-      'Look up orders, update addresses, and hand off to Live Chat.\nShopify sync built for India D2C WhatsApp support.',
+      'Look up an order, fix an address, hand off to a human. Without anyone leaving the chat.',
     answerFirst:
       'TopEdge Flow Builder is a Shopify-aware WhatsApp automation flow builder for India D2C. Look up orders, update addresses, and hand off to Live Chat with order context, on OAuth sync and webhooks rather than a generic script bot.',
     faqs: [
@@ -291,10 +291,10 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     path: '/features/opt-in-tools',
     featureSlug: 'opt-in-tools',
     eyebrow: 'Opt-in tools',
-    title: 'Shopify WhatsApp opt-in popups,',
-    titleAccent: 'spin wheel and widgets',
+    title: 'Turn browsers into',
+    titleAccent: 'a WhatsApp list',
     subtitle:
-      'Capture consented WhatsApp numbers on your storefront.\nThen run campaigns and journeys from one list.',
+      'Popup, spin wheel and chat widget. Every number consented, every consent timestamped.',
     answerFirst:
       'TopEdge Opt-in Tools capture consented WhatsApp numbers on your Shopify storefront (popup, spin wheel, and chat widget) so campaigns and journeys message only subscribers who opted in, with consent timestamps in Audience CRM.',
     faqs: [
@@ -429,10 +429,10 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     path: '/features/campaigns',
     featureSlug: 'campaigns',
     eyebrow: 'Campaigns',
-    title: 'WhatsApp campaigns for Shopify India',
-    titleAccent: 'that attribute revenue in ₹',
+    title: 'Campaigns you can',
+    titleAccent: 'measure in ₹',
     subtitle:
-      'Segment shoppers, send Meta-approved templates, and measure revenue.\nProfit after fees, not vanity send counts.',
+      'Segment, send a Meta-approved template, then read the revenue it earned rather than the sends it made.',
     answerFirst:
       'TopEdge Campaigns send Meta-approved WhatsApp templates to Shopify behavior segments for India D2C. Frequency caps protect quality rating, and reporting focuses on revenue after Meta fees, not vanity send counts.',
     faqs: [
@@ -581,10 +581,10 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     path: '/features/audience-crm',
     featureSlug: 'audience-crm',
     eyebrow: 'Audience CRM',
-    title: 'WhatsApp audience CRM for Shopify:',
-    titleAccent: 'one shopper, every order',
+    title: 'One shopper.',
+    titleAccent: 'Every order.',
     subtitle:
-      'One timeline for WhatsApp chats, Shopify orders, and care.\nScore leads and build segments in-product.',
+      'Chats, orders and support on one timeline, however many numbers they message you from.',
     answerFirst:
       'TopEdge Audience CRM unifies WhatsApp chats, Shopify orders, and care on one shopper timeline for India D2C. Score leads, build in-product segments, and keep unlimited profiles available for campaigns and journeys.',
     faqs: [
@@ -733,10 +733,10 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     path: '/features/journeys',
     featureSlug: 'journeys',
     eyebrow: 'Journey',
-    title: 'Shopify abandoned cart recovery and',
-    titleAccent: 'COD confirmation on WhatsApp',
+    title: 'Recover the cart.',
+    titleAccent: 'Confirm the COD.',
     subtitle:
-      'Abandoned cart, COD confirm, and shipping on a visual canvas.\nMeta-approved templates, recovered ₹, not vanity sends.',
+      'Cart, COD and shipping journeys on one canvas, measured in recovered rupees rather than sends.',
     answerFirst:
       'TopEdge Journeys is a visual WhatsApp automation builder for Shopify India D2C. Trigger abandoned checkout, COD confirmation, and shipping updates with Meta-approved templates, branch by payment method, and attribute recovered revenue in ₹, without engineering tickets. Journey Branch is on Growth and Scale.',
     faqs: [
@@ -888,10 +888,10 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     path: '/features/analytics',
     featureSlug: 'analytics',
     eyebrow: 'Tracking Pixel',
-    title: 'Shopify visitor identity pixel:',
-    titleAccent: 'match browse intent to WhatsApp',
+    title: 'See who is browsing,',
+    titleAccent: 'then message them',
     subtitle:
-      'One-click Shopify embed for views, carts, and checkout.\nFeed journeys with consent-aware site intent.',
+      'One Shopify embed. Views, carts and checkouts matched to a WhatsApp number that opted in.',
     answerFirst:
       'TopEdge Tracking Pixel is a one-click Shopify theme embed that captures product views, carts, and checkout intent, then matches events to WhatsApp numbers so Journeys and campaigns can fire while interest is still warm.',
     faqs: [
@@ -1039,10 +1039,10 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     path: '/features/ai-brain',
     featureSlug: 'ai-brain',
     eyebrow: 'AI Brain',
-    title: 'BYOK AI WhatsApp chatbot for',
-    titleAccent: 'Shopify India',
+    title: 'Your keys.',
+    titleAccent: 'Your catalog.',
     subtitle:
-      'Bring your own OpenAI or Claude keys.\nGround replies in catalog and policies, takeover pauses AI.',
+      'Bring your own OpenAI or Claude key. Answers grounded in your catalog, and the bot steps back the moment an agent joins.',
     answerFirst:
       'TopEdge AI Brain is bring-your-own-key WhatsApp AI for Shopify India. Connect OpenAI, Claude, or Gemini, ground replies in store knowledge and policies, route with Intent Detect, and pause AI instantly when Live Chat takes over, so spend stays on your provider bill.',
     faqs: [
@@ -1171,10 +1171,10 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     path: '/features/meta-manager',
     featureSlug: 'meta-manager',
     eyebrow: 'Meta Manager',
-    title: 'Meta WhatsApp templates for Shopify:',
-    titleAccent: 'approve before anything sends',
+    title: 'Nothing sends until',
+    titleAccent: 'Meta approves it',
     subtitle:
-      'Templates, Blueprints, catalog, and QR in one place.\nOnly APPROVED copy ever reaches Journeys and campaigns.',
+      'Templates, catalog and QR in one place. Only APPROVED copy ever reaches a journey or a campaign.',
     answerFirst:
       'TopEdge Meta Manager is where Shopify India teams submit, track, and approve WhatsApp Cloud API templates. Only APPROVED utility and marketing copy reaches Journeys and campaigns, plus blueprints for cart/COD, catalog sync, and wa.me QR.',
     faqs: [
@@ -1322,10 +1322,10 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     path: '/features/chat-rules',
     featureSlug: 'chat-rules',
     eyebrow: 'Chat rules',
-    title: 'WhatsApp chat routing rules for',
-    titleAccent: 'Shopify support teams',
+    title: 'The right chat,',
+    titleAccent: 'the right agent',
     subtitle:
-      'Route COD, refunds, and VIP chats to the right people.\nKeep Live Chat calm when volume spikes.',
+      'Route COD, refunds and VIPs by rule, so the inbox stays calm on the day volume triples.',
     answerFirst:
       'TopEdge Chat Rules auto-route WhatsApp conversations for Shopify India teams (COD, refunds, and VIP queues) so the right people own the thread while Live Chat stays calm when volume spikes.',
     faqs: [
@@ -1472,10 +1472,10 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     path: '/features/warranty',
     featureSlug: 'warranty',
     eyebrow: 'Warranty',
-    title: 'Shopify digital warranty registration',
-    titleAccent: 'on WhatsApp',
+    title: 'Warranty, without',
+    titleAccent: 'the spreadsheet',
     subtitle:
-      'Warranty records tied to Shopify orders in one hub.\nAssign, track, and close, no spreadsheet chase.',
+      'Registration, claims and status tied to the Shopify order. Assign it, track it, close it.',
     answerFirst:
       'TopEdge Warranty is a digital warranty workspace for Shopify India brands. Tie claims to orders, assign teammates, and track status in one hub beside WhatsApp Live Chat, instead of chasing spreadsheets.',
     faqs: [
@@ -1594,10 +1594,10 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     path: '/features/profit-loss',
     featureSlug: 'profit-loss',
     eyebrow: 'Profit & costs',
-    title: 'Shopify P&L after COD, RTO and ads:',
-    titleAccent: 'what did I actually keep?',
+    title: 'What did you',
+    titleAccent: 'actually keep?',
     subtitle:
-      'India-aware P&L with COGS, COD, RTO, fees, and ads.\nSee net profit, not vanity revenue.',
+      'Net profit after COGS, COD fees, RTO, gateway charges and ad spend. The India lines Shopify admin leaves out.',
     answerFirst:
       'TopEdge Profit & costs is India-aware Shopify P&L for D2C: COGS, packaging, payment fees, COD/RTO, and ads in a cost waterfall so you see net profit in ₹, not vanity revenue.',
     faqs: [
@@ -1773,10 +1773,10 @@ export const PRODUCT_PAGES: Record<ProductPageId, ProductPage> = {
     path: '/features/intent-detection',
     featureSlug: 'intent-detection',
     eyebrow: 'Intent detection',
-    title: 'WhatsApp intent routing for Shopify:',
-    titleAccent: 'route before you spend AI tokens',
+    title: 'Route the chat',
+    titleAccent: 'before you pay for it',
     subtitle:
-      'Detect shipping, returns, COD, and human handoff intent.\nRoute flows before you spend AI tokens.',
+      'Shipping, returns, COD, handoff. Read the intent first and spend AI tokens only where they are needed.',
     answerFirst:
       'TopEdge Intent Detection routes WhatsApp chats by meaning (shipping, returns, COD, handoff) before you spend AI tokens. Train real phrases (including Hinglish), then start a Flow, reply, assign, or escalate with confidence.',
     faqs: [

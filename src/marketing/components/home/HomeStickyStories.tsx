@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import DemoProductVideoFrame from './demo/DemoProductVideoFrame';
 import DemoProductImageFrame from './demo/DemoProductImageFrame';
 import DemoPixelTrackingUi from './demo/DemoPixelTrackingUi';
@@ -13,7 +14,10 @@ type Story = {
   id: string;
   titleLead: string;
   titleAccent: string;
+  /** One line. If it needs a colon and a list, it is two features. */
   body: string;
+  href: string;
+  cta: string;
   glow: Glow;
 } & (
   | { kind: 'video'; video: DemoVideo }
@@ -24,9 +28,11 @@ type Story = {
 const STORIES: Story[] = [
   {
     id: 'cod-prepaid',
-    titleLead: 'COD → Prepaid',
+    titleLead: 'COD to Prepaid',
     titleAccent: 'Conversion',
-    body: 'Convert cash-on-delivery checkouts to prepaid on a visual canvas: wait, branch, and message before it ships.',
+    body: 'Offer UPI before the parcel leaves the warehouse, so fewer COD orders come back.',
+    href: '/features/journeys',
+    cta: 'See journeys',
     glow: 'violet',
     kind: 'video',
     video: FEATURE_VIDEOS.cod,
@@ -35,16 +41,20 @@ const STORIES: Story[] = [
     id: 'shopify-tools',
     titleLead: 'Flow Builder +',
     titleAccent: 'Shopify Tools',
-    body: 'Build WhatsApp flows that fetch orders, update addresses, cancel shipments, and hand off to support, automation that already knows the cart and the SKU.',
+    body: 'Fetch an order, fix an address, cancel a shipment. Without leaving the chat.',
+    href: '/features/flow-builder',
+    cta: 'See Flow Builder',
     glow: 'sky',
     kind: 'video',
     video: FEATURE_VIDEOS.shopifyTools,
   },
   {
     id: 'optin-popup',
-    titleLead: 'Website Opt-in',
-    titleAccent: 'tools',
-    body: 'Pulse Drop, popup, spin wheel, mystery discount, and WhatsApp widget. Capture numbers, then campaign from a consented list.',
+    titleLead: 'Website',
+    titleAccent: 'Opt-in Tools',
+    body: 'Popup, spin wheel and chat widget. Turn browsers into a consented WhatsApp list.',
+    href: '/features/opt-in-tools',
+    cta: 'See opt-in tools',
     glow: 'indigo',
     kind: 'video',
     video: FEATURE_VIDEOS.optin,
@@ -53,7 +63,9 @@ const STORIES: Story[] = [
     id: 'intent-detection',
     titleLead: 'Real-time',
     titleAccent: 'Intent Detection',
-    body: 'Read purchase, size, and COD signals in WhatsApp, then route the right journey before the shopper goes cold.',
+    body: 'Read buying, sizing and COD signals in the chat, then route the journey that fits.',
+    href: '/features/intent-detection',
+    cta: 'See intent routing',
     glow: 'indigo',
     kind: 'video',
     video: FEATURE_VIDEOS.intent,
@@ -62,7 +74,9 @@ const STORIES: Story[] = [
     id: 'segmentation',
     titleLead: 'Smart Audience',
     titleAccent: 'Segmentation',
-    body: 'Build cohorts from carts, COD risk, and purchase history, then enroll journeys and measure attributed revenue in one list.',
+    body: 'Cohorts from carts, COD risk and order history. Enroll them, then see what came back.',
+    href: '/features/audience-crm',
+    cta: 'See audiences',
     glow: 'rose',
     kind: 'video',
     video: FEATURE_VIDEOS.segmentation,
@@ -70,17 +84,21 @@ const STORIES: Story[] = [
   {
     id: 'abandoned-cart',
     titleLead: 'Abandoned Cart',
-    titleAccent: 'Workflow',
-    body: 'Recover checkouts with timed WhatsApp nudges the moment a shopper leaves items behind.',
+    titleAccent: 'Recovery',
+    body: 'One nudge the moment a checkout is left behind. Two more only if it is still open.',
+    href: '/features/journeys',
+    cta: 'See cart recovery',
     glow: 'emerald',
     kind: 'video',
     video: FEATURE_VIDEOS.cart,
   },
   {
     id: 'website-pixel',
-    titleLead: 'Website Detailed',
+    titleLead: 'Website',
     titleAccent: 'Tracking Pixel',
-    body: 'Watch live product views, scroll, and carts matched to WhatsApp numbers, ready to message.',
+    body: 'See who is browsing right now, matched to a WhatsApp number you can message.',
+    href: '/features/analytics',
+    cta: 'See the pixel',
     glow: 'violet',
     kind: 'pixel',
   },
@@ -88,7 +106,9 @@ const STORIES: Story[] = [
     id: 'audience-campaigns',
     titleLead: 'Custom Audience',
     titleAccent: 'Campaigns',
-    body: 'Pick pixel or recharge audiences, lock a Meta-safe template, and watch attributed revenue climb.',
+    body: 'Pick the audience, lock a Meta-approved template, track the revenue it earns.',
+    href: '/features/campaigns',
+    cta: 'See campaigns',
     glow: 'rose',
     kind: 'image',
     image: FEATURE_IMAGES.campaigns,
@@ -97,7 +117,9 @@ const STORIES: Story[] = [
     id: 'unified-identity',
     titleLead: 'Unified Customer',
     titleAccent: 'Identity',
-    body: 'Primary + secondary numbers and multiple emails collapse into one lead, so every chat and order stays on the same shopper.',
+    body: 'Two numbers, three emails, one shopper. Every chat carries the whole order history.',
+    href: '/features/audience-crm',
+    cta: 'See profiles',
     glow: 'violet',
     kind: 'image',
     image: FEATURE_IMAGES.unifiedIdentity,
@@ -120,6 +142,12 @@ function FeatureMoment({ story }: { story: Story }) {
             <span className="home-sticky__title-accent">{story.titleAccent}</span>
           </h2>
           <p className="home-sticky__body">{story.body}</p>
+          <Link className="home-sticky__cta" to={story.href}>
+            {story.cta}
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </Link>
         </div>
 
         <div className="home-sticky__static-scene home-sticky__static-scene--iframe home-sticky__moment-scene home-sticky__frame-layer">

@@ -2164,3 +2164,31 @@
     transform: none;
   }
 }
+
+/* The five marks, static on a phone. See the note in product-feature.css:
+   the trust strip's styles are duplicated per page sheet, so this rule has
+   to exist in each one that renders it. */
+@media (max-width: 767px) {
+  .mkt-pricing__proof-logos .home-trust-logos__viewport {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .mkt-pricing__proof-logos .home-trust-logos__track {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.45rem 0.95rem;
+    animation: none;
+  }
+
+  .mkt-pricing__proof-logos .home-trust-logos__item[aria-hidden='true'] {
+    display: none;
+  }
+
+  .mkt-pricing__proof-logos .home-trust-logos--on-stage .home-trust-logos__item img,
+  .mkt-pricing__proof-logos .home-trust-logos__item img {
+    height: 15px;
+    max-width: 68px;
+  }
+}

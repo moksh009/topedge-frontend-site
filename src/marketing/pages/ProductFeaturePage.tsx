@@ -23,6 +23,8 @@ import { demoAssetBySrc } from '../data/productDemoVideos';
 import { featurePagesModifiedIso } from '../data/contentDates';
 import FeatureMeshStage from '../components/effects/FeatureMeshStage';
 import HomeTrust from '../components/home/HomeTrust';
+import { PrimaryButton, GhostButton } from '../components/ui';
+import { ArrowRight } from 'lucide-react';
 import '../styles/product-feature.css';
 
 type Props = {
@@ -186,6 +188,13 @@ function ProductFeatureView({ page }: { page: ProductPage }) {
               </span>
             ))}
           </p>
+          <div className="mkt-pf__actions">
+            <PrimaryButton to="/signup">
+              Start free trial
+              <ArrowRight className="h-4 w-4" />
+            </PrimaryButton>
+            <GhostButton to="/pricing">See pricing</GhostButton>
+          </div>
           <div className="mkt-pf__trust">
             <HomeTrust onStage />
           </div>

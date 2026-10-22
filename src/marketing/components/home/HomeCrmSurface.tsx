@@ -42,10 +42,10 @@ export default function HomeCrmSurface() {
       <div className="home-crm__inner">
         <header className="home-crm__header">
           <h2 id="home-crm-title" className="home-crm__title">
-            Identity & <span className="home-crm__title-accent">CRM</span>
+            The surface your team <span className="home-crm__title-accent">opens every day</span>
           </h2>
           <p className="home-crm__sub">
-            Orders, profiles, and stock, the ops surface your team opens every day.
+            Orders, profiles and stock in one place, so nobody opens Shopify admin to answer a chat.
           </p>
         </header>
 
