@@ -1,17 +1,17 @@
 const logos = [
   {
     name: 'Delitech Smart Home',
-    src: '/trust/delitech-white.png',
+    src: '/trust/delitech-color.png',
     href: 'https://delitechsmarthome.in/',
   },
   {
     name: 'Apex Light',
-    src: '/trust/apex-white.png',
+    src: '/trust/apex-color.png',
     href: 'https://apexlight.in/',
   },
   {
     name: 'ajeeb',
-    src: '/trust/ajeeb-black.png',
+    src: '/trust/ajeeb-color.png',
     href: '#',
   },
   {
@@ -21,12 +21,13 @@ const logos = [
   },
   {
     name: 'Oleez Online',
-    src: '/trust/oleez-black.png',
+    src: '/trust/oleez-color.png',
     href: '#',
   },
 ];
 
-/** Trusted-logo marquee, black marks only, no wordmark duplicates */
+/** Trusted-logo marquee. Full-colour marks, supplied by the owner — the
+ *  monochrome versions read as placeholders rather than as real customers. */
 export default function HomeTrust({ onStage = false }: { onStage?: boolean }) {
   // Two copies are enough for seamless marquee CSS; four bloated the DOM.
   //

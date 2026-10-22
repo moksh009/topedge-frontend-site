@@ -796,6 +796,12 @@ html[data-v="switch"] .mig{display:block}
 
   /* Card headings centred over the two rows they introduce, rather than
      hanging left of an icon with the comparison text below it. */
+  /* The three hero pillars stack to one column here, and a left-aligned
+     column under a centred headline reads as a list that fell off the
+     middle of the page. */
+  .pil{text-align:center}
+  .pil li{justify-items:center}
+
   .cmp-t{justify-content:center;text-align:center;text-wrap:balance}
   .cmp-row{padding:1.15rem 1rem;text-align:center}
   .cmp-x,.cmp-v{text-align:center}

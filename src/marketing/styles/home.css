@@ -2373,7 +2373,7 @@
 }
 
 .home-trust-logos--on-stage .home-trust-logos__item:hover img {
-  filter: brightness(0) opacity(0.9);
+  filter: none;
 }
 
 .home-trust-logos--on-stage .home-trust-logos__word {
@@ -2387,7 +2387,10 @@
   max-width: 120px;
   object-fit: contain;
   display: block;
-  filter: brightness(0) opacity(0.72);
+  /* No brightness(0). These are the owner's real customer marks in their own
+     colours; flattening them to silhouettes was what made the ribbon read as
+     placeholder shapes rather than as five businesses. */
+  filter: none;
   opacity: 1;
 }
 
@@ -2672,12 +2675,12 @@
   }
 
   .home-hero__trust .home-trust-logos--on-stage .home-trust-logos__item img {
-    filter: brightness(0) opacity(0.72);
+    filter: none;
     opacity: 1;
   }
 
   .home-hero__trust .home-trust-logos--on-stage .home-trust-logos__item:hover img {
-    filter: brightness(0) opacity(0.92);
+    filter: none;
   }
 
   .home-hero__shot {
