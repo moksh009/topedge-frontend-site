@@ -1,3 +1,14 @@
+/* Plus Jakarta Sans, the face the landing pages already set.
+   Same two self-hosted files (public/fonts), so the React site costs nothing
+   extra to serve them — they were simply never declared outside the static
+   LP CSS, which is why topedgeai.com rendered in the system stack while
+   /lp/* rendered in Jakarta. One site, one face.
+
+   Declared 400-600 because that is the range the subset carries; anything
+   heavier is synthesised, exactly as it already is on the landing pages. */
+@font-face{font-family:'Plus Jakarta Sans';font-style:normal;font-weight:400 600;font-display:swap;src:url(/fonts/pjs-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2122,U+2212,U+FEFF,U+FFFD}
+@font-face{font-family:'Plus Jakarta Sans';font-style:normal;font-weight:400 600;font-display:swap;src:url(/fonts/pjs-latin-ext.woff2) format('woff2');unicode-range:U+0100-024F,U+20A0-20CF}
+
 /* TopEdge marketing — Apple-like Inter / system UI (no Outfit) */
 
 /* Hide scrollbar sitewide (scroll still works) — same as homepage */
@@ -29,7 +40,7 @@ body::-webkit-scrollbar {
   --mkt-max-text: 1120px;
   --mkt-max-wide: 1280px;
   --marketing-nav-h: 76px;
-  --mkt-font: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Inter', system-ui, sans-serif;
+  --mkt-font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
 }
 
 .mkt-display {

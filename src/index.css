@@ -37,7 +37,7 @@
     /* Apple Purple */
 
     /* Typography — Apple-like system stack (no Outfit) */
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Inter", system-ui, sans-serif;
+    font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Inter", system-ui, "Segoe UI", Roboto, sans-serif;
   }
 
   .dark {

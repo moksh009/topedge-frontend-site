@@ -82,7 +82,7 @@ mark.chip{background:var(--chip-bg)}
    phrase: "...say on [star]Trustpilot", "Switch to [TopEdge]". */
 .chip--mark{display:inline-flex;align-items:center;gap:.3em;padding:.08em .4em .14em}
 .chip--mark svg{display:block;flex:none;width:.78em;height:.78em}
-.chip-bm{display:block;flex:none;width:.95em;height:.95em}
+.chip-bm{display:block;flex:none;width:.95em;height:.95em;border-radius:50%}
 /* The brand mark inside the highlight, so the headline is a lockup rather than
    a product name with our name tacked on. It belongs to the default headline
    only: every other variant marks a phrase ("ship them", "twice") that a logo
@@ -593,7 +593,7 @@ section{padding:3.75rem 0}
  .hero h1{font-size:1.8rem}
 }
 @media(max-width:759px){
- .mkt-plan--emphasis{order:-1}
+ .mkt-plan--emphasis{order:0}
  body{padding-bottom:6rem}
  .hero h1{max-width:16ch}
  /* The row stacks here: faces on one line, the rating under them. The column
@@ -778,4 +778,25 @@ html[data-v="switch"] .mig{display:block}
  .pf{grid-template-columns:minmax(0,19rem) minmax(0,1fr)}
  .steps{grid-template-columns:repeat(3,1fr)}
  .topbar{display:flex}
+}
+
+/* ---- mobile refinements ------------------------------------------- *
+   The heading, the comparison cards and the plan order, all read on a
+   375px screen rather than inferred from the desktop layout. */
+@media(max-width:640px){
+  /* The chip is inline-flex, so "Switch to (mark) TopEdge AI" cannot break:
+     it is one unbreakable 20-character run, and the line above it breaks
+     early to make room. Inline lets the phrase wrap inside the chip, which
+     box-decoration-break has always been set up to paint correctly. */
+  .chip--mark{display:inline;padding:.06em .32em .12em}
+  .chip-bm{display:inline-block;vertical-align:-.16em;margin:0 .16em 0 .06em}
+
+  /* It still wants a size down at this width. */
+  .head h2{font-size:clamp(1.45rem,6.4vw,1.9rem);max-width:20ch}
+
+  /* Card headings centred over the two rows they introduce, rather than
+     hanging left of an icon with the comparison text below it. */
+  .cmp-t{justify-content:center;text-align:center;text-wrap:balance}
+  .cmp-row{padding:1.15rem 1rem;text-align:center}
+  .cmp-x,.cmp-v{text-align:center}
 }
