@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, type ComponentType, type CSSProperties } f
 import { Link, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import {
+  ArrowRight,
   Bot,
   ChevronDown,
   Crosshair,
@@ -328,6 +329,7 @@ export default function MarketingNavbar() {
               </Link>
               <Link to="/signup" className="mkt-btn-primary mkt-nav__cta">
                 Start free
+                <ArrowRight aria-hidden />
               </Link>
             </div>
 
@@ -475,6 +477,7 @@ export default function MarketingNavbar() {
                     onClick={() => setOpen(false)}
                   >
                     Start free
+                    <ArrowRight aria-hidden />
                   </Link>
                 </div>
               </motion.div>

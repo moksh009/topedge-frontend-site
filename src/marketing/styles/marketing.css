@@ -2497,3 +2497,112 @@ a.mkt-foot__partner:hover {
     font-size: 1.3rem;
   }
 }
+
+/* ---- One primary button, everywhere ------------------------------------
+   Same pill as the /lp/shopify-whatsapp ".btn" (scripts/lp/base.css): violet
+   gradient, soft lift shadow, a glint that crosses at rest (phones have no
+   hover), arrow that nudges on hover. Every .mkt-btn-primary on the site
+   (home hero, feature pages, CTA bands, navbar) picks it up from here. The
+   `html` prefix beats the per-section size overrides in home.css. */
+html .mkt-btn-primary {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  width: auto;
+  height: auto;
+  min-height: 3rem;
+  padding: 0 1.6rem;
+  border: 0;
+  border-radius: 9999px;
+  background: linear-gradient(180deg, #8b5cf6, #7c3aed);
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: normal;
+  text-decoration: none;
+  box-shadow: 0 10px 26px -12px rgba(124, 58, 237, 0.7);
+  transition: background 0.2s, box-shadow 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+}
+html .mkt-btn-primary:hover,
+html .mkt-btn-primary:focus-visible {
+  background: linear-gradient(180deg, #7c3aed, #6d28d9);
+  box-shadow: 0 18px 38px -14px rgba(109, 40, 217, 0.8);
+  transform: translateY(-2px);
+}
+html .mkt-btn-primary:active {
+  transform: translateY(0) scale(0.985);
+  box-shadow: 0 6px 16px -10px rgba(109, 40, 217, 0.7);
+  transition-duration: 0.06s;
+}
+html .mkt-btn-primary:focus-visible {
+  outline: 3px solid #c4b5fd;
+  outline-offset: 2px;
+}
+html .mkt-btn-primary svg {
+  flex: none;
+  width: 1rem;
+  height: 1rem;
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+html .mkt-btn-primary:hover svg,
+html .mkt-btn-primary:focus-visible svg {
+  transform: translateX(3px);
+}
+html .mkt-btn-primary::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(104deg, transparent 43%, rgba(255, 255, 255, 0.58) 50%, transparent 57%);
+  transform: translateX(-130%);
+  animation: mkt-btn-shine 6s linear 1.4s infinite;
+  pointer-events: none;
+}
+@keyframes mkt-btn-shine {
+  0% { transform: translateX(-130%); }
+  14%, 100% { transform: translateX(130%); }
+}
+
+/* Navbar: same button, a size that fits the bar. */
+html .mkt-nav__actions .mkt-nav__cta {
+  height: auto !important;
+  min-height: 2.5rem !important;
+  padding: 0 1.2rem !important;
+  gap: 0.4rem;
+  font-size: 0.88rem !important;
+  font-weight: 500 !important;
+  letter-spacing: normal !important;
+  background: linear-gradient(180deg, #8b5cf6, #7c3aed) !important;
+  box-shadow: 0 10px 26px -12px rgba(124, 58, 237, 0.7) !important;
+}
+html .mkt-nav__actions .mkt-nav__cta:hover,
+html .mkt-nav__actions .mkt-nav__cta:focus-visible {
+  background: linear-gradient(180deg, #7c3aed, #6d28d9) !important;
+  box-shadow: 0 18px 38px -14px rgba(109, 40, 217, 0.8) !important;
+}
+html a.mkt-nav__mobile-signup.mkt-btn-primary {
+  min-height: 2.85rem !important;
+  height: auto !important;
+  font-size: 0.95rem !important;
+  font-weight: 500 !important;
+  background: linear-gradient(180deg, #8b5cf6, #7c3aed) !important;
+  box-shadow: 0 10px 26px -12px rgba(124, 58, 237, 0.7) !important;
+}
+html a.mkt-nav__mobile-signup.mkt-btn-primary:active {
+  background: linear-gradient(180deg, #7c3aed, #6d28d9) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html .mkt-btn-primary::after {
+    display: none;
+  }
+  html .mkt-btn-primary:hover,
+  html .mkt-btn-primary:focus-visible {
+    transform: none;
+  }
+}
