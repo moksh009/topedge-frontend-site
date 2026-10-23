@@ -2,10 +2,13 @@ import { Link } from 'react-router-dom';
 import MarketingSEO from '../marketing/components/MarketingSEO';
 import {
   PAGE_SEO,
+  ORG_REF,
   organizationJsonLd,
   breadcrumbJsonLd,
   webPageJsonLd,
 } from '../marketing/data/pageSeo';
+import { SITE_URL } from '../marketing/data/marketingSeo';
+import { articleDatePublishedIso } from '../marketing/data/contentDates';
 import MarketingPage from '../marketing/components/MarketingPage';
 import MarketingCtaBand from '../marketing/components/MarketingCtaBand';
 import { blogPosts } from '../data/blogPosts';
@@ -49,6 +52,26 @@ export default function Blog() {
             { name: 'Home', path: '/' },
             { name: 'Blog', path: '/blog' },
           ]),
+          // The index is a collection, not an article: Blog + the post list so
+          // an answer engine can enumerate the corpus from this one URL
+          // instead of discovering it a link at a time.
+          {
+            '@context': 'https://schema.org',
+            '@type': ['Blog', 'CollectionPage'],
+            '@id': `${SITE_URL}/blog#blog`,
+            name: 'TopEdge AI Playbooks',
+            description: PAGE_SEO.blog.description,
+            url: `${SITE_URL}/blog`,
+            inLanguage: 'en-IN',
+            publisher: ORG_REF,
+            blogPost: allBlogPosts.map((post) => ({
+              '@type': 'BlogPosting',
+              '@id': `${SITE_URL}/blog/${post.slug}#article`,
+              headline: post.title,
+              url: `${SITE_URL}/blog/${post.slug}`,
+              datePublished: articleDatePublishedIso(post.date),
+            })),
+          },
         ]}
       />
       <MarketingPage className="mkt-blog-index">

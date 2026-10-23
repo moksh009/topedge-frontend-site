@@ -4,7 +4,7 @@ import MarketingPage from '../components/MarketingPage';
 import MarketingCtaBand from '../components/MarketingCtaBand';
 import CompareStatus from '../components/compare/CompareStatus';
 import CompareFaq from '../components/compare/CompareFaq';
-import { breadcrumbJsonLd, organizationJsonLd, webPageJsonLd } from '../data/pageSeo';
+import { articleJsonLd, breadcrumbJsonLd, organizationJsonLd, webPageJsonLd } from '../data/pageSeo';
 import { updatedKicker } from '../data/contentDates';
 import '../styles/compare.css';
 
@@ -72,6 +72,15 @@ export default function CompareMultiWayPage<K extends string>({
             { name: 'Compare', path: '/compare' },
             { name: shortName, path },
           ]),
+          // Same reason as the two-way boards: dated editorial comparison.
+          articleJsonLd({
+            headline: shortName,
+            description,
+            path,
+            dateModified: modifiedIso,
+            section: 'Comparison',
+            keywords,
+          }),
         ]}
       />
       <MarketingPage className="mkt-cmp">

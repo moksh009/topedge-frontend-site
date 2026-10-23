@@ -17,7 +17,7 @@ export const blogPosts: BlogPost[] = [
     readTime: '14 min',
     category: 'Cart recovery',
     author: 'Moksh Patel',
-    image: '/marketing/solutions/sol-fashion-cart-saas.png',
+    image: '/marketing/solutions/sol-fashion-cart-saas.jpg',
     imageAlt:
       'Diagram-style Shopify abandoned cart recovered on WhatsApp with product and checkout context',
     keywords: [
@@ -390,7 +390,7 @@ export const blogPosts: BlogPost[] = [
     readTime: '11 min',
     category: 'Ecommerce automation',
     author: 'Moksh Patel',
-    image: '/marketing/features/shopify-whatsapp.png',
+    image: '/marketing/features/shopify-whatsapp.jpg',
     imageWebp: '/marketing/features/shopify-whatsapp.webp',
     imageAlt: 'Shopify connected to WhatsApp automation for Indian D2C brands',
     keywords: [
@@ -480,7 +480,7 @@ export const blogPosts: BlogPost[] = [
     readTime: '11 min',
     category: 'Strategy',
     author: 'Smit Tilva',
-    image: '/marketing/features/intent-detection-flow.png',
+    image: '/marketing/features/intent-detection-flow.jpg',
     imageAlt: 'Intent-aware ecommerce automation flow across WhatsApp and other channels',
     keywords: [
       'ecommerce automation WhatsApp vs email',
@@ -663,7 +663,7 @@ export const blogPosts: BlogPost[] = [
     readTime: '11 min',
     category: 'Inbox',
     author: 'Moksh Patel',
-    image: '/marketing/solutions/sol-fashion-inbox-saas.png',
+    image: '/marketing/solutions/sol-fashion-inbox-saas.jpg',
     imageAlt: 'Shared WhatsApp inbox showing Shopify order context beside the conversation',
     keywords: [
       'WhatsApp shared inbox',
@@ -771,7 +771,7 @@ export const blogPosts: BlogPost[] = [
     readTime: '10 min',
     category: 'Checklist',
     author: 'Moksh Patel',
-    image: '/marketing/solutions/sol-beauty-cart-saas.png',
+    image: '/marketing/solutions/sol-beauty-cart-saas.jpg',
     imageAlt: 'Checklist-style Shopify WhatsApp setup for cart recovery and inbox',
     keywords: [
       'Shopify automation checklist',
@@ -869,7 +869,7 @@ export const blogPosts: BlogPost[] = [
     readTime: '16 min',
     category: 'Comparisons',
     author: 'Moksh Patel',
-    image: '/marketing/features/unified-identity.png',
+    image: '/marketing/features/unified-identity.jpg',
     imageAlt: 'Unified customer identity across Shopify and WhatsApp automation tools',
     keywords: [
       'best WhatsApp automation tools',
@@ -1091,7 +1091,7 @@ export const blogPosts: BlogPost[] = [
     readTime: '16 min',
     category: 'COD',
     author: 'Moksh Patel',
-    image: '/marketing/solutions/sol-cod-rto-saas.png',
+    image: '/marketing/solutions/sol-cod-rto-saas.jpg',
     imageAlt: 'Reducing Shopify RTO with WhatsApp COD confirmation before shipment',
     keywords: [
       'reduce RTO',
@@ -1295,7 +1295,7 @@ export const blogPosts: BlogPost[] = [
     readTime: '12 min',
     category: 'Basics',
     author: 'Moksh Patel',
-    image: '/marketing/solutions/sol-cod-prepaid-saas.png',
+    image: '/marketing/solutions/sol-cod-prepaid-saas.jpg',
     imageAlt: 'Ecommerce automation covering COD and prepaid Shopify orders on WhatsApp',
     keywords: [
       'ecommerce automation',
@@ -1387,7 +1387,7 @@ export const blogPosts: BlogPost[] = [
     readTime: '12 min',
     category: 'AI',
     author: 'Moksh Patel',
-    image: '/marketing/solutions/sol-electronics-inbox-saas.png',
+    image: '/marketing/solutions/sol-electronics-inbox-saas.jpg',
     imageAlt: 'AI WhatsApp chatbot answering Shopify catalog questions with human handoff',
     keywords: [
       'AI WhatsApp chatbot Shopify',
@@ -1531,7 +1531,7 @@ export const blogPosts: BlogPost[] = [
     readTime: '10 min',
     category: 'Comparisons',
     author: 'Moksh Patel',
-    image: '/marketing/features/unified-identity.png',
+    image: '/marketing/features/unified-identity.jpg',
     imageAlt: 'Shopify India team evaluating a Zoko alternative for WhatsApp commerce',
     keywords: [
       'Zoko alternative',
@@ -1637,7 +1637,7 @@ export const blogPosts: BlogPost[] = [
     readTime: '9 min',
     category: 'Comparisons',
     author: 'Moksh Patel',
-    image: '/marketing/solutions/sol-fashion-inbox-saas.png',
+    image: '/marketing/solutions/sol-fashion-inbox-saas.jpg',
     imageAlt: 'Merchant comparing Getgabs entry pricing with deeper Shopify WhatsApp stacks',
     keywords: [
       'Getgabs alternative',
@@ -1822,7 +1822,7 @@ export const blogPosts: BlogPost[] = [
     readTime: '12 min',
     category: 'Guides',
     author: 'Smit Tilva',
-    image: '/marketing/features/optin-popup.png',
+    image: '/marketing/features/optin-popup.jpg',
     imageAlt: 'Shopify merchant evaluating WhatsApp apps in the App Store',
     keywords: [
       'Shopify WhatsApp app',
@@ -1913,7 +1913,7 @@ export const blogPosts: BlogPost[] = [
     readTime: '9 min',
     category: 'Meta',
     author: 'Moksh Patel',
-    image: '/marketing/features/shopify-whatsapp.png',
+    image: '/marketing/features/shopify-whatsapp.jpg',
     imageWebp: '/marketing/features/shopify-whatsapp.webp',
     imageAlt: 'Meta WhatsApp Cloud API pricing categories for Indian Shopify brands',
     keywords: [
@@ -2119,7 +2119,7 @@ export const blogPosts: BlogPost[] = [
     readTime: '9 min',
     category: 'Comparisons',
     author: 'Moksh Patel',
-    image: '/marketing/features/unified-identity.png',
+    image: '/marketing/features/unified-identity.jpg',
     imageAlt: 'Shopify India operator comparing Dondy WhatsApp rates with Meta pass-through pricing',
     keywords: [
       'Dondy alternative',
@@ -2211,7 +2211,7 @@ export const blogPosts: BlogPost[] = [
     readTime: '18 min',
     category: 'Ecommerce automation',
     author: 'Moksh Patel',
-    image: '/marketing/features/shopify-whatsapp.png',
+    image: '/marketing/features/shopify-whatsapp.jpg',
     imageWebp: '/marketing/features/shopify-whatsapp.webp',
     imageAlt:
       'Shopify event flowing into WhatsApp automation for cart, COD, order updates, and support',
@@ -2610,7 +2610,7 @@ export const blogPosts: BlogPost[] = [
     readTime: '17 min',
     category: 'Comparisons',
     author: 'Smit Tilva',
-    image: '/marketing/features/unified-identity.png',
+    image: '/marketing/features/unified-identity.jpg',
     imageAlt:
       'Comparison board of Shopify WhatsApp apps for cart recovery, COD, marketing, and support',
     keywords: [
@@ -3041,7 +3041,7 @@ export const blogPosts: BlogPost[] = [
     readTime: '9 min',
     category: 'Growth',
     author: 'Smit Tilva',
-    image: '/marketing/solutions/sol-beauty-cart-saas.png',
+    image: '/marketing/solutions/sol-beauty-cart-saas.jpg',
     imageAlt:
       'Ecommerce brand balancing organic content and paid ads with WhatsApp recovery on TopEdge AI',
     keywords: [
@@ -3257,7 +3257,7 @@ export const blogPosts: BlogPost[] = [
     readTime: '6 min',
     category: 'COD',
     author: 'Moksh Patel',
-    image: '/marketing/solutions/sol-cod-hero.png',
+    image: '/marketing/solutions/sol-cod-hero.jpg',
     imageAlt: 'Indian D2C COD and RTO benchmark report 2026 for Shopify brands',
     keywords: [
       'RTO rate India ecommerce 2026',
@@ -3524,7 +3524,7 @@ export const blogPosts: BlogPost[] = [
     readTime: '14 min',
     category: 'Strategy',
     author: 'Smit Tilva',
-    image: '/marketing/solutions/sol-fashion-hero.png',
+    image: '/marketing/solutions/sol-fashion-hero.jpg',
     imageAlt:
       'Indian D2C operator reviewing cost per order, margin and RTO figures for an ecommerce business',
     keywords: [
@@ -3927,7 +3927,7 @@ export const blogPosts: BlogPost[] = [
     readTime: '14 min',
     category: 'Ecommerce automation',
     author: 'Moksh Patel',
-    image: '/marketing/solutions/sol-electronics-hero.png',
+    image: '/marketing/solutions/sol-electronics-hero.jpg',
     imageAlt:
       'Automated ecommerce workflow connecting a Shopify store to WhatsApp, shipping and inventory systems',
     keywords: [
@@ -4182,7 +4182,7 @@ export const blogPosts: BlogPost[] = [
     readTime: '13 min',
     category: 'Growth',
     author: 'Smit Tilva',
-    image: '/marketing/solutions/sol-beauty-hero.png',
+    image: '/marketing/solutions/sol-beauty-hero.jpg',
     imageAlt:
       'Short-form video funnel turning Instagram Reels and YouTube Shorts views into ecommerce leads',
     keywords: [
@@ -4359,7 +4359,7 @@ export const blogPosts: BlogPost[] = [
     readTime: '12 min',
     category: 'Guides',
     author: 'Smit Tilva',
-    image: '/marketing/solutions/sol-beauty-catalog-saas.png',
+    image: '/marketing/solutions/sol-beauty-catalog-saas.jpg',
     imageAlt:
       'Product catalogue view showing high-margin ecommerce categories for an Indian online store',
     keywords: [

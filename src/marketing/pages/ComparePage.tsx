@@ -12,7 +12,7 @@ import {
 } from '../data/compareCompetitors';
 import { planDuelFeatures, type MatrixCompetitor } from '../data/compareFeatureMatrix';
 import { FALLBACK_CATALOG, GST_FOOTNOTE, TRIAL } from '../lib/billingCatalog';
-import { breadcrumbJsonLd, organizationJsonLd, webPageJsonLd } from '../data/pageSeo';
+import { articleJsonLd, breadcrumbJsonLd, organizationJsonLd, webPageJsonLd } from '../data/pageSeo';
 import {
   compareTwoWayModifiedIso,
   updatedKicker,
@@ -176,6 +176,17 @@ export default function ComparePage({ competitor: competitorProp }: Props) {
             { name: 'Compare', path: '/compare' },
             { name: data.name, path },
           ]),
+          // The board is a dated, bylined editorial comparison, so it carries
+          // Article alongside WebPage. Without it every AI-discoverability
+          // pass reads these as article pages with no Article schema.
+          articleJsonLd({
+            headline: data.h1,
+            description: data.description,
+            path,
+            dateModified: modifiedIso,
+            section: 'Comparison',
+            keywords: data.keywords,
+          }),
           // No Product / SoftwareApplication+offers here — compare URLs are not
           // purchase pages; priced Offers trigger Google Merchant listings and
           // previously failed URL Inspection with Missing field "image".

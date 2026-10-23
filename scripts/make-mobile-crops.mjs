@@ -33,14 +33,14 @@ const check = process.argv.includes('--check');
  * top left just beheads the drawing.
  */
 export const MOBILE_CROP_SOURCES = [
-  { src: '/aiii/ai-brain-hero.png', focus: 'center' },
-  { src: '/audience-crm-hero.png', focus: 'panel' },
-  { src: '/campaignn.png', focus: 'panel' },
+  { src: '/aiii/ai-brain-hero.webp', focus: 'center' },
+  { src: '/audience-crm-hero.webp', focus: 'panel' },
+  { src: '/campaignn.webp', focus: 'panel' },
   { src: '/marketing/customers/customers-outcome-template.png', focus: 'center' },
-  { src: '/marketing/solutions/sol-fashion-inbox.png', focus: 'center' },
-  { src: '/pnl/39.png', focus: 'panel' },
-  { src: '/warranty-sub-feature/manual-assign.png', focus: 'panel' },
-  { src: '/website-pixel.png', focus: 'panel' },
+  { src: '/marketing/solutions/sol-fashion-inbox.webp', focus: 'center' },
+  { src: '/pnl/39.webp', focus: 'panel' },
+  { src: '/warranty-sub-feature/manual-assign.webp', focus: 'panel' },
+  { src: '/website-pixel.webp', focus: 'panel' },
 ];
 
 export function mobileSrcFor(src) {

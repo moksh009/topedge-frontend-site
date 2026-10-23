@@ -89,7 +89,7 @@ const NAV_PROMO = {
   href: '/blog/cod-rto-benchmark-india-2026',
   title: 'Read the 2026 COD & RTO Report',
   blurb: 'See where your return rate stands',
-  image: '/marketing/solutions/sol-cod-hero.png',
+  image: '/marketing/solutions/sol-cod-hero.jpg',
   imageAlt: 'COD and RTO benchmark report for Indian D2C brands on Shopify',
 } as const;
 

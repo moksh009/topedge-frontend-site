@@ -21,7 +21,7 @@ const LEADS = [
     phone: '+91 ···· 4402',
     place: 'Delhi, India',
     tone: 'view' as const,
-    avatar: '/marketing/features/pixel-avatar-ln.png',
+    avatar: '/marketing/features/pixel-avatar-ln.webp',
     x: 42,
     y: 24,
   },
@@ -69,7 +69,7 @@ const LEADS = [
     phone: '+91 ···· 2044',
     place: 'Kolkata, India',
     tone: 'view' as const,
-    avatar: '/marketing/features/pixel-avatar-ln.png',
+    avatar: '/marketing/features/pixel-avatar-ln.webp',
     x: 66,
     y: 40,
   },
@@ -185,7 +185,7 @@ export default function DemoPixelTrackingUi({ className }: { className?: string 
               <div className="demo-pixel__india-stage" style={mapStyle}>
                 <img
                   className="demo-pixel__india-img"
-                  src="/marketing/features/india-outline.png?v=4"
+                  src="/marketing/features/india-outline.webp?v=4"
                   alt="India visitor activity map"
                   width={420}
                   height={560}

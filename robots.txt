@@ -32,8 +32,14 @@ Disallow: /admin/
 Disallow: /private/
 Disallow: /api/
 Disallow: /dev/
-Disallow: /signup
-Disallow: /login
+
+# /signup and /login are NOT disallowed, for the same reason /community/* is
+# not. Both are linked from the navbar and the footer, so every page on the
+# site points at them. Disallowing a URL you link site-wide does not remove it
+# from the index — it only stops the crawler fetching the page and reading the
+# `noindex, follow` those two shells already serve, and it reported 275 links
+# into blocked URLs on the last crawl. Let them be fetched and obey the
+# noindex.
 
 # /community/* is a legacy area served with noindex; it is deliberately not
 # disallowed here so crawlers can fetch it and read the noindex / retirement.

@@ -40,7 +40,7 @@ const founders = [
   {
     name: 'Smit Tilva',
     role: 'Co-founder · Growth',
-    image: '/marketing/team/smit-tilva.png',
+    image: '/marketing/team/smit-tilva.jpg',
     imageAlt: 'Smit Tilva, Co-founder of TopEdge AI',
     bio: 'Runs go-to-market with merchants: onboarding, DFY setup, and getting cart recovery and COD flows live without the fluff.',
   },

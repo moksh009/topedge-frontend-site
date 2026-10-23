@@ -11,14 +11,14 @@
  * fails the build when a crop is missing or older than its source.
  */
 const SOURCES = [
-  '/aiii/ai-brain-hero.png',
-  '/audience-crm-hero.png',
-  '/campaignn.png',
+  '/aiii/ai-brain-hero.webp',
+  '/audience-crm-hero.webp',
+  '/campaignn.webp',
   '/marketing/customers/customers-outcome-template.png',
-  '/marketing/solutions/sol-fashion-inbox.png',
-  '/pnl/39.png',
-  '/warranty-sub-feature/manual-assign.png',
-  '/website-pixel.png',
+  '/marketing/solutions/sol-fashion-inbox.webp',
+  '/pnl/39.webp',
+  '/warranty-sub-feature/manual-assign.webp',
+  '/website-pixel.webp',
 ] as const;
 
 const HAS_CROP = new Set<string>(SOURCES);

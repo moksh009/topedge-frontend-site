@@ -5,8 +5,8 @@
 
 export const TITLE_MIN = 15;
 export const TITLE_MAX = 65;
-export const DESC_MIN = 70;
-export const DESC_MAX = 165;
+export const DESC_MIN = 110;
+export const DESC_MAX = 160;
 
 /** Default OG image dimensions for public/og-share.jpg (measured 2026-09-27). */
 export const OG_IMAGE_WIDTH = 1280;

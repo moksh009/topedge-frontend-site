@@ -12,8 +12,12 @@ import {
 } from '../legal/companyIdentity';
 
 /** The Meta and Shopify badges each link to the programme they name; this is
- *  the equivalent page for the third. */
-const WHATSAPP_PLATFORM_URL = 'https://business.whatsapp.com/products/business-platform';
+ *  the equivalent page for the third.
+ *
+ *  Meta retired business.whatsapp.com: that host 301s to whatsappbusiness.com,
+ *  so linking it spent a redirect hop on all 68 crawlable pages (the footer is
+ *  site-wide). Link the destination. */
+const WHATSAPP_PLATFORM_URL = 'https://whatsappbusiness.com/products/business-platform/';
 
 type FootLink = { label: string; href: string; badge?: string };
 

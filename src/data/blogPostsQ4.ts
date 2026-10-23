@@ -228,7 +228,7 @@ export const blogPostsQ4: BlogPost[] = [
     readTime: '9 min',
     category: 'Comparisons',
     author: 'Moksh Patel',
-    image: '/marketing/features/unified-identity.png',
+    image: '/marketing/features/unified-identity.jpg',
     imageAlt: 'Shopify India brand comparing a WATI alternative for WhatsApp automation',
     keywords: [
       'WATI alternative',
@@ -323,7 +323,7 @@ ${faqHtml(WATI_FAQS)}
     readTime: '9 min',
     category: 'Comparisons',
     author: 'Moksh Patel',
-    image: '/marketing/features/shopify-whatsapp.png',
+    image: '/marketing/features/shopify-whatsapp.jpg',
     imageAlt: 'Shopify India store owner evaluating an AiSensy alternative for WhatsApp marketing',
     keywords: [
       'AiSensy alternative',
@@ -409,7 +409,7 @@ ${faqHtml(AISENSY_FAQS)}
     readTime: '8 min',
     category: 'Comparisons',
     author: 'Moksh Patel',
-    image: '/marketing/features/shopify-whatsapp.png',
+    image: '/marketing/features/shopify-whatsapp.jpg',
     imageAlt: 'Comparison of Interakt alternatives for Shopify WhatsApp automation in India',
     keywords: [
       'Interakt alternative',
@@ -493,7 +493,7 @@ ${faqHtml(INTERAKT_FAQS)}
     readTime: '8 min',
     category: 'Comparisons',
     author: 'Moksh Patel',
-    image: '/marketing/features/unified-identity.png',
+    image: '/marketing/features/unified-identity.jpg',
     imageAlt: 'Shopify India brand weighing a Bitespeed alternative with INR pricing',
     keywords: [
       'Bitespeed alternative',
@@ -568,7 +568,7 @@ ${faqHtml(BITESPEED_FAQS)}
     readTime: '9 min',
     category: 'Meta & templates',
     author: 'Moksh Patel',
-    image: '/marketing/features/shopify-whatsapp.png',
+    image: '/marketing/features/shopify-whatsapp.jpg',
     imageAlt: 'Meta WhatsApp template rejection reasons and fixes for Shopify order and cart messages',
     keywords: [
       'WhatsApp template rejected',
@@ -634,7 +634,7 @@ ${faqHtml(TEMPLATE_FAQS)}
     readTime: '9 min',
     category: 'Compliance',
     author: 'Moksh Patel',
-    image: '/marketing/features/optin-popup.png',
+    image: '/marketing/features/optin-popup.jpg',
     imageAlt: 'Shopify WhatsApp opt-in popup collecting customer consent for order updates and offers',
     keywords: [
       'WhatsApp opt-in Shopify',
@@ -704,7 +704,7 @@ ${faqHtml(OPTIN_FAQS)}
     readTime: '9 min',
     category: 'Comparisons',
     author: 'Moksh Patel',
-    image: '/marketing/features/unified-identity.png',
+    image: '/marketing/features/unified-identity.jpg',
     imageAlt: 'Shopify India brand comparing an Updatrr alternative for WhatsApp automation',
     keywords: [
       'Updatrr alternative',
@@ -813,7 +813,7 @@ ${faqHtml(UPDATRR_FAQS)}
     readTime: '10 min',
     category: 'COD',
     author: 'Moksh Patel',
-    image: '/marketing/solutions/sol-cod-prepaid-saas.png',
+    image: '/marketing/solutions/sol-cod-prepaid-saas.jpg',
     imageAlt: 'WhatsApp journey converting a Shopify COD order to a prepaid UPI payment before dispatch',
     keywords: [
       'COD to prepaid WhatsApp',

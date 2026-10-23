@@ -55,7 +55,7 @@
         "Abandoned cart and COD confirmation running on one stack",
         "Order context beside every chat in the shared inbox"
       ],
-      "art": "/marketing/customers/customers-outcome-cart.png"
+      "art": "/marketing/customers/customers-outcome-cart.webp"
     },
     {
       "slug": "apex-light",
@@ -72,7 +72,7 @@
         "Recovery sequences written in the brand's own voice",
         "One inbox in place of WhatsApp Web plus the Shopify admin"
       ],
-      "art": "/marketing/customers/customers-outcome-inbox.png"
+      "art": "/marketing/customers/customers-outcome-inbox.webp"
     }
   ]
 }

@@ -581,3 +581,60 @@ bigger heading in the same gap is just a bigger crowd.
 70 prerendered, 0 failed · `check:dist`, `check:llms`, `check:crops`, `check:blog`, `check:lp`,
 `seo:contracts` all passed · `eslint` 0 errors · `tsc` clean apart from the pre-existing unused
 variable in `MarketingNavbar.tsx` · no horizontal scroll on home or a feature page at 390px.
+
+---
+
+## Batch 10 — Ahrefs crawl of 22 Oct 2026, every finding worked — 2026-10-23
+
+Full write-up: `seo-audit/AUDIT-2026-10-22-RESPONSE.md`. Reported 45 errors,
+81 warnings, 174 notices; they resolve to eight root causes.
+
+| Finding | Count | Fix |
+|---|---|---|
+| Image file size too large (**error**) | 44 | 83 stills re-encoded, 85.2 MB → 4.6 MB |
+| Page has links to redirect | 68 | One stale footer URL |
+| schema.org validation error | 68 | `priceRange` + `openingHoursSpecification` off `Organization` |
+| Links to robots-blocked URLs | 275 | `/signup`, `/login` un-disallowed; they already serve `noindex` |
+| Article page missing Article schema | 15 | `articleJsonLd()` on 13 URLs, `Blog`+`CollectionPage` on `/blog` |
+| Meta description too long / short | 3 | Rewritten; budget tightened to 110–160 |
+| Pages with no JSON-LD | 2 | `/privacy`, `/terms` |
+| Indexable page not in sitemap | 1 | Already in it; crawl predated the deploy |
+
+Left alone with reasons recorded in the response: the `http://www.` two-hop
+(Netlify upgrades HTTPS before `_redirects`), the Unicommerce and Trustpilot
+403s (bot blocks; Unicommerce resolves 200 in a browser), the `interakt.shop`
+geo-redirect, and Article markup on pricing/feature/legal pages, which would be
+wrong.
+
+Not fixable here: six `dash.topedgeai.com` URLs account for every "H1 missing",
+"Low word count" and "Page has no outgoing links" finding. Different codebase;
+see `DASHBOARD-SUBDOMAIN-SPEC.md`.
+
+### New build guards
+
+- `scripts/check-image-weight.mjs` (`npm run check:images`) — fails on a
+  referenced image missing from `dist/` or over 100 KB, read from the
+  prerendered HTML so it sees what a crawler sees.
+- `scripts/check-structured-data.mjs` (`npm run check:schema`) — validates
+  every JSON-LD block against the schema.org vocabulary vendored at
+  `scripts/data/schemaorg-vocabulary.json`.
+
+Both wired into `build:netlify` / `build:firebase` / `build:static` after
+`check-dist`.
+
+### Gate output
+
+```
+$ npm run build:netlify                exit 0, prerender 70 ok / 0 failed
+  ✓ image weight check passed — 133 referenced images, 6.2 MB, none over 100 KB
+  ✓ structured data check passed — 307 JSON-LD blocks on 76 pages
+$ npm run seo:contracts                ✅ passed
+$ npm run seo:audit                    ✅ passed (70 prerendered + legal)
+$ npm run sitemap:validate             ✅ All clear (71 URLs, all 200)
+$ npm run check:lp                     ✅ passed
+$ npx tsc --noEmit -p tsconfig.app.json
+    no new errors (one pre-existing TS6133 in MarketingNavbar, untouched)
+```
+
+Deliberately not committed, as in Batch 1 (TE-022): regenerated
+`contentDates.*`, `sitemap.xml`, `llms.txt`, `llms-full.txt`.

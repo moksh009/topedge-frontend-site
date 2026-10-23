@@ -8,6 +8,7 @@ import {
   organizationJsonLd,
   breadcrumbJsonLd,
   webPageJsonLd,
+  articleJsonLd,
 } from '../data/pageSeo';
 import { pricingModifiedIso } from '../data/contentDates';
 import MarketingPage from '../components/MarketingPage';
@@ -134,6 +135,16 @@ export default function MetaRatesPage() {
             { name: 'Pricing', path: '/pricing' },
             { name: 'Meta rates', path: seo.path },
           ]),
+          // A dated explainer of Meta's published India rate card, not a
+          // product page: it reads as an article to a crawler, so it says so.
+          articleJsonLd({
+            headline: 'Meta WhatsApp rates for India',
+            description: seo.description,
+            path: seo.path,
+            dateModified: modifiedIso,
+            section: 'Pricing',
+            keywords: seo.keywords,
+          }),
         ]}
       />
       <MarketingPage>

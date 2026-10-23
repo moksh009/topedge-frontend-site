@@ -319,7 +319,7 @@ export const TEAM = {
   'Smit Tilva': {
     id: `${SITE_URL}/about#smit-tilva`,
     jobTitle: 'Co-founder',
-    image: `${SITE_URL}/marketing/team/smit-tilva.png`,
+    image: `${SITE_URL}/marketing/team/smit-tilva.jpg`,
     sameAs: [] as string[],
   },
 } as const;
@@ -380,12 +380,26 @@ export function organizationJsonLd() {
     areaServed: { '@type': 'Country', name: 'India' },
     // Entry price for the cheapest paid plan through the top of Scale, so an
     // answer engine quoting a price range quotes ours instead of guessing.
-    priceRange: '₹1,599-₹6,499 per month',
-    openingHoursSpecification: {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-      opens: '10:00',
-      closes: '19:00',
+    //
+    // This used to be a bare `priceRange` beside an `openingHoursSpecification`.
+    // Both are LocalBusiness/Place properties: schema.org rejected them on a
+    // plain Organization, which failed validation on every page the node is on
+    // (all 68). The same two facts live here in shapes Organization accepts —
+    // `makesOffer` for the price band, `contactPoint.hoursAvailable` for the
+    // desk hours — rather than retyping the company as a LocalBusiness, which
+    // it is not.
+    makesOffer: {
+      '@type': 'Offer',
+      name: 'TopEdge AI subscription plans',
+      url: `${SITE_URL}/pricing`,
+      availability: 'https://schema.org/InStock',
+      priceSpecification: {
+        '@type': 'PriceSpecification',
+        minPrice: 1599,
+        maxPrice: 6499,
+        priceCurrency: 'INR',
+        valueAddedTaxIncluded: false,
+      },
     },
     knowsAbout: [
       'WhatsApp Business API',
@@ -411,6 +425,12 @@ export function organizationJsonLd() {
       telephone: '+91-93130-45439',
       availableLanguage: ['English', 'Hindi'],
       areaServed: 'IN',
+      hoursAvailable: {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+        opens: '10:00',
+        closes: '19:00',
+      },
     },
   };
 }
@@ -588,6 +608,50 @@ export function webPageJsonLd(opts: {
     // Keep about as Organization so nested schemas never lack required image.
     about: ORG_REF,
     publisher: ORG_REF,
+  };
+}
+
+/**
+ * Article node for the editorial pages that are not blog posts.
+ *
+ * The compare boards read as articles to a crawler — a dated byline, a
+ * standfirst, 900 to 1,400 words of prose and tables — but carried only
+ * WebPage, so every AI-discoverability pass reported them as an article page
+ * with no Article schema. They are maintained continuously rather than
+ * published once, so `datePublished` and `dateModified` are both the content
+ * date the page already shows in its kicker: it is the only date about the
+ * board that is true.
+ */
+export function articleJsonLd(opts: {
+  headline: string;
+  description: string;
+  path: string;
+  dateModified: string;
+  datePublished?: string;
+  image?: string;
+  author?: string;
+  section?: string;
+  keywords?: string;
+}) {
+  const url = `${SITE_URL}${opts.path === '/' ? '' : opts.path}`;
+  const iso = (d: string) =>
+    new Date(d.includes('T') ? d : `${d}T12:00:00Z`).toISOString();
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    '@id': `${url}#article`,
+    inLanguage: 'en-IN',
+    headline: opts.headline,
+    description: opts.description,
+    image: opts.image ?? ORG_LOGO_URL,
+    datePublished: iso(opts.datePublished ?? opts.dateModified),
+    dateModified: iso(opts.dateModified),
+    author: authorJsonLd(opts.author),
+    publisher: ORG_REF,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+    url,
+    ...(opts.section ? { articleSection: opts.section } : {}),
+    ...(opts.keywords ? { keywords: opts.keywords } : {}),
   };
 }
 
