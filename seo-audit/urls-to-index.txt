@@ -1,10 +1,12 @@
 https://topedgeai.com/
 https://topedgeai.com/pricing
+https://topedgeai.com/pricing/meta-rates
 https://topedgeai.com/features
 https://topedgeai.com/integrations
 https://topedgeai.com/customers
 https://topedgeai.com/compare
 https://topedgeai.com/compare/topedge-vs-wati-vs-aisensy
+https://topedgeai.com/compare/topedge-vs-wati-vs-interakt-vs-aisensy
 https://topedgeai.com/about
 https://topedgeai.com/contact
 https://topedgeai.com/blog
@@ -37,7 +39,6 @@ https://topedgeai.com/blog/whatsapp-abandoned-cart-recovery-shopify
 https://topedgeai.com/blog/whatsapp-automation-for-shopify
 https://topedgeai.com/blog/best-whatsapp-apps-for-shopify
 https://topedgeai.com/blog/shopify-whatsapp-automation-what-to-automate-first
-https://topedgeai.com/blog/cod-confirmation-whatsapp-reduce-rto-shopify
 https://topedgeai.com/blog/ecommerce-automation-whatsapp-vs-email-india
 https://topedgeai.com/blog/meta-whatsapp-cloud-api-shopify-templates
 https://topedgeai.com/blog/whatsapp-shared-inbox-shopify-order-context
@@ -46,7 +47,6 @@ https://topedgeai.com/blog/best-whatsapp-automation-tools-shopify-india
 https://topedgeai.com/blog/how-to-reduce-rto-with-whatsapp-cod-confirmation
 https://topedgeai.com/blog/what-is-ecommerce-automation-shopify-whatsapp
 https://topedgeai.com/blog/ai-whatsapp-chatbot-for-shopify-india
-https://topedgeai.com/blog/ai-chatbot-for-shopify
 https://topedgeai.com/blog/zoko-alternative-shopify-india
 https://topedgeai.com/blog/getgabs-alternative-shopify-whatsapp
 https://topedgeai.com/blog/kanal-whatsapp-alternative-shopify
@@ -65,5 +65,7 @@ https://topedgeai.com/blog/interakt-alternative-shopify-india
 https://topedgeai.com/blog/bitespeed-alternative-shopify-india
 https://topedgeai.com/blog/whatsapp-template-rejected-meta-shopify-fix
 https://topedgeai.com/blog/whatsapp-opt-in-shopify-india
+https://topedgeai.com/blog/updatrr-alternative-shopify-india
+https://topedgeai.com/blog/cod-to-prepaid-whatsapp-shopify-india
 https://topedgeai.com/privacy
 https://topedgeai.com/terms
