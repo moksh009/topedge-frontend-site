@@ -222,6 +222,11 @@ export const blogPostsQ4: BlogPost[] = [
     title: 'Best WATI Alternative for Shopify India (2026)',
     description:
       'Looking for a WATI alternative for Shopify India? What to keep, what to fix (markup, AI access, COD), and how to test a switch in one afternoon.',
+    summary: [
+      'Compare a worked month, 500 Shopify orders and 10,000 marketing messages, rather than the plan price.',
+      'WATI applies platform usage charges above Meta’s base rates and publishes no single all-in India entry price.',
+      'Keep what works, the broadcasts and templates, and fix the three things that usually bite: markup, AI access and COD branching.',
+    ],
     slug: 'wati-alternative-shopify-india',
     date: '2026-10-08',
     updated: '2026-10-21',
@@ -317,6 +322,11 @@ ${faqHtml(WATI_FAQS)}
     title: 'Best AiSensy Alternative for Shopify India (2026)',
     description:
       'Outgrowing AiSensy broadcasts on Shopify India? Compare 0% Meta markup (₹0.115 service vs ₹0.145 on AiSensy), BYOK AI, and native COD-to-prepaid flows.',
+    summary: [
+      'From 1 October 2026 AiSensy charges Indian users ₹0.145 per service message, against Meta’s own ₹0.1150 rate.',
+      'That gap is a markup on a fee Meta already bills you, and it scales with every service reply you send.',
+      'Before leaving, test the three things a broadcast tool usually lacks: COD to prepaid, your own AI key, and order context in the inbox.',
+    ],
     slug: 'aisensy-alternative-shopify-india',
     date: '2026-10-08',
     updated: '2026-10-21',
@@ -403,6 +413,11 @@ ${faqHtml(AISENSY_FAQS)}
     title: 'Best Interakt Alternative for Shopify India (2026)',
     description:
       'An Interakt alternative for Shopify India: pricing from about ₹2,799, AI add-on cost, COD-to-prepaid on higher tiers, and a one-day switch test.',
+    summary: [
+      'Interakt starts at about ₹2,799 a month for a plan that includes the WhatsApp channel.',
+      'AI is a ₹3,000 add-on with 100 free messages a month, then ₹0.50 each, which at 5,000 replies is the larger line.',
+      'COD to prepaid sits on the higher tiers, so check which plan actually carries the flow you came for.',
+    ],
     slug: 'interakt-alternative-shopify-india',
     date: '2026-10-08',
     updated: '2026-10-21',
@@ -487,6 +502,11 @@ ${faqHtml(INTERAKT_FAQS)}
     title: 'Best Bitespeed Alternative for Shopify India (2026)',
     description:
       'A Bitespeed alternative for Shopify India: revenue minimums, USD-style pricing and AI add-ons, versus a flat INR plan sized to your order volume.',
+    summary: [
+      'Bitespeed asks for about ₹5,00,000 monthly revenue before it will onboard you, with baseline plans from about ₹15,000 a month.',
+      'Below that floor the comparison is not features, it is whether you are in the market at all.',
+      'Across twelve months, a flat INR plan from ₹19,188 a year is a different order of commitment.',
+    ],
     slug: 'bitespeed-alternative-shopify-india',
     date: '2026-10-08',
     updated: '2026-10-21',
@@ -562,6 +582,11 @@ ${faqHtml(BITESPEED_FAQS)}
     title: 'WhatsApp Template Rejected? Fix It for Shopify',
     description:
       'Why Meta rejects WhatsApp templates for Shopify stores (category, variables, samples) and how to rewrite order, cart and COD templates for approval.',
+    summary: [
+      'Five things get templates rejected, and missing sample values is the most common. The copy is rarely the problem.',
+      'Category is the expensive mistake: a template approved as marketing costs roughly seven times the same message as utility.',
+      'Fix the workflow, not just the template. Submit, wait, then publish, with the journey gated on approval state.',
+    ],
     slug: 'whatsapp-template-rejected-meta-shopify-fix',
     date: '2026-10-08',
     updated: '2026-10-21',
@@ -628,6 +653,19 @@ ${faqHtml(TEMPLATE_FAQS)}
     title: 'WhatsApp Opt-In for Shopify India: Checkout, Popups & DPDP',
     description:
       'How to collect WhatsApp opt-in on Shopify in India: checkout, popups, QR and chat, what to record, and how to keep your quality rating healthy.',
+    inlineImages: [
+      {
+        afterHeading: 'Where to collect opt-in on a Shopify store',
+        src: '/marketing/features/optin-popup.jpg',
+        alt: 'An opt-in popup builder set to an exit-intent trigger with a discount code, previewing a WhatsApp subscribe form on a storefront.',
+        caption: 'Sample preview. The trigger and the wording decide whether the consent you collect is worth anything.',
+      },
+    ],
+    summary: [
+      'Collect opt-in at checkout, in a popup, by QR and in chat, and record what the customer agreed to and when.',
+      'Consent wording has to say who is messaging and what about. Vague wording is what a block follows.',
+      'Quality rating is the asset to protect. It sets your messaging limits, and it only moves after the damage is done.',
+    ],
     slug: 'whatsapp-opt-in-shopify-india',
     date: '2026-10-08',
     updated: '2026-10-21',
@@ -698,6 +736,11 @@ ${faqHtml(OPTIN_FAQS)}
     title: 'Best Updatrr Alternative for Shopify India (2026)',
     description:
       'An Updatrr alternative for Shopify India: flat INR plans from ₹1,999/mo, a 14-day trial and BYOK AI on every plan, against USD tiers that gate AI at $99.99.',
+    summary: [
+      'Updatrr publishes USD tiers from $29.99 to $99.99 with a 7-day trial, and states it adds no markup on Meta’s fees.',
+      'AI sits on the $99.99 Pro AI tier, so the AI you came for may not be on the plan you priced.',
+      'Against a flat INR plan from ₹1,999 a month with a 14-day trial, the real difference is currency exposure and where AI lives.',
+    ],
     slug: 'updatrr-alternative-shopify-india',
     date: '2026-10-21',
     updated: '2026-10-21',
@@ -807,6 +850,19 @@ ${faqHtml(UPDATRR_FAQS)}
     title: 'COD to Prepaid on WhatsApp for Shopify India 2026',
     description:
       'Convert Shopify India COD orders to UPI prepaid on WhatsApp before dispatch: the ₹68 saved per order, the ₹0.1150 against ₹0.8631 template split, and the flow.',
+    inlineImages: [
+      {
+        afterHeading: 'The flow, step by step',
+        src: '/marketing/solutions/sol-cod-prepaid-saas.jpg',
+        alt: 'A confirm, prepaid offer and paid sequence beside a WhatsApp message offering shipping savings with a secure pay link.',
+        caption: 'Sample preview. The prepaid offer is a second message, sent only after the COD order is confirmed.',
+      },
+    ],
+    summary: [
+      'A prepaid order is worth about ₹68 more than the same order on COD once RTO risk and the remittance fee are counted.',
+      'The prepaid offer belongs in a second message, after the confirmation, rather than bundled into the first.',
+      'The template split decides the cost: ₹0.1150 for a utility confirmation against ₹0.8631 if the same message is categorised as marketing.',
+    ],
     slug: 'cod-to-prepaid-whatsapp-shopify-india',
     date: '2026-10-22',
     updated: '2026-10-22',

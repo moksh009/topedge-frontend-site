@@ -1,5 +1,4 @@
 import type { ReactNode } from 'react';
-import { ArrowRight } from 'lucide-react';
 import { PrimaryButton, GhostButton } from './ui';
 
 export default function MarketingCtaBand({
@@ -40,12 +39,10 @@ export default function MarketingCtaBand({
           {primaryHref ? (
             <PrimaryButton href={primaryHref} className="mkt-cta__primary">
               {primaryLabel}
-              <ArrowRight className="h-4 w-4" />
             </PrimaryButton>
           ) : (
             <PrimaryButton to={primaryTo} className="mkt-cta__primary">
               {primaryLabel}
-              <ArrowRight className="h-4 w-4" />
             </PrimaryButton>
           )}
           {secondaryLabel && (secondaryHref || secondaryTo) ? (

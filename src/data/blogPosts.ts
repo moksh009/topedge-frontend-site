@@ -384,6 +384,11 @@ export const blogPosts: BlogPost[] = [
     title: 'Shopify WhatsApp Automation: What to Automate First',
     description:
       'Prioritize Shopify WhatsApp automation that pays: abandoned cart, COD confirmation, order updates, then campaigns: a rollout order for Indian D2C ecommerce.',
+    summary: [
+      'Automate in this order: abandoned cart, then COD confirmation, then order updates, then campaigns. Each one funds the next.',
+      'Connect Shopify before you write a single template, because the template needs order variables that only the connection supplies.',
+      'Do not start with campaigns. A marketing blast to an audience you have not warmed is the fastest route to a poor quality rating.',
+    ],
     slug: 'shopify-whatsapp-automation-what-to-automate-first',
     date: '2026-09-02',
     updated: '2026-10-21',
@@ -474,6 +479,11 @@ export const blogPosts: BlogPost[] = [
     title: 'WhatsApp vs Email Marketing Automation for D2C India',
     description:
       'Compare WhatsApp ecommerce automation vs email for cart recovery, order updates, and campaigns: when to use each channel on Shopify in India.',
+    summary: [
+      'Use WhatsApp where speed and a reply matter: cart recovery, COD confirmation, delivery updates. Keep email where depth and a permanent record matter.',
+      'They are not substitutes. Most Indian Shopify stores run both and let WhatsApp take the short window while a decision is still live.',
+      'Split them by job rather than by budget, and give each message type a clear channel owner for the first 90 days.',
+    ],
     slug: 'ecommerce-automation-whatsapp-vs-email-india',
     date: '2026-09-04',
     updated: '2026-10-21',
@@ -565,6 +575,11 @@ export const blogPosts: BlogPost[] = [
     title: 'Meta WhatsApp Cloud API Templates for Shopify',
     description:
       'A plain-English guide to Meta WhatsApp Cloud API templates for Shopify ecommerce: categories, approval tips, journey gating, and transparent rates.',
+    summary: [
+      'Meta prices the category, not the message. Getting a template approved as utility rather than marketing is the biggest single lever on your bill.',
+      'Approve before you automate. A journey that is able to send an unapproved draft eventually will.',
+      'Most rejections come from missing sample values and vague variables, not from the copy itself.',
+    ],
     slug: 'meta-whatsapp-cloud-api-shopify-templates',
     date: '2026-09-05',
     updated: '2026-10-21',
@@ -657,6 +672,19 @@ export const blogPosts: BlogPost[] = [
     title: 'WhatsApp Shared Inbox with Shopify Orders',
     description:
       'Why ecommerce teams need a WhatsApp shared inbox with Shopify order context: assignment, AI handoff, tags, and Instagram in one place.',
+    inlineImages: [
+      {
+        afterHeading: 'Why order context cuts handle time',
+        src: '/marketing/solutions/sol-fashion-inbox-saas.jpg',
+        alt: 'A shared inbox thread about a size exchange, with the Shopify order number, fulfilment status and the size change shown above the conversation.',
+        caption: 'Sample preview. Order number, status and the size change are all readable without leaving the thread.',
+      },
+    ],
+    summary: [
+      'Order context beside the thread cuts handle time because the agent stops opening Shopify admin to answer "where is my order".',
+      'Since October 2026 it also cuts the Meta bill: the first 1,000 service replies a month are free per number, then ₹0.1150 each.',
+      'AI handoff only works with assignment rules and tags behind it, or every thread becomes everyone’s and nobody’s.',
+    ],
     slug: 'whatsapp-shared-inbox-shopify-order-context',
     date: '2026-09-06',
     updated: '2026-10-21',
@@ -765,6 +793,19 @@ export const blogPosts: BlogPost[] = [
     title: 'Shopify WhatsApp Automation Go-Live Checklist (India)',
     description:
       'A fast Shopify automation checklist to connect WhatsApp, approve Meta templates, publish cart recovery, turn on COD paths, and open a shared inbox.',
+    inlineImages: [
+      {
+        afterHeading: 'Publish the first revenue journeys',
+        src: '/marketing/solutions/sol-fashion-cart-saas.jpg',
+        alt: 'An abandoned cart card showing a linen shirt at ₹2,499 in size M, beside the WhatsApp recovery message naming the same product, size and price.',
+        caption: 'Sample preview. The reminder carries the product, the size and the ₹ total straight from the live cart.',
+      },
+    ],
+    summary: [
+      'The technical connect takes about fifteen minutes. Meta business verification and template approval are the queues you wait in.',
+      'Submit templates before you publish a journey, not after, or the journey sits idle waiting on review.',
+      'Open the shared inbox the same day you publish, because the first automated message will get a reply.',
+    ],
     slug: 'shopify-automation-checklist-whatsapp-cart-recovery',
     date: '2026-09-07',
     updated: '2026-10-21',
@@ -1085,6 +1126,19 @@ export const blogPosts: BlogPost[] = [
     title: 'How to Reduce COD RTO on Shopify India: WhatsApp SOP',
     description:
       'A step-by-step SOP to cut Shopify India RTO: utility template timing, confirm, reschedule and cancel branches, warehouse hold rules and what finance measures.',
+    inlineImages: [
+      {
+        afterHeading: 'A practical COD confirmation flow',
+        src: '/marketing/solutions/sol-cod-rto-saas.jpg',
+        alt: 'An RTO risk panel showing confirmed, prepaid-flip and at-risk COD counts, beside a WhatsApp thread asking a buyer to confirm their shipping address.',
+        caption: 'Sample preview. The confirmation and the address check both happen before the parcel is picked up, not after.',
+      },
+    ],
+    summary: [
+      'The unit economics are the whole argument: a ₹0.1150 utility message to prevent a ₹180 to ₹240 logistics loss.',
+      'RTO ran 39.2% at the November 2025 festive peak and fell to 21.0% by March 2026 among brands verifying before dispatch.',
+      'Confirm before the courier has the parcel, offer confirm, reschedule and cancel branches, and hold the order in the warehouse until a reply lands.',
+    ],
     slug: 'how-to-reduce-rto-with-whatsapp-cod-confirmation',
     date: '2026-09-09',
     updated: '2026-10-21',
@@ -1289,6 +1343,11 @@ export const blogPosts: BlogPost[] = [
     title: 'What Is Ecommerce Automation on Shopify WhatsApp?',
     description:
       'Plain definition of ecommerce automation on Shopify WhatsApp: carts, COD, order updates, campaigns, inbox, and what to automate first in India.',
+    summary: [
+      'Ecommerce automation on Shopify WhatsApp is five things: cart recovery, COD confirmation, order updates, campaigns and a shared inbox.',
+      'It is not a chatbot. The difference is whether the tool can read the order it is talking about.',
+      'In India, start with cart recovery and COD confirmation, because both map to money you are already losing.',
+    ],
     slug: 'what-is-ecommerce-automation-shopify-whatsapp',
     date: '2026-09-10',
     updated: '2026-10-21',
@@ -1381,6 +1440,19 @@ export const blogPosts: BlogPost[] = [
     title: 'AI WhatsApp Chatbot for Shopify India',
     description:
       'What a good AI WhatsApp chatbot for Shopify looks like in India: live SKUs, ₹ prices, COD FAQs, Meta-safe behavior, and clean handoff to humans.',
+    inlineImages: [
+      {
+        afterHeading: 'Must-have behaviors',
+        src: '/marketing/features/intent-detection-lead.webp',
+        alt: 'An intent detection panel scoring purchase intent at 92 out of 100 and routing the conversation into a COD confirmation journey.',
+        caption: 'Sample preview. Routing on detected intent keeps AI spend for the replies that actually need a model.',
+      },
+    ],
+    summary: [
+      'A good AI chatbot reads live SKUs, ₹ prices and COD rules from the store. One that cannot read the order should not answer questions about it.',
+      'Bringing your own key costs roughly ₹0.10 to ₹0.30 per AI message, against ₹0.50 where a platform meters AI as an add-on.',
+      'Guardrails matter more than the model. The failure mode is a confident invented answer, and clean handoff to a human is the fix.',
+    ],
     slug: 'ai-whatsapp-chatbot-for-shopify-india',
     date: '2026-09-11',
     updated: '2026-10-21',
@@ -1525,6 +1597,11 @@ export const blogPosts: BlogPost[] = [
     title: 'Best Zoko Alternative for Shopify India (2026)',
     description:
       'Why Shopify India teams look for a Zoko alternative, what to require in a replacement (COD, templates, Meta billing) and how to test a switch in a day.',
+    summary: [
+      'Zoko publishes USD plans from $49.99 to $499.99 a month with per-conversation metering on top, so the India cost moves with the exchange rate.',
+      'A replacement has to cover COD branching, Meta template approval state and direct Meta billing, not just broadcasts.',
+      'You can test a switch in an afternoon: connect the store, approve one template, and run one real order through it.',
+    ],
     slug: 'zoko-alternative-shopify-india',
     date: '2026-09-20',
     updated: '2026-10-21',
@@ -1631,6 +1708,11 @@ export const blogPosts: BlogPost[] = [
     title: 'Best Getgabs Alternative for Shopify India (2026)',
     description:
       'Getgabs wins on entry price. When Shopify India teams outgrow free-to-install WhatsApp apps: and how to judge depth without a price fight.',
+    summary: [
+      'Getgabs wins on entry price, roughly $11 to $59 a month, and its Shopify listing and its own site do not agree on the tiers.',
+      'Cheap entry usually still gates depth. COD to prepaid, identity resolution and warranty flows tend to sit above the entry plan.',
+      'Compare what a month costs at your real order volume, with 18% GST on an INR invoice, rather than the headline tier.',
+    ],
     slug: 'getgabs-alternative-shopify-whatsapp',
     date: '2026-09-20',
     updated: '2026-10-21',
@@ -1727,6 +1809,11 @@ export const blogPosts: BlogPost[] = [
     title: 'Best Kanal Alternative for Shopify India: INR vs EUR',
     description:
       'Kanal is strong for global WhatsApp + Klaviyo stacks. When India COD and INR pricing matter more than an EUR floor, here is how to evaluate alternatives.',
+    summary: [
+      'Kanal is genuinely strong for global WhatsApp stacks with Klaviyo, priced in EUR from €89 to €1,900 a month.',
+      'India D2C diverges on COD. An EUR floor with no COD-to-prepaid path is the usual reason teams start looking.',
+      'If you budget in rupees, price the plan in rupees and add 18% GST, or you are not comparing like with like.',
+    ],
     slug: 'kanal-whatsapp-alternative-shopify',
     date: '2026-09-20',
     updated: '2026-10-21',
@@ -2113,6 +2200,11 @@ export const blogPosts: BlogPost[] = [
     title: 'Best Dondy Alternative for Shopify India (2026)',
     description:
       'Dondy’s WhatsApp rate table sits ~60% above Meta marketing rates. When that math matters for Shopify India: and when Dondy’s toolkit still fits.',
+    summary: [
+      'Dondy publishes an India per-message rate of $0.01888, about 60% above Meta marketing rates, so the markup arrives before the subscription does.',
+      'Dondy is a genuinely broad Shopify toolkit, from a free widget up to Elite at $159.99 a month.',
+      'Check its rate table against Meta’s own card the day you buy, because both move.',
+    ],
     slug: 'dondy-alternative-shopify-india',
     date: '2026-09-21',
     updated: '2026-10-21',

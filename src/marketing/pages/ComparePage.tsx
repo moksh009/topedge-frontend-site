@@ -1,5 +1,4 @@
 import { Link, Navigate, useParams } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
 import MarketingSEO from '../components/MarketingSEO';
 import MarketingPage from '../components/MarketingPage';
 import MarketingCtaBand from '../components/MarketingCtaBand';
@@ -446,7 +445,6 @@ export default function ComparePage({ competitor: competitorProp }: Props) {
             <div className="mkt-cmp__duel-foot">
               <Link to="/signup" className="mkt-cmp__duel-cta is-solid">
                 Start free
-                <ArrowRight className="h-3.5 w-3.5" aria-hidden />
               </Link>
               <Link to="/pricing" className="mkt-cmp__duel-cta">
                 All TopEdge AI plans

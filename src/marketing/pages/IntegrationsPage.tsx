@@ -222,7 +222,6 @@ export default function IntegrationsPage() {
           <div className="mkt-int__actions">
             <Link to="/signup" className="mkt-btn-primary">
               Start free
-              <ArrowRight size={16} aria-hidden />
             </Link>
             <Link to="/shopify-whatsapp-integration" className="mkt-int__btn">
               Shopify integration guide

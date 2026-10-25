@@ -1,7 +1,7 @@
 import { useEffect, useId, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Link, useLocation } from 'react-router-dom';
-import { ArrowRight, X } from 'lucide-react';
+import { X } from 'lucide-react';
 import { marketingSignupPath, SALES_WHATSAPP_URL } from '../lib/billingCatalog';
 import '../styles/convert-prompt.css';
 
@@ -232,7 +232,6 @@ export default function MarketingConvertPrompt() {
         <div className="mkt-convert__actions">
           <Link className="mkt-convert__primary" to={marketingSignupPath()} onClick={dismiss}>
             Start free
-            <ArrowRight size={15} strokeWidth={2.25} aria-hidden />
           </Link>
           <a
             className="mkt-convert__secondary"

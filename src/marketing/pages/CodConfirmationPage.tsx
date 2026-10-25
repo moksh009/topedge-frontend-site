@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Check, Minus } from 'lucide-react';
+import { Check, Minus } from 'lucide-react';
 import MarketingSEO from '../components/MarketingSEO';
 import MarketingPage from '../components/MarketingPage';
 import MarketingCtaBand from '../components/MarketingCtaBand';
@@ -168,7 +168,6 @@ export default function CodConfirmationPage() {
             <div className="mkt-cod__actions">
               <PrimaryButton to="/signup">
                 Start free trial
-                <ArrowRight className="h-4 w-4" />
               </PrimaryButton>
               <GhostButton to="/pricing">See pricing</GhostButton>
             </div>

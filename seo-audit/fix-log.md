@@ -638,3 +638,318 @@ $ npx tsc --noEmit -p tsconfig.app.json
 
 Deliberately not committed, as in Batch 1 (TE-022): regenerated
 `contentDates.*`, `sitemap.xml`, `llms.txt`, `llms-full.txt`.
+
+---
+
+## Batch 11 — re-baseline, and the diagnosis moves off technical — 2026-10-25
+
+Full write-up: `seo-audit/BASELINE-2026-10-25.md`. No site code changed in this
+batch; it is a measurement and strategy pass.
+
+Re-crawled all 71 live sitemap URLs. **Technical is done.** Zero metadata
+contract breaches, zero images missing alt, zero pages without JSON-LD, all 71
+canonicals self-referencing. Verified Batch 10 is live and correct: `Organization`
+carries `@id`, `makesOffer` replaced the invalid `priceRange`, and
+`OpeningHoursSpecification` sits correctly under `contactPoint.hoursAvailable`.
+Named `Person` authors (TE-008) are live on blog posts.
+
+Two things I had wrong and corrected in the same session:
+
+- I first reported three metadata breaches. My crawler counted raw HTML, where
+  `&amp;` is five characters. Decoded they are 64, 58 and 157 against budgets of
+  65/65/160 — all pass. Retracted in the baseline and removed from the roadmap.
+- I opened by suspecting the SEO work was not deployed, because HEAD is 109
+  commits ahead of `origin/main`. It is deployed: live `robots.txt` byte-matches
+  the Batch 10 repo file, so Netlify serves `update-pricing`. Worth knowing —
+  `main` is not the deploy branch.
+
+The 101 → 71 sitemap drop is the 9 Oct docs migration, not a loss.
+`/docs/*` 301s to `dash.topedgeai.com/docs/:splat` keeping the slug, and the
+destination is indexable: 200, `index,follow`, one H1, 885 words, two JSON-LD
+blocks, own `docs-sitemap.xml`. Legacy URLs all handled —
+`/community/promote-profile` returns **410** plus `noindex,nofollow`, which is
+the right signal, and `/solutions`, `/solutions/agencies` 301.
+
+**The finding that matters.** The commercial pages are the thinnest pages on the
+site and the blog is the thickest. `/compare/alternatives` 446 words,
+`/compare` 471, `/shopify-whatsapp-integration` 474, `/integrations` 541, home
+628, all 14 `/features/*` between 593 and 697 — against a site median of 991 and
+a WhatsApp-pricing post at 3,504 words with 86 rupee figures. Every money page is
+below the median; every one carries zero or near-zero rupee figures. The
+19 Oct "accurate, honest and unquotable" diagnosis is now fixed on the blog and
+untouched on the pages that have to convert.
+
+Citations did improve: 22 unique external hosts across 71 pages, against TE-014's
+12 across 101. Strip the seven sitewide footer/social links and the real
+editorial set is `developers.facebook.com` (23 pages), `help.shopify.com` (8),
+`unicommerce.com` (7), `shipping.amazon.in` (6), then Trustpilot, AiSensy,
+Interakt, Updatrr, Baymard, Zoko, Dondy, shopify.dev. Only 1 of 71 pages has no
+external citation.
+
+**Authority is unchanged and it is the bottleneck.** `apps.shopify.com/topedge-ai`
+verified today at **0.0, 0 reviews**, 18 days after TE-009. Meanwhile `/customers`
+says 4.0 from 5 Trustpilot reviews, and three merchants are named on the site with
+live stores linked sitewide — Delitech Smart Home (Ved Patel), Apex Light, First
+Resort. Five public reviews exist on the platform that does not rank and none on
+the one that does. Drafts prepared, unsent, in
+`seo-audit/outreach/shopify-review-requests-2026-10-25.md`.
+
+**Competitor footprint, captured today** (`COMPETITOR_MATRIX.csv`): DelightChat
+7,150 URLs, Zoko 1,501, Wati 1,437, Interakt 1,053, AiSensy 718, LimeChat 270,
+Gallabox 183, TopEdge 71, DoubleTick 62. respond.io's 14,053 is eight locales of
+the same ~1,081 pages. Bitespeed and Gupshup publish no discoverable sitemap.
+
+I sampled pages rather than trusting counts, which cut both ways. AiSensy's 74
+`/whatsapp-chatbot-template/*` pages are 1,863–2,130 words with real
+per-template substance — that is the pattern to copy, and Meta-approved templates
+are something we actually ship. DelightChat's 4,936 `/apps/*` pages are 523–526
+words with H1 = app name and one H2 = developer name, which is the thin
+programmatic content the brief forbids; it inflates their count by 69%. Wati's
+111 `/whatsapp-template` URLs are mostly consolidated — two different slugs serve
+the same 4,744-word page with an identical title and H1. And every competitor has
+case studies as their own URLs (Interakt 71, AiSensy 65, Gallabox 62, LimeChat 47,
+DoubleTick 34, Zoko 21); we have zero.
+
+Still blocked, and I produced no numbers for any of it: Search Console (so no
+impressions, clicks, CTR, position or coverage), Google ranks (CAPTCHA retried
+today), and any backlink data at all — no Ahrefs, no Semrush units, no GSC Links
+report, so there is no backlink audit table in this batch by design. Bing's
+`site:` count came back as "39 results" through the in-app browser, which is
+Bing's own approximate figure, not a census. `ACCESS-NEEDED.md` now carries a
+dated status table and the one-command GSC path via `scripts/gsc-auth.mjs`.
+
+### New artifacts
+
+`BASELINE-2026-10-25.md` · `SITE_URL_INVENTORY.csv` (71 rows, 15 columns) ·
+`COMPETITOR_MATRIX.csv` · `CONTENT_ROADMAP.csv` (12 rows, 3 marked BLOCKED) ·
+`outreach/shopify-review-requests-2026-10-25.md`
+
+### Gates
+
+None run — no source file changed in this batch.
+
+---
+
+## Batch 12 — a block model for commercial pages, and the first two rebuilt — 2026-10-25
+
+Plan: `seo-audit/PLAN-2026-10-25-ORGANIC-FIRST.md`. Google Ads is paused and the
+next channel is Meta ads plus influencer reels after Diwali, so organic is the
+only acquisition channel right now and the money pages carry the whole load.
+
+### The actual root cause of the thin money pages
+
+Not thin copy. A thin type. `SeoTopic` accepted `answerFirst`, `sections` of
+`{ h2, body }`, `bullets` and `faqs`, and nothing else. A `section` is one
+heading and one paragraph, so the page could not render a table, a step, a
+figure or a callout even if someone wrote one. Adding words to that shape builds
+a longer wall. `/compare/alternatives` had the mirror problem:
+`AlternativeEntry` carried `{ name, logo, oneLiner }`, so the page could only
+ever be a logo directory.
+
+### New: structured content blocks
+
+`src/marketing/components/topic/TopicBlocks.tsx` and
+`src/marketing/styles/topic-blocks.css`. Six block kinds, each chosen because it
+makes content scannable, keyword-dense and quotable at once: `specTable`,
+`steps`, `figures`, `checklist`, `callout`, `prose`, plus a table of contents
+derived from the block headings. `SeoTopic.blocks` is optional, so the two
+topics still on `sections` render exactly as before.
+
+Built entirely from the tokens already in `marketing.css`. No new colours, radii
+or fonts. A `figures` block cannot display a number that is not registered in
+`src/data/sources.ts`; it renders the publisher and the date a human read the
+claim beside the value, which is the citability fix `SERP-RECON-2026-10-19`
+asked for.
+
+**Mobile is the point, not a courtesy.** Reel traffic is phone traffic. Below
+768px every table drops its head row and restacks each row into a card with the
+column name printed above each value, from a `data-col` attribute. Verified at
+375px: no horizontal overflow, `scrollWidth` 375 against a 375 viewport.
+
+### `/shopify-whatsapp-integration`: 474 to 2,270 words
+
+The page with the best demand evidence we have. Now carries what it connects,
+what syncs from Shopify as a three-column table, a five-step connection
+sequence with honest waiting times, Meta's India rate card as cited figures, the
+COD case, a do/avoid checklist, a template-approval warning, and a
+native-vs-glue-code comparison. FAQ went from 2 to 8. Ten ₹ figures where there
+were none.
+
+Citations went from the seven sitewide footer links to those plus
+`developers.facebook.com`, `baymard.com`, `unicommerce.com` and
+`shipping.amazon.in`.
+
+Two real bugs fell out, both caught by looking rather than by a gate:
+
+- The mobile table rendered its column names as a card at the top of every
+  table. `.mkt-spec__row--head { display: none }` sat *before*
+  `.mkt-spec__row { display: block }` in the same media query, and both
+  selectors are one class, so source order decided and `block` won.
+- The page shipped two `related` links both pointing at `/integrations`, which
+  React reported as a duplicate key and a reader would have seen as two links to
+  the same place. Replaced with eight distinct destinations. While fixing it I
+  also caught `/meta-rates` in two of my own new links; the route is
+  `/pricing/meta-rates`, so both would have 404'd.
+
+### `/compare/alternatives`: 446 to 1,096 words
+
+A logo directory became a decision table across eleven platforms: entry price as
+published, what each adds on top of Meta's fees, and what it bills in. **Every
+cell is condensed from the `subscription` and markup rows already researched per
+competitor in `compareFeatureMatrix.ts`,** so the table makes no claim the child
+board does not already carry and date. No new vendor research, no new numbers.
+
+The currency column is the part that earns its place: four of the ten bill an
+Indian merchant in USD or EUR, so the real monthly cost moves with the exchange
+rate. Nobody puts that in a pricing table.
+
+Then four questions that catch most of the difference between these platforms:
+the markup, the currency, the onboarding minimum, and whether the tool can read
+a Shopify order at all. The table reuses `.mkt-spec` rather than growing a
+second table implementation.
+
+### Deliberately not done
+
+No programmatic page farm. DelightChat's 4,936 `/apps/*` pages run 523 to 526
+words with H1 = app name and one H2 = developer name. `/lp/*` untouched: they
+are `noindex` and were written for a channel that is now off.
+
+### Gate output
+
+```
+$ CI=1 npm run build:static        exit 0, prerender 70 ok / 0 failed
+  ✓ catalog drift, llms pricing, blog links, blog sources (0 em dashes)
+  ✓ image weight — 133 images, 6.2 MB, none over 100 KB
+  ✓ structured data — 307 JSON-LD blocks on 76 pages
+  ✓ llms check — every URL canonical, every ₹ figure from the catalog
+$ npm run seo:contracts            ✅ passed
+$ npm run seo:audit                ✅ passed (70 prerendered + legal)
+$ npm run check:lp                 ✅ passed
+$ npx eslint <changed files>       0 errors, 0 warnings
+$ npx tsc --noEmit                 no new errors (pre-existing TS6133 in
+                                   MarketingNavbar, untouched)
+```
+
+`check:crops` reports 5 stale crops locally and did so before this batch too:
+it compares mtimes, the crops and their sources all carry 2026-10-23 15:22, and
+the check only requires existence when `CI` or `NETLIFY` is set. Netlify sets
+`NETLIFY`, so the deploy passes. No image was touched in this batch.
+
+Not committed, as in earlier batches: regenerated `contentDates.*`,
+`sitemap.xml`, `llms.txt`, `llms-full.txt`.
+
+---
+
+## Batch 13 — buttons, the mobile menu, and a blog template worth reading — 2026-10-25
+
+Four jobs from the owner, all verified in a browser at 375px and at desktop width.
+
+### Arrows off every button
+
+Buttons carry their label only now. The trailing chevron was decoration on a
+pill that already reads as a button, and on a narrow phone it pushed the label
+off centre. Removed from 13 call sites: the CTA band (both buttons), the home
+hero, the nine home showcase CTAs in `HomeStickyStories`, the navbar on desktop
+and in the mobile sheet, About, the blog CTA, the convert prompt, the compare
+duel CTA, and the feature, product, integrations, features-index and COD pages.
+Ten now-unused `ArrowRight` imports went with them.
+
+**Arrows stay on card and list affordances** (`mkt-cmp-alt__cta`,
+`mkt-int-card__link`, `mkt-int-guide__arrow`, `mkt-cmpx-feat__cta`), where the
+arrow is the only signal the row is clickable. Verified in `dist`: zero
+`.mkt-btn-primary` or `.mkt-btn-ghost` anywhere on the site still contains an
+`<svg>`.
+
+### Smaller buttons on phones
+
+`html .mkt-btn-primary` set `min-height: 3rem` with `1.6rem` of side padding and
+the `html` prefix beat every per-section override in `home.css`, so the hero CTA
+was a desktop button on a 375px screen. A `max-width: 640px` block at the same
+specificity takes it to `2.6rem` with `1.25rem` padding and a `0.875rem` label.
+Measured on the phone viewport: navbar 40px, hero 38px, showcase CTAs 42px, all
+above the 40px comfortable tap target or within a pixel of it, and no horizontal
+overflow.
+
+### The mobile menu now opens all the way
+
+The sheet is `position: fixed; inset: 0`, so it starts at the top of the
+viewport. A later rule set `max-height: calc(100dvh - var(--mkt-ann-h))` to
+account for the announcement strip, but subtracting the strip's height without
+also offsetting `top` **shortened the wrong end**: the sheet ran 0 to 752px in
+an 812px viewport, leaving a 60px band at the bottom where the page showed
+through under the Log in / Start free row, while the strip stayed covered at the
+top anyway. Measured before the fix: `top 0, bottom 752, gapAtBottom 60`.
+
+The sheet carries its own bar with the wordmark and a close button, so it covers
+the strip and runs `top: 0; height: 100dvh`. Measured after: `top 0, bottom 812,
+gap 0`, with the CTA row fully on screen and the Product list scrolling inside
+the full height.
+
+### The blog, rebuilt around the structure a long post needs
+
+Reference: `wati.io/en/blog`, which opens with a short summary, carries a
+contents list, and puts images between sections. Ours had none of the three. The
+measure was already right at about 68 characters a line, so nothing here widens
+the text; what was missing was structure.
+
+**Contents list, on all 32 posts.** 164 of the 181 H2s across the posts had no
+`id`, so there was nothing to link to. `addHeadingIds` now slugs every H2 and H3
+during the same enhancement pass that builds the tables, keeping hand-written
+ids where they exist, and `extractToc` reads the list back off the enhanced
+HTML so the links and the ids cannot drift. On desktop the list sticks in the
+right-hand column, which a single centred prose column had been leaving empty;
+on mobile it stacks.
+
+**"Read this first", on the 20 posts that lacked one.** Twelve posts already
+ship an inline verdict box, so they were left alone and no post now carries
+both. Every line of the 20 new summaries is drawn from that post's own figures.
+
+**Images between sections, on six posts.** Posts shipped with **zero** body
+images, which is the main reason a 3,500-word post read as a wall.
+`inlineImages` places a figure after a named heading, inserted into the HTML
+during enhancement rather than after mount, so the crawler sees it and the
+reserved dimensions stop it shifting the paragraph below. Only real product
+assets, each one opened and described before its alt text was written, each
+captioned "Sample preview" because they are illustrative compositions and not
+merchant data.
+
+Two bugs caught by checking rather than by a gate:
+
+- On mobile the contents list rendered **above** the summary, because DOM order
+  is mobile order and I had put the list first. A reader on a phone met eleven
+  links before the three lines that answer the question. Summary, contents and
+  article are now siblings in that order, and the desktop grid moves the
+  contents to column two across both rows.
+- `cod-rto-benchmark-india-2026` and `organic-vs-paid-ecommerce-marketing-2026`
+  ship their own hand-written "Table of contents" using the same class, so they
+  briefly rendered two. Guarded with the same content test the FAQ block uses.
+  Verified: all 32 posts carry exactly one.
+
+### SEO sweep, all 75 built pages
+
+Checked title length, description length, H1 count, H2 presence, canonical,
+`og:image` and JSON-LD on every page in `dist`. **Four pages carry an issue and
+all four are deliberately `noindex`**: `/dev`, `/login` and `/signup` are app
+shells, and `/lp/shopify-whatsapp` is an ad landing page. Every one of the 71
+indexable pages passes all seven checks. Blog schema intact: all 32 posts carry
+`BlogPosting`, a `Person` author and `BreadcrumbList`.
+
+### Gate output
+
+```
+$ CI=1 npm run build:static      exit 0, prerender 70 ok / 0 failed
+  ✓ catalog drift · llms pricing · blog links · blog sources (0 em dashes)
+  ✓ image weight — 133 referenced images, 6.2 MB, none over 100 KB
+  ✓ structured data — 307 JSON-LD blocks on 76 pages
+$ npm run seo:contracts          ✅ passed
+$ npm run seo:audit              ✅ passed (70 prerendered + legal)
+$ npm run check:lp               ✅ passed
+$ npm run sitemap:validate       ✅ All clear
+$ npx eslint src                 0 errors (5 pre-existing warnings)
+$ npx tsc --noEmit               no new errors (pre-existing TS6133 in
+                                 MarketingNavbar, untouched)
+```
+
+Added `.claude/launch.json` so the dev server can be driven for visual checks.
+Not committed, as in earlier batches: regenerated `contentDates.*`,
+`sitemap.xml`, `llms.txt`, `llms-full.txt`.

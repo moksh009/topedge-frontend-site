@@ -89,6 +89,31 @@ export const BLOG_SLUGS = [
 export const NOT_FOUND_PRERENDER_PATH = '/404';
 
 /** Static marketing paths (no trailing slash except root as '/') */
+/**
+ * Blog archive URLs. Category groups must stay in sync with
+ * src/marketing/data/blogCategories.ts, and the page count with
+ * BLOG_PAGE_SIZE there (12) against BLOG_SLUGS.length.
+ *
+ * These are real indexable archives, each self-canonical: they give the deeper
+ * posts a second route in from the index instead of only a dated list.
+ */
+export const BLOG_CATEGORY_SLUGS = [
+  'comparisons',
+  'automation',
+  'cod-rto',
+  'meta-templates',
+  'ai-and-inbox',
+  'growth',
+];
+
+export const BLOG_PAGE_SIZE = 12;
+
+/** Page 1 lives at /blog, so this is pages 2..N. */
+export function blogPageNumbers() {
+  const total = Math.max(1, Math.ceil(BLOG_SLUGS.length / BLOG_PAGE_SIZE));
+  return Array.from({ length: total - 1 }, (_, i) => i + 2);
+}
+
 export function getMarketingPrerenderPaths() {
   // privacy/terms are static HTML in public/ (Meta crawler-safe) — do not overwrite via prerender
   return [
@@ -103,6 +128,8 @@ export function getMarketingPrerenderPaths() {
     '/about',
     '/contact',
     '/blog',
+    ...blogPageNumbers().map((n) => `/blog/page/${n}`),
+    ...BLOG_CATEGORY_SLUGS.map((s) => `/blog/category/${s}`),
     ...FEATURE_SLUGS.map((s) => `/features/${s}`),
     ...COMPARE_SLUGS.map((s) => `/compare/${s}`),
     ...TOPIC_SLUGS.map((s) => `/${s}`),

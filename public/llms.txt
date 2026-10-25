@@ -45,8 +45,8 @@ the billing catalog, which scripts/check-catalog-drift.mjs pins to the live API.
 - [Journey](https://topedgeai.com/features/journeys): Build WhatsApp journeys for abandoned carts and COD confirmation in a visual editor. Meta approval gating, recovered revenue tracked in ₹. Try free.
 - [Tracking Pixel](https://topedgeai.com/features/analytics): One-click Shopify theme app embed that matches live product views, add-to-cart and browse drop-offs to consented WhatsApp numbers for retargeting journeys.
 - [AI Brain](https://topedgeai.com/features/ai-brain): Bring your own OpenAI or Claude key. Ground WhatsApp replies in store knowledge, route with Intent Detect, and pause AI on takeover.
-- [Meta Manager](https://topedgeai.com/features/meta-manager): Submit, track, and approve Meta WhatsApp templates for Shopify India, utility and marketing categories, Journey blueprints for cart and COD, catalog and wa.me QR.
-- [Chat rules](https://topedgeai.com/features/chat-rules): Route WhatsApp conversations for Shopify India teams, keyword and intent rules for COD, refunds, and VIP assignment. Works with Live Chat takeover that pauses AI.
+- [Meta Manager](https://topedgeai.com/features/meta-manager): Submit, track and approve Meta WhatsApp templates for Shopify India: utility and marketing categories, cart and COD Journey blueprints, catalog and wa.me QR.
+- [Chat rules](https://topedgeai.com/features/chat-rules): Route WhatsApp chats for Shopify India teams: keyword and intent rules for COD, refunds and VIP assignment, with Live Chat takeover that pauses the AI.
 - [Warranty](https://topedgeai.com/features/warranty): Automate Shopify warranty batches, QR registration with WhatsApp OTP at ₹0.115 a message, and claim status updates tied to unified customer profiles.
 - [Profit & costs](https://topedgeai.com/features/profit-loss): Track true Indian D2C net profit on Shopify after COGS, ₹12-₹24 packaging, ₹30 COD fees, ₹180-₹240 RTO losses, gateway fees and ad spend, in one cost waterfall.
 - [Intent detection](https://topedgeai.com/features/intent-detection): Route shipping, returns, COD, and handoff on WhatsApp before you spend AI tokens. Works with AI Brain and Live Chat.
@@ -108,7 +108,7 @@ Product documentation lives in the TopEdge dashboard: https://dash.topedgeai.com
 
 ## Canonical URL directory
 
-All 71 indexable URLs on this domain, no trailing slash except the root.
+All 79 indexable URLs on this domain, no trailing slash except the root.
 
 - https://topedgeai.com/
 - https://topedgeai.com/pricing
@@ -122,6 +122,14 @@ All 71 indexable URLs on this domain, no trailing slash except the root.
 - https://topedgeai.com/about
 - https://topedgeai.com/contact
 - https://topedgeai.com/blog
+- https://topedgeai.com/blog/page/2
+- https://topedgeai.com/blog/page/3
+- https://topedgeai.com/blog/category/comparisons
+- https://topedgeai.com/blog/category/automation
+- https://topedgeai.com/blog/category/cod-rto
+- https://topedgeai.com/blog/category/meta-templates
+- https://topedgeai.com/blog/category/ai-and-inbox
+- https://topedgeai.com/blog/category/growth
 - https://topedgeai.com/features/journeys
 - https://topedgeai.com/features/flow-builder
 - https://topedgeai.com/features/ai-brain

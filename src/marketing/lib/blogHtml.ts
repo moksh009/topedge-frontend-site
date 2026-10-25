@@ -108,8 +108,135 @@ function prepareTables(root: HTMLElement) {
   });
 }
 
+/**
+ * Slug for a heading, used for both the `id` written onto the heading and the
+ * `href` in the table of contents. One function so the two can never drift.
+ */
+export function slugifyHeading(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[₹$%]/g, ' ')
+    .replace(/&[a-z]+;/g, ' ')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 60);
+}
+
+/**
+ * Give every H2 and H3 in a post an id so the table of contents can link to it.
+ *
+ * 164 of the 181 H2s across the posts had no id, so there was nothing to link
+ * to and no table of contents was possible. Hand-written ids are kept as they
+ * are, because existing posts already link to some of them internally.
+ */
+function addHeadingIds(root: HTMLElement) {
+  const used = new Set<string>();
+  root.querySelectorAll('[id]').forEach((el) => used.add(el.id));
+  root.querySelectorAll<HTMLElement>('h2, h3').forEach((h) => {
+    if (h.id) return;
+    const base = slugifyHeading(h.textContent ?? '');
+    if (!base) return;
+    let id = base;
+    for (let i = 2; used.has(id); i += 1) id = `${base}-${i}`;
+    used.add(id);
+    h.id = id;
+  });
+}
+
+export type TocItem = { id: string; label: string; level: 2 | 3 };
+
+/**
+ * Reads the contents list off already-enhanced HTML, so the ids are the ones
+ * actually on the page. H3s are carried for nesting but the rendered list only
+ * shows H2s unless a post is unusually shallow.
+ */
+export function extractToc(enhancedHtml: string): TocItem[] {
+  if (!enhancedHtml) return [];
+  const out: TocItem[] = [];
+  const re = /<h([23])\b([^>]*)>([\s\S]*?)<\/h\1>/gi;
+  for (let m = re.exec(enhancedHtml); m; m = re.exec(enhancedHtml)) {
+    const idMatch = /id="([^"]+)"/i.exec(m[2]);
+    if (!idMatch) continue;
+    const label = m[3]
+      .replace(/<[^>]+>/g, '')
+      .replace(/&amp;/g, '&')
+      .replace(/&rsquo;/g, '’')
+      .replace(/&nbsp;/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+    if (!label) continue;
+    // The template's own FAQ heading is added outside the prose.
+    if (idMatch[1] === 'blog-faq-heading') continue;
+    out.push({ id: idMatch[1], label, level: Number(m[1]) === 3 ? 3 : 2 });
+  }
+  return out;
+}
+
+export type InlineImage = {
+  afterHeading: string;
+  src: string;
+  webp?: string;
+  alt: string;
+  caption?: string;
+};
+
+/**
+ * Drops each configured image in after the section heading it belongs to.
+ *
+ * Done here rather than injected after mount so the figure is in the
+ * prerendered HTML: a crawler sees it, the alt text counts, and the reserved
+ * width and height mean it cannot shift the paragraph under it while loading.
+ *
+ * The image goes after the heading's first following paragraph where there is
+ * one, not immediately under the heading, so a section still opens with a
+ * sentence rather than a picture.
+ */
+function insertInlineImages(root: HTMLElement, images: InlineImage[]) {
+  const doc = root.ownerDocument;
+  const headings = [...root.querySelectorAll<HTMLElement>('h2, h3')];
+
+  for (const img of images) {
+    const want = slugifyHeading(img.afterHeading);
+    const target = headings.find(
+      (h) => h.id === img.afterHeading || h.id === want || slugifyHeading(h.textContent ?? '') === want,
+    );
+    if (!target) continue;
+
+    const figure = doc.createElement('figure');
+    figure.className = 'mkt-blog-figure';
+
+    const picture = doc.createElement('picture');
+    if (img.webp) {
+      const source = doc.createElement('source');
+      source.setAttribute('type', 'image/webp');
+      source.setAttribute('srcset', img.webp);
+      picture.append(source);
+    }
+    const el = doc.createElement('img');
+    el.setAttribute('src', img.src);
+    el.setAttribute('alt', img.alt);
+    el.setAttribute('width', '1200');
+    el.setAttribute('height', '675');
+    el.setAttribute('loading', 'lazy');
+    el.setAttribute('decoding', 'async');
+    picture.append(el);
+    figure.append(picture);
+
+    if (img.caption) {
+      const cap = doc.createElement('figcaption');
+      cap.textContent = img.caption;
+      figure.append(cap);
+    }
+
+    let anchor: Element = target;
+    const next = target.nextElementSibling;
+    if (next && next.tagName === 'P') anchor = next;
+    anchor.after(figure);
+  }
+}
+
 /** Presentation-only rewrites of stored post HTML; falls back to the raw string without a DOM. */
-export function enhanceBlogHtml(html: string): string {
+export function enhanceBlogHtml(html: string, inlineImages: InlineImage[] = []): string {
   if (!html || typeof DOMParser === 'undefined') return html;
   const doc = new DOMParser().parseFromString(`<div id="root">${html}</div>`, 'text/html');
   const root = doc.getElementById('root');
@@ -119,6 +246,8 @@ export function enhanceBlogHtml(html: string): string {
   staticFaqs(root);
   wrapNumericRanges(root);
   prepareTables(root);
+  addHeadingIds(root);
+  if (inlineImages.length) insertInlineImages(root, inlineImages);
 
   return root.innerHTML;
 }

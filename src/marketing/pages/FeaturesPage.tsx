@@ -14,7 +14,6 @@ import { MARKETING_FEATURES, type MarketingFeature } from '../data/features';
 import { demoAssetFor } from '../data/productDemoVideos';
 import { Link } from 'react-router-dom';
 import {
-  ArrowRight,
   ArrowUpRight,
   BadgeCheck,
   BrainCircuit,
@@ -147,7 +146,6 @@ export default function FeaturesPage() {
           <div className="mkt-fx__actions">
             <Link to="/signup" className="mkt-btn-primary">
               Start free
-              <ArrowRight size={16} aria-hidden />
             </Link>
             <Link to="/pricing" className="mkt-fx__btn">
               See pricing

@@ -3,6 +3,7 @@ import MarketingSEO from '../components/MarketingSEO';
 import MarketingPage from '../components/MarketingPage';
 import MarketingCtaBand from '../components/MarketingCtaBand';
 import { PageHero, Section, SectionHeading, MarketingCard, PrimaryButton } from '../components/ui';
+import { TopicBlockView, TopicToc } from '../components/topic/TopicBlocks';
 import { getSeoTopic } from '../data/seoTopics';
 import {
   breadcrumbJsonLd,
@@ -23,6 +24,7 @@ export default function SeoTopicPage({ slug }: Props) {
 
   const path = `/${topic.slug}`;
   const faqSchema = topic.faqs.map((f) => ({ question: f.question, answer: f.answer }));
+  const blocks = topic.blocks ?? [];
 
   return (
     <>
@@ -58,6 +60,11 @@ export default function SeoTopicPage({ slug }: Props) {
         <Section className="!pt-0">
           <div className="mx-auto max-w-3xl">
             <p className="text-base leading-relaxed text-slate-600 md:text-lg">{topic.answerFirst}</p>
+            {blocks.length > 0 && (
+              <div className="mt-8">
+                <TopicToc blocks={blocks} />
+              </div>
+            )}
           </div>
         </Section>
 
@@ -77,24 +84,42 @@ export default function SeoTopicPage({ slug }: Props) {
           </ul>
         </Section>
 
-        {topic.sections.map((s) => (
-          <Section key={s.h2}>
-            <div className="mx-auto max-w-3xl">
-              <h2 className="mkt-display text-3xl font-medium tracking-tight text-[#0c1222]">{s.h2}</h2>
-              <p className="mt-4 text-base leading-relaxed text-slate-600">{s.body}</p>
+        {blocks.length > 0 ? (
+          /*
+           * One Section wrapping all blocks, not one Section per block. A
+           * Section carries 7rem of vertical padding, which is a page break
+           * between unrelated things; inside a single argument it reads as
+           * drift. Blocks space themselves.
+           */
+          <Section className="!pt-4">
+            <div className="mx-auto flex max-w-3xl flex-col gap-14 md:gap-16">
+              {blocks.map((b) => (
+                <TopicBlockView key={b.id} block={b} />
+              ))}
             </div>
           </Section>
-        ))}
+        ) : (
+          topic.sections.map((s) => (
+            <Section key={s.h2}>
+              <div className="mx-auto max-w-3xl">
+                <h2 className="mkt-display text-3xl font-medium tracking-tight text-[#0c1222]">{s.h2}</h2>
+                <p className="mt-4 text-base leading-relaxed text-slate-600">{s.body}</p>
+              </div>
+            </Section>
+          ))
+        )}
 
         <Section wash="soft">
           <SectionHeading title="Questions teams ask" />
-          <div className="mx-auto max-w-3xl space-y-6">
-            {topic.faqs.map((f) => (
-              <div key={f.question}>
-                <h3 className="text-lg font-medium text-[#0c1222]">{f.question}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate-600">{f.answer}</p>
-              </div>
-            ))}
+          <div className="mx-auto max-w-3xl">
+            <dl className="mkt-faq">
+              {topic.faqs.map((f) => (
+                <div key={f.question} className="mkt-faq__item">
+                  <dt className="mkt-faq__q">{f.question}</dt>
+                  <dd className="mkt-faq__a">{f.answer}</dd>
+                </div>
+              ))}
+            </dl>
           </div>
         </Section>
 

@@ -1,0 +1,485 @@
+/**
+ * Structured content blocks for commercial topic pages.
+ *
+ * Why this file exists: `SeoTopic.sections` could only carry one heading and
+ * one paragraph, so /shopify-whatsapp-integration rendered as paragraph after
+ * paragraph and sat at 474 words, below the site's 991-word median. Adding more
+ * prose to that shape makes a longer wall, not a better page. These blocks give
+ * the model somewhere to put a table, a sequence, a cited figure or a warning.
+ *
+ * Everything here is built from the tokens already in marketing.css. No new
+ * colours, radii or fonts.
+ *
+ * Mobile matters more than usual here: Google Ads is paused and the next
+ * traffic is Meta ads and influencer reels, which is phone traffic. Tables
+ * restack to label/value rows below 768px rather than scrolling off-screen.
+ */
+
+/* ---------- table of contents ---------- */
+
+.mkt-toc {
+  border: 1px solid var(--mkt-border);
+  border-radius: var(--mkt-radius-card);
+  background: var(--mkt-violet-light);
+  padding: 1.25rem 1.5rem;
+}
+
+.mkt-toc__label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mkt-violet);
+  margin: 0 0 0.75rem;
+}
+
+.mkt-toc__list {
+  display: grid;
+  gap: 0.5rem 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 768px) {
+  .mkt-toc__list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.mkt-toc__list a {
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: var(--mkt-ink);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+.mkt-toc__list a:hover {
+  color: var(--mkt-violet);
+  border-bottom-color: currentColor;
+}
+
+/* ---------- shared block heading ---------- */
+
+.mkt-blk {
+  scroll-margin-top: calc(var(--marketing-nav-h, 96px) + 1rem);
+}
+
+.mkt-blk__h2 {
+  font-family: 'Inter Tight', var(--mkt-font);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--mkt-ink);
+  margin: 0;
+}
+
+.mkt-blk__intro {
+  margin: 1rem 0 0;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: #475569;
+}
+
+.mkt-blk__body {
+  margin: 1rem 0 0;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #475569;
+}
+
+/* ---------- spec / comparison table ---------- */
+
+.mkt-spec {
+  margin-top: 1.75rem;
+  border: 1px solid var(--mkt-border);
+  border-radius: var(--mkt-radius-card);
+  background: var(--mkt-shell);
+  overflow: hidden;
+}
+
+.mkt-spec__row {
+  display: grid;
+  gap: 0;
+  border-bottom: 1px solid var(--mkt-border);
+}
+
+.mkt-spec__row:last-child {
+  border-bottom: 0;
+}
+
+.mkt-spec__row--head {
+  background: #faf9ff;
+}
+
+.mkt-spec__cell {
+  padding: 0.95rem 1.15rem;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: #475569;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.mkt-spec__cell--label {
+  font-weight: 500;
+  color: var(--mkt-ink);
+}
+
+.mkt-spec__row--head .mkt-spec__cell {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--mkt-ink);
+}
+
+/* The TopEdge column, when a table has one, reads as ours without shouting. */
+.mkt-spec__cell--mine {
+  background: var(--mkt-violet-light);
+  color: var(--mkt-ink);
+  font-weight: 500;
+}
+
+.mkt-spec__note {
+  display: block;
+  margin-top: 0.3rem;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: #94a3b8;
+}
+
+.mkt-spec__footnote {
+  margin: 0.9rem 0 0;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: #94a3b8;
+}
+
+/*
+ * Below 768px a 4-column grid is unreadable, so each row becomes its own
+ * stacked card with the column name printed before each value. The column
+ * labels come from a data attribute, so the head row is simply hidden.
+ */
+@media (max-width: 767px) {
+  .mkt-spec {
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    overflow: visible;
+  }
+
+  .mkt-spec__row {
+    display: block;
+    border: 1px solid var(--mkt-border);
+    border-radius: var(--mkt-radius-card);
+    background: var(--mkt-shell);
+    margin-bottom: 0.75rem;
+    padding: 0.35rem 0;
+  }
+
+  /*
+   * After the rule above, not before it. Both selectors are one class, so they
+   * carry equal specificity and source order decides; with `display: none`
+   * first, `display: block` won and the column names rendered as their own
+   * card at the top of every table.
+   */
+  .mkt-spec .mkt-spec__row--head {
+    display: none;
+  }
+
+  .mkt-spec__row:last-child {
+    margin-bottom: 0;
+  }
+
+  .mkt-spec__cell {
+    display: block;
+    padding: 0.5rem 1.1rem;
+  }
+
+  .mkt-spec__cell--label {
+    font-size: 1rem;
+    padding-top: 0.75rem;
+  }
+
+  .mkt-spec__cell[data-col]::before {
+    content: attr(data-col);
+    display: block;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #94a3b8;
+    margin-bottom: 0.15rem;
+  }
+
+  .mkt-spec__cell--mine {
+    background: var(--mkt-violet-light);
+  }
+}
+
+/* ---------- numbered steps ---------- */
+
+.mkt-steps {
+  margin: 1.75rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.mkt-steps__item {
+  display: grid;
+  grid-template-columns: 2.25rem 1fr;
+  gap: 1rem;
+  align-items: start;
+  border: 1px solid var(--mkt-border);
+  border-radius: var(--mkt-radius-card);
+  background: var(--mkt-shell);
+  padding: 1.15rem 1.25rem;
+}
+
+.mkt-steps__n {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 999px;
+  background: var(--mkt-violet-light);
+  color: var(--mkt-violet);
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.mkt-steps__title {
+  margin: 0.2rem 0 0;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--mkt-ink);
+  line-height: 1.4;
+}
+
+.mkt-steps__body {
+  margin: 0.4rem 0 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #475569;
+}
+
+.mkt-steps__meta {
+  display: inline-block;
+  margin-top: 0.55rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  background: #faf9ff;
+  border: 1px solid var(--mkt-border);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--mkt-muted);
+}
+
+/* ---------- cited figures ---------- */
+
+.mkt-figs {
+  margin: 1.75rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .mkt-figs {
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  }
+}
+
+.mkt-figs__item {
+  border: 1px solid var(--mkt-border);
+  border-radius: var(--mkt-radius-card);
+  background: var(--mkt-shell);
+  padding: 1.15rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.mkt-figs__value {
+  font-family: 'Inter Tight', var(--mkt-font);
+  font-size: clamp(1.5rem, 3.2vw, 1.9rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--mkt-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.mkt-figs__label {
+  margin: 0.5rem 0 0;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: #475569;
+  flex: 1;
+}
+
+.mkt-figs__cite {
+  margin: 0.85rem 0 0;
+  font-size: 0.74rem;
+  line-height: 1.5;
+  color: #94a3b8;
+}
+
+.mkt-figs__cite a {
+  color: var(--mkt-violet);
+  text-decoration: none;
+  border-bottom: 1px solid #ddd6fe;
+}
+
+.mkt-figs__cite a:hover {
+  border-bottom-color: currentColor;
+}
+
+/* ---------- do / do not checklist ---------- */
+
+.mkt-check {
+  margin-top: 1.75rem;
+  display: grid;
+  gap: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  .mkt-check {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.mkt-check__col {
+  border: 1px solid var(--mkt-border);
+  border-radius: var(--mkt-radius-card);
+  background: var(--mkt-shell);
+  padding: 1.25rem;
+}
+
+.mkt-check__head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin: 0 0 0.85rem;
+}
+
+.mkt-check__col--do .mkt-check__head {
+  color: #059669;
+}
+
+.mkt-check__col--dont .mkt-check__head {
+  color: #e11d48;
+}
+
+.mkt-check__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.mkt-check__list li {
+  position: relative;
+  padding-left: 1.4rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #475569;
+}
+
+.mkt-check__list li::before {
+  position: absolute;
+  left: 0;
+  top: 0.05rem;
+  font-weight: 600;
+}
+
+.mkt-check__col--do .mkt-check__list li::before {
+  content: '✓';
+  color: #059669;
+}
+
+.mkt-check__col--dont .mkt-check__list li::before {
+  content: '✕';
+  color: #e11d48;
+}
+
+/* ---------- callout ---------- */
+
+.mkt-callout {
+  margin-top: 1.75rem;
+  border: 1px solid var(--mkt-border);
+  border-left: 3px solid var(--mkt-violet);
+  border-radius: var(--mkt-radius-control);
+  background: #faf9ff;
+  padding: 1.1rem 1.3rem;
+}
+
+.mkt-callout--warn {
+  border-left-color: #f59e0b;
+  background: #fffbeb;
+  border-color: #fde68a;
+}
+
+.mkt-callout__title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--mkt-ink);
+}
+
+.mkt-callout__body {
+  margin: 0.4rem 0 0;
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: #475569;
+}
+
+.mkt-callout__body a {
+  color: var(--mkt-violet);
+  text-decoration: none;
+  border-bottom: 1px solid #ddd6fe;
+}
+
+/* ---------- FAQ, as a real definition list ---------- */
+
+.mkt-faq {
+  margin: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.mkt-faq__item {
+  border: 1px solid var(--mkt-border);
+  border-radius: var(--mkt-radius-card);
+  background: var(--mkt-shell);
+  padding: 1.15rem 1.3rem;
+}
+
+.mkt-faq__q {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.45;
+  color: var(--mkt-ink);
+}
+
+.mkt-faq__a {
+  margin: 0.5rem 0 0;
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: #475569;
+}

@@ -268,21 +268,25 @@
 }
 
 /* Article */
+/*
+ * Flat. The violet radial behind every article was decoration the reader had
+ * to look past, and it made a 3,000-word post read as a landing page. The
+ * colour now lives only inside the hero card, where it frames the title
+ * instead of tinting the whole page.
+ */
 .mkt-blog-article {
-  background:
-    radial-gradient(ellipse 70% 45% at 50% -5%, rgba(124, 58, 237, 0.1), transparent 55%),
-    linear-gradient(180deg, #faf9ff 0%, #ffffff 28%, #ffffff 100%);
+  background: #ffffff;
 }
 
 .mkt-blog-hero {
-  padding-top: calc(var(--marketing-nav-h) + 2.5rem);
+  padding-top: calc(var(--marketing-nav-h) + 1.25rem);
   padding-bottom: 0;
   border-bottom: none;
 }
 
 @media (min-width: 768px) {
   .mkt-blog-hero {
-    padding-top: calc(var(--marketing-nav-h) + 3.25rem);
+    padding-top: calc(var(--marketing-nav-h) + 1.75rem);
   }
 }
 
@@ -992,4 +996,491 @@
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.88);
+}
+
+/* ===================================================================
+   Article layout: contents beside the body, summary above it
+   ===================================================================
+
+   The post was a single centred column of prose inside a 1120px container,
+   so roughly 500px of the row sat empty on desktop while an eleven-section
+   article gave the reader no way to see its own structure. The reference
+   (wati.io/en/blog) puts a short summary and a contents list at the top and
+   images between sections; all three are what makes a long post feel
+   navigable rather than endless.
+
+   The body column keeps its existing measure, which was already right at
+   roughly 68 characters a line. Nothing here widens the text.
+   =================================================================== */
+
+.mkt-blog-layout {
+  display: block;
+}
+
+@media (min-width: 1024px) {
+  .mkt-blog-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 15.5rem;
+    /* Row 1 holds the summary, row 2 the article; the contents spans both. */
+    grid-template-rows: auto 1fr;
+    column-gap: 3rem;
+    align-items: start;
+  }
+
+  .mkt-blog-layout > .mkt-blog-summary {
+    grid-column: 1;
+    grid-row: 1;
+    margin: 3.25rem auto 0;
+  }
+
+  .mkt-blog-layout > .mkt-blog-toc {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+
+  .mkt-blog-layout > .mkt-blog-body-wrap {
+    grid-column: 1;
+    grid-row: 2;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* The summary already carries the top space in this layout. */
+  .mkt-blog-layout > .mkt-blog-summary + .mkt-blog-toc + .mkt-blog-body-wrap {
+    padding-top: 1.75rem;
+  }
+}
+
+/*
+ * Mobile order is DOM order: summary, contents, article.
+ *
+ * The summary has to sit on exactly the same measure as the prose under it, or
+ * the two left edges disagree by a few pixels and the page looks assembled
+ * rather than designed. These are the same max-widths .mkt-blog-body-wrap
+ * carries at the same breakpoints; change them together.
+ */
+.mkt-blog-layout > .mkt-blog-summary {
+  margin: 2.25rem auto 0;
+  max-width: 42rem;
+}
+
+@media (min-width: 640px) {
+  .mkt-blog-layout > .mkt-blog-summary {
+    max-width: 35.75rem;
+  }
+}
+
+@media (min-width: 1100px) {
+  .mkt-blog-layout > .mkt-blog-summary {
+    max-width: 38.25rem;
+  }
+}
+
+/* ---------- contents ---------- */
+
+.mkt-blog-toc {
+  margin: 2rem 0 0;
+  padding: 1.1rem 1.25rem;
+  border: 1px solid var(--mkt-border);
+  border-radius: var(--mkt-radius-card);
+  background: #faf9ff;
+}
+
+@media (min-width: 1024px) {
+  .mkt-blog-toc {
+    position: sticky;
+    /* Clears the fixed navbar and the announcement strip above it. */
+    top: calc(var(--marketing-nav-h, 76px) + 1.25rem);
+    margin-top: 3.25rem;
+    max-height: calc(100dvh - var(--marketing-nav-h, 76px) - 3rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    background: transparent;
+    border: 0;
+    border-left: 1px solid var(--mkt-border);
+    border-radius: 0;
+    padding: 0.1rem 0 0.1rem 1.25rem;
+  }
+}
+
+.mkt-blog-toc__label {
+  margin: 0 0 0.7rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--mkt-violet);
+}
+
+.mkt-blog-toc__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: toc;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.mkt-blog-toc__list a {
+  display: block;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: #475569;
+  text-decoration: none;
+}
+
+.mkt-blog-toc__list a:hover {
+  color: var(--mkt-violet);
+}
+
+/* ---------- read this first ---------- */
+
+/*
+ * The summary card. It was a thin violet-bordered note that read as a footnote
+ * next to the article it introduces; the left border in particular made it
+ * look like a pull quote. It is a warm panel with a real heading now, which is
+ * what the block deserves: on a long post this is the part most readers will
+ * actually read, and the part an answer engine is most likely to lift.
+ */
+.mkt-blog-summary {
+  margin: 0 0 2.5rem;
+  padding: 1.75rem 1.5rem;
+  border: 1px solid #f6e6bd;
+  border-radius: 20px;
+  background: #fdf6e3;
+}
+
+@media (min-width: 768px) {
+  .mkt-blog-summary {
+    padding: 2.25rem 2.25rem 2rem;
+  }
+}
+
+.mkt-blog-summary__label {
+  margin: 0 0 1.1rem;
+  font-family: 'Inter Tight', var(--mkt-font);
+  font-size: clamp(1.4rem, 3.2vw, 1.85rem);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  text-transform: none;
+  color: #1c1917;
+}
+
+.mkt-blog-summary__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.85rem;
+}
+
+.mkt-blog-summary__list li {
+  position: relative;
+  padding-left: 1.6rem;
+  font-size: 1rem;
+  line-height: 1.62;
+  color: #3f3a33;
+}
+
+.mkt-blog-summary__list li::before {
+  content: '';
+  position: absolute;
+  left: 0.1rem;
+  top: 0.58em;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 999px;
+  background: #16a34a;
+}
+
+/* ---------- figures between sections ---------- */
+
+.mkt-blog-figure {
+  margin: 2rem 0;
+}
+
+.mkt-blog-figure picture,
+.mkt-blog-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.mkt-blog-figure img {
+  border: 1px solid var(--mkt-border);
+  border-radius: 14px;
+  background: #faf9ff;
+}
+
+.mkt-blog-figure figcaption {
+  margin-top: 0.65rem;
+  font-size: 0.8rem;
+  line-height: 1.55;
+  color: #94a3b8;
+}
+
+/* ===================================================================
+   Hero card, categories strip, archive pagination
+   ===================================================================
+   The post hero was a full-bleed violet wash with the cover stacked
+   underneath it, so the title and the image never sat in one glance and the
+   page opened on a gradient. It is a contained card now: text left, cover
+   right, flat tint, with the category strip directly beneath it.
+   =================================================================== */
+
+.mkt-blog-hero__card {
+  display: grid;
+  gap: 1.5rem;
+  align-items: center;
+  padding: 1.6rem;
+  border-radius: 24px;
+  background: #f4f2ff;
+}
+
+@media (min-width: 900px) {
+  .mkt-blog-hero__card {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.92fr);
+    gap: 2.5rem;
+    padding: 2.5rem 2.75rem;
+  }
+}
+
+.mkt-blog-hero__text {
+  min-width: 0;
+}
+
+.mkt-blog-hero__media {
+  min-width: 0;
+}
+
+.mkt-blog-hero__media picture,
+.mkt-blog-hero__media img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.mkt-blog-hero__media img {
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 18px 44px -26px rgba(49, 28, 94, 0.45);
+}
+
+/* ---------- breadcrumb ---------- */
+
+.mkt-blog-crumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: 1.1rem;
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.mkt-blog-crumbs a {
+  color: #4b5563;
+  text-decoration: none;
+}
+
+.mkt-blog-crumbs a:hover {
+  color: var(--mkt-violet);
+}
+
+.mkt-blog-crumbs span {
+  color: #c4c0d4;
+}
+
+/* ---------- category strip under the hero ---------- */
+
+.mkt-blog-catstrip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.9rem;
+  margin-top: 1.1rem;
+  padding: 0.85rem 1.25rem;
+  border: 1px solid var(--mkt-border);
+  border-radius: 18px;
+  background: #ffffff;
+}
+
+.mkt-blog-catstrip__label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #94a3b8;
+}
+
+.mkt-blog-catstrip ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mkt-blog-catstrip a {
+  display: inline-flex;
+  padding: 0.34rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 450;
+  color: #475569;
+  text-decoration: none;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.mkt-blog-catstrip a:hover {
+  background: #f4f2ff;
+  color: var(--mkt-ink);
+}
+
+.mkt-blog-catstrip a.is-active {
+  background: #efeafe;
+  color: var(--mkt-violet);
+  font-weight: 500;
+}
+
+/* ---------- categories bar on the archives ---------- */
+
+.mkt-blog-cats {
+  max-width: var(--mkt-max-wide);
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+.mkt-blog-cats__label {
+  margin: 0 0 0.9rem;
+  font-family: 'Inter Tight', var(--mkt-font);
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--mkt-ink);
+}
+
+.mkt-blog-cats__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin: 0 0 2.25rem;
+  padding: 0;
+  list-style: none;
+}
+
+.mkt-blog-cats__item {
+  display: inline-flex;
+  padding: 0.45rem 0.95rem;
+  border: 1px solid var(--mkt-border);
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 450;
+  color: #475569;
+  text-decoration: none;
+  background: #ffffff;
+  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+}
+
+.mkt-blog-cats__item:hover {
+  border-color: #c4b5fd;
+  color: var(--mkt-ink);
+}
+
+.mkt-blog-cats__item.is-active {
+  background: var(--mkt-violet);
+  border-color: var(--mkt-violet);
+  color: #ffffff;
+  font-weight: 500;
+}
+
+/* ---------- pagination ---------- */
+
+.mkt-blog-pager {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem 1.25rem;
+  max-width: var(--mkt-max-wide);
+  margin: 2.5rem auto 0;
+  padding: 0 1.25rem 1rem;
+}
+
+.mkt-blog-pager__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.5rem 0.75rem 0.5rem 0.6rem;
+  border: 1px solid var(--mkt-border);
+  border-radius: 999px;
+  background: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--mkt-ink);
+  text-decoration: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.mkt-blog-pager__btn:hover {
+  border-color: #c4b5fd;
+  box-shadow: 0 10px 24px -18px rgba(76, 29, 149, 0.5);
+}
+
+.mkt-blog-pager__btn.is-disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* The arrow sits last on Next and first on Prev; flex order handles both. */
+.mkt-blog-pager__btn > .mkt-blog-pager__arrow:last-child {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.mkt-blog-pager__arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 999px;
+  background: var(--mkt-ink);
+  color: #ffffff;
+  flex: none;
+}
+
+.mkt-blog-pager__count {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #64748b;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- "Read more" on a card ---------- */
+
+.mkt-blog-card__more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--mkt-ink);
+}
+
+.mkt-blog-card__more-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.35rem;
+  height: 1.35rem;
+  border-radius: 999px;
+  background: var(--mkt-ink);
+  color: #ffffff;
+  transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.mkt-blog-card:hover .mkt-blog-card__more-arrow {
+  transform: translateX(3px);
 }

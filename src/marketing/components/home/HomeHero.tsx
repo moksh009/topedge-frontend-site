@@ -1,4 +1,3 @@
-import { ArrowRight } from 'lucide-react';
 import { PrimaryButton } from '../ui';
 import HeroRippleBackground from '../effects/HeroRippleBackground';
 import HomeTrust from './HomeTrust';
@@ -72,7 +71,6 @@ export default function HomeHero() {
               <div className="home-hero__actions">
                 <PrimaryButton to="/signup">
                   Start free trial
-                  <ArrowRight className="h-4 w-4" />
                 </PrimaryButton>
                 <a
                   className="home-hero__shopify-btn"

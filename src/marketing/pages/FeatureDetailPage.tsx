@@ -17,7 +17,6 @@ import { demoAssetFor } from '../data/productDemoVideos';
 import { getProductPageByFeatureSlug } from '../data/productPages';
 import ProductFeaturePage from './ProductFeaturePage';
 import { Link, Navigate, useParams } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
 
 export default function FeatureDetailPage() {
   const { slug = '' } = useParams();
@@ -112,7 +111,6 @@ export default function FeatureDetailPage() {
               <div className="mt-8 flex flex-wrap gap-3">
                 <PrimaryButton to="/signup">
                   Start free
-                  <ArrowRight className="h-4 w-4" />
                 </PrimaryButton>
                 <GhostButton to="/pricing">See pricing</GhostButton>
               </div>

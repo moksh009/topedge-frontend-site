@@ -2165,10 +2165,26 @@ a.mkt-foot__partner:hover {
   }
 }
 
-/* Mobile: the band is already full width, so the sheet is too. */
+/* Mobile: the band is already full width, so the sheet is too.
+ *
+ * This rule used to read `max-height: calc(100dvh - var(--mkt-ann-h))`, which
+ * was the bug behind "the menu does not open all the way". The sheet is
+ * `position: fixed; inset: 0`, so it starts at the top of the VIEWPORT, not
+ * below the announcement strip. Subtracting the strip's height from the height
+ * without also offsetting `top` left the sheet 60px short at the BOTTOM, with
+ * the page showing through under the Log in / Start free row, and the strip
+ * still covered at the top. Shortening the wrong end.
+ *
+ * The sheet carries its own bar with the wordmark and a close button, and the
+ * comment above is right that on a phone the menu is the page while it is
+ * open, so it covers the strip and runs the full height. `100dvh` rather than
+ * `100vh` so it tracks the mobile URL bar collapsing.
+ */
 @media (max-width: 1023px) {
   .mkt-nav__capsule--open {
-    max-height: calc(100dvh - var(--mkt-ann-h, 0px));
+    top: 0;
+    height: 100dvh;
+    max-height: 100dvh;
   }
 
   .mkt-nav__bar {
@@ -2501,9 +2517,16 @@ a.mkt-foot__partner:hover {
 /* ---- One primary button, everywhere ------------------------------------
    Same pill as the /lp/shopify-whatsapp ".btn" (scripts/lp/base.css): violet
    gradient, soft lift shadow, a glint that crosses at rest (phones have no
-   hover), arrow that nudges on hover. Every .mkt-btn-primary on the site
-   (home hero, feature pages, CTA bands, navbar) picks it up from here. The
-   `html` prefix beats the per-section size overrides in home.css. */
+   hover). Every .mkt-btn-primary on the site (home hero, feature pages, CTA
+   bands, navbar) picks it up from here. The `html` prefix beats the
+   per-section size overrides in home.css.
+
+   Buttons carry their label only. The trailing arrow icon was removed from
+   every button on 2026-10-25 (owner's call): on a pill that already reads as
+   a button the chevron is decoration, and it was pushing the label off-centre
+   on narrow phones. Arrows stay on card and list affordances, where they are
+   the only signal the row is clickable. The svg rules below remain for the
+   buttons that carry a real mark, such as the Shopify logo in the hero. */
 html .mkt-btn-primary {
   position: relative;
   overflow: hidden;
@@ -2552,6 +2575,35 @@ html .mkt-btn-primary svg {
 html .mkt-btn-primary:hover svg,
 html .mkt-btn-primary:focus-visible svg {
   transform: translateX(3px);
+}
+
+/*
+ * Phones get a smaller pill. 3rem tall with 1.6rem of side padding is a
+ * desktop button; on a 375px screen two of them in a row crowd the gutter and
+ * the hero CTA reads as oversized. 2.6rem is 41.6px, still above the 40px
+ * comfortable tap target, and the label is what shrinks least.
+ * Same `html` prefix, or the desktop rule above wins.
+ */
+@media (max-width: 640px) {
+  html .mkt-btn-primary {
+    min-height: 2.6rem;
+    padding: 0 1.25rem;
+    font-size: 0.875rem;
+    gap: 0.4rem;
+    box-shadow: 0 8px 20px -12px rgba(124, 58, 237, 0.65);
+  }
+
+  html .mkt-btn-ghost {
+    min-height: 2.6rem;
+    height: auto;
+    padding: 0 1.25rem;
+    font-size: 0.875rem;
+  }
+
+  html .mkt-btn-primary svg {
+    width: 0.9rem;
+    height: 0.9rem;
+  }
 }
 html .mkt-btn-primary::after {
   content: '';

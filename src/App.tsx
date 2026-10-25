@@ -1,5 +1,12 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+  useParams,
+  Navigate,
+} from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Toaster } from 'react-hot-toast';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
@@ -27,6 +34,24 @@ const SignupRedirect = React.lazy(() => import('./marketing/pages/SignupRedirect
 const LoginRedirect = React.lazy(() => import('./marketing/pages/LoginRedirect'));
 const Blog = React.lazy(() => import('./pages/Blog'));
 const BlogPost = React.lazy(() => import('./pages/BlogPost'));
+/*
+ * The paginated and category archives render the same Blog component with
+ * different props. Wrapped here rather than reading params inside Blog so the
+ * component stays a pure function of its props and can be prerendered for a
+ * specific page without a router in the way.
+ */
+function BlogPageRoute() {
+  const { page } = useParams<{ page: string }>();
+  const n = Number(page);
+  if (!Number.isInteger(n) || n < 2) return <Navigate to="/blog" replace />;
+  return <Blog page={n} />;
+}
+
+function BlogCategoryRoute() {
+  const { category } = useParams<{ category: string }>();
+  return <Blog categorySlug={category} />;
+}
+
 const TermsPage = React.lazy(() => import('./marketing/pages/TermsPage'));
 const CompareIndexPage = React.lazy(() => import('./marketing/pages/CompareIndexPage'));
 const ComparePage = React.lazy(() => import('./marketing/pages/ComparePage'));
@@ -192,6 +217,12 @@ const AnimatedRoutes = () => {
           <Route path="/compare/alternatives" element={<CompareAlternativesPage />} />
           <Route path="/compare/:competitor" element={<ComparePage />} />
           <Route path="/blog" element={<Blog />} />
+          {/*
+            Paginated and category archives come before /blog/:slug, or the
+            slug route would swallow /blog/page and /blog/category.
+          */}
+          <Route path="/blog/page/:page" element={<BlogPageRoute />} />
+          <Route path="/blog/category/:category" element={<BlogCategoryRoute />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route
             path="/shopify-whatsapp-integration"

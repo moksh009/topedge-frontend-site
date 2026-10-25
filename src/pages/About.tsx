@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, ExternalLink } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 import MarketingSEO from '../marketing/components/MarketingSEO';
 import {
   PAGE_SEO,
@@ -139,7 +139,6 @@ export default function About() {
           <div className="mkt-about__actions">
             <PrimaryButton to="/signup">
               Start free
-              <ArrowRight className="h-4 w-4" aria-hidden />
             </PrimaryButton>
             <GhostButton to="/contact">Contact</GhostButton>
           </div>

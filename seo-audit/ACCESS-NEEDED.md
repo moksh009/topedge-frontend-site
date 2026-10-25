@@ -1,5 +1,56 @@
 # Blocked workstreams — what I need from you
 
+> **Status update 2026-10-25.** The 2026-10-07 text is preserved below unchanged.
+> What has actually moved since then, and what has not:
+>
+> | Item | 07 Oct | 25 Oct |
+> |---|---|---|
+> | 1. Google Search Console | blocked | **still blocked** — but there may now be a one-command path, see below |
+> | 2. Bing Webmaster Tools | blocked | still blocked. I did get `site:topedgeai.com` → **"39 results"** out of the in-app browser today; pagination is blocked, so that is Bing's own approximate count, not a census |
+> | 3. GA4 | unconfirmed | still unconfirmed |
+> | 4. Netlify dashboard | worked around | worked around again: live `robots.txt` byte-matches the Batch 10 repo file, so Netlify is serving `update-pricing` (`d318459`), **not `main`, which is 109 commits behind**. Confirmed by content diff, not by deploy log |
+> | 5. Google SERP positions | blocked (CAPTCHA) | **retried today, same CAPTCHA** (`/sorry/index`). No rank data. I will not bypass it |
+> | 6. AI assistants | partially blocked | unchanged |
+> | **7. Backlink data (new)** | — | **no Ahrefs, no Semrush units, no GSC Links report. I have zero verified data on our referring domains.** Any backlink audit table would be invented, so I produced none |
+>
+> ## The GSC unblock may be one command
+>
+> `scripts/gsc-auth.mjs` already exists in this repo and does exactly what is
+> needed: it opens a consent screen, catches the loopback redirect, and prints a
+> `GSC_REFRESH_TOKEN=` line for `.env`. `.env` already has `GOOGLE_CLIENT_ID`
+> and `GOOGLE_CLIENT_SECRET` (currently labelled "Google Calendar API
+> Credentials"), and **`GSC_REFRESH_TOKEN` is not set**, which is why nothing can
+> read Search Console today.
+>
+> Run this yourself and paste the printed line into `.env`:
+>
+> ```
+> node scripts/gsc-auth.mjs
+> ```
+>
+> Three preconditions, all on that OAuth client's Google Cloud project — the
+> script's own header documents them, and I cannot check any of them without
+> signing in as you:
+>
+> 1. **Search Console API** enabled on the project.
+> 2. `http://127.0.0.1:53682/callback` listed under Authorised redirect URIs (a
+>    Desktop-app client type gets loopback for free; a Web client needs it added
+>    explicitly).
+> 3. The Google account you consent with must already be a **verified owner or
+>    full user** of the `topedgeai.com` property.
+>
+> If any of those fails, the CSV-export route in item 2 below is still open and
+> needs no credentials from me.
+>
+> **Why this is the top ask:** everything in Phase 2 of the brief — impressions,
+> clicks, CTR, average position, brand vs non-brand, coverage, query-to-page
+> mapping — is downstream of it. Today I can tell you precisely what the site
+> *is*; I still cannot tell you what Google *does with it*.
+
+---
+
+# Blocked workstreams — what I need from you
+
 Dated 2026-10-07, ~11:00 IST. Everything else is proceeding.
 
 ## 1. Google Search Console — BLOCKS §1 entirely (the biggest gap)

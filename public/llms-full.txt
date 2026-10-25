@@ -133,7 +133,7 @@ TopEdge AI Brain is bring-your-own-key WhatsApp AI for Shopify India. Connect Op
 
 https://topedgeai.com/features/meta-manager
 
-Submit, track, and approve Meta WhatsApp templates for Shopify India, utility and marketing categories, Journey blueprints for cart and COD, catalog and wa.me QR.
+Submit, track and approve Meta WhatsApp templates for Shopify India: utility and marketing categories, cart and COD Journey blueprints, catalog and wa.me QR.
 
 TopEdge Meta Manager is where Shopify India teams submit, track, and approve WhatsApp Cloud API templates. Only APPROVED utility and marketing copy reaches Journeys and campaigns, plus blueprints for cart/COD, catalog sync, and wa.me QR.
 
@@ -146,7 +146,7 @@ TopEdge Meta Manager is where Shopify India teams submit, track, and approve Wha
 
 https://topedgeai.com/features/chat-rules
 
-Route WhatsApp conversations for Shopify India teams, keyword and intent rules for COD, refunds, and VIP assignment. Works with Live Chat takeover that pauses AI.
+Route WhatsApp chats for Shopify India teams: keyword and intent rules for COD, refunds and VIP assignment, with Live Chat takeover that pauses the AI.
 
 TopEdge Chat Rules auto-route WhatsApp conversations for Shopify India teams (COD, refunds, and VIP queues) so the right people own the thread while Live Chat stays calm when volume spikes.
 
