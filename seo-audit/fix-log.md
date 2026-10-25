@@ -953,3 +953,420 @@ $ npx tsc --noEmit               no new errors (pre-existing TS6133 in
 Added `.claude/launch.json` so the dev server can be driven for visual checks.
 Not committed, as in earlier batches: regenerated `contentDates.*`,
 `sitemap.xml`, `llms.txt`, `llms-full.txt`.
+
+---
+
+## Batch 14 — flat article page, a hero that is a card, and real blog archives — 2026-10-25
+
+Owner's brief: kill the purple gradient, rebuild the hero and the summary card
+to match the reference at `wati.io/blog`, and give the blog category and
+paginated pages with proper prev/next.
+
+### Flat page, contained hero
+
+`.mkt-blog-article` carried
+`radial-gradient(ellipse 70% 45% at 50% -5%, rgba(124,58,237,0.1), ...)` behind
+every post. Decoration the reader has to look past, and it made a 3,000-word
+article open like a landing page. The page is white now and the colour lives
+only inside the hero card.
+
+The hero is a contained card: breadcrumb (`Home | Blog | COD & RTO`), category
+pill, H1, lede and byline on the left, cover image beside it on the right. It
+used to be a full-bleed wash with the cover stacked underneath, so the title and
+the image never sat in one glance. Breadcrumb and pill both link to the category
+archive.
+
+A category strip sits under the hero on every post, current group highlighted,
+so a post is not a dead end.
+
+### The summary card
+
+The left border made it read as a pull quote rather than the thing most readers
+will actually take away. It is a warm panel now (`#fdf6e3`), with a real heading
+at `clamp(1.4rem, 3.2vw, 1.85rem)` and green dot bullets. The label is an `h2`,
+which is honest: it is a section, and `extractToc` reads only the prose, so it
+does not appear twice in the contents.
+
+Caught while checking: the summary sat 20px narrower than the prose beneath it,
+because I had hardcoded `35.75rem` while `.mkt-blog-body-wrap` goes to
+`38.25rem` above 1100px. It now carries the same three breakpoint widths. The
+comment says to change them together.
+
+### Archives
+
+The 32 posts carry 14 different `category` strings, several saying the same
+thing (`Meta` and `Meta & templates`, `Guides` and `Basics`). Fourteen tabs is a
+list, not a navigation bar, and renaming stored categories would change the pill
+on published posts and the `articleSection` already in their schema. So
+`src/marketing/data/blogCategories.ts` maps the raw strings into six display
+groups and the stored value stays the post's own label.
+
+New indexable URLs, all registered in `marketing-urls.mjs` so they prerender and
+enter the sitemap:
+
+| URL | Posts |
+|---|---|
+| `/blog`, `/blog/page/2`, `/blog/page/3` | 12 + 12 + 8 = 32 |
+| `/blog/category/comparisons` | 11 |
+| `/blog/category/automation` | 6 |
+| `/blog/category/growth` | 6 |
+| `/blog/category/meta-templates` | 4 |
+| `/blog/category/cod-rto` | 3 |
+| `/blog/category/ai-and-inbox` | 2 |
+
+Pagination is `‹ Prev · Page 2 of 3 · Next ›` with `rel="prev"` / `rel="next"`,
+and disabled ends render as spans rather than dead links. Cards gained a
+"Read more" affordance with the circular arrow. Route order matters:
+`/blog/page/:page` and `/blog/category/:category` are declared before
+`/blog/:slug`, or the slug route swallows them.
+
+### Verified
+
+78 prerendered, 0 failed (was 70). All nine archive pages checked individually:
+title and description inside budget, exactly one H1, canonical present, card
+counts correct. At 375px the post hero card, category strip, summary and prose
+all sit at left 20 / width 335 with no horizontal overflow, and the pager stays
+on one row.
+
+```
+$ CI=1 npm run build:static    78 ok / 0 failed
+  ✓ image weight · structured data 339 blocks on 84 pages · llms
+$ npm run seo:contracts        ✅   $ npm run seo:audit  ✅ (78 + legal)
+$ npx eslint src               0 errors   $ npx tsc --noEmit  clean
+```
+
+---
+
+## Batch 15 — Phase 1 of the content-surfaces plan: journey examples — 2026-10-25
+
+Plan: `seo-audit/PLAN-CONTENT-SURFACES.md`, Phase 1. Our answer to Wati's
+`/chatbot-examples`, except the subject is journeys, because that is what we
+actually ship.
+
+### Grounded in the catalogue, not in copywriting
+
+Every trigger, step order and template name comes from
+`shared/template-catalog.json` in the dashboard repo: `abandoned_cart`,
+`cod_order_placed`, `order_fulfilled`, `cod_prepaid`, and the canonical Meta
+names (`cart_recovery_1..3`, `cod_confirmation_v1`, `cod_confirm_v2`,
+`order_status_confirmed_v1`, `order_status_shipped_v1`,
+`order_status_delivered_v1`, `order_cancellation_v1`, `eco_cod_prepaid_switch`).
+
+The catalogue carries slot metadata but **no approved body copy**, so these
+pages publish the shape of each journey, its Meta category and therefore its
+cost, and do not fabricate message wording nobody has had approved. That is the
+one decision on these pages I would defend hardest.
+
+### Two judgement calls
+
+**No warranty page.** It is a real shipped automation and a genuine
+differentiator against the comparison boards, but nobody searches for it. A page
+that cannot rank and cannot convert is another URL to maintain. It gets a
+pointer on the index to `/features/warranty` instead.
+
+**No generated illustration.** For a journey, the honest visual is the journey.
+`JourneyFlow` draws the real sequence: trigger card, timing chips between steps,
+numbered step cards, the Meta category badge with its India rate, the canonical
+template name, and the reply branches. Built from CSS grid with a pseudo-element
+rail rather than an SVG, so it reflows to one column on a phone instead of
+scaling a fixed viewBox down to unreadable. Generated art is for blog headers,
+where decoration is the right answer.
+
+The Marketing badge is amber and the Utility badge is green on purpose: a
+marketing-category send costs roughly seven times a utility one, and the badge
+should carry that without a sentence.
+
+### New URLs (5)
+
+| URL | Words | Category |
+|---|---|---|
+| `/whatsapp-journey-examples` | 991 | index, `ItemList` |
+| `.../abandoned-cart-recovery` | 1,370 | Marketing, ₹0.8631 x3 |
+| `.../cod-confirmation` | 1,362 | Utility, ₹0.1150 |
+| `.../cod-to-prepaid` | 1,252 | Marketing, ₹0.8631 |
+| `.../order-status-updates` | 1,093 | Utility, ₹0.1150 x4 |
+
+All five carry `FAQPage`, `BreadcrumbList` and `WebPage`; titles 47 to 56 chars,
+descriptions 143 to 152, exactly one H1 each. Registered in
+`marketing-urls.mjs`, so they prerender and enter the sitemap.
+
+### One real bug, caught by looking
+
+The index cards rendered as unstyled inline spans with every line of copy run
+together. The card CSS lives in `journey-flow.css`, which loads through the
+`JourneyFlow` component, and the index renders cards without rendering a
+diagram, so the stylesheet never arrived. Imported explicitly on the index with
+a comment saying why.
+
+### Gates
+
+```
+$ CI=1 npm run build:static    83 ok / 0 failed (was 78)
+  ✓ structured data — 365 JSON-LD blocks on 89 pages
+  ✓ image weight · llms · catalog drift · blog sources (0 em dashes)
+$ npm run seo:contracts  ✅   $ npm run seo:audit  ✅ (83 + legal)
+$ npm run check:lp  ✅        $ npm run check:blog  ✅
+$ npx eslint src  0 errors    $ npx tsc --noEmit  clean
+```
+
+Verified at 375px: no horizontal overflow, 3 steps and 5 branches render, rail
+and cards stack to one column.
+
+### Interlinking
+
+Each journey page links to its sibling journeys, the matching blog post,
+`/features/journeys`, `/pricing/meta-rates` and `/pricing`.
+`/shopify-whatsapp-integration` now links out to the index, which gives the
+thinnest money page a route into 5 new pages of depth.
+
+---
+
+## Batch 16 — journey example pages, rebuilt around a visual — 2026-10-25
+
+Owner's call on Batch 15, and it was right: the pages opened with a
+left-aligned heading and then went straight into prose and cards. A page about
+WhatsApp messages that never shows a WhatsApp message asks the reader to take
+the whole thing on trust.
+
+### What changed
+
+**A centred hero with a real visual.** `JourneyHero` replaces the shared
+left-aligned `PageHero` on all five pages: centred eyebrow, a balanced title at
+`clamp(1.75rem, 4.6vw, 3.1rem)`, centred subtitle and CTAs, then the product
+composition in a soft violet stage. The lead paragraph under it is centred too
+and held to a 44rem measure; left-aligned body copy under a centred title read
+as two pages stapled together. It reverts to left alignment below 640px, where
+centred paragraphs are harder to read.
+
+**Real product compositions, one per journey**, matched to what each page
+actually describes:
+
+| Page | Composition |
+|---|---|
+| Abandoned cart recovery | Cart card with the linen shirt at ₹2,499, beside the WhatsApp recovery thread |
+| COD confirmation | RTO risk panel, beside the address confirmation thread |
+| COD to prepaid | Confirm, prepaid offer and paid sequence, beside the pay link |
+| Order status updates | Support thread beside an order card with status and tracking |
+
+Not generated art. These pages describe automations that exist, so the picture
+is of the thing that exists. Every file was already in `/marketing/solutions`
+and already under the 100 KB build gate.
+
+**The index gained two layers of visual.** A four-up thumbnail strip under the
+hero that doubles as navigation, and a cover image on each journey card. The
+cards were previously a trigger pill and two lines of text.
+
+### Two bugs, both caught by looking rather than by a gate
+
+- **Index cards rendered completely unstyled**, every line of copy run
+  together. The card CSS lives in `journey-flow.css`, which loads through the
+  `JourneyFlow` component, and the index renders cards without rendering a
+  diagram, so the stylesheet never arrived. Imported explicitly, with a comment.
+- **Thumbnails looked blank.** The images were loading fine (`complete: true`,
+  natural width 1280). `object-position: center top` on a 121px-tall crop was
+  showing nothing but the background gradient, because these compositions put
+  their subject through the middle of the frame with whitespace at both edges.
+  Now `center 45%` on a 5:4 box.
+
+### Gates
+
+```
+$ CI=1 npm run build:static    83 ok / 0 failed
+  ✓ image weight — 133 referenced images, 6.2 MB, none over 100 KB
+  ✓ structured data — 365 JSON-LD blocks on 89 pages
+$ npm run seo:contracts  ✅   $ npm run seo:audit  ✅ (83 + legal)
+$ npx eslint src  0 errors    $ npx tsc --noEmit  clean
+```
+
+Verified at 375px and desktop: title centred, no horizontal overflow, strip
+reflows 4 across to 2 across, thumbnails show their subject.
+
+---
+
+## Batch 17 — centred headings, theme accent, and generated art — 2026-10-25
+
+Owner's call again, on three things: section titles not centred, the violet
+highlight missing from titles, and no generated imagery.
+
+### Theme accent
+
+Titles now carry the same violet highlight the blog index and the compare
+boards use (`#5b21b6` on `#ede9fe`, `box-decoration-break: clone`), rather than
+the journey pages having their own rules. `renderAccent` splits the title on a
+phrase named in the data and falls back to the plain title when the phrase is
+not present, so a typo degrades to plain text instead of a half-matched span.
+
+The index accent started as "journey examples" and split across the line break
+into what read as two pills. Shortened to "examples", which sits mid-line.
+
+### Centred headings
+
+Section headings are centred, including the ones `TopicBlocks` renders, via a
+`.mkt-jx-centered` wrapper. Body copy, tables and step lists stay left aligned:
+centring a heading is a signpost, centring a paragraph is a readability
+problem. The lead paragraph is centred on desktop and reverts to left below
+640px.
+
+### Generated illustrations
+
+Four isometric concept illustrations, one per journey, generated through Gemini
+and placed in `public/marketing/journeys/`. 12 to 21 KB each at 1200px wide.
+
+**The prompt recipe that works**, after a flat-vector first attempt came out
+weak: *isometric 3D, raised three-quarter angle, real depth, soft long shadows
+on a pale lavender floor, violet #7C3AED with soft purple and white only,
+objects grounded with shadows not floating, no text, no letters, no logos, no
+people.* The two levers are "isometric" and "grounded with shadows"; without
+them the output is floating clip art.
+
+**Where each kind of image goes, and why.** Generated art is concept only: it
+never depicts product UI, a dashboard or a result. It runs the index strip and
+the cards, where it reads better at thumbnail size and the four together look
+like a set. The real product compositions from `/marketing/solutions` stay in
+the detail heroes, because that is where a reader needs evidence the thing
+exists rather than an idea of it. One art band sits between the flow diagram
+and the argument as a visual beat.
+
+**Pipeline notes for next time.** Downloads from the in-app browser do reach
+`~/Downloads`, they just take a few seconds, so check twice before concluding
+otherwise. Converting with `sips -Z 1200` then `cwebp -q 82` is the path;
+`sharp` is not installed. Posting the image straight from the page to a
+localhost receiver does not work: Chrome blocks public-origin requests to
+loopback even with `Access-Control-Allow-Private-Network` set.
+
+**Open item for the owner:** each generated image carries Gemini's small visible
+sparkle mark in the bottom-right corner. It is a provenance marker, so I have
+left it rather than cropping it out. Say if you want them re-framed without it.
+
+### Gates
+
+```
+$ CI=1 npm run build:static    83 ok / 0 failed
+  ✓ image weight — 137 referenced images, 6.3 MB, none over 100 KB
+  ✓ structured data — 365 JSON-LD blocks on 89 pages
+$ npm run seo:contracts  ✅   $ npm run seo:audit  ✅ (83 + legal)
+$ npx eslint src  0 errors    $ npx tsc --noEmit  clean
+```
+
+---
+
+## Batch 18 — message previews, a calmer sequence, richer heroes — 2026-10-25
+
+Owner's call, three things: show the actual WhatsApp message instead of a
+template name, the step rail looked odd, and the heroes needed proper generated
+art. The glow came off the backgrounds in the same pass.
+
+### The message preview
+
+A step card used to show `cod_confirmation_v1` and nothing else, which
+describes the message to an engineer and to nobody else. `WhatsAppPreview` now
+renders what the customer receives: media header where the template has one,
+the body, the timestamp and the buttons.
+
+**Where the honesty line sits.** The catalogue stores structure, not approved
+body copy, because every merchant submits these to Meta from their own account
+and edits the wording. So the **structure is real** (header type, button labels,
+which fields are variable, all from the slot definitions) and the **body is an
+illustrative example**, labelled "Example message" on every card.
+
+First version used `{{1}} {{2}} {{3}}`, which is what the template looks like
+but not what the customer sees. Now it carries real sample values, with the
+dynamic parts highlighted: *Hi **Priya**, please confirm your Cash on Delivery
+order **#1042**. Amount due on delivery: **₹2,499**.* A legend under the diagram
+says the highlighted values come from the Shopify order, so the chip teaches
+and reads at the same time.
+
+### The sequence
+
+The connector rail is gone. It drew a gradient line down the left with a notch
+into each card, so there was a second thing to read before the step itself and
+it looked like a timeline widget bolted onto a list. The order is already clear
+from the numbering, so the line was decoration. Waits now render as a labelled
+divider across the column ("+6 to 12 hours" between rules), which also reads
+better as what it is: time passing, not a pipe.
+
+### Heroes and the glow
+
+Four new wide generated scenes, 22 to 27 KB each, one per journey: a phone with
+chat bubbles at the centre and the journey's own props around it. The earlier
+simpler illustrations stay on the index, where they have to survive thumbnail
+size. The duplicate art band inside the article is gone now the hero carries it.
+
+The radial violet glow came off `.mkt-jh`, and the hero stage lost its violet
+gradient frame for a plain white panel with a border. The glow read as a halo
+sitting on the page and fought with the illustration under it, which carries its
+own lavender field.
+
+### Gates
+
+```
+$ CI=1 npm run build:static    83 ok / 0 failed
+  ✓ image weight — 141 referenced images, 6.4 MB, none over 100 KB
+  ✓ structured data — 365 JSON-LD blocks on 89 pages
+$ npm run seo:contracts  ✅   $ npm run seo:audit  ✅ (83 + legal)
+$ npx eslint src  0 errors    $ npx tsc --noEmit  clean
+```
+
+Verified at 375px: no horizontal overflow, 4 previews, 9 value chips, bubble
+267px inside a 375px viewport.
+
+---
+
+## Batch 19 — Phase 2: the WhatsApp template library — 2026-10-25
+
+Plan: `seo-audit/PLAN-CONTENT-SURFACES.md`, Phase 2. Built on the patterns
+settled in Batches 16 to 18, so there was nothing to go back and forth on:
+centred hero with the violet accent, generated isometric hero, centred section
+headings, flat background, `TopicBlocks` for the argument.
+
+### The phone mock
+
+The bare bubble on the journey pages is right where a message sits beside a
+step. Here the message IS the page, so `PhoneMock` gives it the whole device:
+status bar, business header, chat field, the template, and the composer. Drawn
+entirely in CSS, no image, sized from one `--ph-w` so the device scales as a
+unit and never dominates its column.
+
+Same honesty rule as the journey previews, stated on the page itself. The
+**structure is real**, read off `shared/template-catalog.json`: header type,
+button labels, the trigger, and which fields are filled from the order. The
+**body is an illustrative example**, because every merchant submits and edits
+their own wording to Meta from their own account.
+
+### What is published
+
+Eleven slots in three groups, which is what the product ships. Not padded to
+look like a hundred: a library listing templates the product does not have is a
+support ticket waiting to happen.
+
+| Group | Slots | Category |
+|---|---|---|
+| Order messages | 6 | Utility, ₹0.1150 |
+| Cart recovery | 3 | Marketing, ₹0.8631 |
+| Audience programs | 2 | One of each |
+
+Plus three festive variants, kept in their own section and labelled as seasonal
+rewrites of a slot above rather than extra templates. The warning that earns
+its place: adding a festive offer to a utility template reprices it from
+₹0.1150 to ₹0.8631 on every send for as long as it is live.
+
+### Page
+
+`/whatsapp-templates`, one H1, 8 H2s, 14 H3s, `FAQPage` + `BreadcrumbList` +
+`WebPage` + `SoftwareApplication`. Six FAQs covering what a template is, why
+category sets the price, whether wording is editable, approval time, festival
+copy and how many to start with. Cross-linked to the journey examples, Meta
+manager, the rate card, the rejection post and the opt-in post.
+
+### Gates
+
+```
+$ CI=1 npm run build:static    84 ok / 0 failed (was 83)
+  ✓ image weight — 142 referenced images, 6.4 MB, none over 100 KB
+  ✓ structured data — 370 JSON-LD blocks on 90 pages
+$ npm run seo:contracts  ✅   $ npm run seo:audit  ✅ (84 + legal)
+$ npx eslint src  0 errors    $ npx tsc --noEmit  clean
+```
+
+At 375px: no horizontal overflow, 14 phones at 272px inside a 375px viewport,
+40 value chips, cards stack phone-above-detail.

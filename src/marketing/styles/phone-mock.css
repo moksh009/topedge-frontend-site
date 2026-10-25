@@ -1,0 +1,244 @@
+/**
+ * Phone mock for the template library.
+ *
+ * On the journey pages a message preview sits beside a step, so a bare bubble
+ * is enough context. Here the message is the subject of the page, so it gets
+ * the whole device: status bar, business header, chat field, composer. A
+ * merchant judging whether a template is worth submitting wants to see it the
+ * way the customer will, at the size the customer will.
+ *
+ * Sized in rem so the whole device scales with one value, and capped so it
+ * never dominates a column. Everything is drawn in CSS; there is no image.
+ */
+
+.mkt-ph {
+  --ph-w: 17rem;
+  display: flex;
+  justify-content: center;
+}
+
+.mkt-ph__frame {
+  width: var(--ph-w);
+  max-width: 100%;
+  padding: 0.5rem;
+  border-radius: 2.4rem;
+  background: linear-gradient(160deg, #2a2440 0%, #141022 55%, #241d3c 100%);
+  box-shadow:
+    0 30px 60px -28px rgba(32, 18, 72, 0.6),
+    0 2px 5px rgba(32, 18, 72, 0.25),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.07);
+}
+
+.mkt-ph__screen {
+  position: relative;
+  border-radius: 2rem;
+  overflow: hidden;
+  background: #ece5dd;
+  display: flex;
+  flex-direction: column;
+  min-height: 26rem;
+}
+
+/* ---------- status bar ---------- */
+
+.mkt-ph__status {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem 0.3rem;
+  background: #0f6d60;
+  color: #ffffff;
+  font-size: 0.64rem;
+  font-weight: 600;
+}
+
+.mkt-ph__island {
+  position: absolute;
+  left: 50%;
+  top: 0.35rem;
+  transform: translateX(-50%);
+  width: 3.6rem;
+  height: 0.95rem;
+  border-radius: 999px;
+  background: #0b0b10;
+}
+
+.mkt-ph__icons {
+  display: inline-flex;
+  color: #ffffff;
+}
+
+/* ---------- business header ---------- */
+
+.mkt-ph__bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.7rem 0.55rem;
+  background: #0f6d60;
+  color: #ffffff;
+}
+
+.mkt-ph__back {
+  display: inline-flex;
+  flex: none;
+  opacity: 0.9;
+}
+
+.mkt-ph__avatar {
+  width: 1.6rem;
+  height: 1.6rem;
+  flex: none;
+  border-radius: 999px;
+  background: linear-gradient(145deg, #c4b5fd, #7c3aed);
+}
+
+.mkt-ph__who {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.2;
+}
+
+.mkt-ph__name {
+  font-size: 0.76rem;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mkt-ph__sub {
+  font-size: 0.6rem;
+  opacity: 0.8;
+}
+
+/* ---------- chat ---------- */
+
+.mkt-ph__chat {
+  flex: 1;
+  padding: 0.85rem 0.7rem;
+  background: #ece5dd;
+}
+
+.mkt-ph__bubble {
+  position: relative;
+  max-width: 90%;
+  padding: 0.45rem 0.5rem 0.35rem;
+  border-radius: 9px;
+  background: #ffffff;
+  box-shadow: 0 1px 1px rgba(11, 20, 26, 0.13);
+}
+
+.mkt-ph__bubble::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -6px;
+  width: 7px;
+  height: 12px;
+  background: #ffffff;
+  clip-path: polygon(100% 0, 100% 100%, 0 0);
+}
+
+.mkt-ph__media {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  margin-bottom: 0.4rem;
+  padding: 1.15rem 0.5rem;
+  border-radius: 6px;
+  background: #eef0f2;
+  color: #9aa6ad;
+  text-align: center;
+}
+
+.mkt-ph__media span {
+  font-size: 0.62rem;
+  line-height: 1.35;
+}
+
+.mkt-ph__body {
+  margin: 0;
+  font-size: 0.74rem;
+  line-height: 1.5;
+  color: #111b21;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+/* The fields filled from the Shopify order. */
+.mkt-ph__var {
+  display: inline;
+  padding: 0 0.22rem;
+  border-radius: 4px;
+  background: #ede9fe;
+  color: #5b21b6;
+  font-weight: 600;
+}
+
+.mkt-ph__stamp {
+  display: block;
+  margin-top: 0.1rem;
+  text-align: right;
+  font-size: 0.56rem;
+  color: #8696a0;
+}
+
+.mkt-ph__buttons {
+  margin: 0.35rem -0.5rem -0.35rem;
+  border-top: 1px solid #e9edef;
+}
+
+.mkt-ph__button {
+  display: block;
+  padding: 0.42rem;
+  text-align: center;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: #0096de;
+}
+
+.mkt-ph__button + .mkt-ph__button {
+  border-top: 1px solid #e9edef;
+}
+
+/* ---------- composer ---------- */
+
+.mkt-ph__composer {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.55rem 0.7rem;
+  background: #ece5dd;
+}
+
+.mkt-ph__input {
+  flex: 1;
+  padding: 0.4rem 0.65rem;
+  border-radius: 999px;
+  background: #ffffff;
+  font-size: 0.68rem;
+  color: #9aa6ad;
+}
+
+.mkt-ph__send {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.65rem;
+  height: 1.65rem;
+  flex: none;
+  border-radius: 999px;
+  background: #0f6d60;
+  color: #ffffff;
+}
+
+@media (min-width: 1024px) {
+  .mkt-ph {
+    --ph-w: 18rem;
+  }
+}

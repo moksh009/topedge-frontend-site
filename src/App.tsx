@@ -40,6 +40,11 @@ const BlogPost = React.lazy(() => import('./pages/BlogPost'));
  * component stays a pure function of its props and can be prerendered for a
  * specific page without a router in the way.
  */
+function JourneyExampleRoute() {
+  const { journey } = useParams<{ journey: string }>();
+  return <JourneyExamplePage slug={journey ?? ''} />;
+}
+
 function BlogPageRoute() {
   const { page } = useParams<{ page: string }>();
   const n = Number(page);
@@ -63,6 +68,13 @@ const CompareFourWayPage = React.lazy(() =>
   import('./marketing/pages/CompareThreeWayPage').then((m) => ({ default: m.CompareFourWayPage })),
 );
 const SeoTopicPage = React.lazy(() => import('./marketing/pages/SeoTopicPage'));
+const JourneyExamplesIndexPage = React.lazy(
+  () => import('./marketing/pages/JourneyExamplesIndexPage'),
+);
+const JourneyExamplePage = React.lazy(() => import('./marketing/pages/JourneyExamplePage'));
+const WhatsAppTemplatesPage = React.lazy(
+  () => import('./marketing/pages/WhatsAppTemplatesPage'),
+);
 const NotFoundPage = React.lazy(() => import('./marketing/pages/NotFoundPage'));
 const PrivacyPolicy = React.lazy(() => import('./pages/PrivacyPolicy'));
 
@@ -224,6 +236,9 @@ const AnimatedRoutes = () => {
           <Route path="/blog/page/:page" element={<BlogPageRoute />} />
           <Route path="/blog/category/:category" element={<BlogCategoryRoute />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
+          <Route path="/whatsapp-templates" element={<WhatsAppTemplatesPage />} />
+          <Route path="/whatsapp-journey-examples" element={<JourneyExamplesIndexPage />} />
+          <Route path="/whatsapp-journey-examples/:journey" element={<JourneyExampleRoute />} />
           <Route
             path="/shopify-whatsapp-integration"
             element={<SeoTopicPage slug="shopify-whatsapp-integration" />}

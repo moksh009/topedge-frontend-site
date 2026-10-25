@@ -1,0 +1,818 @@
+/**
+ * Journey flow diagram.
+ *
+ * One column, always. A journey is a sequence, and a sequence read top to
+ * bottom works identically on a 375px phone and a 1440px desktop, where a
+ * horizontal rail would have to shrink or scroll. The connector is a
+ * pseudo-element on the list, not a drawn line, so nothing has to be
+ * recalculated when a step wraps to three lines.
+ *
+ * Colours come from marketing.css. The one deliberate addition is amber on the
+ * Marketing badge: a marketing-category send costs roughly seven times a
+ * utility one, and the badge should carry that warning without a sentence.
+ */
+
+.mkt-jf {
+  --jf-rail: 2px;
+  --jf-line: #e4ddf7;
+  margin: 1.75rem 0 0;
+}
+
+/* ---------- trigger ---------- */
+
+.mkt-jf__trigger {
+  position: relative;
+  margin-bottom: 1.1rem;
+  padding: 1.1rem 1.35rem;
+  border: 1px solid #e6dffb;
+  border-radius: var(--mkt-radius-card);
+  background: var(--mkt-violet-light);
+}
+
+.mkt-jf__trigger-tag {
+  display: inline-flex;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mkt-violet);
+}
+
+.mkt-jf__trigger-name {
+  margin: 0.35rem 0 0;
+  font-family: 'Inter Tight', var(--mkt-font);
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--mkt-ink);
+}
+
+.mkt-jf__trigger-note {
+  margin: 0.3rem 0 0;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: #64748b;
+}
+
+/* ---------- the sequence ---------- */
+
+/*
+ * No connector rail. The first version drew a gradient line down the left with
+ * a notch into each card, which added a second thing to read before the step
+ * itself and looked like a timeline widget bolted onto a list. The order is
+ * already obvious from the numbering and the gap labels, so the line was doing
+ * decoration rather than work.
+ */
+.mkt-jf__steps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mkt-jf__step {
+  margin: 0;
+}
+
+/* The wait between two sends, as a labelled divider across the column. */
+.mkt-jf__gap {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0.9rem 0;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--mkt-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.mkt-jf__gap::before,
+.mkt-jf__gap::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--jf-line);
+}
+
+/* ---------- step card ---------- */
+
+.mkt-jf__card {
+  border: 1px solid var(--mkt-border);
+  border-radius: var(--mkt-radius-card);
+  background: #ffffff;
+  padding: 1.1rem 1.2rem;
+}
+
+.mkt-jf__card-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.mkt-jf__n {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.65rem;
+  height: 1.65rem;
+  flex: none;
+  border-radius: 999px;
+  background: var(--mkt-violet-light);
+  color: var(--mkt-violet);
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.mkt-jf__title {
+  margin: 0;
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--mkt-ink);
+}
+
+.mkt-jf__cat {
+  display: inline-flex;
+  flex: none;
+  padding: 0.22rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.mkt-jf__cat--utility,
+.mkt-jf__cat--service {
+  background: #ecfdf5;
+  color: #047857;
+}
+
+/* Amber, because this is the category that costs about 7x. */
+.mkt-jf__cat--marketing {
+  background: #fffbeb;
+  color: #b45309;
+}
+
+.mkt-jf__detail {
+  margin: 0.65rem 0 0;
+  font-size: 0.9rem;
+  line-height: 1.62;
+  color: #475569;
+}
+
+.mkt-jf__tpl {
+  display: inline-block;
+  margin-top: 0.7rem;
+  padding: 0.18rem 0.5rem;
+  border-radius: 7px;
+  background: #f6f5fb;
+  border: 1px solid var(--mkt-border);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.76rem;
+  color: #5b21b6;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- reply branches ---------- */
+
+.mkt-jf__branches {
+  margin: 0.85rem 0 0;
+  padding: 0.75rem 0 0;
+  border-top: 1px dashed var(--jf-line);
+  list-style: none;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.mkt-jf__branches li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.mkt-jf__branch-label {
+  flex: none;
+  padding: 0.12rem 0.55rem;
+  border-radius: 999px;
+  background: var(--mkt-violet-light);
+  color: var(--mkt-violet);
+  font-size: 0.74rem;
+  font-weight: 600;
+}
+
+.mkt-jf__branch-out {
+  flex: 1 1 12rem;
+  min-width: 0;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: #475569;
+}
+
+.mkt-jf__foot {
+  margin: 1.1rem 0 0;
+  font-size: 0.78rem;
+  line-height: 1.6;
+  color: #94a3b8;
+}
+
+@media (min-width: 768px) {
+  .mkt-jf__card {
+    padding: 1.35rem 1.5rem;
+  }
+}
+
+/* ===================================================================
+   Journey cards, used on the index and as siblings on a detail page
+   =================================================================== */
+
+.mkt-jx-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 1.25rem 1.35rem;
+  border: 1px solid var(--mkt-border);
+  border-radius: var(--mkt-radius-card);
+  background: #ffffff;
+  text-decoration: none;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+.mkt-jx-card:hover {
+  border-color: #c4b5fd;
+  box-shadow: 0 18px 38px -28px rgba(76, 29, 149, 0.55);
+  transform: translateY(-2px);
+}
+
+.mkt-jx-card.is-lg {
+  padding: 1.6rem 1.7rem;
+}
+
+.mkt-jx-card__trigger {
+  display: inline-block;
+  align-self: flex-start;
+  margin-bottom: 0.7rem;
+  padding: 0.16rem 0.55rem;
+  border-radius: 7px;
+  background: #f6f5fb;
+  border: 1px solid var(--mkt-border);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.72rem;
+  color: #5b21b6;
+  overflow-wrap: anywhere;
+}
+
+.mkt-jx-card__title {
+  font-family: 'Inter Tight', var(--mkt-font);
+  font-size: 1.15rem;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.3;
+  color: var(--mkt-ink);
+}
+
+.mkt-jx-card.is-lg .mkt-jx-card__title {
+  font-size: 1.3rem;
+}
+
+.mkt-jx-card__blurb {
+  margin-top: 0.5rem;
+  flex: 1;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #475569;
+}
+
+.mkt-jx-card__cta {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--mkt-violet);
+}
+
+/* ---------- the warranty pointer ---------- */
+
+.mkt-jx-note {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem;
+  padding: 1rem 1.25rem;
+  border: 1px dashed #d9cffa;
+  border-radius: var(--mkt-radius-card);
+  background: #fbfaff;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #475569;
+  text-decoration: none;
+}
+
+.mkt-jx-note strong {
+  color: var(--mkt-ink);
+  font-weight: 600;
+}
+
+.mkt-jx-note code {
+  padding: 0.1rem 0.4rem;
+  border-radius: 6px;
+  background: #f1eefb;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+  color: #5b21b6;
+}
+
+.mkt-jx-note span {
+  margin-left: auto;
+  flex: none;
+  font-weight: 500;
+  color: var(--mkt-violet);
+}
+
+.mkt-jx-note:hover {
+  border-color: #c4b5fd;
+}
+
+/* ===================================================================
+   Centred hero with a real product visual
+   =================================================================== */
+
+/*
+ * Flat. The radial violet glow behind the hero read as a halo sitting on the
+ * page rather than part of it, and it fought with the illustration underneath,
+ * which carries its own lavender field. A plain soft wash to white is enough
+ * separation from the body.
+ */
+.mkt-jh {
+  padding: calc(var(--marketing-nav-h, 76px) + 2rem) 1.25rem 0;
+  background: linear-gradient(180deg, #faf9ff 0%, #ffffff 78%);
+}
+
+@media (min-width: 768px) {
+  .mkt-jh {
+    padding-top: calc(var(--marketing-nav-h, 76px) + 3rem);
+  }
+}
+
+.mkt-jh__inner {
+  max-width: 48rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.mkt-jh__eyebrow {
+  margin: 0;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mkt-violet);
+}
+
+.mkt-jh__title {
+  margin: 0.9rem 0 0;
+  font-family: 'Inter Tight', var(--mkt-font);
+  font-weight: 500;
+  letter-spacing: -0.032em;
+  line-height: 1.1;
+  color: var(--mkt-ink);
+  font-size: clamp(1.75rem, 4.6vw, 3.1rem);
+  text-wrap: balance;
+}
+
+.mkt-jh__sub {
+  margin: 1.1rem auto 0;
+  max-width: 40rem;
+  font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+  line-height: 1.6;
+  color: #5b6478;
+  text-wrap: pretty;
+}
+
+.mkt-jh__actions {
+  margin-top: 1.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+/* ---------- the image stage ---------- */
+
+.mkt-jh__stage {
+  margin: 2.5rem auto 0;
+  max-width: 60rem;
+  padding: 0;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid var(--mkt-border);
+  background: #ffffff;
+}
+
+.mkt-jh__stage img {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: #ffffff;
+}
+
+/* ---------- index: four thumbnails under the hero ---------- */
+
+.mkt-jh__strip {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.6rem;
+  max-width: 62rem;
+  margin: 2.5rem auto 0;
+}
+
+@media (min-width: 900px) {
+  .mkt-jh__strip {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.9rem;
+  }
+}
+
+.mkt-jh__strip a {
+  display: block;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(196, 181, 253, 0.5);
+  background: #ffffff;
+  box-shadow: 0 18px 40px -32px rgba(49, 28, 94, 0.55);
+  transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.2s ease;
+}
+
+.mkt-jh__strip a:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 24px 50px -30px rgba(49, 28, 94, 0.65);
+}
+
+/*
+ * These compositions put their subject in the middle of the frame, not at the
+ * top: a panel above, a phone through the centre, whitespace at both edges.
+ * Cropping from the top on a thumbnail this short showed nothing but the
+ * background gradient. Centre the crop and give it a taller box.
+ */
+.mkt-jh__strip img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 5 / 4;
+  object-fit: cover;
+  object-position: center 45%;
+}
+
+.mkt-jh__strip span {
+  display: block;
+  padding: 0.6rem 0.75rem 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--mkt-ink);
+  text-align: center;
+}
+
+/* ---------- index cards: give them a picture ---------- */
+
+.mkt-jx-card__media {
+  display: block;
+  margin: -1.6rem -1.7rem 1.1rem;
+  border-radius: var(--mkt-radius-card) var(--mkt-radius-card) 0 0;
+  overflow: hidden;
+  background: #f6f5fb;
+}
+
+.mkt-jx-card:not(.is-lg) .mkt-jx-card__media {
+  margin: -1.25rem -1.35rem 0.9rem;
+}
+
+.mkt-jx-card__media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: center 45%;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.mkt-jx-card:hover .mkt-jx-card__media img {
+  transform: scale(1.03);
+}
+
+/*
+ * The answer-first paragraph sits directly under a centred hero, so it is
+ * centred too and held to a reading measure. Left-aligned body copy under a
+ * centred title reads as two pages stapled together.
+ */
+.mkt-jh-lead {
+  max-width: 44rem;
+  margin: 0 auto;
+  text-align: center;
+  font-size: clamp(1rem, 1.55vw, 1.12rem);
+  line-height: 1.65;
+  color: #475569;
+  text-wrap: pretty;
+}
+
+@media (max-width: 640px) {
+  .mkt-jh-lead {
+    text-align: left;
+  }
+}
+
+/*
+ * Violet highlight on one phrase of a title, the same treatment the blog index
+ * and the compare boards use (#5b21b6 on #ede9fe). Carried here so the journey
+ * pages read as part of the same site rather than a section with its own rules.
+ * box-decoration-break keeps the pill intact when the phrase wraps a line.
+ */
+.mkt-jh__hl {
+  color: #5b21b6;
+  background: #ede9fe;
+  border-radius: 0.4em;
+  padding: 0.02em 0.22em 0.06em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/*
+ * Section headings on the journey pages are centred, including the ones the
+ * TopicBlocks render. Body copy, tables and step lists stay left aligned:
+ * centring a heading is a signpost, centring a paragraph is a readability
+ * problem.
+ */
+.mkt-jx-centered .mkt-blk__h2,
+.mkt-jx-centered .mkt-blk__intro {
+  text-align: center;
+}
+
+.mkt-jx-centered .mkt-blk__intro {
+  max-width: 42rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Concept illustration band between the flow diagram and the argument. */
+.mkt-jx-band {
+  margin: 2.5rem 0 0;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #f4f2ff;
+}
+
+.mkt-jx-band img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ===================================================================
+   WhatsApp message preview
+   ===================================================================
+   Shows what the customer receives at each step. The step card used to carry
+   only the canonical template name, which describes the message to an
+   engineer and to nobody else.
+   =================================================================== */
+
+.mkt-wa {
+  margin: 0.9rem 0 0;
+}
+
+.mkt-wa__label {
+  display: inline-flex;
+  margin-bottom: 0.45rem;
+  padding: 0.14rem 0.5rem;
+  border-radius: 999px;
+  background: #f1f5f9;
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+/* The chat field. Warm neutral rather than WhatsApp's own wallpaper. */
+.mkt-wa__screen {
+  padding: 0.85rem;
+  border-radius: 14px;
+  background: #ece5dd;
+}
+
+.mkt-wa__bubble {
+  position: relative;
+  max-width: 21rem;
+  padding: 0.55rem 0.6rem 0.4rem;
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0 1px 1px rgba(11, 20, 26, 0.13);
+}
+
+/* The little tail on an incoming bubble. */
+.mkt-wa__bubble::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -7px;
+  width: 8px;
+  height: 13px;
+  background: #ffffff;
+  clip-path: polygon(100% 0, 100% 100%, 0 0);
+}
+
+.mkt-wa__media {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  padding: 0.75rem 0.7rem;
+  border-radius: 7px;
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+.mkt-wa__media-icon {
+  display: inline-flex;
+  flex: none;
+  color: #9ca3af;
+}
+
+.mkt-wa__media-label {
+  font-size: 0.74rem;
+  line-height: 1.4;
+}
+
+.mkt-wa__body {
+  margin: 0;
+  font-size: 0.84rem;
+  line-height: 1.5;
+  color: #111b21;
+  white-space: pre-line;
+}
+
+/* Variable slots, as they appear in an approved template. */
+.mkt-wa__var {
+  display: inline-block;
+  padding: 0 0.3rem;
+  border-radius: 4px;
+  background: #ede9fe;
+  color: #5b21b6;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.mkt-wa__time {
+  display: block;
+  margin-top: 0.15rem;
+  text-align: right;
+  font-size: 0.62rem;
+  color: #8696a0;
+}
+
+.mkt-wa__buttons {
+  margin: 0.4rem -0.6rem -0.4rem;
+  border-top: 1px solid #e9edef;
+}
+
+.mkt-wa__button {
+  display: block;
+  padding: 0.5rem;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #0096de;
+}
+
+.mkt-wa__button + .mkt-wa__button {
+  border-top: 1px solid #e9edef;
+}
+
+.mkt-wa__note {
+  margin: 0.5rem 0 0;
+  font-size: 0.74rem;
+  line-height: 1.5;
+  color: #94a3b8;
+}
+
+/* Explains the highlighted chips in the message previews. */
+.mkt-jf__legend {
+  margin: 1.25rem 0 0;
+  padding: 0.7rem 0.9rem;
+  border-radius: var(--mkt-radius-control);
+  background: #faf9ff;
+  border: 1px solid var(--mkt-border);
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: #475569;
+}
+
+/* ===================================================================
+   Template library card: the phone beside what the template is for
+   =================================================================== */
+
+.mkt-tpl {
+  display: grid;
+  gap: 1.5rem;
+  align-items: center;
+  padding: 1.5rem;
+  border: 1px solid var(--mkt-border);
+  border-radius: var(--mkt-radius-card);
+  background: #ffffff;
+}
+
+@media (min-width: 860px) {
+  .mkt-tpl {
+    grid-template-columns: 19rem minmax(0, 1fr);
+    gap: 2.25rem;
+    padding: 2rem 2.25rem;
+  }
+}
+
+.mkt-tpl__phone {
+  display: flex;
+  justify-content: center;
+}
+
+.mkt-tpl__body {
+  min-width: 0;
+}
+
+.mkt-tpl__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.mkt-tpl__title {
+  margin: 0;
+  font-family: 'Inter Tight', var(--mkt-font);
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: -0.018em;
+  line-height: 1.3;
+  color: var(--mkt-ink);
+}
+
+.mkt-tpl__purpose {
+  margin: 0.7rem 0 0;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: #475569;
+}
+
+.mkt-tpl__meta {
+  display: grid;
+  gap: 0.65rem;
+  margin: 1.1rem 0 0;
+  padding: 0.9rem 1rem;
+  border-radius: var(--mkt-radius-control);
+  background: #faf9ff;
+  border: 1px solid var(--mkt-border);
+}
+
+@media (min-width: 640px) {
+  .mkt-tpl__meta {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.mkt-tpl__meta dt {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #94a3b8;
+}
+
+.mkt-tpl__meta dd {
+  margin: 0.25rem 0 0;
+}
+
+.mkt-tpl__meta code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.78rem;
+  color: #5b21b6;
+  overflow-wrap: anywhere;
+}
+
+.mkt-tpl__watch {
+  margin: 0.9rem 0 0;
+  padding: 0.75rem 0.95rem;
+  border-radius: var(--mkt-radius-control);
+  border-left: 3px solid #f59e0b;
+  background: #fffbeb;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: #78350f;
+}
+
+.mkt-tpl__watch strong {
+  color: #92400e;
+}

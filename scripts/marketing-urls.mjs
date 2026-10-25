@@ -114,6 +114,14 @@ export function blogPageNumbers() {
   return Array.from({ length: total - 1 }, (_, i) => i + 2);
 }
 
+/** Worked journey examples (src/marketing/data/journeyExamples.ts). */
+export const JOURNEY_EXAMPLE_SLUGS = [
+  'abandoned-cart-recovery',
+  'cod-confirmation',
+  'cod-to-prepaid',
+  'order-status-updates',
+];
+
 export function getMarketingPrerenderPaths() {
   // privacy/terms are static HTML in public/ (Meta crawler-safe) — do not overwrite via prerender
   return [
@@ -133,6 +141,9 @@ export function getMarketingPrerenderPaths() {
     ...FEATURE_SLUGS.map((s) => `/features/${s}`),
     ...COMPARE_SLUGS.map((s) => `/compare/${s}`),
     ...TOPIC_SLUGS.map((s) => `/${s}`),
+    '/whatsapp-templates',
+    '/whatsapp-journey-examples',
+    ...JOURNEY_EXAMPLE_SLUGS.map((s) => `/whatsapp-journey-examples/${s}`),
     ...BLOG_SLUGS.map((s) => `/blog/${s}`),
     NOT_FOUND_PRERENDER_PATH,
   ];

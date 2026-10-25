@@ -49,6 +49,22 @@ const columns: { title: string; links: FootLink[] }[] = [
     ],
   },
   {
+    /*
+     * The content surfaces built in Phases 1 and 2. The footer grid was already
+     * repeat(4) with three columns filled, so this slots in without touching
+     * the layout.
+     */
+    title: 'Resources',
+    links: [
+      { label: 'Journey examples', href: '/whatsapp-journey-examples' },
+      { label: 'WhatsApp templates', href: '/whatsapp-templates' },
+      { label: 'Shopify WhatsApp integration', href: '/shopify-whatsapp-integration' },
+      { label: 'Integrations', href: '/integrations' },
+      { label: 'Meta India rate card', href: '/pricing/meta-rates' },
+      { label: 'All playbooks', href: '/blog' },
+    ],
+  },
+  {
     title: 'Compare',
     links: [
       { label: 'TopEdge vs WATI', href: '/compare/wati' },

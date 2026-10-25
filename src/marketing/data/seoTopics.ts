@@ -437,6 +437,7 @@ export const SEO_TOPICS: Record<string, SeoTopic> = {
       { label: 'Integrations overview', href: '/integrations' },
       { label: 'Meta template manager', href: '/features/meta-manager' },
       { label: 'Journey builder', href: '/features/journeys' },
+      { label: 'Journey examples', href: '/whatsapp-journey-examples' },
       { label: 'Meta India rate card', href: '/pricing/meta-rates' },
       { label: 'WhatsApp API pricing in India', href: '/blog/whatsapp-business-api-pricing-india' },
       { label: 'What to automate first', href: '/blog/shopify-whatsapp-automation-what-to-automate-first' },

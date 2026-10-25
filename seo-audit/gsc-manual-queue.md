@@ -1,6 +1,6 @@
 # Google Search Console — manual "Request indexing" queue
 
-Generated 2026-10-22 from public/sitemap.xml.
+Generated 2026-10-25 from public/sitemap.xml.
 
 Google has no API for requesting indexing of ordinary pages, and the button
 in the Search Console UI allows roughly ten URLs a day. This queue is ranked
@@ -14,44 +14,40 @@ it spends quota and changes nothing.
 **Deploy before submitting.** A URL submitted ahead of the deploy gets crawled
 as the old page and the fetch is wasted.
 
-## Changed in this release — 20 URLs
+## Changed in this release — 11 URLs
 
 ### Day 1
 
-- [ ] https://topedgeai.com/pricing
 - [ ] https://topedgeai.com/blog
-- [ ] https://topedgeai.com/customers
-- [ ] https://topedgeai.com/features
-- [ ] https://topedgeai.com/features/journeys
-- [ ] https://topedgeai.com/blog/cod-to-prepaid-whatsapp-shopify-india
-- [ ] https://topedgeai.com/features/ai-brain
-- [ ] https://topedgeai.com/features/analytics
-- [ ] https://topedgeai.com/features/audience-crm
-- [ ] https://topedgeai.com/features/campaigns
+- [ ] https://topedgeai.com/blog/category/ai-and-inbox
+- [ ] https://topedgeai.com/blog/category/automation
+- [ ] https://topedgeai.com/blog/category/cod-rto
+- [ ] https://topedgeai.com/blog/category/comparisons
+- [ ] https://topedgeai.com/blog/category/growth
+- [ ] https://topedgeai.com/blog/category/meta-templates
+- [ ] https://topedgeai.com/blog/page/2
+- [ ] https://topedgeai.com/blog/page/3
+- [ ] https://topedgeai.com/about
 
 ### Day 2
 
-- [ ] https://topedgeai.com/features/chat-rules
-- [ ] https://topedgeai.com/features/cod-confirmation
-- [ ] https://topedgeai.com/features/flow-builder
-- [ ] https://topedgeai.com/features/intent-detection
-- [ ] https://topedgeai.com/features/meta-manager
-- [ ] https://topedgeai.com/features/opt-in-tools
-- [ ] https://topedgeai.com/features/profit-loss
-- [ ] https://topedgeai.com/features/warranty
-- [ ] https://topedgeai.com/pricing/meta-rates
-- [ ] https://topedgeai.com/shopify-whatsapp-integration
+- [ ] https://topedgeai.com/integrations
 
-## Unchanged in this release — 51 URLs
+## Unchanged in this release — 74 URLs
 
 These did not change, so the sitemap already carries their real date and a
 manual request buys nothing. Submit only if Search Console reports them as
 missing from the index.
 
 - https://topedgeai.com/  (lastmod 2026-10-21)
+- https://topedgeai.com/pricing  (lastmod 2026-10-22)
 - https://topedgeai.com/contact  (lastmod 2026-10-21)
+- https://topedgeai.com/customers  (lastmod 2026-10-23)
 - https://topedgeai.com/blog/whatsapp-abandoned-cart-recovery-shopify  (lastmod 2026-10-21)
 - https://topedgeai.com/blog/shopify-automation-checklist-whatsapp-cart-recovery  (lastmod 2026-10-21)
+- https://topedgeai.com/features  (lastmod 2026-10-23)
+- https://topedgeai.com/features/journeys  (lastmod 2026-10-23)
+- https://topedgeai.com/whatsapp-journey-examples/abandoned-cart-recovery  (lastmod 2026-10-23)
 - https://topedgeai.com/blog/whatsapp-business-api-pricing-india  (lastmod 2026-10-21)
 - https://topedgeai.com/blog/how-to-reduce-rto-with-whatsapp-cod-confirmation  (lastmod 2026-10-21)
 - https://topedgeai.com/blog/dondy-alternative-shopify-india  (lastmod 2026-10-21)
@@ -81,6 +77,7 @@ missing from the index.
 - https://topedgeai.com/blog/what-is-ecommerce-automation-shopify-whatsapp  (lastmod 2026-10-21)
 - https://topedgeai.com/blog/whatsapp-opt-in-shopify-india  (lastmod 2026-10-21)
 - https://topedgeai.com/blog/whatsapp-shared-inbox-shopify-order-context  (lastmod 2026-10-21)
+- https://topedgeai.com/blog/cod-to-prepaid-whatsapp-shopify-india  (lastmod 2026-10-22)
 - https://topedgeai.com/compare/aisensy  (lastmod 2026-10-21)
 - https://topedgeai.com/compare/alternatives  (lastmod 2026-10-21)
 - https://topedgeai.com/compare/bitespeed  (lastmod 2026-10-21)
@@ -94,8 +91,25 @@ missing from the index.
 - https://topedgeai.com/compare/updatrr  (lastmod 2026-10-21)
 - https://topedgeai.com/compare/wati  (lastmod 2026-10-21)
 - https://topedgeai.com/compare/zoko  (lastmod 2026-10-21)
-- https://topedgeai.com/about  (lastmod 2026-10-21)
+- https://topedgeai.com/features/ai-brain  (lastmod 2026-10-23)
+- https://topedgeai.com/features/analytics  (lastmod 2026-10-23)
+- https://topedgeai.com/features/audience-crm  (lastmod 2026-10-23)
+- https://topedgeai.com/features/campaigns  (lastmod 2026-10-23)
+- https://topedgeai.com/features/chat-rules  (lastmod 2026-10-23)
+- https://topedgeai.com/features/cod-confirmation  (lastmod 2026-10-23)
+- https://topedgeai.com/features/flow-builder  (lastmod 2026-10-23)
+- https://topedgeai.com/features/intent-detection  (lastmod 2026-10-23)
+- https://topedgeai.com/features/meta-manager  (lastmod 2026-10-23)
+- https://topedgeai.com/features/opt-in-tools  (lastmod 2026-10-23)
+- https://topedgeai.com/features/profit-loss  (lastmod 2026-10-23)
+- https://topedgeai.com/features/warranty  (lastmod 2026-10-23)
 - https://topedgeai.com/compare  (lastmod 2026-10-21)
-- https://topedgeai.com/integrations  (lastmod 2026-10-21)
+- https://topedgeai.com/pricing/meta-rates  (lastmod 2026-10-23)
+- https://topedgeai.com/shopify-whatsapp-integration  (lastmod 2026-10-23)
+- https://topedgeai.com/whatsapp-journey-examples  (lastmod 2026-10-23)
+- https://topedgeai.com/whatsapp-journey-examples/cod-confirmation  (lastmod 2026-10-23)
+- https://topedgeai.com/whatsapp-journey-examples/cod-to-prepaid  (lastmod 2026-10-23)
+- https://topedgeai.com/whatsapp-journey-examples/order-status-updates  (lastmod 2026-10-23)
+- https://topedgeai.com/whatsapp-templates  (lastmod 2026-10-23)
 - https://topedgeai.com/privacy  (lastmod 2026-10-05)
 - https://topedgeai.com/terms  (lastmod 2026-10-05)
