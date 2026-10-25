@@ -1,7 +1,7 @@
 (function(){
   var SLUG='{{SLUG}}';
   var SIGNUP_URL='{{SIGNUP_URL}}';
-  var KEYS=['gclid','gbraid','wbraid','utm_source','utm_medium','utm_campaign','utm_term','utm_content'];
+  var KEYS=['gclid','gbraid','wbraid','fbclid','utm_source','utm_medium','utm_campaign','utm_term','utm_content','ref'];
   var d={},n=0,s=null;
   try{
     var p=new URLSearchParams(location.search);

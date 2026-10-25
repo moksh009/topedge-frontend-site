@@ -12,11 +12,13 @@ export const ATTRIBUTION_KEYS = [
   'gclid',
   'gbraid',
   'wbraid',
+  'fbclid',
   'utm_source',
   'utm_medium',
   'utm_campaign',
   'utm_term',
   'utm_content',
+  'ref',
 ] as const;
 
 export type Attribution = Partial<Record<(typeof ATTRIBUTION_KEYS)[number] | 'lp' | 'ts', string>>;
