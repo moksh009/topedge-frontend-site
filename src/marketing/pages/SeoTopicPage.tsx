@@ -4,6 +4,7 @@ import MarketingPage from '../components/MarketingPage';
 import MarketingCtaBand from '../components/MarketingCtaBand';
 import { PageHero, Section, SectionHeading, MarketingCard, PrimaryButton } from '../components/ui';
 import { TopicBlockView, TopicToc } from '../components/topic/TopicBlocks';
+import FaqAccordion from '../components/topic/FaqAccordion';
 import { getSeoTopic } from '../data/seoTopics';
 import {
   breadcrumbJsonLd,
@@ -112,14 +113,7 @@ export default function SeoTopicPage({ slug }: Props) {
         <Section wash="soft">
           <SectionHeading title="Questions teams ask" />
           <div className="mx-auto max-w-3xl">
-            <dl className="mkt-faq">
-              {topic.faqs.map((f) => (
-                <div key={f.question} className="mkt-faq__item">
-                  <dt className="mkt-faq__q">{f.question}</dt>
-                  <dd className="mkt-faq__a">{f.answer}</dd>
-                </div>
-              ))}
-            </dl>
+            <FaqAccordion items={topic.faqs} />
           </div>
         </Section>
 

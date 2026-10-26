@@ -4,6 +4,7 @@ import MarketingPage from '../components/MarketingPage';
 import MarketingCtaBand from '../components/MarketingCtaBand';
 import { Section, SectionHeading, PrimaryButton } from '../components/ui';
 import { TopicBlockView, TopicToc } from '../components/topic/TopicBlocks';
+import FaqAccordion from '../components/topic/FaqAccordion';
 import JourneyFlow from '../components/journey/JourneyFlow';
 import JourneyHero from '../components/journey/JourneyHero';
 import { JOURNEY_EXAMPLES, journeyExampleBySlug } from '../data/journeyExamples';
@@ -76,6 +77,22 @@ export default function JourneyExamplePage({ slug }: { slug: string }) {
             */}
             <JourneyFlow trigger={j.trigger} triggerNote={j.triggerNote} steps={j.steps} />
 
+            {/*
+              j.image is a real product composition, not generated art, kept
+              for exactly this: showing what the journey looks like running
+              rather than only describing it.
+            */}
+            <figure className="mkt-jx-band">
+              <img
+                src={j.image}
+                alt={j.imageAlt}
+                width={1200}
+                height={750}
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption className="mkt-jx-band__caption">{j.imageAlt}</figcaption>
+            </figure>
 
             {j.blocks.length > 0 && (
               <div className="mt-10">
@@ -96,14 +113,7 @@ export default function JourneyExamplePage({ slug }: { slug: string }) {
         <Section wash="soft">
           <SectionHeading title="Questions teams ask" center />
           <div className="mx-auto max-w-3xl">
-            <dl className="mkt-faq">
-              {j.faqs.map((f) => (
-                <div key={f.question} className="mkt-faq__item">
-                  <dt className="mkt-faq__q">{f.question}</dt>
-                  <dd className="mkt-faq__a">{f.answer}</dd>
-                </div>
-              ))}
-            </dl>
+            <FaqAccordion items={j.faqs} />
           </div>
         </Section>
 

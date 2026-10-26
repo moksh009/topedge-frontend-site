@@ -1158,7 +1158,7 @@
 
 .mkt-blog-summary__label {
   margin: 0 0 1.1rem;
-  font-family: 'Inter Tight', var(--mkt-font);
+  font-family: var(--mkt-font);
   font-size: clamp(1.4rem, 3.2vw, 1.85rem);
   font-weight: 500;
   letter-spacing: -0.025em;
@@ -1353,7 +1353,7 @@
 
 .mkt-blog-cats__label {
   margin: 0 0 0.9rem;
-  font-family: 'Inter Tight', var(--mkt-font);
+  font-family: var(--mkt-font);
   font-size: 1.5rem;
   font-weight: 500;
   letter-spacing: -0.02em;

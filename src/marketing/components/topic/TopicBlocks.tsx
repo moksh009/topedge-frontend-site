@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, type ReactNode } from 'react';
 import { SOURCES, type SourceId } from '@/data/sources';
 import '../../styles/topic-blocks.css';
 
@@ -88,6 +88,36 @@ export function TopicToc({ blocks }: { blocks: TopicBlock[] }) {
   );
 }
 
+/** `**word**` renders as emphasis, the one inline markup prose content gets. */
+function renderInline(text: string) {
+  return text.split(/(\*\*[^*]+\*\*)/g).map((part, i) =>
+    /^\*\*[^*]+\*\*$/.test(part) ? (
+      <strong key={i}>{part.slice(2, -2)}</strong>
+    ) : (
+      <Fragment key={i}>{part}</Fragment>
+    ),
+  );
+}
+
+function BlockKicker() {
+  return <span className="mkt-blk__kicker" aria-hidden />;
+}
+
+const CALLOUT_ICON: Record<'note' | 'warn', ReactNode> = {
+  note: (
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 11v5.5M12 7.5v.01" />
+    </svg>
+  ),
+  warn: (
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M10.3 3.9L2.7 17.1a1.8 1.8 0 0 0 1.56 2.7h15.5a1.8 1.8 0 0 0 1.56-2.7L13.7 3.9a1.8 1.8 0 0 0-3.4 0z" />
+      <path d="M12 9.5v4M12 17v.01" />
+    </svg>
+  ),
+};
+
 function Cite({ source }: { source: SourceId }) {
   const s = SOURCES[source];
   return (
@@ -152,10 +182,11 @@ export function TopicBlockView({ block }: { block: TopicBlock }) {
       const paras = Array.isArray(block.body) ? block.body : [block.body];
       return (
         <section id={block.id} className="mkt-blk">
+          <BlockKicker />
           <h2 className="mkt-blk__h2">{block.h2}</h2>
           {paras.map((p, i) => (
-            <p key={i} className="mkt-blk__body">
-              {p}
+            <p key={i} className={`mkt-blk__body${i === 0 ? ' mkt-blk__body--lede' : ''}`}>
+              {renderInline(p)}
             </p>
           ))}
         </section>
@@ -165,6 +196,7 @@ export function TopicBlockView({ block }: { block: TopicBlock }) {
     case 'specTable':
       return (
         <section id={block.id} className="mkt-blk">
+          <BlockKicker />
           <h2 className="mkt-blk__h2">{block.h2}</h2>
           {block.intro && <p className="mkt-blk__intro">{block.intro}</p>}
           <SpecTable block={block} />
@@ -175,6 +207,7 @@ export function TopicBlockView({ block }: { block: TopicBlock }) {
     case 'steps':
       return (
         <section id={block.id} className="mkt-blk">
+          <BlockKicker />
           <h2 className="mkt-blk__h2">{block.h2}</h2>
           {block.intro && <p className="mkt-blk__intro">{block.intro}</p>}
           <ol className="mkt-steps">
@@ -197,6 +230,7 @@ export function TopicBlockView({ block }: { block: TopicBlock }) {
     case 'figures':
       return (
         <section id={block.id} className="mkt-blk">
+          <BlockKicker />
           <h2 className="mkt-blk__h2">{block.h2}</h2>
           {block.intro && <p className="mkt-blk__intro">{block.intro}</p>}
           <ul className="mkt-figs">
@@ -214,6 +248,7 @@ export function TopicBlockView({ block }: { block: TopicBlock }) {
     case 'checklist':
       return (
         <section id={block.id} className="mkt-blk">
+          <BlockKicker />
           <h2 className="mkt-blk__h2">{block.h2}</h2>
           {block.intro && <p className="mkt-blk__intro">{block.intro}</p>}
           <div className="mkt-check">
@@ -237,24 +272,28 @@ export function TopicBlockView({ block }: { block: TopicBlock }) {
         </section>
       );
 
-    case 'callout':
+    case 'callout': {
+      const tone = block.tone === 'warn' ? 'warn' : 'note';
       return (
-        <aside
-          id={block.id}
-          className={`mkt-callout${block.tone === 'warn' ? ' mkt-callout--warn' : ''}`}
-        >
-          <p className="mkt-callout__title">{block.title}</p>
-          <p className="mkt-callout__body">
-            {block.body}
+        <aside id={block.id} className={`mkt-callout${tone === 'warn' ? ' mkt-callout--warn' : ''}`}>
+          <span className="mkt-callout__icon" aria-hidden>
+            {CALLOUT_ICON[tone]}
+          </span>
+          <div className="mkt-callout__content">
+            <p className="mkt-callout__title">{block.title}</p>
+            <p className="mkt-callout__body">{renderInline(block.body)}</p>
             {block.link && (
-              <Fragment>
-                {' '}
-                <a href={block.link.href}>{block.link.label}</a>
-              </Fragment>
+              <a className="mkt-callout__link" href={block.link.href}>
+                {block.link.label}
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </a>
             )}
-          </p>
+          </div>
         </aside>
       );
+    }
 
     default:
       return null;

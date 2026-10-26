@@ -4,6 +4,7 @@ import MarketingPage from '../components/MarketingPage';
 import MarketingCtaBand from '../components/MarketingCtaBand';
 import { Section, SectionHeading, PrimaryButton } from '../components/ui';
 import { TopicBlockView, type TopicBlock } from '../components/topic/TopicBlocks';
+import FaqAccordion from '../components/topic/FaqAccordion';
 import JourneyHero from '../components/journey/JourneyHero';
 import PhoneMock from '../components/journey/PhoneMock';
 import {
@@ -268,14 +269,7 @@ export default function WhatsAppTemplatesPage() {
         <Section>
           <SectionHeading title="Questions teams ask" center />
           <div className="mx-auto max-w-3xl">
-            <dl className="mkt-faq">
-              {FAQS.map((f) => (
-                <div key={f.question} className="mkt-faq__item">
-                  <dt className="mkt-faq__q">{f.question}</dt>
-                  <dd className="mkt-faq__a">{f.answer}</dd>
-                </div>
-              ))}
-            </dl>
+            <FaqAccordion items={FAQS} />
           </div>
 
           <ul className="mx-auto mt-10 flex max-w-3xl flex-wrap justify-center gap-3">

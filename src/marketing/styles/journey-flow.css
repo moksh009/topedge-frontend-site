@@ -40,7 +40,7 @@
 
 .mkt-jf__trigger-name {
   margin: 0.35rem 0 0;
-  font-family: 'Inter Tight', var(--mkt-font);
+  font-family: var(--mkt-font);
   font-size: 1.05rem;
   font-weight: 500;
   color: var(--mkt-ink);
@@ -268,7 +268,7 @@
 }
 
 .mkt-jx-card__title {
-  font-family: 'Inter Tight', var(--mkt-font);
+  font-family: var(--mkt-font);
   font-size: 1.15rem;
   font-weight: 500;
   letter-spacing: -0.015em;
@@ -299,42 +299,104 @@
 
 .mkt-jx-note {
   display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.4rem;
-  padding: 1rem 1.25rem;
-  border: 1px dashed #d9cffa;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.1rem 1.35rem;
+  border: 1px solid #ebe5fc;
   border-radius: var(--mkt-radius-card);
-  background: #fbfaff;
-  font-size: 0.9rem;
-  line-height: 1.6;
-  color: #475569;
+  background: linear-gradient(135deg, #faf9ff 0%, #f4f1ff 100%);
   text-decoration: none;
-}
-
-.mkt-jx-note strong {
-  color: var(--mkt-ink);
-  font-weight: 600;
-}
-
-.mkt-jx-note code {
-  padding: 0.1rem 0.4rem;
-  border-radius: 6px;
-  background: #f1eefb;
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 0.8rem;
-  color: #5b21b6;
-}
-
-.mkt-jx-note span {
-  margin-left: auto;
-  flex: none;
-  font-weight: 500;
-  color: var(--mkt-violet);
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
 }
 
 .mkt-jx-note:hover {
   border-color: #c4b5fd;
+  box-shadow: 0 16px 34px -26px rgba(76, 29, 149, 0.45);
+  transform: translateY(-1px);
+}
+
+.mkt-jx-note__icon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--mkt-violet);
+  box-shadow: 0 1px 0 rgba(124, 58, 237, 0.08), 0 10px 20px -14px rgba(76, 29, 149, 0.4);
+}
+
+.mkt-jx-note__body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.mkt-jx-note__tag {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mkt-violet);
+}
+
+.mkt-jx-note__title {
+  margin-top: 0.2rem;
+  font-size: 0.98rem;
+  font-weight: 500;
+  color: var(--mkt-ink);
+}
+
+.mkt-jx-note__desc {
+  margin-top: 0.2rem;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: #64748b;
+}
+
+.mkt-jx-note__desc code {
+  padding: 0.1rem 0.4rem;
+  border-radius: 6px;
+  background: #ffffff;
+  border: 1px solid #ebe5fc;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.78rem;
+  color: #5b21b6;
+}
+
+.mkt-jx-note__cta {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 0.3rem;
+  margin-left: auto;
+  padding-left: 1rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--mkt-violet);
+  white-space: nowrap;
+}
+
+.mkt-jx-note__cta svg {
+  transition: transform 0.18s ease;
+}
+
+.mkt-jx-note:hover .mkt-jx-note__cta svg {
+  transform: translateX(3px);
+}
+
+@media (max-width: 640px) {
+  .mkt-jx-note {
+    flex-wrap: wrap;
+  }
+
+  .mkt-jx-note__cta {
+    margin-left: 0;
+    padding-left: calc(2.75rem + 1rem);
+  }
 }
 
 /* ===================================================================
@@ -375,7 +437,7 @@
 
 .mkt-jh__title {
   margin: 0.9rem 0 0;
-  font-family: 'Inter Tight', var(--mkt-font);
+  font-family: var(--mkt-font);
   font-weight: 500;
   letter-spacing: -0.032em;
   line-height: 1.1;
@@ -559,9 +621,10 @@
   margin-right: auto;
 }
 
-/* Concept illustration band between the flow diagram and the argument. */
+/* Real product shot between the flow diagram and the argument. */
 .mkt-jx-band {
   margin: 2.5rem 0 0;
+  border: 1px solid var(--mkt-border);
   border-radius: 20px;
   overflow: hidden;
   background: #f4f2ff;
@@ -571,6 +634,16 @@
   display: block;
   width: 100%;
   height: auto;
+}
+
+.mkt-jx-band__caption {
+  margin: 0;
+  padding: 0.85rem 1.1rem;
+  border-top: 1px solid var(--mkt-border);
+  background: #ffffff;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: #64748b;
 }
 
 /* ===================================================================
@@ -627,25 +700,25 @@
 }
 
 .mkt-wa__media {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.5rem;
-  padding: 0.75rem 0.7rem;
+  margin: 0 0 0.5rem;
   border-radius: 7px;
+  overflow: hidden;
   background: #f3f4f6;
-  color: #6b7280;
 }
 
-.mkt-wa__media-icon {
-  display: inline-flex;
-  flex: none;
-  color: #9ca3af;
+.mkt-wa__media-art {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
 }
 
 .mkt-wa__media-label {
-  font-size: 0.74rem;
+  margin: 0;
+  padding: 0.3rem 0.1rem 0;
+  font-size: 0.68rem;
   line-height: 1.4;
+  color: #9ca3af;
+  text-align: center;
 }
 
 .mkt-wa__body {
@@ -752,7 +825,7 @@
 
 .mkt-tpl__title {
   margin: 0;
-  font-family: 'Inter Tight', var(--mkt-font);
+  font-family: var(--mkt-font);
   font-size: 1.2rem;
   font-weight: 500;
   letter-spacing: -0.018em;

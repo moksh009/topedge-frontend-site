@@ -50,7 +50,7 @@ body::-webkit-scrollbar {
 }
 
 .mkt-kpi {
-  font-family: 'Inter Tight', var(--mkt-font);
+  font-family: var(--mkt-font);
   font-weight: 500;
   font-variant-numeric: tabular-nums;
 }

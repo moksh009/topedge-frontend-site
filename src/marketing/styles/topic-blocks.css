@@ -66,8 +66,22 @@
   scroll-margin-top: calc(var(--marketing-nav-h, 96px) + 1rem);
 }
 
+.mkt-blk__kicker {
+  display: block;
+  width: 2.25rem;
+  height: 3px;
+  margin-bottom: 0.9rem;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #7c3aed, #c4b5fd);
+}
+
+.mkt-jx-centered .mkt-blk__kicker {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .mkt-blk__h2 {
-  font-family: 'Inter Tight', var(--mkt-font);
+  font-family: var(--mkt-font);
   font-size: clamp(1.5rem, 3vw, 2rem);
   font-weight: 500;
   letter-spacing: -0.02em;
@@ -88,6 +102,27 @@
   font-size: 1rem;
   line-height: 1.7;
   color: #475569;
+}
+
+/* The opening line of a prose block, read slightly louder than the rest. */
+.mkt-blk__body--lede {
+  font-size: 1.08rem;
+  color: #374151;
+}
+
+.mkt-blk__body strong {
+  color: var(--mkt-ink);
+  font-weight: 600;
+}
+
+.mkt-blk__body mark {
+  padding: 0.02em 0.3em;
+  border-radius: 0.35em;
+  background: #ede9fe;
+  color: #5b21b6;
+  font-weight: 500;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
 }
 
 /* ---------- spec / comparison table ---------- */
@@ -310,7 +345,7 @@
 }
 
 .mkt-figs__value {
-  font-family: 'Inter Tight', var(--mkt-font);
+  font-family: var(--mkt-font);
   font-size: clamp(1.5rem, 3.2vw, 1.9rem);
   font-weight: 500;
   letter-spacing: -0.02em;
@@ -420,18 +455,41 @@
 /* ---------- callout ---------- */
 
 .mkt-callout {
+  display: flex;
+  gap: 0.9rem;
   margin-top: 1.75rem;
-  border: 1px solid var(--mkt-border);
-  border-left: 3px solid var(--mkt-violet);
-  border-radius: var(--mkt-radius-control);
-  background: #faf9ff;
-  padding: 1.1rem 1.3rem;
+  border: 1px solid #ebe5fc;
+  border-radius: var(--mkt-radius-card);
+  background: linear-gradient(135deg, #faf9ff 0%, #f4f1ff 100%);
+  padding: 1.15rem 1.3rem;
 }
 
 .mkt-callout--warn {
-  border-left-color: #f59e0b;
-  background: #fffbeb;
   border-color: #fde68a;
+  background: linear-gradient(135deg, #fffbeb 0%, #fff7e0 100%);
+}
+
+.mkt-callout__icon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--mkt-violet);
+  box-shadow: 0 1px 0 rgba(124, 58, 237, 0.08), 0 10px 20px -14px rgba(76, 29, 149, 0.35);
+}
+
+.mkt-callout--warn .mkt-callout__icon {
+  color: #b45309;
+  box-shadow: 0 1px 0 rgba(180, 83, 9, 0.08), 0 10px 20px -14px rgba(180, 83, 9, 0.35);
+}
+
+.mkt-callout__content {
+  min-width: 0;
+  flex: 1 1 auto;
 }
 
 .mkt-callout__title {
@@ -448,10 +506,30 @@
   color: #475569;
 }
 
-.mkt-callout__body a {
+.mkt-callout__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: 0.7rem;
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+  background: #ffffff;
+  border: 1px solid #ddd6fe;
   color: var(--mkt-violet);
+  font-size: 0.82rem;
+  font-weight: 500;
   text-decoration: none;
-  border-bottom: 1px solid #ddd6fe;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.mkt-callout__link:hover {
+  border-color: #c4b5fd;
+  transform: translateX(2px);
+}
+
+.mkt-callout--warn .mkt-callout__link {
+  color: #b45309;
+  border-color: #fde68a;
 }
 
 /* ---------- FAQ, as a real definition list ---------- */

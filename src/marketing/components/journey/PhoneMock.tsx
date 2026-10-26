@@ -78,14 +78,23 @@ export default function PhoneMock({
           <div className="mkt-ph__chat">
             <div className="mkt-ph__bubble">
               {message.header && (
-                <div className="mkt-ph__media" aria-hidden>
-                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="3" y="4" width="18" height="16" rx="2" />
-                    <circle cx="8.5" cy="9.5" r="1.5" />
-                    <path d="M21 16l-5-5L5 20" />
+                <figure className="mkt-ph__media" aria-hidden>
+                  <svg className="mkt-ph__media-art" viewBox="0 0 160 110" preserveAspectRatio="xMidYMid slice">
+                    <defs>
+                      <linearGradient id="phMediaGrad" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stopColor="#ede9fe" />
+                        <stop offset="100%" stopColor="#fdf2f8" />
+                      </linearGradient>
+                    </defs>
+                    <rect width="160" height="110" fill="url(#phMediaGrad)" />
+                    <g transform="translate(60 25)" fill="none" stroke="#9061e0" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M20 10L36 19.5V40.5L20 50L4 40.5V19.5L20 10Z" />
+                      <path d="M4 19.5L20 29L36 19.5" />
+                      <path d="M20 29V50" />
+                    </g>
                   </svg>
-                  <span>{message.header}</span>
-                </div>
+                  <figcaption>{message.header}</figcaption>
+                </figure>
               )}
 
               <p className="mkt-ph__body">{renderBody(message.body)}</p>

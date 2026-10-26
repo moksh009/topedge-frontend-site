@@ -4,6 +4,7 @@ import MarketingPage from '../components/MarketingPage';
 import MarketingCtaBand from '../components/MarketingCtaBand';
 import { Section, SectionHeading, PrimaryButton } from '../components/ui';
 import { TopicBlockView, type TopicBlock } from '../components/topic/TopicBlocks';
+import FaqAccordion from '../components/topic/FaqAccordion';
 import { JOURNEY_EXAMPLES } from '../data/journeyExamples';
 import JourneyHero from '../components/journey/JourneyHero';
 import {
@@ -54,8 +55,8 @@ const BLOCKS: TopicBlock[] = [
     id: 'what-is-a-journey',
     h2: 'What a journey is, and what it is not',
     body: [
-      'A journey is an automation tied to something that happened in your store. Shopify says a checkout was abandoned, an order was placed, a COD order needs confirming, a parcel shipped. The journey picks that event up and sends an approved WhatsApp template carrying the real order detail, then waits to see what the customer does.',
-      'That last part is what separates it from a chatbot. A chatbot answers whatever is typed at it. A journey starts from a fact, already knows the order number, the items and the amount due, and can branch on a reply because it has somewhere to send the outcome: release the order, hold it, hand the thread to a human.',
+      'A journey is **an automation tied to something that happened in your store**. Shopify says a checkout was abandoned, an order was placed, a COD order needs confirming, a parcel shipped. The journey picks that event up and sends an approved WhatsApp template carrying the real order detail, then waits to see what the customer does.',
+      'That last part is what separates it from a chatbot. A chatbot answers whatever is typed at it. A journey **starts from a fact** — it already knows the order number, the items and the amount due — and can branch on a reply because it has somewhere to send the outcome: release the order, hold it, hand the thread to a human.',
     ],
   },
   {
@@ -153,24 +154,7 @@ export default function JourneyExamplesIndexPage() {
               </Link>
             </>
           }
-        >
-          {/* Four real compositions, one per journey, doubling as navigation. */}
-          <div className="mkt-jh__strip">
-            {JOURNEY_EXAMPLES.map((j) => (
-              <Link key={j.slug} to={`${PATH}/${j.slug}`}>
-                <img
-                  src={j.art}
-                  alt={j.artAlt}
-                  width={640}
-                  height={480}
-                  loading="eager"
-                  decoding="async"
-                />
-                <span>{j.cardTitle}</span>
-              </Link>
-            ))}
-          </div>
-        </JourneyHero>
+        />
 
         <Section className="!pt-0">
           <div className="mx-auto max-w-3xl">
@@ -183,12 +167,13 @@ export default function JourneyExamplesIndexPage() {
           </div>
         </Section>
 
+        {/*
+          One card grid, not a thumbnail strip in the hero followed by a second,
+          larger version of the same four cards. The grid doubles as navigation
+          into each journey, so it carries the real trigger, the blurb and a
+          picture rather than just a caption.
+        */}
         <Section wash="soft">
-          <SectionHeading
-            title="Four journeys, in the order most stores publish them"
-            subtitle="Each one is bound to a real Shopify event. Open any for the full sequence, the branches and the per-message cost."
-            center
-          />
           <ul className="mx-auto grid max-w-5xl gap-4 md:grid-cols-2">
             {JOURNEY_EXAMPLES.map((j) => (
               <li key={j.slug}>
@@ -207,14 +192,30 @@ export default function JourneyExamplesIndexPage() {
 
           {/*
             Warranty is a real shipped automation and a genuine differentiator,
-            but nobody searches for it. It gets a pointer rather than a page
-            that could not rank and could not convert.
+            but nobody searches for it. It gets a feature card pointing at
+            /features/warranty rather than a page that could not rank.
           */}
           <div className="mx-auto mt-6 max-w-5xl">
             <Link to="/features/warranty" className="mkt-jx-note">
-              <strong>Also shipping:</strong> a warranty registration journey on the{' '}
-              <code>order_placed</code> trigger, for brands that register warranty at purchase.
-              <span>See the warranty feature</span>
+              <span className="mkt-jx-note__icon" aria-hidden>
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 3l7 3.2v5.1c0 4.6-3 8.1-7 9.4-4-1.3-7-4.8-7-9.4V6.2L12 3z" />
+                  <path d="M9 12.2l2 2 4-4.2" />
+                </svg>
+              </span>
+              <span className="mkt-jx-note__body">
+                <span className="mkt-jx-note__tag">Also shipping</span>
+                <span className="mkt-jx-note__title">Warranty registration journey</span>
+                <span className="mkt-jx-note__desc">
+                  Fires on <code>order_placed</code>, for brands that register warranty at purchase.
+                </span>
+              </span>
+              <span className="mkt-jx-note__cta">
+                See the warranty feature
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </span>
             </Link>
           </div>
         </Section>
@@ -230,14 +231,7 @@ export default function JourneyExamplesIndexPage() {
         <Section wash="soft">
           <SectionHeading title="Questions teams ask" center />
           <div className="mx-auto max-w-3xl">
-            <dl className="mkt-faq">
-              {FAQS.map((f) => (
-                <div key={f.question} className="mkt-faq__item">
-                  <dt className="mkt-faq__q">{f.question}</dt>
-                  <dd className="mkt-faq__a">{f.answer}</dd>
-                </div>
-              ))}
-            </dl>
+            <FaqAccordion items={FAQS} />
           </div>
         </Section>
 
