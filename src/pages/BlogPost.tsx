@@ -21,6 +21,7 @@ import {
   splitNumericRanges,
 } from '../marketing/lib/blogHtml';
 import { bindCalculators } from '../marketing/lib/blogCalculators';
+import SummarizeWithAI from '../marketing/components/blog/SummarizeWithAI';
 import '../marketing/styles/blog.css';
 import '../marketing/styles/calculator.css';
 
@@ -210,6 +211,7 @@ export default function BlogPost() {
             eleven links before the three lines that answer the question.
           */}
           <div className="mkt-blog-layout">
+            <SummarizeWithAI url={canonical} title={post.title} />
             {post.summary?.length ? (
               <aside className="mkt-blog-summary" aria-labelledby="blog-summary-heading">
                 <h2 id="blog-summary-heading" className="mkt-blog-summary__label">

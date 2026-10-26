@@ -11,6 +11,11 @@ export const blogPosts: BlogPost[] = [
     title: 'Shopify Abandoned Cart Recovery on WhatsApp (India)',
     description:
       'WhatsApp abandoned cart recovery for Shopify: cart vs checkout, message timing, templates, opt-in rules and what to look for in a recovery tool.',
+    summary: [
+      'Cart abandonment runs around 70% (Baymard Institute, averaged over 50 studies), so recovery is not an edge case: it is most of your traffic.',
+      "A reminder is a marketing template at ₹0.8631 per delivered message on Meta's India card, so a full three-step sequence costs ₹2.59 at most.",
+      'Purchase suppression is what makes the maths work: every shopper who buys after message 1 cancels messages 2 and 3, so you pay ₹0.8631 instead of ₹2.59.',
+    ],
     slug: 'whatsapp-abandoned-cart-recovery-shopify',
     date: '2026-09-01',
     updated: '2026-10-21',
@@ -904,6 +909,11 @@ export const blogPosts: BlogPost[] = [
     title: 'Best WhatsApp Automation for Shopify India (2026)',
     description:
       'Direct answer plus a comparison table of WhatsApp automation tools for Shopify India: WATI, AiSensy, Interakt, Bitespeed, Zoko, Getgabs, Kanal, Dondy, TopEdge.',
+    summary: [
+      'Score vendors on four things only: Meta markup, COD handling, whether pricing is conversation-metered or flat, and what stays gated after “free to install”.',
+      'The comparison table prices every shortlisted tool at 500 orders and 10,000 marketing messages a month, so you see the total bill rather than the plan fee.',
+      'Ask for a live demo of a COD confirmation firing on a real order. A vendor who can only show slides cannot show you the part that actually breaks.',
+    ],
     slug: 'best-whatsapp-automation-tools-shopify-india',
     date: '2026-09-08',
     updated: '2026-10-21',
@@ -1903,6 +1913,11 @@ export const blogPosts: BlogPost[] = [
     title: 'How to Choose a WhatsApp App on Shopify App Store',
     description:
       'Pre-install checklist: Meta markup, COD depth, conversation metering vs flat pricing, free-to-install vs gated features, and reviews that matter.',
+    summary: [
+      "“Official API” says nothing about price. Ask what the app charges per message on top of Meta's India rate card, in rupees, in writing.",
+      'Confirming a COD order and converting it to prepaid are different jobs. Plenty of apps do the first and quietly skip the second.',
+      'Judge Shopify reviews by what the reviewer was trying to do, not by the star count: five stars from a prepaid-only store tells a COD-heavy store nothing.',
+    ],
     slug: 'how-to-choose-whatsapp-app-shopify-app-store',
     date: '2026-09-20',
     updated: '2026-10-21',
@@ -1994,6 +2009,11 @@ export const blogPosts: BlogPost[] = [
     title: 'WhatsApp Business API Pricing India 2026: ₹ Rates & Fees',
     description:
       'Meta WhatsApp API rates in India from 1 October 2026: ₹0.8631 marketing, ₹0.115 utility, and ₹0.115 service replies after 1,000 free, plus BSP markup math.',
+    summary: [
+      "Meta's India rates from 1 October 2026: ₹0.8631 per delivered marketing message and ₹0.1150 for utility and authentication, before 18% GST.",
+      'Every WhatsApp account must move to INR billing by 31 December 2026, which is why older articles and your own invoices may not agree.',
+      'The number that decides your bill is the platform markup on top of Meta, not the plan fee. The worked 10,000-message month shows the gap in rupees.',
+    ],
     slug: 'whatsapp-business-api-pricing-india',
     date: '2026-09-20',
     updated: '2026-10-21',
@@ -2297,6 +2317,11 @@ export const blogPosts: BlogPost[] = [
     title: 'WhatsApp Automation for Shopify India: Complete Guide',
     description:
       'WhatsApp automation for Shopify: store events to journeys, lifecycle workflows, App vs Cloud API, opt-in, India COD, and cost.',
+    summary: [
+      'WhatsApp automation on Shopify means order-triggered templates: cart reminders, COD confirmation, shipping and delivery updates, then campaigns.',
+      'The free WhatsApp Business app cannot do any of it. Automation needs the WhatsApp Business Platform, which is what every Shopify app connects to.',
+      "Opt-in is the part stores get wrong. Message someone who never opted in and it is Meta's quality rating, not your competitor, that limits your sending.",
+    ],
     slug: 'whatsapp-automation-for-shopify',
     date: '2026-09-21',
     updated: '2026-10-21',
@@ -2696,6 +2721,11 @@ export const blogPosts: BlogPost[] = [
     title: 'Best WhatsApp Apps for Shopify in 2026',
     description:
       'Best WhatsApp apps for Shopify in 2026, compared by job: cart recovery, COD, shared inbox and marketing. Pricing, Meta costs and who each type suits.',
+    summary: [
+      'Shopify WhatsApp apps split into four types: chat widgets, broadcast tools, full automation platforms, and COD-focused apps. They are not substitutes.',
+      'Pick by the job you are solving first. The best app for abandoned cart recovery is rarely the best app for COD confirmation.',
+      "Your real cost is the app plan plus Meta's per-message India rate plus any markup. Compare all three or the cheap plan wins on paper only.",
+    ],
     slug: 'best-whatsapp-apps-for-shopify',
     date: '2026-09-22',
     updated: '2026-10-21',
@@ -3127,6 +3157,11 @@ export const blogPosts: BlogPost[] = [
     title: 'Organic vs Paid Ecommerce Marketing in India (2026)',
     description:
       'Phased ecommerce playbook: validate without ad spend, build organic momentum, deploy paid ads, and recover lost sales with TopEdge AI WhatsApp automation.',
+    summary: [
+      'Organic is an asset you own, paid is attention you rent: the top organic search result takes roughly 27.6% of clicks against about 2.1% for the top ad.',
+      'Validate the product with zero ad spend, earn your first orders organically, then pour paid budget on what is already converting.',
+      'Paid traffic magnifies whatever your funnel already does, leaks included. Fix the leaks before you raise the budget, not after.',
+    ],
     slug: 'organic-vs-paid-ecommerce-marketing-2026',
     date: '2026-09-23',
     updated: '2026-10-21',
@@ -3343,6 +3378,11 @@ export const blogPosts: BlogPost[] = [
     title: 'COD & RTO in Indian D2C: 2026 Benchmark & ₹ Cost Per Order',
     description:
       '2026 India D2C RTO benchmark across 410M+ shipments: 39.2% festive peak vs 21.0% verified, 58% COD return rate, and ₹180 to ₹240 logistics loss math.',
+    summary: [
+      "India's RTO rate peaked at 39.2% in November 2025 and fell to 21.0% by mid-2026 (Unicommerce, across 410M+ shipments). Near 21% puts you ahead of the market.",
+      'COD is the whole problem: 58% of COD orders come back against under 15% of prepaid orders, and GoKwik puts COD RTO near 26% against prepaid under 2%.',
+      'One returned order costs ₹450 to ₹900 fully loaded (ClickPost). A WhatsApp utility confirmation that prevents it costs ₹0.1150.',
+    ],
     slug: 'cod-rto-benchmark-india-2026',
     date: '2026-09-25',
     updated: '2026-10-21',
@@ -3610,6 +3650,11 @@ export const blogPosts: BlogPost[] = [
     title: 'Ecommerce Profit Margins in India 2026: CAC, RTO & COD',
     description:
       'What ecommerce profit margins in India actually look like in 2026, what it costs to start, and how to protect margin against RTO, CAC and shipping.',
+    summary: [
+      'You can do ₹10 lakh a month in revenue and still lose money. Margin, not revenue, is what tells you whether the business works.',
+      'The four numbers that decide it: CAC, RTO, shipping cost per order and AOV, worked through on a real ₹799 kurta line by line.',
+      'Validate with ₹3,000 to ₹5,000 of Meta spend to a basic product page. If nothing happens after ₹5,000, move on to the next product.',
+    ],
     slug: 'profitable-ecommerce-business-india',
     date: '2026-10-04',
     updated: '2026-10-21',
@@ -4013,6 +4058,11 @@ export const blogPosts: BlogPost[] = [
     title: 'How to Automate Your Shopify Store in India (2026)',
     description:
       'A step-by-step guide to ecommerce automation for Indian store owners: order processing, inventory, support, WhatsApp and email workflows, and the tool stack.',
+    summary: [
+      'Automate in order of what it saves: COD confirmation first, then order updates, then cart recovery, then support. Each one pays for the next.',
+      'A failed delivery costs roughly ₹80 to ₹300 depending on your courier, which is why confirming the order beats discounting it.',
+      'Build the stack in layers and start with one workflow. A half-finished five-tool stack costs more than one workflow that runs every day.',
+    ],
     slug: 'how-to-automate-ecommerce-store-india',
     date: '2026-10-04',
     updated: '2026-10-21',
@@ -4268,6 +4318,11 @@ export const blogPosts: BlogPost[] = [
     title: 'Turn Instagram Reels & YouTube Shorts into Ecommerce Leads',
     description:
       'How to turn Instagram Reels and YouTube Shorts into trackable ecommerce leads in 2026: hooks, posting cadence, comment-to-DM capture, UTMs and follow-up.',
+    summary: [
+      'Post frequency is the strategy. Reels and Shorts reward volume far more than polish, so publishing cadence beats production budget.',
+      'Views are not leads. Every video needs one route into a conversation you can answer, usually a DM keyword or a WhatsApp link in the bio.',
+      'Above roughly ₹2,000 a ticket, qualify the lead before you quote. Under ₹1,500, a simple DM exchange is usually enough.',
+    ],
     slug: 'organic-ecommerce-leads-short-form-video',
     date: '2026-10-04',
     updated: '2026-10-21',
@@ -4445,6 +4500,11 @@ export const blogPosts: BlogPost[] = [
     title: 'Top 5 Product Categories to Sell Online in India 2026',
     description:
       'The five highest-demand ecommerce categories for 2026 with realistic margins: smart home, eco-friendly, health and wellness, pet care and athleisure.',
+    summary: [
+      'Five categories with real momentum in India, with gross margins: eco-friendly 55–70%, health and wellness 55–75%, pet care 45–65%, athleisure 45–65%, accessories 40–65%.',
+      'Momentum is not margin. A trending category you cannot source or ship profitably is a worse business than a dull one you can.',
+      'Picking the category is the easy part. Sourcing, COD handling and RTO are what decide whether it makes money.',
+    ],
     slug: 'trending-products-to-sell-online-india-2026',
     date: '2026-10-04',
     updated: '2026-10-21',

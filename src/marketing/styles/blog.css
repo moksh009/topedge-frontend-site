@@ -323,20 +323,20 @@
 }
 
 .mkt-blog-title {
-  margin-top: 1rem;
+  margin-top: 0.85rem;
   font-family: var(--mkt-font);
-  font-size: clamp(1.85rem, 4vw, 2.65rem);
+  font-size: clamp(1.6rem, 3.4vw, 2.2rem);
   font-weight: 560;
-  line-height: 1.14;
+  line-height: 1.18;
   letter-spacing: -0.03em;
   color: var(--mkt-ink);
   text-wrap: balance;
 }
 
 .mkt-blog-lede {
-  margin-top: 1.15rem;
-  font-size: 1.0625rem;
-  line-height: 1.65;
+  margin-top: 0.95rem;
+  font-size: 1rem;
+  line-height: 1.6;
   color: #475569;
 }
 
@@ -345,8 +345,8 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 0.5rem 1rem;
-  margin-top: 1.35rem;
-  font-size: 0.8125rem;
+  margin-top: 1.1rem;
+  font-size: 0.78rem;
   color: #94a3b8;
 }
 
@@ -377,32 +377,31 @@
 }
 
 .mkt-blog-body-wrap {
-  --mkt-blog-body-size: 1rem;
-  --mkt-blog-body-lh: 1.6;
-  max-width: 42rem;
+  --mkt-blog-body-size: 0.9375rem;
+  --mkt-blog-body-lh: 1.68;
+  max-width: 44rem;
   margin: 0 auto;
-  padding: 2.5rem 0 1rem;
+  padding: 1.5rem 0 1rem;
 }
 
 /* Width caps hold body text at 65-75 chars/line for each body size. */
 @media (min-width: 640px) {
   .mkt-blog-body-wrap {
-    --mkt-blog-body-size: 1.0625rem;
-    --mkt-blog-body-lh: 1.7;
-    max-width: 35.75rem;
+    --mkt-blog-body-size: 1rem;
+    --mkt-blog-body-lh: 1.72;
+    max-width: 42rem;
   }
 }
 
 @media (min-width: 768px) {
   .mkt-blog-body-wrap {
-    padding: 3.25rem 0 1.5rem;
+    padding: 1.75rem 0 1.5rem;
   }
 }
 
 @media (min-width: 1100px) {
   .mkt-blog-body-wrap {
-    --mkt-blog-body-size: 1.125rem;
-    max-width: 38.25rem;
+    max-width: 44rem;
   }
 }
 
@@ -417,7 +416,7 @@
 }
 
 .mkt-blog-prose p {
-  margin: 0 0 1.25em;
+  margin: 0 0 1.05em;
 }
 
 .mkt-nowrap {
@@ -425,19 +424,19 @@
 }
 
 .mkt-blog-prose h2 {
-  margin: 2.25em 0 0.75em;
+  margin: 1.9em 0 0.6em;
   font-family: var(--mkt-font);
-  font-size: 1.5em;
-  font-weight: 700;
+  font-size: 1.4em;
+  font-weight: 600;
   line-height: 1.25;
   letter-spacing: -0.02em;
   color: var(--mkt-ink);
 }
 
 .mkt-blog-prose h3 {
-  margin: 1.75em 0 0.6em;
+  margin: 1.5em 0 0.5em;
   font-family: var(--mkt-font);
-  font-size: 1.2em;
+  font-size: 1.12em;
   font-weight: 600;
   line-height: 1.35;
   letter-spacing: -0.015em;
@@ -457,13 +456,13 @@
 
 .mkt-blog-prose ul,
 .mkt-blog-prose ol {
-  margin: 0 0 1.5rem;
-  padding-left: 1.35rem;
+  margin: 0 0 1.2rem;
+  padding-left: 1.25rem;
 }
 
 .mkt-blog-prose li {
-  margin: 0.5rem 0;
-  padding-left: 0.35rem;
+  margin: 0.35rem 0;
+  padding-left: 0.3rem;
 }
 
 .mkt-blog-prose li::marker {
@@ -783,32 +782,31 @@
 .mkt-blog-faq {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  margin: 1rem 0 1.75rem;
+  gap: 0.6rem;
+  margin: 1rem 0 1.5rem;
   font-size: var(--mkt-blog-body-size, 1rem);
   line-height: var(--mkt-blog-body-lh, 1.6);
 }
 
 .mkt-blog-faq :is(.mkt-blog-faq__item, details) {
-  padding: 1rem 1.1rem 1.05rem;
-  border: 1px solid #ece7fa;
-  border-radius: 14px;
-  background: linear-gradient(180deg, #fcfbff 0%, #ffffff 100%);
-  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
+  padding: 0.85rem 1rem 0.9rem;
+  border: 1px solid #ebe8f5;
+  border-radius: 12px;
+  background: #fcfbff;
 }
 
 @media (min-width: 640px) {
   .mkt-blog-faq :is(.mkt-blog-faq__item, details) {
-    padding: 1.15rem 1.35rem 1.2rem;
+    padding: 0.95rem 1.15rem 1rem;
   }
 }
 
 .mkt-blog-faq :is(.mkt-blog-faq__q, summary) {
   margin: 0;
   font-family: var(--mkt-font);
-  font-size: 1.05em;
-  font-weight: 650;
-  line-height: 1.4;
+  font-size: 1em;
+  font-weight: 600;
+  line-height: 1.45;
   letter-spacing: -0.01em;
   color: var(--mkt-ink);
   list-style: none;
@@ -827,14 +825,14 @@
 }
 
 .mkt-blog-faq-block {
-  margin: 2.5rem 0 0;
+  margin: 2.25rem 0 0;
 }
 
 .mkt-blog-faq-block__title {
   margin: 0 0 1rem;
   font-family: var(--mkt-font);
-  font-size: calc(var(--mkt-blog-body-size) * 1.5);
-  font-weight: 700;
+  font-size: calc(var(--mkt-blog-body-size) * 1.4);
+  font-weight: 600;
   line-height: 1.25;
   letter-spacing: -0.02em;
   color: #0c1222;
@@ -845,18 +843,16 @@
 }
 
 .mkt-blog-cta {
-  margin: 3rem 0 0;
-  padding: 1.75rem 1.5rem;
-  border: 1px solid var(--mkt-border);
-  border-radius: 20px;
-  background:
-    linear-gradient(135deg, rgba(124, 58, 237, 0.06), rgba(255, 255, 255, 0.9)),
-    #fff;
+  margin: 2.5rem 0 0;
+  padding: 1.35rem 1.25rem 1.5rem;
+  border: 1px solid #ece9f6;
+  border-radius: 14px;
+  background: #faf9fd;
 }
 
 @media (min-width: 640px) {
   .mkt-blog-cta {
-    padding: 2rem 2.25rem;
+    padding: 1.6rem 1.75rem;
   }
 }
 
@@ -883,9 +879,9 @@
 }
 
 .mkt-blog-related {
-  padding: 3rem 0 4.5rem;
-  background: #f8f7fc;
-  border-top: 1px solid var(--mkt-border);
+  padding: 2.5rem 0 3.5rem;
+  background: #fbfafd;
+  border-top: 1px solid #eceaf4;
 }
 
 .mkt-blog-related__title {
@@ -1018,34 +1014,40 @@
 @media (min-width: 1024px) {
   .mkt-blog-layout {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 15.5rem;
-    /* Row 1 holds the summary, row 2 the article; the contents spans both. */
-    grid-template-rows: auto 1fr;
-    column-gap: 3rem;
+    grid-template-columns: minmax(0, 1fr) 15rem;
+    /* Rows: assistant row, summary, article. The contents spans all three. */
+    grid-template-rows: auto auto 1fr;
+    column-gap: 2.5rem;
     align-items: start;
+  }
+
+  .mkt-blog-layout > .mkt-blog-ai {
+    grid-column: 1;
+    grid-row: 1;
+    margin: 2rem auto 0;
   }
 
   .mkt-blog-layout > .mkt-blog-summary {
     grid-column: 1;
-    grid-row: 1;
-    margin: 3.25rem auto 0;
+    grid-row: 2;
+    margin: 1.1rem auto 0;
   }
 
   .mkt-blog-layout > .mkt-blog-toc {
     grid-column: 2;
-    grid-row: 1 / span 2;
+    grid-row: 1 / span 3;
   }
 
   .mkt-blog-layout > .mkt-blog-body-wrap {
     grid-column: 1;
-    grid-row: 2;
+    grid-row: 3;
     margin-left: auto;
     margin-right: auto;
   }
 
-  /* The summary already carries the top space in this layout. */
-  .mkt-blog-layout > .mkt-blog-summary + .mkt-blog-toc + .mkt-blog-body-wrap {
-    padding-top: 1.75rem;
+  /* The blocks above already carry the top space in this layout. */
+  .mkt-blog-layout > .mkt-blog-toc + .mkt-blog-body-wrap {
+    padding-top: 1.25rem;
   }
 }
 
@@ -1057,20 +1059,23 @@
  * rather than designed. These are the same max-widths .mkt-blog-body-wrap
  * carries at the same breakpoints; change them together.
  */
-.mkt-blog-layout > .mkt-blog-summary {
-  margin: 2.25rem auto 0;
-  max-width: 42rem;
+.mkt-blog-layout > .mkt-blog-summary,
+.mkt-blog-layout > .mkt-blog-ai {
+  margin: 1.4rem auto 0;
+  max-width: 44rem;
 }
 
 @media (min-width: 640px) {
-  .mkt-blog-layout > .mkt-blog-summary {
-    max-width: 35.75rem;
+  .mkt-blog-layout > .mkt-blog-summary,
+  .mkt-blog-layout > .mkt-blog-ai {
+    max-width: 42rem;
   }
 }
 
 @media (min-width: 1100px) {
-  .mkt-blog-layout > .mkt-blog-summary {
-    max-width: 38.25rem;
+  .mkt-blog-layout > .mkt-blog-summary,
+  .mkt-blog-layout > .mkt-blog-ai {
+    max-width: 44rem;
   }
 }
 
@@ -1078,10 +1083,10 @@
 
 .mkt-blog-toc {
   margin: 2rem 0 0;
-  padding: 1.1rem 1.25rem;
-  border: 1px solid var(--mkt-border);
-  border-radius: var(--mkt-radius-card);
-  background: #faf9ff;
+  padding: 0.9rem 1rem;
+  border: 1px solid #eceaf4;
+  border-radius: 12px;
+  background: #fbfafd;
 }
 
 @media (min-width: 1024px) {
@@ -1089,7 +1094,7 @@
     position: sticky;
     /* Clears the fixed navbar and the announcement strip above it. */
     top: calc(var(--marketing-nav-h, 76px) + 1.25rem);
-    margin-top: 3.25rem;
+    margin-top: 2rem;
     max-height: calc(100dvh - var(--marketing-nav-h, 76px) - 3rem);
     overflow-y: auto;
     overscroll-behavior: contain;
@@ -1116,12 +1121,12 @@
   list-style: none;
   counter-reset: toc;
   display: grid;
-  gap: 0.5rem;
+  gap: 0.4rem;
 }
 
 .mkt-blog-toc__list a {
   display: block;
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   line-height: 1.45;
   color: #475569;
   text-decoration: none;
@@ -1134,35 +1139,37 @@
 /* ---------- read this first ---------- */
 
 /*
- * The summary card. It was a thin violet-bordered note that read as a footnote
- * next to the article it introduces; the left border in particular made it
- * look like a pull quote. It is a warm panel with a real heading now, which is
- * what the block deserves: on a long post this is the part most readers will
- * actually read, and the part an answer engine is most likely to lift.
+ * The summary card: the three lines a reader skims before deciding to read on,
+ * and the part an answer engine is most likely to lift.
+ *
+ * It is a quiet panel rather than a coloured callout. A warm fill and a 1.85rem
+ * heading made it shout louder than the article's own h2s, which pushed the
+ * first paragraph of the post below the fold on a phone. Now it sits at list
+ * size with a small label, so the eye lands on the ticks, not on the box.
  */
 .mkt-blog-summary {
-  margin: 0 0 2.5rem;
-  padding: 1.75rem 1.5rem;
-  border: 1px solid #f6e6bd;
-  border-radius: 20px;
-  background: #fdf6e3;
+  margin: 0 0 1.75rem;
+  padding: 1.15rem 1.15rem 1.25rem;
+  border: 1px solid #e9e4f5;
+  border-radius: 14px;
+  background: #faf9fd;
 }
 
 @media (min-width: 768px) {
   .mkt-blog-summary {
-    padding: 2.25rem 2.25rem 2rem;
+    padding: 1.4rem 1.5rem 1.5rem;
   }
 }
 
 .mkt-blog-summary__label {
-  margin: 0 0 1.1rem;
+  margin: 0 0 0.8rem;
   font-family: var(--mkt-font);
-  font-size: clamp(1.4rem, 3.2vw, 1.85rem);
-  font-weight: 500;
-  letter-spacing: -0.025em;
-  line-height: 1.15;
-  text-transform: none;
-  color: #1c1917;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  line-height: 1.3;
+  text-transform: uppercase;
+  color: #7c6fa8;
 }
 
 .mkt-blog-summary__list {
@@ -1170,26 +1177,87 @@
   padding: 0;
   list-style: none;
   display: grid;
-  gap: 0.85rem;
+  gap: 0.55rem;
 }
 
 .mkt-blog-summary__list li {
   position: relative;
-  padding-left: 1.6rem;
-  font-size: 1rem;
-  line-height: 1.62;
-  color: #3f3a33;
+  padding-left: 1.5rem;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: #334155;
 }
 
+/* An inline tick rather than a dot: it reads as a takeaway, not a bullet. */
 .mkt-blog-summary__list li::before {
   content: '';
   position: absolute;
-  left: 0.1rem;
-  top: 0.58em;
-  width: 0.5rem;
-  height: 0.5rem;
-  border-radius: 999px;
-  background: #16a34a;
+  left: 0;
+  top: 0.3em;
+  width: 1rem;
+  height: 1rem;
+  background: no-repeat center / 1rem 1rem
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%2316a34a' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 10.5l4 4 8-9'/%3E%3C/svg%3E");
+}
+
+/* ---------- summarize this post with ---------- */
+
+/*
+ * A row of assistant links above the article (SummarizeWithAI.tsx). Readers
+ * increasingly hand a long buyer's guide to an assistant instead of reading
+ * it; this lets them do that with the URL and a prompt already filled in.
+ *
+ * It is deliberately the smallest thing on the page: a label and five icons,
+ * wrapping to a second line on narrow phones rather than scrolling sideways.
+ */
+.mkt-blog-ai {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  /* Auto margins stop a grid item from stretching, and this row's content is
+     short enough to shrink to a third of the column without this. */
+  width: 100%;
+  gap: 0.55rem 0.75rem;
+  margin: 0 0 1.25rem;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid #ece9f6;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.mkt-blog-ai__label {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.4;
+  color: #64748b;
+}
+
+.mkt-blog-ai__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mkt-blog-ai__btn {
+  display: grid;
+  place-items: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  border: 1px solid #e7e3f3;
+  border-radius: 9px;
+  background: #fcfbff;
+  color: #475569;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+.mkt-blog-ai__btn:hover,
+.mkt-blog-ai__btn:focus-visible {
+  border-color: #c9b8f6;
+  background: #f6f2ff;
+  color: var(--mkt-violet);
 }
 
 /* ---------- figures between sections ---------- */
@@ -1229,18 +1297,19 @@
 
 .mkt-blog-hero__card {
   display: grid;
-  gap: 1.5rem;
+  gap: 1.25rem;
   align-items: center;
-  padding: 1.6rem;
-  border-radius: 24px;
-  background: #f4f2ff;
+  padding: 1.25rem;
+  border: 1px solid #ece9f6;
+  border-radius: 18px;
+  background: #fbfaff;
 }
 
 @media (min-width: 900px) {
   .mkt-blog-hero__card {
     grid-template-columns: minmax(0, 1fr) minmax(0, 0.92fr);
-    gap: 2.5rem;
-    padding: 2.5rem 2.75rem;
+    gap: 2rem;
+    padding: 1.75rem 2rem;
   }
 }
 
@@ -1260,9 +1329,9 @@
 }
 
 .mkt-blog-hero__media img {
-  border-radius: 16px;
+  border-radius: 12px;
   background: #ffffff;
-  box-shadow: 0 18px 44px -26px rgba(49, 28, 94, 0.45);
+  box-shadow: 0 10px 26px -20px rgba(49, 28, 94, 0.4);
 }
 
 /* ---------- breadcrumb ---------- */
@@ -1271,9 +1340,9 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.55rem;
-  margin-bottom: 1.1rem;
-  font-size: 0.85rem;
+  gap: 0.5rem;
+  margin-bottom: 0.9rem;
+  font-size: 0.8rem;
   color: #6b7280;
 }
 
@@ -1296,16 +1365,16 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.5rem 0.9rem;
-  margin-top: 1.1rem;
-  padding: 0.85rem 1.25rem;
-  border: 1px solid var(--mkt-border);
-  border-radius: 18px;
+  gap: 0.4rem 0.75rem;
+  margin-top: 0.9rem;
+  padding: 0.55rem 0.9rem;
+  border: 1px solid #eceaf4;
+  border-radius: 12px;
   background: #ffffff;
 }
 
 .mkt-blog-catstrip__label {
-  font-size: 0.8rem;
+  font-size: 0.76rem;
   font-weight: 500;
   color: #94a3b8;
 }
@@ -1321,9 +1390,9 @@
 
 .mkt-blog-catstrip a {
   display: inline-flex;
-  padding: 0.34rem 0.8rem;
+  padding: 0.28rem 0.7rem;
   border-radius: 999px;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 450;
   color: #475569;
   text-decoration: none;
