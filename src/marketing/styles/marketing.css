@@ -150,28 +150,30 @@ body::-webkit-scrollbar {
   background: linear-gradient(135deg, var(--mkt-violet) 0%, var(--mkt-violet-hover) 100%);
 }
 
-/* Soft violet → white section washes */
+/*
+ * Section surfaces.
+ *
+ * These were violet radial glows layered over a gradient. Stacked down a page
+ * they read as blotches of purple fog behind the content rather than as
+ * sections, and every card sitting on them picked up a tint along one edge.
+ * A section is separated by a flat tone now: one step off white, no radial,
+ * no gradient ramp. The structure comes from the content and the hairline,
+ * which is how the reference sites do it.
+ */
 .mkt-wash {
-  background:
-    radial-gradient(ellipse 80% 60% at 50% -10%, rgba(124, 58, 237, 0.14), transparent 55%),
-    linear-gradient(180deg, #f5f3ff 0%, #faf9ff 42%, #ffffff 100%);
+  background: #faf9fc;
 }
 
 .mkt-wash-soft {
-  background: linear-gradient(180deg, #faf9ff 0%, #ffffff 70%);
+  background: #fbfafd;
 }
 
 .mkt-wash-deep {
-  background:
-    radial-gradient(ellipse 70% 50% at 80% 20%, rgba(124, 58, 237, 0.12), transparent 50%),
-    radial-gradient(ellipse 50% 40% at 10% 80%, rgba(167, 139, 250, 0.1), transparent 45%),
-    linear-gradient(180deg, #efeaf8 0%, #f8f7fc 45%, #ffffff 100%);
+  background: #f6f5fa;
 }
 
 .mkt-wash-cta {
-  background:
-    radial-gradient(ellipse 90% 80% at 50% 100%, rgba(124, 58, 237, 0.18), transparent 55%),
-    linear-gradient(180deg, #ffffff 0%, #f5f3ff 100%);
+  background: #faf9fc;
 }
 
 /* Closing CTA band — theme-aligned with homepage sections */
@@ -179,21 +181,15 @@ body::-webkit-scrollbar {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  padding: clamp(4.5rem, 9vw, 7rem) 1.25rem;
-  background:
-    radial-gradient(70% 55% at 50% 100%, rgba(124, 58, 237, 0.14), transparent 58%),
-    radial-gradient(40% 35% at 12% 20%, rgba(167, 139, 250, 0.08), transparent 55%),
-    linear-gradient(180deg, #ffffff 0%, #faf8ff 55%, #f5f3ff 100%);
+  padding: clamp(3.25rem, 6.5vw, 5rem) 1.25rem;
+  background: #faf9fc;
+  border-top: 1px solid #eceaf4;
 }
 
+/* Kept as a no-op so the element in MarketingCtaBand costs nothing. The blur
+   it used to draw put a violet cloud under the closing CTA of every page. */
 .mkt-cta__glow {
-  pointer-events: none;
-  position: absolute;
-  inset: auto 10% -40% 10%;
-  height: 70%;
-  background: radial-gradient(ellipse at center, rgba(196, 181, 253, 0.28), transparent 68%);
-  filter: blur(36px);
-  z-index: 0;
+  display: none;
 }
 
 .mkt-cta__inner {
@@ -1557,24 +1553,11 @@ html.mkt-nav-locked .mkt-nav__mobile-scroll {
   content: none;
 }
 
-/* Soft violet wash on mobile only */
+/* The footer carried the same violet cloud on mobile, which on a phone filled
+   most of the last screen of every page. Flat tone, same as the CTA above it. */
 @media (max-width: 768px) {
   .mkt-foot {
-    background:
-      radial-gradient(70% 55% at 50% 100%, rgba(124, 58, 237, 0.14), transparent 58%),
-      radial-gradient(40% 35% at 12% 20%, rgba(167, 139, 250, 0.08), transparent 55%),
-      linear-gradient(180deg, #ffffff 0%, #faf8ff 55%, #f5f3ff 100%);
-  }
-
-  .mkt-foot::before {
-    content: '';
-    pointer-events: none;
-    position: absolute;
-    inset: auto 8% -42% 8%;
-    height: 72%;
-    background: radial-gradient(ellipse at center, rgba(196, 181, 253, 0.28), transparent 68%);
-    filter: blur(36px);
-    z-index: 0;
+    background: #faf9fc;
   }
 }
 
@@ -1823,9 +1806,10 @@ a.mkt-foot__partner:hover {
   object-fit: contain;
 }
 
-/* The Trustpilot score sits with the partner badges, as a card the same
-   height as they are, so the row reads as one line of proof. */
-.mkt-foot__rating .mkt-tp__score {
+/* The Trustpilot and Product Hunt scores sit with the partner badges, as
+   cards the same height as they are, so the row reads as one line of proof. */
+.mkt-foot__rating .mkt-tp__score,
+.mkt-foot__rating .mkt-ph__badge {
   box-sizing: border-box;
   height: 3.15rem;
   padding: 0 1rem;
@@ -1838,6 +1822,11 @@ a.mkt-foot__partner:hover {
 
 .mkt-foot__rating .mkt-tp__score:hover {
   border-color: #c7e9da;
+}
+
+/* Product Hunt's own orange, so the hover matches the mark inside it. */
+.mkt-foot__rating .mkt-ph__badge:hover {
+  border-color: #f3c4b4;
 }
 
 .mkt-foot__company-rows {
@@ -1961,7 +1950,8 @@ a.mkt-foot__partner:hover {
     flex: 1 1 100%;
   }
 
-  .mkt-foot__rating .mkt-tp__score {
+  .mkt-foot__rating .mkt-tp__score,
+  .mkt-foot__rating .mkt-ph__badge {
     height: 2.75rem;
     width: 100%;
     justify-content: center;

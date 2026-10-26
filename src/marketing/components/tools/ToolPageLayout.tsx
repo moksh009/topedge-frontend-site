@@ -86,7 +86,7 @@ export default function ToolPageLayout({
         </Section>
 
         <Section wash="soft">
-          <div className="mkt-jx-centered mx-auto flex max-w-3xl flex-col gap-14 md:gap-16">
+          <div className="mkt-jx-centered mx-auto flex max-w-3xl flex-col gap-10 md:gap-12">
             {blocks.map((b) => (
               <TopicBlockView key={b.id} block={b} />
             ))}

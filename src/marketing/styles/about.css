@@ -1,9 +1,7 @@
 /* About — theme-aligned company story */
 
 .mkt-about {
-  background:
-    radial-gradient(ellipse 75% 42% at 50% -10%, rgba(124, 58, 237, 0.1), transparent 55%),
-    linear-gradient(180deg, #faf9ff 0%, #ffffff 28%, #ffffff 100%);
+  background: #ffffff;
   color: var(--mkt-ink, #0c1222);
 }
 

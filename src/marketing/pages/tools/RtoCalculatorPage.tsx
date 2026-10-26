@@ -29,7 +29,7 @@ const BLOCKS: TopicBlock[] = [
   {
     kind: 'figures',
     id: 'numbers',
-    h2: 'The numbers behind the calculator',
+    h2: 'Where these numbers come from',
     figures: [
       {
         value: '₹180 to ₹240',
@@ -88,7 +88,7 @@ export default function RtoCalculatorPage() {
       name="RTO cost calculator"
       h1="RTO cost calculator for Shopify stores"
       accent="RTO cost calculator"
-      subtitle="See how much returned Cash on Delivery parcels cost your store every month, and what it would cost to confirm every COD order on WhatsApp instead."
+      subtitle="See what returned COD parcels cost you each month, and what confirming them on WhatsApp would cost instead."
       privacy="Runs in your browser. Nothing you type is saved or sent anywhere."
       blocks={BLOCKS}
       faqs={FAQS}

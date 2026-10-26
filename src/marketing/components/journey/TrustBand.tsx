@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { CUSTOMER_STORIES } from '../../data/socialProof';
-import { TrustpilotScore } from '../TrustpilotProof';
+import ProofBadges from '../ProofBadges';
 import '../../styles/journey-flow.css';
 
 const LOGOS = [
@@ -27,7 +27,7 @@ export default function TrustBand({
         <h2 className="mkt-trust__title" id="mkt-trust-title">
           {title}
         </h2>
-        <TrustpilotScore compact />
+        <ProofBadges compact />
       </div>
 
       <ul className="mkt-trust__logos" aria-label="Brands using TopEdge">

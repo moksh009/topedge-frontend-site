@@ -1,6 +1,7 @@
 import { PrimaryButton } from '../ui';
 import HeroRippleBackground from '../effects/HeroRippleBackground';
 import HomeTrust from './HomeTrust';
+import ProofBadges from '../ProofBadges';
 import HomeHeroVideo from './HomeHeroVideo';
 
 import { COMPANY_SHOPIFY_APP_URL } from '../../legal/companyIdentity';
@@ -93,6 +94,9 @@ export default function HomeHero() {
 
               <div className="home-hero__trust">
                 <HomeTrust onStage />
+                {/* The logo strip says who uses it; this says where that can be
+                    checked. Both belong to the same claim, so they sit together. */}
+                <ProofBadges compact className="home-hero__ratings" />
               </div>
             </div>
 

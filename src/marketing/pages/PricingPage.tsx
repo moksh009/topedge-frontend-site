@@ -19,7 +19,8 @@ import IncludedFeatures from '../components/pricing/IncludedFeatures';
 import PricingFaq, { PRICING_FAQS } from '../components/pricing/PricingFaq';
 import PricingSectionHead from '../components/pricing/PricingSectionHead';
 import PricingSalesCta from '../components/pricing/PricingSalesCta';
-import TrustpilotProof, { TrustpilotScore } from '../components/TrustpilotProof';
+import TrustpilotProof from '../components/TrustpilotProof';
+import ProofBadges from '../components/ProofBadges';
 import HomeTrust from '../components/home/HomeTrust';
 import {
   BillingCatalog,
@@ -125,7 +126,7 @@ export default function PricingPage() {
                 from an ad has already decided to judge the number; who else is
                 paying it is the question they ask in the same breath. */}
             <motion.div className="mkt-pricing__proof" {...rise(0.1)}>
-              <TrustpilotScore compact />
+              <ProofBadges compact />
               <div className="mkt-pricing__proof-logos">
                 <HomeTrust onStage />
               </div>

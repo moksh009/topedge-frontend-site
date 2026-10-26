@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { TrustpilotScore } from '../TrustpilotProof';
+import ProofBadges from '../ProofBadges';
 import '../../styles/journey-flow.css';
 
 /**
@@ -50,7 +50,7 @@ export default function JourneyHero({
   accent?: string;
   subtitle: string;
   actions?: ReactNode;
-  /** Shows the live Trustpilot score under the actions, as social proof. */
+  /** Shows the Trustpilot and Product Hunt badges under the actions. */
   trust?: boolean;
   image?: string;
   imageAlt?: string;
@@ -66,7 +66,7 @@ export default function JourneyHero({
         {actions && <div className="mkt-jh__actions">{actions}</div>}
         {trust && (
           <div className="mkt-jh__trust">
-            <TrustpilotScore compact />
+            <ProofBadges compact />
           </div>
         )}
       </div>

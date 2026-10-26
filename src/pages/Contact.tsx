@@ -8,7 +8,7 @@ import {
   webPageJsonLd,
 } from '../marketing/data/pageSeo';
 import MarketingPage from '../marketing/components/MarketingPage';
-import { TrustpilotScore } from '../marketing/components/TrustpilotProof';
+import ProofBadges from '../marketing/components/ProofBadges';
 import {
   COMPANY_ADDRESS_LINES,
   COMPANY_EMAIL,
@@ -106,7 +106,7 @@ export default function Contact() {
             talking to the people who build it.
           </p>
           <div className="mkt-contact__score">
-            <TrustpilotScore compact />
+            <ProofBadges compact />
           </div>
         </header>
 

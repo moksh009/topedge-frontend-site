@@ -52,7 +52,7 @@ export default function ToolsIndexPage() {
           eyebrow="Free tools"
           title="Free tools for Shopify stores"
           accent="Free tools"
-          subtitle="Calculators and generators for the problems Indian Shopify stores ask about most: RTO, abandoned carts, WhatsApp costs and choosing the right tool. No sign-up, nothing to install."
+          subtitle="Calculators and generators for what Indian Shopify stores ask about most: RTO, abandoned carts and WhatsApp costs. No sign-up, nothing to install."
           trust
         />
 

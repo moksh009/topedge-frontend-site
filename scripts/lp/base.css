@@ -167,6 +167,13 @@ html[data-v]:not([data-v="platform"]) .hero-bm{display:none}
 .tp{display:inline-flex;align-items:center;gap:.22rem;color:#191919;font-weight:600;letter-spacing:-.025em;text-decoration:none;white-space:nowrap}
 .tp svg{display:block;flex:none;margin-bottom:.06em}
 .tp:hover{text-decoration:underline;text-underline-offset:2px}
+/* Product Hunt lockup, same rules as .tp: their mark, their ink. */
+.hp-ph2{margin:.2rem 0 0;font-size:.92rem;color:#4b3a6e}
+.hp-ph2 span{display:inline-flex;align-items:center;gap:.3rem}
+.hp-ph2 b{font-weight:600;color:#2e1065}
+.ph{display:inline-flex;align-items:center;gap:.25rem;color:#191919;font-weight:600;letter-spacing:-.025em;text-decoration:none;white-space:nowrap}
+.ph svg{display:block;flex:none}
+.ph:hover{text-decoration:underline;text-underline-offset:2px}
 .hp-t{font-size:.88rem;color:#7c6b99}
 /* Said to a screen reader, not drawn: see heroProof on why the count is off
    the visible line but still in the accessible one. */

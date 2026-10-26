@@ -28,10 +28,9 @@
   inset: 0 -20vw auto;
   height: 130%;
   z-index: -1;
-  background:
-    radial-gradient(45% 55% at 50% 0%, rgba(124, 58, 237, 0.11), transparent 70%),
-    radial-gradient(30% 40% at 15% 75%, rgba(37, 211, 102, 0.07), transparent 70%),
-    radial-gradient(30% 40% at 85% 75%, rgba(56, 189, 248, 0.08), transparent 70%);
+  /* Three coloured radials used to bloom behind this hero. Flat tone instead:
+     the violet, green and blue clouds fought the product art below them. */
+  background: #fbfafd;
   pointer-events: none;
 }
 

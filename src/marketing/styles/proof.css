@@ -1,0 +1,224 @@
+/*
+ * Third-party proof badges: Product Hunt, and the row that pairs it with the
+ * Trustpilot score (trustpilot.css styles that one).
+ *
+ * Both badges are pills of the same height and type size so a row of them
+ * reads as one strip rather than as two widgets that happen to be adjacent.
+ * Each keeps its own brand colour, because a recoloured badge is a badge the
+ * reader cannot match against the site it came from.
+ */
+
+/* ---------- the badge ---------- */
+
+.mkt-ph__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  text-decoration: none;
+  color: inherit;
+}
+
+.mkt-ph__stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.12rem;
+}
+
+.mkt-ph__star {
+  display: block;
+}
+
+.mkt-ph__text {
+  font-size: 0.875rem;
+  color: var(--mkt-plan-muted, #64748b);
+  white-space: nowrap;
+}
+
+.mkt-ph__text b {
+  font-weight: 600;
+  color: var(--mkt-plan-ink, #0c1222);
+}
+
+.mkt-ph__word {
+  font-weight: 600;
+  color: #191919;
+}
+
+.mkt-ph__count {
+  font-size: 0.8125rem;
+  color: #94a3b8;
+  white-space: nowrap;
+}
+
+.mkt-ph__badge:hover .mkt-ph__text b,
+.mkt-ph__badge:hover .mkt-ph__word {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.mkt-ph__badge--compact .mkt-ph__text,
+.mkt-ph__badge--compact .mkt-ph__count {
+  font-size: 0.8125rem;
+}
+
+/* ---------- the paired row ---------- */
+
+/*
+ * Trustpilot and Product Hunt side by side, with a hairline between them.
+ * On a phone they stack, because two pills on one line at 390px wrap into
+ * four ragged rows.
+ */
+.mkt-proof-row {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem 0.9rem;
+  padding: 0.45rem 0.95rem;
+  border: 1px solid var(--mkt-border, #e8e6f0);
+  border-radius: 999px;
+  background: #ffffff;
+  box-shadow: 0 1px 2px rgba(12, 18, 34, 0.04);
+}
+
+.mkt-proof-row__sep {
+  width: 1px;
+  height: 1.1rem;
+  background: #e6e4ef;
+}
+
+@media (max-width: 560px) {
+  .mkt-proof-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.45rem;
+    border-radius: 16px;
+    padding: 0.65rem 0.9rem;
+  }
+
+  .mkt-proof-row__sep {
+    width: 2.5rem;
+    height: 1px;
+  }
+}
+
+/*
+ * A row dropped onto a surface that already has chrome of its own: the footer
+ * column, the convert prompt. It stacks, because in a half-width column the
+ * two pills wrap and the divider is left stranded at the end of the first line.
+ */
+.mkt-proof-row--plain {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.4rem;
+  border: 0;
+  background: none;
+  box-shadow: none;
+  padding: 0;
+}
+
+.mkt-proof-row--plain .mkt-proof-row__sep {
+  display: none;
+}
+
+/* ---------- the review section ---------- */
+
+.mkt-ph {
+  max-width: var(--mkt-max-wide, 72rem);
+  margin: 0 auto;
+}
+
+.mkt-ph__head {
+  text-align: center;
+  margin-bottom: 1.75rem;
+}
+
+.mkt-ph__title {
+  margin: 0;
+  font-family: var(--mkt-font);
+  font-size: clamp(1.45rem, 3vw, 2rem);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  color: var(--mkt-ink, #0c1222);
+}
+
+.mkt-ph__intro {
+  margin: 0.7rem auto 0;
+  max-width: 38rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #64748b;
+}
+
+.mkt-ph__badge-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.1rem;
+}
+
+.mkt-ph__list {
+  display: grid;
+  gap: 0.85rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 720px) {
+  .mkt-ph__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1080px) {
+  .mkt-ph__list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.mkt-ph__item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1.1rem 1.15rem 1.15rem;
+  border: 1px solid var(--mkt-border, #e8e6f0);
+  border-radius: 14px;
+  background: #ffffff;
+}
+
+.mkt-ph__quote {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: #334155;
+}
+
+.mkt-ph__author {
+  margin: auto 0 0;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--mkt-ink, #0c1222);
+}
+
+.mkt-ph__role {
+  display: block;
+  margin-top: 0.1rem;
+  font-weight: 400;
+  color: #94a3b8;
+}
+
+.mkt-ph__retrieved {
+  margin: 1.25rem 0 0;
+  text-align: center;
+  font-size: 0.8125rem;
+  color: #94a3b8;
+}
+
+.mkt-ph__retrieved a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}

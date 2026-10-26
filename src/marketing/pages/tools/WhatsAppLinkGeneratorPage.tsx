@@ -34,7 +34,7 @@ const BLOCKS: TopicBlock[] = [
   {
     kind: 'steps',
     id: 'where',
-    h2: 'Five places to use your WhatsApp link',
+    h2: 'Where to put the link',
     steps: [
       { title: 'Product pages', body: 'A “Questions? Chat with us” link next to the Add to cart button answers doubts before they turn into an abandoned cart.' },
       { title: 'Order confirmation emails', body: 'One link for “where is my order” and address changes, so customers do not have to find your number.' },
@@ -64,7 +64,7 @@ export default function WhatsAppLinkGeneratorPage() {
       name="WhatsApp link generator"
       h1="WhatsApp link and QR code generator"
       accent="WhatsApp link"
-      subtitle="Create a click-to-chat link and QR code with a pre-filled message, then add a WhatsApp chat button to your Shopify store. Free, no sign-up."
+      subtitle="Make a click-to-chat link, a QR code and a chat button for your store. Free, no sign-up."
       privacy="Runs entirely in your browser. Your number and message are never sent to us."
       blocks={BLOCKS}
       faqs={FAQS}

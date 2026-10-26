@@ -7,10 +7,17 @@
     "Nothing in this file may be written from memory. Every field is either read",
     "off the third-party page by a human on the date in `asOf` / `retrieved`, or",
     "it does not go in. The review texts are verbatim: they are published on",
-    "Trustpilot under these authors' names, so a tidy-up here is a misquote of a",
-    "real person. check-landing-pages.mjs keeps its own second copy of the three",
-    "texts on purpose, so an edit here that nobody checked against the live page",
-    "fails the build rather than shipping."
+    "Trustpilot and Product Hunt under these authors' names, so a tidy-up here is",
+    "a misquote of a real person. check-landing-pages.mjs keeps its own second",
+    "copy of the three Trustpilot texts on purpose, so an edit here that nobody",
+    "checked against the live page fails the build rather than shipping.",
+    "",
+    "`productHunt.rating`, `.reviews`, `.followers` and `.quotes` are empty until",
+    "somebody reads them off https://www.producthunt.com/products/topedge-ai and",
+    "fills them in with the date they did it. The UI degrades on purpose: with no",
+    "rating the badge is a plain 'Find us on Product Hunt' link, and the review",
+    "section does not render at all. An empty block ships a smaller true claim;",
+    "a filled-in guess ships a false one."
   ],
   "trustpilot": {
     "score": "4.0",
@@ -37,6 +44,16 @@
         "author": "Robin"
       }
     ]
+  },
+  "productHunt": {
+    "rating": "",
+    "reviews": "",
+    "followers": "",
+    "asOf": "",
+    "retrieved": "",
+    "productUrl": "https://www.producthunt.com/products/topedge-ai",
+    "reviewUrl": "https://www.producthunt.com/products/topedge-ai/reviews",
+    "quotes": []
   },
   "customers": [
     {

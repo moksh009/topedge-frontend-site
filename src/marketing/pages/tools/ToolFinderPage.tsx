@@ -62,7 +62,7 @@ const BLOCKS: TopicBlock[] = [
         body: 'A tool that cannot connect to your store is ruled out, whatever else it does well. TopEdge and Bitespeed only work with Shopify, so they drop out for other stores.',
       },
       {
-        title: 'Each answer adds points for the tools that handle it',
+        title: 'Each answer scores the tools that handle it',
         body: 'COD to prepaid, cart recovery, AI replies, plan price and Meta markup are scored from what each vendor publishes about itself.',
       },
       {
@@ -74,7 +74,7 @@ const BLOCKS: TopicBlock[] = [
   {
     kind: 'checklist',
     id: 'what-to-check',
-    h2: 'What to check before you pick any tool',
+    h2: 'What to check before you buy',
     doLabel: 'Ask every vendor',
     dontLabel: 'Watch out for',
     doItems: [
@@ -120,7 +120,7 @@ export default function ToolFinderPage() {
           eyebrow="Free tool"
           title="Help me find the best WhatsApp tool for my Shopify store"
           accent="best WhatsApp tool"
-          subtitle="Answer six quick questions about your store. Get a shortlist that fits, with honest reasons, and see where each tool falls short."
+          subtitle="Six questions about your store. You get a ranked shortlist, the reasons behind it, and where each tool falls short."
           trust
         />
 
@@ -170,7 +170,7 @@ export default function ToolFinderPage() {
 
         <MarketingCtaBand
           title="Try TopEdge free for 14 days"
-          subtitle="Connect Shopify, switch on COD confirmation and cart recovery, and see it working on your own orders."
+          subtitle="Connect Shopify, switch on COD confirmation and cart recovery, and watch it run on your own orders."
           primaryLabel="Start free"
           secondaryLabel="See pricing"
           secondaryTo="/pricing"

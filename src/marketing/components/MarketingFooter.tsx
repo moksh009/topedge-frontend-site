@@ -12,6 +12,7 @@ import {
 } from '../legal/companyIdentity';
 import { FREE_TOOLS, TOOLS_PATH } from '../data/freeTools';
 import { TrustpilotScore } from './TrustpilotProof';
+import { ProductHuntBadge } from './ProductHuntProof';
 
 /** The Meta and Shopify badges each link to the programme they name; this is
  *  the equivalent page for the third.
@@ -267,6 +268,9 @@ export default function MarketingFooter() {
           <ul className="mkt-foot__trust-list">
             <li className="mkt-foot__rating">
               <TrustpilotScore compact />
+            </li>
+            <li className="mkt-foot__rating">
+              <ProductHuntBadge compact />
             </li>
             <li>
               <a

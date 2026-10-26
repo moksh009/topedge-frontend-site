@@ -45,6 +45,33 @@ export const TRUSTPILOT_QUOTES: TrustpilotQuote[] = raw.trustpilot.quotes;
  */
 export const TRUSTPILOT_RETRIEVED = raw.trustpilot.retrieved;
 
+/* ---------- Product Hunt ---------- */
+
+export type ProductHuntQuote = {
+  text: string;
+  author: string;
+  /** What Product Hunt shows under the name, where it shows one. */
+  role?: string;
+  /** 1-5, as that reviewer left it. Omitted when the review carries no score. */
+  rating?: number;
+};
+
+export const PRODUCT_HUNT = raw.productHunt;
+
+/**
+ * Reviews published on the Product Hunt listing, verbatim.
+ *
+ * Empty until a human reads them off the live page. Callers must treat empty
+ * as "render nothing", never as "write something plausible" — see the
+ * `_comment` block in the JSON.
+ */
+export const PRODUCT_HUNT_QUOTES: ProductHuntQuote[] = raw.productHunt.quotes;
+
+/** True once the listing's own rating has been read off the page. */
+export function hasProductHuntRating() {
+  return Boolean(raw.productHunt.rating && raw.productHunt.reviews);
+}
+
 export const CUSTOMER_STORIES: CustomerStory[] = raw.customers;
 
 /** `4.0 out of 5 on Trustpilot, from 5 reviews` — the whole claim in one line. */

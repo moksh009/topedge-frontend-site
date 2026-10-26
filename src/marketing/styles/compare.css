@@ -2122,7 +2122,7 @@
   inset: 0 -10vw auto;
   height: 100%;
   z-index: -1;
-  background: radial-gradient(45% 60% at 50% 0%, rgba(124, 58, 237, 0.1), transparent 72%);
+  background: #fbfafd;
   pointer-events: none;
 }
 

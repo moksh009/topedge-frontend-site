@@ -943,6 +943,22 @@ const star = (fill, i) =>
  */
 const TP_LOCKUP = `<a class="tp" href="${TRUSTPILOT.reviewUrl}" target="_blank" rel="noopener">${TP_STAR}Trustpilot</a>`;
 
+/**
+ * Product Hunt's lockup, beside Trustpilot's.
+ *
+ * Same rule as above: Product Hunt's own mark and ink, never ours. The rating
+ * only appears once somebody has read it off the listing; until then this is
+ * a plain link, which is the whole claim the page is entitled to make. See
+ * the `_comment` block in socialProof.json.
+ */
+const PRODUCT_HUNT = SOCIAL_PROOF.productHunt ?? {};
+const PH_MARK =
+  '<svg class="phm" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">' +
+  '<circle cx="12" cy="12" r="12" fill="#da552f"/>' +
+  '<path fill="#fff" d="M13.4 6.6H8.9v10.8h2.7v-3.3h1.8a3.75 3.75 0 0 0 0-7.5zm0 5.1h-1.8V9h1.8a1.35 1.35 0 0 1 0 2.7z"/>' +
+  '</svg>';
+const PH_LOCKUP = `<a class="ph" href="${PRODUCT_HUNT.productUrl ?? 'https://www.producthunt.com/products/topedge-ai'}" target="_blank" rel="noopener">${PH_MARK}Product Hunt</a>`;
+
 function starRow(score) {
   const n = Number(score);
   const boxes = Array.from({ length: 5 }, (_, i) => star(Math.max(0, Math.min(1, n - i)), i)).join('');
@@ -978,10 +994,14 @@ function heroProof() {
   const stars = TRUSTPILOT.score
     ? `<p class="hp-stars">${starRow(TRUSTPILOT.score)}<span><b>${esc(TRUSTPILOT.score)}</b> on ${TP_LOCKUP}<i class="vh"> from ${esc(TRUSTPILOT.reviews)} reviews</i></span></p>`
     : `<p class="hp-stars hp-stars--none">${TP_LOCKUP} &mdash; read the reviews</p>`;
+  const ph = PRODUCT_HUNT.rating
+    ? `<p class="hp-ph2"><span><b>${esc(PRODUCT_HUNT.rating)}</b> on ${PH_LOCKUP}<i class="vh"> from ${esc(PRODUCT_HUNT.reviews)} reviews</i></span></p>`
+    : `<p class="hp-ph2">${PH_LOCKUP}</p>`;
   return `<div class="hp">
         <div class="hp-faces" role="img" aria-label="Running on TopEdge: ${esc(who)}">${faces}</div>
         <div class="hp-col">
           ${stars}
+          ${ph}
           <p class="hp-t">Loved by Shopify founders in India</p>
         </div>
       </div>`;

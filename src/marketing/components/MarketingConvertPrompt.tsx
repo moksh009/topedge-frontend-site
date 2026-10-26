@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { Link, useLocation } from 'react-router-dom';
 import { X } from 'lucide-react';
 import { marketingSignupPath, SALES_WHATSAPP_URL } from '../lib/billingCatalog';
+import ProofBadges from './ProofBadges';
 import '../styles/convert-prompt.css';
 
 const STORAGE_KEY = 'te_mkt_convert_prompt_v4';
@@ -181,81 +182,103 @@ export default function MarketingConvertPrompt() {
           <X size={15} strokeWidth={2} />
         </button>
 
-        <div className="mkt-convert__brand">
-          <img
-            src="/logo.png"
-            alt="TopEdge AI"
-            width={22}
-            height={22}
-            className="mkt-convert__brand-mark"
-            decoding="async"
-          />
-          <span className="mkt-convert__brand-name">
-            TopEdge <span>AI</span>
-          </span>
+        <div className="mkt-convert__col">
+          <div className="mkt-convert__brand">
+            <img
+              src="/logo.png"
+              alt="TopEdge AI"
+              width={22}
+              height={22}
+              className="mkt-convert__brand-mark"
+              decoding="async"
+            />
+            <span className="mkt-convert__brand-name">
+              TopEdge <span>AI</span>
+            </span>
+          </div>
+
+          <h2 id={titleId} className="mkt-convert__title">
+            Recover <span className="mkt-convert__title-accent">abandoned carts</span> before they go
+            cold
+          </h2>
+          <p className="mkt-convert__sub">
+            Live in about 15 minutes. 14-day trial, no card on this site.
+          </p>
+
+          <ul className="mkt-convert__points">
+            <li>Cart reminders that stop when they buy</li>
+            <li>COD confirmation before you ship</li>
+            <li>Order and delivery updates on WhatsApp</li>
+            <li>One inbox, with the Shopify order beside it</li>
+          </ul>
+
+          <div className="mkt-convert__actions">
+            <Link className="mkt-convert__primary" to={marketingSignupPath()} onClick={dismiss}>
+              Start free
+            </Link>
+            <a
+              className="mkt-convert__secondary"
+              href={SALES_WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={dismiss}
+            >
+              <img
+                src="/platforms/whatsapp.svg"
+                alt=""
+                width={16}
+                height={16}
+                className="mkt-convert__wa-icon"
+                decoding="async"
+                aria-hidden
+              />
+              WhatsApp us
+            </a>
+          </div>
+
+          <ProofBadges compact plain className="mkt-convert__proof" />
+
+          <button type="button" className="mkt-convert__dismiss" onClick={dismiss}>
+            Keep browsing
+          </button>
         </div>
 
-        <h2 id={titleId} className="mkt-convert__title">
-          Recover <span className="mkt-convert__title-accent">abandoned carts</span>
-          <br />
-          before they go cold
-        </h2>
-        <p className="mkt-convert__sub">Live in about 15 minutes. 14-day trial, no card on this site.</p>
+        <div className="mkt-convert__aside" aria-hidden>
+          <div className="mkt-convert__shot">
+            <img
+              src="/marketing/features/shopify-whatsapp-inbox.webp"
+              alt=""
+              width={1536}
+              height={799}
+              decoding="async"
+              loading="lazy"
+            />
+          </div>
 
-        <div className="mkt-convert__stats" aria-label="Proof points">
-          <div className="mkt-convert__stat">
-            <strong>+7%</strong>
-            <span>cart recovery</span>
+          <div className="mkt-convert__stats">
+            <div className="mkt-convert__stat">
+              <strong>+7%</strong>
+              <span>cart recovery</span>
+            </div>
+            <div className="mkt-convert__stat">
+              <strong>~15m</strong>
+              <span>to go live</span>
+            </div>
           </div>
-          <div className="mkt-convert__stat">
-            <strong>~15m</strong>
-            <span>to go live</span>
-          </div>
-          <div className="mkt-convert__stat">
-            <strong>COD</strong>
-            <span>confirm flows</span>
-          </div>
-        </div>
 
-        <div className="mkt-convert__brands" aria-label="Brands on TopEdge">
-          <div className="mkt-convert__brands-viewport">
-            <div className="mkt-convert__brands-track">
-              {brandTrack.map((b, i) => (
-                <span key={`${b.name}-${i}`} className="mkt-convert__brands-item" title={b.name}>
-                  <img src={b.src} alt={b.name} width={88} height={28} decoding="async" />
-                </span>
-              ))}
+          <div className="mkt-convert__brands">
+            <p className="mkt-convert__brands-label">Running on TopEdge</p>
+            <div className="mkt-convert__brands-viewport">
+              <div className="mkt-convert__brands-track">
+                {brandTrack.map((b, i) => (
+                  <span key={`${b.name}-${i}`} className="mkt-convert__brands-item" title={b.name}>
+                    <img src={b.src} alt={b.name} width={88} height={28} decoding="async" />
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
         </div>
-
-        <div className="mkt-convert__actions">
-          <Link className="mkt-convert__primary" to={marketingSignupPath()} onClick={dismiss}>
-            Start free
-          </Link>
-          <a
-            className="mkt-convert__secondary"
-            href={SALES_WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={dismiss}
-          >
-            <img
-              src="/platforms/whatsapp.svg"
-              alt=""
-              width={16}
-              height={16}
-              className="mkt-convert__wa-icon"
-              decoding="async"
-              aria-hidden
-            />
-            WhatsApp us
-          </a>
-        </div>
-
-        <button type="button" className="mkt-convert__dismiss" onClick={dismiss}>
-          Keep browsing
-        </button>
       </div>
     </div>,
     document.body,

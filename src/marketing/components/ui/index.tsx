@@ -96,7 +96,9 @@ export function Section({
     <section
       id={id}
       className={cn(
-        'px-5 py-20 md:px-8 md:py-28',
+        // Was py-20/py-28. At 112px a side, four sections of short copy filled
+        // three screens with mostly air; the reference sites run about 80.
+        'px-5 py-14 md:px-8 md:py-20',
         subtle && 'bg-[#faf9ff]',
         wash === true && 'mkt-wash',
         wash === 'soft' && 'mkt-wash-soft',
@@ -123,9 +125,9 @@ export function SectionHeading({
   className?: string;
 }) {
   return (
-    <div className={cn('mb-12 max-w-3xl', center && 'mx-auto text-center', className)}>
+    <div className={cn('mb-8 max-w-3xl', center && 'mx-auto text-center', className)}>
       {eyebrow && <Eyebrow className={center ? 'text-center' : undefined}>{eyebrow}</Eyebrow>}
-      <h2 className="mkt-display mt-3 text-3xl font-normal tracking-tight text-[#0c1222] md:text-4xl">
+      <h2 className="mkt-display mt-2.5 text-[1.6rem] font-normal tracking-tight text-[#0c1222] md:text-[2rem]">
         {title}
       </h2>
       {subtitle && (
@@ -188,7 +190,7 @@ export function PageHero({
   }
 
   return (
-    <section className={cn('mkt-wash px-5 pt-32 pb-20 md:px-8 md:pt-40 md:pb-24', className)}>
+    <section className={cn('mkt-wash px-5 pt-24 pb-14 md:px-8 md:pt-28 md:pb-16', className)}>
       <div className="mx-auto max-w-[var(--mkt-max-text)]">
         {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
         <h1

@@ -5937,3 +5937,17 @@ html body .home-sticky .home-sticky__static-copy .home-sticky__body {
     line-height: 1.5;
   }
 }
+
+
+/* ---------- hero proof badges ---------- */
+
+/*
+ * Trustpilot + Product Hunt under the trusted-by marquee. The marquee names
+ * the merchants; this is where a reader goes to check them. On the hero's
+ * tinted stage the pill keeps a white surface so both marks stay legible.
+ */
+/* Not `home-hero__proof`: that name belongs to the legacy hero animation,
+   which a display:none !important group higher up this file hides. */
+.home-hero__ratings {
+  margin-top: 0.9rem;
+}

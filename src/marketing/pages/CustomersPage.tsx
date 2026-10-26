@@ -9,7 +9,8 @@ import {
 import MarketingPage from '../components/MarketingPage';
 import MarketingCtaBand from '../components/MarketingCtaBand';
 import HomeTrust from '../components/home/HomeTrust';
-import TrustpilotProof, { TrustpilotScore } from '../components/TrustpilotProof';
+import TrustpilotProof from '../components/TrustpilotProof';
+import ProofBadges from '../components/ProofBadges';
 import { CUSTOMER_STORIES } from '../data/socialProof';
 import '../styles/customers.css';
 
@@ -149,7 +150,7 @@ export default function CustomersPage() {
             before dispatch, and one shared inbox that carries Shopify order context.
           </p>
           <div className="mkt-customers__score">
-            <TrustpilotScore compact />
+            <ProofBadges compact />
           </div>
           <div className="mkt-customers__trust">
             <HomeTrust onStage />

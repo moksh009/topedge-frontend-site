@@ -29,7 +29,7 @@ const BLOCKS: TopicBlock[] = [
   {
     kind: 'figures',
     id: 'numbers',
-    h2: 'The numbers behind the calculator',
+    h2: 'Where these numbers come from',
     figures: [
       {
         value: '70.22%',
@@ -88,7 +88,7 @@ export default function CartRecoveryCalculatorPage() {
       name="Cart recovery revenue calculator"
       h1="Cart recovery revenue calculator"
       accent="Cart recovery"
-      subtitle="Work out how much revenue WhatsApp reminders could win back from your abandoned carts, and the most the messages would cost."
+      subtitle="See how much revenue WhatsApp reminders could win back, and what the messages would cost."
       privacy="Runs in your browser. Nothing you type is saved or sent anywhere."
       blocks={BLOCKS}
       faqs={FAQS}
