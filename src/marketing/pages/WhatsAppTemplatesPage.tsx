@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import MarketingSEO from '../components/MarketingSEO';
 import MarketingPage from '../components/MarketingPage';
@@ -6,12 +7,13 @@ import { Section, SectionHeading, PrimaryButton } from '../components/ui';
 import { TopicBlockView, type TopicBlock } from '../components/topic/TopicBlocks';
 import FaqAccordion from '../components/topic/FaqAccordion';
 import JourneyHero from '../components/journey/JourneyHero';
-import PhoneMock from '../components/journey/PhoneMock';
+import PhoneMock, { type TemplateMessage } from '../components/journey/PhoneMock';
+import TrustBand from '../components/journey/TrustBand';
+import HowItWorks from '../components/journey/HowItWorks';
 import {
   TEMPLATE_GROUPS,
   TEMPLATE_RATE,
   FESTIVAL_VARIANTS,
-  allSlots,
   type TemplateSlot,
 } from '../data/whatsappTemplates';
 import {
@@ -64,18 +66,18 @@ const BLOCKS: TopicBlock[] = [
   {
     kind: 'prose',
     id: 'what-is-a-template',
-    h2: 'Why templates exist at all',
+    h2: 'Why WhatsApp needs templates',
     body: [
-      'WhatsApp does not let a business message whoever it likes whenever it likes. Once a customer has replied, you have a 24-hour window to talk freely. Outside that window you can only send something Meta has already looked at and approved, and that is a template.',
-      'This is why a WhatsApp setup cannot be switched on the way an email tool can. The journeys are ready in minutes; the templates sit in Meta review, against your own business account, before anything can send. Planning for that queue is most of what separates a smooth go-live from a frustrating one.',
+      'A business can only message a customer freely for **24 hours after the customer replies**. Outside that window, every message has to be a template that Meta has approved in advance.',
+      'That is why templates come first. Your journeys are ready in minutes, but **each template needs Meta’s approval** before it can send, so submit the ones you need early.',
     ],
   },
   {
     kind: 'specTable',
     id: 'category-price',
-    h2: 'Category decides the price, not the words',
+    h2: 'What each template costs',
     intro:
-      'Meta prices the category. The gap between the two you will actually use is about seven times, and it is the single biggest lever on a WhatsApp bill.',
+      'Meta charges by template type, not by length. A marketing message costs about seven times a utility one.',
     columns: ['Category', 'What belongs in it', 'India, per delivered message'],
     rows: [
       {
@@ -107,50 +109,116 @@ const BLOCKS: TopicBlock[] = [
     kind: 'callout',
     id: 'reclassify',
     tone: 'warn',
-    title: 'Adding an offer to a utility template reprices it',
+    title: 'An offer turns a utility message into marketing',
     body:
-      'This is the mistake that costs real money. An order confirmation is utility at ₹0.1150 because it is about an order the customer already placed. Add a discount code or a festive promotion to the same message and Meta categorises it as marketing at ₹0.8631, on every send, for as long as that template is live. Keep the offer in a second message.',
+      'Add a discount or promotion to an order update and Meta charges it as marketing, ₹0.8631 instead of ₹0.1150, on every send. Keep offers in a separate message.',
     link: { label: 'See the full India rate card', href: '/pricing/meta-rates' },
   },
 ];
 
-function SlotCard({ slot }: { slot: TemplateSlot }) {
-  return (
-    <article className="mkt-tpl">
-      <div className="mkt-tpl__phone">
-        <PhoneMock message={slot.message} />
-      </div>
+type LibraryItem = {
+  id: string;
+  title: string;
+  purpose: string;
+  category: TemplateSlot['category'];
+  group: string;
+  message: TemplateMessage;
+};
 
-      <div className="mkt-tpl__body">
-        <div className="mkt-tpl__head">
-          <h3 className="mkt-tpl__title">{slot.title}</h3>
-          <span className={`mkt-jf__cat mkt-jf__cat--${slot.category.toLowerCase()}`}>
-            {slot.category} · {TEMPLATE_RATE[slot.category]}
+const FESTIVE_GROUP = { id: 'festive', label: 'Festive' };
+
+const LIBRARY: LibraryItem[] = [
+  ...TEMPLATE_GROUPS.flatMap((g) =>
+    g.slots.map((s) => ({
+      id: s.id,
+      title: s.title,
+      purpose: s.purpose,
+      category: s.category,
+      group: g.id,
+      message: s.message,
+    })),
+  ),
+  ...FESTIVAL_VARIANTS.map((f) => ({
+    id: f.id,
+    title: f.title,
+    purpose: f.note,
+    category: f.category,
+    group: FESTIVE_GROUP.id,
+    message: f.message,
+  })),
+];
+
+const FILTERS = [
+  { id: 'all', label: 'All templates' },
+  ...TEMPLATE_GROUPS.map((g) => ({ id: g.id, label: g.label })),
+  FESTIVE_GROUP,
+];
+
+const GROUP_LABEL: Record<string, string> = Object.fromEntries(
+  FILTERS.filter((f) => f.id !== 'all').map((f) => [f.id, f.label]),
+);
+
+function TemplateCard({ item }: { item: LibraryItem }) {
+  return (
+    <article className="mkt-lib-card">
+      <div className="mkt-lib-card__preview">
+        <PhoneMock message={item.message} compact />
+      </div>
+      <div className="mkt-lib-card__body">
+        <div className="mkt-lib-card__tags">
+          <span className="mkt-lib-card__group">{GROUP_LABEL[item.group]}</span>
+          <span className={`mkt-jf__cat mkt-jf__cat--${item.category.toLowerCase()}`}>
+            {item.category} · {TEMPLATE_RATE[item.category]}
           </span>
         </div>
-
-        <p className="mkt-tpl__purpose">{slot.purpose}</p>
-
-        <p className="mkt-tpl__tech">
-          <code>{slot.metaName}</code>
-          <span aria-hidden>·</span>
-          fires on <code>{slot.trigger}</code>
-        </p>
-
-        {slot.watchOut && (
-          <p className="mkt-tpl__watch">
-            <strong>Watch out:</strong> {slot.watchOut}
-          </p>
-        )}
+        <h3 className="mkt-lib-card__title">{item.title}</h3>
+        <p className="mkt-lib-card__purpose">{item.purpose}</p>
+        <Link to="/signup" className="mkt-lib-card__cta">
+          Use this template →
+        </Link>
       </div>
     </article>
   );
 }
 
-export default function WhatsAppTemplatesPage() {
-  const slots = allSlots();
-  const utility = slots.filter((s) => s.category === 'Utility').length;
+function TemplateLibrary() {
+  const [filter, setFilter] = useState('all');
+  const items = filter === 'all' ? LIBRARY : LIBRARY.filter((i) => i.group === filter);
 
+  return (
+    <div className="mkt-lib">
+      <div className="mkt-lib__filters" role="tablist" aria-label="Filter templates">
+        {FILTERS.map((f) => {
+          const count =
+            f.id === 'all' ? LIBRARY.length : LIBRARY.filter((i) => i.group === f.id).length;
+          return (
+            <button
+              key={f.id}
+              type="button"
+              role="tab"
+              aria-selected={filter === f.id}
+              className={`mkt-lib__filter${filter === f.id ? ' is-active' : ''}`}
+              onClick={() => setFilter(f.id)}
+            >
+              {f.label}
+              <span className="mkt-lib__count">{count}</span>
+            </button>
+          );
+        })}
+      </div>
+
+      <ul className="mkt-lib__grid">
+        {items.map((item) => (
+          <li key={item.id}>
+            <TemplateCard item={item} />
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default function WhatsAppTemplatesPage() {
   return (
     <>
       <MarketingSEO
@@ -180,9 +248,7 @@ export default function WhatsAppTemplatesPage() {
           title="WhatsApp templates for Shopify stores"
           trust
           accent="WhatsApp templates"
-          subtitle="The eleven templates TopEdge ships, shown as your customer receives them, with the Meta category and the ₹ rate each one carries."
-          image="/marketing/journeys/hero-whatsapp-templates.webp"
-          imageAlt="An isometric scene of a phone showing a chat message, with template cards and a stamp of approval around it."
+          subtitle="Ready-to-use WhatsApp templates for order updates, COD confirmation, cart recovery and festive sales. Pick one, get it approved by Meta, and start sending."
           actions={
             <>
               <PrimaryButton to="/signup">Start free</PrimaryButton>
@@ -196,59 +262,22 @@ export default function WhatsAppTemplatesPage() {
           }
         />
 
-        <Section className="!pt-0">
-          <div className="mx-auto max-w-3xl">
-            <p className="mkt-jh-lead">
-              Eleven templates, not a catalogue of a hundred. These are the ones the product
-              actually ships, grouped the way they run: {utility} utility templates that follow a
-              Shopify order, three marketing sends that chase a cart, and two optional programs.
-              Every preview shows the real structure, and the highlighted values are the fields
-              filled from the order.
-            </p>
-          </div>
+        <Section className="!pt-12 md:!pt-16" id="library">
+          <TemplateLibrary />
         </Section>
 
-        <Section className="!pt-4">
+        <Section wash="soft">
+          <TrustBand />
+        </Section>
+
+        <Section>
+          <HowItWorks />
+        </Section>
+
+        <Section wash="soft">
           <div className="mkt-jx-centered mx-auto flex max-w-3xl flex-col gap-14 md:gap-16">
             {BLOCKS.map((b) => (
               <TopicBlockView key={b.id} block={b} />
-            ))}
-          </div>
-        </Section>
-
-        {TEMPLATE_GROUPS.map((group, i) => (
-          <Section key={group.id} wash={i % 2 === 0 ? 'soft' : undefined} id={group.id}>
-            <SectionHeading title={group.label} subtitle={group.blurb} center />
-            <div className="mx-auto flex max-w-4xl flex-col gap-5">
-              {group.slots.map((s) => (
-                <SlotCard key={s.id} slot={s} />
-              ))}
-            </div>
-          </Section>
-        ))}
-
-        <Section wash="soft" id="festive">
-          <SectionHeading
-            title="Festive copy, Diwali and after"
-            subtitle="Not extra templates. Each one is a seasonal rewrite of a template above, submitted to Meta as its own, under your own account."
-            center
-          />
-          <div className="mx-auto flex max-w-4xl flex-col gap-5">
-            {FESTIVAL_VARIANTS.map((f) => (
-              <article key={f.id} className="mkt-tpl">
-                <div className="mkt-tpl__phone">
-                  <PhoneMock message={f.message} />
-                </div>
-                <div className="mkt-tpl__body">
-                  <div className="mkt-tpl__head">
-                    <h3 className="mkt-tpl__title">{f.title}</h3>
-                  </div>
-                  <p className="mkt-tpl__purpose">{f.note}</p>
-                  <p className="mkt-tpl__tech">
-                    Seasonal rewrite of <code>{f.basedOn}</code>
-                  </p>
-                </div>
-              </article>
             ))}
           </div>
         </Section>
@@ -281,8 +310,8 @@ export default function WhatsAppTemplatesPage() {
         </Section>
 
         <MarketingCtaBand
-          title="Push these to Meta from your own account"
-          subtitle="Connect Shopify, submit the templates you need, and publish the journey that sends them. Free for 14 days, no card."
+          title="Start sending these templates this week"
+          subtitle="Connect Shopify, submit the templates you need to Meta, and switch on the journey that sends them. Free for 14 days, no card."
           primaryLabel="Start free"
           secondaryLabel="See pricing"
           secondaryTo="/pricing"

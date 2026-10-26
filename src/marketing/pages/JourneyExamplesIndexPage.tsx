@@ -7,6 +7,9 @@ import { TopicBlockView, type TopicBlock } from '../components/topic/TopicBlocks
 import FaqAccordion from '../components/topic/FaqAccordion';
 import { JOURNEY_EXAMPLES } from '../data/journeyExamples';
 import JourneyHero from '../components/journey/JourneyHero';
+import JourneyCard from '../components/journey/JourneyCard';
+import TrustBand from '../components/journey/TrustBand';
+import HowItWorks from '../components/journey/HowItWorks';
 import {
   breadcrumbJsonLd,
   organizationJsonLd,
@@ -30,12 +33,12 @@ const FAQS = [
   {
     question: 'What is a WhatsApp journey?',
     answer:
-      'A journey is an automation bound to a Shopify event. The event fires, the journey sends one or more approved WhatsApp templates, and the customer’s reply can branch it. The difference between a journey and a chatbot is that a journey reads the order it is talking about.',
+      'A journey is an automation triggered by something in your Shopify store, like an abandoned cart or a new COD order. It sends approved WhatsApp messages with the real order details, and changes course based on how the customer replies.',
   },
   {
     question: 'Which journey should a Shopify store publish first?',
     answer:
-      'Cart recovery if you are mostly prepaid, COD confirmation if return-to-origin is the problem that is costing you money. Publish one, watch it for a week, then add the second. Four journeys published on day one is four things you cannot attribute.',
+      'Start with COD confirmation if returned COD parcels are costing you money, or cart recovery if most of your orders are prepaid. Run one for a week, then add the next.',
   },
   {
     question: 'Do these journeys cost extra?',
@@ -51,20 +54,11 @@ const FAQS = [
 
 const BLOCKS: TopicBlock[] = [
   {
-    kind: 'prose',
-    id: 'what-is-a-journey',
-    h2: 'What a journey is, and what it is not',
-    body: [
-      'A journey is **an automation tied to something that happened in your store**. Shopify says a checkout was abandoned, an order was placed, a COD order needs confirming, a parcel shipped. The journey picks that event up and sends an approved WhatsApp template carrying the real order detail, then waits to see what the customer does.',
-      'That last part is what separates it from a chatbot. A chatbot answers whatever is typed at it. A journey **starts from a fact** — it already knows the order number, the items and the amount due — and can branch on a reply because it has somewhere to send the outcome: release the order, hold it, hand the thread to a human.',
-    ],
-  },
-  {
     kind: 'specTable',
     id: 'cost-by-category',
     h2: 'What each journey costs to run',
     intro:
-      'Meta prices the category, not the message, and the gap is the single biggest lever on your WhatsApp bill. Transactional journeys are cheap to run and scale with orders. Promotional ones scale with audience and are worth rationing.',
+      'Meta charges per delivered message, and the price depends on the message type. Order updates are cheap. Sales messages cost about seven times more.',
     columns: ['Journey', 'Meta category', 'Per delivered message, India'],
     rows: [
       {
@@ -95,9 +89,9 @@ const BLOCKS: TopicBlock[] = [
     kind: 'callout',
     id: 'order',
     tone: 'note',
-    title: 'Publish one, not four',
+    title: 'Start with one journey',
     body:
-      'Every journey here is worth running eventually. Running all of them in week one means you cannot tell which change moved your numbers, and it puts four sets of templates into Meta review at the same time. Start with the one that maps to money you are currently losing.',
+      'Launch one journey, measure it for a week, then add the next. Turning on all four at once makes it impossible to tell which one moved your numbers.',
     link: { label: 'See the journey builder', href: '/features/journeys' },
   },
 ];
@@ -143,7 +137,7 @@ export default function JourneyExamplesIndexPage() {
           title="WhatsApp journey examples for Shopify stores"
           trust
           accent="journey examples"
-          subtitle="The automations that ship with TopEdge, written out in full: what fires each one, what goes out, how long the gaps are, and what the sequence costs per order."
+          subtitle="Ready-made WhatsApp automations for Shopify. See exactly what each one sends, when it sends it, and what it costs."
           actions={
             <>
               <PrimaryButton to="/signup">Start free</PrimaryButton>
@@ -157,36 +151,11 @@ export default function JourneyExamplesIndexPage() {
           }
         />
 
-        <Section className="!pt-0">
-          <div className="mx-auto max-w-3xl">
-            <p className="mkt-jh-lead">
-              Every journey below is one TopEdge ships, with the Shopify trigger and the Meta
-              template names it actually uses. They are worked examples rather than a feature list,
-              because the question a merchant is really asking is what this looks like running on
-              their store on a Tuesday.
-            </p>
-          </div>
-        </Section>
-
-        {/*
-          One card grid, not a thumbnail strip in the hero followed by a second,
-          larger version of the same four cards. The grid doubles as navigation
-          into each journey, so it carries the real trigger, the blurb and a
-          picture rather than just a caption.
-        */}
-        <Section wash="soft">
-          <ul className="mx-auto grid max-w-5xl gap-4 md:grid-cols-2">
+        <Section className="!pt-12 md:!pt-16">
+          <ul className="mx-auto grid max-w-5xl gap-5 md:grid-cols-2">
             {JOURNEY_EXAMPLES.map((j) => (
               <li key={j.slug}>
-                <Link to={`${PATH}/${j.slug}`} className="mkt-jx-card is-lg">
-                  <span className="mkt-jx-card__media">
-                    <img src={j.art} alt="" aria-hidden width={640} height={400} loading="lazy" decoding="async" />
-                  </span>
-                  <span className="mkt-jx-card__trigger">{j.cardTrigger}</span>
-                  <span className="mkt-jx-card__title">{j.cardTitle}</span>
-                  <span className="mkt-jx-card__blurb">{j.cardBlurb}</span>
-                  <span className="mkt-jx-card__cta">See the full journey</span>
-                </Link>
+                <JourneyCard journey={j} href={`${PATH}/${j.slug}`} large />
               </li>
             ))}
           </ul>
@@ -196,7 +165,7 @@ export default function JourneyExamplesIndexPage() {
             but nobody searches for it. It gets a feature card pointing at
             /features/warranty rather than a page that could not rank.
           */}
-          <div className="mx-auto mt-6 max-w-5xl">
+          <div className="mx-auto mt-5 max-w-5xl">
             <Link to="/features/warranty" className="mkt-jx-note">
               <span className="mkt-jx-note__icon" aria-hidden>
                 <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -205,10 +174,10 @@ export default function JourneyExamplesIndexPage() {
                 </svg>
               </span>
               <span className="mkt-jx-note__body">
-                <span className="mkt-jx-note__tag">Also shipping</span>
+                <span className="mkt-jx-note__tag">Also included</span>
                 <span className="mkt-jx-note__title">Warranty registration journey</span>
                 <span className="mkt-jx-note__desc">
-                  Fires on <code>order_placed</code>, for brands that register warranty at purchase.
+                  Sends the customer a warranty confirmation the moment they order.
                 </span>
               </span>
               <span className="mkt-jx-note__cta">
@@ -221,7 +190,15 @@ export default function JourneyExamplesIndexPage() {
           </div>
         </Section>
 
+        <Section wash="soft">
+          <TrustBand />
+        </Section>
+
         <Section>
+          <HowItWorks />
+        </Section>
+
+        <Section wash="soft">
           <div className="mkt-jx-centered mx-auto flex max-w-3xl flex-col gap-14 md:gap-16">
             {BLOCKS.map((b) => (
               <TopicBlockView key={b.id} block={b} />
@@ -229,7 +206,7 @@ export default function JourneyExamplesIndexPage() {
           </div>
         </Section>
 
-        <Section wash="soft">
+        <Section>
           <SectionHeading title="Questions teams ask" center />
           <div className="mx-auto max-w-3xl">
             <FaqAccordion items={FAQS} />

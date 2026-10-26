@@ -241,18 +241,33 @@
   padding: 1.6rem 1.7rem;
 }
 
-.mkt-jx-card__trigger {
-  display: inline-block;
+.mkt-jx-card__badge {
   align-self: flex-start;
-  margin-bottom: 0.7rem;
-  padding: 0.16rem 0.55rem;
-  border-radius: 7px;
-  background: #f6f5fb;
-  border: 1px solid var(--mkt-border);
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 0.72rem;
-  color: #5b21b6;
-  overflow-wrap: anywhere;
+  margin-bottom: 0.75rem;
+}
+
+/* Goal and metric, the two things a merchant decides on, as a quiet table. */
+.mkt-jx-card__meta {
+  display: grid;
+  gap: 0.35rem;
+  margin-top: 1rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid #f1eef9;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: var(--mkt-ink);
+}
+
+.mkt-jx-card__meta > span {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.mkt-jx-card__meta em {
+  flex: none;
+  width: 6.5rem;
+  font-style: normal;
+  color: #94a3b8;
 }
 
 .mkt-jx-card__title {
@@ -485,63 +500,6 @@
   background: #ffffff;
 }
 
-/* ---------- index: four thumbnails under the hero ---------- */
-
-.mkt-jh__strip {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.6rem;
-  max-width: 62rem;
-  margin: 2.5rem auto 0;
-}
-
-@media (min-width: 900px) {
-  .mkt-jh__strip {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 0.9rem;
-  }
-}
-
-.mkt-jh__strip a {
-  display: block;
-  border-radius: 18px;
-  overflow: hidden;
-  border: 1px solid rgba(196, 181, 253, 0.5);
-  background: #ffffff;
-  box-shadow: 0 18px 40px -32px rgba(49, 28, 94, 0.55);
-  transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.2s ease;
-}
-
-.mkt-jh__strip a:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 24px 50px -30px rgba(49, 28, 94, 0.65);
-}
-
-/*
- * These compositions put their subject in the middle of the frame, not at the
- * top: a panel above, a phone through the centre, whitespace at both edges.
- * Cropping from the top on a thumbnail this short showed nothing but the
- * background gradient. Centre the crop and give it a taller box.
- */
-.mkt-jh__strip img {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 5 / 4;
-  object-fit: cover;
-  object-position: center 45%;
-}
-
-.mkt-jh__strip span {
-  display: block;
-  padding: 0.6rem 0.75rem 0.75rem;
-  font-size: 0.8rem;
-  font-weight: 500;
-  line-height: 1.35;
-  color: var(--mkt-ink);
-  text-align: center;
-}
-
 /* ---------- index cards: give them a picture ---------- */
 
 .mkt-jx-card__media {
@@ -605,6 +563,7 @@
   border-radius: 0.35em;
   padding: 0.04em 0.28em 0.1em;
   margin: 0 0.04em;
+  white-space: nowrap;
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
 }
@@ -624,31 +583,6 @@
   max-width: 42rem;
   margin-left: auto;
   margin-right: auto;
-}
-
-/* Real product shot between the flow diagram and the argument. */
-.mkt-jx-band {
-  margin: 2.5rem 0 0;
-  border: 1px solid var(--mkt-border);
-  border-radius: 20px;
-  overflow: hidden;
-  background: #f4f2ff;
-}
-
-.mkt-jx-band img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.mkt-jx-band__caption {
-  margin: 0;
-  padding: 0.85rem 1.1rem;
-  border-top: 1px solid var(--mkt-border);
-  background: #ffffff;
-  font-size: 0.82rem;
-  line-height: 1.55;
-  color: #64748b;
 }
 
 /* ===================================================================
@@ -786,95 +720,6 @@
 }
 
 /* ===================================================================
-   Template library card: the phone beside what the template is for
-   =================================================================== */
-
-.mkt-tpl {
-  display: grid;
-  gap: 1.5rem;
-  align-items: center;
-  padding: 1.5rem;
-  border: 1px solid var(--mkt-border);
-  border-radius: var(--mkt-radius-card);
-  background: #ffffff;
-}
-
-@media (min-width: 860px) {
-  .mkt-tpl {
-    grid-template-columns: 19rem minmax(0, 1fr);
-    gap: 2.25rem;
-    padding: 2rem 2.25rem;
-  }
-}
-
-.mkt-tpl__phone {
-  display: flex;
-  justify-content: center;
-}
-
-.mkt-tpl__body {
-  min-width: 0;
-}
-
-.mkt-tpl__head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.65rem;
-}
-
-.mkt-tpl__title {
-  margin: 0;
-  font-family: var(--mkt-font);
-  font-size: 1.2rem;
-  font-weight: 500;
-  letter-spacing: -0.018em;
-  line-height: 1.3;
-  color: var(--mkt-ink);
-}
-
-.mkt-tpl__purpose {
-  margin: 0.7rem 0 0;
-  font-size: 0.95rem;
-  line-height: 1.65;
-  color: #475569;
-}
-
-/* One quiet line for the identifiers a developer needs to find the template
-   in the dashboard. A merchant reading the card can skip it entirely. */
-.mkt-tpl__tech {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.35rem;
-  margin: 0.75rem 0 0;
-  font-size: 0.78rem;
-  color: #94a3b8;
-}
-
-.mkt-tpl__tech code {
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 0.74rem;
-  color: #7c6aa8;
-  overflow-wrap: anywhere;
-}
-
-.mkt-tpl__watch {
-  margin: 0.9rem 0 0;
-  padding: 0.75rem 0.95rem;
-  border-radius: var(--mkt-radius-control);
-  border-left: 3px solid #f59e0b;
-  background: #fffbeb;
-  font-size: 0.88rem;
-  line-height: 1.6;
-  color: #78350f;
-}
-
-.mkt-tpl__watch strong {
-  color: #92400e;
-}
-
-/* ===================================================================
    Simple feature tile: an icon and a line, for a short capability list
    that does not need a full mkt-jx-card (no link, no picture, no blurb).
    =================================================================== */
@@ -913,4 +758,404 @@
   font-weight: 500;
   line-height: 1.5;
   color: var(--mkt-ink);
+}
+
+/* ===================================================================
+   Trust band: logos, rating and two real customer quotes
+   =================================================================== */
+
+.mkt-trust {
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+.mkt-trust__head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+  text-align: center;
+}
+
+.mkt-trust__title {
+  margin: 0;
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  color: var(--mkt-ink);
+  text-wrap: balance;
+}
+
+.mkt-trust__head .mkt-tp__score {
+  padding: 0.45rem 0.9rem;
+  border: 1px solid var(--mkt-border);
+  border-radius: 999px;
+  background: #ffffff;
+}
+
+.mkt-trust__logos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1.25rem 2.75rem;
+  margin: 2rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mkt-trust__logos img {
+  display: block;
+  height: 22px;
+  width: auto;
+  max-width: 120px;
+  object-fit: contain;
+  filter: brightness(0) opacity(0.45);
+}
+
+.mkt-trust__stories {
+  display: grid;
+  gap: 1rem;
+  margin: 2.25rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 768px) {
+  .mkt-trust__stories {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.mkt-trust__story {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 1.6rem;
+  border: 1px solid var(--mkt-border);
+  border-radius: var(--mkt-radius-card);
+  background: #ffffff;
+  box-shadow: 0 1px 2px rgba(12, 18, 34, 0.04);
+}
+
+.mkt-trust__headline {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--mkt-ink);
+}
+
+.mkt-trust__quote {
+  flex: 1 1 auto;
+  margin: 0.7rem 0 0;
+}
+
+.mkt-trust__quote p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: #475569;
+}
+
+.mkt-trust__by {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-top: 1.2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #f4f2fa;
+}
+
+.mkt-trust__avatar {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 999px;
+  background: #ede9fe;
+  color: #7c3aed;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.mkt-trust__by > span:last-child {
+  display: grid;
+  line-height: 1.35;
+}
+
+.mkt-trust__by b {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--mkt-ink);
+}
+
+.mkt-trust__by > span:last-child > span {
+  font-size: 0.78rem;
+  color: #94a3b8;
+}
+
+.mkt-trust__more {
+  margin: 1.5rem 0 0;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.mkt-trust__more a {
+  font-weight: 500;
+  color: var(--mkt-violet);
+  text-decoration: none;
+}
+
+.mkt-trust__more a:hover {
+  text-decoration: underline;
+}
+
+/* ===================================================================
+   How it works: three numbered steps across
+   =================================================================== */
+
+.mkt-how {
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+.mkt-how__title {
+  margin: 0;
+  text-align: center;
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  color: var(--mkt-ink);
+}
+
+.mkt-how__steps {
+  display: grid;
+  gap: 1rem;
+  margin: 2rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 768px) {
+  .mkt-how__steps {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.mkt-how__step {
+  padding: 1.4rem 1.5rem;
+  border: 1px solid var(--mkt-border);
+  border-radius: var(--mkt-radius-card);
+  background: #ffffff;
+}
+
+.mkt-how__n {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  background: var(--mkt-violet-light);
+  color: var(--mkt-violet);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.mkt-how__step-title {
+  margin: 0.9rem 0 0;
+  font-size: 1.02rem;
+  font-weight: 500;
+  color: var(--mkt-ink);
+}
+
+.mkt-how__step-body {
+  margin: 0.4rem 0 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #64748b;
+}
+
+/* ===================================================================
+   Template library: filter pills over a grid of preview cards
+   =================================================================== */
+
+.mkt-lib {
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.mkt-lib__filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.mkt-lib__filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 0.95rem;
+  border: 1px solid var(--mkt-border);
+  border-radius: 999px;
+  background: #ffffff;
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: #475569;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+
+.mkt-lib__filter:hover {
+  border-color: #c4b5fd;
+  color: var(--mkt-ink);
+}
+
+.mkt-lib__filter.is-active {
+  border-color: var(--mkt-violet);
+  background: var(--mkt-violet);
+  color: #ffffff;
+}
+
+.mkt-lib__count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.35rem;
+  height: 1.35rem;
+  padding: 0 0.35rem;
+  border-radius: 999px;
+  background: #f1f5f9;
+  font-size: 0.72rem;
+  color: #64748b;
+}
+
+.mkt-lib__filter.is-active .mkt-lib__count {
+  background: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+}
+
+.mkt-lib__grid {
+  display: grid;
+  gap: 1.1rem;
+  margin: 2rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 640px) {
+  .mkt-lib__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .mkt-lib__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.mkt-lib__grid > li {
+  display: flex;
+}
+
+.mkt-lib-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid var(--mkt-border);
+  border-radius: var(--mkt-radius-card);
+  background: #ffffff;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+.mkt-lib-card:hover {
+  border-color: #c4b5fd;
+  box-shadow: 0 18px 38px -28px rgba(76, 29, 149, 0.5);
+  transform: translateY(-2px);
+}
+
+/* The preview grows to fill the row, so cards in a row share one height and
+   the copy underneath always starts on the same line. */
+.mkt-lib-card__preview {
+  flex: 1 1 auto;
+  display: flex;
+  border-bottom: 1px solid var(--mkt-border);
+}
+
+.mkt-lib-card__preview .mkt-ph {
+  flex: 1 1 auto;
+}
+
+.mkt-lib-card__body {
+  display: flex;
+  flex-direction: column;
+  padding: 1.1rem 1.2rem 1.25rem;
+}
+
+.mkt-lib-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.mkt-lib-card__group {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mkt-violet);
+}
+
+.mkt-lib-card__title {
+  margin: 0.6rem 0 0;
+  font-size: 1.05rem;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--mkt-ink);
+}
+
+.mkt-lib-card__purpose {
+  margin: 0.4rem 0 0;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: #64748b;
+}
+
+.mkt-lib-card__cta {
+  align-self: flex-start;
+  margin-top: 0.9rem;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--mkt-violet);
+  text-decoration: none;
+}
+
+.mkt-lib-card__cta:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 639px) {
+  .mkt-lib__filters {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    margin: 0 -1.25rem;
+    padding: 0 1.25rem 0.25rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .mkt-lib__filters::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mkt-lib__filter {
+    flex: none;
+  }
 }

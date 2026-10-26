@@ -7,6 +7,8 @@ import { TopicBlockView, TopicToc } from '../components/topic/TopicBlocks';
 import FaqAccordion from '../components/topic/FaqAccordion';
 import JourneyFlow from '../components/journey/JourneyFlow';
 import JourneyHero from '../components/journey/JourneyHero';
+import JourneyCard from '../components/journey/JourneyCard';
+import TrustBand from '../components/journey/TrustBand';
 import { JOURNEY_EXAMPLES, journeyExampleBySlug } from '../data/journeyExamples';
 import {
   breadcrumbJsonLd,
@@ -78,23 +80,6 @@ export default function JourneyExamplePage({ slug }: { slug: string }) {
             */}
             <JourneyFlow trigger={j.trigger} triggerNote={j.triggerNote} steps={j.steps} />
 
-            {/*
-              j.image is a real product composition, not generated art, kept
-              for exactly this: showing what the journey looks like running
-              rather than only describing it.
-            */}
-            <figure className="mkt-jx-band">
-              <img
-                src={j.image}
-                alt={j.imageAlt}
-                width={1200}
-                height={750}
-                loading="lazy"
-                decoding="async"
-              />
-              <figcaption className="mkt-jx-band__caption">{j.imageAlt}</figcaption>
-            </figure>
-
             {j.blocks.length > 0 && (
               <div className="mt-10">
                 <TopicToc blocks={j.blocks} />
@@ -112,29 +97,26 @@ export default function JourneyExamplePage({ slug }: { slug: string }) {
         </Section>
 
         <Section wash="soft">
+          <TrustBand />
+        </Section>
+
+        <Section>
           <SectionHeading title="Questions teams ask" center />
           <div className="mx-auto max-w-3xl">
             <FaqAccordion items={j.faqs} />
           </div>
         </Section>
 
-        <Section>
+        <Section wash="soft">
           <SectionHeading
             title="Other journeys"
-            subtitle="The rest of what runs on a Shopify store from day one."
+            subtitle="More ready-made automations for your Shopify store."
             center
           />
-          <ul className="mx-auto grid max-w-4xl gap-4 md:grid-cols-3">
+          <ul className="mx-auto grid max-w-5xl gap-4 md:grid-cols-3">
             {siblings.map((s) => (
               <li key={s.slug}>
-                <Link to={`${INDEX_PATH}/${s.slug}`} className="mkt-jx-card">
-                  <span className="mkt-jx-card__media">
-                    <img src={s.art} alt="" aria-hidden width={640} height={400} loading="lazy" decoding="async" />
-                  </span>
-                  <span className="mkt-jx-card__trigger">{s.cardTrigger}</span>
-                  <span className="mkt-jx-card__title">{s.cardTitle}</span>
-                  <span className="mkt-jx-card__blurb">{s.cardBlurb}</span>
-                </Link>
+                <JourneyCard journey={s} href={`${INDEX_PATH}/${s.slug}`} />
               </li>
             ))}
           </ul>

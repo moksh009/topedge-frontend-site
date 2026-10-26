@@ -40,27 +40,36 @@ function renderBody(body: string) {
 export default function PhoneMock({
   businessName = 'Linen & Co.',
   message,
+  compact = false,
 }: {
   businessName?: string;
   message: TemplateMessage;
+  /** Chat header and message only, no device frame, for dense grids. */
+  compact?: boolean;
 }) {
   return (
-    <div className="mkt-ph" role="img" aria-label="Preview of the message as the customer receives it">
+    <div
+      className={`mkt-ph${compact ? ' mkt-ph--compact' : ''}`}
+      role="img"
+      aria-label="Preview of the message as the customer receives it"
+    >
       <div className="mkt-ph__frame">
         <div className="mkt-ph__screen">
-          <div className="mkt-ph__status" aria-hidden>
-            <span className="mkt-ph__time">9:41</span>
-            <span className="mkt-ph__island" />
-            <span className="mkt-ph__icons">
-              <svg viewBox="0 0 24 14" width="17" height="10" aria-hidden>
-                <rect x="0" y="4" width="3" height="6" rx="1" fill="currentColor" />
-                <rect x="5" y="2.5" width="3" height="7.5" rx="1" fill="currentColor" />
-                <rect x="10" y="1" width="3" height="9" rx="1" fill="currentColor" />
-                <rect x="15" y="2" width="8" height="9" rx="2" fill="none" stroke="currentColor" strokeWidth="1.2" />
-                <rect x="16.2" y="3.2" width="5" height="6.6" rx="1" fill="currentColor" />
-              </svg>
-            </span>
-          </div>
+          {!compact && (
+            <div className="mkt-ph__status" aria-hidden>
+              <span className="mkt-ph__time">9:41</span>
+              <span className="mkt-ph__island" />
+              <span className="mkt-ph__icons">
+                <svg viewBox="0 0 24 14" width="17" height="10" aria-hidden>
+                  <rect x="0" y="4" width="3" height="6" rx="1" fill="currentColor" />
+                  <rect x="5" y="2.5" width="3" height="7.5" rx="1" fill="currentColor" />
+                  <rect x="10" y="1" width="3" height="9" rx="1" fill="currentColor" />
+                  <rect x="15" y="2" width="8" height="9" rx="2" fill="none" stroke="currentColor" strokeWidth="1.2" />
+                  <rect x="16.2" y="3.2" width="5" height="6.6" rx="1" fill="currentColor" />
+                </svg>
+              </span>
+            </div>
+          )}
 
           <div className="mkt-ph__bar">
             <span className="mkt-ph__back" aria-hidden>
@@ -113,14 +122,16 @@ export default function PhoneMock({
             </div>
           </div>
 
-          <div className="mkt-ph__composer" aria-hidden>
-            <span className="mkt-ph__input">Message</span>
-            <span className="mkt-ph__send">
-              <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
-                <path d="M3 20.5v-6l8-2.5-8-2.5v-6l19 8.5z" />
-              </svg>
-            </span>
-          </div>
+          {!compact && (
+            <div className="mkt-ph__composer" aria-hidden>
+              <span className="mkt-ph__input">Message</span>
+              <span className="mkt-ph__send">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+                  <path d="M3 20.5v-6l8-2.5-8-2.5v-6l19 8.5z" />
+                </svg>
+              </span>
+            </div>
+          )}
         </div>
       </div>
     </div>

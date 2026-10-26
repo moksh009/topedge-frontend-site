@@ -23,6 +23,12 @@ export type JourneyExample = {
   cardBlurb: string;
   /** Shopify trigger name, for the index card. */
   cardTrigger: string;
+  /** Meta category of the sends, which sets the cost badge on the card. */
+  cardCategory: 'Utility' | 'Marketing';
+  /** What the journey is for, in a merchant's words. */
+  cardGoal: string;
+  /** The number to watch to know it is working. */
+  cardMetric: string;
   /**
    * Wide generated scene for the detail-page hero. Richer than `art`, which
    * has to survive being shown at thumbnail size on the index.
@@ -63,6 +69,9 @@ export const JOURNEY_EXAMPLES: JourneyExample[] = [
     cardBlurb:
       'Three WhatsApp reminders over 72 hours, each with the product photo, price and a one-tap link back to checkout.',
     cardTrigger: 'abandoned_cart',
+    cardCategory: 'Marketing',
+    cardGoal: 'Recover lost sales',
+    cardMetric: 'Recovered revenue',
     image: '/marketing/solutions/sol-fashion-cart-saas.jpg',
     imageAlt:
       'An abandoned cart card showing a linen shirt at \u20b92,499 in size M, beside the WhatsApp recovery message naming the same product, size and price.',
@@ -254,6 +263,9 @@ export const JOURNEY_EXAMPLES: JourneyExample[] = [
     cardBlurb:
       'Ask every COD customer to confirm before you ship, so fake and impulse orders never leave the warehouse.',
     cardTrigger: 'cod_order_placed',
+    cardCategory: 'Utility',
+    cardGoal: 'Cut RTO on COD orders',
+    cardMetric: 'RTO rate',
     image: '/marketing/solutions/sol-cod-rto-saas.jpg',
     imageAlt:
       'An RTO risk panel showing confirmed, prepaid-flip and at-risk COD counts, beside a WhatsApp thread asking a buyer to confirm their shipping address.',
@@ -444,6 +456,9 @@ export const JOURNEY_EXAMPLES: JourneyExample[] = [
     cardBlurb:
       'After a COD order is confirmed, offer free shipping to pay online now and cut return risk.',
     cardTrigger: 'cod_prepaid',
+    cardCategory: 'Marketing',
+    cardGoal: 'Get paid upfront',
+    cardMetric: 'Prepaid switch rate',
     image: '/marketing/solutions/sol-cod-prepaid-saas.jpg',
     imageAlt:
       'A confirm, prepaid offer and paid sequence beside a WhatsApp message offering shipping savings with a secure pay link.',
@@ -609,6 +624,9 @@ export const JOURNEY_EXAMPLES: JourneyExample[] = [
     cardBlurb:
       'Confirmed, shipped, delivered and cancelled updates that stop “where is my order?” messages before they start.',
     cardTrigger: 'order_placed · order_fulfilled',
+    cardCategory: 'Utility',
+    cardGoal: 'Fewer support tickets',
+    cardMetric: '“Where is my order?” tickets',
     image: '/marketing/solutions/sol-electronics-inbox-saas.jpg',
     imageAlt:
       'A support thread beside an order card showing the order number, its status and the courier tracking number.',

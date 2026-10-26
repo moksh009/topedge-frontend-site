@@ -27,8 +27,6 @@ export type TemplateSlot = {
   /** Shopify event that fires it, or null where it is sent by a program. */
   trigger: string;
   message: TemplateMessage;
-  /** The one thing people get wrong with this template. */
-  watchOut?: string;
 };
 
 export type TemplateGroup = {
@@ -76,8 +74,6 @@ export const TEMPLATE_GROUPS: TemplateGroup[] = [
           body: 'Hi {{Priya}}, your order {{#1042}} is ready to ship 📦\n\n{{Olive Linen Shirt, M}}\nPay on delivery: {{₹2,499}}\n\nPlease confirm and we’ll dispatch it today.',
           buttons: ['Confirm order', 'Cancel order'],
         },
-        watchOut:
-          'Keep offers out of this message. Add a discount and Meta charges it as marketing, about seven times the price.',
       },
       {
         id: 'om_cod_confirm_v2',
@@ -105,8 +101,6 @@ export const TEMPLATE_GROUPS: TemplateGroup[] = [
           body: 'Good news, {{Priya}}! Your order is on its way 🚚\n\nOrder {{#1042}} shipped with {{Delhivery}}.\nExpected delivery: {{Fri, 14 Nov}}',
           buttons: ['Track order'],
         },
-        watchOut:
-          'Always include a working tracking link. Without it, this message creates the support ticket it was meant to prevent.',
       },
       {
         id: 'om_delivered',
@@ -183,8 +177,6 @@ export const TEMPLATE_GROUPS: TemplateGroup[] = [
           body: 'Last call, {{Priya}} ⏳\n\nWe’re holding {{Olive Linen Shirt, M}} at {{₹2,499}} until tonight. After that it goes back to stock.',
           buttons: ['Complete my order', 'Ask a question'],
         },
-        watchOut:
-          'Skip the discount here. If the last reminder always has one, repeat customers learn to abandon on purpose.',
       },
     ],
   },
@@ -220,8 +212,6 @@ export const TEMPLATE_GROUPS: TemplateGroup[] = [
           body: 'Your order {{#1042}} is confirmed, {{Priya}} 🙌\n\nPay now by UPI or card and shipping is on us. You save {{₹80}}, same delivery date.',
           buttons: ['Pay now & save ₹80', 'Keep Cash on Delivery'],
         },
-        watchOut:
-          'Needs a branching journey, so it is on Growth and Scale. Basic COD confirmation is on every plan.',
       },
     ],
   },
@@ -236,11 +226,13 @@ export const FESTIVAL_VARIANTS: {
   id: string;
   title: string;
   basedOn: string;
+  category: TemplateSlot['category'];
   note: string;
   message: TemplateMessage;
 }[] = [
   {
     id: 'diwali-cart',
+    category: 'Marketing',
     title: 'Diwali cart reminder',
     basedOn: 'cart_recovery_1',
     note: 'Cart reminders are already marketing, so festive wording does not change the price.',
@@ -252,6 +244,7 @@ export const FESTIVAL_VARIANTS: {
   },
   {
     id: 'diwali-prepaid',
+    category: 'Marketing',
     title: 'Diwali prepaid offer',
     basedOn: 'eco_cod_prepaid_switch',
     note: 'Festive delivery queues are long, which gives customers a real reason to pay now.',
@@ -263,6 +256,7 @@ export const FESTIVAL_VARIANTS: {
   },
   {
     id: 'diwali-shipped',
+    category: 'Utility',
     title: 'Festive shipping update',
     basedOn: 'order_status_shipped_v1',
     note: 'Stays utility only while it has no offer. Add a festive discount and it is charged as marketing.',
@@ -273,7 +267,3 @@ export const FESTIVAL_VARIANTS: {
     },
   },
 ];
-
-export function allSlots() {
-  return TEMPLATE_GROUPS.flatMap((g) => g.slots);
-}

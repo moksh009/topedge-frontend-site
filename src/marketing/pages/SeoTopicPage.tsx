@@ -6,6 +6,7 @@ import { Section, SectionHeading, PrimaryButton } from '../components/ui';
 import { TopicBlockView, TopicToc } from '../components/topic/TopicBlocks';
 import FaqAccordion from '../components/topic/FaqAccordion';
 import JourneyHero from '../components/journey/JourneyHero';
+import TrustBand from '../components/journey/TrustBand';
 import { getSeoTopic } from '../data/seoTopics';
 import {
   breadcrumbJsonLd,
@@ -99,6 +100,10 @@ export default function SeoTopicPage({ slug }: Props) {
               </li>
             ))}
           </ul>
+        </Section>
+
+        <Section>
+          <TrustBand title="Shopify brands connected to WhatsApp with TopEdge" />
         </Section>
 
         {blocks.length > 0 ? (
