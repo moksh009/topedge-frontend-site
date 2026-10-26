@@ -2599,3 +2599,17 @@
   color: var(--mkt-violet);
   border-bottom-color: currentColor;
 }
+
+/* Proof badges under the comparison hero. A page that asks the reader to
+   trust our reading of a competitor should say where we can be checked. */
+.mkt-cmp__proof {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.25rem;
+}
+
+@media (max-width: 560px) {
+  .mkt-cmp__proof {
+    margin-top: 1rem;
+  }
+}

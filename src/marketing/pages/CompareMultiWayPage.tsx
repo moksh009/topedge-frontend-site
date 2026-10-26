@@ -6,6 +6,8 @@ import CompareStatus from '../components/compare/CompareStatus';
 import CompareFaq from '../components/compare/CompareFaq';
 import { articleJsonLd, breadcrumbJsonLd, organizationJsonLd, webPageJsonLd } from '../data/pageSeo';
 import { updatedKicker } from '../data/contentDates';
+import ProofBadges from '../components/ProofBadges';
+import ReviewPlatforms from '../components/ReviewPlatforms';
 import '../styles/compare.css';
 
 /** One rival column: the label a buyer reads and the key the row cell is under. */
@@ -118,6 +120,9 @@ export default function CompareMultiWayPage<K extends string>({
               </span>
             ))}
           </h1>
+          <div className="mkt-cmp__proof">
+            <ProofBadges compact />
+          </div>
         </header>
 
         <section className="mkt-cmp__block" aria-labelledby="cmp-multi">
@@ -200,6 +205,10 @@ export default function CompareMultiWayPage<K extends string>({
             </h2>
           </div>
           <CompareFaq items={faqs} />
+        </section>
+
+        <section className="mkt-cmp__block" aria-label="Reviews">
+          <ReviewPlatforms />
         </section>
 
         <MarketingCtaBand

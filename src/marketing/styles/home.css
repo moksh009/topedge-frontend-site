@@ -5948,6 +5948,19 @@ html body .home-sticky .home-sticky__static-copy .home-sticky__body {
  */
 /* Not `home-hero__proof`: that name belongs to the legacy hero animation,
    which a display:none !important group higher up this file hides. */
+
+/*
+ * The strip holds two badges plus their review counts, about 595px of
+ * content, inside a .home-hero__trust capped at 36rem (576px). Nineteen
+ * pixels short, so it wrapped and stranded the divider at the end of the
+ * first line. Rather than drop the counts — the numbers are the point — the
+ * row escapes its parent's cap and centres on the viewport instead.
+ */
 .home-hero__ratings {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: calc(100vw - 2rem);
   margin-top: 0.9rem;
 }

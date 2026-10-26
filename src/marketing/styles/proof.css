@@ -123,15 +123,40 @@
  * column, the convert prompt. It stacks, because in a half-width column the
  * two pills wrap and the divider is left stranded at the end of the first line.
  */
+/*
+ * A row dropped onto a surface that already has chrome of its own: the
+ * convert prompt. Two loose lines of text under the buttons read as a
+ * footnote; as two chips they read as two places people have reviewed us,
+ * which is the whole point of putting them there.
+ */
 .mkt-proof-row--plain {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  display: grid;
   gap: 0.4rem;
   border: 0;
   background: none;
   box-shadow: none;
   padding: 0;
+}
+
+/*
+ * One chip a row, never two. These sit inside a ~400px column (the convert
+ * prompt's left half), so a two-up grid gives each about 190px and both
+ * badges — stars, score, wordmark, count — clip at "Trustpil". Viewport media
+ * queries cannot see that column, so the single column is the rule.
+ */
+.mkt-proof-row--plain > .mkt-tp__score,
+.mkt-proof-row--plain > .mkt-ph__badge {
+  justify-content: flex-start;
+  gap: 0.45rem;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid #ece9f6;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.mkt-proof-row--plain .mkt-tp__count,
+.mkt-proof-row--plain .mkt-ph__count {
+  margin-left: auto;
 }
 
 .mkt-proof-row--plain .mkt-proof-row__sep {
@@ -236,4 +261,182 @@
   color: inherit;
   text-decoration: underline;
   text-underline-offset: 2px;
+}
+
+/* ===================================================================
+   Where merchants review us
+   ===================================================================
+   A comparison page's reader is weighing vendors, so the useful claim is
+   "here is every place you can check us, and the number each one shows",
+   with each card linking out so the figure can be verified.
+   =================================================================== */
+
+.mkt-rp {
+  max-width: var(--mkt-max-wide, 72rem);
+  margin: 0 auto;
+}
+
+.mkt-rp__head {
+  text-align: center;
+  margin-bottom: 1.6rem;
+}
+
+.mkt-rp__title {
+  margin: 0;
+  font-family: var(--mkt-font);
+  font-size: clamp(1.45rem, 3vw, 2rem);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  color: var(--mkt-ink, #0c1222);
+}
+
+.mkt-rp__intro {
+  margin: 0.7rem auto 0;
+  max-width: 40rem;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: #64748b;
+}
+
+.mkt-rp__grid {
+  display: grid;
+  gap: 0.85rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 760px) {
+  .mkt-rp__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.mkt-rp__card {
+  display: flex;
+  border: 1px solid var(--mkt-border, #e8e6f0);
+  border-radius: 14px;
+  background: #ffffff;
+  transition: border-color 0.15s ease;
+}
+
+.mkt-rp__card:hover {
+  border-color: #d8d2f0;
+}
+
+.mkt-rp__link,
+.mkt-rp__card--partner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.3rem;
+  width: 100%;
+  padding: 1.1rem 1.15rem 1.15rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.mkt-rp__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #475569;
+}
+
+.mkt-rp__brand svg {
+  display: block;
+  flex: none;
+}
+
+/* The score is the thing the eye should land on, so it is set at display
+   size rather than left inside the badge line below it. */
+.mkt-rp__score {
+  font-family: var(--mkt-font);
+  font-size: 2.1rem;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  font-variant-numeric: tabular-nums;
+  color: var(--mkt-ink, #0c1222);
+}
+
+.mkt-rp__meta {
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: #94a3b8;
+}
+
+.mkt-rp__link > .mkt-tp__score,
+.mkt-rp__link > .mkt-ph__badge,
+.mkt-rp__link > .mkt-ph__embed {
+  margin-top: 0.7rem;
+  pointer-events: none;
+}
+
+/* Inside a card that is itself the link, the badge is decoration: its own
+   score text would repeat the big number right above it. */
+.mkt-rp__link .mkt-tp__score-text,
+.mkt-rp__link .mkt-ph__text,
+.mkt-rp__link .mkt-tp__count,
+.mkt-rp__link .mkt-ph__count {
+  display: none;
+}
+
+.mkt-rp__partners {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  margin: 0.55rem 0 0.4rem;
+  padding: 0;
+  list-style: none;
+}
+
+.mkt-rp__partners img {
+  display: block;
+  height: 2rem;
+  width: auto;
+  max-width: 6.5rem;
+  object-fit: contain;
+}
+
+.mkt-rp__quotes {
+  display: grid;
+  gap: 0.85rem;
+  margin: 0.85rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 760px) {
+  .mkt-rp__quotes {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.mkt-rp__quote {
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--mkt-border, #e8e6f0);
+  border-radius: 14px;
+  background: #fbfafd;
+}
+
+.mkt-rp__quote p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #334155;
+}
+
+.mkt-rp__quote cite {
+  display: block;
+  margin-top: 0.6rem;
+  font-size: 0.8rem;
+  font-style: normal;
+  font-weight: 600;
+  color: var(--mkt-ink, #0c1222);
 }

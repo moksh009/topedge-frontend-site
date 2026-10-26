@@ -51,15 +51,16 @@
     ]
   },
   "productHunt": {
-    "rating": "",
-    "reviews": "",
-    "followers": "",
+    "rating": "5.0",
+    "reviews": "8",
+    "followers": "8",
     "embedProductId": "",
-    "asOf": "",
-    "retrieved": "",
+    "asOf": "26 October 2026",
+    "retrieved": "26 October 2026",
     "productUrl": "https://www.producthunt.com/products/topedge-ai",
     "reviewUrl": "https://www.producthunt.com/products/topedge-ai/reviews",
-    "quotes": []
+    "quotes": [],
+    "tagline": "Shopify D2C Growth Suite"
   },
   "customers": [
     {

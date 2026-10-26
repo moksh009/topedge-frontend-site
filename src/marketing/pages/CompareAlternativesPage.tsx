@@ -6,6 +6,8 @@ import MarketingCtaBand from '../components/MarketingCtaBand';
 import { COMPARE_ALTERNATIVES } from '../data/compareAlternatives';
 import { breadcrumbJsonLd, organizationJsonLd, webPageJsonLd } from '../data/pageSeo';
 import { compareTwoWayModifiedIso, updatedKicker } from '../data/contentDates';
+import ProofBadges from '../components/ProofBadges';
+import ReviewPlatforms from '../components/ReviewPlatforms';
 import '../styles/compare.css';
 import '../styles/topic-blocks.css';
 
@@ -74,6 +76,9 @@ export default function CompareAlternativesPage() {
             <span className="mkt-cmp__h1-vs">·</span>
             <span className="mkt-cmp__h1-rest">All 10 Shopify India alternatives</span>
           </h1>
+          <div className="mkt-cmp__proof">
+            <ProofBadges compact />
+          </div>
         </header>
 
         {/*
@@ -295,6 +300,10 @@ export default function CompareAlternativesPage() {
             </Link>
             <Link to="/pricing">TopEdge pricing</Link>
           </nav>
+        </section>
+
+        <section className="mkt-cmp__block" aria-label="Reviews">
+          <ReviewPlatforms />
         </section>
 
         <MarketingCtaBand

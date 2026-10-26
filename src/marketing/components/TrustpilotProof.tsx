@@ -59,7 +59,9 @@ export function TrustpilotScore({ compact = false }: { compact?: boolean }) {
         ))}
       </span>
       <span className="mkt-tp__score-text">
-        <b>{TRUSTPILOT.score}</b> out of 5 on{' '}
+        {/* No "out of 5": the star row already says it, and spelling it out
+            twice in one strip left no room for the review count. */}
+        <b>{TRUSTPILOT.score}</b> on{' '}
         <span className="mkt-tp__word">
           <svg viewBox="0 0 24 24" width="13" height="13" aria-hidden>
             <path d={STAR_PATH} fill={TP_GREEN} />

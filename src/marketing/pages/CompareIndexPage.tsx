@@ -6,6 +6,8 @@ import { PAGE_SEO, organizationJsonLd, breadcrumbJsonLd, webPageJsonLd } from '.
 import MarketingPage from '../components/MarketingPage';
 import MarketingCtaBand from '../components/MarketingCtaBand';
 import { allCompareCompetitors } from '../data/compareCompetitors';
+import ProofBadges from '../components/ProofBadges';
+import ReviewPlatforms from '../components/ReviewPlatforms';
 import '../styles/compare.css';
 
 const FEATURED = [
@@ -145,6 +147,9 @@ export default function CompareIndexPage() {
             <li>Public sources</li>
             <li>Meta markup per tool</li>
           </ul>
+          <div className="mkt-cmp__proof">
+            <ProofBadges compact />
+          </div>
         </header>
 
         <section className="mkt-cmp__block mkt-cmpx__block" aria-labelledby="mkt-cmpx-featured">
@@ -218,6 +223,10 @@ export default function CompareIndexPage() {
               </div>
             ))}
           </div>
+        </section>
+
+        <section className="mkt-cmp__block" aria-label="Reviews">
+          <ReviewPlatforms />
         </section>
 
         <MarketingCtaBand

@@ -16,6 +16,8 @@ import {
   compareTwoWayModifiedIso,
   updatedKicker,
 } from '../data/contentDates';
+import ProofBadges from '../components/ProofBadges';
+import ReviewPlatforms from '../components/ReviewPlatforms';
 import '../styles/compare.css';
 
 type Props = { competitor?: string };
@@ -221,6 +223,9 @@ export default function ComparePage({ competitor: competitorProp }: Props) {
               <span className="mkt-cmp__h1-peer-name">{data.name}</span>
             </span>
           </h1>
+          <div className="mkt-cmp__proof">
+            <ProofBadges compact />
+          </div>
         </header>
 
         {!lean && data.whoForTopEdge && data.whoForCompetitor ? (
@@ -512,6 +517,10 @@ export default function ComparePage({ competitor: competitorProp }: Props) {
               </Link>
             ))}
           </nav>
+        </section>
+
+        <section className="mkt-cmp__block" aria-label="Reviews">
+          <ReviewPlatforms />
         </section>
 
         <MarketingCtaBand

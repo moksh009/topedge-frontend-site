@@ -112,7 +112,7 @@ export function ProductHuntBadge({ compact = false }: { compact?: boolean }) {
         <>
           <Stars rating={rating} />
           <span className="mkt-ph__text">
-            <b>{PRODUCT_HUNT.rating}</b> out of 5 on <span className="mkt-ph__word">Product Hunt</span>
+            <b>{PRODUCT_HUNT.rating}</b> on <span className="mkt-ph__word">Product Hunt</span>
           </span>
           <span className="sr-only">, from {PRODUCT_HUNT.reviews} reviews, read on {PRODUCT_HUNT.asOf}</span>
           <span className="mkt-ph__count" aria-hidden>

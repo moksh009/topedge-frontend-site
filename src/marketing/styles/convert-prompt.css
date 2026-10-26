@@ -92,88 +92,21 @@
 }
 
 /*
- * The product stage: the inbox screenshot with three claims floating off it,
- * which is the composition the reference modal uses. Hidden on a phone, where
- * it would push the buttons off the screen.
+ * The artwork on the right: the composition supplied for this modal, placed
+ * as given. It already carries its own feature cards and figures, so nothing
+ * is drawn over it. Hidden on a phone, where it would push the buttons off
+ * the screen.
  */
-.mkt-convert__stage {
+.mkt-convert__art {
   display: none;
 }
 
 @media (min-width: 760px) {
-  .mkt-convert__stage {
-    position: relative;
+  .mkt-convert__art {
     display: block;
-    padding: 0 0 1.6rem;
-  }
-
-  .mkt-convert__stage-shot {
-    display: block;
-    width: 92%;
+    width: 100%;
     height: auto;
-    margin-left: auto;
-    border: 1px solid #ebe7f7;
-    border-radius: 12px;
-    background: #fff;
-    box-shadow: 0 18px 40px -28px rgba(49, 28, 94, 0.5);
-  }
-
-  .mkt-convert__chip {
-    position: absolute;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    padding: 0.38rem 0.6rem;
-    border: 1px solid #ece9f6;
-    border-radius: 9px;
-    background: #fff;
-    box-shadow: 0 8px 20px -12px rgba(49, 28, 94, 0.38);
-    font-size: 0.7rem;
-    font-weight: 500;
-    line-height: 1.25;
-    color: #0c1222;
-    white-space: nowrap;
-    animation: mkt-convert-chip 0.42s cubic-bezier(0.22, 1, 0.36, 1) backwards;
-  }
-
-  .mkt-convert__chip img {
-    display: block;
-    flex: none;
-  }
-
-  .mkt-convert__chip--a {
-    top: 12%;
-    left: 0;
-    animation-delay: 0.16s;
-  }
-
-  .mkt-convert__chip--b {
-    top: 46%;
-    left: -0.4rem;
-    animation-delay: 0.26s;
-  }
-
-  .mkt-convert__chip--c {
-    bottom: 0.5rem;
-    right: 1.2rem;
-    animation-delay: 0.36s;
-  }
-}
-
-@keyframes mkt-convert-chip {
-  from {
-    opacity: 0;
-    transform: translateY(6px) scale(0.97);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .mkt-convert__chip {
-    animation: none;
+    border-radius: 10px;
   }
 }
 
