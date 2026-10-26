@@ -131,20 +131,11 @@ function SlotCard({ slot }: { slot: TemplateSlot }) {
 
         <p className="mkt-tpl__purpose">{slot.purpose}</p>
 
-        <dl className="mkt-tpl__meta">
-          <div>
-            <dt>Meta template name</dt>
-            <dd>
-              <code>{slot.metaName}</code>
-            </dd>
-          </div>
-          <div>
-            <dt>Fires on</dt>
-            <dd>
-              <code>{slot.trigger}</code>
-            </dd>
-          </div>
-        </dl>
+        <p className="mkt-tpl__tech">
+          <code>{slot.metaName}</code>
+          <span aria-hidden>·</span>
+          fires on <code>{slot.trigger}</code>
+        </p>
 
         {slot.watchOut && (
           <p className="mkt-tpl__watch">
@@ -187,7 +178,8 @@ export default function WhatsAppTemplatesPage() {
         <JourneyHero
           eyebrow="Template library"
           title="WhatsApp templates for Shopify stores"
-          accent="templates"
+          trust
+          accent="WhatsApp templates"
           subtitle="The eleven templates TopEdge ships, shown as your customer receives them, with the Meta category and the ₹ rate each one carries."
           image="/marketing/journeys/hero-whatsapp-templates.webp"
           imageAlt="An isometric scene of a phone showing a chat message, with template cards and a stamp of approval around it."
@@ -252,14 +244,9 @@ export default function WhatsAppTemplatesPage() {
                     <h3 className="mkt-tpl__title">{f.title}</h3>
                   </div>
                   <p className="mkt-tpl__purpose">{f.note}</p>
-                  <dl className="mkt-tpl__meta">
-                    <div>
-                      <dt>Rewrite of</dt>
-                      <dd>
-                        <code>{f.basedOn}</code>
-                      </dd>
-                    </div>
-                  </dl>
+                  <p className="mkt-tpl__tech">
+                    Seasonal rewrite of <code>{f.basedOn}</code>
+                  </p>
                 </div>
               </article>
             ))}

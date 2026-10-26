@@ -165,18 +165,6 @@
   color: #475569;
 }
 
-.mkt-jf__tpl {
-  display: inline-block;
-  margin-top: 0.7rem;
-  padding: 0.18rem 0.5rem;
-  border-radius: 7px;
-  background: #f6f5fb;
-  border: 1px solid var(--mkt-border);
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 0.76rem;
-  color: #5b21b6;
-  overflow-wrap: anywhere;
-}
 
 /* ---------- reply branches ---------- */
 
@@ -438,7 +426,7 @@
 .mkt-jh__title {
   margin: 0.9rem 0 0;
   font-family: var(--mkt-font);
-  font-weight: 500;
+  font-weight: 400;
   letter-spacing: -0.032em;
   line-height: 1.1;
   color: var(--mkt-ink);
@@ -462,6 +450,20 @@
   justify-content: center;
   align-items: center;
   gap: 0.85rem;
+}
+
+.mkt-jh__trust {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.mkt-jh__trust .mkt-tp__score {
+  padding: 0.45rem 0.9rem;
+  border: 1px solid var(--mkt-border);
+  border-radius: 999px;
+  background: #ffffff;
+  box-shadow: 0 1px 2px rgba(12, 18, 34, 0.04);
 }
 
 /* ---------- the image stage ---------- */
@@ -595,11 +597,14 @@
  * pages read as part of the same site rather than a section with its own rules.
  * box-decoration-break keeps the pill intact when the phrase wraps a line.
  */
+/* Same highlighter as the homepage hero (.home-hero__title-brand). */
 .mkt-jh__hl {
-  color: #5b21b6;
-  background: #ede9fe;
-  border-radius: 0.4em;
-  padding: 0.02em 0.22em 0.06em;
+  color: #2e1065;
+  background: #e4d4ff;
+  font-weight: 400;
+  border-radius: 0.35em;
+  padding: 0.04em 0.28em 0.1em;
+  margin: 0 0.04em;
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
 }
@@ -676,6 +681,8 @@
   padding: 0.85rem;
   border-radius: 14px;
   background: #ece5dd;
+  background-image: radial-gradient(rgba(17, 27, 33, 0.035) 1px, transparent 1px);
+  background-size: 14px 14px;
 }
 
 .mkt-wa__bubble {
@@ -684,7 +691,7 @@
   padding: 0.55rem 0.6rem 0.4rem;
   border-radius: 10px;
   background: #ffffff;
-  box-shadow: 0 1px 1px rgba(11, 20, 26, 0.13);
+  box-shadow: 0 1px 2px rgba(11, 20, 26, 0.15), 0 6px 16px -12px rgba(11, 20, 26, 0.3);
 }
 
 /* The little tail on an incoming bubble. */
@@ -703,22 +710,14 @@
   margin: 0 0 0.5rem;
   border-radius: 7px;
   overflow: hidden;
-  background: #f3f4f6;
+  background: #fcf7f4;
 }
 
 .mkt-wa__media-art {
   display: block;
   width: 100%;
-  aspect-ratio: 16 / 10;
-}
-
-.mkt-wa__media-label {
-  margin: 0;
-  padding: 0.3rem 0.1rem 0;
-  font-size: 0.68rem;
-  line-height: 1.4;
-  color: #9ca3af;
-  text-align: center;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
 }
 
 .mkt-wa__body {
@@ -741,11 +740,18 @@
 }
 
 .mkt-wa__time {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.2rem;
   margin-top: 0.15rem;
-  text-align: right;
   font-size: 0.62rem;
   color: #8696a0;
+}
+
+.mkt-wa__ticks {
+  flex: none;
+  margin-top: 1px;
 }
 
 .mkt-wa__buttons {
@@ -766,12 +772,6 @@
   border-top: 1px solid #e9edef;
 }
 
-.mkt-wa__note {
-  margin: 0.5rem 0 0;
-  font-size: 0.74rem;
-  line-height: 1.5;
-  color: #94a3b8;
-}
 
 /* Explains the highlighted chips in the message previews. */
 .mkt-jf__legend {
@@ -840,38 +840,22 @@
   color: #475569;
 }
 
-.mkt-tpl__meta {
-  display: grid;
-  gap: 0.65rem;
-  margin: 1.1rem 0 0;
-  padding: 0.9rem 1rem;
-  border-radius: var(--mkt-radius-control);
-  background: #faf9ff;
-  border: 1px solid var(--mkt-border);
-}
-
-@media (min-width: 640px) {
-  .mkt-tpl__meta {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-.mkt-tpl__meta dt {
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+/* One quiet line for the identifiers a developer needs to find the template
+   in the dashboard. A merchant reading the card can skip it entirely. */
+.mkt-tpl__tech {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0.75rem 0 0;
+  font-size: 0.78rem;
   color: #94a3b8;
 }
 
-.mkt-tpl__meta dd {
-  margin: 0.25rem 0 0;
-}
-
-.mkt-tpl__meta code {
+.mkt-tpl__tech code {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 0.78rem;
-  color: #5b21b6;
+  font-size: 0.74rem;
+  color: #7c6aa8;
   overflow-wrap: anywhere;
 }
 
@@ -888,4 +872,45 @@
 
 .mkt-tpl__watch strong {
   color: #92400e;
+}
+
+/* ===================================================================
+   Simple feature tile: an icon and a line, for a short capability list
+   that does not need a full mkt-jx-card (no link, no picture, no blurb).
+   =================================================================== */
+
+.mkt-feat {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 1.05rem 1.2rem;
+  border: 1px solid var(--mkt-border);
+  border-radius: var(--mkt-radius-card);
+  background: #ffffff;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.mkt-feat:hover {
+  border-color: #c4b5fd;
+  box-shadow: 0 14px 30px -26px rgba(76, 29, 149, 0.45);
+}
+
+.mkt-feat__icon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 999px;
+  background: var(--mkt-violet-light);
+  color: var(--mkt-violet);
+}
+
+.mkt-feat__text {
+  margin: 0;
+  font-size: 0.92rem;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--mkt-ink);
 }

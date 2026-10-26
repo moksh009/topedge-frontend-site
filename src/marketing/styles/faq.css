@@ -1,0 +1,96 @@
+/* FAQ accordion — owned by FaqAccordion.tsx, which imports this file.
+   These rules used to live only in pricing.css, so every other page rendered
+   the button unstyled and the chevron dropped onto its own line. */
+
+.mkt-faq {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  width: min(100%, 46rem);
+  margin: 0 auto;
+}
+
+.mkt-faq__item {
+  overflow: hidden;
+  border-radius: 1rem;
+  border: 1px solid #eef0f4;
+  background: #fff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.mkt-faq__item:hover {
+  border-color: #e4dcfb;
+}
+
+.mkt-faq__item.is-open {
+  border-color: #ddd6fe;
+  background: linear-gradient(180deg, #faf5ff 0%, #ffffff 100%);
+  box-shadow: 0 10px 28px -22px rgba(124, 58, 237, 0.35);
+}
+
+.mkt-faq__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  padding: 1.05rem 1.2rem;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mkt-faq__trigger:focus-visible {
+  outline: 2px solid #c4b5fd;
+  outline-offset: -2px;
+  border-radius: 1rem;
+}
+
+.mkt-faq__q {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 0.98rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.4;
+  color: #0c1222;
+  transition: color 0.15s ease;
+}
+
+.mkt-faq__trigger:hover .mkt-faq__q,
+.mkt-faq__item.is-open .mkt-faq__q {
+  color: #5b21b6;
+}
+
+.mkt-faq__chev-wrap {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 999px;
+  border: 1px solid #eef0f4;
+  background: #f8fafc;
+  color: #64748b;
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), background 0.15s ease,
+    border-color 0.15s ease, color 0.15s ease;
+}
+
+.mkt-faq__item.is-open .mkt-faq__chev-wrap {
+  transform: rotate(180deg);
+  border-color: #ddd6fe;
+  background: #ede9fe;
+  color: #7c3aed;
+}
+
+.mkt-faq__a {
+  margin: 0;
+  padding: 0 1.2rem 1.15rem;
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: #64748b;
+}

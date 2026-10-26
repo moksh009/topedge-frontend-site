@@ -307,7 +307,7 @@ export const SEO_TOPICS: Record<string, SeoTopic> = {
       {
         kind: 'prose',
         id: 'cod',
-        h2: 'The COD case, specifically',
+        h2: 'Why this matters most for COD stores',
         body: [
           'COD is why a Shopify WhatsApp integration pays for itself faster in India than almost anywhere else. An unconfirmed COD order is a parcel you pay to ship twice if the customer changes their mind at the door, and the published RTO figures above show how often that happens during a festive quarter.',
           'A confirmation message before dispatch does two things at once. It filters out the orders that were never serious, which is the larger share of the problem, and it gives the serious ones a reason to switch to prepaid when you offer one. Confirmation runs on every TopEdge plan. The prepaid switch, which needs a branching journey, is a Growth and Scale feature.',

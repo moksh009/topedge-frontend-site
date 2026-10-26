@@ -48,45 +48,47 @@ export const TEMPLATE_GROUPS: TemplateGroup[] = [
     id: 'order-messages',
     label: 'Order messages',
     blurb:
-      'The six that run against a Shopify order. All utility, because each one is about an order the customer already placed, which is why they cost about a seventh of a marketing send.',
+      'Six messages that follow every Shopify order. All are utility templates, so each costs about a seventh of a marketing message.',
     slots: [
       {
         id: 'om_order_confirm',
         title: 'Order confirmation',
         purpose:
-          'Acknowledges the order straight after checkout. This is the message that sets the expectation every later one is measured against.',
+          'Sent right after checkout, so the customer knows the order went through and what happens next.',
         metaName: 'order_status_confirmed_v1',
         category: 'Utility',
         trigger: 'order_placed',
         message: {
-          body: 'Thanks {{Priya}}, we have your order {{#1042}}.\nTotal {{₹2,499}}. We will message you the moment it ships.',
+          header: 'Product image',
+          body: 'Hi {{Priya}}, thank you for your order! 🎉\n\nOrder {{#1042}} · {{Olive Linen Shirt, M}}\nTotal: {{₹2,499}}\n\nWe’ll message you here the moment it ships.',
         },
       },
       {
         id: 'om_cod_confirm',
         title: 'COD confirmation',
         purpose:
-          'Asks the customer to confirm a Cash on Delivery order before anything is picked. The cheapest thing you can put in front of a return-to-origin parcel.',
+          'Asks the customer to confirm a Cash on Delivery order before it is packed, so fake and impulse orders never ship.',
         metaName: 'cod_confirmation_v1',
         category: 'Utility',
         trigger: 'cod_order_placed',
         message: {
-          body: 'Hi {{Priya}}, please confirm your Cash on Delivery order {{#1042}}.\nAmount due on delivery: {{₹2,499}}.',
+          header: 'Product image',
+          body: 'Hi {{Priya}}, your order {{#1042}} is ready to ship 📦\n\n{{Olive Linen Shirt, M}}\nPay on delivery: {{₹2,499}}\n\nPlease confirm and we’ll dispatch it today.',
           buttons: ['Confirm order', 'Cancel order'],
         },
         watchOut:
-          'Keep the prepaid offer out of this one. Attach an incentive and Meta reclassifies it as marketing, at roughly seven times the price.',
+          'Keep offers out of this message. Add a discount and Meta charges it as marketing, about seven times the price.',
       },
       {
         id: 'om_cod_confirm_v2',
-        title: 'COD confirm, ship or cancel',
+        title: 'COD reminder',
         purpose:
-          'The follow-up while the order is still inside your dispatch window. After this, silence is a decision and needs a written rule.',
+          'One follow-up if the customer has not confirmed yet. The order stays on hold until they reply.',
         metaName: 'cod_confirm_v2',
         category: 'Utility',
         trigger: 'cod_order_placed',
         message: {
-          body: 'Hi {{Priya}}, order {{#1042}} is still waiting on your confirmation, so we have not dispatched it yet.\nAmount due: {{₹2,499}}.',
+          body: 'Hi {{Priya}}, just checking in 🙂\n\nYour order {{#1042}} is on hold until you confirm it.\nPay on delivery: {{₹2,499}}',
           buttons: ['Confirm order', 'Cancel order'],
         },
       },
@@ -94,41 +96,42 @@ export const TEMPLATE_GROUPS: TemplateGroup[] = [
         id: 'om_shipped_flow',
         title: 'Order shipped',
         purpose:
-          'Carries an image header and a Track order button. The single highest-value message in the set, because it answers the question most customers were about to ask.',
+          'Tells the customer their parcel is on the way, with a one-tap tracking link. This one stops most “where is my order” questions.',
         metaName: 'order_status_shipped_v1',
         category: 'Utility',
         trigger: 'order_fulfilled',
         message: {
           header: 'Product image',
-          body: 'Order {{#1042}} has shipped with {{Delhivery}}.\nTracking number: {{1Z999AA10123456}}.',
+          body: 'Good news, {{Priya}}! Your order is on its way 🚚\n\nOrder {{#1042}} shipped with {{Delhivery}}.\nExpected delivery: {{Fri, 14 Nov}}',
           buttons: ['Track order'],
         },
         watchOut:
-          'Without a working tracking link this message creates the support ticket it was meant to prevent.',
+          'Always include a working tracking link. Without it, this message creates the support ticket it was meant to prevent.',
       },
       {
         id: 'om_delivered',
         title: 'Order delivered',
         purpose:
-          'Closes the loop once the parcel arrives, and is the natural moment to ask for a review as a separate send.',
+          'Confirms the parcel arrived and gives the customer an easy way to reach you if something is wrong.',
         metaName: 'order_status_delivered_v1',
         category: 'Utility',
         trigger: 'order delivered',
         message: {
-          body: 'Order {{#1042}} was delivered.\nIf anything is not right, just reply here and we will sort it out.',
+          header: 'Product image',
+          body: 'Delivered! ✅ Hope you love it, {{Priya}}.\n\nOrder {{#1042}} reached you today. If anything isn’t right, just reply here and we’ll fix it.',
           buttons: ['Contact support'],
         },
       },
       {
         id: 'om_cancelled',
-        title: 'Cancellation received',
+        title: 'Order cancelled',
         purpose:
-          'Acknowledges the cancellation and states the refund timeline. Silence here is what turns a refund into a support ticket and a bad review.',
+          'Confirms the cancellation and tells the customer when their refund will arrive.',
         metaName: 'order_cancellation_v1',
         category: 'Utility',
         trigger: 'order cancelled',
         message: {
-          body: 'Order {{#1042}} has been cancelled.\nAnything you already paid comes back within {{5 to 7}} working days.',
+          body: 'Hi {{Priya}}, your order {{#1042}} has been cancelled.\n\nIf you paid online, your refund of {{₹2,499}} will reach you in {{5–7}} working days.',
         },
       },
     ],
@@ -137,85 +140,88 @@ export const TEMPLATE_GROUPS: TemplateGroup[] = [
     id: 'cart-recovery',
     label: 'Cart recovery',
     blurb:
-      'Three sends across about 72 hours, on one trigger. All marketing category, because a cart reminder exists to make a sale that has not happened yet. There is no wording that changes that.',
+      'Three reminders over about 72 hours. These are marketing templates, because they ask for a sale that has not happened yet.',
     slots: [
       {
         id: 'cart_recovery_1',
-        title: 'Reminder one, the cart is still here',
+        title: 'Cart reminder 1',
         purpose:
-          'Product image, the item and its total, a Buy now button back to the same checkout. Sent while the intent is still warm.',
+          'Sent within the hour, with the product photo, price and a button straight back to checkout.',
         metaName: 'cart_recovery_1',
         category: 'Marketing',
         trigger: 'abandoned_cart',
         message: {
           header: 'Product image',
-          body: 'Hi {{Priya}}, you left {{Olive Linen Shirt, size M}} in your cart. It is still saved at {{₹2,499}}.\nTap below to finish your order.',
-          buttons: ['Buy now', 'Contact support'],
+          body: 'Hi {{Priya}}, you left something behind 👀\n\n{{Olive Linen Shirt, M}} is still in your cart at {{₹2,499}}.\nTap below to finish your order.',
+          buttons: ['Complete my order', 'Ask a question'],
         },
       },
       {
         id: 'cart_recovery_2',
-        title: 'Reminder two, answer the objection',
+        title: 'Cart reminder 2',
         purpose:
-          'The send that should clear whatever actually stopped them: sizing, delivery time, or whether COD is available. Not a repeat of the first message.',
+          'Sent the next day. Instead of repeating itself, it offers help with sizing, delivery or COD.',
         metaName: 'cart_recovery_2',
         category: 'Marketing',
         trigger: 'abandoned_cart',
         message: {
-          body: 'Hi {{Priya}}, your cart is still saved.\nIf something was unclear about sizing, delivery time or COD, just reply and we will answer it.',
-          buttons: ['Buy now', 'Contact support'],
+          header: 'Product image',
+          body: 'Still deciding, {{Priya}}? 🤔\n\nHappy to help with size, delivery time or Cash on Delivery. Just reply here.\nYour cart is saved for you.',
+          buttons: ['Complete my order', 'Ask a question'],
         },
       },
       {
         id: 'cart_recovery_3',
-        title: 'Reminder three, last call',
+        title: 'Cart reminder 3',
         purpose:
-          'The final send. It ships without a discount code on purpose.',
+          'The last reminder. No discount code, on purpose.',
         metaName: 'cart_recovery_3',
         category: 'Marketing',
         trigger: 'abandoned_cart',
         message: {
-          body: 'Last reminder, {{Priya}}. {{Olive Linen Shirt, size M}} is still held at {{₹2,499}}.\nWe release it back to stock after today.',
-          buttons: ['Buy now', 'Contact support'],
+          header: 'Product image',
+          body: 'Last call, {{Priya}} ⏳\n\nWe’re holding {{Olive Linen Shirt, M}} at {{₹2,499}} until tonight. After that it goes back to stock.',
+          buttons: ['Complete my order', 'Ask a question'],
         },
         watchOut:
-          'A predictable discount at step three teaches repeat customers to abandon on purpose. Clear the objection instead, and keep discounts for a campaign you control.',
+          'Skip the discount here. If the last reminder always has one, repeat customers learn to abandon on purpose.',
       },
     ],
   },
   {
     id: 'audience-programs',
-    label: 'Audience programs',
+    label: 'Extra programs',
     blurb:
-      'Two optional programs that sit outside the order flow. One utility, one marketing, and the difference is whether the message carries an offer.',
+      'Two optional messages outside the normal order flow. One utility, one marketing, depending on whether it carries an offer.',
     slots: [
       {
         id: 'warranty_certificate',
         title: 'Warranty activated',
         purpose:
-          'Confirms warranty registration for brands that register at purchase. Utility, because it is a record of something the customer already bought.',
+          'Confirms the warranty is registered, for brands that offer one at purchase.',
         metaName: 'warranty_registration_v1',
         category: 'Utility',
         trigger: 'order_placed',
         message: {
-          body: 'Your warranty for {{SmartHub E-400}} is active, {{Priya}}.\nCover runs to {{14 March 2028}} against order {{#1042}}.',
+          body: 'Your warranty is active ✅\n\nProduct: {{SmartHub E-400}}\nCovered until: {{14 March 2028}}\nOrder: {{#1042}}',
           buttons: ['View warranty'],
         },
       },
       {
         id: 'eco_cod_prepaid',
-        title: 'COD to prepaid nudge',
+        title: 'COD to prepaid offer',
         purpose:
-          'Offers a confirmed COD customer a reason to pay by UPI or card before dispatch. Sent after the confirmation, never bundled into it.',
+          'Sent after a COD order is confirmed, offering free shipping if the customer pays online now.',
         metaName: 'eco_cod_prepaid_switch',
         category: 'Marketing',
         trigger: 'cod_prepaid',
         message: {
-          body: 'Order {{#1042}} is confirmed, {{Priya}}.\nPay now by UPI or card and we will cover the {{₹80}} shipping. Same delivery date.',
-          buttons: ['Pay now', 'Keep as COD'],
+          header: 'Product image',
+          body: 'Your order {{#1042}} is confirmed, {{Priya}} 🙌\n\nPay now by UPI or card and shipping is on us. You save {{₹80}}, same delivery date.',
+          buttons: ['Pay now & save ₹80', 'Keep Cash on Delivery'],
         },
         watchOut:
-          'Needs a branching journey, so it is a Growth and Scale feature. Basic COD confirmation runs on every plan.',
+          'Needs a branching journey, so it is on Growth and Scale. Basic COD confirmation is on every plan.',
       },
     ],
   },
@@ -237,31 +243,32 @@ export const FESTIVAL_VARIANTS: {
     id: 'diwali-cart',
     title: 'Diwali cart reminder',
     basedOn: 'cart_recovery_1',
-    note: 'Already marketing category, so festive copy changes nothing about the price.',
+    note: 'Cart reminders are already marketing, so festive wording does not change the price.',
     message: {
       header: 'Product image',
-      body: 'Diwali delivery closes soon, {{Priya}}.\n{{Olive Linen Shirt, size M}} is still in your cart at {{₹2,499}}. Order by {{Thursday}} and it reaches you before the weekend.',
-      buttons: ['Buy now', 'Contact support'],
+      body: 'Happy Diwali, {{Priya}}! 🪔\n\n{{Olive Linen Shirt, M}} is still in your cart at {{₹2,499}}.\nOrder by {{Thursday}} to get it before the festival.',
+      buttons: ['Complete my order', 'Ask a question'],
     },
   },
   {
     id: 'diwali-prepaid',
-    title: 'Diwali prepaid nudge',
+    title: 'Diwali prepaid offer',
     basedOn: 'eco_cod_prepaid_switch',
-    note: 'Festive dispatch queues are long, which is the honest reason to ask for prepaid now.',
+    note: 'Festive delivery queues are long, which gives customers a real reason to pay now.',
     message: {
-      body: 'Order {{#1042}} is confirmed, {{Priya}}.\nPay by UPI today and we ship it in the first Diwali batch, with the {{₹80}} shipping on us.',
-      buttons: ['Pay now', 'Keep as COD'],
+      header: 'Product image',
+      body: 'Your order {{#1042}} is confirmed 🪔\n\nPay by UPI today and it goes out in our first Diwali batch, with {{₹80}} shipping on us.',
+      buttons: ['Pay now & save ₹80', 'Keep Cash on Delivery'],
     },
   },
   {
     id: 'diwali-shipped',
-    title: 'Festive dispatch update',
+    title: 'Festive shipping update',
     basedOn: 'order_status_shipped_v1',
-    note: 'Stays utility only while it carries no offer. Add a festive discount and it becomes a marketing send at ₹0.8631.',
+    note: 'Stays utility only while it has no offer. Add a festive discount and it is charged as marketing.',
     message: {
       header: 'Product image',
-      body: 'Good news {{Priya}}, order {{#1042}} is out in today’s festive dispatch with {{Delhivery}}.\nTracking: {{1Z999AA10123456}}.',
+      body: 'Your Diwali order is on its way, {{Priya}} 🎁\n\nOrder {{#1042}} shipped with {{Delhivery}}.\nExpected delivery: {{Fri, 14 Nov}}',
       buttons: ['Track order'],
     },
   },

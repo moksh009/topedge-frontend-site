@@ -51,6 +51,7 @@ export default function JourneyExamplePage({ slug }: { slug: string }) {
           title={j.h1}
           accent={j.h1Accent}
           subtitle={j.subtitle}
+          trust
           image={j.hero}
           imageAlt={j.heroAlt}
           actions={

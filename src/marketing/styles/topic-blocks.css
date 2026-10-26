@@ -66,24 +66,10 @@
   scroll-margin-top: calc(var(--marketing-nav-h, 96px) + 1rem);
 }
 
-.mkt-blk__kicker {
-  display: block;
-  width: 2.25rem;
-  height: 3px;
-  margin-bottom: 0.9rem;
-  border-radius: 999px;
-  background: linear-gradient(90deg, #7c3aed, #c4b5fd);
-}
-
-.mkt-jx-centered .mkt-blk__kicker {
-  margin-left: auto;
-  margin-right: auto;
-}
-
 .mkt-blk__h2 {
   font-family: var(--mkt-font);
   font-size: clamp(1.5rem, 3vw, 2rem);
-  font-weight: 500;
+  font-weight: 400;
   letter-spacing: -0.02em;
   line-height: 1.2;
   color: var(--mkt-ink);
@@ -530,34 +516,4 @@
 .mkt-callout--warn .mkt-callout__link {
   color: #b45309;
   border-color: #fde68a;
-}
-
-/* ---------- FAQ, as a real definition list ---------- */
-
-.mkt-faq {
-  margin: 0;
-  display: grid;
-  gap: 0.75rem;
-}
-
-.mkt-faq__item {
-  border: 1px solid var(--mkt-border);
-  border-radius: var(--mkt-radius-card);
-  background: var(--mkt-shell);
-  padding: 1.15rem 1.3rem;
-}
-
-.mkt-faq__q {
-  margin: 0;
-  font-size: 1rem;
-  font-weight: 500;
-  line-height: 1.45;
-  color: var(--mkt-ink);
-}
-
-.mkt-faq__a {
-  margin: 0.5rem 0 0;
-  font-size: 0.9rem;
-  line-height: 1.65;
-  color: #475569;
 }

@@ -2,9 +2,10 @@ import { Link, Navigate } from 'react-router-dom';
 import MarketingSEO from '../components/MarketingSEO';
 import MarketingPage from '../components/MarketingPage';
 import MarketingCtaBand from '../components/MarketingCtaBand';
-import { PageHero, Section, SectionHeading, MarketingCard, PrimaryButton } from '../components/ui';
+import { Section, SectionHeading, PrimaryButton } from '../components/ui';
 import { TopicBlockView, TopicToc } from '../components/topic/TopicBlocks';
 import FaqAccordion from '../components/topic/FaqAccordion';
+import JourneyHero from '../components/journey/JourneyHero';
 import { getSeoTopic } from '../data/seoTopics';
 import {
   breadcrumbJsonLd,
@@ -51,16 +52,27 @@ export default function SeoTopicPage({ slug }: Props) {
         ]}
       />
       <MarketingPage>
-        <PageHero eyebrow={topic.eyebrow} title={topic.h1} subtitle={topic.subtitle}>
-          <PrimaryButton to="/signup">Start free</PrimaryButton>
-          <Link to="/pricing" className="text-sm font-medium text-[#7C3AED] hover:underline">
-            See pricing →
-          </Link>
-        </PageHero>
+        <JourneyHero
+          eyebrow={topic.eyebrow}
+          title={topic.h1}
+          accent="WhatsApp integration"
+          subtitle={topic.subtitle}
+          trust
+          image="/marketing/features/shopify-whatsapp-inbox.webp"
+          imageAlt="A shared inbox showing a WhatsApp thread beside the Shopify order it belongs to: order number, Cash on Delivery status, and the product that was bought."
+          actions={
+            <>
+              <PrimaryButton to="/signup">Start free</PrimaryButton>
+              <Link to="/pricing" className="text-sm font-medium text-[#7C3AED] hover:underline">
+                See pricing
+              </Link>
+            </>
+          }
+        />
 
         <Section className="!pt-0">
           <div className="mx-auto max-w-3xl">
-            <p className="text-base leading-relaxed text-slate-600 md:text-lg">{topic.answerFirst}</p>
+            <p className="mkt-jh-lead">{topic.answerFirst}</p>
             {blocks.length > 0 && (
               <div className="mt-8">
                 <TopicToc blocks={blocks} />
@@ -72,14 +84,18 @@ export default function SeoTopicPage({ slug }: Props) {
         <Section wash="soft">
           <SectionHeading
             title="What you can run"
-            subtitle="Practical WhatsApp ecommerce automation on Shopify."
+            subtitle="Practical WhatsApp ecommerce automation on Shopify, the moment the two are connected."
+            center
           />
           <ul className="mx-auto grid max-w-4xl gap-4 md:grid-cols-2">
             {topic.bullets.map((b) => (
-              <li key={b}>
-                <MarketingCard className="!p-5 h-full">
-                  <p className="text-sm leading-relaxed text-slate-600">{b}</p>
-                </MarketingCard>
+              <li key={b} className="mkt-feat">
+                <span className="mkt-feat__icon" aria-hidden>
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M20 6L9 17l-5-5" />
+                  </svg>
+                </span>
+                <p className="mkt-feat__text">{b}</p>
               </li>
             ))}
           </ul>

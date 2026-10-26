@@ -141,7 +141,8 @@ export default function JourneyExamplesIndexPage() {
         <JourneyHero
           eyebrow="Journey examples"
           title="WhatsApp journey examples for Shopify stores"
-          accent="examples"
+          trust
+          accent="journey examples"
           subtitle="The automations that ship with TopEdge, written out in full: what fires each one, what goes out, how long the gaps are, and what the sequence costs per order."
           actions={
             <>

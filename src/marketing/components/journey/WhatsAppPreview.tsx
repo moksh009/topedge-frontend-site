@@ -48,21 +48,15 @@ export default function WhatsAppPreview({ data }: { data: WhatsAppPreviewData })
         <div className="mkt-wa__bubble">
           {data.header && (
             <figure className="mkt-wa__media" aria-hidden>
-              <svg className="mkt-wa__media-art" viewBox="0 0 160 110" preserveAspectRatio="xMidYMid slice">
-                <defs>
-                  <linearGradient id="waMediaGrad" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0%" stopColor="#ede9fe" />
-                    <stop offset="100%" stopColor="#fdf2f8" />
-                  </linearGradient>
-                </defs>
-                <rect width="160" height="110" fill="url(#waMediaGrad)" />
-                <g transform="translate(60 25)" fill="none" stroke="#9061e0" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M20 10L36 19.5V40.5L20 50L4 40.5V19.5L20 10Z" />
-                  <path d="M4 19.5L20 29L36 19.5" />
-                  <path d="M20 29V50" />
-                </g>
-              </svg>
-              <figcaption className="mkt-wa__media-label">{data.header}</figcaption>
+              <img
+                className="mkt-wa__media-art"
+                src="/marketing/journeys/product-linen-shirt.webp"
+                alt=""
+                width={320}
+                height={240}
+                loading="lazy"
+                decoding="async"
+              />
             </figure>
           )}
 
@@ -70,6 +64,10 @@ export default function WhatsAppPreview({ data }: { data: WhatsAppPreviewData })
 
           <span className="mkt-wa__time" aria-hidden>
             9:41
+            <svg className="mkt-wa__ticks" viewBox="0 0 18 12" width="16" height="11">
+              <path d="M1 6.5l3 3 3-3" fill="none" stroke="#53bdeb" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M6 6.5l3 3 7-8" fill="none" stroke="#53bdeb" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
           </span>
 
           {data.buttons?.length ? (
@@ -83,7 +81,6 @@ export default function WhatsAppPreview({ data }: { data: WhatsAppPreviewData })
           ) : null}
         </div>
       </div>
-      {data.note && <p className="mkt-wa__note">{data.note}</p>}
     </figure>
   );
 }

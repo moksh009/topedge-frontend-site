@@ -74,8 +74,6 @@ export default function JourneyFlow({
 
               <p className="mkt-jf__detail">{s.detail}</p>
 
-              {s.templateName && <code className="mkt-jf__tpl">{s.templateName}</code>}
-
               {s.preview && <WhatsAppPreview data={s.preview} />}
 
               {s.branches?.length ? (

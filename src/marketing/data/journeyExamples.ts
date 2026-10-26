@@ -61,7 +61,7 @@ export const JOURNEY_EXAMPLES: JourneyExample[] = [
     slug: 'abandoned-cart-recovery',
     cardTitle: 'Abandoned cart recovery',
     cardBlurb:
-      'Three reminders across 72 hours, each carrying the product, the ₹ total and a one-tap link back to the same checkout.',
+      'Three WhatsApp reminders over 72 hours, each with the product photo, price and a one-tap link back to checkout.',
     cardTrigger: 'abandoned_cart',
     image: '/marketing/solutions/sol-fashion-cart-saas.jpg',
     imageAlt:
@@ -76,7 +76,7 @@ export const JOURNEY_EXAMPLES: JourneyExample[] = [
     h1: 'Abandoned cart recovery journey on WhatsApp',
     h1Accent: 'cart recovery',
     subtitle:
-      'The three-step cart recovery ladder as it ships: what fires it, how long each gap is, which Meta template category each send uses, and what the whole sequence costs per cart.',
+      'Three WhatsApp reminders that bring shoppers back to their cart, with the exact timing, messages and cost per cart.',
     title: 'Abandoned Cart Recovery Journey on WhatsApp for Shopify',
     description:
       'The 3-step WhatsApp abandoned cart recovery journey for Shopify India: triggers, timing, Meta template categories and the ₹ cost per recovered cart.',
@@ -89,16 +89,16 @@ export const JOURNEY_EXAMPLES: JourneyExample[] = [
       'Shopify counts a checkout abandoned once it has been incomplete for more than ten minutes after the customer gave an email or phone number.',
     steps: [
       {
-        title: 'Reminder one: the cart is still here',
+        title: 'Reminder 1: your cart is waiting',
         detail:
-          'Product image, the item and its ₹ total, a Buy now button back to the same checkout, and a Contact support button. Sent while the intent is still warm.',
+          'Shows the product photo, the price and a button straight back to checkout. Sent while the shopper is still interested.',
         timing: 'within 30 to 60 minutes',
         category: 'Marketing',
         templateName: 'cart_recovery_1',
         preview: {
           header: 'Product image',
-          body: 'Hi {{Priya}}, you left {{Olive Linen Shirt, size M}} in your cart. It is still saved at {{₹2,499}}.\nTap below to finish your order.',
-          buttons: ['Buy now', 'Contact support'],
+          body: 'Hi {{Priya}}, you left something behind 👀\n\n{{Olive Linen Shirt, M}} is still in your cart at {{₹2,499}}.\nTap below to finish your order.',
+          buttons: ['Complete my order', 'Ask a question'],
           note:
             'Marketing category, because it exists to make a sale that has not happened yet.',
         },
@@ -108,29 +108,31 @@ export const JOURNEY_EXAMPLES: JourneyExample[] = [
         ],
       },
       {
-        title: 'Reminder two: answer the objection',
+        title: 'Reminder 2: offer help',
         detail:
-          'The cart is still saved. This is the send that should clear whatever stopped them: shipping time, sizing, or whether COD is available.',
+          'Instead of repeating itself, this one offers help with whatever stopped them: size, delivery time or COD.',
         timing: '+24 hours',
         category: 'Marketing',
         templateName: 'cart_recovery_2',
         preview: {
-          body: 'Hi {{Priya}}, your cart is still saved.\nIf something was unclear about sizing, delivery time or COD, just reply and we will answer it.',
-          buttons: ['Buy now', 'Contact support'],
+          header: 'Product image',
+          body: 'Still deciding, {{Priya}}? 🤔\n\nHappy to help with size, delivery time or Cash on Delivery. Just reply here.\nYour cart is saved for you.',
+          buttons: ['Complete my order', 'Ask a question'],
           note:
             'The send that should clear the objection, not repeat the first message.',
         },
       },
       {
-        title: 'Reminder three: last call, no invented discount',
+        title: 'Reminder 3: last call',
         detail:
-          'Final reminder with Buy now and Contact support. The shipped template carries no discount code, deliberately: a discount in the sequence teaches repeat buyers to abandon on purpose.',
+          'The final nudge. It has no discount code on purpose, so repeat buyers don’t learn to abandon carts to get one.',
         timing: '+48 hours',
         category: 'Marketing',
         templateName: 'cart_recovery_3',
         preview: {
-          body: 'Last reminder, {{Priya}}. {{Olive Linen Shirt, size M}} is still held at {{₹2,499}}.\nWe release it back to stock after today.',
-          buttons: ['Buy now', 'Contact support'],
+          header: 'Product image',
+          body: 'Last call, {{Priya}} ⏳\n\nWe’re holding {{Olive Linen Shirt, M}} at {{₹2,499}} until tonight. After that it goes back to stock.',
+          buttons: ['Complete my order', 'Ask a question'],
           note:
             'No discount code. A predictable discount here teaches repeat buyers to abandon on purpose.',
         },
@@ -145,7 +147,7 @@ export const JOURNEY_EXAMPLES: JourneyExample[] = [
         id: 'why',
         h2: 'Why this journey exists',
         intro:
-          'Cart abandonment is not a WhatsApp problem, it is an ecommerce constant. The reason to answer it on WhatsApp in India is read speed, and the reason to measure it is that the sends cost money.',
+          'Most shoppers leave without buying. WhatsApp gets read fast in India, which makes it the best place to bring them back.',
         figures: [
           {
             value: '70.22%',
@@ -170,7 +172,7 @@ export const JOURNEY_EXAMPLES: JourneyExample[] = [
       {
         kind: 'prose',
         id: 'category',
-        h2: 'Why cart recovery is a marketing template, and what that costs',
+        h2: 'What cart recovery costs, and why',
         body: [
           'This is the part most comparisons skip. A cart reminder is promotional: it exists to make a sale that has not happened, so Meta categorises it as marketing, at ₹0.8631 a delivered message in India rather than the ₹0.1150 a utility message costs. There is no wording that gets a cart reminder reclassified, and a platform promising otherwise is describing a template that will be rejected or re-categorised later.',
           'Three sends is therefore about ₹2.59 per abandoned cart. On a ₹2,499 order at a 10% recovery rate, that is ₹25.90 spent to recover ₹2,499 of revenue. The maths is comfortable, which is exactly why the discipline matters: a fourth and fifth send will not break the budget, but they will damage the quality rating that decides your messaging limits.',
@@ -179,21 +181,21 @@ export const JOURNEY_EXAMPLES: JourneyExample[] = [
       {
         kind: 'checklist',
         id: 'practice',
-        h2: 'What separates a sequence that compounds from one that gets throttled',
+        h2: 'What to do, and what to avoid',
         doLabel: 'Do this',
         dontLabel: 'Avoid this',
         doItems: [
           'Send the first reminder inside 30 to 60 minutes, while the decision is still live',
           'Carry the product image and the ₹ total, so the message is about their cart and not about you',
           'Drop the customer out of the sequence the moment they pay or reply',
-          'Keep the Contact support button on every step',
-          'Measure sent to read to clicked to paid against Shopify orders, not opens',
+          'Keep an “Ask a question” button on every message',
+          'Measure recovered orders in Shopify, not just opens',
         ],
         dontItems: [
           'A fourth and fifth reminder, which costs quality rating and buys little',
           'Discounting in reminder one, when the shopper only wanted a shipping answer',
           'Inventing a discount code the store has not actually created',
-          'Running the ladder against numbers that never opted in',
+          'Messaging numbers that never opted in',
           'Treating a high read rate as success when no order followed',
         ],
       },
@@ -201,7 +203,7 @@ export const JOURNEY_EXAMPLES: JourneyExample[] = [
         kind: 'callout',
         id: 'policy',
         tone: 'warn',
-        title: 'Templates have to clear Meta before any of this runs',
+        title: 'Meta has to approve these templates first',
         body:
           'All three steps are pre-built templates that still go to Meta for approval against your own WhatsApp Business account. Until they come back approved, the journey cannot send them, which is deliberate: the alternative is automation that quietly ships drafts to customers.',
         link: {
@@ -250,7 +252,7 @@ export const JOURNEY_EXAMPLES: JourneyExample[] = [
     slug: 'cod-confirmation',
     cardTitle: 'COD confirmation',
     cardBlurb:
-      'Confirm a Cash on Delivery order before the courier collects it, with confirm, reschedule and cancel branches, and a warehouse hold until a reply lands.',
+      'Ask every COD customer to confirm before you ship, so fake and impulse orders never leave the warehouse.',
     cardTrigger: 'cod_order_placed',
     image: '/marketing/solutions/sol-cod-rto-saas.jpg',
     imageAlt:
@@ -265,7 +267,7 @@ export const JOURNEY_EXAMPLES: JourneyExample[] = [
     h1: 'COD confirmation journey on WhatsApp',
     h1Accent: 'COD confirmation',
     subtitle:
-      'The journey that runs between a Cash on Delivery order being placed and the parcel being picked, with the branches a warehouse can actually act on.',
+      'Ask every COD customer to confirm on WhatsApp before you ship, and stop paying for parcels that come back.',
     title: 'COD Confirmation Journey on WhatsApp for Shopify India',
     description:
       'The WhatsApp COD confirmation journey for Shopify India: trigger, utility template at ₹0.1150, confirm and cancel branches, and the warehouse hold rule.',
@@ -280,12 +282,13 @@ export const JOURNEY_EXAMPLES: JourneyExample[] = [
       {
         title: 'Ask the customer to confirm',
         detail:
-          'Order number, items and the amount due on delivery, with confirm and cancel buttons. This is a utility message, not a promotion, which is why it costs about a seventh of a marketing send.',
+          'Shows the order, the product and the amount to pay on delivery, with Confirm and Cancel buttons. It’s a utility message, so it costs about a seventh of a marketing one.',
         timing: 'within minutes of checkout',
         category: 'Utility',
         templateName: 'cod_confirmation_v1',
         preview: {
-          body: 'Hi {{Priya}}, please confirm your Cash on Delivery order {{#1042}}.\nAmount due on delivery: {{₹2,499}}.',
+          header: 'Product image',
+          body: 'Hi {{Priya}}, your order {{#1042}} is ready to ship 📦\n\n{{Olive Linen Shirt, M}}\nPay on delivery: {{₹2,499}}\n\nPlease confirm and we’ll dispatch it today.',
           buttons: ['Confirm order', 'Cancel order'],
           note:
             'Utility category: it is about an order that already exists, so it costs about a seventh of a marketing send.',
@@ -297,14 +300,14 @@ export const JOURNEY_EXAMPLES: JourneyExample[] = [
         ],
       },
       {
-        title: 'Reminder, still unconfirmed',
+        title: 'Reminder if there’s no reply',
         detail:
-          'One follow-up on the same utility template while the order is still inside the dispatch window. After this, silence is a decision and the order should not simply ship by default.',
+          'One follow-up before your dispatch cut-off. The order stays on hold until the customer replies.',
         timing: '+6 to 12 hours',
         category: 'Utility',
         templateName: 'cod_confirm_v2',
         preview: {
-          body: 'Hi {{Priya}}, order {{#1042}} is still waiting on your confirmation, so we have not dispatched it yet.\nAmount due: {{₹2,499}}.',
+          body: 'Hi {{Priya}}, just checking in 🙂\n\nYour order {{#1042}} is on hold until you confirm it.\nPay on delivery: {{₹2,499}}',
           buttons: ['Confirm order', 'Cancel order'],
           note:
             'One follow-up inside the dispatch window. After this, silence needs a written rule.',
@@ -314,9 +317,9 @@ export const JOURNEY_EXAMPLES: JourneyExample[] = [
         ],
       },
       {
-        title: 'Human takes over',
+        title: 'Your team takes over',
         detail:
-          'Anything that is not a clean confirm or cancel belongs with a person. The thread lands in the shared inbox with the Shopify order beside it, so whoever picks it up can see what was bought and what is owed.',
+          'If the customer asks a question instead, the chat moves to your shared inbox with the Shopify order right beside it.',
         category: 'Service',
         branches: [
           { label: 'Resolved', outcome: 'Agent releases or cancels the order from the same screen.' },
@@ -327,9 +330,9 @@ export const JOURNEY_EXAMPLES: JourneyExample[] = [
       {
         kind: 'figures',
         id: 'economics',
-        h2: 'The unit economics, which are the whole argument',
+        h2: 'The unit economics',
         intro:
-          'This journey is not a customer experience improvement that happens to save money. It is a cost control that happens to improve customer experience.',
+          'One confirmation message costs a fraction of a rupee. One returned parcel costs hundreds.',
         figures: [
           {
             value: '₹180 to ₹240',
@@ -354,7 +357,7 @@ export const JOURNEY_EXAMPLES: JourneyExample[] = [
       {
         kind: 'prose',
         id: 'timing',
-        h2: 'Why the dispatch window decides everything',
+        h2: 'Why timing matters',
         body: [
           'A confirmation message is only worth sending while you can still act on the answer. Once the courier has the parcel, a cancellation is an RTO rather than a saved order, and you have already paid to ship it.',
           'The published numbers back the urgency. Orders attempted within one to two days recorded 22% RTO, rising to 35% when the attempt came after five or more days, and a failed delivery that is not resolved within 36 hours of the NDR being raised almost always ends in cancellation and return. Confirmation is the same discipline applied one step earlier, before the first attempt rather than after it.',
@@ -365,7 +368,7 @@ export const JOURNEY_EXAMPLES: JourneyExample[] = [
         id: 'branches',
         h2: 'What the warehouse does with each reply',
         intro:
-          'A branch nobody acts on is decoration. This is the part that has to be agreed with operations before the journey is published, not after.',
+          'Agree this with your warehouse team before you switch the journey on.',
         columns: ['Customer reply', 'Order state', 'Who acts'],
         rows: [
           {
@@ -393,7 +396,7 @@ export const JOURNEY_EXAMPLES: JourneyExample[] = [
         kind: 'callout',
         id: 'category',
         tone: 'note',
-        title: 'Keep this on a utility template, and keep the offer out of it',
+        title: 'Keep offers out of the confirmation message',
         body:
           'Confirmation is a transactional message about an order the customer has already placed, which is what makes it utility at ₹0.1150. Attach a discount or a prepaid incentive to the same message and you have written a marketing template at ₹0.8631, and a worse confirmation. The prepaid offer belongs in a second message.',
         link: { label: 'See the COD to prepaid journey', href: '/whatsapp-journey-examples/cod-to-prepaid' },
@@ -439,7 +442,7 @@ export const JOURNEY_EXAMPLES: JourneyExample[] = [
     slug: 'cod-to-prepaid',
     cardTitle: 'COD to prepaid',
     cardBlurb:
-      'A second message after the confirmation, offering a reason to pay now. Growth and Scale, because it needs a branching journey.',
+      'After a COD order is confirmed, offer free shipping to pay online now and cut return risk.',
     cardTrigger: 'cod_prepaid',
     image: '/marketing/solutions/sol-cod-prepaid-saas.jpg',
     imageAlt:
@@ -454,7 +457,7 @@ export const JOURNEY_EXAMPLES: JourneyExample[] = [
     h1: 'COD to prepaid journey on WhatsApp',
     h1Accent: 'COD to prepaid',
     subtitle:
-      'The follow-up that offers a confirmed Cash on Delivery customer a reason to pay by UPI or card instead, and why it has to be a separate message.',
+      'Turn confirmed COD orders into prepaid ones with a simple WhatsApp offer to pay by UPI or card.',
     title: 'COD to Prepaid Journey on WhatsApp for Shopify India',
     description:
       'The WhatsApp COD to prepaid journey for Shopify India: when the UPI nudge fires, why it is a second message, and what a prepaid order is worth.',
@@ -467,13 +470,14 @@ export const JOURNEY_EXAMPLES: JourneyExample[] = [
       'Fires after a COD order exists and has been confirmed, so the offer never reaches someone who already cancelled.',
     steps: [
       {
-        title: 'The order is already confirmed',
+        title: 'Customer confirms the COD order',
         detail:
-          'This journey assumes the COD confirmation ran first. Offering a prepaid switch to a customer who has not confirmed they want the order at all is asking the wrong question.',
+          'The COD confirmation always runs first. There’s no point offering prepaid to someone who hasn’t confirmed they want the order.',
         category: 'Utility',
         templateName: 'cod_confirmation_v1',
         preview: {
-          body: 'Hi {{Priya}}, please confirm your Cash on Delivery order {{#1042}}.\nAmount due on delivery: {{₹2,499}}.',
+          header: 'Product image',
+          body: 'Hi {{Priya}}, your order {{#1042}} is ready to ship 📦\n\n{{Olive Linen Shirt, M}}\nPay on delivery: {{₹2,499}}\n\nPlease confirm and we’ll dispatch it today.',
           buttons: ['Confirm order', 'Cancel order'],
           note:
             'Utility category: it is about an order that already exists, so it costs about a seventh of a marketing send.',
@@ -482,13 +486,14 @@ export const JOURNEY_EXAMPLES: JourneyExample[] = [
       {
         title: 'Offer a reason to pay now',
         detail:
-          'A separate message carrying the incentive and a secure payment link. The incentive has to be real and funded, typically free or discounted shipping, because the saving to you is the RTO risk you avoid.',
+          'A separate message with a real incentive, usually free shipping, and a secure payment link.',
         timing: 'after confirmation',
         category: 'Marketing',
         templateName: 'eco_cod_prepaid_switch',
         preview: {
-          body: 'Order {{#1042}} is confirmed, {{Priya}}.\nPay now by UPI or card and we will cover the {{₹80}} shipping. Same delivery date.',
-          buttons: ['Pay now', 'Keep as COD'],
+          header: 'Product image',
+          body: 'Your order {{#1042}} is confirmed, {{Priya}} 🙌\n\nPay now by UPI or card and shipping is on us. You save {{₹80}}, same delivery date.',
+          buttons: ['Pay now & save ₹80', 'Keep Cash on Delivery'],
           note:
             'A separate send from the confirmation. Bundling the offer into it would reclassify that message as marketing.',
         },
@@ -502,9 +507,9 @@ export const JOURNEY_EXAMPLES: JourneyExample[] = [
       {
         kind: 'figures',
         id: 'worth',
-        h2: 'What a prepaid order is actually worth',
+        h2: 'What a prepaid order is worth',
         intro:
-          'The incentive you can afford is set by the risk you remove, so it is worth knowing the published gap between COD and prepaid returns before choosing a number.',
+          'Prepaid orders get returned far less often than COD ones. That gap decides how big an incentive you can afford.',
         figures: [
           {
             value: '58% vs under 15%',
@@ -529,7 +534,7 @@ export const JOURNEY_EXAMPLES: JourneyExample[] = [
       {
         kind: 'prose',
         id: 'second-message',
-        h2: 'Why the offer must be a second message',
+        h2: 'Why it has to be a separate message',
         body: [
           'There are two reasons and they point the same way. The first is pricing: a confirmation is a utility message at ₹0.1150 because it is transactional. Add an incentive and it becomes promotional, which Meta prices at ₹0.8631. You would be paying about seven times more for a message that now does two jobs.',
           'The second is comprehension. A confirmation asks one question and needs one answer, and a customer who is being asked to confirm an order and switch payment method in the same breath tends to do neither. Confirm first, then offer. The order is safe either way, because it was confirmed before the offer went out.',
@@ -540,7 +545,7 @@ export const JOURNEY_EXAMPLES: JourneyExample[] = [
         id: 'incentive',
         h2: 'Choosing an incentive you can afford',
         intro:
-          'The ceiling is what a prepaid order saves you in avoided RTO risk and remittance fees. Below that you are buying margin back; above it you are buying revenue you already had.',
+          'Never offer more than a prepaid order actually saves you in returns and COD fees.',
         doLabel: 'Do this',
         dontLabel: 'Avoid this',
         doItems: [
@@ -562,7 +567,7 @@ export const JOURNEY_EXAMPLES: JourneyExample[] = [
         kind: 'callout',
         id: 'plan',
         tone: 'note',
-        title: 'This one needs a branching journey',
+        title: 'Available on Growth and Scale',
         body:
           'Basic COD confirmation runs on every plan. The prepaid switch reads the confirmation outcome and branches on it, so it needs Journey Branch, which is a Growth and Scale feature. Worth knowing before you plan around it.',
         link: { label: 'See plans', href: '/pricing' },
@@ -602,7 +607,7 @@ export const JOURNEY_EXAMPLES: JourneyExample[] = [
     slug: 'order-status-updates',
     cardTitle: 'Order status updates',
     cardBlurb:
-      'Placed, shipped with a tracking link, delivered, cancelled. The journey that stops "where is my order" arriving in the first place.',
+      'Confirmed, shipped, delivered and cancelled updates that stop “where is my order?” messages before they start.',
     cardTrigger: 'order_placed · order_fulfilled',
     image: '/marketing/solutions/sol-electronics-inbox-saas.jpg',
     imageAlt:
@@ -617,7 +622,7 @@ export const JOURNEY_EXAMPLES: JourneyExample[] = [
     h1: 'WhatsApp order status updates for Shopify',
     h1Accent: 'order status',
     subtitle:
-      'Order confirmation, shipping with a tracking link, delivery and cancellation, on utility templates that cost about a seventh of a marketing send.',
+      'Keep customers updated from checkout to doorstep, so “where is my order?” never reaches your inbox.',
     title: 'WhatsApp Order Status Updates for Shopify India',
     description:
       'The WhatsApp order status journey for Shopify: confirmed, shipped with tracking, delivered and cancelled, on utility templates at ₹0.1150 each.',
@@ -637,7 +642,8 @@ export const JOURNEY_EXAMPLES: JourneyExample[] = [
         category: 'Utility',
         templateName: 'order_status_confirmed_v1',
         preview: {
-          body: 'Thanks {{Priya}}, we have your order {{#1042}}.\nTotal {{₹2,499}}. We will message you the moment it ships.',
+          header: 'Product image',
+          body: 'Hi {{Priya}}, thank you for your order! 🎉\n\nOrder {{#1042}} · {{Olive Linen Shirt, M}}\nTotal: {{₹2,499}}\n\nWe’ll message you here the moment it ships.',
           note:
             'Sets the expectation every later message is measured against.',
         },
@@ -651,7 +657,7 @@ export const JOURNEY_EXAMPLES: JourneyExample[] = [
         templateName: 'order_status_shipped_v1',
         preview: {
           header: 'Product image',
-          body: 'Order {{#1042}} has shipped with {{Delhivery}}.\nTracking number: {{1Z999AA10123456}}.',
+          body: 'Good news, {{Priya}}! Your order is on its way 🚚\n\nOrder {{#1042}} shipped with {{Delhivery}}.\nExpected delivery: {{Fri, 14 Nov}}',
           buttons: ['Track order'],
           note:
             'The highest-value message in the sequence. Without a working Track order button it generates the ticket it was meant to prevent.',
@@ -664,7 +670,8 @@ export const JOURNEY_EXAMPLES: JourneyExample[] = [
         category: 'Utility',
         templateName: 'order_status_delivered_v1',
         preview: {
-          body: 'Order {{#1042}} was delivered.\nIf anything is not right, just reply here and we will sort it out.',
+          header: 'Product image',
+          body: 'Delivered! ✅ Hope you love it, {{Priya}}.\n\nOrder {{#1042}} reached you today. If anything isn’t right, just reply here and we’ll fix it.',
           buttons: ['Contact support'],
           note:
             'Closes the loop, and is the natural moment to ask for a review as a separate send.',
@@ -677,7 +684,7 @@ export const JOURNEY_EXAMPLES: JourneyExample[] = [
         category: 'Utility',
         templateName: 'order_cancellation_v1',
         preview: {
-          body: 'Order {{#1042}} has been cancelled.\nAnything you already paid comes back within {{5 to 7}} working days.',
+          body: 'Hi {{Priya}}, your order {{#1042}} has been cancelled.\n\nIf you paid online, your refund of {{₹2,499}} will reach you in {{5–7}} working days.',
           note:
             'Silence after a cancellation is what turns a refund into a support ticket.',
         },

@@ -125,7 +125,7 @@ export function SectionHeading({
   return (
     <div className={cn('mb-12 max-w-3xl', center && 'mx-auto text-center', className)}>
       {eyebrow && <Eyebrow className={center ? 'text-center' : undefined}>{eyebrow}</Eyebrow>}
-      <h2 className="mkt-display mt-3 text-3xl font-medium tracking-tight text-[#0c1222] md:text-4xl">
+      <h2 className="mkt-display mt-3 text-3xl font-normal tracking-tight text-[#0c1222] md:text-4xl">
         {title}
       </h2>
       {subtitle && (

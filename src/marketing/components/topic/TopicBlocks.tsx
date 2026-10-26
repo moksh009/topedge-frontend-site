@@ -99,10 +99,6 @@ function renderInline(text: string) {
   );
 }
 
-function BlockKicker() {
-  return <span className="mkt-blk__kicker" aria-hidden />;
-}
-
 const CALLOUT_ICON: Record<'note' | 'warn', ReactNode> = {
   note: (
     <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -182,7 +178,6 @@ export function TopicBlockView({ block }: { block: TopicBlock }) {
       const paras = Array.isArray(block.body) ? block.body : [block.body];
       return (
         <section id={block.id} className="mkt-blk">
-          <BlockKicker />
           <h2 className="mkt-blk__h2">{block.h2}</h2>
           {paras.map((p, i) => (
             <p key={i} className={`mkt-blk__body${i === 0 ? ' mkt-blk__body--lede' : ''}`}>
@@ -196,7 +191,6 @@ export function TopicBlockView({ block }: { block: TopicBlock }) {
     case 'specTable':
       return (
         <section id={block.id} className="mkt-blk">
-          <BlockKicker />
           <h2 className="mkt-blk__h2">{block.h2}</h2>
           {block.intro && <p className="mkt-blk__intro">{block.intro}</p>}
           <SpecTable block={block} />
@@ -207,7 +201,6 @@ export function TopicBlockView({ block }: { block: TopicBlock }) {
     case 'steps':
       return (
         <section id={block.id} className="mkt-blk">
-          <BlockKicker />
           <h2 className="mkt-blk__h2">{block.h2}</h2>
           {block.intro && <p className="mkt-blk__intro">{block.intro}</p>}
           <ol className="mkt-steps">
@@ -230,7 +223,6 @@ export function TopicBlockView({ block }: { block: TopicBlock }) {
     case 'figures':
       return (
         <section id={block.id} className="mkt-blk">
-          <BlockKicker />
           <h2 className="mkt-blk__h2">{block.h2}</h2>
           {block.intro && <p className="mkt-blk__intro">{block.intro}</p>}
           <ul className="mkt-figs">
@@ -248,7 +240,6 @@ export function TopicBlockView({ block }: { block: TopicBlock }) {
     case 'checklist':
       return (
         <section id={block.id} className="mkt-blk">
-          <BlockKicker />
           <h2 className="mkt-blk__h2">{block.h2}</h2>
           {block.intro && <p className="mkt-blk__intro">{block.intro}</p>}
           <div className="mkt-check">

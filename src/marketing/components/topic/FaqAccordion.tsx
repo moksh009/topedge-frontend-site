@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import '../../styles/faq.css';
 
 /**
  * The interactive FAQ accordion, generalised off PricingFaq so every page

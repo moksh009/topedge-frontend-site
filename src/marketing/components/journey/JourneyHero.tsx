@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { TrustpilotScore } from '../TrustpilotProof';
 import '../../styles/journey-flow.css';
 
 /**
@@ -38,6 +39,7 @@ export default function JourneyHero({
   accent,
   subtitle,
   actions,
+  trust,
   image,
   imageAlt,
   children,
@@ -48,6 +50,8 @@ export default function JourneyHero({
   accent?: string;
   subtitle: string;
   actions?: ReactNode;
+  /** Shows the live Trustpilot score under the actions, as social proof. */
+  trust?: boolean;
   image?: string;
   imageAlt?: string;
   /** Used instead of a single image, e.g. the index thumbnail strip. */
@@ -60,6 +64,11 @@ export default function JourneyHero({
         <h1 className="mkt-jh__title">{renderAccent(title, accent)}</h1>
         <p className="mkt-jh__sub">{subtitle}</p>
         {actions && <div className="mkt-jh__actions">{actions}</div>}
+        {trust && (
+          <div className="mkt-jh__trust">
+            <TrustpilotScore compact />
+          </div>
+        )}
       </div>
 
       {image && (

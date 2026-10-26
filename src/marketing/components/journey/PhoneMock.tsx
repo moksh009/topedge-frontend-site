@@ -79,21 +79,15 @@ export default function PhoneMock({
             <div className="mkt-ph__bubble">
               {message.header && (
                 <figure className="mkt-ph__media" aria-hidden>
-                  <svg className="mkt-ph__media-art" viewBox="0 0 160 110" preserveAspectRatio="xMidYMid slice">
-                    <defs>
-                      <linearGradient id="phMediaGrad" x1="0" y1="0" x2="1" y2="1">
-                        <stop offset="0%" stopColor="#ede9fe" />
-                        <stop offset="100%" stopColor="#fdf2f8" />
-                      </linearGradient>
-                    </defs>
-                    <rect width="160" height="110" fill="url(#phMediaGrad)" />
-                    <g transform="translate(60 25)" fill="none" stroke="#9061e0" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M20 10L36 19.5V40.5L20 50L4 40.5V19.5L20 10Z" />
-                      <path d="M4 19.5L20 29L36 19.5" />
-                      <path d="M20 29V50" />
-                    </g>
-                  </svg>
-                  <figcaption>{message.header}</figcaption>
+                  <img
+                    className="mkt-ph__media-art"
+                    src="/marketing/journeys/product-linen-shirt.webp"
+                    alt=""
+                    width={320}
+                    height={240}
+                    loading="lazy"
+                    decoding="async"
+                  />
                 </figure>
               )}
 
@@ -101,6 +95,10 @@ export default function PhoneMock({
 
               <span className="mkt-ph__stamp" aria-hidden>
                 9:41
+                <svg className="mkt-ph__ticks" viewBox="0 0 18 12" width="14" height="10">
+                  <path d="M1 6.5l3 3 3-3" fill="none" stroke="#53bdeb" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M6 6.5l3 3 7-8" fill="none" stroke="#53bdeb" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
               </span>
 
               {message.buttons?.length ? (
