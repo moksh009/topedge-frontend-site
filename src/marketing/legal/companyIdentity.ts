@@ -18,9 +18,9 @@ export const COMPANY_ADDRESS_LINES = [
 export const COMPANY_ADDRESS_ONE_LINE = COMPANY_ADDRESS_LINES.join(' ');
 
 export const COMPANY_EMAIL = 'team@topedgeai.com';
-export const COMPANY_PHONE = '+91 93130 45439';
+export const COMPANY_PHONE = '+91 94297 84875';
 /** Digits only for wa.me / tel links */
-export const COMPANY_PHONE_E164 = '919313045439';
+export const COMPANY_PHONE_E164 = '919429784875';
 
 export const COMPANY_WHATSAPP_URL =
   `https://wa.me/${COMPANY_PHONE_E164}?text=${encodeURIComponent(

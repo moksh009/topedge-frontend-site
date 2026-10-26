@@ -422,7 +422,7 @@ export function organizationJsonLd() {
       '@type': 'ContactPoint',
       contactType: 'sales',
       email: 'team@topedgeai.com',
-      telephone: '+91-93130-45439',
+      telephone: '+91-94297-84875',
       availableLanguage: ['English', 'Hindi'],
       areaServed: 'IN',
       hoursAvailable: {

@@ -92,6 +92,7 @@ export default function PhoneMock({
                     className="mkt-ph__media-art"
                     src="/marketing/journeys/product-linen-shirt.webp"
                     alt=""
+                    aria-hidden
                     width={320}
                     height={240}
                     loading="lazy"

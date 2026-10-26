@@ -1823,6 +1823,23 @@ a.mkt-foot__partner:hover {
   object-fit: contain;
 }
 
+/* The Trustpilot score sits with the partner badges, as a card the same
+   height as they are, so the row reads as one line of proof. */
+.mkt-foot__rating .mkt-tp__score {
+  box-sizing: border-box;
+  height: 3.15rem;
+  padding: 0 1rem;
+  border: 1px solid #eef0f4;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 1px 2px rgba(12, 18, 34, 0.04);
+  transition: border-color 0.15s ease;
+}
+
+.mkt-foot__rating .mkt-tp__score:hover {
+  border-color: #c7e9da;
+}
+
 .mkt-foot__company-rows {
   margin: 0;
   display: flex;
@@ -1938,6 +1955,16 @@ a.mkt-foot__partner:hover {
   .mkt-foot__partner img {
     height: 2.65rem;
     max-width: 8.75rem;
+  }
+
+  .mkt-foot__rating {
+    flex: 1 1 100%;
+  }
+
+  .mkt-foot__rating .mkt-tp__score {
+    height: 2.75rem;
+    width: 100%;
+    justify-content: center;
   }
 }
 

@@ -11,6 +11,7 @@ import {
   COMPANY_WHATSAPP_URL,
 } from '../legal/companyIdentity';
 import { FREE_TOOLS, TOOLS_PATH } from '../data/freeTools';
+import { TrustpilotScore } from './TrustpilotProof';
 
 /** The Meta and Shopify badges each link to the programme they name; this is
  *  the equivalent page for the third.
@@ -261,9 +262,12 @@ export default function MarketingFooter() {
           </nav>
         </div>
 
-        <div className="mkt-foot__trust" aria-label="Platform partnerships">
-          <p className="mkt-foot__trust-label">Trusted by platforms</p>
+        <div className="mkt-foot__trust" aria-label="Ratings and platform partnerships">
+          <p className="mkt-foot__trust-label">Trusted by merchants and platforms</p>
           <ul className="mkt-foot__trust-list">
+            <li className="mkt-foot__rating">
+              <TrustpilotScore compact />
+            </li>
             <li>
               <a
                 className="mkt-foot__partner"

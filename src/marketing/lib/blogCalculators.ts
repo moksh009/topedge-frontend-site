@@ -94,6 +94,8 @@ type Field = {
   max: number;
   step: number;
   suffix?: string;
+  /** Upper end of the slider. The box still accepts up to `max`. */
+  sliderMax?: number;
 };
 
 type Calculator = {
@@ -101,8 +103,12 @@ type Calculator = {
   /** One line above the inputs. Doubles as the answer-engine lead. */
   lead: string;
   fields: Field[];
-  /** Returns the rows of the result table plus the sentence under it. */
-  compute: (v: Record<string, number>) => { rows: Row[]; verdict: string };
+  /** The answer the reader came for, the rows behind it, and one sentence. */
+  compute: (v: Record<string, number>) => {
+    headline: { label: string; value: string; sub: string };
+    rows: Row[];
+    verdict: string;
+  };
   footnote: string;
 };
 
@@ -125,6 +131,7 @@ const WHATSAPP_BILL: Calculator = {
       value: 10000,
       min: 0,
       max: 500000,
+      sliderMax: 100000,
       step: 500,
     },
     {
@@ -134,6 +141,7 @@ const WHATSAPP_BILL: Calculator = {
       value: 10000,
       min: 0,
       max: 500000,
+      sliderMax: 100000,
       step: 500,
     },
     {
@@ -143,6 +151,7 @@ const WHATSAPP_BILL: Calculator = {
       value: 5000,
       min: 0,
       max: 200000,
+      sliderMax: 50000,
       step: 250,
     },
   ],
@@ -156,6 +165,11 @@ const WHATSAPP_BILL: Calculator = {
     const marketingMarkup = marketing * (VENDOR.dondyMarketingInr - META_INDIA.marketing);
 
     return {
+      headline: {
+        label: 'Meta bill for the month, at 0% markup',
+        value: money(meta),
+        sub: `${money(meta * (1 + META_INDIA.gst))} with 18% GST, billed by Meta to your own account`,
+      },
       rows: [
         {
           label: 'Marketing templates',
@@ -212,6 +226,7 @@ const RTO_COST: Calculator = {
       value: 1000,
       min: 0,
       max: 100000,
+      sliderMax: 20000,
       step: 50,
     },
     {
@@ -231,6 +246,7 @@ const RTO_COST: Calculator = {
       value: 26,
       min: 0,
       max: 100,
+      sliderMax: 60,
       step: 0.5,
       suffix: '%',
     },
@@ -243,6 +259,11 @@ const RTO_COST: Calculator = {
     const loadedHigh = rtoParcels * RTO.loadedHigh;
 
     return {
+      headline: {
+        label: 'Lost to RTO every month',
+        value: `${money(directLow)} to ${money(rtoParcels * RTO.directHigh)}`,
+        sub: `${count.format(rtoParcels)} parcels come back. Confirming every COD order on WhatsApp costs ${money(confirmCost)}.`,
+      },
       rows: [
         {
           label: 'COD orders a month',
@@ -292,6 +313,7 @@ const CART_RECOVERY: Calculator = {
       value: 1000,
       min: 0,
       max: 200000,
+      sliderMax: 20000,
       step: 50,
     },
     {
@@ -301,6 +323,7 @@ const CART_RECOVERY: Calculator = {
       value: 1500,
       min: 0,
       max: 100000,
+      sliderMax: 10000,
       step: 50,
     },
     {
@@ -310,6 +333,7 @@ const CART_RECOVERY: Calculator = {
       value: 10,
       min: 0,
       max: 100,
+      sliderMax: 40,
       step: 0.5,
       suffix: '%',
     },
@@ -331,6 +355,11 @@ const CART_RECOVERY: Calculator = {
     const perRupee = cost > 0 ? revenue / cost : 0;
 
     return {
+      headline: {
+        label: 'Revenue recovered every month',
+        value: money(revenue),
+        sub: `${count.format(recovered)} orders won back, for at most ${money(cost)} in Meta message fees`,
+      },
       rows: [
         {
           label: 'Carts recovered',
@@ -399,15 +428,29 @@ function render(host: HTMLElement, calc: Calculator): () => void {
   host.append(el(doc, 'p', 'mkt-calc__title', calc.title));
   host.append(el(doc, 'p', 'mkt-calc__lead', calc.lead));
 
+  const body = el(doc, 'div', 'mkt-calc__body');
   const form = el(doc, 'div', 'mkt-calc__fields');
-  const inputs: HTMLInputElement[] = [];
+  const boxes: HTMLInputElement[] = [];
+  const sliders: HTMLInputElement[] = [];
+
+  const sliderFill = (slider: HTMLInputElement) => {
+    const min = Number(slider.min);
+    const max = Number(slider.max);
+    const pct = max > min ? ((Number(slider.value) - min) / (max - min)) * 100 : 0;
+    slider.style.setProperty('--fill', `${Math.min(100, Math.max(0, pct))}%`);
+  };
 
   for (const f of calc.fields) {
-    const field = el(doc, 'label', 'mkt-calc__field');
-    field.append(el(doc, 'span', 'mkt-calc__label', f.label));
+    const field = el(doc, 'div', 'mkt-calc__field');
+    const id = `calc-${f.key}-${Math.random().toString(36).slice(2, 7)}`;
+    const head = el(doc, 'div', 'mkt-calc__field-head');
+    const label = el(doc, 'label', 'mkt-calc__label', f.label);
+    label.htmlFor = id;
+    head.append(label);
 
     const box = el(doc, 'span', 'mkt-calc__input');
     const input = doc.createElement('input');
+    input.id = id;
     input.type = 'number';
     input.inputMode = 'numeric';
     input.value = String(f.value);
@@ -417,26 +460,54 @@ function render(host: HTMLElement, calc: Calculator): () => void {
     input.dataset.key = f.key;
     box.append(input);
     if (f.suffix) box.append(el(doc, 'span', 'mkt-calc__suffix', f.suffix));
-    field.append(box);
+    head.append(box);
+    field.append(head);
+
+    const slider = doc.createElement('input');
+    slider.type = 'range';
+    slider.className = 'mkt-calc__slider';
+    slider.min = String(f.min);
+    slider.max = String(Math.max(f.sliderMax ?? f.max, f.value));
+    slider.step = String(f.step);
+    slider.value = String(f.value);
+    slider.dataset.key = f.key;
+    slider.setAttribute('aria-label', f.label);
+    sliderFill(slider);
+    field.append(slider);
 
     if (f.hint) field.append(el(doc, 'span', 'mkt-calc__hint', f.hint));
     form.append(field);
-    inputs.push(input);
+    boxes.push(input);
+    sliders.push(slider);
   }
-  host.append(form);
+  body.append(form);
 
+  const results = el(doc, 'div', 'mkt-calc__results');
+  const headline = el(doc, 'div', 'mkt-calc__headline');
+  headline.setAttribute('role', 'status');
+  headline.setAttribute('aria-live', 'polite');
+  const hLabel = el(doc, 'p', 'mkt-calc__headline-label');
+  const hValue = el(doc, 'p', 'mkt-calc__headline-value');
+  const hSub = el(doc, 'p', 'mkt-calc__headline-sub');
+  headline.append(hLabel, hValue, hSub);
+  results.append(headline);
+
+  results.append(el(doc, 'p', 'mkt-calc__breakdown', 'How it adds up'));
   const out = el(doc, 'div', 'mkt-calc__out');
-  host.append(out);
+  results.append(out);
 
   const verdict = el(doc, 'p', 'mkt-calc__verdict');
-  verdict.setAttribute('role', 'status');
-  host.append(verdict);
+  results.append(verdict);
+  body.append(results);
+  host.append(body);
 
-  const note = el(doc, 'p', 'mkt-calc__note', calc.footnote);
-  host.append(note);
+  host.append(el(doc, 'p', 'mkt-calc__note', calc.footnote));
 
   const paint = () => {
-    const { rows, verdict: line } = calc.compute(state);
+    const { headline: h, rows, verdict: line } = calc.compute(state);
+    hLabel.textContent = h.label;
+    hValue.textContent = h.value;
+    hSub.textContent = h.sub;
     out.textContent = '';
     const table = doc.createElement('table');
     const tbody = doc.createElement('tbody');
@@ -459,19 +530,32 @@ function render(host: HTMLElement, calc: Calculator): () => void {
 
   const onInput = (e: Event) => {
     const input = e.currentTarget as HTMLInputElement;
-    const field = calc.fields.find((f) => f.key === input.dataset.key);
+    const key = input.dataset.key;
+    const field = calc.fields.find((f) => f.key === key);
     if (!field) return;
     const raw = Number(input.value);
     // An empty or half-typed box reads as 0 rather than NaN, so the table keeps
     // answering while the reader is still typing.
-    state[field.key] = Number.isFinite(raw) ? Math.min(field.max, Math.max(field.min, raw)) : 0;
+    const value = Number.isFinite(raw) ? Math.min(field.max, Math.max(field.min, raw)) : 0;
+    state[field.key] = value;
+    const box = boxes.find((b) => b.dataset.key === key);
+    const slider = sliders.find((r) => r.dataset.key === key);
+    if (input !== box && box) box.value = String(value);
+    if (slider) {
+      if (input !== slider) {
+        if (value > Number(slider.max)) slider.max = String(value);
+        slider.value = String(value);
+      }
+      sliderFill(slider);
+    }
     paint();
   };
 
-  inputs.forEach((i) => i.addEventListener('input', onInput));
+  const all = [...boxes, ...sliders];
+  all.forEach((i) => i.addEventListener('input', onInput));
   paint();
 
-  return () => inputs.forEach((i) => i.removeEventListener('input', onInput));
+  return () => all.forEach((i) => i.removeEventListener('input', onInput));
 }
 
 /**

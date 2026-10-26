@@ -2,63 +2,92 @@
  * Embedded rupee calculators (src/marketing/lib/blogCalculators.ts).
  *
  * Scoped to `.mkt-calc` rather than to the blog prose, because the same widget
- * is mounted on /pricing where none of the prose rules apply. The static
- * fallback inside the placeholder is styled by whatever surrounds it until the
- * widget binds and adds `.is-live`, so nothing here assumes the live markup.
+ * is mounted on tool pages, /pricing/meta-rates and inside blog posts. The
+ * static fallback inside the placeholder is styled by whatever surrounds it
+ * until the widget binds and adds `.is-live`.
+ *
+ * The two-pane layout keys off the widget's own width (a container query), not
+ * the viewport: in a blog column it stays stacked, on a tool page it splits
+ * into inputs on the left and the answer on the right.
  */
 
 .mkt-calc {
+  container-type: inline-size;
   margin: 1.75rem 0;
   padding: 1.25rem;
   border: 1px solid #e6e0f8;
-  border-radius: 16px;
-  background: linear-gradient(180deg, #fbfaff, #fff 60%);
+  border-radius: 20px;
+  background: #ffffff;
+  box-shadow: 0 30px 60px -48px rgba(49, 28, 94, 0.45);
 }
 
 @media (min-width: 640px) {
   .mkt-calc {
-    padding: 1.6rem 1.75rem;
+    padding: 1.75rem 2rem;
   }
 }
 
 .mkt-calc__title {
   margin: 0;
-  font-size: 1.05rem;
-  font-weight: 650;
+  font-size: 1.2rem;
+  font-weight: 500;
   letter-spacing: -0.015em;
   line-height: 1.35;
   color: var(--mkt-ink, #0c1222);
 }
 
 .mkt-calc__lead {
-  margin: 0.45rem 0 0;
+  margin: 0.4rem 0 0;
   font-size: 0.92rem;
   line-height: 1.6;
-  color: #475569;
+  color: #64748b;
 }
+
+.mkt-calc__body {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: 1.4rem;
+}
+
+@container (min-width: 760px) {
+  .mkt-calc__body {
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .mkt-calc__results {
+    position: sticky;
+    top: calc(var(--marketing-nav-h, 96px) + 1rem);
+  }
+}
+
+/* ---------- inputs ---------- */
 
 .mkt-calc__fields {
   display: grid;
-  gap: 0.9rem;
-  margin-top: 1.1rem;
-}
-
-@media (min-width: 720px) {
-  .mkt-calc__fields {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-  }
+  gap: 1.15rem;
 }
 
 .mkt-calc__field {
   display: grid;
-  gap: 0.35rem;
-  align-content: start;
+  gap: 0.55rem;
+  padding: 0.95rem 1rem 1rem;
+  border: 1px solid #efeaf8;
+  border-radius: 14px;
+  background: #fcfbff;
+}
+
+.mkt-calc__field-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
 }
 
 .mkt-calc__label {
-  font-size: 0.82rem;
-  font-weight: 600;
+  font-size: 0.88rem;
+  font-weight: 500;
   line-height: 1.35;
   color: var(--mkt-ink, #0c1222);
 }
@@ -66,7 +95,9 @@
 .mkt-calc__input {
   display: flex;
   align-items: center;
-  gap: 0.35rem;
+  flex: none;
+  gap: 0.3rem;
+  width: 8.5rem;
   padding: 0 0.7rem;
   border: 1px solid #ddd5f3;
   border-radius: 10px;
@@ -80,13 +111,16 @@
 
 .mkt-calc__input input {
   width: 100%;
+  min-width: 0;
   /* 16px or iOS zooms the page on focus. */
-  min-height: 2.75rem;
+  min-height: 2.5rem;
   padding: 0;
   border: 0;
   background: transparent;
   font: inherit;
   font-size: 1rem;
+  font-weight: 600;
+  text-align: right;
   font-variant-numeric: tabular-nums;
   color: var(--mkt-ink, #0c1222);
 }
@@ -101,35 +135,137 @@
   color: #64748b;
 }
 
+.mkt-calc__slider {
+  --fill: 50%;
+  width: 100%;
+  height: 1.5rem;
+  margin: 0;
+  background: transparent;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.mkt-calc__slider:focus {
+  outline: none;
+}
+
+.mkt-calc__slider::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #7c3aed var(--fill), #e9e3fb var(--fill));
+}
+
+.mkt-calc__slider::-moz-range-track {
+  height: 6px;
+  border-radius: 999px;
+  background: #e9e3fb;
+}
+
+.mkt-calc__slider::-moz-range-progress {
+  height: 6px;
+  border-radius: 999px;
+  background: #7c3aed;
+}
+
+.mkt-calc__slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: -7px;
+  border: 3px solid #ffffff;
+  border-radius: 999px;
+  background: #7c3aed;
+  box-shadow: 0 1px 4px rgba(49, 28, 94, 0.35);
+}
+
+.mkt-calc__slider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border: 3px solid #ffffff;
+  border-radius: 999px;
+  background: #7c3aed;
+  box-shadow: 0 1px 4px rgba(49, 28, 94, 0.35);
+}
+
+.mkt-calc__slider:focus-visible::-webkit-slider-thumb {
+  box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.25);
+}
+
 .mkt-calc__hint {
   font-size: 0.76rem;
   line-height: 1.45;
   color: #64748b;
 }
 
+/* ---------- the answer ---------- */
+
+.mkt-calc__headline {
+  padding: 1.3rem 1.35rem;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #f5f0ff 0%, #ece3ff 100%);
+  border: 1px solid #ddd0fb;
+}
+
+.mkt-calc__headline-label {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #6d28d9;
+}
+
+.mkt-calc__headline-value {
+  margin: 0.45rem 0 0;
+  font-size: clamp(1.6rem, 6cqi, 2.2rem);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  font-variant-numeric: tabular-nums;
+  color: #2e1065;
+}
+
+.mkt-calc__headline-sub {
+  margin: 0.5rem 0 0;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: #4c1d95;
+}
+
+.mkt-calc__breakdown {
+  margin: 1.25rem 0 0.5rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #94a3b8;
+}
+
 .mkt-calc__out {
-  margin-top: 1.15rem;
   overflow: hidden;
-  border: 1px solid #e6e0f8;
-  border-radius: 12px;
+  border: 1px solid #efeaf8;
+  border-radius: 14px;
   background: #fff;
 }
 
 .mkt-calc__out table {
   width: 100%;
+  margin: 0;
   border-collapse: collapse;
   font-size: 0.875rem;
   line-height: 1.5;
 }
 
 .mkt-calc__out :is(th, td) {
-  padding: 0.7rem 0.85rem;
+  padding: 0.75rem 0.9rem;
   text-align: left;
   vertical-align: top;
   /* The prose sheet keeps header cells on one line; these are sentences. */
   white-space: normal;
   background: none;
-  border-bottom: 1px solid var(--mkt-border, #efeaf8);
+  border: 0;
+  border-bottom: 1px solid #f3f0fa;
 }
 
 .mkt-calc__out td {
@@ -155,14 +291,14 @@
 
 .mkt-calc__rowLabel {
   display: block;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--mkt-ink, #0c1222);
 }
 
 .mkt-calc__rowDetail {
   display: block;
   margin-top: 0.15rem;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 400;
   line-height: 1.45;
   color: #64748b;
@@ -170,29 +306,35 @@
 
 .mkt-calc__verdict {
   margin: 1rem 0 0;
-  font-size: 0.92rem;
-  line-height: 1.65;
+  padding: 0.85rem 1rem;
+  border-left: 3px solid #a78bfa;
+  border-radius: 0 12px 12px 0;
+  background: #faf9ff;
+  font-size: 0.9rem;
+  line-height: 1.6;
   color: var(--mkt-ink, #0c1222);
 }
 
 .mkt-calc__note {
-  margin: 0.75rem 0 0;
+  margin: 1.25rem 0 0;
+  padding-top: 1rem;
+  border-top: 1px solid #f3f0fa;
   font-size: 0.76rem;
   line-height: 1.55;
-  color: #64748b;
+  color: #94a3b8;
 }
 
-/* Below 520px a two-column row squeezes the label to three words a line, so
-   the figure moves under its own label instead. */
-@media (max-width: 519px) {
+/* A two-column row squeezes the label to three words a line in a narrow
+   widget, so the figure moves under its own label instead. */
+@container (max-width: 480px) {
   .mkt-calc__out :is(table, tbody, tr, th, td) {
     display: block;
     width: auto;
   }
 
   .mkt-calc__out tr {
-    padding: 0.7rem 0.8rem;
-    border-bottom: 1px solid var(--mkt-border, #efeaf8);
+    padding: 0.7rem 0.85rem;
+    border-bottom: 1px solid #f3f0fa;
   }
 
   .mkt-calc__out tr:last-child {
@@ -204,10 +346,22 @@
     border-bottom: none;
   }
 
+  .mkt-calc__out tr.is-total {
+    background: #faf8ff;
+  }
+
+  .mkt-calc__out tr.is-total :is(th, td) {
+    background: none;
+  }
+
   .mkt-calc__out td {
-    margin-top: 0.35rem;
+    margin-top: 0.3rem;
     text-align: left;
-    font-size: 1.05rem;
+    font-size: 1.02rem;
     white-space: normal;
+  }
+
+  .mkt-calc__input {
+    width: 7.25rem;
   }
 }
