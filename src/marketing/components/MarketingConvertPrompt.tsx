@@ -244,8 +244,15 @@ export default function MarketingConvertPrompt() {
         </div>
 
         <div className="mkt-convert__aside" aria-hidden>
-          <div className="mkt-convert__shot">
+          {/*
+            The reference modal puts a product composition on the right: a
+            dashboard behind, feature cards floating off it. Same composition,
+            our own screenshot and our own three claims — the reference is
+            another vendor's artwork and shows another vendor's product.
+          */}
+          <div className="mkt-convert__stage">
             <img
+              className="mkt-convert__stage-shot"
               src="/marketing/features/shopify-whatsapp-inbox.webp"
               alt=""
               width={1536}
@@ -253,6 +260,15 @@ export default function MarketingConvertPrompt() {
               decoding="async"
               loading="lazy"
             />
+            <span className="mkt-convert__chip mkt-convert__chip--a">
+              <img src="/platforms/whatsapp.svg" alt="" width={14} height={14} />
+              Recover abandoned carts
+            </span>
+            <span className="mkt-convert__chip mkt-convert__chip--b">
+              <img src="/platforms/shopify.svg" alt="" width={14} height={14} />
+              Confirm COD before you ship
+            </span>
+            <span className="mkt-convert__chip mkt-convert__chip--c">One inbox, every chat</span>
           </div>
 
           <div className="mkt-convert__stats">

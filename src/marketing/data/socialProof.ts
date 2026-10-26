@@ -72,6 +72,24 @@ export function hasProductHuntRating() {
   return Boolean(raw.productHunt.rating && raw.productHunt.reviews);
 }
 
+/**
+ * True when Product Hunt's own review widget can be used instead.
+ *
+ * Preferred over a hand-copied rating: the image is served by Product Hunt
+ * and shows their live star rating and review count, so it cannot drift from
+ * the listing the way a number typed into this repo does.
+ */
+export function hasProductHuntEmbed() {
+  return Boolean(raw.productHunt.embedProductId);
+}
+
+/** Product Hunt's review widget for this product, light theme. */
+export function productHuntEmbedSrc() {
+  return `https://api.producthunt.com/widgets/embed-image/v1/review.svg?product_id=${encodeURIComponent(
+    raw.productHunt.embedProductId,
+  )}&theme=light`;
+}
+
 export const CUSTOMER_STORIES: CustomerStory[] = raw.customers;
 
 /** `4.0 out of 5 on Trustpilot, from 5 reviews` — the whole claim in one line. */

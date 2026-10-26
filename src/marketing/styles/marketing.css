@@ -452,6 +452,20 @@ html.mkt-has-ann {
   --marketing-nav-h: calc(76px + var(--mkt-ann-h, 0px));
 }
 
+/*
+ * The navbar capsule on its own, never the strip above it.
+ *
+ * --marketing-nav-h grows by the strip height so that sticky offsets and
+ * scroll-margins clear the whole fixed header, which is right for anything
+ * measured against the viewport. It is wrong for a page's own top padding:
+ * `html.mkt-has-ann body` below already moves the document down by exactly
+ * the strip height, so a hero that pads by --marketing-nav-h reserves the
+ * strip twice and opens on ~50px of dead white. Page heroes read this.
+ */
+:root {
+  --mkt-bar-h: 76px;
+}
+
 /* The header is fixed, so the strip sits over the page rather than above it.
    Most pages clear the navbar with their own hardcoded top padding and only a
    few read --marketing-nav-h, so rather than find and change every one of

@@ -421,13 +421,13 @@
  * air cut to about half: these pages exist to get the reader to the thing.
  */
 .mkt-jh {
-  padding: calc(var(--marketing-nav-h, 76px) + 1.1rem) 1.25rem 0;
+  padding: calc(var(--mkt-bar-h, 76px) + 1rem) 1.25rem 0;
   background: #ffffff;
 }
 
 @media (min-width: 768px) {
   .mkt-jh {
-    padding-top: calc(var(--marketing-nav-h, 76px) + 1.6rem);
+    padding-top: calc(var(--mkt-bar-h, 76px) + 1.5rem);
   }
 }
 

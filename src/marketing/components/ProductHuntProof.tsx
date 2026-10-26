@@ -1,4 +1,10 @@
-import { PRODUCT_HUNT, PRODUCT_HUNT_QUOTES, hasProductHuntRating } from '../data/socialProof';
+import {
+  PRODUCT_HUNT,
+  PRODUCT_HUNT_QUOTES,
+  hasProductHuntEmbed,
+  hasProductHuntRating,
+  productHuntEmbedSrc,
+} from '../data/socialProof';
 import '../styles/proof.css';
 
 const PH_ORANGE = '#da552f';
@@ -60,15 +66,39 @@ function Stars({ rating }: { rating: number }) {
 /**
  * The Product Hunt badge, as a pill that matches TrustpilotScore beside it.
  *
- * Two shapes, chosen by the data rather than by a prop: with a rating read
- * off the live listing it shows stars, the score and the review count; with
- * none it is a plain "Find us on Product Hunt" link. The second shape is not
- * a placeholder to be dressed up later — it is what the page is entitled to
- * claim before anybody has read the listing.
+ * Three shapes, chosen by the data rather than by a prop:
+ *   1. Product Hunt's own review widget, which draws the live stars and count
+ *      from their servers. Preferred, because nothing here can go stale.
+ *   2. A rating a human read off the listing, drawn locally in the same shape
+ *      as the Trustpilot score beside it.
+ *   3. A plain "Find us on Product Hunt" link.
+ *
+ * The third is not a placeholder to be dressed up later — it is what the page
+ * is entitled to claim before anybody has read the listing.
  */
 export function ProductHuntBadge({ compact = false }: { compact?: boolean }) {
   const rated = hasProductHuntRating();
   const rating = Number(PRODUCT_HUNT.rating);
+
+  if (hasProductHuntEmbed()) {
+    return (
+      <a
+        className="mkt-ph__embed"
+        href={PRODUCT_HUNT.reviewUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <img
+          src={productHuntEmbedSrc()}
+          alt="TopEdge AI reviews on Product Hunt"
+          width={250}
+          height={54}
+          loading="lazy"
+          decoding="async"
+        />
+      </a>
+    );
+  }
 
   return (
     <a

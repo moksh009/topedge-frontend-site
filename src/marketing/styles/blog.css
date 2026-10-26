@@ -277,14 +277,16 @@
 }
 
 .mkt-blog-hero {
-  padding-top: calc(var(--marketing-nav-h) + 1.25rem);
+  /* --mkt-bar-h, not --marketing-nav-h: see the note beside it in
+     marketing.css. The full value reserves the announcement strip twice. */
+  padding-top: calc(var(--mkt-bar-h, 76px) + 1.25rem);
   padding-bottom: 0;
   border-bottom: none;
 }
 
 @media (min-width: 768px) {
   .mkt-blog-hero {
-    padding-top: calc(var(--marketing-nav-h) + 1.75rem);
+    padding-top: calc(var(--mkt-bar-h, 76px) + 1.6rem);
   }
 }
 

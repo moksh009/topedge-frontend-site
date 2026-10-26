@@ -62,6 +62,21 @@
   font-size: 0.8125rem;
 }
 
+/* Product Hunt's own review widget. It ships at 250x54 and carries its own
+   padding, so it is scaled to sit on the Trustpilot score's baseline rather
+   than given chrome of its own. */
+.mkt-ph__embed {
+  display: inline-flex;
+  flex: none;
+  line-height: 0;
+}
+
+.mkt-ph__embed img {
+  display: block;
+  width: auto;
+  height: 2.1rem;
+}
+
 /* ---------- the paired row ---------- */
 
 /*
