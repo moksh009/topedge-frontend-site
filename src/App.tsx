@@ -75,6 +75,15 @@ const JourneyExamplePage = React.lazy(() => import('./marketing/pages/JourneyExa
 const WhatsAppTemplatesPage = React.lazy(
   () => import('./marketing/pages/WhatsAppTemplatesPage'),
 );
+const ToolsIndexPage = React.lazy(() => import('./marketing/pages/tools/ToolsIndexPage'));
+const ToolFinderPage = React.lazy(() => import('./marketing/pages/tools/ToolFinderPage'));
+const RtoCalculatorPage = React.lazy(() => import('./marketing/pages/tools/RtoCalculatorPage'));
+const CartRecoveryCalculatorPage = React.lazy(
+  () => import('./marketing/pages/tools/CartRecoveryCalculatorPage'),
+);
+const WhatsAppLinkGeneratorPage = React.lazy(
+  () => import('./marketing/pages/tools/WhatsAppLinkGeneratorPage'),
+);
 const NotFoundPage = React.lazy(() => import('./marketing/pages/NotFoundPage'));
 const PrivacyPolicy = React.lazy(() => import('./pages/PrivacyPolicy'));
 
@@ -243,6 +252,11 @@ const AnimatedRoutes = () => {
             path="/shopify-whatsapp-integration"
             element={<SeoTopicPage slug="shopify-whatsapp-integration" />}
           />
+          <Route path="/tools" element={<ToolsIndexPage />} />
+          <Route path="/tools/best-whatsapp-tool-for-shopify" element={<ToolFinderPage />} />
+          <Route path="/tools/rto-cost-calculator" element={<RtoCalculatorPage />} />
+          <Route path="/tools/cart-recovery-calculator" element={<CartRecoveryCalculatorPage />} />
+          <Route path="/tools/whatsapp-link-generator" element={<WhatsAppLinkGeneratorPage />} />
           <Route path="/signup" element={<SignupRedirect />} />
           <Route path="/login" element={<LoginRedirect />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />

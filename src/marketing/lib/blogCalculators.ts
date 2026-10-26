@@ -281,9 +281,99 @@ const RTO_COST: Calculator = {
     'Cost bands from Amazon Shipping India’s RTO breakdown (₹180 to ₹240 direct) and ClickPost figures compiled by First Resort (₹450 to ₹900 fully loaded), national RTO rates from Unicommerce’s India D2C Report 2026, all read 21 October 2026. Message rate from Meta’s published India card. This models your inputs against published bands, it is not a forecast: your own courier mix and pincode spread move it.',
 };
 
+const CART_RECOVERY: Calculator = {
+  title: 'What WhatsApp cart recovery could win back',
+  lead: 'Put in your abandoned checkouts and order value to see the revenue a recovery sequence brings back, and the most the messages can cost.',
+  fields: [
+    {
+      key: 'carts',
+      label: 'Abandoned checkouts a month',
+      hint: 'Shopify admin → Orders → Abandoned checkouts',
+      value: 1000,
+      min: 0,
+      max: 200000,
+      step: 50,
+    },
+    {
+      key: 'aov',
+      label: 'Average order value (₹)',
+      hint: 'From Shopify analytics',
+      value: 1500,
+      min: 0,
+      max: 100000,
+      step: 50,
+    },
+    {
+      key: 'recovery',
+      label: 'Share of carts recovered',
+      hint: 'Your own estimate. Start low and check it against real orders after a month',
+      value: 10,
+      min: 0,
+      max: 100,
+      step: 0.5,
+      suffix: '%',
+    },
+    {
+      key: 'reminders',
+      label: 'Reminders per cart',
+      hint: 'Three over 72 hours is the usual sequence',
+      value: 3,
+      min: 1,
+      max: 3,
+      step: 1,
+    },
+  ],
+  compute: ({ carts, aov, recovery, reminders }) => {
+    const recovered = Math.round((carts * recovery) / 100);
+    const revenue = recovered * aov;
+    const messages = carts * reminders;
+    const cost = messages * META_INDIA.marketing;
+    const perRupee = cost > 0 ? revenue / cost : 0;
+
+    return {
+      rows: [
+        {
+          label: 'Carts recovered',
+          detail: `${recovery}% of ${count.format(carts)} abandoned checkouts`,
+          value: count.format(recovered),
+        },
+        {
+          label: 'Revenue recovered a month',
+          detail: `${count.format(recovered)} orders at ${money(aov)}`,
+          value: money(revenue),
+          strong: true,
+        },
+        {
+          label: 'Reminder messages, at most',
+          detail: `${reminders} per cart. Shoppers who buy or reply stop getting them, so the real number is lower`,
+          value: count.format(messages),
+        },
+        {
+          label: 'Meta message cost, at most',
+          detail: `Marketing templates at ${inrRate.format(META_INDIA.marketing)} each, at 0% markup, ex GST`,
+          value: money(cost),
+          strong: true,
+        },
+        {
+          label: 'Revenue for every ₹1 spent on messages',
+          detail: 'Recovered revenue divided by the maximum message cost',
+          value: perRupee ? `₹${perRupee.toFixed(perRupee >= 10 ? 0 : 1)}` : '—',
+        },
+      ],
+      verdict:
+        cost && revenue
+          ? `Recovering ${recovery}% of ${count.format(carts)} carts brings back about ${money(revenue)} a month, for at most ${money(cost)} in Meta message fees. The sequence pays for itself if it recovers ${Math.max(1, Math.ceil(cost / Math.max(aov, 1)))} order${Math.ceil(cost / Math.max(aov, 1)) === 1 ? '' : 's'}.`
+          : 'Put in your abandoned checkouts and order value to see the comparison.',
+    };
+  },
+  footnote:
+    'Marketing rate from Meta’s published India card, ₹0.8631 per delivered message, read 21 October 2026. Cart reminders are always marketing templates. The recovery share is your own estimate: we do not know of an independent benchmark for WhatsApp recovery rates in India that we would stand behind, so measure yours against real orders. Message cost assumes every reminder goes to every cart, so your real bill will be lower.',
+};
+
 const CALCULATORS: Record<string, Calculator> = {
   'whatsapp-bill': WHATSAPP_BILL,
   'rto-cost': RTO_COST,
+  'cart-recovery': CART_RECOVERY,
 };
 
 function el<K extends keyof HTMLElementTagNameMap>(

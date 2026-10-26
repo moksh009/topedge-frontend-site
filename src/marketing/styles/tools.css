@@ -1,0 +1,1114 @@
+/* Free tools: the tool finder quiz, the tool shell and the tools hub.
+   Built from marketing.css tokens; mobile first, because most visitors to a
+   free tool arrive from a phone. */
+
+/* ===================================================================
+   Tool finder
+   =================================================================== */
+
+.mkt-finder {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem;
+  border: 1px solid var(--mkt-border);
+  border-radius: 24px;
+  background: #ffffff;
+  box-shadow: 0 30px 60px -44px rgba(49, 28, 94, 0.45);
+  scroll-margin-top: calc(var(--marketing-nav-h, 96px) + 1rem);
+}
+
+.mkt-finder.is-done {
+  max-width: 64rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+}
+
+@media (min-width: 768px) {
+  .mkt-finder {
+    padding: 2.25rem 2.5rem;
+  }
+}
+
+/* ---------- intro ---------- */
+
+.mkt-finder__intro {
+  text-align: center;
+}
+
+.mkt-finder__intro-kicker {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.mkt-finder__intro-logos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem 1.25rem;
+  margin: 1.4rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mkt-finder__intro-logos li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.mkt-finder__logo {
+  display: inline-flex;
+  flex: none;
+  overflow: hidden;
+  border: 1px solid var(--mkt-border);
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.mkt-finder__logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mkt-finder__start {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.75rem;
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+}
+
+.mkt-finder__intro-note {
+  max-width: 28rem;
+  margin: 1.1rem auto 0;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: #94a3b8;
+}
+
+/* ---------- question ---------- */
+
+.mkt-finder__progress {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mkt-finder__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.3rem 0.5rem 0.3rem 0.2rem;
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  font: inherit;
+  font-size: 0.85rem;
+  color: #64748b;
+  cursor: pointer;
+}
+
+.mkt-finder__back:hover {
+  color: var(--mkt-ink);
+}
+
+.mkt-finder__count {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  font-variant-numeric: tabular-nums;
+}
+
+.mkt-finder__bar {
+  height: 4px;
+  margin-top: 0.7rem;
+  border-radius: 999px;
+  background: #f1eef9;
+  overflow: hidden;
+}
+
+.mkt-finder__bar span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--mkt-violet);
+  transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.mkt-finder__q {
+  margin: 1.6rem 0 0;
+  font-size: clamp(1.35rem, 3.4vw, 1.75rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  color: var(--mkt-ink);
+}
+
+.mkt-finder__help {
+  margin: 0.5rem 0 0;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: #64748b;
+}
+
+.mkt-finder__multi {
+  margin: 0.6rem 0 0;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--mkt-violet);
+}
+
+.mkt-finder__options {
+  display: grid;
+  gap: 0.6rem;
+  margin-top: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .mkt-finder__options {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.mkt-finder__opt {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 3.4rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--mkt-border);
+  border-radius: 14px;
+  background: #ffffff;
+  font: inherit;
+  font-size: 0.95rem;
+  text-align: left;
+  color: var(--mkt-ink);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mkt-finder__opt:hover:not(:disabled) {
+  border-color: #c4b5fd;
+}
+
+.mkt-finder__opt:focus-visible {
+  outline: 2px solid #c4b5fd;
+  outline-offset: 2px;
+}
+
+.mkt-finder__opt.is-on {
+  border-color: var(--mkt-violet);
+  background: #faf7ff;
+  box-shadow: 0 0 0 1px var(--mkt-violet) inset;
+}
+
+.mkt-finder__opt:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.mkt-finder__tick {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 1.3rem;
+  height: 1.3rem;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 999px;
+  color: #ffffff;
+}
+
+.mkt-finder__tick.is-square {
+  border-radius: 6px;
+}
+
+.mkt-finder__opt.is-on .mkt-finder__tick {
+  border-color: var(--mkt-violet);
+  background: var(--mkt-violet);
+}
+
+.mkt-finder__next {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 1.25rem;
+  border: 0;
+  font: inherit;
+  cursor: pointer;
+}
+
+.mkt-finder__next:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.mkt-finder__fact {
+  margin-top: 1.5rem;
+  padding: 1rem 1.15rem;
+  border-radius: 14px;
+  background: #faf9ff;
+  border: 1px solid #ebe5fc;
+}
+
+.mkt-finder__fact-label {
+  margin: 0;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mkt-violet);
+}
+
+.mkt-finder__fact-text {
+  margin: 0.35rem 0 0;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--mkt-ink);
+}
+
+.mkt-finder__fact-compare {
+  margin: 0.4rem 0 0;
+  font-size: 0.86rem;
+  line-height: 1.55;
+  color: #475569;
+}
+
+.mkt-finder__fact-src {
+  margin: 0.5rem 0 0;
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.mkt-finder__fact-src a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ---------- results ---------- */
+
+.mkt-finder__summary {
+  text-align: center;
+}
+
+.mkt-finder__eyebrow {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mkt-violet);
+}
+
+.mkt-finder__result-title {
+  margin: 0.6rem 0 0;
+  font-size: clamp(1.5rem, 3.6vw, 2.2rem);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  color: var(--mkt-ink);
+}
+
+.mkt-finder__result-title span {
+  padding: 0.02em 0.25em 0.08em;
+  border-radius: 0.35em;
+  background: #e4d4ff;
+  color: #2e1065;
+  white-space: nowrap;
+}
+
+.mkt-finder__chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4rem;
+  margin: 1.1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mkt-finder__chips li {
+  padding: 0.25rem 0.65rem;
+  border: 1px solid var(--mkt-border);
+  border-radius: 999px;
+  background: #ffffff;
+  font-size: 0.78rem;
+  color: #475569;
+}
+
+.mkt-finder__tools {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.35rem 1rem;
+  margin-top: 1rem;
+}
+
+.mkt-finder__tools button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.25rem;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--mkt-violet);
+  cursor: pointer;
+}
+
+.mkt-finder__tools button:hover {
+  text-decoration: underline;
+}
+
+.mkt-finder__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 1.25rem 1.3rem;
+  border: 1px solid var(--mkt-border);
+  border-radius: 20px;
+  background: #ffffff;
+}
+
+.mkt-finder__card.is-top {
+  margin-top: 2rem;
+  padding: 1.75rem 1.4rem 1.5rem;
+  border-color: #c4b5fd;
+  box-shadow: 0 30px 60px -40px rgba(76, 29, 149, 0.5);
+}
+
+@media (min-width: 768px) {
+  .mkt-finder__card.is-top {
+    padding: 2rem 2.25rem 1.75rem;
+  }
+}
+
+.mkt-finder__card.is-blocked {
+  background: #fbfbfd;
+}
+
+.mkt-finder__card.is-blocked .mkt-finder__card-head,
+.mkt-finder__card.is-blocked .mkt-finder__pick {
+  opacity: 0.7;
+}
+
+.mkt-finder__ribbon {
+  position: absolute;
+  top: -0.8rem;
+  left: 1.3rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  background: var(--mkt-violet);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.mkt-finder__card-head {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.mkt-finder__card-title h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--mkt-ink);
+}
+
+.mkt-finder__card.is-top .mkt-finder__card-title h3 {
+  font-size: 1.35rem;
+}
+
+.mkt-finder__card-title p {
+  margin: 0.15rem 0 0;
+  font-size: 0.82rem;
+  color: #64748b;
+}
+
+.mkt-finder__match {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.mkt-finder__match-track {
+  flex: 1 1 auto;
+  height: 8px;
+  border-radius: 999px;
+  background: #f1eef9;
+  overflow: hidden;
+}
+
+.mkt-finder__match-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #a78bfa, #7c3aed);
+}
+
+.mkt-finder__match-num {
+  flex: none;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--mkt-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.mkt-finder__card.is-blocked .mkt-finder__match-num {
+  color: #94a3b8;
+}
+
+.mkt-finder__pick {
+  margin: 0.9rem 0 0;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: #475569;
+}
+
+.mkt-finder__pick b {
+  font-weight: 600;
+  color: var(--mkt-ink);
+}
+
+.mkt-finder__list {
+  display: grid;
+  gap: 0.45rem;
+  margin: 0.9rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mkt-finder__list li {
+  position: relative;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: #334155;
+}
+
+.mkt-finder__list.is-good li {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.mkt-finder__list.is-good svg {
+  flex: none;
+  margin-top: 0.15rem;
+  color: #059669;
+}
+
+.mkt-finder__keep {
+  margin-top: 0.9rem;
+  padding: 0.75rem 0.9rem;
+  border-radius: 12px;
+  background: #fffbeb;
+}
+
+.mkt-finder__keep > p {
+  margin: 0;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #b45309;
+}
+
+.mkt-finder__keep .mkt-finder__list {
+  margin-top: 0.4rem;
+}
+
+.mkt-finder__list.is-warn li {
+  padding-left: 0.85rem;
+  color: #78350f;
+}
+
+.mkt-finder__list.is-warn li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.6rem;
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: #d97706;
+}
+
+.mkt-finder__plan {
+  margin: 1rem 0 0;
+  padding: 0.75rem 0.9rem;
+  border-radius: 12px;
+  background: #f5f3ff;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: #3b0764;
+}
+
+.mkt-finder__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 1.1rem;
+  margin-top: auto;
+  padding-top: 1.1rem;
+}
+
+.mkt-finder__actions .mkt-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.mkt-finder__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--mkt-violet);
+  text-decoration: none;
+}
+
+.mkt-finder__link:hover {
+  text-decoration: underline;
+}
+
+.mkt-finder__sub {
+  margin: 2.75rem 0 0;
+  font-size: 1.25rem;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  color: var(--mkt-ink);
+}
+
+.mkt-finder__grid {
+  display: grid;
+  gap: 0.9rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 768px) {
+  .mkt-finder__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ---------- side-by-side table ---------- */
+
+.mkt-finder__table {
+  margin-top: 1rem;
+  border: 1px solid var(--mkt-border);
+  border-radius: 18px;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+.mkt-finder__tr {
+  display: grid;
+  border-bottom: 1px solid var(--mkt-border);
+}
+
+.mkt-finder__tr:last-child {
+  border-bottom: 0;
+}
+
+.mkt-finder__tr.is-head {
+  background: #faf9ff;
+}
+
+.mkt-finder__th,
+.mkt-finder__rh,
+.mkt-finder__td {
+  padding: 0.85rem 1rem;
+  font-size: 0.84rem;
+  line-height: 1.5;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.mkt-finder__th {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: var(--mkt-ink);
+}
+
+.mkt-finder__th .mkt-finder__logo {
+  border-radius: 8px;
+}
+
+.mkt-finder__rh {
+  font-weight: 500;
+  color: var(--mkt-ink);
+}
+
+.mkt-finder__td {
+  color: #475569;
+}
+
+.mkt-finder__td.is-us {
+  background: #faf7ff;
+  color: #3b0764;
+}
+
+.mkt-finder__fine {
+  margin: 0.9rem 0 0;
+  font-size: 0.78rem;
+  line-height: 1.6;
+  color: #94a3b8;
+}
+
+.mkt-finder__fine a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+/* A four-column table cannot be read on a phone, so each row becomes its own
+   card with the vendor name printed before each cell. */
+@media (max-width: 767px) {
+  .mkt-finder__table {
+    border: 0;
+    background: none;
+    overflow: visible;
+  }
+
+  .mkt-finder__tr {
+    display: block;
+    margin-bottom: 0.75rem;
+    border: 1px solid var(--mkt-border);
+    border-radius: 16px;
+    background: #ffffff;
+    overflow: hidden;
+  }
+
+  .mkt-finder__table .mkt-finder__tr.is-head {
+    display: none;
+  }
+
+  .mkt-finder__rh {
+    display: block;
+    padding-bottom: 0.4rem;
+    background: #faf9ff;
+    font-size: 0.9rem;
+  }
+
+  .mkt-finder__td {
+    display: block;
+    padding: 0.6rem 1rem;
+    border-top: 1px solid #f4f2fa;
+  }
+
+  .mkt-finder__td::before {
+    content: attr(data-vendor);
+    display: block;
+    margin-bottom: 0.15rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #94a3b8;
+  }
+}
+
+/* ===================================================================
+   Tool pages: shared shell pieces
+   =================================================================== */
+
+.mkt-tool {
+  max-width: 52rem;
+  margin: 0 auto;
+}
+
+.mkt-tool__privacy {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  margin: 1rem 0 0;
+  font-size: 0.8rem;
+  color: #64748b;
+  text-align: center;
+}
+
+/* Related tools strip at the foot of every tool page. */
+.mkt-tools-grid {
+  display: grid;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 640px) {
+  .mkt-tools-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .mkt-tools-grid.is-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.mkt-tools-grid > li {
+  display: flex;
+}
+
+.mkt-tool-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 1.4rem 1.45rem;
+  border: 1px solid var(--mkt-border);
+  border-radius: 20px;
+  background: #ffffff;
+  text-decoration: none;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+.mkt-tool-card:hover {
+  border-color: #c4b5fd;
+  box-shadow: 0 18px 38px -28px rgba(76, 29, 149, 0.5);
+  transform: translateY(-2px);
+}
+
+.mkt-tool-card.is-feature {
+  background: linear-gradient(135deg, #faf7ff 0%, #f1ebff 100%);
+  border-color: #ddd6fe;
+}
+
+.mkt-tool-card__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 12px;
+  background: var(--mkt-violet-light);
+  color: var(--mkt-violet);
+}
+
+.mkt-tool-card.is-feature .mkt-tool-card__icon {
+  background: #ffffff;
+}
+
+.mkt-tool-card__tag {
+  align-self: flex-start;
+  margin-top: 1rem;
+  padding: 0.18rem 0.55rem;
+  border-radius: 999px;
+  background: #ecfdf5;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #047857;
+}
+
+.mkt-tool-card__title {
+  margin-top: 0.6rem;
+  font-size: 1.12rem;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--mkt-ink);
+}
+
+.mkt-tool-card__body {
+  flex: 1 1 auto;
+  margin-top: 0.4rem;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: #64748b;
+}
+
+.mkt-tool-card__cta {
+  margin-top: 1rem;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--mkt-violet);
+}
+
+/* ===================================================================
+   WhatsApp link generator
+   =================================================================== */
+
+.mkt-wlg {
+  display: grid;
+  gap: 1.25rem;
+  padding: 1.4rem 1.25rem;
+  border: 1px solid var(--mkt-border);
+  border-radius: 24px;
+  background: #ffffff;
+  box-shadow: 0 30px 60px -44px rgba(49, 28, 94, 0.45);
+}
+
+@media (min-width: 900px) {
+  .mkt-wlg {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: 2rem;
+    padding: 2rem 2.25rem;
+  }
+}
+
+.mkt-wlg__field {
+  display: block;
+  margin-top: 1rem;
+}
+
+.mkt-wlg__field:first-child {
+  margin-top: 0;
+}
+
+.mkt-wlg__label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--mkt-ink);
+}
+
+.mkt-wlg__phone {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.mkt-wlg input,
+.mkt-wlg select,
+.mkt-wlg textarea {
+  width: 100%;
+  min-width: 0;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: #ffffff;
+  font: inherit;
+  font-size: 0.95rem;
+  color: var(--mkt-ink);
+}
+
+.mkt-wlg select {
+  flex: 0 0 7.5rem;
+  width: 7.5rem;
+}
+
+.mkt-wlg textarea {
+  min-height: 6.5rem;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.mkt-wlg input:focus,
+.mkt-wlg select:focus,
+.mkt-wlg textarea:focus {
+  outline: none;
+  border-color: #a78bfa;
+  box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.25);
+}
+
+.mkt-wlg__hint {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 0.78rem;
+  color: #94a3b8;
+}
+
+.mkt-wlg__hint.is-error {
+  color: #dc2626;
+}
+
+.mkt-wlg__presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.55rem;
+}
+
+.mkt-wlg__presets button {
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--mkt-border);
+  border-radius: 999px;
+  background: #ffffff;
+  font: inherit;
+  font-size: 0.78rem;
+  color: #475569;
+  cursor: pointer;
+}
+
+.mkt-wlg__presets button:hover {
+  border-color: #c4b5fd;
+  color: var(--mkt-ink);
+}
+
+.mkt-wlg__out {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.25rem;
+  border-radius: 18px;
+  background: #faf9ff;
+  border: 1px solid #ebe5fc;
+}
+
+.mkt-wlg__out-label {
+  margin: 0;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mkt-violet);
+}
+
+.mkt-wlg__link {
+  margin: 0.35rem 0 0;
+  padding: 0.65rem 0.8rem;
+  border-radius: 10px;
+  background: #ffffff;
+  border: 1px solid var(--mkt-border);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: #3b0764;
+  overflow-wrap: anywhere;
+}
+
+.mkt-wlg__btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.mkt-wlg__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 0.95rem;
+  border: 1px solid var(--mkt-border);
+  border-radius: 999px;
+  background: #ffffff;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--mkt-ink);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.mkt-wlg__btn:hover {
+  border-color: #c4b5fd;
+}
+
+.mkt-wlg__btn.is-primary {
+  border-color: var(--mkt-violet);
+  background: var(--mkt-violet);
+  color: #ffffff;
+}
+
+.mkt-wlg__btn:disabled,
+.mkt-wlg__btn[aria-disabled='true'] {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.mkt-wlg__qr {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.mkt-wlg__qr-box {
+  flex: none;
+  width: 8.5rem;
+  height: 8.5rem;
+  padding: 0.5rem;
+  border-radius: 14px;
+  background: #ffffff;
+  border: 1px solid var(--mkt-border);
+}
+
+.mkt-wlg__qr-box svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.mkt-wlg__qr-text {
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: #64748b;
+}
+
+.mkt-wlg__code {
+  margin: 0.5rem 0 0;
+  max-height: 12rem;
+  padding: 0.9rem 1rem;
+  overflow: auto;
+  border-radius: 12px;
+  background: #0f0a1f;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.74rem;
+  line-height: 1.55;
+  color: #e9e3ff;
+  white-space: pre;
+}
+
+.mkt-wlg__snippet {
+  margin-top: 1.75rem;
+  padding: 1.4rem 1.25rem;
+  border: 1px solid var(--mkt-border);
+  border-radius: 20px;
+  background: #ffffff;
+}
+
+@media (min-width: 768px) {
+  .mkt-wlg__snippet {
+    padding: 1.75rem 2rem;
+  }
+}
+
+.mkt-wlg__snippet h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--mkt-ink);
+}
+
+.mkt-wlg__snippet ol {
+  margin: 0.75rem 0 0;
+  padding-left: 1.2rem;
+  list-style: decimal;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: #475569;
+}
+
+.mkt-wlg__snippet-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 1.1rem;
+}
+
+.mkt-wlg__snippet-head p {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--mkt-ink);
+}

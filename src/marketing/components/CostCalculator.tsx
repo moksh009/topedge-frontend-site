@@ -14,7 +14,7 @@ export default function CostCalculator({
   calc,
   children,
 }: {
-  calc: 'whatsapp-bill' | 'rto-cost';
+  calc: 'whatsapp-bill' | 'rto-cost' | 'cart-recovery';
   children: ReactNode;
 }) {
   const ref = useRef<HTMLDivElement>(null);

@@ -10,6 +10,7 @@ import {
   COMPANY_SOCIAL,
   COMPANY_WHATSAPP_URL,
 } from '../legal/companyIdentity';
+import { FREE_TOOLS, TOOLS_PATH } from '../data/freeTools';
 
 /** The Meta and Shopify badges each link to the programme they name; this is
  *  the equivalent page for the third.
@@ -62,6 +63,17 @@ const columns: { title: string; links: FootLink[] }[] = [
       { label: 'Integrations', href: '/integrations' },
       { label: 'Meta India rate card', href: '/pricing/meta-rates' },
       { label: 'All playbooks', href: '/blog' },
+    ],
+  },
+  {
+    title: 'Free tools',
+    links: [
+      ...FREE_TOOLS.map((t) => ({
+        label: t.short,
+        href: t.href,
+        ...(t.feature ? { badge: 'New' } : {}),
+      })),
+      { label: 'All free tools', href: TOOLS_PATH },
     ],
   },
   {
