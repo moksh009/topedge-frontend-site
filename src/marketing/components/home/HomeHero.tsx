@@ -93,10 +93,11 @@ export default function HomeHero() {
               </div>
 
               <div className="home-hero__trust">
-                <HomeTrust onStage />
-                {/* The logo strip says who uses it; this says where that can be
-                    checked. Both belong to the same claim, so they sit together. */}
+                {/* Above the logos, not below: the scores are the claim a
+                    stranger can check, and the logo strip is the evidence for
+                    it. Reading order follows that. */}
                 <ProofBadges compact className="home-hero__ratings" />
+                <HomeTrust onStage />
               </div>
             </div>
 

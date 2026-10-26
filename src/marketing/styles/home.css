@@ -5962,5 +5962,100 @@ html body .home-sticky .home-sticky__static-copy .home-sticky__body {
   transform: translateX(-50%);
   width: max-content;
   max-width: calc(100vw - 2rem);
-  margin-top: 0.9rem;
+  margin: 0 0 1rem;
+}
+
+/* On a phone the strip stacks into two rows inside the pill, and at full
+   size that block is taller than the logo strip it introduces. */
+@media (max-width: 640px) {
+  .home-hero__ratings {
+    margin-bottom: 0.85rem;
+    padding: 0.4rem 0.75rem;
+    border-radius: 14px;
+    gap: 0.3rem;
+  }
+
+  .home-hero__ratings .mkt-tp__score-text,
+  .home-hero__ratings .mkt-ph__text {
+    font-size: 0.75rem;
+  }
+
+  .home-hero__ratings .mkt-tp__count,
+  .home-hero__ratings .mkt-ph__count {
+    font-size: 0.7rem;
+  }
+
+  .home-hero__ratings .mkt-tp__star {
+    width: 13px;
+    height: 13px;
+  }
+
+  .home-hero__ratings .mkt-ph__star {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+/* ---------- testimonials: published reviews ---------- */
+
+/*
+ * A quote published on a review site carries the platform's lockup where a
+ * merchant's logo would otherwise sit, and says so again in the footer. Both
+ * are deliberately quiet: the point is that the words can be checked, not
+ * that another brand is on the card.
+ */
+.home-voices__src {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #191919;
+}
+
+.home-voices__src svg {
+  display: block;
+  flex: none;
+}
+
+.home-voices__verified {
+  flex-shrink: 0;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  color: #64748b;
+  white-space: nowrap;
+}
+
+/* The scores under the section heading: where the reviews below can be read. */
+.home-voices__proof {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.1rem;
+}
+
+/* Sized to its content; the head is 40rem and the strip is a little wider,
+   so it is allowed to overhang rather than wrap. */
+.home-voices__proof .mkt-proof-row {
+  width: max-content;
+  max-width: calc(100vw - 2rem);
+}
+
+@media (max-width: 640px) {
+  .home-voices__proof .mkt-proof-row {
+    padding: 0.4rem 0.75rem;
+    gap: 0.3rem;
+  }
+
+  .home-voices__proof .mkt-tp__score-text,
+  .home-voices__proof .mkt-ph__text {
+    font-size: 0.75rem;
+  }
+
+  .home-voices__proof .mkt-tp__count,
+  .home-voices__proof .mkt-ph__count {
+    font-size: 0.7rem;
+  }
 }

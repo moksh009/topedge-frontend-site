@@ -86,11 +86,18 @@
  */
 .mkt-proof-row {
   display: inline-flex;
-  flex-wrap: wrap;
+  /*
+   * No wrapping above the stacking breakpoint. Wrapping left the divider
+   * stranded at the end of the first line wherever the container was a few
+   * pixels short — a 40rem section head, a 36rem hero column — and a media
+   * query cannot see those containers. Below 560px it becomes a column with
+   * a horizontal rule instead, which is the only place a break belongs.
+   */
+  flex-wrap: nowrap;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem 0.9rem;
-  padding: 0.45rem 0.95rem;
+  gap: 0.5rem 0.7rem;
+  padding: 0.45rem 0.85rem;
   border: 1px solid var(--mkt-border, #e8e6f0);
   border-radius: 999px;
   background: #ffffff;
@@ -105,6 +112,7 @@
 
 @media (max-width: 560px) {
   .mkt-proof-row {
+    flex-wrap: wrap;
     flex-direction: column;
     align-items: center;
     gap: 0.45rem;

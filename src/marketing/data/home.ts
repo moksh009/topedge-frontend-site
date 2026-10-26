@@ -146,6 +146,15 @@ export const howItWorks = [
   },
 ];
 
+/**
+ * Home testimonials.
+ *
+ * `source` says where the words came from, and the card shows it: 'direct'
+ * for a quote given to us, 'trustpilot' for one published under the author's
+ * name on Trustpilot. The Trustpilot entries are appended at runtime from
+ * socialProof.json (see homeTestimonials.ts) rather than copied here, so
+ * there is one copy of each published review and it stays verbatim.
+ */
 export const testimonials = [
   {
     quote:
@@ -158,6 +167,7 @@ export const testimonials = [
     brandLogoAlt: 'Delitech Smart Home',
     metric: 'Same-week go-live',
     tone: 'violet' as const,
+    source: 'direct' as const,
   },
   {
     quote:
@@ -170,6 +180,7 @@ export const testimonials = [
     brandLogoAlt: 'Apex Light',
     metric: 'Inbox + orders',
     tone: 'amber' as const,
+    source: 'direct' as const,
   },
 ];
 

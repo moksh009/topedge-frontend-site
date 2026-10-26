@@ -94,14 +94,14 @@ export default function ToolPageLayout({
         </Section>
 
         <Section>
-          <SectionHeading title="Questions teams ask" center />
+          <SectionHeading title="Questions teams ask" accent="teams ask" />
           <div className="mx-auto max-w-3xl">
             <FaqAccordion items={faqs} />
           </div>
         </Section>
 
         <Section wash="soft">
-          <SectionHeading title="More free tools" center />
+          <SectionHeading title="More free tools" accent="free tools" />
           <div className="mx-auto max-w-5xl">
             <ToolCards tools={otherTools(slug).slice(0, 3)} columns={3} />
           </div>

@@ -101,7 +101,7 @@ export default function JourneyExamplePage({ slug }: { slug: string }) {
         </Section>
 
         <Section>
-          <SectionHeading title="Questions teams ask" center />
+          <SectionHeading title="Questions teams ask" accent="teams ask" />
           <div className="mx-auto max-w-3xl">
             <FaqAccordion items={j.faqs} />
           </div>
@@ -110,8 +110,8 @@ export default function JourneyExamplePage({ slug }: { slug: string }) {
         <Section wash="soft">
           <SectionHeading
             title="Other journeys"
+            accent="journeys"
             subtitle="More ready-made automations for your Shopify store."
-            center
           />
           <ul className="mx-auto grid max-w-5xl gap-4 md:grid-cols-3">
             {siblings.map((s) => (

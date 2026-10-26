@@ -55,6 +55,7 @@ const BLOCKS: TopicBlock[] = [
     kind: 'steps',
     id: 'how-we-score',
     h2: 'How the finder scores',
+    accent: 'finder scores',
     intro: 'The same rules apply to every tool, including ours.',
     steps: [
       {
@@ -75,6 +76,7 @@ const BLOCKS: TopicBlock[] = [
     kind: 'checklist',
     id: 'what-to-check',
     h2: 'What to check before you buy',
+    accent: 'before you buy',
     doLabel: 'Ask every vendor',
     dontLabel: 'Watch out for',
     doItems: [
@@ -137,7 +139,7 @@ export default function ToolFinderPage() {
         </Section>
 
         <Section>
-          <SectionHeading title="Questions teams ask" center />
+          <SectionHeading title="Questions teams ask" accent="teams ask" />
           <div className="mx-auto max-w-3xl">
             <FaqAccordion items={FAQS} />
           </div>
@@ -162,7 +164,7 @@ export default function ToolFinderPage() {
         </Section>
 
         <Section wash="soft">
-          <SectionHeading title="More free tools" center />
+          <SectionHeading title="More free tools" accent="free tools" />
           <div className="mx-auto max-w-5xl">
             <ToolCards tools={otherTools('best-whatsapp-tool-for-shopify').slice(0, 3)} columns={3} />
           </div>

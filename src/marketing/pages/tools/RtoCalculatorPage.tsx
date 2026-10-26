@@ -30,6 +30,7 @@ const BLOCKS: TopicBlock[] = [
     kind: 'figures',
     id: 'numbers',
     h2: 'Where these numbers come from',
+    accent: 'numbers come from',
     figures: [
       {
         value: '₹180 to ₹240',
@@ -52,6 +53,7 @@ const BLOCKS: TopicBlock[] = [
     kind: 'steps',
     id: 'cut-rto',
     h2: 'Three ways to cut RTO this month',
+    accent: 'cut RTO',
     steps: [
       {
         title: 'Confirm every COD order before you pack it',

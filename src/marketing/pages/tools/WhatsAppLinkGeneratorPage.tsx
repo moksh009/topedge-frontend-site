@@ -35,6 +35,7 @@ const BLOCKS: TopicBlock[] = [
     kind: 'steps',
     id: 'where',
     h2: 'Where to put the link',
+    accent: 'put the link',
     steps: [
       { title: 'Product pages', body: 'A “Questions? Chat with us” link next to the Add to cart button answers doubts before they turn into an abandoned cart.' },
       { title: 'Order confirmation emails', body: 'One link for “where is my order” and address changes, so customers do not have to find your number.' },

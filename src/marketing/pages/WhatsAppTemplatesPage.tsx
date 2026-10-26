@@ -283,7 +283,7 @@ export default function WhatsAppTemplatesPage() {
         </Section>
 
         <Section>
-          <SectionHeading title="Questions teams ask" center />
+          <SectionHeading title="Questions teams ask" accent="teams ask" />
           <div className="mx-auto max-w-3xl">
             <FaqAccordion items={FAQS} />
           </div>

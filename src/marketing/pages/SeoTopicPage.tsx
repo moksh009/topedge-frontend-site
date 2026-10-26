@@ -85,8 +85,8 @@ export default function SeoTopicPage({ slug }: Props) {
         <Section wash="soft">
           <SectionHeading
             title="What you can run"
+            accent="can run"
             subtitle="Practical WhatsApp ecommerce automation on Shopify, the moment the two are connected."
-            center
           />
           <ul className="mx-auto grid max-w-4xl gap-4 md:grid-cols-2">
             {topic.bullets.map((b) => (
@@ -132,14 +132,14 @@ export default function SeoTopicPage({ slug }: Props) {
         )}
 
         <Section wash="soft">
-          <SectionHeading title="Questions teams ask" />
+          <SectionHeading title="Questions teams ask" accent="teams ask" />
           <div className="mx-auto max-w-3xl">
             <FaqAccordion items={topic.faqs} />
           </div>
         </Section>
 
         <Section>
-          <SectionHeading title="Related pages" subtitle="Keep exploring WhatsApp automation for Shopify." />
+          <SectionHeading title="Related pages" accent="Related" subtitle="Keep exploring WhatsApp automation for Shopify." />
           <ul className="mx-auto flex max-w-3xl flex-wrap gap-3">
             {topic.related.map((r) => (
               <li key={r.href}>

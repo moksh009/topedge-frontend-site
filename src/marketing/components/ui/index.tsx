@@ -111,16 +111,42 @@ export function Section({
   );
 }
 
+/**
+ * Splits `title` on `accent` so one phrase carries the lilac highlight the
+ * homepage h2s use. Falls back to the plain title when the phrase is not
+ * found, rather than rendering a half-matched span.
+ */
+function withAccent(title: string, accent?: string) {
+  if (!accent) return title;
+  const i = title.indexOf(accent);
+  if (i < 0) return title;
+  return (
+    <>
+      {title.slice(0, i)}
+      <span className="mkt-hl">{accent}</span>
+      {title.slice(i + accent.length)}
+    </>
+  );
+}
+
 export function SectionHeading({
   eyebrow,
   title,
+  accent,
   subtitle,
-  center,
+  center = true,
   className,
 }: {
   eyebrow?: string;
   title: string;
+  /** Phrase inside `title` to highlight, as on the homepage section heads. */
+  accent?: string;
   subtitle?: string;
+  /**
+   * Centred by default. Every section on these pages centres its heading and
+   * the cards below it are centred too, so a left-set h2 over a centred grid
+   * read as a mistake on the pages that forgot to pass it.
+   */
   center?: boolean;
   className?: string;
 }) {
@@ -128,10 +154,17 @@ export function SectionHeading({
     <div className={cn('mb-8 max-w-3xl', center && 'mx-auto text-center', className)}>
       {eyebrow && <Eyebrow className={center ? 'text-center' : undefined}>{eyebrow}</Eyebrow>}
       <h2 className="mkt-display mt-2.5 text-[1.6rem] font-normal tracking-tight text-[#0c1222] md:text-[2rem]">
-        {title}
+        {withAccent(title, accent)}
       </h2>
       {subtitle && (
-        <p className="mt-4 max-w-3xl text-base leading-snug text-slate-500 md:text-lg">{subtitle}</p>
+        <p
+          className={cn(
+            'mt-4 max-w-3xl text-base leading-snug text-slate-500 md:text-lg',
+            center && 'mx-auto',
+          )}
+        >
+          {subtitle}
+        </p>
       )}
     </div>
   );

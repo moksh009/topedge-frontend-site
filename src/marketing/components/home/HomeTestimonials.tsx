@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { testimonials } from '../../data/home';
+import { homeTestimonials, type HomeTestimonial } from '../../data/homeTestimonials';
+import ProofBadges from '../ProofBadges';
 
 const CYCLE_MS = 5000;
 const SIDE_MS = 520;
@@ -24,13 +25,33 @@ const SIDE_POSE = {
 };
 
 type Phase = 'idle' | 'side' | 'swap';
-type Testimonial = (typeof testimonials)[number];
+type Testimonial = HomeTestimonial;
 type Pose = { x: number; y: number; rotate: number; scale: number; opacity: number };
 
 const EASE_OUT = [0.22, 1, 0.36, 1] as const;
 const EASE_INOUT = [0.4, 0, 0.2, 1] as const;
 
+/**
+ * The mark at the top of a card: the merchant's logo for a quote given to us,
+ * the platform's lockup for one published on a review site. A published review
+ * has an author but no employer, so there is no company mark to show and the
+ * useful thing to name is where it can be read.
+ */
 function BrandMark({ item }: { item: Testimonial }) {
+  if (item.source === 'trustpilot') {
+    return (
+      <span className="home-voices__src">
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden>
+          <path
+            d="M12 1.6l3.1 7.2 7.8.6-5.9 5.1 1.8 7.6L12 18l-6.8 4.1 1.8-7.6L1.1 9.4l7.8-.6z"
+            fill="#00b67a"
+          />
+        </svg>
+        Trustpilot
+      </span>
+    );
+  }
+
   return (
     <img
       className={`home-voices__brand-logo home-voices__brand-logo--${item.tone}`}
@@ -174,20 +195,24 @@ function TestimonialCard({
             <em>{item.role}</em>
           </span>
         </div>
-        <div className="home-voices__biz">
-          <img
-            src="/brand-mark.png"
-            alt=""
-            aria-hidden
-            width={22}
-            height={22}
-            loading="lazy"
-            decoding="async"
-          />
-          <span className="home-voices__biz-name">
-            TopEdge <span>AI</span>
-          </span>
-        </div>
+        {item.source === 'trustpilot' ? (
+          <span className="home-voices__verified">Verified on Trustpilot</span>
+        ) : (
+          <div className="home-voices__biz">
+            <img
+              src="/brand-mark.png"
+              alt=""
+              aria-hidden
+              width={22}
+              height={22}
+              loading="lazy"
+              decoding="async"
+            />
+            <span className="home-voices__biz-name">
+              TopEdge <span>AI</span>
+            </span>
+          </div>
+        )}
       </footer>
     </motion.article>
   );
@@ -200,7 +225,7 @@ function TestimonialCard({
  */
 export default function HomeTestimonials({ hideHeader = false }: { hideHeader?: boolean }) {
   const reduceMotion = useReducedMotion();
-  const [order, setOrder] = useState(() => testimonials.map((_, i) => i));
+  const [order, setOrder] = useState(() => homeTestimonials.map((_, i) => i));
   const [phase, setPhase] = useState<Phase>('idle');
   const [exitingId, setExitingId] = useState<number | null>(null);
   const [threadKey, setThreadKey] = useState(0);
@@ -209,7 +234,7 @@ export default function HomeTestimonials({ hideHeader = false }: { hideHeader?: 
   const busyRef = useRef(false);
 
   useEffect(() => {
-    if (reduceMotion || testimonials.length < 2) return undefined;
+    if (reduceMotion || homeTestimonials.length < 2) return undefined;
 
     let sideTimer: number | undefined;
     let swapTimer: number | undefined;
@@ -260,14 +285,18 @@ export default function HomeTestimonials({ hideHeader = false }: { hideHeader?: 
               <span className="home-voices__hl">we work with</span>
             </h2>
             <p className="home-voices__sub">
-              Indian D2C operators on what changed after they switched.
+              Indian D2C operators on what changed after they switched, and the
+              reviews they published afterwards.
             </p>
+            <div className="home-voices__proof">
+              <ProofBadges compact />
+            </div>
           </header>
         )}
 
         <div className="home-voices__stage">
           {visible.map((itemIndex, stackPos) => {
-            const item = testimonials[itemIndex];
+            const item = homeTestimonials[itemIndex];
             const isExiting = exitingId === itemIndex;
 
             let pose: Pose = POSES[stackPos];

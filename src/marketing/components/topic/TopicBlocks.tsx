@@ -18,11 +18,13 @@ import '../../styles/topic-blocks.css';
  */
 
 export type TopicBlock =
-  | { kind: 'prose'; id: string; h2: string; body: string | string[] }
+  | { kind: 'prose'; id: string; h2: string; accent?: string; body: string | string[] }
   | {
       kind: 'specTable';
       id: string;
       h2: string;
+      /** Phrase inside `h2` to highlight, as on the homepage. */
+      accent?: string;
       intro?: string;
       /** First column is the row label; the rest are value columns. */
       columns: string[];
@@ -35,6 +37,8 @@ export type TopicBlock =
       kind: 'steps';
       id: string;
       h2: string;
+      /** Phrase inside `h2` to highlight, as on the homepage. */
+      accent?: string;
       intro?: string;
       steps: { title: string; body: string; meta?: string }[];
     }
@@ -42,6 +46,8 @@ export type TopicBlock =
       kind: 'figures';
       id: string;
       h2: string;
+      /** Phrase inside `h2` to highlight, as on the homepage. */
+      accent?: string;
       intro?: string;
       figures: { value: string; label: string; source: SourceId }[];
     }
@@ -49,6 +55,8 @@ export type TopicBlock =
       kind: 'checklist';
       id: string;
       h2: string;
+      /** Phrase inside `h2` to highlight, as on the homepage. */
+      accent?: string;
       intro?: string;
       doLabel?: string;
       dontLabel?: string;
@@ -172,13 +180,30 @@ function SpecTable({ block }: { block: Extract<TopicBlock, { kind: 'specTable' }
   );
 }
 
+/**
+ * A block heading, with one phrase optionally carrying the lilac highlight
+ * the homepage h2s use. Falls back to the plain string when the phrase is
+ * not present, rather than rendering a half-matched span.
+ */
+function BlockHeading({ h2, accent }: { h2: string; accent?: string }) {
+  const i = accent ? h2.indexOf(accent) : -1;
+  if (!accent || i < 0) return <h2 className="mkt-blk__h2">{h2}</h2>;
+  return (
+    <h2 className="mkt-blk__h2">
+      {h2.slice(0, i)}
+      <span className="mkt-hl">{accent}</span>
+      {h2.slice(i + accent.length)}
+    </h2>
+  );
+}
+
 export function TopicBlockView({ block }: { block: TopicBlock }) {
   switch (block.kind) {
     case 'prose': {
       const paras = Array.isArray(block.body) ? block.body : [block.body];
       return (
         <section id={block.id} className="mkt-blk">
-          <h2 className="mkt-blk__h2">{block.h2}</h2>
+          <BlockHeading h2={block.h2} accent={block.accent} />
           {paras.map((p, i) => (
             <p key={i} className={`mkt-blk__body${i === 0 ? ' mkt-blk__body--lede' : ''}`}>
               {renderInline(p)}
@@ -191,7 +216,7 @@ export function TopicBlockView({ block }: { block: TopicBlock }) {
     case 'specTable':
       return (
         <section id={block.id} className="mkt-blk">
-          <h2 className="mkt-blk__h2">{block.h2}</h2>
+          <BlockHeading h2={block.h2} accent={block.accent} />
           {block.intro && <p className="mkt-blk__intro">{block.intro}</p>}
           <SpecTable block={block} />
           {block.footnote && <p className="mkt-spec__footnote">{block.footnote}</p>}
@@ -201,7 +226,7 @@ export function TopicBlockView({ block }: { block: TopicBlock }) {
     case 'steps':
       return (
         <section id={block.id} className="mkt-blk">
-          <h2 className="mkt-blk__h2">{block.h2}</h2>
+          <BlockHeading h2={block.h2} accent={block.accent} />
           {block.intro && <p className="mkt-blk__intro">{block.intro}</p>}
           <ol className="mkt-steps">
             {block.steps.map((s, i) => (
@@ -223,7 +248,7 @@ export function TopicBlockView({ block }: { block: TopicBlock }) {
     case 'figures':
       return (
         <section id={block.id} className="mkt-blk">
-          <h2 className="mkt-blk__h2">{block.h2}</h2>
+          <BlockHeading h2={block.h2} accent={block.accent} />
           {block.intro && <p className="mkt-blk__intro">{block.intro}</p>}
           <ul className="mkt-figs">
             {block.figures.map((f) => (
@@ -240,7 +265,7 @@ export function TopicBlockView({ block }: { block: TopicBlock }) {
     case 'checklist':
       return (
         <section id={block.id} className="mkt-blk">
-          <h2 className="mkt-blk__h2">{block.h2}</h2>
+          <BlockHeading h2={block.h2} accent={block.accent} />
           {block.intro && <p className="mkt-blk__intro">{block.intro}</p>}
           <div className="mkt-check">
             <div className="mkt-check__col mkt-check__col--do">

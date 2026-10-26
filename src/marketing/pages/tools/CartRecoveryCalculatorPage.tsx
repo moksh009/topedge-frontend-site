@@ -30,6 +30,7 @@ const BLOCKS: TopicBlock[] = [
     kind: 'figures',
     id: 'numbers',
     h2: 'Where these numbers come from',
+    accent: 'numbers come from',
     figures: [
       {
         value: '70.22%',
@@ -52,6 +53,7 @@ const BLOCKS: TopicBlock[] = [
     kind: 'checklist',
     id: 'practice',
     h2: 'What makes a cart reminder work',
+    accent: 'cart reminder work',
     doLabel: 'Do this',
     dontLabel: 'Avoid this',
     doItems: [

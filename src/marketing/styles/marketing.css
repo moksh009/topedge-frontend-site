@@ -146,6 +146,29 @@ body::-webkit-scrollbar {
   padding-right: 1.25rem;
 }
 
+/*
+ * The section-heading highlight: the same lilac pill the homepage h2s and the
+ * page heroes use, so a heading reads the same wherever it appears. One
+ * phrase per heading — a highlight on every other word is a highlight on
+ * nothing.
+ */
+.mkt-hl {
+  color: #2e1065;
+  background: #e4d4ff;
+  font-weight: 400;
+  border-radius: 0.35em;
+  padding: 0.04em 0.28em 0.1em;
+  margin: 0 0.04em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+@media (min-width: 640px) {
+  .mkt-hl {
+    white-space: nowrap;
+  }
+}
+
 .marketing-btn-gradient {
   background: linear-gradient(135deg, var(--mkt-violet) 0%, var(--mkt-violet-hover) 100%);
 }
