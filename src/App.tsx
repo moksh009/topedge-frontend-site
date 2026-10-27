@@ -162,7 +162,7 @@ class AppErrorBoundary extends React.Component<
       return (
         <div className="min-h-screen flex items-center justify-center bg-[#F8F9FB] text-slate-900">
           <div className="text-center px-6">
-            <p className="text-xs font-semibold tracking-wide text-slate-400 uppercase mb-2">
+            <p className="text-xs font-semibold tracking-wide text-[#69727f] uppercase mb-2">
               Something went wrong
             </p>
             <p className="text-lg font-bold mb-4">The page failed to load.</p>

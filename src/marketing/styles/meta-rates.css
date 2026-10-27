@@ -12,7 +12,7 @@
 .mkt-rates {
   --rates-violet: #7c3aed;
   --rates-ink: #0c1222;
-  --rates-muted: #64748b;
+  --rates-muted: var(--mkt-muted);
   --rates-border: #eceaf5;
   background: #fff;
   color: var(--rates-ink);
@@ -131,7 +131,7 @@
   margin: 1.1rem auto 0;
   font-size: 0.8rem;
   line-height: 1.6;
-  color: #94a3b8;
+  color: var(--mkt-faint);
   text-align: center;
   text-wrap: pretty;
 }
@@ -203,7 +203,7 @@
   font-size: 0.74rem;
   font-weight: 400;
   letter-spacing: 0;
-  color: #94a3b8;
+  color: var(--mkt-faint);
 }
 
 .mkt-rates__card-covers {
@@ -281,7 +281,7 @@
   display: block;
   margin-top: 0.1rem;
   font-size: 0.78rem;
-  color: #94a3b8;
+  color: var(--mkt-faint);
 }
 
 .mkt-rates__markup-rate {

@@ -80,14 +80,14 @@
   margin: 0.75rem 0 0;
   font-size: 0.95rem;
   line-height: 1.65;
-  color: #475569;
+  color: var(--mkt-body-2);
 }
 
 .mkt-blk__body {
   margin: 0.8rem 0 0;
   font-size: 0.95rem;
   line-height: 1.68;
-  color: #475569;
+  color: var(--mkt-body-2);
 }
 
 /* The opening line of a prose block, read slightly louder than the rest. */
@@ -139,7 +139,7 @@
   padding: 0.95rem 1.15rem;
   font-size: 0.9rem;
   line-height: 1.55;
-  color: #475569;
+  color: var(--mkt-body-2);
   min-width: 0;
   overflow-wrap: anywhere;
 }
@@ -169,14 +169,14 @@
   margin-top: 0.3rem;
   font-size: 0.8rem;
   line-height: 1.5;
-  color: #94a3b8;
+  color: var(--mkt-faint);
 }
 
 .mkt-spec__footnote {
   margin: 0.9rem 0 0;
   font-size: 0.8rem;
   line-height: 1.6;
-  color: #94a3b8;
+  color: var(--mkt-faint);
 }
 
 /*
@@ -232,7 +232,7 @@
     font-weight: 600;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: #94a3b8;
+    color: var(--mkt-faint);
     margin-bottom: 0.15rem;
   }
 
@@ -305,7 +305,7 @@
   margin: 0.3rem 0 0;
   font-size: 0.875rem;
   line-height: 1.6;
-  color: #475569;
+  color: var(--mkt-body-2);
 }
 
 .mkt-steps__meta {
@@ -361,7 +361,7 @@
   margin: 0.5rem 0 0;
   font-size: 0.875rem;
   line-height: 1.55;
-  color: #475569;
+  color: var(--mkt-body-2);
   flex: 1;
 }
 
@@ -369,7 +369,7 @@
   margin: 0.85rem 0 0;
   font-size: 0.74rem;
   line-height: 1.5;
-  color: #94a3b8;
+  color: var(--mkt-faint);
 }
 
 .mkt-figs__cite a {
@@ -447,7 +447,7 @@
   padding-left: 1.4rem;
   font-size: 0.9rem;
   line-height: 1.6;
-  color: #475569;
+  color: var(--mkt-body-2);
 }
 
 .mkt-check__list li::before {
@@ -518,7 +518,7 @@
   margin: 0.4rem 0 0;
   font-size: 0.9rem;
   line-height: 1.65;
-  color: #475569;
+  color: var(--mkt-body-2);
 }
 
 .mkt-callout__link {

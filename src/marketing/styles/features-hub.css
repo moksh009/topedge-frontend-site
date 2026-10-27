@@ -2,8 +2,8 @@
 
 .mkt-fx {
   --fx-ink: #0c1222;
-  --fx-muted: #64748b;
-  --fx-body: #475569;
+  --fx-muted: var(--mkt-muted);
+  --fx-body: var(--mkt-body-2);
   --fx-line: #eef0f4;
   --fx-violet: #7c3aed;
   --fx-violet-deep: #5b21b6;
@@ -249,7 +249,7 @@
 
 .mkt-fx-card__arrow {
   margin-left: auto;
-  color: #94a3b8;
+  color: var(--mkt-faint);
   transition:
     transform 0.2s ease,
     color 0.2s ease;

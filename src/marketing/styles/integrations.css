@@ -2,8 +2,8 @@
 
 .mkt-int {
   --int-ink: #0c1222;
-  --int-muted: #64748b;
-  --int-body: #475569;
+  --int-muted: var(--mkt-muted);
+  --int-body: var(--mkt-body-2);
   --int-line: #eef0f4;
   --int-violet: #7c3aed;
   --int-violet-deep: #5b21b6;

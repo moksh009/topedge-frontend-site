@@ -212,6 +212,8 @@ export default function MarketingConvertPrompt() {
             <li>One inbox, with the Shopify order beside it</li>
           </ul>
 
+          <ProofBadges compact plain className="mkt-convert__proof" />
+
           <div className="mkt-convert__actions">
             <Link className="mkt-convert__primary" to={marketingSignupPath()} onClick={dismiss}>
               Start free
@@ -236,8 +238,6 @@ export default function MarketingConvertPrompt() {
             </a>
           </div>
 
-          <ProofBadges compact plain className="mkt-convert__proof" />
-
           <button type="button" className="mkt-convert__dismiss" onClick={dismiss}>
             Keep browsing
           </button>
@@ -254,16 +254,6 @@ export default function MarketingConvertPrompt() {
             loading="lazy"
           />
 
-          <div className="mkt-convert__stats">
-            <div className="mkt-convert__stat">
-              <strong>+7%</strong>
-              <span>cart recovery</span>
-            </div>
-            <div className="mkt-convert__stat">
-              <strong>~15m</strong>
-              <span>to go live</span>
-            </div>
-          </div>
 
           <div className="mkt-convert__brands">
             <p className="mkt-convert__brands-label">Running on TopEdge</p>

@@ -40,7 +40,7 @@
   margin: 0.4rem 0 0;
   font-size: 0.92rem;
   line-height: 1.6;
-  color: #64748b;
+  color: var(--mkt-muted);
 }
 
 .mkt-calc__body {
@@ -132,7 +132,7 @@
 .mkt-calc__suffix {
   flex: none;
   font-size: 0.9rem;
-  color: #64748b;
+  color: var(--mkt-muted);
 }
 
 .mkt-calc__slider {
@@ -195,7 +195,7 @@
 .mkt-calc__hint {
   font-size: 0.76rem;
   line-height: 1.45;
-  color: #64748b;
+  color: var(--mkt-muted);
 }
 
 /* ---------- the answer ---------- */
@@ -239,7 +239,7 @@
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #94a3b8;
+  color: var(--mkt-faint);
 }
 
 .mkt-calc__out {
@@ -301,7 +301,7 @@
   font-size: 0.78rem;
   font-weight: 400;
   line-height: 1.45;
-  color: #64748b;
+  color: var(--mkt-muted);
 }
 
 .mkt-calc__verdict {
@@ -321,7 +321,7 @@
   border-top: 1px solid #f3f0fa;
   font-size: 0.76rem;
   line-height: 1.55;
-  color: #94a3b8;
+  color: var(--mkt-faint);
 }
 
 /* A two-column row squeezes the label to three words a line in a narrow

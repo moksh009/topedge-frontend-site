@@ -107,21 +107,25 @@ export function ProductHuntBadge({ compact = false }: { compact?: boolean }) {
       target="_blank"
       rel="noopener noreferrer"
     >
-      <ProductHuntMark size={compact ? 15 : 17} />
       {rated ? (
         <>
           <Stars rating={rating} />
           <span className="mkt-ph__text">
-            <b>{PRODUCT_HUNT.rating}</b> on <span className="mkt-ph__word">Product Hunt</span>
+            <b>{PRODUCT_HUNT.rating}</b> on{' '}
+            <span className="mkt-ph__word">
+              <ProductHuntMark size={compact ? 14 : 15} />
+              Product Hunt
+            </span>
           </span>
           <span className="sr-only">, from {PRODUCT_HUNT.reviews} reviews, read on {PRODUCT_HUNT.asOf}</span>
-          <span className="mkt-ph__count" aria-hidden>
-            {PRODUCT_HUNT.reviews} reviews
-          </span>
         </>
       ) : (
         <span className="mkt-ph__text">
-          Find us on <span className="mkt-ph__word">Product Hunt</span>
+          Find us on{' '}
+          <span className="mkt-ph__word">
+            <ProductHuntMark size={compact ? 14 : 15} />
+            Product Hunt
+          </span>
         </span>
       )}
     </a>

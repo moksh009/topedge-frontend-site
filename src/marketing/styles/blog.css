@@ -59,7 +59,7 @@
   max-width: 36rem;
   font-size: clamp(0.95rem, 1.5vw, 1.0625rem);
   line-height: 1.6;
-  color: #64748b;
+  color: var(--mkt-muted);
   text-wrap: pretty;
 }
 
@@ -240,7 +240,7 @@
   margin: 0.55rem 0 0;
   font-size: 0.875rem;
   line-height: 1.55;
-  color: #64748b;
+  color: var(--mkt-muted);
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
@@ -255,7 +255,7 @@
   align-items: center;
   gap: 0.4rem 0.65rem;
   font-size: 0.75rem;
-  color: #94a3b8;
+  color: var(--mkt-faint);
 }
 
 .mkt-blog-card__dot {
@@ -339,17 +339,63 @@
   margin-top: 0.95rem;
   font-size: 1rem;
   line-height: 1.6;
-  color: #475569;
+  color: var(--mkt-body-2);
 }
 
 .mkt-blog-meta {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.5rem 1rem;
+  gap: 0.5rem 0.85rem;
   margin-top: 1.1rem;
-  font-size: 0.78rem;
-  color: #94a3b8;
+  /* 0.78rem is 12.5px. This line carries the byline, the date, the reading
+     time and the revision date — the things a reader checks before deciding
+     whether a post is worth their time — so it is set at a size those can
+     actually be read at. */
+  font-size: 0.8125rem;
+  color: var(--mkt-faint);
+}
+
+.mkt-blog-meta a {
+  color: var(--mkt-body-2);
+  font-weight: 550;
+  text-decoration: none;
+}
+
+.mkt-blog-meta a:hover {
+  color: var(--mkt-violet);
+}
+
+.mkt-blog-meta__read {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.mkt-blog-meta__read svg {
+  display: block;
+  flex: none;
+  opacity: 0.8;
+}
+
+/*
+ * The revision date, as a chip rather than another item in the dotted run.
+ *
+ * It answers a different question from the rest of the line — "is this still
+ * current?" rather than "who wrote it and when?" — and on a long-lived
+ * reference post it is the single most load-bearing fact in the header. Read
+ * as a fourth dotted item it disappeared into the byline.
+ */
+.mkt-blog-meta__updated {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.18rem 0.5rem;
+  border: 1px solid #e3f0e6;
+  border-radius: 999px;
+  background: #f3faf4;
+  font-weight: 550;
+  color: #3f7a52;
 }
 
 .mkt-blog-meta__dot {
@@ -357,6 +403,21 @@
   height: 3px;
   border-radius: 50%;
   background: #cbd5e1;
+}
+
+/*
+ * On a phone this line wraps, and a separator that lands at the end of a line
+ * is a dot hanging in space with nothing after it. Below the wrap point the
+ * dots go and the gap does the separating instead.
+ */
+@media (max-width: 560px) {
+  .mkt-blog-meta {
+    gap: 0.45rem 0.75rem;
+  }
+
+  .mkt-blog-meta__dot {
+    display: none;
+  }
 }
 
 .mkt-blog-cover-img {
@@ -378,19 +439,36 @@
   display: block;
 }
 
+/*
+ * Article measure and scale.
+ *
+ * Measured against the long-form pages readers compare us to: wati.io sets
+ * 18px on a 1.63 line over a 97-character measure, getgabs.com 16px on a 2.0
+ * line over 114. Both give running text more size, more leading and more
+ * width than we did at 15-16px over 84 characters, which is what made the
+ * page read as dense.
+ *
+ * --mkt-blog-rhythm is the one number the whole vertical scale derives from.
+ * Paragraph gaps are a fraction of it and the space above a heading is a
+ * multiple, so the gap that separates sections always beats the gap that
+ * separates paragraphs by about two to one. That ratio is what the eye reads
+ * as structure; when it collapses, a page looks cluttered however big the
+ * type is.
+ */
 .mkt-blog-body-wrap {
-  --mkt-blog-body-size: 0.9375rem;
-  --mkt-blog-body-lh: 1.68;
+  --mkt-blog-body-size: 1.0625rem;
+  --mkt-blog-body-lh: 1.7;
+  --mkt-blog-rhythm: 1.05em;
   max-width: 44rem;
   margin: 0 auto;
   padding: 1.5rem 0 1rem;
 }
 
-/* Width caps hold body text at 65-75 chars/line for each body size. */
+/* Width caps hold body text at 70-78 chars/line for each body size. */
 @media (min-width: 640px) {
   .mkt-blog-body-wrap {
-    --mkt-blog-body-size: 1rem;
-    --mkt-blog-body-lh: 1.72;
+    --mkt-blog-body-size: 1.125rem;
+    --mkt-blog-body-lh: 1.75;
     max-width: 42rem;
   }
 }
@@ -403,14 +481,16 @@
 
 @media (min-width: 1100px) {
   .mkt-blog-body-wrap {
-    max-width: 44rem;
+    --mkt-blog-body-size: 1.1875rem;
+    max-width: 46rem;
   }
 }
 
 .mkt-blog-prose {
   font-size: var(--mkt-blog-body-size);
   line-height: var(--mkt-blog-body-lh);
-  color: #334155;
+  color: var(--mkt-body);
+  text-wrap: pretty;
 }
 
 .mkt-blog-prose > *:first-child {
@@ -418,35 +498,48 @@
 }
 
 .mkt-blog-prose p {
-  margin: 0 0 1.05em;
+  margin: 0 0 calc(var(--mkt-blog-rhythm) * 1.3);
 }
 
 .mkt-nowrap {
   white-space: nowrap;
 }
 
+/*
+ * Heading ramp. h2 was 1.4x body and h3 1.12x, which on a 16px body put a
+ * subhead within 2px of the paragraph under it — the reader could not find
+ * the structure by scanning, so the page read as one undifferentiated block.
+ * The pages we are measured against run h2 at 1.67x to 2x body. These sit at
+ * 1.6x and 1.25x, with the step between them wide enough to be read as a step
+ * rather than a rounding error.
+ *
+ * Sizes are in em so they track whatever body size the breakpoint set.
+ */
 .mkt-blog-prose h2 {
-  margin: 1.9em 0 0.6em;
+  margin: calc(var(--mkt-blog-rhythm) * 2) 0 calc(var(--mkt-blog-rhythm) * 0.7);
   font-family: var(--mkt-font);
-  font-size: 1.4em;
-  font-weight: 600;
-  line-height: 1.25;
-  letter-spacing: -0.02em;
+  font-size: 1.6em;
+  font-weight: 650;
+  line-height: 1.22;
+  letter-spacing: -0.022em;
   color: var(--mkt-ink);
+  text-wrap: balance;
 }
 
 .mkt-blog-prose h3 {
-  margin: 1.5em 0 0.5em;
+  margin: calc(var(--mkt-blog-rhythm) * 1.6) 0 calc(var(--mkt-blog-rhythm) * 0.5);
   font-family: var(--mkt-font);
-  font-size: 1.12em;
-  font-weight: 600;
-  line-height: 1.35;
+  font-size: 1.25em;
+  font-weight: 650;
+  line-height: 1.32;
   letter-spacing: -0.015em;
   color: var(--mkt-ink);
+  text-wrap: balance;
 }
 
+/* A subhead straight under its section head needs the gap closed, not opened. */
 .mkt-blog-prose h2 + h3 {
-  margin-top: 1em;
+  margin-top: calc(var(--mkt-blog-rhythm) * 1.1);
 }
 
 /* Lenis (desktop) applies its own anchor offset and also reads scroll-margin, so only set it where Lenis is off. */
@@ -458,13 +551,22 @@
 
 .mkt-blog-prose ul,
 .mkt-blog-prose ol {
-  margin: 0 0 1.2rem;
-  padding-left: 1.25rem;
+  margin: 0 0 calc(var(--mkt-blog-rhythm) * 1.45);
+  padding-left: 1.4em;
 }
 
+/*
+ * List items need more air between them than lines inside one item, or a
+ * three-line bullet reads as three bullets.
+ */
 .mkt-blog-prose li {
-  margin: 0.35rem 0;
-  padding-left: 0.3rem;
+  margin: 0.55em 0;
+  padding-left: 0.3em;
+}
+
+.mkt-blog-prose li > ul,
+.mkt-blog-prose li > ol {
+  margin: 0.5em 0 0;
 }
 
 .mkt-blog-prose li::marker {
@@ -502,7 +604,7 @@
   border-left: 3px solid var(--mkt-violet);
   border-radius: 0 12px 12px 0;
   background: var(--mkt-violet-light);
-  color: #475569;
+  color: var(--mkt-body-2);
   font-style: normal;
 }
 
@@ -520,7 +622,7 @@
 .mkt-blog-prose figcaption {
   margin-top: 0.5rem;
   font-size: 0.8125em;
-  color: #64748b;
+  color: var(--mkt-muted);
 }
 
 .mkt-blog-prose .mkt-blog-callout {
@@ -582,7 +684,7 @@
   margin: 0.75rem 0 0;
   font-size: 1em;
   line-height: 1.65;
-  color: #475569;
+  color: var(--mkt-body-2);
 }
 
 .mkt-blog-prose .mkt-blog-verdict p:not(.mkt-blog-verdict__label) strong {
@@ -599,7 +701,7 @@
 .mkt-blog-prose .mkt-blog-verdict ul {
   margin: 0.5rem 0 0;
   padding-left: 1.2rem;
-  color: #475569;
+  color: var(--mkt-body-2);
 }
 
 .mkt-blog-prose .mkt-blog-verdict li {
@@ -652,10 +754,31 @@
 }
 
 .mkt-blog-prose .mkt-blog-table-wrap {
-  margin: 1.25rem 0 0.75rem;
+  /* A table is a block in the argument, so it gets the air a section break
+     does; it was sitting 1.25rem off the paragraph above, close enough that
+     the two read as one dense slab. */
+  margin: calc(var(--mkt-blog-rhythm) * 1.8) 0;
   overflow: hidden;
   border: 1px solid var(--mkt-border);
   border-radius: 14px;
+}
+
+/*
+ * Tables and figures break out of the text measure.
+ *
+ * The measure is set for prose, and a three-column table squeezed into it
+ * wraps every cell onto four lines, which is how a table stops being readable
+ * at a glance. There is slack either side of the prose column inside its grid
+ * track at every width where the grid is active, so 2rem a side never reaches
+ * the contents rail.
+ */
+@media (min-width: 1024px) {
+  .mkt-blog-prose .mkt-blog-table-wrap,
+  .mkt-blog-prose > figure {
+    width: calc(100% + 4rem);
+    margin-left: -2rem;
+    margin-right: -2rem;
+  }
 }
 
 .mkt-blog-prose .mkt-blog-table-scroll {
@@ -682,12 +805,12 @@
   width: 100%;
   border-collapse: collapse;
   font-size: 0.875em;
-  line-height: 1.5;
+  line-height: 1.55;
 }
 
 .mkt-blog-prose th,
 .mkt-blog-prose td {
-  padding: 0.7rem 0.85rem;
+  padding: 0.8em 0.95em;
   text-align: left;
   vertical-align: top;
   border-bottom: 1px solid var(--mkt-border);
@@ -757,7 +880,7 @@
     font-weight: 600;
     letter-spacing: 0.04em;
     text-transform: uppercase;
-    color: #64748b;
+    color: var(--mkt-muted);
   }
 
   .mkt-blog-prose :is(.is-dense, .is-stacked) td:first-child {
@@ -776,7 +899,7 @@
 
 .mkt-blog-prose .mkt-blog-footnote {
   font-size: 0.8125em;
-  color: #64748b;
+  color: var(--mkt-muted);
   margin: 0.5rem 0 1.5rem;
 }
 
@@ -823,7 +946,7 @@
   margin: 0.45rem 0 0;
   font-size: 0.95em;
   line-height: 1.65;
-  color: #475569;
+  color: var(--mkt-body-2);
 }
 
 .mkt-blog-faq-block {
@@ -833,9 +956,10 @@
 .mkt-blog-faq-block__title {
   margin: 0 0 1rem;
   font-family: var(--mkt-font);
-  font-size: calc(var(--mkt-blog-body-size) * 1.4);
-  font-weight: 600;
-  line-height: 1.25;
+  /* Same step as a prose h2, because that is what it is. */
+  font-size: calc(var(--mkt-blog-body-size) * 1.6);
+  font-weight: 650;
+  line-height: 1.22;
   letter-spacing: -0.02em;
   color: #0c1222;
 }
@@ -870,7 +994,7 @@
   margin-top: 0.5rem;
   font-size: 0.9375rem;
   line-height: 1.55;
-  color: #64748b;
+  color: var(--mkt-muted);
 }
 
 .mkt-blog-cta__actions {
@@ -969,7 +1093,7 @@
   margin-top: auto;
   padding-top: 0.85rem;
   font-size: 0.75rem;
-  color: #94a3b8;
+  color: var(--mkt-faint);
 }
 
 /* Legacy cover class kept for safety */
@@ -1013,13 +1137,27 @@
   display: block;
 }
 
+/*
+ * The article shell runs wider than the rest of the marketing site.
+ *
+ * The shared container caps at 1120px, and once the 15rem contents rail and
+ * its gutter come out of that, the prose column was left centring inside what
+ * remained — so the page carried roughly 230px of dead margin to the left of
+ * the first word while the text itself ran narrow. Competitors give running
+ * text 888px (wati) to 960px (getgabs). A wider shell buys the measure back
+ * without pushing the contents rail off the grid.
+ */
+.mkt-blog-shell {
+  max-width: 1200px;
+}
+
 @media (min-width: 1024px) {
   .mkt-blog-layout {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 15rem;
     /* Rows: assistant row, summary, article. The contents spans all three. */
     grid-template-rows: auto auto 1fr;
-    column-gap: 2.5rem;
+    column-gap: 3rem;
     align-items: start;
   }
 
@@ -1077,7 +1215,7 @@
 @media (min-width: 1100px) {
   .mkt-blog-layout > .mkt-blog-summary,
   .mkt-blog-layout > .mkt-blog-ai {
-    max-width: 44rem;
+    max-width: 46rem;
   }
 }
 
@@ -1130,7 +1268,7 @@
   display: block;
   font-size: 0.8125rem;
   line-height: 1.45;
-  color: #475569;
+  color: var(--mkt-body-2);
   text-decoration: none;
 }
 
@@ -1163,15 +1301,30 @@
   }
 }
 
+/*
+ * The card's heading.
+ *
+ * It was an 11.5px uppercase label the colour of a form hint, which is the
+ * typography of a legal footnote sitting on top of the three lines most
+ * readers will actually read. Set as a heading it earns the box it is in —
+ * the restraint that matters is in the card's flat fill and quiet border, not
+ * in shrinking its title until nobody notices it.
+ */
 .mkt-blog-summary__label {
-  margin: 0 0 0.8rem;
+  margin: 0 0 0.85rem;
   font-family: var(--mkt-font);
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.09em;
+  font-size: 1.0625rem;
+  font-weight: 650;
+  letter-spacing: -0.015em;
   line-height: 1.3;
-  text-transform: uppercase;
-  color: #7c6fa8;
+  text-transform: none;
+  color: var(--mkt-ink);
+}
+
+@media (min-width: 768px) {
+  .mkt-blog-summary__label {
+    font-size: 1.1875rem;
+  }
 }
 
 .mkt-blog-summary__list {
@@ -1179,15 +1332,15 @@
   padding: 0;
   list-style: none;
   display: grid;
-  gap: 0.55rem;
+  gap: 0.7rem;
 }
 
 .mkt-blog-summary__list li {
   position: relative;
-  padding-left: 1.5rem;
-  font-size: 0.9375rem;
-  line-height: 1.6;
-  color: #334155;
+  padding-left: 1.6rem;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--mkt-body);
 }
 
 /* An inline tick rather than a dot: it reads as a takeaway, not a bullet. */
@@ -1219,11 +1372,11 @@
   /* Auto margins stop a grid item from stretching, and this row's content is
      short enough to shrink to a third of the column without this. */
   width: 100%;
-  gap: 0.55rem 0.75rem;
+  gap: 0.6rem 0.9rem;
   margin: 0 0 1.25rem;
-  padding: 0.7rem 0.85rem;
+  padding: 0.8rem 1rem;
   border: 1px solid #ece9f6;
-  border-radius: 12px;
+  border-radius: 14px;
   background: #ffffff;
 }
 
@@ -1231,35 +1384,81 @@
   font-size: 0.8125rem;
   font-weight: 500;
   line-height: 1.4;
-  color: #64748b;
+  color: var(--mkt-muted);
 }
 
 .mkt-blog-ai__list {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
+  gap: 0.5rem;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
+/*
+ * Each assistant is an app icon on a tile of its own.
+ *
+ * Two of the supplied marks (Claude, Perplexity, Grok) already carry their own
+ * background, so they fill the button edge to edge and the button's border
+ * becomes their outline. The bare glyphs (ChatGPT, Gemini) sit inset on the
+ * button's white surface at the same optical size. Both end up the same
+ * square, which is what makes the row scan as one set rather than five
+ * unrelated logos.
+ */
 .mkt-blog-ai__btn {
+  position: relative;
   display: grid;
   place-items: center;
-  width: 2.1rem;
-  height: 2.1rem;
+  width: 2.35rem;
+  height: 2.35rem;
+  overflow: hidden;
   border: 1px solid #e7e3f3;
-  border-radius: 9px;
-  background: #fcfbff;
-  color: #475569;
-  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+  border-radius: 10px;
+  background: #ffffff;
+  transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.mkt-blog-ai__btn img {
+  width: 1.4rem;
+  height: 1.4rem;
+  object-fit: contain;
+  display: block;
+}
+
+/*
+ * Optical sizing, not nominal sizing.
+ *
+ * The supplied files do not agree on how much of their canvas the mark
+ * actually fills: the ChatGPT knot covers about 90% of its square, the Gemini
+ * star about 66%. Rendered at one box size the Gemini star came out visibly
+ * smaller than everything beside it, so it gets a bigger box to land on the
+ * same optical size.
+ */
+.mkt-blog-ai__btn[data-ai='gemini'] img {
+  width: 1.85rem;
+  height: 1.85rem;
+}
+
+/* A finished app icon has no padding to give, so it runs to the edges. */
+.mkt-blog-ai__btn--tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .mkt-blog-ai__btn:hover,
 .mkt-blog-ai__btn:focus-visible {
   border-color: #c9b8f6;
-  background: #f6f2ff;
-  color: var(--mkt-violet);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px -4px rgba(15, 23, 42, 0.22);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mkt-blog-ai__btn:hover,
+  .mkt-blog-ai__btn:focus-visible {
+    transform: none;
+  }
 }
 
 /* ---------- figures between sections ---------- */
@@ -1285,7 +1484,7 @@
   margin-top: 0.65rem;
   font-size: 0.8rem;
   line-height: 1.55;
-  color: #94a3b8;
+  color: var(--mkt-faint);
 }
 
 /* ===================================================================
@@ -1345,7 +1544,7 @@
   gap: 0.5rem;
   margin-bottom: 0.9rem;
   font-size: 0.8rem;
-  color: #6b7280;
+  color: var(--mkt-muted);
 }
 
 .mkt-blog-crumbs a {
@@ -1378,7 +1577,7 @@
 .mkt-blog-catstrip__label {
   font-size: 0.76rem;
   font-weight: 500;
-  color: #94a3b8;
+  color: var(--mkt-faint);
 }
 
 .mkt-blog-catstrip ul {
@@ -1396,7 +1595,7 @@
   border-radius: 999px;
   font-size: 0.8rem;
   font-weight: 450;
-  color: #475569;
+  color: var(--mkt-body-2);
   text-decoration: none;
   transition: background 0.15s ease, color 0.15s ease;
 }
@@ -1445,7 +1644,7 @@
   border-radius: 999px;
   font-size: 0.9rem;
   font-weight: 450;
-  color: #475569;
+  color: var(--mkt-body-2);
   text-decoration: none;
   background: #ffffff;
   transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
@@ -1522,7 +1721,7 @@
 .mkt-blog-pager__count {
   margin: 0;
   font-size: 0.875rem;
-  color: #64748b;
+  color: var(--mkt-muted);
   font-variant-numeric: tabular-nums;
 }
 

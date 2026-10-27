@@ -40,7 +40,7 @@
 .mkt-finder__intro-kicker {
   margin: 0;
   font-size: 0.85rem;
-  color: #64748b;
+  color: var(--mkt-muted);
 }
 
 .mkt-finder__intro-logos {
@@ -59,7 +59,7 @@
   align-items: center;
   gap: 0.35rem;
   font-size: 0.75rem;
-  color: #64748b;
+  color: var(--mkt-muted);
 }
 
 .mkt-finder__logo {
@@ -92,7 +92,7 @@
   margin: 1.1rem auto 0;
   font-size: 0.82rem;
   line-height: 1.55;
-  color: #94a3b8;
+  color: var(--mkt-faint);
 }
 
 /* ---------- question ---------- */
@@ -113,7 +113,7 @@
   background: none;
   font: inherit;
   font-size: 0.85rem;
-  color: #64748b;
+  color: var(--mkt-muted);
   cursor: pointer;
 }
 
@@ -123,7 +123,7 @@
 
 .mkt-finder__count {
   font-size: 0.8rem;
-  color: #94a3b8;
+  color: var(--mkt-faint);
   font-variant-numeric: tabular-nums;
 }
 
@@ -156,7 +156,7 @@
   margin: 0.5rem 0 0;
   font-size: 0.92rem;
   line-height: 1.55;
-  color: #64748b;
+  color: var(--mkt-muted);
 }
 
 .mkt-finder__multi {
@@ -280,13 +280,13 @@
   margin: 0.4rem 0 0;
   font-size: 0.86rem;
   line-height: 1.55;
-  color: #475569;
+  color: var(--mkt-body-2);
 }
 
 .mkt-finder__fact-src {
   margin: 0.5rem 0 0;
   font-size: 0.75rem;
-  color: #94a3b8;
+  color: var(--mkt-faint);
 }
 
 .mkt-finder__fact-src a {
@@ -343,7 +343,7 @@
   border-radius: 999px;
   background: #ffffff;
   font-size: 0.78rem;
-  color: #475569;
+  color: var(--mkt-body-2);
 }
 
 .mkt-finder__tools {
@@ -437,7 +437,7 @@
 .mkt-finder__card-title p {
   margin: 0.15rem 0 0;
   font-size: 0.82rem;
-  color: #64748b;
+  color: var(--mkt-muted);
 }
 
 .mkt-finder__match {
@@ -471,14 +471,14 @@
 }
 
 .mkt-finder__card.is-blocked .mkt-finder__match-num {
-  color: #94a3b8;
+  color: var(--mkt-faint);
 }
 
 .mkt-finder__pick {
   margin: 0.9rem 0 0;
   font-size: 0.9rem;
   line-height: 1.55;
-  color: #475569;
+  color: var(--mkt-body-2);
 }
 
 .mkt-finder__pick b {
@@ -498,7 +498,7 @@
   position: relative;
   font-size: 0.88rem;
   line-height: 1.5;
-  color: #334155;
+  color: var(--mkt-body);
 }
 
 .mkt-finder__list.is-good li {
@@ -660,7 +660,7 @@
 }
 
 .mkt-finder__td {
-  color: #475569;
+  color: var(--mkt-body-2);
 }
 
 .mkt-finder__td.is-us {
@@ -672,7 +672,7 @@
   margin: 0.9rem 0 0;
   font-size: 0.78rem;
   line-height: 1.6;
-  color: #94a3b8;
+  color: var(--mkt-faint);
 }
 
 .mkt-finder__fine a {
@@ -723,7 +723,7 @@
     font-weight: 600;
     letter-spacing: 0.04em;
     text-transform: uppercase;
-    color: #94a3b8;
+    color: var(--mkt-faint);
   }
 }
 
@@ -743,7 +743,7 @@
   gap: 0.4rem;
   margin: 1rem 0 0;
   font-size: 0.8rem;
-  color: #64748b;
+  color: var(--mkt-muted);
   text-align: center;
 }
 
@@ -834,7 +834,7 @@
   margin-top: 0.4rem;
   font-size: 0.9rem;
   line-height: 1.55;
-  color: #64748b;
+  color: var(--mkt-muted);
 }
 
 .mkt-tool-card__cta {
@@ -925,7 +925,7 @@
   display: block;
   margin-top: 0.35rem;
   font-size: 0.78rem;
-  color: #94a3b8;
+  color: var(--mkt-faint);
 }
 
 .mkt-wlg__hint.is-error {
@@ -946,7 +946,7 @@
   background: #ffffff;
   font: inherit;
   font-size: 0.78rem;
-  color: #475569;
+  color: var(--mkt-body-2);
   cursor: pointer;
 }
 
@@ -977,7 +977,7 @@
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #64748b;
+  color: var(--mkt-muted);
 }
 
 .mkt-wlg__link {
@@ -1056,7 +1056,7 @@
 .mkt-wlg__qr-text {
   font-size: 0.82rem;
   line-height: 1.5;
-  color: #64748b;
+  color: var(--mkt-muted);
 }
 
 .mkt-wlg__code {
@@ -1100,7 +1100,7 @@
   list-style: decimal;
   font-size: 0.9rem;
   line-height: 1.7;
-  color: #475569;
+  color: var(--mkt-body-2);
 }
 
 .mkt-wlg__snippet-head {

@@ -3,7 +3,7 @@
 .mkt-pricing {
   --mkt-plan-violet: #7c3aed;
   --mkt-plan-border: #eef0f4;
-  --mkt-plan-muted: #64748b;
+  --mkt-plan-muted: var(--mkt-muted);
   --mkt-plan-ink: #0c1222;
   background: #fff;
   color: var(--mkt-plan-ink);
@@ -66,7 +66,7 @@
 .mkt-pricing__note {
   margin: 0.85rem auto 0;
   font-size: 0.78rem;
-  color: #94a3b8;
+  color: var(--mkt-faint);
   text-align: center;
 }
 
@@ -127,7 +127,7 @@
   font-size: 0.9375rem;
   font-weight: 400;
   line-height: 1.55;
-  color: #64748b;
+  color: var(--mkt-muted);
 }
 
 .mkt-psec__head--left .mkt-psec__sub {
@@ -211,7 +211,7 @@
   border: none;
   border-radius: 9999px;
   background: transparent;
-  color: #64748b;
+  color: var(--mkt-muted);
   font-size: 0.8125rem;
   font-weight: 550;
   cursor: pointer;
@@ -511,7 +511,7 @@
   font-size: 0.8125rem;
   font-weight: 500;
   letter-spacing: -0.02em;
-  color: #64748b;
+  color: var(--mkt-muted);
   text-align: left;
 }
 
@@ -533,7 +533,7 @@
 .mkt-plan__period {
   font-size: 0.8125rem;
   font-weight: 450;
-  color: #94a3b8;
+  color: var(--mkt-faint);
 }
 
 .mkt-plan__day {
@@ -548,7 +548,7 @@
   background: #f8fafc;
   font-size: 0.625rem;
   font-weight: 500;
-  color: #64748b;
+  color: var(--mkt-muted);
   white-space: nowrap;
 }
 
@@ -576,7 +576,7 @@
   font-weight: 450;
   line-height: 1.45;
   letter-spacing: -0.01em;
-  color: #64748b;
+  color: var(--mkt-muted);
   text-align: left;
 }
 
@@ -588,7 +588,7 @@
   font-weight: 450;
   line-height: 1.5;
   letter-spacing: -0.01em;
-  color: #64748b;
+  color: var(--mkt-muted);
   text-align: left;
 }
 
@@ -616,7 +616,7 @@
   font-size: 0.8125rem;
   font-weight: 450;
   letter-spacing: -0.01em;
-  color: #475569;
+  color: var(--mkt-body-2);
 }
 
 .mkt-plan__meters li {
@@ -635,7 +635,7 @@
   height: 1.28rem;
   border-radius: 999px;
   background: #f1f5f9;
-  color: #64748b;
+  color: var(--mkt-muted);
 }
 
 .mkt-plan__mark svg {
@@ -727,7 +727,7 @@
   align-items: flex-start;
   font-size: 0.8rem;
   line-height: 1.4;
-  color: #475569;
+  color: var(--mkt-body-2);
 }
 
 .mkt-buy-flow__n {
@@ -787,7 +787,7 @@
   font-size: 0.65em;
   font-weight: 500;
   letter-spacing: 0;
-  color: #94a3b8;
+  color: var(--mkt-faint);
 }
 
 .mkt-price__slot {
@@ -853,7 +853,7 @@
   text-align: center;
   font-size: 0.72rem;
   line-height: 1.4;
-  color: #94a3b8;
+  color: var(--mkt-faint);
 }
 
 /* ——— Included (every plan) ——— */
@@ -934,7 +934,7 @@
   font-weight: 450;
   line-height: 1.45;
   letter-spacing: -0.01em;
-  color: #334155;
+  color: var(--mkt-body);
 }
 
 .mkt-included__mark {
@@ -987,7 +987,7 @@
 .mkt-sec-note {
   margin: 0;
   font-size: 0.8rem;
-  color: #94a3b8;
+  color: var(--mkt-faint);
 }
 
 /* legacy aliases kept for teaser / other pages */
@@ -1019,7 +1019,7 @@
   margin: 0;
   font-size: 0.875rem;
   line-height: 1.5;
-  color: #64748b;
+  color: var(--mkt-muted);
 }
 
 /* ——— Plan comparison (Vertex-style) ——— */
@@ -1074,7 +1074,7 @@
   font-weight: 600;
   letter-spacing: 0.02em;
   text-transform: uppercase;
-  color: #94a3b8;
+  color: var(--mkt-faint);
   text-align: center;
 }
 
@@ -1105,7 +1105,7 @@
 .mkt-compare__text {
   font-size: 0.8125rem;
   font-weight: 500;
-  color: #475569;
+  color: var(--mkt-body-2);
   font-variant-numeric: tabular-nums lining-nums;
   line-height: 1.35;
 }
@@ -1293,7 +1293,7 @@
   text-align: center;
   font-size: 0.9rem;
   line-height: 1.55;
-  color: #64748b;
+  color: var(--mkt-muted);
 }
 
 .mkt-roi-card__cta {
@@ -1475,7 +1475,7 @@
 .mkt-roi__preset em {
   font-style: normal;
   font-size: 0.72rem;
-  color: #94a3b8;
+  color: var(--mkt-faint);
 }
 
 .mkt-roi__grid {
@@ -1490,7 +1490,7 @@
   font-weight: 500;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: #94a3b8;
+  color: var(--mkt-faint);
 }
 
 .mkt-roi__value {
@@ -1503,7 +1503,7 @@
 
 .mkt-roi__week {
   margin: 0.4rem 0 0;
-  color: #64748b;
+  color: var(--mkt-muted);
   font-size: 0.875rem;
 }
 
@@ -1517,7 +1517,7 @@
 
 .mkt-roi__stats dt {
   font-size: 0.75rem;
-  color: #94a3b8;
+  color: var(--mkt-faint);
 }
 
 .mkt-roi__stats dd {
@@ -1545,7 +1545,7 @@
   justify-content: space-between;
   gap: 0.75rem;
   font-size: 0.8125rem;
-  color: #475569;
+  color: var(--mkt-body-2);
 }
 
 .mkt-roi__num {
@@ -1603,7 +1603,7 @@
   font-style: normal;
   font-size: 0.75rem;
   font-weight: 600;
-  color: #64748b;
+  color: var(--mkt-muted);
 }
 
 .mkt-roi__controls input[type='range'] {
@@ -1646,7 +1646,7 @@
 .mkt-roi__hint {
   margin: 0;
   font-size: 0.75rem;
-  color: #94a3b8;
+  color: var(--mkt-faint);
 }
 
 .mkt-roi__cta {
@@ -1835,7 +1835,7 @@
   border-collapse: collapse;
   font-size: 0.8125rem;
   line-height: 1.45;
-  color: #475569;
+  color: var(--mkt-body-2);
 }
 
 .mkt-pricing__text-table th,
@@ -1863,7 +1863,7 @@
   padding: 0 0 0 1.1rem;
   font-size: 0.8125rem;
   line-height: 1.6;
-  color: #475569;
+  color: var(--mkt-body-2);
 }
 
 .mkt-pricing__plan-text-list strong {
@@ -1875,7 +1875,7 @@
   margin: 0.85rem 0 0;
   font-size: 0.8125rem;
   line-height: 1.6;
-  color: #64748b;
+  color: var(--mkt-muted);
 }
 
 /* Below 600px the 5 columns cannot fit, and side-scrolling hid the Journey
@@ -1964,7 +1964,7 @@
   margin-bottom: 0.65rem;
   font-size: 0.625rem;
   letter-spacing: 0.14em;
-  color: #94a3b8;
+  color: var(--mkt-faint);
   text-shadow: none;
 }
 

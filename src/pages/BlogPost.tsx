@@ -70,6 +70,12 @@ export default function BlogPost() {
   // Posts tagged with the generic brand name are bylined to the founder; a
   // post can carry another team member's name via `author`.
   const authorName = post.author in TEAM ? post.author : DEFAULT_AUTHOR;
+  // `updated` already feeds the article's dateModified for structured data but
+  // was never shown to the reader. It is only worth showing when it is
+  // genuinely later than the publication date: on a post revised the same week
+  // it was written the two dates are the same, and printing both reads as a
+  // mistake rather than as a freshness signal.
+  const showUpdated = Boolean(post.updated && new Date(post.updated) > new Date(post.date));
   const group = groupForCategory(post.category);
 
   return (
@@ -161,7 +167,18 @@ export default function BlogPost() {
                   <span className="mkt-blog-meta__dot" aria-hidden />
                   <time dateTime={post.date}>{formatDate(post.date)}</time>
                   <span className="mkt-blog-meta__dot" aria-hidden />
-                  <span>{post.readTime} read</span>
+                  <span className="mkt-blog-meta__read">
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+                      <circle cx="12" cy="12" r="9" />
+                      <path d="M12 7v5l3 2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                    {post.readTime} read
+                  </span>
+                  {showUpdated ? (
+                    <span className="mkt-blog-meta__updated">
+                      Updated <time dateTime={post.updated}>{formatDate(post.updated as string)}</time>
+                    </span>
+                  ) : null}
                 </div>
               </div>
 
@@ -200,7 +217,7 @@ export default function BlogPost() {
           </div>
         </header>
 
-        <div className="marketing-container">
+        <div className="marketing-container mkt-blog-shell">
           {/*
             Three siblings, in the order a phone should read them: the summary,
             then the contents list, then the article. On desktop the grid moves

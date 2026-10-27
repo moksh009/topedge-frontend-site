@@ -21,7 +21,7 @@ export default function PlaceholderPage({
         <PageHero eyebrow={eyebrow} title={title} subtitle={description} />
         <Section className="!pt-0">
           <MarketingCard className="mx-auto max-w-3xl !p-8 text-center">
-            <p className="text-sm leading-relaxed text-slate-500">
+            <p className="text-sm leading-relaxed text-[#5a6474]">
               This page shell is live so navigation works while the premium content is built section by section.
             </p>
           </MarketingCard>

@@ -421,7 +421,7 @@ export default function PrivacyPolicy() {
             Address: {COMPANY_ADDRESS_ONE_LINE}<br />
             GSTIN: {COMPANY_GSTIN}
           </p>
-          <p style={{ marginTop: '0.65rem', fontSize: '0.75rem', color: '#94a3b8' }}>
+          <p style={{ marginTop: '0.65rem', fontSize: '0.75rem', color: '#69727f' }}>
             We aim to acknowledge grievances within a reasonable period and resolve them as required by applicable law.
             Document version: {LEGAL_DOCS_VERSION}.
           </p>

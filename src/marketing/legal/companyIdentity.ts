@@ -32,7 +32,7 @@ export const COMPANY_SHOPIFY_APP_URL = 'https://apps.shopify.com/topedge-ai';
 
 export const COMPANY_SOCIAL = {
   linkedin: 'https://www.linkedin.com/company/topedgeai',
-  instagram: 'https://www.instagram.com/topedge_ai/',
+  instagram: 'https://www.instagram.com/topedgeai_com/',
   youtube: 'https://www.youtube.com/@topedge_ai',
 } as const;
 

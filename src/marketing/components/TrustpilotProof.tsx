@@ -72,9 +72,6 @@ export function TrustpilotScore({ compact = false }: { compact?: boolean }) {
       <span className="sr-only">
         , from {TRUSTPILOT.reviews} reviews, read on {TRUSTPILOT.asOf}
       </span>
-      <span className="mkt-tp__count" aria-hidden>
-        {TRUSTPILOT.reviews} reviews
-      </span>
     </a>
   );
 }

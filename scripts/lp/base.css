@@ -36,7 +36,7 @@ img{max-width:100%}
 .mkt-nav__actions .mkt-nav__link{display:none}
 .mkt-nav__desktop{gap:.15rem}
 .mkt-nav__actions{gap:.35rem}
-.mkt-nav__link{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:.4rem .7rem;min-height:2.1rem;font-size:.875rem;font-weight:500;letter-spacing:-.015em;line-height:1;color:#475569;text-decoration:none;transition:color .2s,background .2s}
+.mkt-nav__link{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:.4rem .7rem;min-height:2.1rem;font-size:.875rem;font-weight:500;letter-spacing:-.015em;line-height:1;color:#3f4b5e;text-decoration:none;transition:color .2s,background .2s}
 .mkt-nav__link:hover,.mkt-nav__link:focus-visible{color:#0f172a;background:#f1f5f9}
 .mkt-btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;height:2.5rem;padding:0 1.1rem;font-size:.875rem;padding:0 1.5rem;border-radius:9999px;font-size:.9375rem;font-weight:450;color:#fff;background:var(--violet);text-decoration:none;transition:background .2s}
 .mkt-btn-primary:hover,.mkt-btn-primary:focus-visible{background:var(--violet-hover)}
@@ -474,13 +474,13 @@ section{padding:3.75rem 0}
 .mkt-plan--scale .mkt-plan__panel{border-color:#f9a8d4;background:linear-gradient(180deg,#fdf2f8 0,#fce7f3 44%,#fff 100%);box-shadow:0 16px 34px -14px rgba(236,72,153,.13),0 8px 18px -10px rgba(15,23,42,.08),0 2px 6px -2px rgba(15,23,42,.05)}
 .mkt-plan--scale .mkt-plan__mark{background:#fce7f3;color:#db2777}
 .mkt-plan__title-row{display:flex;align-items:center;justify-content:space-between;gap:.5rem .75rem;width:100%}
-.mkt-plan__name{font-size:.8125rem;font-weight:500;letter-spacing:-.02em;color:#64748b}
+.mkt-plan__name{font-size:.8125rem;font-weight:500;letter-spacing:-.02em;color:#5a6474}
 .mkt-plan__badge{display:inline-flex;align-items:center;min-height:1.35rem;padding:.15rem .6rem;border-radius:9999px;border:1px solid #ddd6fe;background:#ede9fe;color:#6d28d9;font-size:.625rem;font-weight:650;white-space:nowrap}
 .mkt-plan__price-row{display:flex;flex-wrap:wrap;align-items:baseline;gap:.35rem .5rem;width:100%;margin-top:.55rem}
 .mkt-plan__price{font-size:2.1rem;font-weight:500;letter-spacing:-.035em;line-height:1;font-variant-numeric:tabular-nums}
-.mkt-plan__period{font-size:.8125rem;font-weight:450;color:#94a3b8}
-.mkt-plan__billing-note{margin-top:.4rem;width:100%;min-height:2.9em;font-size:.75rem;line-height:1.45;color:#64748b}
-.mkt-plan__blurb{margin-top:.65rem;width:100%;min-height:2.5em;font-size:.8125rem;line-height:1.5;color:#64748b}
+.mkt-plan__period{font-size:.8125rem;font-weight:450;color:#69727f}
+.mkt-plan__billing-note{margin-top:.4rem;width:100%;min-height:2.9em;font-size:.75rem;line-height:1.45;color:#5a6474}
+.mkt-plan__blurb{margin-top:.65rem;width:100%;min-height:2.5em;font-size:.8125rem;line-height:1.5;color:#5a6474}
 /* The plan buttons are the same object as the hero button, one size down:
    same lift, same press, same arrow, same sheen. */
 .mkt-plan__cta{position:relative;overflow:hidden;isolation:isolate;width:100%;margin-top:1rem;display:inline-flex;align-items:center;justify-content:center;gap:.45rem;min-height:2.85rem;padding:0 1rem;border-radius:9999px;font-size:.84rem;font-weight:550;text-decoration:none;transition:background .15s,border-color .15s,box-shadow .25s var(--e),transform .18s var(--e)}
@@ -504,9 +504,9 @@ section{padding:3.75rem 0}
 .mkt-plan__cta:focus-visible{outline:3px solid #c4b5fd;outline-offset:2px}
 .mkt-plan__features{flex:1;display:flex;flex-direction:column;padding:.85rem .55rem .35rem}
 .mkt-plan__kicker{margin-bottom:.65rem;padding:0 .35rem;font-size:.8125rem;font-weight:600;letter-spacing:-.02em;color:var(--ink)}
-.mkt-plan__meters{margin:0;padding:0 .35rem;list-style:none;flex:1;font-size:.8125rem;font-weight:450;color:#475569}
+.mkt-plan__meters{margin:0;padding:0 .35rem;list-style:none;flex:1;font-size:.8125rem;font-weight:450;color:#3f4b5e}
 .mkt-plan__meters li{display:flex;align-items:center;gap:.55rem;padding:.32rem 0}
-.mkt-plan__mark{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;width:1.28rem;height:1.28rem;border-radius:999px;background:#f1f5f9;color:#64748b}
+.mkt-plan__mark{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;width:1.28rem;height:1.28rem;border-radius:999px;background:#f1f5f9;color:#5a6474}
 .mkt-plan__meters li.is-locked{color:#cbd5e1}
 .mkt-plan__meters li.is-locked .mkt-plan__mark{background:#f8fafc;color:#cbd5e1}
 .cycle{display:flex;justify-content:center;gap:.25rem;width:max-content;margin:0 auto 1.6rem;padding:.25rem;border-radius:9999px;background:#ede9fe}
@@ -540,16 +540,16 @@ section{padding:3.75rem 0}
 .mkt-foot__logo-text{font-size:1.02rem;font-weight:500;letter-spacing:-.03em;color:var(--ink);white-space:nowrap}
 .mkt-foot__logo-text span{color:var(--violet)}
 .mkt-foot__company-rows{display:flex;flex-direction:column;gap:.55rem}
-.mkt-foot__company-row{font-size:.72rem;line-height:1.45;color:#64748b}
-.mkt-foot__company-row a{color:#475569;text-decoration:none;font-weight:500}
+.mkt-foot__company-row{font-size:.72rem;line-height:1.45;color:#5a6474}
+.mkt-foot__company-row a{color:#3f4b5e;text-decoration:none;font-weight:500}
 .mkt-foot__company-row a:hover{color:var(--violet)}
 .mkt-foot__company-sep{margin:0 .3rem;color:#cbd5e1}
 .mkt-foot__social-list{display:flex;gap:.5rem;list-style:none;padding:0;margin:0}
-.mkt-foot__social-btn{display:inline-flex;align-items:center;justify-content:center;width:2rem;height:2rem;border-radius:999px;color:#94a3b8;background:#f8fafc;box-shadow:inset 0 0 0 1px #eef2f7;transition:color .15s,background .15s}
+.mkt-foot__social-btn{display:inline-flex;align-items:center;justify-content:center;width:2rem;height:2rem;border-radius:999px;color:#69727f;background:#f8fafc;box-shadow:inset 0 0 0 1px #eef2f7;transition:color .15s,background .15s}
 .mkt-foot__social-btn:hover{color:var(--violet);background:#f5f3ff}
-.mkt-foot__legal{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.55rem 1.1rem;margin-top:.65rem;padding-top:.75rem;border-top:1px solid #f1f5f9;font-size:.72rem;color:#94a3b8}
+.mkt-foot__legal{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.55rem 1.1rem;margin-top:.65rem;padding-top:.75rem;border-top:1px solid #f1f5f9;font-size:.72rem;color:#69727f}
 .mkt-foot__legal-links{display:flex;flex-wrap:wrap;gap:.75rem 1rem}
-.mkt-foot__legal-links a{color:#94a3b8;text-decoration:none}
+.mkt-foot__legal-links a{color:#69727f;text-decoration:none}
 .mkt-foot__legal-links a:hover{color:var(--violet)}
 /* The social marks are set in currentColor, not in LinkedIn blue, Instagram
    magenta and YouTube red: three loud brand colours in the quietest part of
@@ -760,9 +760,9 @@ html[data-v="switch"] .mig{display:block}
 .fq-more{margin-top:1.4rem;text-align:center;font-size:.95rem;color:var(--muted)}
 .fq-more a{font-weight:500;text-decoration:none}
 /* The price block, rewritten so the yearly saving is the loudest number. */
-.mkt-plan__billing-note em{display:block;margin-top:.3rem;font-style:normal;color:#94a3b8}
+.mkt-plan__billing-note em{display:block;margin-top:.3rem;font-style:normal;color:#69727f}
 .save{display:inline-block;margin-left:.3rem;padding:.08rem .4rem;border-radius:999px;background:#e6f8ef;color:#0f7a52;font-size:.68rem;font-weight:700}
-.mkt-plan__gate{margin:.6rem .35rem 0;font-size:.72rem;line-height:1.4;color:#94a3b8}
+.mkt-plan__gate{margin:.6rem .35rem 0;font-size:.72rem;line-height:1.4;color:#69727f}
 /* The slim header, once the hero CTA is gone. */
 .topbar{position:fixed;inset:0 0 auto;z-index:45;display:none;align-items:center;justify-content:center;gap:1.25rem;padding:.6rem 1.25rem;background:rgba(255,255,255,.93);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);box-shadow:0 1px 0 rgba(124,58,237,.12),0 10px 30px -18px rgba(46,16,101,.4);transform:translateY(-110%);transition:transform .25s var(--e)}
 .topbar.on{transform:none}

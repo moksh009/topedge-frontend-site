@@ -31,7 +31,23 @@ body::-webkit-scrollbar {
   --mkt-violet-hover: #6d28d9;
   --mkt-violet-light: #f5f3ff;
   --mkt-ink: #0c1222;
-  --mkt-muted: #64748b;
+
+  /*
+   * Text ramp. Five steps, each one a job rather than a shade, so a rule says
+   * what the text IS instead of picking a slate off the Tailwind wall.
+   *
+   * The pages used #64748b and #94a3b8 straight from that wall for meta,
+   * notes, captions and legal links. On white #94a3b8 measures 2.6:1, which
+   * fails WCAG AA for normal text outright, and #64748b lands at 4.8:1, which
+   * passes on paper and still reads faint at the 12-13px those rules use it
+   * at. That is most of why the pages looked washed out next to competitors,
+   * who set long-form copy at 15:1 or better. Contrast on white is noted per
+   * step; do not lighten one without re-checking it.
+   */
+  --mkt-body: #262f3d;      /* long-form article prose — 13.5:1 */
+  --mkt-body-2: #3f4b5e;    /* secondary paragraphs, card copy — 8.8:1 */
+  --mkt-muted: #5a6474;     /* supporting copy, sub-headings — 6.0:1 */
+  --mkt-faint: #69727f;     /* meta, captions, legal, labels — 4.9:1 */
   --mkt-border: #efeaf8;
   --mkt-success: #10b981;
   --mkt-shell: #ffffff;
@@ -125,7 +141,7 @@ body::-webkit-scrollbar {
   border-radius: 9999px;
   font-size: 0.6875rem;
   font-weight: 500;
-  color: #6b7280;
+  color: var(--mkt-muted);
   background: #f8fafc;
   border: 1px solid #e2e8f0;
 }
@@ -281,7 +297,7 @@ body::-webkit-scrollbar {
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.55;
-  color: #64748b;
+  color: var(--mkt-muted);
 }
 
 .mkt-cta__actions {
@@ -673,7 +689,7 @@ html.mkt-has-ann.mkt-nav-locked body {
   font-weight: 500;
   letter-spacing: -0.015em;
   line-height: 1;
-  color: #475569;
+  color: var(--mkt-body-2);
   text-decoration: none;
   background: transparent;
   outline: none;
@@ -711,7 +727,7 @@ html.mkt-has-ann.mkt-nav-locked body {
 }
 
 .mkt-nav__link--btn.is-active .mkt-nav__chev {
-  color: #64748b;
+  color: var(--mkt-muted);
 }
 
 .mkt-nav__chev {
@@ -1247,7 +1263,7 @@ html.mkt-has-ann.mkt-nav-locked body {
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #94a3b8;
+  color: var(--mkt-faint);
   line-height: 1;
 }
 
@@ -1287,7 +1303,7 @@ html.mkt-has-ann.mkt-nav-locked body {
   font-weight: 500;
   letter-spacing: -0.015em;
   line-height: 1.35;
-  color: #334155;
+  color: var(--mkt-body);
   text-decoration: none;
   transition:
     background 0.2s cubic-bezier(0.16, 1, 0.3, 1),
@@ -1689,7 +1705,7 @@ html.mkt-nav-locked .mkt-nav__mobile-scroll {
   font-weight: 500;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: #94a3b8;
+  color: var(--mkt-faint);
   background: transparent;
 }
 
@@ -1708,7 +1724,7 @@ html.mkt-nav-locked .mkt-nav__mobile-scroll {
   gap: 0.35rem;
   font-size: 0.875rem;
   font-weight: 400;
-  color: #475569;
+  color: var(--mkt-body-2);
   text-decoration: none;
   line-height: 1.35;
   transition: color 0.15s ease;
@@ -1743,7 +1759,7 @@ html.mkt-nav-locked .mkt-nav__mobile-scroll {
   min-height: 0;
   padding: 0.85rem 0 0;
   background: transparent;
-  color: #64748b;
+  color: var(--mkt-muted);
   border-top: 1px solid #f1f5f9;
   align-self: stretch;
 }
@@ -1754,7 +1770,7 @@ html.mkt-nav-locked .mkt-nav__mobile-scroll {
   font-weight: 500;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: #94a3b8;
+  color: var(--mkt-faint);
   white-space: nowrap;
 }
 
@@ -1808,7 +1824,7 @@ html.mkt-nav-locked .mkt-nav__mobile-scroll {
   font-size: 0.72rem;
   font-weight: 550;
   letter-spacing: 0.02em;
-  color: #94a3b8;
+  color: var(--mkt-faint);
 }
 
 .mkt-foot__trust-list {
@@ -1882,14 +1898,14 @@ a.mkt-foot__partner:hover {
   align-items: start;
   font-size: 0.72rem;
   line-height: 1.45;
-  color: #64748b;
+  color: var(--mkt-muted);
 }
 
 .mkt-foot__company-row > svg {
   width: 0.875rem;
   height: 0.875rem;
   margin-top: 0.22rem;
-  color: #94a3b8;
+  color: var(--mkt-faint);
   justify-self: center;
 }
 
@@ -1899,7 +1915,7 @@ a.mkt-foot__partner:hover {
 }
 
 .mkt-foot__company-row a {
-  color: #475569;
+  color: var(--mkt-body-2);
   text-decoration: none;
   font-weight: 500;
 }
@@ -1924,7 +1940,7 @@ a.mkt-foot__partner:hover {
   padding-top: 0.75rem;
   border-top: 1px solid #f1f5f9;
   font-size: 0.72rem;
-  color: #94a3b8;
+  color: var(--mkt-faint);
 }
 
 .mkt-foot__legal p {
@@ -1938,7 +1954,7 @@ a.mkt-foot__partner:hover {
 }
 
 .mkt-foot__legal-links a {
-  color: #94a3b8;
+  color: var(--mkt-faint);
   text-decoration: none;
 }
 

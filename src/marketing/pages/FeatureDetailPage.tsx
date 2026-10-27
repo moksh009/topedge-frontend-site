@@ -114,7 +114,7 @@ export default function FeatureDetailPage() {
                 </PrimaryButton>
                 <GhostButton to="/pricing">See pricing</GhostButton>
               </div>
-              <p className="mt-6 text-sm text-slate-500">
+              <p className="mt-6 text-sm text-[#5a6474]">
                 Also see{' '}
                 <Link to="/shopify-whatsapp-integration" className="font-medium text-[#7C3AED]">
                   Shopify WhatsApp integration
@@ -135,7 +135,7 @@ export default function FeatureDetailPage() {
                   <p className="text-sm leading-relaxed text-slate-600">{o}</p>
                 </MarketingCard>
               ))}
-              <p className="pt-2 text-xs text-slate-400">
+              <p className="pt-2 text-xs text-[#69727f]">
                 Live data and settings are managed in your dashboard after you connect Shopify &
                 WhatsApp.
               </p>
@@ -155,7 +155,7 @@ export default function FeatureDetailPage() {
                 className="rounded-[20px] border border-[#efeaf8] bg-white/90 p-5 transition hover:border-[#c4b5fd]"
               >
                 <p className="text-sm font-medium text-[#0c1222]">{f.title}</p>
-                <p className="mt-2 line-clamp-2 text-sm text-slate-500">{f.body}</p>
+                <p className="mt-2 line-clamp-2 text-sm text-[#5a6474]">{f.body}</p>
               </Link>
             ))}
           </div>

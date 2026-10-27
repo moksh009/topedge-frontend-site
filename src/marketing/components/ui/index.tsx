@@ -159,7 +159,7 @@ export function SectionHeading({
       {subtitle && (
         <p
           className={cn(
-            'mt-4 max-w-3xl text-base leading-snug text-slate-500 md:text-lg',
+            'mt-4 max-w-3xl text-base leading-snug text-[#5a6474] md:text-lg',
             center && 'mx-auto',
           )}
         >
@@ -205,7 +205,7 @@ export function PageHero({
           {title}
         </h1>
         {subtitle && (
-          <p className="mt-5 max-w-3xl text-[clamp(0.9rem,1.5vw,1.05rem)] leading-snug text-slate-500 max-[640px]:text-[0.875rem]">
+          <p className="mt-5 max-w-3xl text-[clamp(0.9rem,1.5vw,1.05rem)] leading-snug text-[#5a6474] max-[640px]:text-[0.875rem]">
             {subtitle}
           </p>
         )}
@@ -237,7 +237,7 @@ export function PageHero({
           {title}
         </h1>
         {subtitle && (
-          <p className="mt-5 max-w-3xl text-[clamp(0.9rem,1.5vw,1.05rem)] leading-snug text-slate-500 max-[640px]:text-[0.875rem]">
+          <p className="mt-5 max-w-3xl text-[clamp(0.9rem,1.5vw,1.05rem)] leading-snug text-[#5a6474] max-[640px]:text-[0.875rem]">
             {subtitle}
           </p>
         )}

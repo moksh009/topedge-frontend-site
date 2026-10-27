@@ -48,7 +48,7 @@
   max-width: 38rem;
   font-size: clamp(0.95rem, 1.5vw, 1.05rem);
   line-height: 1.6;
-  color: #64748b;
+  color: var(--mkt-muted);
   text-wrap: pretty;
 }
 
@@ -159,7 +159,7 @@
   margin-top: 0.3rem;
   font-size: 0.875rem;
   line-height: 1.55;
-  color: #64748b;
+  color: var(--mkt-muted);
   text-wrap: pretty;
 }
 
@@ -173,7 +173,7 @@
 .mkt-contact__channel-note {
   margin-top: 0.3rem;
   font-size: 0.78125rem;
-  color: #94a3b8;
+  color: var(--mkt-faint);
 }
 
 /* ——— Everything that is not a sales question ——— */
@@ -221,7 +221,7 @@
   margin: 0;
   font-size: 0.875rem;
   line-height: 1.6;
-  color: #64748b;
+  color: var(--mkt-muted);
   text-wrap: pretty;
 }
 

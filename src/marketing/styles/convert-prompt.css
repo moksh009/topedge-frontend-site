@@ -75,38 +75,66 @@
     padding: 2rem 1.9rem 1.5rem;
   }
 
+  /*
+   * The art is the panel, not a picture sitting inside one.
+   *
+   * With padding on all four sides the image floated in a tinted box with a
+   * visible margin left and right of it, which read as a gap the layout had
+   * forgotten to close. Edge to edge, filling the column's full height, the
+   * right-hand side becomes one surface and the seam between the columns is
+   * the only line in it.
+   */
   .mkt-convert__aside {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    padding: 1.9rem 1.6rem 1.5rem;
+    gap: 0;
+    padding: 0;
     border-left: 1px solid #f1eefb;
     background: #faf9fd;
+    overflow: hidden;
   }
 }
 
-/* The right-hand column is proof, not decoration: on a phone it would push
-   the buttons off-screen, so only the marquee survives there. */
+/* On a phone this column is the cropped art plus the marquee, stacked under
+   the CTAs rather than beside them. */
 .mkt-convert__aside {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
   margin-top: 1rem;
 }
 
 /*
- * The artwork on the right: the composition supplied for this modal, placed
- * as given. It already carries its own feature cards and figures, so nothing
- * is drawn over it. Hidden on a phone, where it would push the buttons off
- * the screen.
+ * The artwork: the composition supplied for this modal, placed as given. It
+ * already carries its own feature cards and figures, so nothing is drawn over
+ * it.
+ *
+ * On a phone it was hidden outright, on the grounds that it would push the
+ * buttons off the screen. At full height it would — but cropped to a band it
+ * costs about 110px and the card still fits inside 88dvh with the CTAs above
+ * the fold, so the modal keeps the picture that explains what it is selling.
  */
 .mkt-convert__art {
-  display: none;
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 7;
+  object-fit: cover;
+  object-position: center 38%;
+  border-radius: 10px;
 }
 
 @media (min-width: 760px) {
   .mkt-convert__art {
     display: block;
     width: 100%;
+    /* Takes whatever height the left column sets, and crops rather than
+       letterboxes, so there is never dead space above or below it. */
+    flex: 1 1 auto;
+    min-height: 0;
     height: auto;
-    border-radius: 10px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 0;
   }
 }
 
@@ -130,7 +158,7 @@
     padding-left: 1.45rem;
     font-size: 0.875rem;
     line-height: 1.5;
-    color: #475569;
+    color: var(--mkt-body-2);
   }
 
   .mkt-convert__points li::before {
@@ -170,7 +198,7 @@
   border: 0;
   border-radius: 999px;
   background: transparent;
-  color: #94a3b8;
+  color: var(--mkt-faint);
   cursor: pointer;
 }
 
@@ -257,75 +285,33 @@
   margin: 0.65rem 0 0;
   font-size: 0.875rem;
   line-height: 1.45;
-  color: #64748b;
+  color: var(--mkt-muted);
 }
 
 .mkt-convert__trial {
   display: none;
 }
 
-.mkt-convert__stats {
-  display: none;
-}
 
-@media (min-width: 760px) {
-  .mkt-convert__stats {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.5rem;
-    margin-top: 0;
-  }
 
-  .mkt-convert__stat {
-    padding: 0.7rem 0.5rem;
-    border: 1px solid #ece9f6;
-    border-radius: 10px;
-    background: #fff;
-  }
 
-  .mkt-convert__stat strong {
-    font-size: 1.25rem;
-  }
 
-  .mkt-convert__stat span {
-    font-size: 0.72rem;
-    max-width: none;
-  }
-}
-
-.mkt-convert__stat {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.2rem;
-  min-height: 0;
-  padding: 0.35rem 0.25rem;
-  text-align: center;
-}
-
-.mkt-convert__stat strong {
-  font-size: 1.05rem;
-  font-weight: 600;
-  letter-spacing: -0.03em;
-  line-height: 1;
-  color: #7c3aed;
-  font-variant-numeric: tabular-nums;
-}
-
-.mkt-convert__stat span {
-  font-size: 0.68rem;
-  font-weight: 500;
-  line-height: 1.25;
-  color: #64748b;
-  max-width: 4.8rem;
-}
 
 .mkt-convert__brands {
   margin-top: 0.85rem;
   margin-bottom: 0;
   padding: 0.35rem 0;
   overflow: hidden;
+}
+
+@media (min-width: 760px) {
+  .mkt-convert__brands {
+    flex: none;
+    margin-top: 0;
+    padding: 0.9rem 1.4rem 1.1rem;
+    border-top: 1px solid #f1eefb;
+    background: #faf9fd;
+  }
 }
 
 .mkt-convert__brands-label {
@@ -432,12 +418,12 @@
   padding: 0.25rem 0.5rem;
   font-size: 0.75rem;
   font-weight: 500;
-  color: #94a3b8;
+  color: var(--mkt-faint);
   cursor: pointer;
 }
 
 .mkt-convert__dismiss:hover {
-  color: #64748b;
+  color: var(--mkt-muted);
 }
 
 @keyframes mkt-convert-fade {
@@ -512,13 +498,7 @@
     -webkit-box-decoration-break: clone;
   }
 
-  .mkt-convert__stats {
-    gap: 0.25rem;
-  }
 
-  .mkt-convert__stat strong {
-    font-size: 0.98rem;
-  }
 
   .mkt-convert__brands-track {
     gap: 1.75rem;

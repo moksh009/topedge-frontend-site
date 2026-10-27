@@ -2,8 +2,8 @@
 
 .mkt-pf {
   --pf-ink: #0c1222;
-  --pf-muted: #64748b;
-  --pf-soft: #94a3b8;
+  --pf-muted: var(--mkt-muted);
+  --pf-soft: var(--mkt-faint);
   --pf-line: #eef0f4;
   --pf-violet: #7c3aed;
   --pf-wash: #f8f6ff;
@@ -683,7 +683,7 @@
   font-weight: 500;
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.06em;
-  color: #64748b;
+  color: var(--mkt-muted);
   line-height: 1;
 }
 

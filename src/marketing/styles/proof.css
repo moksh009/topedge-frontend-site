@@ -40,16 +40,26 @@
   color: var(--mkt-plan-ink, #0c1222);
 }
 
+/*
+ * The mark sits inside the wordmark, immediately before the name, the way
+ * the Trustpilot star does beside it. It used to lead the whole pill, which
+ * put a logo in front of the score it belongs to and read as a bullet rather
+ * than as part of the name.
+ */
 .mkt-ph__word {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
   font-weight: 600;
   color: #191919;
-}
-
-.mkt-ph__count {
-  font-size: 0.8125rem;
-  color: #94a3b8;
   white-space: nowrap;
 }
+
+.mkt-ph__word svg {
+  display: block;
+  flex: none;
+}
+
 
 .mkt-ph__badge:hover .mkt-ph__text b,
 .mkt-ph__badge:hover .mkt-ph__word {
@@ -57,8 +67,7 @@
   text-underline-offset: 2px;
 }
 
-.mkt-ph__badge--compact .mkt-ph__text,
-.mkt-ph__badge--compact .mkt-ph__count {
+.mkt-ph__badge--compact .mkt-ph__text {
   font-size: 0.8125rem;
 }
 
@@ -162,10 +171,6 @@
   background: #fff;
 }
 
-.mkt-proof-row--plain .mkt-tp__count,
-.mkt-proof-row--plain .mkt-ph__count {
-  margin-left: auto;
-}
 
 .mkt-proof-row--plain .mkt-proof-row__sep {
   display: none;
@@ -198,7 +203,7 @@
   max-width: 38rem;
   font-size: 0.95rem;
   line-height: 1.6;
-  color: #64748b;
+  color: var(--mkt-muted);
 }
 
 .mkt-ph__badge-wrap {
@@ -241,7 +246,7 @@
   margin: 0;
   font-size: 0.9375rem;
   line-height: 1.6;
-  color: #334155;
+  color: var(--mkt-body);
 }
 
 .mkt-ph__author {
@@ -255,14 +260,14 @@
   display: block;
   margin-top: 0.1rem;
   font-weight: 400;
-  color: #94a3b8;
+  color: var(--mkt-faint);
 }
 
 .mkt-ph__retrieved {
   margin: 1.25rem 0 0;
   text-align: center;
   font-size: 0.8125rem;
-  color: #94a3b8;
+  color: var(--mkt-faint);
 }
 
 .mkt-ph__retrieved a {
@@ -304,7 +309,7 @@
   max-width: 40rem;
   font-size: 0.9375rem;
   line-height: 1.6;
-  color: #64748b;
+  color: var(--mkt-muted);
 }
 
 .mkt-rp__grid {
@@ -352,7 +357,7 @@
   font-size: 0.8125rem;
   font-weight: 600;
   letter-spacing: -0.01em;
-  color: #475569;
+  color: var(--mkt-body-2);
 }
 
 .mkt-rp__brand svg {
@@ -375,7 +380,7 @@
 .mkt-rp__meta {
   font-size: 0.78rem;
   line-height: 1.45;
-  color: #94a3b8;
+  color: var(--mkt-faint);
 }
 
 .mkt-rp__link > .mkt-tp__score,
@@ -388,9 +393,7 @@
 /* Inside a card that is itself the link, the badge is decoration: its own
    score text would repeat the big number right above it. */
 .mkt-rp__link .mkt-tp__score-text,
-.mkt-rp__link .mkt-ph__text,
-.mkt-rp__link .mkt-tp__count,
-.mkt-rp__link .mkt-ph__count {
+.mkt-rp__link .mkt-ph__text {
   display: none;
 }
 
@@ -437,7 +440,7 @@
   margin: 0;
   font-size: 0.9rem;
   line-height: 1.6;
-  color: #334155;
+  color: var(--mkt-body);
 }
 
 .mkt-rp__quote cite {

@@ -493,7 +493,7 @@ export default function TermsPage() {
             Questions about these Terms for <strong>{COMPANY_BRAND_NAME}</strong> ({COMPANY_LEGAL_NAME}):
           </p>
           <LegalEntityContactCard />
-          <p style={{ marginTop: '0.65rem', fontSize: '0.75rem', color: '#94a3b8' }}>
+          <p style={{ marginTop: '0.65rem', fontSize: '0.75rem', color: '#69727f' }}>
             Prefer email: <a href={`mailto:${COMPANY_EMAIL}`}>{COMPANY_EMAIL}</a>.
             Document version: {LEGAL_DOCS_VERSION}.
           </p>

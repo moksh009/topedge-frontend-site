@@ -410,7 +410,7 @@ export function organizationJsonLd() {
     ],
     sameAs: [
       'https://www.linkedin.com/company/topedgeai',
-      'https://www.instagram.com/topedge_ai/',
+      'https://www.instagram.com/topedgeai_com/',
       'https://www.youtube.com/@topedge_ai',
       COMPANY_SHOPIFY_APP_URL,
       // Listed because it exists and the site links to it from /pricing and
