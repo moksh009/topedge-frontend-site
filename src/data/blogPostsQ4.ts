@@ -235,7 +235,8 @@ export const blogPostsQ4: BlogPost[] = [
     author: 'Moksh Patel',
     image: '/blog/wati-alternative-shopify-india.jpg',
     imageWebp: '/blog/wati-alternative-shopify-india.webp',
-    imageAlt: 'Best WATI alternative for Shopify: WhatsApp and Shopify syncing at 0% Meta markup with automated support, cart recovery and repeat purchases, with the Meta Business Partner mark',
+    imageAlt:
+      'WATI alternative for Shopify India, with a support ticket beside a ₹1,299 Shopify order and native COD confirmation active',
     keywords: [
       'WATI alternative',
       'WATI alternative India',
@@ -336,7 +337,8 @@ ${faqHtml(WATI_FAQS)}
     author: 'Moksh Patel',
     image: '/blog/aisensy-alternative-shopify-india.jpg',
     imageWebp: '/blog/aisensy-alternative-shopify-india.webp',
-    imageAlt: 'Best AiSensy alternative for Shopify India: WhatsApp automation connected to Shopify at zero Meta markup, with the Meta Business Partner mark',
+    imageAlt:
+      'AiSensy alternative for Shopify India, with 0% Meta markup and native COD-to-prepaid conversion on WhatsApp',
     keywords: [
       'AiSensy alternative',
       'AiSensy alternative India',
@@ -428,7 +430,8 @@ ${faqHtml(AISENSY_FAQS)}
     author: 'Moksh Patel',
     image: '/blog/interakt-alternative-shopify-india.jpg',
     imageWebp: '/blog/interakt-alternative-shopify-india.webp',
-    imageAlt: 'Best Interakt alternative for Shopify India: WhatsApp automation connected to Shopify at zero Meta markup, with the Meta Business Partner mark',
+    imageAlt:
+      'Interakt alternative for Shopify India, comparing Starter and Growth plans from ₹1,999 a month with BYOK AI active',
     keywords: [
       'Interakt alternative',
       'Interakt alternative Shopify',
@@ -677,8 +680,10 @@ ${faqHtml(TEMPLATE_FAQS)}
     readTime: '9 min',
     category: 'Compliance',
     author: 'Moksh Patel',
-    image: '/marketing/features/optin-popup.jpg',
-    imageAlt: 'Shopify WhatsApp opt-in popup collecting customer consent for order updates and offers',
+    image: '/blog/whatsapp-opt-in-shopify-india.jpg',
+    imageWebp: '/blog/whatsapp-opt-in-shopify-india.webp',
+    imageAlt:
+      'WhatsApp opt-in and DPDP compliance for Shopify India, with a Get updates on WhatsApp consent checkbox and a high quality rating',
     keywords: [
       'WhatsApp opt-in Shopify',
       'WhatsApp opt-in India',
@@ -754,7 +759,8 @@ ${faqHtml(OPTIN_FAQS)}
     author: 'Moksh Patel',
     image: '/blog/updatrr-alternative-shopify-india.jpg',
     imageWebp: '/blog/updatrr-alternative-shopify-india.webp',
-    imageAlt: 'Best Updatrr alternative for Shopify India: WhatsApp and Shopify syncing with zero Meta markup, cart recovery and repeat purchases, with the Meta Business Partner mark',
+    imageAlt:
+      'Updatrr alternative for Shopify India, comparing INR, USD, EUR and GBP plans from ₹1,999 a month with BYOK AI active',
     keywords: [
       'Updatrr alternative',
       'Updatrr alternative Shopify',
@@ -877,7 +883,8 @@ ${faqHtml(UPDATRR_FAQS)}
     author: 'Moksh Patel',
     image: '/blog/cod-to-prepaid-whatsapp-shopify-india.jpg',
     imageWebp: '/blog/cod-to-prepaid-whatsapp-shopify-india.webp',
-    imageAlt: 'Convert COD to Prepaid on WhatsApp: a WhatsApp order confirmation, the Shopify bag and a Pay via UPI card offering ₹50 off, with the Meta Business Partner mark',
+    imageAlt:
+      'COD to prepaid on WhatsApp for Shopify India, saving about ₹68 per order with a UPI prepaid upgrade before dispatch',
     keywords: [
       'COD to prepaid WhatsApp',
       'convert COD to prepaid Shopify',

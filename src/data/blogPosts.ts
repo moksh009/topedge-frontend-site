@@ -22,9 +22,10 @@ export const blogPosts: BlogPost[] = [
     readTime: '14 min',
     category: 'Cart recovery',
     author: 'Moksh Patel',
-    image: '/marketing/solutions/sol-fashion-cart-saas.jpg',
+    image: '/blog/whatsapp-abandoned-cart-recovery-shopify.jpg',
+    imageWebp: '/blog/whatsapp-abandoned-cart-recovery-shopify.webp',
     imageAlt:
-      'Diagram-style Shopify abandoned cart recovered on WhatsApp with product and checkout context',
+      'Shopify abandoned cart recovery on WhatsApp, with a ₹2,499 backpack left in the cart and a resume checkout reminder sequence',
     keywords: [
       'Shopify abandoned cart recovery',
       'Shopify cart recovery',
@@ -400,9 +401,10 @@ export const blogPosts: BlogPost[] = [
     readTime: '11 min',
     category: 'Ecommerce automation',
     author: 'Moksh Patel',
-    image: '/marketing/features/shopify-whatsapp.jpg',
-    imageWebp: '/marketing/features/shopify-whatsapp.webp',
-    imageAlt: 'Shopify connected to WhatsApp automation for Indian D2C brands',
+    image: '/blog/shopify-whatsapp-automation-what-to-automate-first.jpg',
+    imageWebp: '/blog/shopify-whatsapp-automation-what-to-automate-first.webp',
+    imageAlt:
+      'What to automate first on Shopify WhatsApp: cart recovery, order updates, shipping updates and post-purchase nurture, rolled out in stages',
     keywords: [
       'Shopify WhatsApp automation',
       'WhatsApp automation',
@@ -495,8 +497,10 @@ export const blogPosts: BlogPost[] = [
     readTime: '11 min',
     category: 'Strategy',
     author: 'Smit Tilva',
-    image: '/marketing/features/intent-detection-flow.jpg',
-    imageAlt: 'Intent-aware ecommerce automation flow across WhatsApp and other channels',
+    image: '/blog/ecommerce-automation-whatsapp-vs-email-india.jpg',
+    imageWebp: '/blog/ecommerce-automation-whatsapp-vs-email-india.webp',
+    imageAlt:
+      'WhatsApp vs email marketing for Indian D2C brands, comparing the two channels inside one active channel strategy',
     keywords: [
       'ecommerce automation WhatsApp vs email',
       'WhatsApp marketing India',
@@ -591,8 +595,10 @@ export const blogPosts: BlogPost[] = [
     readTime: '13 min',
     category: 'Meta',
     author: 'Moksh Patel',
-    image: '/marketing/customers/customers-outcome-template.png',
-    imageAlt: 'Approved WhatsApp Cloud API templates used in Shopify customer journeys',
+    image: '/blog/meta-whatsapp-cloud-api-shopify-templates.jpg',
+    imageWebp: '/blog/meta-whatsapp-cloud-api-shopify-templates.webp',
+    imageAlt:
+      'Meta WhatsApp Cloud API templates for Shopify, with an order update template approved in the utility category',
     keywords: [
       'Meta WhatsApp Cloud API',
       'WhatsApp Business API Shopify',
@@ -696,8 +702,10 @@ export const blogPosts: BlogPost[] = [
     readTime: '11 min',
     category: 'Inbox',
     author: 'Moksh Patel',
-    image: '/marketing/solutions/sol-fashion-inbox-saas.jpg',
-    imageAlt: 'Shared WhatsApp inbox showing Shopify order context beside the conversation',
+    image: '/blog/whatsapp-shared-inbox-shopify-order-context.jpg',
+    imageWebp: '/blog/whatsapp-shared-inbox-shopify-order-context.webp',
+    imageAlt:
+      "WhatsApp shared inbox for Shopify, with a support ticket beside the customer's ₹1,098 Shopify order and its line items",
     keywords: [
       'WhatsApp shared inbox',
       'Shopify WhatsApp support',
@@ -817,8 +825,10 @@ export const blogPosts: BlogPost[] = [
     readTime: '10 min',
     category: 'Checklist',
     author: 'Moksh Patel',
-    image: '/marketing/solutions/sol-beauty-cart-saas.jpg',
-    imageAlt: 'Checklist-style Shopify WhatsApp setup for cart recovery and inbox',
+    image: '/blog/shopify-automation-checklist-whatsapp-cart-recovery.jpg',
+    imageWebp: '/blog/shopify-automation-checklist-whatsapp-cart-recovery.webp',
+    imageAlt:
+      'Shopify WhatsApp go-live checklist with templates approved, flows approved, opt-in confirmed and domain verified before launch',
     keywords: [
       'Shopify automation checklist',
       'WhatsApp automation checklist',
@@ -920,8 +930,10 @@ export const blogPosts: BlogPost[] = [
     readTime: '16 min',
     category: 'Comparisons',
     author: 'Moksh Patel',
-    image: '/marketing/features/unified-identity.jpg',
-    imageAlt: 'Unified customer identity across Shopify and WhatsApp automation tools',
+    image: '/blog/best-whatsapp-automation-tools-shopify-india.jpg',
+    imageWebp: '/blog/best-whatsapp-automation-tools-shopify-india.webp',
+    imageAlt:
+      'Best WhatsApp automation for Shopify India, with a platform comparison rating automation, integration, ease of use and support 4.8 out of 5',
     keywords: [
       'best WhatsApp automation tools',
       'WhatsApp Shopify India',
@@ -1155,8 +1167,10 @@ export const blogPosts: BlogPost[] = [
     readTime: '16 min',
     category: 'COD',
     author: 'Moksh Patel',
-    image: '/marketing/solutions/sol-cod-rto-saas.jpg',
-    imageAlt: 'Reducing Shopify RTO with WhatsApp COD confirmation before shipment',
+    image: '/blog/how-to-reduce-rto-with-whatsapp-cod-confirmation.jpg',
+    imageWebp: '/blog/how-to-reduce-rto-with-whatsapp-cod-confirmation.webp',
+    imageAlt:
+      'Reducing COD RTO on Shopify with a WhatsApp confirmation for a ₹1,249 COD order and a warehouse hold until the buyer replies',
     keywords: [
       'reduce RTO',
       'COD confirmation WhatsApp',
@@ -1364,8 +1378,10 @@ export const blogPosts: BlogPost[] = [
     readTime: '12 min',
     category: 'Basics',
     author: 'Moksh Patel',
-    image: '/marketing/solutions/sol-cod-prepaid-saas.jpg',
-    imageAlt: 'Ecommerce automation covering COD and prepaid Shopify orders on WhatsApp',
+    image: '/blog/what-is-ecommerce-automation-shopify-whatsapp.jpg',
+    imageWebp: '/blog/what-is-ecommerce-automation-shopify-whatsapp.webp',
+    imageAlt:
+      'Ecommerce automation explained: a new order placed on Shopify triggering an automated WhatsApp notification over a live sync',
     keywords: [
       'ecommerce automation',
       'Shopify WhatsApp automation',
@@ -1469,8 +1485,10 @@ export const blogPosts: BlogPost[] = [
     readTime: '12 min',
     category: 'AI',
     author: 'Moksh Patel',
-    image: '/marketing/solutions/sol-electronics-inbox-saas.jpg',
-    imageAlt: 'AI WhatsApp chatbot answering Shopify catalog questions with human handoff',
+    image: '/blog/ai-whatsapp-chatbot-for-shopify-india.jpg',
+    imageWebp: '/blog/ai-whatsapp-chatbot-for-shopify-india.webp',
+    imageAlt:
+      'AI WhatsApp chatbot for Shopify India answering live SKU and price questions, with smart handoff to a human agent',
     keywords: [
       'AI WhatsApp chatbot Shopify',
       'ecommerce AI chatbot India',
@@ -1618,8 +1636,10 @@ export const blogPosts: BlogPost[] = [
     readTime: '10 min',
     category: 'Comparisons',
     author: 'Moksh Patel',
-    image: '/marketing/features/unified-identity.jpg',
-    imageAlt: 'Shopify India team evaluating a Zoko alternative for WhatsApp commerce',
+    image: '/blog/zoko-alternative-shopify-india.jpg',
+    imageWebp: '/blog/zoko-alternative-shopify-india.webp',
+    imageAlt:
+      'Zoko alternative for Shopify India, with predictable INR billing and zero hidden WhatsApp fees beside revenue and growth figures',
     keywords: [
       'Zoko alternative',
       'Zoko alternative Shopify',
@@ -1729,8 +1749,10 @@ export const blogPosts: BlogPost[] = [
     readTime: '9 min',
     category: 'Comparisons',
     author: 'Moksh Patel',
-    image: '/marketing/solutions/sol-fashion-inbox-saas.jpg',
-    imageAlt: 'Merchant comparing Getgabs entry pricing with deeper Shopify WhatsApp stacks',
+    image: '/blog/getgabs-alternative-shopify-whatsapp.jpg',
+    imageWebp: '/blog/getgabs-alternative-shopify-whatsapp.webp',
+    imageAlt:
+      'Getgabs alternative for Shopify India, with native COD-to-prepaid conversion and unified customer identity on WhatsApp',
     keywords: [
       'Getgabs alternative',
       'Getgabs vs TopEdge',
@@ -1830,8 +1852,10 @@ export const blogPosts: BlogPost[] = [
     readTime: '9 min',
     category: 'Comparisons',
     author: 'Moksh Patel',
-    image: '/marketing/customers/customers-outcome-template.png',
-    imageAlt: 'Shopify India brand evaluating Kanal as a WhatsApp alternative',
+    image: '/blog/kanal-whatsapp-alternative-shopify.jpg',
+    imageWebp: '/blog/kanal-whatsapp-alternative-shopify.webp',
+    imageAlt:
+      'Kanal alternative for Shopify India, comparing INR and EUR payout settlement with native India COD support',
     keywords: [
       'Kanal alternative',
       'Kanal WhatsApp alternative',
@@ -1924,8 +1948,10 @@ export const blogPosts: BlogPost[] = [
     readTime: '12 min',
     category: 'Guides',
     author: 'Smit Tilva',
-    image: '/marketing/features/optin-popup.jpg',
-    imageAlt: 'Shopify merchant evaluating WhatsApp apps in the App Store',
+    image: '/blog/how-to-choose-whatsapp-app-shopify-app-store.jpg',
+    imageWebp: '/blog/how-to-choose-whatsapp-app-shopify-app-store.webp',
+    imageAlt:
+      'Choosing a WhatsApp app on the Shopify App Store, weighing 0% Meta markup and review ratings against a feature checklist',
     keywords: [
       'Shopify WhatsApp app',
       'best WhatsApp app Shopify',
@@ -2020,9 +2046,10 @@ export const blogPosts: BlogPost[] = [
     readTime: '9 min',
     category: 'Meta',
     author: 'Moksh Patel',
-    image: '/marketing/features/shopify-whatsapp.jpg',
-    imageWebp: '/marketing/features/shopify-whatsapp.webp',
-    imageAlt: 'Meta WhatsApp Cloud API pricing categories for Indian Shopify brands',
+    image: '/blog/whatsapp-business-api-pricing-india.jpg',
+    imageWebp: '/blog/whatsapp-business-api-pricing-india.webp',
+    imageAlt:
+      'WhatsApp Business API pricing in India, with marketing conversations at ₹0.8631 and utility, authentication and service rates at 0% vendor markup',
     keywords: [
       'WhatsApp Business API pricing India',
       'WhatsApp API rates India 2026',
@@ -2231,8 +2258,10 @@ export const blogPosts: BlogPost[] = [
     readTime: '9 min',
     category: 'Comparisons',
     author: 'Moksh Patel',
-    image: '/marketing/features/unified-identity.jpg',
-    imageAlt: 'Shopify India operator comparing Dondy WhatsApp rates with Meta pass-through pricing',
+    image: '/blog/dondy-alternative-shopify-india.jpg',
+    imageWebp: '/blog/dondy-alternative-shopify-india.webp',
+    imageAlt:
+      'Dondy alternative for Shopify India, with an estimated monthly cost panel in rupees, lower costs and 0% Meta markup',
     keywords: [
       'Dondy alternative',
       'Dondy alternative Shopify',
@@ -2328,10 +2357,10 @@ export const blogPosts: BlogPost[] = [
     readTime: '18 min',
     category: 'Ecommerce automation',
     author: 'Moksh Patel',
-    image: '/marketing/features/shopify-whatsapp.jpg',
-    imageWebp: '/marketing/features/shopify-whatsapp.webp',
+    image: '/blog/whatsapp-automation-for-shopify.jpg',
+    imageWebp: '/blog/whatsapp-automation-for-shopify.webp',
     imageAlt:
-      'Shopify event flowing into WhatsApp automation for cart, COD, order updates, and support',
+      'WhatsApp automation for Shopify India, with automated journeys linking a Shopify order to WhatsApp messages, tags and tracking',
     keywords: [
       'WhatsApp automation for Shopify',
       'Shopify WhatsApp automation',
@@ -2732,9 +2761,10 @@ export const blogPosts: BlogPost[] = [
     readTime: '17 min',
     category: 'Comparisons',
     author: 'Smit Tilva',
-    image: '/marketing/features/unified-identity.jpg',
+    image: '/blog/best-whatsapp-apps-for-shopify.jpg',
+    imageWebp: '/blog/best-whatsapp-apps-for-shopify.webp',
     imageAlt:
-      'Comparison board of Shopify WhatsApp apps for cart recovery, COD, marketing, and support',
+      'Best WhatsApp apps for Shopify compared, with a WhatsApp-to-Shopify sync panel showing orders, customers and messages at 0% Meta markup',
     keywords: [
       'best WhatsApp apps for Shopify',
       'best WhatsApp app for Shopify',
@@ -3168,9 +3198,10 @@ export const blogPosts: BlogPost[] = [
     readTime: '9 min',
     category: 'Growth',
     author: 'Smit Tilva',
-    image: '/marketing/solutions/sol-beauty-cart-saas.jpg',
+    image: '/blog/organic-vs-paid-ecommerce-marketing-2026.jpg',
+    imageWebp: '/blog/organic-vs-paid-ecommerce-marketing-2026.webp',
     imageAlt:
-      'Ecommerce brand balancing organic content and paid ads with WhatsApp recovery on TopEdge AI',
+      'Organic vs paid ecommerce marketing in India, comparing channel performance and growth against a combined organic and paid strategy',
     keywords: [
       'organic vs paid marketing ecommerce',
       'organic vs paid ecommerce marketing 2026',
@@ -3389,8 +3420,10 @@ export const blogPosts: BlogPost[] = [
     readTime: '6 min',
     category: 'COD',
     author: 'Moksh Patel',
-    image: '/marketing/solutions/sol-cod-hero.jpg',
-    imageAlt: 'Indian D2C COD and RTO benchmark report 2026 for Shopify brands',
+    image: '/blog/cod-rto-benchmark-india-2026.jpg',
+    imageWebp: '/blog/cod-rto-benchmark-india-2026.webp',
+    imageAlt:
+      'COD and RTO benchmarks for Indian D2C in 2026, with an RTO loss of ₹180 to ₹240 per returned order shown beside order analytics',
     keywords: [
       'RTO rate India ecommerce 2026',
       'COD return rate India D2C',
@@ -3661,9 +3694,10 @@ export const blogPosts: BlogPost[] = [
     readTime: '14 min',
     category: 'Strategy',
     author: 'Smit Tilva',
-    image: '/marketing/solutions/sol-fashion-hero.jpg',
+    image: '/blog/profitable-ecommerce-business-india.jpg',
+    imageWebp: '/blog/profitable-ecommerce-business-india.webp',
     imageAlt:
-      'Indian D2C operator reviewing cost per order, margin and RTO figures for an ecommerce business',
+      'Ecommerce profit margins in India, with a 22% net margin after CAC and RTO costs are accounted for on a rising growth curve',
     keywords: [
       'profitable ecommerce business India',
       'ecommerce profit margin India',
@@ -4069,9 +4103,10 @@ export const blogPosts: BlogPost[] = [
     readTime: '14 min',
     category: 'Ecommerce automation',
     author: 'Moksh Patel',
-    image: '/marketing/solutions/sol-electronics-hero.jpg',
+    image: '/blog/how-to-automate-ecommerce-store-india.jpg',
+    imageWebp: '/blog/how-to-automate-ecommerce-store-india.webp',
     imageAlt:
-      'Automated ecommerce workflow connecting a Shopify store to WhatsApp, shipping and inventory systems',
+      'Automating a Shopify store in India, with an active Shopify-to-WhatsApp workflow running order, support and delivery updates',
     keywords: [
       'ecommerce automation India',
       'how to automate ecommerce store',
@@ -4329,9 +4364,10 @@ export const blogPosts: BlogPost[] = [
     readTime: '13 min',
     category: 'Growth',
     author: 'Smit Tilva',
-    image: '/marketing/solutions/sol-beauty-hero.jpg',
+    image: '/blog/organic-ecommerce-leads-short-form-video.jpg',
+    imageWebp: '/blog/organic-ecommerce-leads-short-form-video.webp',
     imageAlt:
-      'Short-form video funnel turning Instagram Reels and YouTube Shorts views into ecommerce leads',
+      'Instagram Reels and YouTube Shorts turned into Shopify ecommerce leads, with a comment-to-DM keyword trigger routing viewers into WhatsApp',
     keywords: [
       'organic ecommerce leads',
       'Instagram Reels ecommerce',
@@ -4511,9 +4547,10 @@ export const blogPosts: BlogPost[] = [
     readTime: '12 min',
     category: 'Guides',
     author: 'Smit Tilva',
-    image: '/marketing/solutions/sol-beauty-catalog-saas.jpg',
+    image: '/blog/trending-products-to-sell-online-india-2026.jpg',
+    imageWebp: '/blog/trending-products-to-sell-online-india-2026.webp',
     imageAlt:
-      'Product catalogue view showing high-margin ecommerce categories for an Indian online store',
+      'Top 5 product categories to sell online in India in 2026, spanning home and living, beauty, wellness and pet supplies at 55-75% gross margin',
     keywords: [
       'trending products to sell online 2026',
       'what to sell online in India',
