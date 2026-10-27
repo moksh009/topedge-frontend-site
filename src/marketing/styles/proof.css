@@ -120,7 +120,7 @@
 }
 
 @media (max-width: 560px) {
-  .mkt-proof-row {
+  .mkt-proof-row:not(.mkt-proof-row--icons) {
     flex-wrap: wrap;
     flex-direction: column;
     align-items: center;
@@ -129,7 +129,7 @@
     padding: 0.65rem 0.9rem;
   }
 
-  .mkt-proof-row__sep {
+  .mkt-proof-row:not(.mkt-proof-row--icons) .mkt-proof-row__sep {
     width: 2.5rem;
     height: 1px;
   }
@@ -174,6 +174,58 @@
 
 .mkt-proof-row--plain .mkt-proof-row__sep {
   display: none;
+}
+
+/*
+ * Icon-only: both badges collapse to brand mark + bare number, always one
+ * line. Used where the full "4.0 on ★ Trustpilot" pill is more than the
+ * surface has room for, such as the convert prompt — the reader still gets
+ * both scores, just not the chrome.
+ */
+.mkt-proof-row--icons {
+  display: inline-flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.6rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.mkt-proof-row--icons .mkt-proof-row__sep {
+  width: 1px;
+  height: 0.85rem;
+  background: #e6e4ef;
+}
+
+.mkt-tp__score.mkt-tp__score--icon,
+.mkt-ph__badge.mkt-ph__badge--icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.8125rem;
+  color: var(--mkt-body-2, #3f4b5e);
+  text-decoration: none;
+}
+
+.mkt-tp__score--icon svg,
+.mkt-ph__badge--icon svg {
+  display: block;
+  flex: none;
+}
+
+.mkt-tp__score--icon b,
+.mkt-ph__badge--icon b {
+  font-weight: 650;
+  color: var(--mkt-ink, #0c1222);
+}
+
+.mkt-tp__score--icon:hover b,
+.mkt-ph__badge--icon:hover b {
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 /* ---------- the review section ---------- */

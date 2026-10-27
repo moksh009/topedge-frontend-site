@@ -36,7 +36,13 @@ function Star({ fill }: { fill: 'full' | 'half' | 'empty' }) {
  * live profile by a human on the date in `asOf`, and the row draws exactly
  * that. A half tile appears only when the score has a fractional part.
  */
-export function TrustpilotScore({ compact = false }: { compact?: boolean }) {
+export function TrustpilotScore({
+  compact = false,
+  iconOnly = false,
+}: {
+  compact?: boolean;
+  iconOnly?: boolean;
+}) {
   const score = Number(TRUSTPILOT.score);
   const whole = Math.floor(score);
   const hasHalf = score % 1 >= 0.25 && score % 1 < 0.75;
@@ -45,6 +51,23 @@ export function TrustpilotScore({ compact = false }: { compact?: boolean }) {
     if (i === whole && hasHalf) return 'half' as const;
     return 'empty' as const;
   });
+
+  if (iconOnly) {
+    return (
+      <a
+        className="mkt-tp__score mkt-tp__score--icon"
+        href={TRUSTPILOT.reviewUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Star fill="full" />
+        <b>{TRUSTPILOT.score}</b>
+        <span className="sr-only">
+          on Trustpilot, from {TRUSTPILOT.reviews} reviews, read on {TRUSTPILOT.asOf}
+        </span>
+      </a>
+    );
+  }
 
   return (
     <a

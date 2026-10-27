@@ -8,7 +8,7 @@
 .mkt-blog-index__hero {
   max-width: min(100%, 52rem);
   margin: 0 auto;
-  padding: clamp(5.5rem, 10vw, 7.25rem) 1.25rem 2rem;
+  padding: clamp(4.75rem, 8.5vw, 6.25rem) 1.25rem 2rem;
   text-align: center;
 }
 
@@ -36,7 +36,7 @@
 .mkt-blog-index__title {
   margin: 0 auto;
   font-family: var(--mkt-font);
-  font-size: clamp(1.85rem, 4.2vw, 2.75rem);
+  font-size: clamp(1.7rem, 3.8vw, 2.4rem);
   font-weight: 400;
   letter-spacing: -0.032em;
   line-height: 1.12;
@@ -57,14 +57,14 @@
 .mkt-blog-index__sub {
   margin: 1rem auto 0;
   max-width: 36rem;
-  font-size: clamp(0.95rem, 1.5vw, 1.0625rem);
+  font-size: clamp(0.9rem, 1.3vw, 1rem);
   line-height: 1.6;
   color: var(--mkt-muted);
   text-wrap: pretty;
 }
 
 .mkt-blog-index__grid {
-  max-width: min(100%, 72rem);
+  max-width: min(100%, 84rem);
   margin: 0 auto;
   padding: 0 1.25rem 4rem;
   display: grid;
@@ -117,15 +117,15 @@
   }
 
   .mkt-blog-card.is-featured .mkt-blog-card__title {
-    font-size: clamp(1.4rem, 2.1vw, 1.85rem);
-    line-height: 1.25;
+    font-size: clamp(1.3rem, 1.9vw, 1.6rem);
+    line-height: 1.28;
     max-width: 22ch;
   }
 
   .mkt-blog-card.is-featured .mkt-blog-card__excerpt {
     -webkit-line-clamp: 4;
     margin-top: 0.75rem;
-    font-size: 0.9375rem;
+    font-size: 0.875rem;
     max-width: 36rem;
   }
 
@@ -166,7 +166,10 @@
 
 .mkt-blog-card__media {
   position: relative;
-  aspect-ratio: 16 / 10;
+  /* Matches the source images' native 1200x675 (16:9) ratio, so cover never
+     has to crop anything off the edges — 16:10 was narrower than the art,
+     which clipped the logo/badge in the image's corners. */
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   background: #0c1222;
 }
@@ -224,7 +227,7 @@
 .mkt-blog-card__title {
   margin: 0;
   font-family: var(--mkt-font);
-  font-size: 1.0625rem;
+  font-size: 1rem;
   font-weight: 560;
   letter-spacing: -0.02em;
   line-height: 1.35;
@@ -238,7 +241,7 @@
 
 .mkt-blog-card__excerpt {
   margin: 0.55rem 0 0;
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   line-height: 1.55;
   color: var(--mkt-muted);
   display: -webkit-box;
@@ -327,9 +330,9 @@
 .mkt-blog-title {
   margin-top: 0.85rem;
   font-family: var(--mkt-font);
-  font-size: clamp(1.6rem, 3.4vw, 2.2rem);
+  font-size: clamp(1.5rem, 3vw, 2rem);
   font-weight: 560;
-  line-height: 1.18;
+  line-height: 1.2;
   letter-spacing: -0.03em;
   color: var(--mkt-ink);
   text-wrap: balance;
@@ -337,7 +340,7 @@
 
 .mkt-blog-lede {
   margin-top: 0.95rem;
-  font-size: 1rem;
+  font-size: 0.9375rem;
   line-height: 1.6;
   color: var(--mkt-body-2);
 }
@@ -456,7 +459,7 @@
  * type is.
  */
 .mkt-blog-body-wrap {
-  --mkt-blog-body-size: 1.0625rem;
+  --mkt-blog-body-size: 1rem;
   --mkt-blog-body-lh: 1.7;
   --mkt-blog-rhythm: 1.05em;
   max-width: 44rem;
@@ -467,9 +470,9 @@
 /* Width caps hold body text at 70-78 chars/line for each body size. */
 @media (min-width: 640px) {
   .mkt-blog-body-wrap {
-    --mkt-blog-body-size: 1.125rem;
+    --mkt-blog-body-size: 1.0625rem;
     --mkt-blog-body-lh: 1.75;
-    max-width: 42rem;
+    max-width: 46rem;
   }
 }
 
@@ -481,8 +484,8 @@
 
 @media (min-width: 1100px) {
   .mkt-blog-body-wrap {
-    --mkt-blog-body-size: 1.1875rem;
-    max-width: 46rem;
+    --mkt-blog-body-size: 1.125rem;
+    max-width: 50rem;
   }
 }
 
@@ -1148,7 +1151,7 @@
  * without pushing the contents rail off the grid.
  */
 .mkt-blog-shell {
-  max-width: 1200px;
+  max-width: 1320px;
 }
 
 @media (min-width: 1024px) {
@@ -1208,14 +1211,14 @@
 @media (min-width: 640px) {
   .mkt-blog-layout > .mkt-blog-summary,
   .mkt-blog-layout > .mkt-blog-ai {
-    max-width: 42rem;
+    max-width: 46rem;
   }
 }
 
 @media (min-width: 1100px) {
   .mkt-blog-layout > .mkt-blog-summary,
   .mkt-blog-layout > .mkt-blog-ai {
-    max-width: 46rem;
+    max-width: 50rem;
   }
 }
 
@@ -1313,7 +1316,7 @@
 .mkt-blog-summary__label {
   margin: 0 0 0.85rem;
   font-family: var(--mkt-font);
-  font-size: 1.0625rem;
+  font-size: 1rem;
   font-weight: 650;
   letter-spacing: -0.015em;
   line-height: 1.3;
@@ -1323,7 +1326,7 @@
 
 @media (min-width: 768px) {
   .mkt-blog-summary__label {
-    font-size: 1.1875rem;
+    font-size: 1.125rem;
   }
 }
 
@@ -1338,7 +1341,7 @@
 .mkt-blog-summary__list li {
   position: relative;
   padding-left: 1.6rem;
-  font-size: 1rem;
+  font-size: 0.9375rem;
   line-height: 1.65;
   color: var(--mkt-body);
 }
@@ -1614,7 +1617,9 @@
 /* ---------- categories bar on the archives ---------- */
 
 .mkt-blog-cats {
-  max-width: var(--mkt-max-wide);
+  /* Matches .mkt-blog-index__grid so the category pills line up with the
+     card grid's edges instead of sitting narrower than the content below. */
+  max-width: 84rem;
   margin: 0 auto;
   padding: 0 1.25rem;
 }
@@ -1670,7 +1675,7 @@
   align-items: center;
   justify-content: center;
   gap: 0.75rem 1.25rem;
-  max-width: var(--mkt-max-wide);
+  max-width: 84rem;
   margin: 2.5rem auto 0;
   padding: 0 1.25rem 1rem;
 }

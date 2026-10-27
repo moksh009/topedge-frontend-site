@@ -114,12 +114,21 @@
  * costs about 110px and the card still fits inside 88dvh with the CTAs above
  * the fold, so the modal keeps the picture that explains what it is selling.
  */
+/*
+ * The art's own ratio (1100x821, ~4:3) rather than a banner crop.
+ *
+ * The box used to be forced to whatever height the layout gave it (a 16:7
+ * strip on a phone, the full left column's height on desktop) and object-fit:
+ * cover then had to crop away a third or more of the width to fill it,
+ * clipping the feature cards and figures drawn near the image's edges. Close
+ * to the source ratio, cover barely has to crop at all.
+ */
 .mkt-convert__art {
   display: block;
   width: 100%;
-  aspect-ratio: 16 / 7;
+  aspect-ratio: 4 / 3;
   object-fit: cover;
-  object-position: center 38%;
+  object-position: center;
   border-radius: 10px;
 }
 
@@ -127,15 +136,13 @@
   .mkt-convert__art {
     display: block;
     width: 100%;
-    /* Takes whatever height the left column sets, and crops rather than
-       letterboxes, so there is never dead space above or below it. */
-    flex: 1 1 auto;
-    min-height: 0;
-    height: auto;
+    aspect-ratio: 4 / 3;
+    flex: none;
     object-fit: cover;
     object-position: center;
     border-radius: 0;
   }
+
 }
 
 /* ---------- what it does, as a list rather than three tiles ---------- */
@@ -176,14 +183,7 @@
 /* ---------- the proof badges ---------- */
 
 .mkt-convert__proof {
-  margin-top: 1rem;
-  align-items: center;
-}
-
-@media (min-width: 760px) {
-  .mkt-convert__proof {
-    align-items: flex-start;
-  }
+  margin-top: 0.85rem;
 }
 
 .mkt-convert__close {
@@ -306,7 +306,13 @@
 
 @media (min-width: 760px) {
   .mkt-convert__brands {
-    flex: none;
+    /* The art no longer stretches to fill the column (it keeps its own
+       4:3 ratio now), so this grows to take up the rest of the column's
+       height instead of leaving a gap below a short image. */
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     margin-top: 0;
     padding: 0.9rem 1.4rem 1.1rem;
     border-top: 1px solid #f1eefb;
@@ -467,6 +473,56 @@
     width: 100%;
     flex-wrap: wrap;
     gap: 1rem 1.25rem;
+  }
+}
+
+/*
+ * Mobile reading order: image, then the pitch, then proof, then the merchant
+ * marquee, then the buttons at the very bottom.
+ *
+ * `.mkt-convert__col` and `.mkt-convert__aside` only exist to be the two grid
+ * columns on desktop; below that they are set to `display: contents` so
+ * their children become direct flex items of the card and can be reordered
+ * freely without touching the JSX (which still needs the desktop grid to
+ * find its two columns there).
+ */
+@media (max-width: 759px) {
+  .mkt-convert__card {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mkt-convert__col,
+  .mkt-convert__aside {
+    display: contents;
+  }
+
+  .mkt-convert__art {
+    order: 1;
+    margin-bottom: 1rem;
+  }
+
+  .mkt-convert__brand,
+  .mkt-convert__title,
+  .mkt-convert__sub,
+  .mkt-convert__points {
+    order: 2;
+  }
+
+  .mkt-convert__proof {
+    order: 3;
+  }
+
+  .mkt-convert__brands {
+    order: 4;
+  }
+
+  .mkt-convert__actions {
+    order: 5;
+  }
+
+  .mkt-convert__dismiss {
+    order: 6;
   }
 }
 

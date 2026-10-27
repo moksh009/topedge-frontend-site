@@ -212,7 +212,7 @@ export default function MarketingConvertPrompt() {
             <li>One inbox, with the Shopify order beside it</li>
           </ul>
 
-          <ProofBadges compact plain className="mkt-convert__proof" />
+          <ProofBadges compact iconOnly className="mkt-convert__proof" />
 
           <div className="mkt-convert__actions">
             <Link className="mkt-convert__primary" to={marketingSignupPath()} onClick={dismiss}>

@@ -134,7 +134,7 @@ export default function BlogPost() {
           post read as a landing page instead of something to sit and read.
         */}
         <header className="mkt-blog-hero">
-          <div className="marketing-container">
+          <div className="marketing-container mkt-blog-shell">
             <div className="mkt-blog-hero__card">
               <div className="mkt-blog-hero__text">
                 <nav className="mkt-blog-crumbs" aria-label="Breadcrumb">
@@ -328,7 +328,7 @@ export default function BlogPost() {
 
         {related.length > 0 && (
           <section className="mkt-blog-related" aria-labelledby="related-heading">
-            <div className="marketing-container" style={{ maxWidth: '68rem' }}>
+            <div className="marketing-container" style={{ maxWidth: '76rem' }}>
               <h2 id="related-heading" className="mkt-blog-related__title">
                 Related playbooks
               </h2>

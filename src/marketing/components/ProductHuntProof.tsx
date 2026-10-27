@@ -76,9 +76,34 @@ function Stars({ rating }: { rating: number }) {
  * The third is not a placeholder to be dressed up later — it is what the page
  * is entitled to claim before anybody has read the listing.
  */
-export function ProductHuntBadge({ compact = false }: { compact?: boolean }) {
+export function ProductHuntBadge({
+  compact = false,
+  iconOnly = false,
+}: {
+  compact?: boolean;
+  iconOnly?: boolean;
+}) {
   const rated = hasProductHuntRating();
   const rating = Number(PRODUCT_HUNT.rating);
+
+  if (iconOnly && !hasProductHuntEmbed()) {
+    return (
+      <a
+        className="mkt-ph__badge mkt-ph__badge--icon"
+        href={rated ? PRODUCT_HUNT.reviewUrl : PRODUCT_HUNT.productUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <ProductHuntMark size={14} />
+        {rated ? <b>{PRODUCT_HUNT.rating}</b> : <b>PH</b>}
+        <span className="sr-only">
+          {rated
+            ? `on Product Hunt, from ${PRODUCT_HUNT.reviews} reviews, read on ${PRODUCT_HUNT.asOf}`
+            : 'Find us on Product Hunt'}
+        </span>
+      </a>
+    );
+  }
 
   if (hasProductHuntEmbed()) {
     return (
