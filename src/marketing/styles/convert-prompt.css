@@ -76,17 +76,18 @@
   }
 
   /*
-   * The art is the panel, not a picture sitting inside one.
+   * The art and marquee as one block, centred in the column's height.
    *
-   * With padding on all four sides the image floated in a tinted box with a
-   * visible margin left and right of it, which read as a gap the layout had
-   * forgotten to close. Edge to edge, filling the column's full height, the
-   * right-hand side becomes one surface and the seam between the columns is
-   * the only line in it.
+   * The image keeps its own ~4:3 ratio rather than stretching to the column's
+   * full height, so the block (image + marquee) is usually shorter than the
+   * left column. Centring it, instead of pinning it to the top with the
+   * marquee stretched to eat the leftover space, reads as a deliberate panel
+   * rather than a stretched one.
    */
   .mkt-convert__aside {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     gap: 0;
     padding: 0;
     border-left: 1px solid #f1eefb;
@@ -109,13 +110,7 @@
  * already carries its own feature cards and figures, so nothing is drawn over
  * it.
  *
- * On a phone it was hidden outright, on the grounds that it would push the
- * buttons off the screen. At full height it would — but cropped to a band it
- * costs about 110px and the card still fits inside 88dvh with the CTAs above
- * the fold, so the modal keeps the picture that explains what it is selling.
- */
-/*
- * The art's own ratio (1100x821, ~4:3) rather than a banner crop.
+ * Its own ratio (1100x821, ~4:3) rather than a banner crop.
  *
  * The box used to be forced to whatever height the layout gave it (a 16:7
  * strip on a phone, the full left column's height on desktop) and object-fit:
@@ -180,12 +175,6 @@
   }
 }
 
-/* ---------- the proof badges ---------- */
-
-.mkt-convert__proof {
-  margin-top: 0.85rem;
-}
-
 .mkt-convert__close {
   position: absolute;
   top: 0.75rem;
@@ -207,12 +196,32 @@
   color: #0c1222;
 }
 
+/*
+ * Brand mark and the Trustpilot rating, one row.
+ *
+ * The brand name alone on its own line read as unfinished — nothing else was
+ * happening on that line. The rating belongs beside it: name first, then the
+ * number, the way a card header pairs a title with a stat.
+ */
+.mkt-convert__brandrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  margin: 0 auto 0.85rem;
+}
+
+@media (min-width: 760px) {
+  .mkt-convert__brandrow {
+    justify-content: space-between;
+    margin: 0 0 0.85rem;
+  }
+}
+
 .mkt-convert__brand {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
   gap: 0.4rem;
-  margin: 0 auto 0.85rem;
 }
 
 .mkt-convert__brand-mark {
@@ -263,10 +272,6 @@
   .mkt-convert__sub {
     max-width: 26rem;
   }
-
-  .mkt-convert__brand {
-    justify-content: flex-start;
-  }
 }
 
 .mkt-convert__title-accent {
@@ -306,13 +311,9 @@
 
 @media (min-width: 760px) {
   .mkt-convert__brands {
-    /* The art no longer stretches to fill the column (it keeps its own
-       4:3 ratio now), so this grows to take up the rest of the column's
-       height instead of leaving a gap below a short image. */
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    /* Sized to its own content — the aside centres the image+marquee block
+       as a unit, so this does not need to stretch to fill the column. */
+    flex: none;
     margin-top: 0;
     padding: 0.9rem 1.4rem 1.1rem;
     border-top: 1px solid #f1eefb;
@@ -477,8 +478,8 @@
 }
 
 /*
- * Mobile reading order: image, then the pitch, then proof, then the merchant
- * marquee, then the buttons at the very bottom.
+ * Mobile reading order: image, then the pitch (brand row, title, bullets),
+ * then the merchant marquee, then the buttons at the very bottom.
  *
  * `.mkt-convert__col` and `.mkt-convert__aside` only exist to be the two grid
  * columns on desktop; below that they are set to `display: contents` so
@@ -502,15 +503,11 @@
     margin-bottom: 1rem;
   }
 
-  .mkt-convert__brand,
+  .mkt-convert__brandrow,
   .mkt-convert__title,
   .mkt-convert__sub,
   .mkt-convert__points {
     order: 2;
-  }
-
-  .mkt-convert__proof {
-    order: 3;
   }
 
   .mkt-convert__brands {
