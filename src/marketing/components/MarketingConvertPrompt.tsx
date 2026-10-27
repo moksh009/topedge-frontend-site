@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import { Link, useLocation } from 'react-router-dom';
 import { X } from 'lucide-react';
 import { marketingSignupPath, SALES_WHATSAPP_URL } from '../lib/billingCatalog';
-import { TrustpilotScore } from './TrustpilotProof';
+import ProofBadges from './ProofBadges';
 import '../styles/convert-prompt.css';
 
 const STORAGE_KEY = 'te_mkt_convert_prompt_v4';
@@ -183,21 +183,18 @@ export default function MarketingConvertPrompt() {
         </button>
 
         <div className="mkt-convert__col">
-          <div className="mkt-convert__brandrow">
-            <div className="mkt-convert__brand">
-              <img
-                src="/logo.png"
-                alt="TopEdge AI"
-                width={22}
-                height={22}
-                className="mkt-convert__brand-mark"
-                decoding="async"
-              />
-              <span className="mkt-convert__brand-name">
-                TopEdge <span>AI</span>
-              </span>
-            </div>
-            <TrustpilotScore iconOnly />
+          <div className="mkt-convert__brand">
+            <img
+              src="/logo.png"
+              alt="TopEdge AI"
+              width={22}
+              height={22}
+              className="mkt-convert__brand-mark"
+              decoding="async"
+            />
+            <span className="mkt-convert__brand-name">
+              TopEdge <span>AI</span>
+            </span>
           </div>
 
           <h2 id={titleId} className="mkt-convert__title">
@@ -214,6 +211,8 @@ export default function MarketingConvertPrompt() {
             <li>Order and delivery updates on WhatsApp</li>
             <li>One inbox, with the Shopify order beside it</li>
           </ul>
+
+          <ProofBadges brief className="mkt-convert__proof" />
 
           <div className="mkt-convert__actions">
             <Link className="mkt-convert__primary" to={marketingSignupPath()} onClick={dismiss}>

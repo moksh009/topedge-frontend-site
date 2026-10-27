@@ -120,7 +120,7 @@
 }
 
 @media (max-width: 560px) {
-  .mkt-proof-row:not(.mkt-proof-row--icons) {
+  .mkt-proof-row:not(.mkt-proof-row--brief) {
     flex-wrap: wrap;
     flex-direction: column;
     align-items: center;
@@ -129,7 +129,7 @@
     padding: 0.65rem 0.9rem;
   }
 
-  .mkt-proof-row:not(.mkt-proof-row--icons) .mkt-proof-row__sep {
+  .mkt-proof-row:not(.mkt-proof-row--brief) .mkt-proof-row__sep {
     width: 2.5rem;
     height: 1px;
   }
@@ -177,53 +177,55 @@
 }
 
 /*
- * Icon-only: both badges collapse to brand mark + bare number, always one
- * line. Used where the full "4.0 on ★ Trustpilot" pill is more than the
- * surface has room for, such as the convert prompt — the reader still gets
- * both scores, just not the chrome.
+ * Brief: each badge is its mark, its name and its score — no star row — and
+ * the pair stays on one line at any width. Used where the full
+ * "★★★★☆ 4.0 on ★ Trustpilot" pill is more than the surface has room for,
+ * such as the convert prompt.
  */
-.mkt-proof-row--icons {
+.mkt-proof-row--brief {
   display: inline-flex;
   flex-wrap: nowrap;
   align-items: center;
   justify-content: flex-start;
-  gap: 0.6rem;
+  gap: 0.7rem;
   padding: 0;
   border: 0;
   background: none;
   box-shadow: none;
 }
 
-.mkt-proof-row--icons .mkt-proof-row__sep {
+.mkt-proof-row--brief .mkt-proof-row__sep {
   width: 1px;
-  height: 0.85rem;
+  height: 0.9rem;
   background: #e6e4ef;
 }
 
-.mkt-tp__score.mkt-tp__score--icon,
-.mkt-ph__badge.mkt-ph__badge--icon {
+.mkt-tp__score.mkt-tp__score--brief,
+.mkt-ph__badge.mkt-ph__badge--brief {
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
   font-size: 0.8125rem;
+  white-space: nowrap;
   color: var(--mkt-body-2, #3f4b5e);
   text-decoration: none;
 }
 
-.mkt-tp__score--icon svg,
-.mkt-ph__badge--icon svg {
+.mkt-tp__score--brief svg,
+.mkt-ph__badge--brief svg {
   display: block;
   flex: none;
 }
 
-.mkt-tp__score--icon b,
-.mkt-ph__badge--icon b {
+.mkt-tp__score--brief b,
+.mkt-ph__badge--brief b {
   font-weight: 650;
   color: var(--mkt-ink, #0c1222);
+  font-variant-numeric: tabular-nums;
 }
 
-.mkt-tp__score--icon:hover b,
-.mkt-ph__badge--icon:hover b {
+.mkt-tp__score--brief:hover b,
+.mkt-ph__badge--brief:hover b {
   text-decoration: underline;
   text-underline-offset: 2px;
 }

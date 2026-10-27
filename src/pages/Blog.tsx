@@ -58,19 +58,21 @@ function PostCard({ post, featured }: { post: BlogPostModel; featured?: boolean 
         <div className="mkt-blog-card__body">
           <h2 className="mkt-blog-card__title">{post.title}</h2>
           <p className="mkt-blog-card__excerpt">{post.description}</p>
-          <p className="mkt-blog-card__meta">
-            <span>{formatDate(post.date)}</span>
-            <span className="mkt-blog-card__dot" aria-hidden />
-            <span>{post.readTime} read</span>
-          </p>
-          <span className="mkt-blog-card__more">
-            Read more
-            <span className="mkt-blog-card__more-arrow" aria-hidden>
-              <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M5 12h12M12 6l6 6-6 6" />
-              </svg>
+          <div className="mkt-blog-card__foot">
+            <p className="mkt-blog-card__meta">
+              <span>{formatDate(post.date)}</span>
+              <span className="mkt-blog-card__dot" aria-hidden />
+              <span>{post.readTime} read</span>
+            </p>
+            <span className="mkt-blog-card__more">
+              Read more
+              <span className="mkt-blog-card__more-arrow" aria-hidden>
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 12h12M12 6l6 6-6 6" />
+                </svg>
+              </span>
             </span>
-          </span>
+          </div>
         </div>
       </Link>
     </article>

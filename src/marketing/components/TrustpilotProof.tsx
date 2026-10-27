@@ -38,10 +38,11 @@ function Star({ fill }: { fill: 'full' | 'half' | 'empty' }) {
  */
 export function TrustpilotScore({
   compact = false,
-  iconOnly = false,
+  brief = false,
 }: {
   compact?: boolean;
-  iconOnly?: boolean;
+  /** Mark, name and score only — no star row. Fits a narrow one-line strip. */
+  brief?: boolean;
 }) {
   const score = Number(TRUSTPILOT.score);
   const whole = Math.floor(score);
@@ -52,18 +53,19 @@ export function TrustpilotScore({
     return 'empty' as const;
   });
 
-  if (iconOnly) {
+  if (brief) {
     return (
       <a
-        className="mkt-tp__score mkt-tp__score--icon"
+        className="mkt-tp__score mkt-tp__score--brief"
         href={TRUSTPILOT.reviewUrl}
         target="_blank"
         rel="noopener noreferrer"
       >
         <Star fill="full" />
+        <span className="mkt-tp__word">Trustpilot</span>
         <b>{TRUSTPILOT.score}</b>
         <span className="sr-only">
-          on Trustpilot, from {TRUSTPILOT.reviews} reviews, read on {TRUSTPILOT.asOf}
+          out of 5, from {TRUSTPILOT.reviews} reviews, read on {TRUSTPILOT.asOf}
         </span>
       </a>
     );

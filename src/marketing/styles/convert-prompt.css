@@ -175,6 +175,17 @@
   }
 }
 
+/* ---------- the proof badges ---------- */
+
+/*
+ * Sits above the CTAs on desktop, above the merchant marquee on a phone.
+ * The row is inline-flex, so the card's own text-align places it: centred on
+ * a phone, hard left beside the bullets on desktop.
+ */
+.mkt-convert__proof {
+  margin-top: 1rem;
+}
+
 .mkt-convert__close {
   position: absolute;
   top: 0.75rem;
@@ -196,32 +207,12 @@
   color: #0c1222;
 }
 
-/*
- * Brand mark and the Trustpilot rating, one row.
- *
- * The brand name alone on its own line read as unfinished — nothing else was
- * happening on that line. The rating belongs beside it: name first, then the
- * number, the way a card header pairs a title with a stat.
- */
-.mkt-convert__brandrow {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.6rem;
-  margin: 0 auto 0.85rem;
-}
-
-@media (min-width: 760px) {
-  .mkt-convert__brandrow {
-    justify-content: space-between;
-    margin: 0 0 0.85rem;
-  }
-}
-
 .mkt-convert__brand {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.4rem;
+  margin: 0 auto 0.85rem;
 }
 
 .mkt-convert__brand-mark {
@@ -271,6 +262,10 @@
 
   .mkt-convert__sub {
     max-width: 26rem;
+  }
+
+  .mkt-convert__brand {
+    justify-content: flex-start;
   }
 }
 
@@ -478,8 +473,8 @@
 }
 
 /*
- * Mobile reading order: image, then the pitch (brand row, title, bullets),
- * then the merchant marquee, then the buttons at the very bottom.
+ * Mobile reading order: image, then the pitch, then the review scores, then
+ * the merchant marquee, then the buttons at the very bottom.
  *
  * `.mkt-convert__col` and `.mkt-convert__aside` only exist to be the two grid
  * columns on desktop; below that they are set to `display: contents` so
@@ -503,11 +498,15 @@
     margin-bottom: 1rem;
   }
 
-  .mkt-convert__brandrow,
+  .mkt-convert__brand,
   .mkt-convert__title,
   .mkt-convert__sub,
   .mkt-convert__points {
     order: 2;
+  }
+
+  .mkt-convert__proof {
+    order: 3;
   }
 
   .mkt-convert__brands {

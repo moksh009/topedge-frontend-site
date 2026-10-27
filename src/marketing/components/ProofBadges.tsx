@@ -13,19 +13,18 @@ import './../styles/proof.css';
  * `plain` drops the pill chrome for places that already have a surface of
  * their own, such as the footer column and the convert prompt.
  *
- * `iconOnly` reduces each badge to its brand mark plus the bare number — no
- * star row, no "on Trustpilot"/"Product Hunt" wordmark — so the pair always
- * reads as one short line instead of two chips stacking.
+ * `brief` reduces each badge to mark, name and score — no star row — so the
+ * pair always reads as one short line instead of two chips stacking.
  */
 export default function ProofBadges({
   compact = false,
   plain = false,
-  iconOnly = false,
+  brief = false,
   className,
 }: {
   compact?: boolean;
   plain?: boolean;
-  iconOnly?: boolean;
+  brief?: boolean;
   className?: string;
 }) {
   return (
@@ -33,15 +32,15 @@ export default function ProofBadges({
       className={[
         'mkt-proof-row',
         plain ? 'mkt-proof-row--plain' : '',
-        iconOnly ? 'mkt-proof-row--icons' : '',
+        brief ? 'mkt-proof-row--brief' : '',
         className ?? '',
       ]
         .filter(Boolean)
         .join(' ')}
     >
-      <TrustpilotScore compact={compact} iconOnly={iconOnly} />
+      <TrustpilotScore compact={compact} brief={brief} />
       <span className="mkt-proof-row__sep" aria-hidden />
-      <ProductHuntBadge compact={compact} iconOnly={iconOnly} />
+      <ProductHuntBadge compact={compact} brief={brief} />
     </div>
   );
 }

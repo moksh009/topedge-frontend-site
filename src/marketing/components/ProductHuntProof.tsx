@@ -78,27 +78,29 @@ function Stars({ rating }: { rating: number }) {
  */
 export function ProductHuntBadge({
   compact = false,
-  iconOnly = false,
+  brief = false,
 }: {
   compact?: boolean;
-  iconOnly?: boolean;
+  /** Mark, name and score only — no star row. Fits a narrow one-line strip. */
+  brief?: boolean;
 }) {
   const rated = hasProductHuntRating();
   const rating = Number(PRODUCT_HUNT.rating);
 
-  if (iconOnly && !hasProductHuntEmbed()) {
+  if (brief && !hasProductHuntEmbed()) {
     return (
       <a
-        className="mkt-ph__badge mkt-ph__badge--icon"
+        className="mkt-ph__badge mkt-ph__badge--brief"
         href={rated ? PRODUCT_HUNT.reviewUrl : PRODUCT_HUNT.productUrl}
         target="_blank"
         rel="noopener noreferrer"
       >
-        <ProductHuntMark size={14} />
-        {rated ? <b>{PRODUCT_HUNT.rating}</b> : <b>PH</b>}
+        <ProductHuntMark size={15} />
+        <span className="mkt-ph__word">Product Hunt</span>
+        {rated ? <b>{PRODUCT_HUNT.rating}</b> : null}
         <span className="sr-only">
           {rated
-            ? `on Product Hunt, from ${PRODUCT_HUNT.reviews} reviews, read on ${PRODUCT_HUNT.asOf}`
+            ? `out of 5, from ${PRODUCT_HUNT.reviews} reviews, read on ${PRODUCT_HUNT.asOf}`
             : 'Find us on Product Hunt'}
         </span>
       </a>
