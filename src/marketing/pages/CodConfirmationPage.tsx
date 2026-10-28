@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import BrandWord from '../components/BrandWord';
 import { Check, Minus } from 'lucide-react';
 import MarketingSEO from '../components/MarketingSEO';
 import MarketingPage from '../components/MarketingPage';
@@ -157,7 +158,7 @@ export default function CodConfirmationPage() {
         <FeatureMeshStage mesh="journeys">
           <header className="mkt-pf__hero">
             <h1 className="mkt-pf__title">
-              Confirm COD orders on WhatsApp to cut RTO{' '}
+              Confirm COD orders on <BrandWord platform="whatsapp">WhatsApp</BrandWord> to cut RTO{' '}
               <span className="mkt-pf__title-accent">and convert COD to prepaid</span>
             </h1>
             <p className="mkt-pf__sub">

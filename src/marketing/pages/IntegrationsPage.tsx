@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import BrandWord from '../components/BrandWord';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Check, MousePointerClick } from 'lucide-react';
 import MarketingSEO from '../components/MarketingSEO';
@@ -213,7 +214,9 @@ export default function IntegrationsPage() {
         <header className="mkt-int__hero">
           <p className="mkt-int__eyebrow">Integrations</p>
           <h1 className="mkt-int__h1">
-            Connect Shopify and WhatsApp in <span className="mkt-int__hl">one workspace</span>
+            Connect <BrandWord platform="shopify">Shopify</BrandWord> and{' '}
+            <BrandWord platform="whatsapp">WhatsApp</BrandWord> in{' '}
+            <span className="mkt-int__hl">one workspace</span>
           </h1>
           <p className="mkt-int__sub">
             TopEdge sits on the tools you already trust. Connect once, sync continuously, operate

@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import BrandWord from '../components/BrandWord';
 import MarketingSEO from '../components/MarketingSEO';
 import {
   PAGE_SEO,
@@ -136,7 +137,8 @@ export default function FeaturesPage() {
         <header className="mkt-fx__hero">
           <p className="mkt-fx__eyebrow">Features</p>
           <h1 className="mkt-fx__h1">
-            Shopify WhatsApp features: every hub your operators{' '}
+            <BrandWord platform="shopify">Shopify</BrandWord>{' '}
+            <BrandWord platform="whatsapp">WhatsApp</BrandWord> features: every hub your operators{' '}
             <span className="mkt-fx__hl">actually open</span>
           </h1>
           <p className="mkt-fx__sub">

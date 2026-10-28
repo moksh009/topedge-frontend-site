@@ -228,7 +228,7 @@ export default function MarketingNavbar() {
                   aria-expanded={productOpen}
                   aria-haspopup="true"
                 >
-                  Product
+                  Products
                   <ChevronDown className={cn('mkt-nav__chev', productOpen && 'is-open')} aria-hidden />
                 </button>
 
@@ -380,7 +380,7 @@ export default function MarketingNavbar() {
                       aria-expanded={mobileProductOpen}
                       onClick={toggleMobileProduct}
                     >
-                      Product
+                      Products
                       <ChevronDown
                         className={cn('mkt-nav__chev', mobileProductOpen && 'is-open')}
                         aria-hidden
@@ -397,7 +397,7 @@ export default function MarketingNavbar() {
                           transition={{ duration: 0.36, ease: easeSoft }}
                         >
                           <div className="mkt-nav__mobile-products">
-                            {productColumns.flatMap((col, colIndex) => [
+                            {productColumns.flatMap((col) => [
                               <p className="mkt-nav__mobile-grouphead" key={`${col.id}-title`}>
                                 {col.title}
                               </p>,

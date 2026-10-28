@@ -9,6 +9,8 @@ import {
 import { SITE_URL } from '../marketing/data/marketingSeo';
 import MarketingPage from '../marketing/components/MarketingPage';
 import MarketingCtaBand from '../marketing/components/MarketingCtaBand';
+import ProofBadges from '../marketing/components/ProofBadges';
+import BrandWord from '../marketing/components/BrandWord';
 import { PrimaryButton, GhostButton } from '../marketing/components/ui';
 import { Reveal, Stagger, StaggerItem } from '../marketing/components/motion';
 import { COMPANY_ADDRESS_LINES, COMPANY_EMAIL } from '../marketing/legal/companyIdentity';
@@ -129,8 +131,11 @@ export default function About() {
             </span>
           </p>
           <h1 className="mkt-about__h1">
-            WhatsApp automation for <span className="mkt-about__h1-accent">Shopify India</span>,
-            built in Ahmedabad
+            <BrandWord platform="whatsapp">WhatsApp automation for </BrandWord>
+            <span className="mkt-about__h1-accent">
+              <BrandWord platform="shopify">Shopify India</BrandWord>
+            </span>
+            {', built in Ahmedabad'}
           </h1>
           <p className="mkt-about__lede">
             Shopify data, Meta-approved templates, and AI in one workspace, so D2C teams sell and
@@ -141,6 +146,50 @@ export default function About() {
               Start free
             </PrimaryButton>
             <GhostButton to="/contact">Contact</GhostButton>
+          </div>
+
+          {/* The page asks a stranger to believe a company they have not heard
+              of. The scores and the platform badges are the only two things on
+              it they can go and check, so they sit under the hero rather than
+              at the bottom where the old page put nothing at all. */}
+          <div className="mkt-about__proof">
+            <ProofBadges brief className="mkt-about__proof-row" />
+            <ul className="mkt-about__badges">
+              <li>
+                <img
+                  src="/badges/meta-business-partner.png?v=4"
+                  alt="Meta Business Partner"
+                  width={104}
+                  height={34}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </li>
+              <li>
+                <img
+                  src="/badges/shopify-app-store.png?v=4"
+                  alt="Available on the Shopify App Store"
+                  width={104}
+                  height={34}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </li>
+              <li>
+                <img
+                  src="/badges/whatsapp-cloud-api.png?v=5"
+                  alt="WhatsApp Business Platform"
+                  width={104}
+                  height={34}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </li>
+            </ul>
+            <p className="mkt-about__proof-note">
+              Messages run on Meta&rsquo;s own WhatsApp Business Platform. Scores are published by
+              Trustpilot and Product Hunt, not by us.
+            </p>
           </div>
         </header>
 
@@ -188,7 +237,7 @@ export default function About() {
             <Reveal>
               <p className="mkt-about__eyebrow">Founders</p>
               <h2 id="about-founders" className="mkt-about__heading">
-                Founded in Ahmedabad for Shopify India
+                Founded in Ahmedabad for <BrandWord platform="shopify" small>Shopify India</BrandWord>
               </h2>
               <p className="mkt-about__intro">
                 Moksh Patel and Smit Tilva run product and growth for brands that want WhatsApp
@@ -225,7 +274,7 @@ export default function About() {
           <Reveal>
             <p className="mkt-about__eyebrow">Brands we serve</p>
             <h2 id="about-brands" className="mkt-about__heading">
-              Brands recovering on WhatsApp
+              Brands recovering on <BrandWord platform="whatsapp" small>WhatsApp</BrandWord>
             </h2>
             <p className="mkt-about__intro">
               From smart home to lighting, they need cart recovery, COD clarity, and support that

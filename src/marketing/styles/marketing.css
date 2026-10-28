@@ -2728,3 +2728,59 @@ html a.mkt-nav__mobile-signup.mkt-btn-primary:active {
     transform: none;
   }
 }
+
+/* ──────────────────────────────────────────────────────────────
+   Inline brand marks in headings
+   ──────────────────────────────────────────────────────────────
+   A platform logo set immediately before its own name, so "WhatsApp" and
+   "Shopify" are recognised before they are read. Sized in `em` so it tracks
+   whatever type it sits in, from a 3rem hero down to a feature-page h2, and
+   aligned off the baseline rather than the line box so it never pushes the
+   line height around.
+
+   Both marks are self-hosted in /platforms. They are not hotlinked: the
+   sources that were suggested were a Google image-cache thumbnail and a
+   third-party logo-scraper CDN, neither of which is a stable origin to ship
+   a homepage against. */
+.mkt-brandmark {
+  display: inline-block;
+  width: 0.82em;
+  height: 0.82em;
+  margin-right: 0.17em;
+  vertical-align: -0.1em;
+  flex: none;
+}
+
+/* Trailing variant, for a mark that follows its word rather than leads it. */
+.mkt-brandmark--after {
+  margin-right: 0;
+  margin-left: 0.17em;
+}
+
+.mkt-brandmark--sm {
+  width: 0.78em;
+  height: 0.78em;
+  vertical-align: -0.08em;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   Highlighter
+   ──────────────────────────────────────────────────────────────
+   One pill, used by the home hero and the About h1.
+
+   The padding is deliberately lopsided. An inline box is padded from the
+   font's em box, not from the cap height, and this typeface carries a tall
+   ascent, so symmetric padding floated the pill well above the letters while
+   it sat tight under them. Taking the top padding most of the way out and
+   giving it to the bottom lands the pill on the text. */
+.mkt-highlight {
+  display: inline;
+  padding: 0.015em 0.3em 0.2em;
+  border-radius: 0.3em;
+  background: #e4d4ff;
+  color: #2a1065;
+  font-weight: 500;
+  letter-spacing: inherit;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}

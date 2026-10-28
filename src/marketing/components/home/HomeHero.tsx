@@ -3,6 +3,7 @@ import HeroRippleBackground from '../effects/HeroRippleBackground';
 import HomeTrust from './HomeTrust';
 import ProofBadges from '../ProofBadges';
 import HomeHeroVideo from './HomeHeroVideo';
+import BrandWord from '../BrandWord';
 
 import { COMPANY_SHOPIFY_APP_URL } from '../../legal/companyIdentity';
 
@@ -53,16 +54,8 @@ export default function HomeHero() {
                   Confirm COD orders. Recover abandoned carts.{' '}
                 </span>
                 <span className="home-hero__title-highlight">
-                  <img
-                    className="home-hero__title-wa"
-                    src="/platforms/whatsapp.svg"
-                    alt=""
-                    width={24}
-                    height={24}
-                    decoding="async"
-                    aria-hidden
-                  />
-                  On WhatsApp, for Shopify India.
+                  <BrandWord platform="whatsapp">On WhatsApp, for </BrandWord>
+                  <BrandWord platform="shopify">Shopify India.</BrandWord>
                 </span>
               </h1>
               <p className="home-hero__sub">
@@ -79,16 +72,7 @@ export default function HomeHero() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Install on Shopify
-                  <img
-                    src="/platforms/shopify.svg"
-                    alt="Shopify"
-                    width={18}
-                    height={18}
-                    className="home-hero__shopify-logo"
-                    decoding="async"
-                    fetchPriority="low"
-                  />
+                  Install on <BrandWord platform="shopify" small>Shopify</BrandWord>
                 </a>
               </div>
 

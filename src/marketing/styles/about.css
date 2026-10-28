@@ -119,17 +119,34 @@
   }
 }
 
+/* One title treatment for the whole page.
+   The hero and the closing band are centred; the sections in between were
+   left-aligned against a 68rem container, so each heading sat stranded with a
+   third of the row empty beside it. Centring the header block and letting the
+   cards keep their grid makes the page read as one piece, and the eyebrow is a
+   pill rather than loose violet caps floating above the type. */
 .mkt-about__eyebrow {
+  display: inline-flex;
+  align-items: center;
   margin: 0;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid rgba(124, 58, 237, 0.16);
+  background: #f5f3ff;
   font-size: 0.6875rem;
   font-weight: 600;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--mkt-violet);
 }
 
+.mkt-about__section > .mkt-animate,
+.mkt-about__section-inner > .mkt-animate {
+  text-align: center;
+}
+
 .mkt-about__heading {
-  margin: 0.65rem 0 0;
+  margin: 0.8rem auto 0;
   font-family: var(--mkt-font);
   font-size: clamp(1.45rem, 2.6vw, 1.9rem);
   font-weight: 560;
@@ -137,11 +154,11 @@
   line-height: 1.2;
   color: var(--mkt-ink);
   text-wrap: balance;
-  max-width: 28rem;
+  max-width: 32rem;
 }
 
 .mkt-about__intro {
-  margin: 0.9rem 0 0;
+  margin: 0.9rem auto 0;
   max-width: 38rem;
   font-size: 1.02rem;
   line-height: 1.65;
@@ -381,5 +398,98 @@
   }
   .mkt-about__entity-para {
     font-size: 0.9375rem;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────
+   Hero proof
+   ──────────────────────────────────────────────────────────────
+   The About page is where a stranger decides whether this is a real company.
+   It used to run from the h1 straight into a wall of prose with a large dead
+   gap in between, and nothing on it could be verified from outside. The two
+   published scores and the three platform badges go here, directly under the
+   buttons, because they are the only claims on the page a reader can check. */
+.mkt-about__proof {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+  margin-top: 2rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.mkt-proof-row.mkt-about__proof-row {
+  justify-content: center;
+}
+
+.mkt-about__badges {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+}
+
+.mkt-about__badges img {
+  display: block;
+  height: 46px;
+  width: auto;
+  border-radius: 8px;
+  border: 1px solid rgba(15, 23, 42, 0.07);
+  background: #fff;
+  object-fit: contain;
+}
+
+.mkt-about__proof-note {
+  margin: 0;
+  max-width: 34rem;
+  text-align: center;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: #6b7686;
+}
+
+@media (max-width: 639px) {
+  .mkt-about__proof {
+    margin-top: 1.5rem;
+    padding-top: 1.35rem;
+  }
+
+  .mkt-about__badges img {
+    height: 36px;
+  }
+}
+
+
+/* The header block above each grid is centred; the cards under it are not. */
+.mkt-about__beliefs,
+.mkt-about__founders,
+.mkt-about__brands {
+  text-align: left;
+}
+
+/* The entity paragraph states what the company is and is not, for search and
+   for anyone checking. It was a loose left-aligned block under a centred hero;
+   it now sits on its own surface, centred with the rest. */
+.mkt-about__entity {
+  max-width: 52rem;
+  padding-top: 2.5rem;
+}
+
+.mkt-about__entity-para {
+  padding: 1.4rem 1.6rem;
+  border-radius: 1rem;
+  border: 1px solid var(--mkt-border, #efeaf8);
+  background: #fbfaff;
+  font-size: 0.98rem;
+}
+
+@media (max-width: 639px) {
+  .mkt-about__entity-para {
+    padding: 1.1rem 1.15rem;
   }
 }

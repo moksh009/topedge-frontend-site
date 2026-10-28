@@ -5532,10 +5532,15 @@
   vertical-align: -0.06em;
 }
 
+/* The pill itself lives in marketing.css as .mkt-highlight, so the hero and
+   the About h1 cannot drift apart. The padding is lopsided on purpose: an
+   inline box pads from the font's em box rather than the cap height, and this
+   typeface has a tall ascent, so even padding floated the pill above the
+   letters. See the note on .mkt-highlight. */
 .home-hero__title-highlight {
   display: inline;
-  padding: 0.1em 0.28em 0.14em;
-  border-radius: 0.32em;
+  padding: 0.015em 0.3em 0.2em;
+  border-radius: 0.3em;
   background: #e4d4ff;
   color: #2a1065;
   font-weight: 500;
@@ -5563,7 +5568,7 @@
   }
 
   .home-hero__title-highlight {
-    padding: 0.08em 0.24em 0.12em;
+    padding: 0.015em 0.26em 0.18em;
   }
 }
 
