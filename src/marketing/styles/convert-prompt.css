@@ -61,6 +61,12 @@
 }
 
 @media (min-width: 760px) {
+  /* Two columns, the left one left-aligned, so the scores line up with the
+     bullets above them rather than floating in the middle of the column. */
+  .mkt-proof-row.mkt-convert__proof {
+    justify-content: flex-start;
+  }
+
   .mkt-convert__card {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 0.92fr);
@@ -179,11 +185,21 @@
 
 /*
  * Sits above the CTAs on desktop, above the merchant marquee on a phone.
- * The row is inline-flex, so the card's own text-align places it: centred on
- * a phone, hard left beside the bullets on desktop.
+ *
+ * This used to rely on the row being inline-flex so the card's own
+ * `text-align: center` would place it. It is not: `.mkt-proof-row` resolves to
+ * `display: flex` at full width, so `text-align` did nothing and the two
+ * scores sat hard left under a centred title on every phone. The row is a flex
+ * container, so it takes `justify-content`, and the selector carries both
+ * classes to outrank `.mkt-proof-row--brief`'s own `flex-start` whichever
+ * order the two stylesheets land in.
  */
 .mkt-convert__proof {
   margin-top: 1rem;
+}
+
+.mkt-proof-row.mkt-convert__proof {
+  justify-content: center;
 }
 
 .mkt-convert__close {
