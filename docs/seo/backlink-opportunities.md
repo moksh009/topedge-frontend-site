@@ -35,7 +35,7 @@ Full copy lives in [`outreach-drafts-week1.md`](./outreach-drafts-week1.md). **D
 
 | Item | Question | Owner | Due |
 |---|---|---|---|
-| B — Case studies | Real merchants confirmed on homepage: Ved Patel (Delitech), Shubham (Apex Light), Shubhash Bhai (Choice Salon), Steven Mugabe (code CLINIC). Case-study pages still need permission to expand quotes. | Merchant-relationship owner | When ready |
+| B — Case studies | On-category merchants only: Ved Patel (Delitech Smart Home), Shubham (Apex Light). Case-study pages still need permission to expand quotes. A salon and a clinic were in this queue; both are off-category for a Shopify D2C positioning and their logo and avatar files were deleted on 2026-10-28, so nothing can wire them back by accident. | Merchant-relationship owner | When ready |
 | C — Shopify App Store | Blocked on review 114291 remediation; no public URL to wire yet | Product / App Store | When listing live |
 | Phase 1 leftovers | Schema field audit + visible Updated date on compares; Bing Webmaster submit | Eng / you | Follow-up prompt when asked |
 | llms.txt | AiSensy **is** listed (`/compare/aisensy`) as of 2026-09-20 — no gap | — | Done |
@@ -129,26 +129,32 @@ These are earned by shipping a connector, and they sit on high-authority automat
 
 ## Tier C — independent roundups. These need outreach (drafts in `outreach-drafts-week1.md`).
 
-New finds, **not already covered by R1–R7**. All are third-party (not a competitor's own blog), so
-inclusion is a genuine editorial ask.
+**Purged 2026-10-28.** This table had grown to R8–R22, most of it scraped
+directory pages and thin "N best alternatives" listicles found by search and
+never opened: `edesy.in`, `getpulsesignal.com`, `stork.ai`, `hyperleap.ai`,
+`appnavigator.io`, `open.store`, `easysellapp.com`, `controlf5.in`,
+`wiserreview.com`, `chakrahq.com`, `prospeo.io`, `bot.space`. None had a
+checked authority figure, several exist to host paid placements, and a link
+from that kind of page is at best worthless and at worst a footprint Google
+reads as a link scheme.
 
-| ID | URL | Who they list | Angle |
+Nothing on the purged list was ever contacted — every row in this file has
+always carried status `todo`/`drafted`, and no row has ever reached `sent` or
+`won`. **No backlink has been placed from this repository.** If low-quality
+links to topedgeai.com exist, they were not created here and the remedy is a
+Search Console disavow file, which has to be built from a real referring-domain
+export (Semrush/Ahrefs), not from guesswork.
+
+What stays, because each is a real publisher in our market and each was
+opened or is independently known:
+
+| ID | URL | Who they list | Why it survives the cut |
 |---|---|---|---|
-| R8 | sumtracker.com/blog/best-shopify-whatsapp-apps | "10 Best WhatsApp Apps for Shopify 2026" | Independent, Shopify-tooling publisher |
-| R9 | controlf5.in/best-shopify-whatsapp-marketing-apps/ | "10+ Best Shopify Apps for WhatsApp Marketing" | India agency — our exact market |
-| R10 | easysellapp.com/blogs/wiki/best-shopify-whatsapp-marketing-apps-2026 | "Best Shopify WhatsApp Marketing Apps (2026)" | Shopify app vendor, non-competing |
-| R11 | open.store/shopify-apps/whatsapp-abandoned-cart-1 | Shopify app directory | Directory listing, may be self-serve |
-| R12 | appnavigator.io | Mirrors App Store listings + reviews | Likely auto-listed once reviews exist |
-| R13 | echai.ventures/d2c/d2c-customer-support-cx/… | Gallabox, Interakt, Zoko, WATI | Indian D2C founder community — high relevance |
-| R14 | wiserreview.com/blog/aisensy-alternatives/ | "9 Best AiSensy Alternatives" | We are a literal AiSensy alternative |
-| R15 | hyperleap.ai/comparison/best-wati-alternatives-2026 | "Best WATI Alternatives 2026" | Same |
-| R16 | getpulsesignal.com/alternatives/aisensy | AiSensy alternatives page | Same |
-| R17 | edesy.in/whatsapp-bot-builder/alternatives/wati | WATI alternatives (India) | Same |
-| R18 | storeleads.app (Shopify app reports) | Per-app install/traffic reports | Data directory; listing likely automatic |
-| R19 | bot.space/blog/best-interakt-alternatives | "7 Best Interakt Alternatives 2026" | Named in your own earlier audit as a listicle that omits us |
-| R20 | prospeo.io/s/interakt-alternatives | "10 Best Interakt Alternatives" | Independent, pricing-led angle |
-| R21 | chakrahq.com/article/top-10-aisensy-alternatives-in-2026/ | "Top 10 AiSensy Alternatives" | Independent |
-| R22 | stork.ai/en/interakt | Per-tool directory entry | Directory; check if self-serve |
+| R8 | sumtracker.com/blog/best-shopify-whatsapp-apps | "10 Best WhatsApp Apps for Shopify" | Real Shopify inventory vendor, non-competing, editorial post |
+| R13 | echai.ventures/d2c/d2c-customer-support-cx/… | Gallabox, Interakt, Zoko, WATI | Indian D2C founder community — exactly our market |
+| R18 | storeleads.app | Per-app install/traffic reports | Data directory; listing is automatic once installs exist |
+
+R1–R7 above are unchanged.
 
 ---
 
