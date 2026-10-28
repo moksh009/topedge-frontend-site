@@ -8,11 +8,11 @@ export const CONTENT_DATES = {
   /** Last edit of 3-way compare page (+ feature matrix). */
   compareThreeWay: '2026-10-21',
   /** Last edit of blogPosts.ts (used as Article dateModified fallback). */
-  blogPosts: '2026-10-26',
+  blogPosts: '2026-10-28',
   /** Last edit of feature / product page content. */
   featurePages: '2026-10-23',
   /** Last edit of published plan catalog (pricing Offers). */
-  pricing: '2026-10-26',
+  pricing: '2026-10-27',
 } as const;
 
 export const BLOG_DATES_BY_SLUG = {
