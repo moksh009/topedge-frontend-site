@@ -129,7 +129,7 @@ export default function About() {
             </span>
           </p>
           <h1 className="mkt-about__h1">
-            WhatsApp growth OS for <span className="mkt-about__h1-accent">Shopify India</span>,
+            WhatsApp automation for <span className="mkt-about__h1-accent">Shopify India</span>,
             built in Ahmedabad
           </h1>
           <p className="mkt-about__lede">

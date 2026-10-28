@@ -1019,7 +1019,7 @@ function heroProof() {
  * what makes each one an argument rather than a label.
  */
 const PILLARS = [
-  'Enterprise e-commerce OS (not just a basic WhatsApp chat app)',
+  'Built for the whole order lifecycle, not just a WhatsApp chat widget',
   'Immediate RTO reduction: confirm COD and boost prepaid conversions',
   'Zero message markup (keep total asset and phone number ownership)',
 ];

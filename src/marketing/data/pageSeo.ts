@@ -104,7 +104,7 @@ export const PAGE_SEO = {
   about: {
     title: 'About TopEdge AI: Shopify WhatsApp Platform, India',
     description:
-      'Founded in Ahmedabad by Moksh Patel and Smit Tilva, TopEdge AI is the WhatsApp automation and COD growth OS for Indian Shopify D2C brands. Cart recovery to RTO.',
+      'Founded in Ahmedabad by Moksh Patel and Smit Tilva, TopEdge AI runs WhatsApp automation and COD confirmation for Indian Shopify D2C brands. Cart recovery to RTO.',
     keywords:
       'About TopEdge AI, Moksh Patel TopEdge, Smit Tilva TopEdge, WhatsApp Shopify platform India, ecommerce automation company Ahmedabad, Delitech Smart Home WhatsApp, Apex Light Shopify WhatsApp',
     path: '/about',

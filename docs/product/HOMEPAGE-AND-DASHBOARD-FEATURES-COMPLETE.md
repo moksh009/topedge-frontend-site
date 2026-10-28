@@ -479,7 +479,7 @@ Marketing site no longer promotes “Order messages” as a primary feature; old
 
 ## 8. One-sentence product summary
 
-**TopEdge** is a WhatsApp revenue + support OS for Shopify India: connect the store, approve Meta templates, recover carts and run journeys, chat with order context, and automate flows — with honest ₹ Meta costs and merchant control over every send.
+**TopEdge** runs WhatsApp revenue and support for Shopify India: connect the store, approve Meta templates, recover carts and run journeys, chat with order context, and automate flows — with honest ₹ Meta costs and merchant control over every send.
 
 ---
 

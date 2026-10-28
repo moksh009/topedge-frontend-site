@@ -36,6 +36,11 @@ const SOCIAL_PROOF = JSON.parse(
 );
 const TRUSTPILOT_SCORE = SOCIAL_PROOF.trustpilot.score;
 const TRUSTPILOT_REVIEWS = SOCIAL_PROOF.trustpilot.reviews;
+// The page carries a Product Hunt rating beside the Trustpilot one, so "every
+// score on the page is the TrustScore" stopped being true. Both sourced pairs
+// are allowed; anything else is still an invented number.
+const SOURCED_SCORES = [TRUSTPILOT_SCORE, SOCIAL_PROOF.productHunt.rating].filter(Boolean);
+const SOURCED_REVIEWS = [TRUSTPILOT_REVIEWS, SOCIAL_PROOF.productHunt.reviews].filter(Boolean);
 
 const failures = [];
 const must = (ok, msg) => {
@@ -383,7 +388,7 @@ must(/\.hp-ph\{[^}]*object-fit:contain/.test(html), 'a hero chip mark is being c
 const prose = withoutQuotes.replace(/<[^>]+>/g, '');
 must(!/★/.test(prose), 'uses a typographic star; the rating is drawn from TRUSTPILOT');
 const scores = [...prose.matchAll(/\b([0-5]\.\d)\b(?!\d)/g)].map((m) => m[1]);
-for (const n of scores) must(n === TRUSTPILOT_SCORE, `states a rating of ${n}; the sourced TrustScore is ${TRUSTPILOT_SCORE}`);
+for (const n of scores) must(SOURCED_SCORES.includes(n), `states a rating of ${n}; the sourced scores are ${SOURCED_SCORES.join(' and ')}`);
 // The star row renders only from a sourced score, and names its source.
 const starRow = (markup.match(/<p class="hp-stars[^"]*">[\s\S]*?<\/p>/) || [''])[0];
 must(starRow !== '', 'the star row is gone');
@@ -414,7 +419,7 @@ const vh = (markup.match(/<i class="vh">[\s\S]*?<\/i>/) || [''])[0];
 must(new RegExp(`from ${TRUSTPILOT_REVIEWS} reviews`).test(vh), 'the review count is gone from the accessible text as well as the visible line');
 must(!/class="vh"/.test(markup.replace(/<i class="vh">[\s\S]*?<\/i>/g, '')) , 'a second visually hidden run appeared; keep one place for text that is said and not drawn');
 const counts = [...prose.matchAll(/([\d,]+)\s+reviews?\b/gi)].map((m) => m[1]);
-for (const n of counts) must(n === TRUSTPILOT_REVIEWS, `states ${n} reviews on the page; the sourced count is ${TRUSTPILOT_REVIEWS}`);
+for (const n of counts) must(SOURCED_REVIEWS.includes(n), `states ${n} reviews on the page; the sourced counts are ${SOURCED_REVIEWS.join(' and ')}`);
 must(/trustpilot\.com\/review\/topedgeai\.com/.test(starRow), 'the rating does not link to the page it came from');
 // Trustpilot's name carries Trustpilot's mark, not a violet text link: the
 // green star is the half of the lockup a reader recognises without reading.

@@ -992,7 +992,7 @@ export const blogPosts: BlogPost[] = [
 <tbody>
 <tr>
 <td><strong>TopEdge AI</strong></td>
-<td>Shopify India growth OS</td>
+<td>Shopify WhatsApp automation (India)</td>
 <td>Flat INR by orders (Launch ₹1,999+)</td>
 <td>Native COD + COD → prepaid, warranty</td>
 <td><a href="/pricing">Pricing</a></td>
@@ -1101,7 +1101,7 @@ export const blogPosts: BlogPost[] = [
 <p>Start at the <a href="/compare/alternatives">alternatives index</a> for one factual line per tool, then open only the pairwise pages you care about. If a vendor cannot show a live Shopify cart inside a WhatsApp preview, you are buying a broadcast tool, not ecommerce automation.</p>
 
 <h2>Where does TopEdge fit on this shortlist?</h2>
-<p>TopEdge is built as a WhatsApp growth OS for Shopify India: <a href="/features/journeys">Journeys</a>, <a href="/features">Live Chat</a>, <a href="/features/meta-manager">Meta Manager</a>, and recovery math in one workspace. Compare named alternatives on our <a href="/compare">compare hub</a>, including <a href="/compare/wati">vs WATI</a>, <a href="/compare/zoko">vs Zoko</a>, <a href="/compare/kanal">vs Kanal</a>, and <a href="/compare/dondy">vs Dondy</a> (narrative: <a href="/blog/dondy-alternative-shopify-india">Dondy alternative</a>).</p>
+<p>TopEdge is built for Shopify stores in India: <a href="/features/journeys">Journeys</a>, <a href="/features">Live Chat</a>, <a href="/features/meta-manager">Meta Manager</a>, and recovery math in one workspace. Compare named alternatives on our <a href="/compare">compare hub</a>, including <a href="/compare/wati">vs WATI</a>, <a href="/compare/zoko">vs Zoko</a>, <a href="/compare/kanal">vs Kanal</a>, and <a href="/compare/dondy">vs Dondy</a> (narrative: <a href="/blog/dondy-alternative-shopify-india">Dondy alternative</a>).</p>
 <blockquote><p>If a demo cannot show a live Shopify cart inside a WhatsApp preview, you are buying a broadcast tool, not ecommerce automation.</p></blockquote>
 
 <h2>What are red flags while buying a WhatsApp app?</h2>
@@ -1419,7 +1419,7 @@ export const blogPosts: BlogPost[] = [
     content: `
 <p><strong>Ecommerce automation on Shopify WhatsApp</strong> means connecting store events (abandoned carts, orders, COD status, shipments) to Meta-approved WhatsApp messages and a team inbox, so growth and support run without copy-pasting from Shopify admin. The complete operator guide is <a href="/blog/whatsapp-automation-for-shopify">WhatsApp automation for Shopify</a>.</p>
 
-<h2>Core automations (the operating system)</h2>
+<h2>Core automations</h2>
 <ul>
 <li>Abandoned cart recovery</li>
 <li>COD confirmation before ship</li>
@@ -1691,7 +1691,7 @@ export const blogPosts: BlogPost[] = [
 </ol>
 
 <h2>Where does TopEdge AI fit that gap?</h2>
-<p>TopEdge is built as a Shopify-native WhatsApp growth OS for India: flat INR plans by order volume, Meta pass-through without a Zoko-style conversation platform markup on the published catalog, plus COD journeys, warranty, and unified identity in the core stack. We do <em>not</em> claim to out-India Zoko on catalog-in-chat heritage. That is their strength. We compete on predictable platform cost and India ops depth.</p>
+<p>TopEdge is built Shopify-native for India: flat INR plans by order volume, Meta pass-through without a Zoko-style conversation platform markup on the published catalog, plus COD journeys, warranty, and unified identity in the core stack. We do <em>not</em> claim to out-India Zoko on catalog-in-chat heritage. That is their strength. We compete on predictable platform cost and India ops depth.</p>
 <p>For the scorecard, plan table, and verify-live footnotes, open the full board: <a href="/compare/zoko">TopEdge vs Zoko</a>. For a fair one-liner index of other tools, see <a href="/compare/alternatives">alternatives</a>.</p>
 
 <h2>Zoko vs TopEdge AI, side by side</h2>
@@ -2549,7 +2549,7 @@ export const blogPosts: BlogPost[] = [
 <td>Automations documented for email/SMS; behavioral WhatsApp still needs an app/platform</td>
 </tr>
 <tr>
-<td><strong>Shopify WhatsApp app / growth OS</strong></td>
+<td><strong>Shopify WhatsApp automation</strong></td>
 <td>Events + templates + inbox + journeys together</td>
 <td>Quality still depends on opt-in, template hygiene, and ops, not install alone</td>
 </tr>
@@ -2739,7 +2739,7 @@ export const blogPosts: BlogPost[] = [
 </div>
 
 
-<p>WhatsApp automation for Shopify is an operating system: store truth, approved messages, journeys, and humans for exceptions. Start with connection and one high-ROI journey, then widen the lifecycle.</p>
+<p>WhatsApp automation for Shopify rests on four things: store truth, approved messages, journeys, and humans for exceptions. Start with connection and one high-ROI journey, then widen the lifecycle.</p>
 <p>Next steps: <a href="/shopify-whatsapp-integration">Shopify WhatsApp integration</a>, <a href="/features/journeys">Journeys</a>, <a href="/pricing">pricing</a>, or <a href="/signup">start free</a>. Cluster: <a href="/blog/whatsapp-abandoned-cart-recovery-shopify">cart recovery</a>, <a href="/blog/best-whatsapp-apps-for-shopify">best WhatsApp apps for Shopify</a>, <a href="/blog/whatsapp-shared-inbox-shopify-order-context">shared inbox</a>.</p>
 <p>Two prerequisites most teams skip: <a href="/blog/whatsapp-opt-in-shopify-india">opt-in</a> and <a href="/blog/whatsapp-template-rejected-meta-shopify-fix">template approval</a>.</p>
 <p class="mkt-blog-footnote">Shopify Messaging capabilities referenced from <a href="https://help.shopify.com/manual/orders/abandoned-checkouts" target="_blank" rel="noopener noreferrer">Shopify Help Center</a> (campaigns for email/SMS/WhatsApp; automations documented for email and SMS). WhatsApp opt-in, customer service window, and template categories from Meta WhatsApp Business Platform documentation. TopEdge plan labels from the public pricing catalog (Launch ₹1,999 · Growth ₹3,999 · Scale ₹6,499 monthly; +GST). Re-check Meta, Shopify, and vendor pages before production launches. Surfaces change.</p>
@@ -2803,7 +2803,7 @@ export const blogPosts: BlogPost[] = [
       {
         question: 'What is the best WhatsApp automation app for Shopify?',
         answer:
-          'Look for event-driven journeys with waits, branching, purchase suppression, Meta template governance, and an inbox for replies. TopEdge AI is built as that growth OS for Shopify; Zoko, Interakt, WATI, AiSensy, Dondy, and others compete with different pricing and depth trade-offs.',
+          'Look for event-driven journeys with waits, branching, purchase suppression, Meta template governance, and an inbox for replies. TopEdge AI is built for exactly that on Shopify; Zoko, Interakt, WATI, AiSensy, Dondy, and others compete with different pricing and depth trade-offs.',
       },
       {
         question: 'Which Shopify WhatsApp app is best for cart recovery?',
@@ -2938,7 +2938,7 @@ export const blogPosts: BlogPost[] = [
 <tbody>
 <tr>
 <td><strong>TopEdge AI</strong></td>
-<td>Shopify WhatsApp growth OS (INR)</td>
+<td>Shopify WhatsApp automation (INR)</td>
 <td>Native OAuth + journeys</td>
 <td>Yes</td>
 <td>Native confirm / COD→prepaid</td>
@@ -3053,7 +3053,7 @@ export const blogPosts: BlogPost[] = [
 
 <h3>1. TopEdge AI</h3>
 <p><strong>Best for:</strong> Shopify D2C that wants event-driven WhatsApp journeys, COD → prepaid, shared inbox with order context, and flat INR plans with Meta pass-through at 0% markup.</p>
-<p><strong>Watch-outs:</strong> Not the cheapest entry sticker; built as a growth OS, not a free floating widget alone.</p>
+<p><strong>Watch-outs:</strong> Not the cheapest entry sticker; built for the whole order lifecycle, not a free floating widget alone.</p>
 <p>Links: <a href="/pricing">Pricing</a> · <a href="/features">Features</a> · <a href="/compare">Compare hub</a></p>
 
 <h3>2. Dondy</h3>
@@ -3074,7 +3074,7 @@ export const blogPosts: BlogPost[] = [
 
 <h3>6. WATI</h3>
 <p><strong>Best for:</strong> Broad BSP use cases beyond a single Shopify store.</p>
-<p><strong>Watch-outs:</strong> Advanced ecommerce identity / COD often needs more API mapping than a native growth OS. <a href="/compare/wati">TopEdge vs WATI</a>.</p>
+<p><strong>Watch-outs:</strong> Advanced ecommerce identity / COD often needs more API mapping than a native Shopify integration. <a href="/compare/wati">TopEdge vs WATI</a>.</p>
 
 <h3>7. Bitespeed</h3>
 <p><strong>Best for:</strong> Omnichannel AI marketing/support above a USD floor.</p>
@@ -3135,7 +3135,7 @@ export const blogPosts: BlogPost[] = [
 </ol>
 
 <h2>TopEdge AI: Where It Fits</h2>
-<p>TopEdge AI fits stores that want Shopify + WhatsApp as an operating system: Journeys for cart/COD/shipping, Live Chat with order context, Opt-in tools, Campaigns after hygiene, and Meta Manager for template status, with flat INR plans and 0% Meta markup on the published catalog.</p>
+<p>TopEdge AI fits stores that want Shopify and WhatsApp working together: Journeys for cart/COD/shipping, Live Chat with order context, Opt-in tools, Campaigns after hygiene, and Meta Manager for template status, with flat INR plans and 0% Meta markup on the published catalog.</p>
 <p>It is not the right pick if you only need a free widget, or if you are shopping purely for the lowest USD sticker without COD/identity depth.</p>
 <p>Start: <a href="/signup">Start free</a> · <a href="/pricing">Pricing</a> · Ecosystem: <a href="/blog/whatsapp-automation-for-shopify">WhatsApp automation for Shopify</a>.</p>
 
@@ -3151,7 +3151,7 @@ export const blogPosts: BlogPost[] = [
 </details>
 <details>
 <summary>What is the best WhatsApp automation app for Shopify?</summary>
-<p>Look for event-driven journeys with waits, branching, purchase suppression, Meta template governance, and an inbox for replies. TopEdge AI is built as that growth OS for Shopify; Zoko, Interakt, WATI, AiSensy, Dondy, and others compete with different pricing and depth trade-offs.</p>
+<p>Look for event-driven journeys with waits, branching, purchase suppression, Meta template governance, and an inbox for replies. TopEdge AI is built for exactly that on Shopify; Zoko, Interakt, WATI, AiSensy, Dondy, and others compete with different pricing and depth trade-offs.</p>
 </details>
 <details>
 <summary>Which Shopify WhatsApp app is best for cart recovery?</summary>
