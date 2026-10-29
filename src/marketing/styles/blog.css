@@ -1727,6 +1727,42 @@
   margin-right: 0;
 }
 
+/* Numbered page links. Same pill as __btn, sized for a single digit. */
+.mkt-blog-pager__pages {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mkt-blog-pager__page {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2rem;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid var(--mkt-border);
+  border-radius: 999px;
+  background: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--mkt-ink);
+  text-decoration: none;
+}
+
+.mkt-blog-pager__page:hover {
+  border-color: #c4b5fd;
+  box-shadow: 0 10px 24px -18px rgba(76, 29, 149, 0.5);
+}
+
+.mkt-blog-pager__page.is-current {
+  border-color: #7c3aed;
+  color: #7c3aed;
+  font-weight: 600;
+}
+
 .mkt-blog-pager__arrow {
   display: inline-flex;
   align-items: center;

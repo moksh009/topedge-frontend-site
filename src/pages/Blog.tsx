@@ -143,6 +143,30 @@ function Pagination({ page, totalPages }: { page: number; totalPages: number }) 
         Page {page} of {totalPages}
       </p>
 
+      {/*
+        Numbered links, added 2026-10-29. Prev/Next alone meant each page linked
+        only to its neighbours, so /blog/page/3 had exactly one dofollow inbound
+        link in the Ahrefs crawl — reachable only from page 2's Next. Listing
+        every page gives the deeper pages an inbound link from all the others.
+        Cheap here because the archive is 3 pages; revisit the shape if
+        BLOG_PAGE_SIZE ever makes that list long.
+      */}
+      <ol className="mkt-blog-pager__pages">
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map((n) => (
+          <li key={n}>
+            {n === page ? (
+              <span className="mkt-blog-pager__page is-current" aria-current="page">
+                {n}
+              </span>
+            ) : (
+              <Link to={href(n)} className="mkt-blog-pager__page">
+                {n}
+              </Link>
+            )}
+          </li>
+        ))}
+      </ol>
+
       {page < totalPages ? (
         <Link to={href(page + 1)} className="mkt-blog-pager__btn" rel="next">
           Next
