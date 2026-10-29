@@ -69,6 +69,20 @@ export const PAGE_SEO = {
       'Shopify WhatsApp features, WhatsApp journeys India, AI Brain BYOK Shopify, tracking pixel WhatsApp, WhatsApp opt-in Shopify, Profit and costs ecommerce, Live Chat Shopify WhatsApp',
     path: '/features',
   },
+  /**
+   * /services targets the "whatsapp automation service / service provider india"
+   * query family, which /features does not answer: /features is organised by
+   * capability, /services by outcome. Kept deliberately distinct so the two do
+   * not cannibalise each other (see src/marketing/data/services.ts).
+   */
+  services: {
+    title: 'WhatsApp Automation Services for Shopify India',
+    description:
+      'WhatsApp automation services for Shopify stores in India: cart and COD recovery, Meta template approval, opt-in, campaigns and migration. 0% Meta markup.',
+    keywords:
+      'whatsapp automation services india, whatsapp api service provider india, whatsapp automation service for shopify, whatsapp business api services india, shopify whatsapp setup service, whatsapp marketing services india',
+    path: '/services',
+  },
   integrations: {
     title: 'Shopify & Meta WhatsApp Integrations | Store Sync',
     description:

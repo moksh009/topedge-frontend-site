@@ -29,6 +29,10 @@ const columns: { title: string; links: FootLink[] }[] = [
     title: 'Company',
     links: [
       { label: 'About', href: '/about' },
+      // /services was a 301 to /features until 2026-10-29, so GSC had it in
+      // "Page with redirect". It is a real page now; this sitewide link is what
+      // gets it crawled.
+      { label: 'Services', href: '/services' },
       { label: 'Customers', href: '/customers' },
       { label: 'Compare', href: '/compare' },
       { label: 'Docs', href: 'https://dash.topedgeai.com/docs' },

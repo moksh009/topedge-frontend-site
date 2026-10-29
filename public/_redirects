@@ -70,7 +70,6 @@ https://www.topedgeai.com/*  https://topedgeai.com/:splat  301!
 /lp/cod-confirmation/  /lp/shopify-whatsapp  301!
 /cod-confirmation-whatsapp  /features/journeys  301!
 /cod-confirmation-whatsapp/  /features/journeys  301!
-/services  /features  301!
 /booking  /contact  301!
 /testimonials  /customers  301!
 /testimonials/  /customers  301!
@@ -101,6 +100,14 @@ https://www.topedgeai.com/*  https://topedgeai.com/:splat  301!
 /blog/evolution-of-ai-business-communication/  /blog/ai-whatsapp-chatbot-for-shopify-india  301!
 /blog/topedge-ai-voice-agents-vs-human-agents-2024  /blog/ai-whatsapp-chatbot-for-shopify-india  301!
 /blog/topedge-ai-voice-agents-vs-human-agents-2024/  /blog/ai-whatsapp-chatbot-for-shopify-india  301!
+# Retired 2024/2025 AI posts that never had a rule, so they fell through to the
+# 404 catch-all (GSC 2026-08-14: "Crawled - currently not indexed"). The voice
+# post maps to the AI agent page, same target as /ai-caller; the generic
+# automation post maps to the live ecommerce automation guide.
+/blog/ai-voice-agents-vs-human-receptionists-medical-roi-2025  /features/ai-brain  301!
+/blog/ai-voice-agents-vs-human-receptionists-medical-roi-2025/  /features/ai-brain  301!
+/blog/ai-automation-revolutionizing-business-operations-2025  /blog/how-to-automate-ecommerce-store-india  301!
+/blog/ai-automation-revolutionizing-business-operations-2025/  /blog/how-to-automate-ecommerce-store-india  301!
 
 # Cannibalisation consolidation (21 Oct 2026). Each pair targeted one query with
 # two URLs, so Google indexed neither well. The unique sections of the retired

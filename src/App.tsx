@@ -75,6 +75,7 @@ const JourneyExamplePage = React.lazy(() => import('./marketing/pages/JourneyExa
 const WhatsAppTemplatesPage = React.lazy(
   () => import('./marketing/pages/WhatsAppTemplatesPage'),
 );
+const ServicesPage = React.lazy(() => import('./marketing/pages/ServicesPage'));
 const ToolsIndexPage = React.lazy(() => import('./marketing/pages/tools/ToolsIndexPage'));
 const ToolFinderPage = React.lazy(() => import('./marketing/pages/tools/ToolFinderPage'));
 const RtoCalculatorPage = React.lazy(() => import('./marketing/pages/tools/RtoCalculatorPage'));
@@ -223,6 +224,7 @@ const AnimatedRoutes = () => {
           <Route path="/contact" element={<Contact />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/pricing/meta-rates" element={<MetaRatesPage />} />
+          <Route path="/services" element={<ServicesPage />} />
           <Route path="/features" element={<FeaturesPage />} />
           <Route path="/features/cod-confirmation" element={<CodConfirmationPage />} />
           <Route path="/features/:slug" element={<FeatureDetailPage />} />
