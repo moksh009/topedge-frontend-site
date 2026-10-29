@@ -2,7 +2,13 @@
 
 > **Rule:** This file is discovery + draft queue only. Nothing here is auto-sent or auto-published. A human reviews, edits, and personally sends or posts.
 
-Last refreshed: **2026-10-09** (competitor link-gap pass — see "Link gap" below).
+Last refreshed: **2026-10-29** — competitor gap re-verified (Updatrr added) in
+[`backlink-competitor-gap-2026-10-29.md`](./backlink-competitor-gap-2026-10-29.md),
+with the actionable list in [`backlink-targets.csv`](./backlink-targets.csv)
+(import into a sheet; one row per target, each mapped to the TopEdge URL to submit).
+The three picked to chase are in [`backlink-top3-2026-10-28.md`](./backlink-top3-2026-10-28.md).
+
+Previous: 2026-10-09 (competitor link-gap pass — see "Link gap" below).
 Previous: 2026-09-21 (manual Week 1 pass; Phase 6 measurement cross-ref added)
 
 Related: [`measurement.md`](./measurement.md) (monthly review must cross-ref this tracker when citations appear after a roundup win).
