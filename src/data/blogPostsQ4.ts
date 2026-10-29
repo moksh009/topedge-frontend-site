@@ -652,7 +652,7 @@ ${verdict(`<p><strong>Most rejections come from five fixable things:</strong> wr
 ${faqHtml(TEMPLATE_FAQS)}
 
 
-<p>Related: <a href="/blog/whatsapp-abandoned-cart-recovery-shopify">WhatsApp abandoned cart recovery</a>, <a href="https://dash.topedgeai.com/docs" target="_blank" rel="noopener">quickstart</a>.</p>
+<p>Related: <a href="/blog/whatsapp-abandoned-cart-recovery-shopify">WhatsApp abandoned cart recovery</a>, <a href="https://dash.topedgeai.com/docs/" target="_blank" rel="noopener">quickstart</a>.</p>
 <p class="mkt-blog-footnote">Template rules come from <a href="https://developers.facebook.com/docs/whatsapp/message-templates/guidelines/" target="_blank" rel="noopener noreferrer">Meta’s WhatsApp Business Platform documentation</a> and change over time. Verify against the current guidelines before launch.</p>
 `,
   },
@@ -737,7 +737,7 @@ ${faqHtml(OPTIN_FAQS)}
 
 <p>Related: <a href="/blog/meta-whatsapp-cloud-api-shopify-templates">Meta Cloud API templates for Shopify</a>, <a href="/blog/whatsapp-abandoned-cart-recovery-shopify">WhatsApp abandoned cart recovery</a> and <a href="/blog/best-whatsapp-apps-for-shopify">the best WhatsApp apps for Shopify</a>.</p>
 
-<p>Related: <a href="/blog/how-to-reduce-rto-with-whatsapp-cod-confirmation">COD confirmation on WhatsApp</a>, <a href="https://dash.topedgeai.com/docs" target="_blank" rel="noopener">quickstart</a>.</p>
+<p>Related: <a href="/blog/how-to-reduce-rto-with-whatsapp-cod-confirmation">COD confirmation on WhatsApp</a>, <a href="https://dash.topedgeai.com/docs/" target="_blank" rel="noopener">quickstart</a>.</p>
 <p class="mkt-blog-footnote">This article is general information, not legal advice. Check <a href="https://whatsappbusiness.com/policy/" target="_blank" rel="noopener noreferrer">Meta’s current WhatsApp Business Platform policy</a> and take advice on India’s data protection rules for your own flows.</p>
 `,
   },

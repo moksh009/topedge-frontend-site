@@ -89,7 +89,7 @@ const LIMITS = [
 ];
 
 const READING = [
-  { label: 'COD confirmation setup guide', href: 'https://dash.topedgeai.com/docs' },
+  { label: 'COD confirmation setup guide', href: 'https://dash.topedgeai.com/docs/' },
   { label: 'Journeys: the visual builder behind it', href: '/features/journeys' },
   { label: 'Profit & costs: measure your own RTO', href: '/features/profit-loss' },
   {

@@ -53,7 +53,7 @@ the billing catalog, which scripts/check-catalog-drift.mjs pins to the live API.
 
 ## Documentation
 
-Product documentation lives in the TopEdge dashboard: https://dash.topedgeai.com/docs
+Product documentation lives in the TopEdge dashboard: https://dash.topedgeai.com/docs/
 
 ## Compare
 

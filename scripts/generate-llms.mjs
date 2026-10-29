@@ -200,7 +200,9 @@ const concise = [
   '',
   '## Documentation',
   '',
-  `Product documentation lives in the TopEdge dashboard: ${identity.COMPANY_DASHBOARD_URL}/docs`,
+  // Trailing slash: the dashboard prerenders docs/<path>/index.html, so the
+  // slashless form 301s and llms.txt would hand answer engines a redirect.
+  `Product documentation lives in the TopEdge dashboard: ${identity.COMPANY_DASHBOARD_URL}/docs/`,
   '',
   '## Compare',
   '',

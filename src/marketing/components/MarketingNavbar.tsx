@@ -94,7 +94,8 @@ const NAV_PROMO = {
 
 const primaryLinks = [
   { label: 'Pricing', href: '/pricing' },
-  { label: 'Docs', href: 'https://dash.topedgeai.com/docs' },
+  // Trailing slash required — see the note on the same link in MarketingFooter.
+  { label: 'Docs', href: 'https://dash.topedgeai.com/docs/' },
   { label: 'Customers', href: '/customers' },
 ] as const;
 

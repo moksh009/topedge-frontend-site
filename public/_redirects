@@ -27,8 +27,10 @@ https://www.topedgeai.com/*  https://topedgeai.com/:splat  301!
 # the docs root, which threw away the one thing the old link knew. The dashboard
 # serves the deep paths (checked 21 Oct 2026), so the path is passed through and
 # an old inbound link keeps its page.
-/docs  https://dash.topedgeai.com/docs  301!
-/docs/  https://dash.topedgeai.com/docs  301!
+# Target carries the slash: the dashboard prerenders docs/<path>/index.html, so
+# a slashless target would 301 again and make this a two-hop chain.
+/docs  https://dash.topedgeai.com/docs/  301!
+/docs/  https://dash.topedgeai.com/docs/  301!
 /docs/*  https://dash.topedgeai.com/docs/:splat  301!
 
 # Feature aliases → canonical hubs
