@@ -12,7 +12,7 @@ export const CONTENT_DATES = {
   /** Last edit of feature / product page content. */
   featurePages: '2026-10-23',
   /** Last edit of published plan catalog (pricing Offers). */
-  pricing: '2026-10-27',
+  pricing: '2026-10-29',
 } as const;
 
 export const BLOG_DATES_BY_SLUG = {

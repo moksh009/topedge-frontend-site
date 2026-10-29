@@ -339,6 +339,50 @@ export function offerPriceValidUntil(from = new Date()): string {
  * unitCode describe the same number. No itemCondition: this is a subscription,
  * not a physical good.
  */
+/**
+ * Merchant-listing fields Google asks for on every Offer, modelled honestly for
+ * a software subscription.
+ *
+ * GSC flagged "Missing field 'hasMerchantReturnPolicy'", "'shippingDetails'" and
+ * "'validFrom'" (non-critical) on 5 URLs from 2026-09-21. They are requested
+ * because softwareApplicationJsonLd is dual-typed SoftwareApplication+Product,
+ * which Google coerces into a merchant listing — and that dual type is load
+ * bearing, so the answer is to fill the fields truthfully rather than drop
+ * Product and lose the listing.
+ *
+ * Nothing here invents a commercial term:
+ *   - doesNotShip: true. There is no shipment; this is a hosted subscription.
+ *     Stating a shipping rate or delivery window would be false, and it is the
+ *     same reasoning as the "No itemCondition" note below.
+ *   - MerchantReturnNotPermitted. Terms section 6 ("Trials, fees, GST, no
+ *     refunds") states all subscription fees are non-refundable once charged,
+ *     including mid-cycle cancellation and unused quota. If that policy ever
+ *     changes, this must change with it.
+ *
+ * MerchantReturnNotPermitted is an enumeration member, so it is a URL string
+ * rather than a node with its own @type.
+ */
+export const OFFER_SHIPPING_DETAILS = {
+  '@type': 'OfferShippingDetails' as const,
+  doesNotShip: true,
+};
+
+export const OFFER_RETURN_POLICY = {
+  '@type': 'MerchantReturnPolicy' as const,
+  applicableCountry: 'IN',
+  returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
+  merchantReturnLink: 'https://topedgeai.com/terms',
+};
+
+/**
+ * The date these prices went live, which is the build date: the catalog is read
+ * at build time and offerPriceValidUntil() stamps a year from the same moment,
+ * so the pair always describes one window.
+ */
+export function offerValidFrom(from = new Date()): string {
+  return from.toISOString().slice(0, 10);
+}
+
 export function catalogDefaultCycleOffersJsonLd(
   catalog: BillingCatalog = FALLBACK_CATALOG,
   opts?: { url?: string },
@@ -346,6 +390,7 @@ export function catalogDefaultCycleOffersJsonLd(
   const url = opts?.url || 'https://topedgeai.com/pricing';
   const currency = catalog.currency || 'INR';
   const validUntil = offerPriceValidUntil();
+  const validFrom = offerValidFrom();
 
   const periods: Array<{
     cycle: BillingCycle;
@@ -380,8 +425,11 @@ export function catalogDefaultCycleOffersJsonLd(
         price,
         priceCurrency: currency,
         priceValidUntil: validUntil,
+        validFrom,
         url,
         availability: 'https://schema.org/InStock',
+        shippingDetails: OFFER_SHIPPING_DETAILS,
+        hasMerchantReturnPolicy: OFFER_RETURN_POLICY,
         priceSpecification: {
           '@type': 'UnitPriceSpecification' as const,
           price,

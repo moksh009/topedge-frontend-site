@@ -45,6 +45,13 @@ export type ProductDemoAsset = {
   name: string;
   description: string;
   uploadDate: string;
+  /**
+   * ISO 8601, measured off the file in public/marketing/demos with
+   * `ffprobe -v error -show_entries format=duration -of csv=p=0 <file>`.
+   * Google treats duration as a strong video-indexing signal and compares it
+   * against the file it fetches, so re-measure when a clip is re-recorded.
+   */
+  duration: string;
 };
 
 const CART: ProductDemoAsset = {
@@ -55,6 +62,7 @@ const CART: ProductDemoAsset = {
   description:
     'Screen recording of an abandoned Shopify cart triggering a WhatsApp recovery message in TopEdge, through to the recovered order.',
   uploadDate: '2026-09-16',
+  duration: 'PT53S',
 };
 
 const COD: ProductDemoAsset = {
@@ -65,6 +73,7 @@ const COD: ProductDemoAsset = {
   description:
     'Screen recording of a cash-on-delivery Shopify order being confirmed over WhatsApp and converted to a prepaid payment in TopEdge.',
   uploadDate: '2026-09-18',
+  duration: 'PT38S',
 };
 
 const FLOW: ProductDemoAsset = {
@@ -75,6 +84,7 @@ const FLOW: ProductDemoAsset = {
   description:
     'Screen recording of a WhatsApp automation being assembled step by step in the TopEdge Flow Builder for a Shopify store.',
   uploadDate: '2026-09-18',
+  duration: 'PT45S',
 };
 
 const OPTIN: ProductDemoAsset = {
@@ -85,6 +95,7 @@ const OPTIN: ProductDemoAsset = {
   description:
     'Screen recording of a TopEdge website opt-in popup collecting WhatsApp consent on a Shopify storefront and adding the subscriber.',
   uploadDate: '2026-09-18',
+  duration: 'PT51S',
 };
 
 const INTENT: ProductDemoAsset = {
@@ -95,6 +106,7 @@ const INTENT: ProductDemoAsset = {
   description:
     'Screen recording of TopEdge reading buying intent from an incoming WhatsApp message and routing the conversation accordingly.',
   uploadDate: '2026-09-18',
+  duration: 'PT27S',
 };
 
 const SEGMENT: ProductDemoAsset = {
@@ -105,6 +117,7 @@ const SEGMENT: ProductDemoAsset = {
   description:
     'Screen recording of a Shopify customer segment being built in TopEdge and used as the audience for a WhatsApp campaign.',
   uploadDate: '2026-09-17',
+  duration: 'PT37S',
 };
 
 /** Route / SEO slug aliases → catalog ids */

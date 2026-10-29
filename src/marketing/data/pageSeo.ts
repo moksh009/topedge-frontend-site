@@ -7,7 +7,10 @@ import {
 } from '../legal/companyIdentity';
 import {
   catalogDefaultCycleOffersJsonLd,
+  OFFER_RETURN_POLICY,
+  OFFER_SHIPPING_DETAILS,
   offerPriceValidUntil,
+  offerValidFrom,
   TRIAL,
 } from '../lib/billingCatalog';
 
@@ -493,9 +496,12 @@ export function softwareApplicationJsonLd() {
         price: '0',
         priceCurrency: 'INR',
         priceValidUntil: offerPriceValidUntil(),
+        validFrom: offerValidFrom(),
         description: `${TRIAL.days}-day free trial`,
         url: pricingUrl,
         availability: 'https://schema.org/InStock',
+        shippingDetails: OFFER_SHIPPING_DETAILS,
+        hasMerchantReturnPolicy: OFFER_RETURN_POLICY,
       },
       ...catalogDefaultCycleOffersJsonLd(undefined, { url: pricingUrl }),
     ],
@@ -534,6 +540,7 @@ export function videoObjectJsonLd(demo: {
   uploadDate: string;
   src: string;
   poster: string;
+  duration?: string;
 }) {
   const abs = (p: string) => `${SITE_URL}${p.split('?')[0]}`;
   return {
@@ -544,6 +551,9 @@ export function videoObjectJsonLd(demo: {
     uploadDate: demo.uploadDate,
     thumbnailUrl: [abs(demo.poster)],
     contentUrl: abs(demo.src),
+    // Google compares duration against the file it fetches; omitted rather
+    // than guessed when a caller has no measured value.
+    ...(demo.duration ? { duration: demo.duration } : {}),
     publisher: ORG_REF,
     isFamilyFriendly: true,
     inLanguage: 'en-IN',

@@ -40,8 +40,33 @@ function tryPlay(video: HTMLVideoElement) {
 
 /**
  * Frameless product demo video, poster first, muted loop.
- * Mobile + mobileSrc / desktop: load when near view, autoplay, pause off-screen, resume on return.
+ * Mobile + mobileSrc / desktop: autoplay in view, pause off-screen, resume on return.
  * Mobile without mobileSrc: poster until tap (legacy large files).
+ *
+ * Sources are declared as <source media> children with preload="none", NOT as a
+ * JS-attached `src`. That combination is what lets this be both fast and
+ * indexable, and it replaced two mechanisms that each broke one of those:
+ *
+ *   - It used to attach `src` from an IntersectionObserver. The prerendered HTML
+ *     therefore had a player with no source at all, so Google read the
+ *     VideoObject, fetched the file, found nothing embedding it and reported
+ *     "Video isn't on a watch page" for all five demos (validation failed
+ *     2026-10-08).
+ *   - prerender-marketing.mjs then stripped `src` out of the snapshot on purpose,
+ *     because the snapshot is taken at a desktop viewport and a baked-in
+ *     `preload="auto"` desktop src made phones fetch the 10 MB desktop encode
+ *     from the markup and the 1.8 MB mobile cut again after hydration.
+ *
+ * <source media> fixes the performance problem at the source: the browser itself
+ * picks the mobile encode on a phone, so there is no desktop fetch to undo and
+ * no swap to wait for. preload="none" means no bytes move until play() is
+ * called, so naming both files costs nothing. The observer below still owns
+ * playback, which is what actually makes this lazy.
+ *
+ * Trade-off accepted: a viewport that crosses 900px mid-session keeps the encode
+ * it already chose, because the browser re-evaluates <source media> only on
+ * load. Rotating a phone is rare and the consequence is a non-optimal file, not
+ * a broken one — cheaper than driving video.load() by hand.
  */
 export default function DemoProductVideoFrame({
   src,
@@ -54,56 +79,41 @@ export default function DemoProductVideoFrame({
 }: DemoProductVideoFrameProps) {
   const hostRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [playSrc, setPlaySrc] = useState(() =>
-    typeof window !== 'undefined' && isNarrowViewport() && mobileSrc ? mobileSrc : src,
-  );
-  const [activeSrc, setActiveSrc] = useState<string | undefined>(() =>
-    priority
-      ? typeof window !== 'undefined' && isNarrowViewport() && mobileSrc
-        ? mobileSrc
-        : src
-      : undefined,
-  );
+  /**
+   * Whether playback may start. This is the lazy gate now; it no longer decides
+   * whether the player has a source, because the sources are always rendered.
+   */
+  const [canPlay, setCanPlay] = useState(priority);
   const [ready, setReady] = useState(false);
   const [needsTap, setNeedsTap] = useState(false);
   const playAfterLoad = useRef(false);
   const wasVisible = useRef(false);
   const startedOnce = useRef(false);
 
-  // Pick mobile vs desktop source after mount (and on resize).
-  useEffect(() => {
-    const mq = window.matchMedia('(max-width: 900px)');
-    const apply = () => {
-      const next = mq.matches && mobileSrc ? mobileSrc : src;
-      setPlaySrc(next);
-    };
-    apply();
-    mq.addEventListener('change', apply);
-    return () => mq.removeEventListener('change', apply);
-  }, [src, mobileSrc]);
-
   useEffect(() => {
     const wrap = hostRef.current;
     if (!wrap) return;
 
     setReady(false);
-    setActiveSrc(undefined);
     setNeedsTap(false);
     playAfterLoad.current = false;
     wasVisible.current = false;
     startedOnce.current = false;
 
     if (priority) {
-      setActiveSrc(playSrc);
+      setCanPlay(true);
       return;
     }
 
     if (prefersReducedMotion()) {
+      setCanPlay(false);
       return;
     }
 
-    // Legacy: large desktop file only — require tap on phones.
+    // Legacy: large desktop file only — require tap on phones. The sources are
+    // in the DOM either way; preload="none" means the tap is what spends bytes.
     if (isNarrowViewport() && !mobileSrc) {
+      setCanPlay(false);
       setNeedsTap(true);
       return;
     }
@@ -111,7 +121,7 @@ export default function DemoProductVideoFrame({
     const io = new IntersectionObserver(
       ([entry]) => {
         if (entry?.isIntersecting) {
-          setActiveSrc(playSrc);
+          setCanPlay(true);
           io.disconnect();
         }
       },
@@ -119,12 +129,12 @@ export default function DemoProductVideoFrame({
     );
     io.observe(wrap);
     return () => io.disconnect();
-  }, [playSrc, priority, mobileSrc]);
+  }, [src, mobileSrc, priority]);
 
   useEffect(() => {
     const wrap = hostRef.current;
     const video = videoRef.current;
-    if (!wrap || !video || !activeSrc) return;
+    if (!wrap || !video || !canPlay) return;
 
     if (prefersReducedMotion()) {
       video.pause();
@@ -206,12 +216,12 @@ export default function DemoProductVideoFrame({
       video.pause();
       wasVisible.current = false;
     };
-  }, [activeSrc]);
+  }, [canPlay]);
 
   const startFromTap = () => {
     playAfterLoad.current = true;
     setNeedsTap(false);
-    setActiveSrc(playSrc);
+    setCanPlay(true);
   };
 
   return (
@@ -234,7 +244,7 @@ export default function DemoProductVideoFrame({
             aria-hidden
           />
         ) : null}
-        {needsTap && !activeSrc ? (
+        {needsTap ? (
           <button
             type="button"
             className="demo-video-glow__play"
@@ -244,24 +254,29 @@ export default function DemoProductVideoFrame({
             Play demo
           </button>
         ) : null}
-        {activeSrc ? (
-          <video
-            ref={videoRef}
-            className="demo-video-glow__el"
-            src={activeSrc}
-            poster={poster}
-            muted
-            loop
-            playsInline
-            preload="auto"
-            aria-label={title}
-            tabIndex={-1}
-            disablePictureInPicture
-            controls={false}
-            onLoadedData={() => setReady(true)}
-            onCanPlay={() => setReady(true)}
-          />
-        ) : null}
+        <video
+          ref={videoRef}
+          className="demo-video-glow__el"
+          poster={poster}
+          muted
+          loop
+          playsInline
+          /* preload="none": no bytes until play(). The observer is the lazy gate. */
+          preload="none"
+          aria-label={title}
+          tabIndex={-1}
+          disablePictureInPicture
+          controls={false}
+          onLoadedData={() => setReady(true)}
+          onCanPlay={() => setReady(true)}
+        >
+          {/* Narrow first: the browser takes the first matching source, so the
+              mobile encode must precede the desktop fallback. */}
+          {mobileSrc ? (
+            <source src={mobileSrc} media="(max-width: 900px)" type="video/mp4" />
+          ) : null}
+          <source src={src} type="video/mp4" />
+        </video>
       </div>
     </div>
   );

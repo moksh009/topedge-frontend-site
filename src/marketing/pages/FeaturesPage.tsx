@@ -4,7 +4,6 @@ import MarketingSEO from '../components/MarketingSEO';
 import {
   PAGE_SEO,
   organizationJsonLd,
-  videoObjectJsonLd,
   breadcrumbJsonLd,
   webPageJsonLd,
 } from '../data/pageSeo';
@@ -12,6 +11,17 @@ import MarketingPage from '../components/MarketingPage';
 import MarketingCtaBand from '../components/MarketingCtaBand';
 import ProductDemoVideo from '../components/home/ProductDemoVideo';
 import { MARKETING_FEATURES, type MarketingFeature } from '../data/features';
+/*
+ * No videoObjectJsonLd here, deliberately.
+ *
+ * This is the feature index; the cart-recovery clip on it is illustrative, and
+ * the same file is embedded on a dozen other routes (PRODUCT_DEMO_ASSETS maps
+ * CART to 16 scene ids). GSC reported that exact clip as "Video isn't on a
+ * watch page" from three different URLs — /features, /features/live-chat/ and
+ * /solutions/beauty/ — because no single page was its home. An index page is
+ * the weakest of those claims, so it makes none. The four feature detail pages
+ * whose clip demonstrates that one feature keep their markup.
+ */
 import { demoAssetFor } from '../data/productDemoVideos';
 import { Link } from 'react-router-dom';
 import {
@@ -130,7 +140,6 @@ export default function FeaturesPage() {
             { name: 'Features', path: '/features' },
           ]),
           // Hero demo is the page's lead visual, so it is main content.
-          videoObjectJsonLd(demoAssetFor('hero')),
         ]}
       />
       <MarketingPage className="mkt-fx">

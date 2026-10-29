@@ -20,23 +20,25 @@ export default function ProductDemoVideo({
 }: ProductDemoVideoProps) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [activeSrc, setActiveSrc] = useState<string | undefined>();
+  /**
+   * Seeded with `src`, NOT undefined.
+   *
+   * This used to start undefined and only get a value from the
+   * IntersectionObserver below, which runs on the client. The prerendered HTML
+   * therefore shipped `<video poster=... preload="none"></video>` — a player
+   * with no source. GSC read the VideoObject, fetched the contentUrl it named,
+   * found no player embedding it on the page and reported "Video isn't on a
+   * watch page" for every demo (validation failed 2026-10-08).
+   *
+   * `preload="none"` is what makes this free: the browser fetches nothing until
+   * play() is called, so naming the source costs no bytes on any viewport. The
+   * observer below still owns playback.
+   */
+  const [activeSrc, setActiveSrc] = useState<string | undefined>(src);
   const wasVisible = useRef(false);
 
   useEffect(() => {
-    const wrap = wrapRef.current;
-    if (!wrap) return;
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry?.isIntersecting) {
-          setActiveSrc(src);
-          io.disconnect();
-        }
-      },
-      { rootMargin: '200px 0px', threshold: 0.01 }
-    );
-    io.observe(wrap);
-    return () => io.disconnect();
+    setActiveSrc(src);
   }, [src]);
 
   useEffect(() => {

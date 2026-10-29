@@ -213,19 +213,23 @@ function sanitizePrerenderHtml(html) {
     '$1',
   );
 
-  // Product demo films (feature pages): same problem, same fix.
+  // Product demo films (feature pages): NOT stripped, deliberately.
   //
-  // DemoProductVideoFrame attaches a src once the frame scrolls into view, so by
-  // snapshot time the desktop encode is in the markup — /features/journeys shipped
-  // the 10 MB cod-prepaid11.mp4 to phones straight from the HTML (preload="auto"),
-  // then fetched the 1.8 MB mobile cut after hydration, paying for both.
+  // This used to strip `src` off demo-video-glow__el for the same reason as the
+  // hero above: DemoProductVideoFrame attached a desktop src on scroll, the
+  // snapshot is taken at a desktop viewport, and a baked-in preload="auto"
+  // desktop file made phones fetch the 10 MB cod-prepaid11.mp4 from the markup
+  // and the 1.8 MB mobile cut again after hydration.
   //
-  // The component re-attaches the right file on the client from its own viewport
-  // check, so an src-less <video> costs nothing and the poster covers JS-off.
-  out = out.replace(
-    /(<video\b[^>]*\bclass="[^"]*demo-video-glow__el[^"]*"[^>]*)\ssrc="[^"]*"/gi,
-    '$1',
-  );
+  // The cost of that fix was the whole of Google's video indexing: a player with
+  // no source is not a watch page, so GSC reported all five demos as "Video
+  // isn't on a watch page" and the 2026-10-06 validation failed on 2026-10-08.
+  //
+  // DemoProductVideoFrame now declares both encodes as <source media> children
+  // under preload="none", so the browser picks the mobile cut itself and fetches
+  // nothing until play(). There is no desktop fetch left to strip, and the
+  // markup Googlebot reads matches the VideoObject contentUrl.
+  // scripts/check-video-markup.mjs fails the build if that stops being true.
 
   // Hoist LCP image preload to the top of <head> so it is not stuck behind
   // CSS/modulepreload discovered during the SPA render.

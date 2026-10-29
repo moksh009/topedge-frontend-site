@@ -264,3 +264,169 @@ curl -s  https://topedgeai.com/features/campaigns/ | grep canonical             
 5. Leave 403 alone until `api.topedgeai.com/robots.txt` exists.
 6. Expect the http/www rows and the nine deliberate 301s to keep reporting. They
    are correct.
+
+---
+
+# Round 2 — Video, rich results and the API host
+
+## 7. Video isn't on a watch page (5) — fixed, two root causes
+
+GSC listed 5 videos; validation started 2026-10-06 and **failed** 2026-10-08.
+Two of the five URLs (`/features/live-chat/`, `/solutions/beauty/`) have 301'd
+since 2026-10-09 and are stale. The three live ones shared one cause, and the
+validation failure is explained by it: nothing in the 06 Oct attempt touched it.
+
+### Cause 1: the player had no source
+
+`ProductDemoVideo` and `DemoProductVideoFrame` both held the video source in
+React state seeded to `undefined`, filled from an `IntersectionObserver` that
+only runs on the client. The prerendered HTML therefore shipped:
+
+```html
+<video class="demo-video-glow__el" poster="..." preload="auto"></video>
+```
+
+A player with no source. The mp4 URL appeared on the page exactly once, inside
+the JSON-LD `contentUrl`. So Google read the VideoObject, fetched the file, found
+nothing on the page embedding it, and declined the watch page. **A VideoObject is
+a description of a player, not a substitute for one.**
+
+### Cause 2: the prerender deliberately stripped the source
+
+`prerender-marketing.mjs` then removed `src` from the snapshot *on purpose*, and
+for a good reason: the snapshot is taken at a desktop viewport, so a baked-in
+`preload="auto"` desktop src made phones fetch the 10 MB `cod-prepaid11.mp4`
+from the markup and the 1.8 MB mobile cut again after hydration — paying twice on
+the exact audience this site is built for.
+
+So the performance fix and the SEO markup were added independently and cancelled
+each other out. Neither was wrong on its own.
+
+### The fix: `<source media>` + `preload="none"`
+
+`DemoProductVideoFrame` now declares both encodes as children:
+
+```html
+<video poster="..." preload="none" loop playsinline>
+  <source src="/marketing/demos/cod-prepaid-mobile.mp4" media="(max-width: 900px)" type="video/mp4">
+  <source src="/marketing/demos/cod-prepaid11.mp4?v=20260918a" type="video/mp4">
+</video>
+```
+
+This is strictly better than either previous state:
+
+- the **browser** picks the mobile encode on a phone, so there is no desktop
+  fetch to undo and no JS swap to wait for;
+- `preload="none"` means no bytes move until `play()`, so naming both files costs
+  nothing — note this also downgrades the old `preload="auto"`;
+- the desktop fallback is exactly the `contentUrl` the VideoObject declares, so
+  markup and page agree;
+- JS-off still shows the poster.
+
+The strip for the demo films was removed from the prerender. **The hero film strip
+was kept** — that clip is 22 MB, carries no VideoObject and has no GSC issue, so
+converting it would add risk for no SEO gain.
+
+Also fixed: `duration` is now emitted on every VideoObject, measured with
+`ffprobe` off the real files (PT27S–PT53S), and the `/features` hub no longer
+claims a VideoObject at all. That last one matters — `PRODUCT_DEMO_ASSETS` maps
+`cart-recovery.mp4` to **16 scene ids**, which is why GSC listed that one clip
+against three different URLs. A clip with no single home cannot have a watch page,
+and an index page is the weakest claimant, so it makes no claim. The four feature
+detail pages whose clip demonstrates that one feature keep their markup.
+
+### New guard: `scripts/check-video-markup.mjs`
+
+Wired in as `check:video` on all three pipelines. For every page emitting a
+VideoObject it asserts the contentUrl is the src of a real `<video>`/`<source>`
+on that page, that the file and thumbnail exist in `dist`, that name,
+description, uploadDate and duration are present, and that **no two pages claim
+the same clip**. Run against the pre-fix build it reproduced the exact GSC
+failure (`players found: none` on all five), which is how it was validated.
+
+Current: `4 VideoObject(s) on 4 page(s), each embedded in a real player, each
+unique to one URL`.
+
+---
+
+## 8. Review snippets (2 issues) — nothing to do, 0 items
+
+Both rows report **Items: 0**, and the site emits **no review markup at all**:
+zero `Review` nodes, zero `aggregateRating`, zero `ratingValue` anywhere in
+`dist`, and no third-party review widget script. Verified by grep over the whole
+build.
+
+This is residue from markup that was removed deliberately, and the reasoning in
+`softwareApplicationJsonLd` is worth preserving: Google's review-snippet policy
+makes a page ineligible for stars when "the entity that's being reviewed controls
+the reviews about itself", so self-serving `Review` markup can never earn the
+feature; and the home testimonials rotate through a carousel, so only a subset is
+ever in the prerendered HTML, which breaks the requirement that marked-up review
+content be readily available on the page. The testimonials stay as visible
+content and are simply not marked up.
+
+Re-adding `aggregateRating` to clear these rows would trade a cosmetic GSC row
+for an actual policy violation. **Mark fixed / ignore.** If stars are wanted
+later, the only compliant route is genuine third-party review markup (Trustpilot
+collects the reviews already) served by the platform that owns them.
+
+---
+
+## 9. Missing `hasMerchantReturnPolicy` / `shippingDetails` / `validFrom` (5 each) — fixed honestly
+
+All three are non-critical merchant-listing warnings on the same 5 URLs, and all
+three have the same cause: `softwareApplicationJsonLd` is dual-typed
+`['SoftwareApplication', 'Product']`, and declaring `Product` makes Google apply
+merchant-listing rules — which ask about shipping and returns.
+
+Dropping `Product` was considered and rejected: the existing comment records that
+"Google Merchant listings coerce SoftwareApplication+Offer → Product" anyway, so
+removing it would likely keep the warnings *and* lose the `image` handling the
+dual type was added for. So the fields are filled, truthfully:
+
+| Field | Value | Why that is honest |
+| --- | --- | --- |
+| `shippingDetails` | `OfferShippingDetails` with `doesNotShip: true` | Nothing is shipped; this is a hosted subscription. Stating a rate or delivery window would be false — the same reasoning as the existing "No itemCondition: this is a subscription, not a physical good" note. |
+| `hasMerchantReturnPolicy` | `MerchantReturnPolicy`, `applicableCountry: IN`, `returnPolicyCategory: MerchantReturnNotPermitted`, `merchantReturnLink: /terms` | Terms section 6 ("Trials, fees, GST, no refunds") states all subscription fees are non-refundable once charged, including mid-cycle cancellation and unused quota. |
+| `validFrom` | build date | The catalog is read at build time and `priceValidUntil` already stamps a year from that same moment, so the pair describes one window. |
+
+**If the refund policy ever changes, `OFFER_RETURN_POLICY` in
+`src/marketing/lib/billingCatalog.ts` must change with it.** That is the one line
+in this change that encodes a commercial term.
+
+Applied to all 7 offers (free trial + 3 plans × 2 cycles) and verified on all
+five reported URLs. `Organization.makesOffer` was deliberately left alone: it is
+a price band on the Organization, not a product listing, and bolting shipping and
+return terms onto it would be markup applied where it does not belong.
+
+Nothing here invents a commercial term. That was the constraint.
+
+---
+
+## 10. `api.topedgeai.com/robots.txt` → 404 (`Cannot GET /robots.txt`)
+
+Confirmed from the response text: that host runs Express and has no route for
+`/robots.txt`, so the API root 403 from §4 has no crawl directive to sit behind.
+**This repo does not contain that service** — nothing here can fix it.
+
+The `Cannot GET` body is Express's default 404, so the fix is one route, mounted
+before any auth or catch-all:
+
+```js
+app.get('/robots.txt', (_req, res) => {
+  res.type('text/plain').send('User-agent: *\nDisallow: /\n');
+});
+```
+
+Why `Disallow: /` and not a 403: a 403 with no robots.txt leaves the URL in
+"Blocked due to access forbidden", which reads as a crawl error. An explicit
+`Disallow` moves it to "Excluded by robots.txt", the correct resting state for an
+API host, and stops Googlebot requesting it at all. Adding `Disallow: /api/` to
+*this* site's robots.txt does nothing for it — different origin.
+
+Note the published compliance endpoints (`/api/meta/data-deletion`,
+`/api/shopify/compliance`) must stay reachable for Meta and Shopify. They are not
+crawled by Googlebot and `Disallow` does not block them for anyone else; it is a
+crawler directive, not access control.
+
+Checked: no page on this site links the bare API root.
