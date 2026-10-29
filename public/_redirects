@@ -4,7 +4,14 @@
 # NEVER add `/*/  /:splat  301!` — with Netlify that rule 301-loops every
 # path onto itself (ERR_TOO_MANY_REDIRECTS), including `/` and static files.
 
-# Apex preferred
+# Apex preferred.
+#
+# Both schemes are listed. With only the https rule, http://www.topedgeai.com/
+# took two hops — Netlify's forced HTTPS sent it to https://www. first, and this
+# rule then sent it to the apex (Ahrefs 29 Oct 2026: "Redirect chain"). A rule
+# whose source names the http scheme is matched before the automatic upgrade, so
+# the www host reaches the apex in one 301 on either scheme.
+http://www.topedgeai.com/*  https://topedgeai.com/:splat  301!
 https://www.topedgeai.com/*  https://topedgeai.com/:splat  301!
 
 # Legal (static HTML for Meta crawlers)

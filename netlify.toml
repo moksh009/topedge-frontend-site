@@ -9,6 +9,14 @@
 
 # Path redirects live in public/_redirects (copied to dist) so they cannot drift
 # from prerender output. Keep host-level apex rule here.
+# http first: without it, http://www took two hops (forced HTTPS to https://www.,
+# then this rule to the apex). Naming the scheme collapses it to one 301.
+[[redirects]]
+  from = "http://www.topedgeai.com/*"
+  to = "https://topedgeai.com/:splat"
+  status = 301
+  force = true
+
 [[redirects]]
   from = "https://www.topedgeai.com/*"
   to = "https://topedgeai.com/:splat"
