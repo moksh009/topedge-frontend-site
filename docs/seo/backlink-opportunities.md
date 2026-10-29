@@ -54,7 +54,14 @@ _Add rows here when you spot new “best WhatsApp / cart recovery Shopify” pos
 
 | Date found | URL | Why it matters | Status |
 |---|---|---|---|
-| | | | |
+| 2026-10-29 | https://www.clickpost.ai/blog/rto-reduction-tools | **"10 Best RTO Reduction Tools for D2C Brands in India (2026)". The single most on-topic roundup found so far** — RTO reduction in India is exactly what `/blog/cod-rto-benchmark-india-2026` and `/features/cod-confirmation` are about, and ClickPost is an independent India logistics SaaS, not a WhatsApp competitor. TopEdge absent. Pitch the COD→prepaid mechanism with the benchmark numbers. | todo |
+| 2026-10-29 | https://thed2cpulse.com/d2c-tech-stack/best-shopify-apps-indian-d2c-brands-2026/ | "Best Shopify Apps for Indian D2C Brands 2026" — a full stack list (Razorpay/GoKwik, Shiprocket, Klaviyo, Judge.me) with **Interakt holding the WhatsApp slot**. India D2C audience, independent publisher. | todo |
+| 2026-10-29 | https://thesellerkit.in/best-whatsapp-business-automation-tools-india/ | "Best WhatsApp Business Automation Tools India 2026". Indian seller audience, independent. Notes Interakt bills its entry plan quarterly — a flat-INR-monthly contrast is the angle. | todo |
+| 2026-10-29 | https://projectsupply.in/blog/shopify-whatsapp-automation-indian-d2c-brands | "Shopify WhatsApp Automation for Indian D2C Brands: A Complete Guide" — educational, not a vendor list, so pitch co-citation on the COD/RTO data rather than list inclusion. | todo |
+| 2026-10-29 | https://dmdaddy.com/blog/best-whatsapp-automation-tools | "Best WhatsApp Automation Tools (2026): Pricing and Picks". Pricing-led roundup — 0% Meta markup and flat INR is a concrete differentiator against the ₹1,395–₹3,200 band quoted for competitors. | todo |
+| 2026-10-29 | https://hyperleap.ai/comparison/best-whatsapp-automation-tools-2026 | Comparison aggregator. Lower editorial bar, lower value; batch with the others, do not prioritise. | todo |
+| 2026-10-29 | https://www.indishmarketer.com/blog/ai-tools-whatsapp-automation · https://trilliantdigital.com/blogs/whatsapp-marketing-india-ai-automation-d2c-brands-2026/ | Small India marketing/agency blogs. Thin, but on-topic and independent. Lowest tier of the batch. | todo |
+| 2026-10-29 | aisensy.com/blog/whatsapp-api-providers · zoko.io/post/best-whatsapp-business-api-india · wati.io/blog/aisensy-alternatives · tailortalk.ai/blogs/top-5-whatsapp-automation-tools | **Competitor-authored roundups — logged so nobody wastes a pitch on them.** They rank for our money queries but will never add us. The counter is our own `/compare/*` and "X alternative" cluster, which already exists. | pass |
 
 ---
 

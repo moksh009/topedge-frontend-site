@@ -215,3 +215,73 @@ the aggressive version that survives review.
 Add each live profile URL to `ORG.sameAs` in `src/marketing/data/pageSeo.ts`
 **once it exists** — never before. A `sameAs` pointing at a 404 is worse than no
 `sameAs`.
+
+---
+
+## "Where can we upload content and rank?" — three tiers, only one of which is SEO
+
+Added 2026-10-29 in answer to a direct question. The honest split matters,
+because two of these three tiers do not pass meaningful equity and one of them
+can actively cost you a ranking.
+
+### Tier 1 — Get into roundups that ALREADY rank. Do this first.
+
+This is the real answer. You are not uploading anything; you are being added to
+a page Google already trusts and already ranks for your money queries. Nine new
+targets were found this pass and are in the discovery backlog in
+`backlink-opportunities.md`, with the five best in `backlink-targets.csv`.
+
+The standout is **ClickPost's "10 Best RTO Reduction Tools for D2C Brands in
+India (2026)"**. RTO reduction in India is the exact subject of
+`/blog/cod-rto-benchmark-india-2026` and `/features/cod-confirmation`, ClickPost
+is an independent India logistics SaaS rather than a WhatsApp competitor, and
+TopEdge is absent. Nothing else found ranks that close to the product.
+
+Then **The D2C Pulse** (Interakt currently holds the WhatsApp slot in its Indian
+D2C stack list), **The Seller Kit**, **DM Daddy** (pricing-led, so 0% Meta markup
+is the hook) and **Project Supply** (educational, so pitch co-citation on the
+benchmark data, not list inclusion).
+
+Logged as `pass`: the roundups authored by AiSensy, Zoko, WATI and TailorTalk.
+They rank for our queries and will never add us. The counter to those is the
+`/compare/*` and "X alternative" cluster that already exists — not a pitch.
+
+### Tier 2 — Contributed editorial. Real links, editor-gated.
+
+Inc42 (est. DR 72) is the one already researched; rules and angle are above. This
+is the only tier that reliably produces a dofollow editorial link, and it costs a
+written piece plus an editor saying yes. The COD/RTO benchmark is the asset that
+makes it possible, because it is original sector data rather than product copy.
+
+### Tier 3 — Self-publishing platforms. Distribution, NOT link equity.
+
+Medium, LinkedIn, Substack, dev.to, Notion. Treat every one of these as audience
+reach, never as a backlink, and understand the specific trap:
+
+**If you republish a post on Medium without a canonical, Google may rank the
+Medium copy instead of yours.** You would be competing with yourself on a domain
+you do not own, using content you already paid to write.
+
+The safe mechanic, if you want Medium's reach: use **Medium's import tool** (or
+its publishing API / RSS syndication), which sets `rel=canonical` back to the
+original URL. Confirm it worked by viewing source on the Medium post and finding
+your topedgeai.com URL in the canonical tag — the import is reported to fail
+silently on some embeds, so check rather than assume. LinkedIn has no equivalent
+canonical mechanism that I could confirm, so post **summaries that link back**
+there, never the full article.
+
+Reddit and Quora rank extremely well and are worth a founder's time for
+visibility, but their outbound links are `nofollow ugc` and worth nothing as
+equity — the same as Shopify Community, which was already checked and carries
+`rel="noopener nofollow ugc"`. There is a table in `backlink-opportunities.md`
+for logging those threads; answer as the founder, disclose the affiliation, and
+only where the answer is genuinely useful.
+
+**Notion remains a non-starter** for the reasons above: a subdomain you do not
+control, no topical authority, and no documented `rel` behaviour.
+
+### The ordering that follows from this
+
+Tier 1 is where the next ten hours should go. Tier 2 is worth one good pitch.
+Tier 3 is a distribution habit, not an SEO project — and it is the only tier with
+a way to lose something, so if Medium is used at all, use the import tool.
