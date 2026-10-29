@@ -132,6 +132,27 @@ for (const [what, needle] of required) {
   }
 }
 
+// --- there must be exactly ONE robots.txt in the repo ----------------------
+//
+// A second copy lived at the repository root until 2026-10-29. Vite's publicDir
+// is public/, so only public/robots.txt was ever served — GSC fetched 1,890
+// bytes, which is that file. The root copy shipped nowhere.
+//
+// It was not harmless. Both files were being edited by hand to match (commit
+// ac29244 changed the same 10 lines in each), and they had already drifted: the
+// llms.txt pointer block reached public/robots.txt and never reached the root
+// copy, leaving 1,890 bytes served against 1,631 bytes dead. The next person to
+// open the obvious path and edit the crawl rules would have changed nothing on
+// the live site and had no way to tell.
+const strayRobots = path.join(root, 'robots.txt');
+if (fs.existsSync(strayRobots)) {
+  errors.push(
+    'robots.txt exists at the repository root. Only public/robots.txt is served ' +
+      '(Vite publicDir), so a root copy is dead weight that silently diverges — ' +
+      'delete it and edit public/robots.txt instead.',
+  );
+}
+
 // --- robots.txt should point at it ----------------------------------------
 const robots = fs.readFileSync(path.join(root, 'public', 'robots.txt'), 'utf8');
 if (!robots.includes(`${SITE}/llms.txt`)) {
