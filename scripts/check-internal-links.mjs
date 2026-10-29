@@ -84,11 +84,33 @@ function main() {
   const rules = loadRedirectSources();
   const redirectHits = [];
   const slashHits = [];
+  const docsHits = [];
   let scanned = 0;
 
   for (const file of sourceFiles()) {
     const src = fs.readFileSync(file, 'utf8');
     const rel = path.relative(root, file);
+    // Absolute links to the documentation on the dashboard host.
+    //
+    // The dashboard prerenders each doc to docs/<path>/index.html, so Netlify
+    // 301s the slashless form. The Docs link sits in the navbar AND the footer,
+    // so one missing slash spent a redirect hop on every crawlable page —
+    // Ahrefs 29 Oct 2026 reported "Page has links to redirect" on 89 pages from
+    // exactly that. Asset paths under /docs keep no slash.
+    const docsRe = /https:\/\/dash\.topedgeai\.com\/docs([^"'\s<)]*)/g;
+    let dm;
+    while ((dm = docsRe.exec(src))) {
+      const tail = dm[1] || '';
+      const pathPart = tail.split(/[#?]/)[0];
+      if (/\.[a-z0-9]+$/i.test(pathPart)) continue; // asset, not a doc route
+      if (pathPart.includes(':splat')) continue; // redirect rule, not a link
+      if (pathPart.endsWith('/')) continue;
+      docsHits.push({
+        url: `https://dash.topedgeai.com/docs${tail}`,
+        where: `${rel}:${src.slice(0, dm.index).split('\n').length}`,
+      });
+    }
+
     // href="/x" and to="/x" — internal, root-relative links only.
     const re = /(?:href|to)=["'](\/[^"'#?\s]*)["']/g;
     let m;
@@ -106,11 +128,21 @@ function main() {
     }
   }
 
-  if (!redirectHits.length && !slashHits.length) {
-    console.log(`✅ internal links: ${scanned} checked, none hit a redirect or a trailing slash`);
+  if (!docsHits.length && !redirectHits.length && !slashHits.length) {
+    console.log(
+      `✅ internal links: ${scanned} checked — none hit a redirect, a trailing slash, ` +
+        `or a slashless docs URL`,
+    );
     return;
   }
 
+  if (docsHits.length) {
+    console.error(`\n❌ ${docsHits.length} link(s) to the docs host without a trailing slash:\n`);
+    for (const h of docsHits) {
+      console.error(`   ${h.where}`);
+      console.error(`      ${h.url}  →  add the trailing slash; the slashless form 301s`);
+    }
+  }
   if (redirectHits.length) {
     console.error(`\n❌ ${redirectHits.length} internal link(s) point at a redirect source:\n`);
     for (const h of redirectHits) {
