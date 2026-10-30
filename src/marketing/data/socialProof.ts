@@ -31,6 +31,8 @@ export type CustomerStory = {
   quote: string;
   facts: string[];
   art: string;
+  /** Brand tint behind the card header. Falls back to the lilac default. */
+  tint?: string;
 };
 
 export const TRUSTPILOT = raw.trustpilot;

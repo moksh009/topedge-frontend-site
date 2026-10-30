@@ -141,10 +141,10 @@ export const SEO_TOPICS: Record<string, SeoTopic> = {
     eyebrow: 'Integrations',
     h1: 'Shopify WhatsApp integration',
     subtitle:
-      'Connect Shopify OAuth and Meta WhatsApp Cloud API in one workspace, carts, orders, catalogs, and templates without duct-taping tools.',
-    title: 'Shopify WhatsApp Integration | Meta Cloud API',
+      'Carts, orders, customers and the COD flag sync over Shopify OAuth into Meta WhatsApp Cloud API. Cart recovery, COD confirmation and support run on live store data, with no markup on Meta fees.',
+    title: 'Shopify WhatsApp Integration India | Meta Cloud API',
     description:
-      'Native Shopify WhatsApp integration for Indian ecommerce: sync carts and orders, approve Meta templates, and run WhatsApp automation in TopEdge.',
+      'Connect WhatsApp to Shopify over OAuth and Meta Cloud API. Sync carts, orders and the COD flag, run cart recovery and COD confirmation. India rates, no markup.',
     keywords:
       'Shopify WhatsApp integration, WhatsApp for Shopify, Meta Cloud API Shopify, ecommerce WhatsApp automation, connect WhatsApp to Shopify, Shopify WhatsApp API India, WhatsApp Business API Shopify app',
     answerFirst:
@@ -155,6 +155,7 @@ export const SEO_TOPICS: Record<string, SeoTopic> = {
         kind: 'prose',
         id: 'what-it-connects',
         h2: 'What a Shopify WhatsApp integration actually connects',
+        accent: 'actually connects',
         body: [
           'There are two systems involved and they speak different languages. Shopify knows what was bought, by whom, for how much, and whether the order is Cash on Delivery. Meta’s WhatsApp Cloud API knows how to deliver a message to a phone number, but only inside the template and policy rules Meta sets. A Shopify WhatsApp integration is the layer that turns a store event into a compliant WhatsApp send, with the order detail filled in.',
           'That detail is the whole point. A generic chatbot can reply to “where is my order”. A connected integration answers it with the order number, the courier, and the amount due on delivery, because it is reading your store rather than guessing. The same connection is what lets a cart reminder name the product and the ₹ total, and what lets a COD confirmation quote the real amount before anything ships.',
@@ -164,6 +165,7 @@ export const SEO_TOPICS: Record<string, SeoTopic> = {
         kind: 'specTable',
         id: 'what-syncs',
         h2: 'What syncs from Shopify, and what each object drives',
+        accent: 'each object drives',
         intro:
           'After Shopify OAuth, these objects flow into TopEdge continuously. The right column is what they are actually used for, because a sync that powers nothing is just storage.',
         columns: ['Shopify object', 'What comes across', 'What it powers on WhatsApp'],
@@ -212,6 +214,7 @@ export const SEO_TOPICS: Record<string, SeoTopic> = {
         kind: 'steps',
         id: 'how-to-connect',
         h2: 'How to connect WhatsApp to Shopify',
+        accent: 'connect WhatsApp to Shopify',
         intro:
           'The engineering is not the slow part. Meta business verification and first template approval are, and both are queues you wait in rather than work you do.',
         steps: [
@@ -251,6 +254,7 @@ export const SEO_TOPICS: Record<string, SeoTopic> = {
         kind: 'figures',
         id: 'meta-rates',
         h2: 'What Meta charges in India, and what we add',
+        accent: 'what we add',
         intro:
           'Meta bills per delivered message by category, directly to you. TopEdge adds no markup on those fees, so these are the rates you pay rather than a resold number.',
         figures: [
@@ -284,6 +288,7 @@ export const SEO_TOPICS: Record<string, SeoTopic> = {
         kind: 'figures',
         id: 'why-it-pays',
         h2: 'Why Indian stores connect WhatsApp first',
+        accent: 'connect WhatsApp first',
         intro:
           'Two problems drive almost every integration we see, and both are measurable. These are published figures with the source beside each one, not our estimates.',
         figures: [
@@ -308,6 +313,7 @@ export const SEO_TOPICS: Record<string, SeoTopic> = {
         kind: 'prose',
         id: 'cod',
         h2: 'Why this matters most for COD stores',
+        accent: 'COD stores',
         body: [
           'COD is why a Shopify WhatsApp integration pays for itself faster in India than almost anywhere else. An unconfirmed COD order is a parcel you pay to ship twice if the customer changes their mind at the door, and the published RTO figures above show how often that happens during a festive quarter.',
           'A confirmation message before dispatch does two things at once. It filters out the orders that were never serious, which is the larger share of the problem, and it gives the serious ones a reason to switch to prepaid when you offer one. Confirmation runs on every TopEdge plan. The prepaid switch, which needs a branching journey, is a Growth and Scale feature.',
@@ -317,6 +323,7 @@ export const SEO_TOPICS: Record<string, SeoTopic> = {
         kind: 'checklist',
         id: 'getting-it-right',
         h2: 'Getting the integration right',
+        accent: 'integration right',
         intro:
           'What separates a WhatsApp setup that compounds from one that gets a number flagged. Most of this is learned the expensive way.',
         doLabel: 'Do this',
@@ -351,6 +358,7 @@ export const SEO_TOPICS: Record<string, SeoTopic> = {
         kind: 'specTable',
         id: 'native-vs-glue',
         h2: 'Native integration compared with glue code',
+        accent: 'glue code',
         intro:
           'Three ways Shopify stores connect WhatsApp, and what each one actually costs you in practice.',
         columns: ['', 'Zapier or glue code', 'A general BSP panel', 'TopEdge'],

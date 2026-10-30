@@ -95,11 +95,11 @@ export const PAGE_SEO = {
     path: '/integrations',
   },
   customers: {
-    title: 'Indian Shopify D2C Case Studies & Stories',
+    title: 'Shopify WhatsApp Case Studies & Reviews, India',
     description:
-      'How Indian Shopify D2C brands like Delitech Smart Home and Apex Light run WhatsApp cart recovery, COD confirmation and a shared inbox, plus Trustpilot reviews.',
+      'How Indian Shopify brands like Delitech and Apex Light run WhatsApp cart recovery, COD confirmation and one shared inbox. With their Trustpilot reviews.',
     keywords:
-      'Shopify WhatsApp case study India, WhatsApp cart recovery results, D2C WhatsApp automation customers, TopEdge AI reviews',
+      'Shopify WhatsApp case study India, WhatsApp cart recovery results, D2C WhatsApp automation customers, TopEdge AI reviews, WhatsApp Business API reviews India, Shopify COD confirmation case study',
     path: '/customers',
   },
   compare: {

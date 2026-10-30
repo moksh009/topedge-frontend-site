@@ -202,7 +202,7 @@ export function TopicBlockView({ block }: { block: TopicBlock }) {
     case 'prose': {
       const paras = Array.isArray(block.body) ? block.body : [block.body];
       return (
-        <section id={block.id} className="mkt-blk">
+        <section id={block.id} className="mkt-blk" data-kind={block.kind}>
           <BlockHeading h2={block.h2} accent={block.accent} />
           {paras.map((p, i) => (
             <p key={i} className={`mkt-blk__body${i === 0 ? ' mkt-blk__body--lede' : ''}`}>
@@ -215,7 +215,7 @@ export function TopicBlockView({ block }: { block: TopicBlock }) {
 
     case 'specTable':
       return (
-        <section id={block.id} className="mkt-blk">
+        <section id={block.id} className="mkt-blk" data-kind={block.kind}>
           <BlockHeading h2={block.h2} accent={block.accent} />
           {block.intro && <p className="mkt-blk__intro">{block.intro}</p>}
           <SpecTable block={block} />
@@ -225,7 +225,7 @@ export function TopicBlockView({ block }: { block: TopicBlock }) {
 
     case 'steps':
       return (
-        <section id={block.id} className="mkt-blk">
+        <section id={block.id} className="mkt-blk" data-kind={block.kind}>
           <BlockHeading h2={block.h2} accent={block.accent} />
           {block.intro && <p className="mkt-blk__intro">{block.intro}</p>}
           <ol className="mkt-steps">
@@ -247,7 +247,7 @@ export function TopicBlockView({ block }: { block: TopicBlock }) {
 
     case 'figures':
       return (
-        <section id={block.id} className="mkt-blk">
+        <section id={block.id} className="mkt-blk" data-kind={block.kind}>
           <BlockHeading h2={block.h2} accent={block.accent} />
           {block.intro && <p className="mkt-blk__intro">{block.intro}</p>}
           <ul className="mkt-figs">
@@ -264,7 +264,7 @@ export function TopicBlockView({ block }: { block: TopicBlock }) {
 
     case 'checklist':
       return (
-        <section id={block.id} className="mkt-blk">
+        <section id={block.id} className="mkt-blk" data-kind={block.kind}>
           <BlockHeading h2={block.h2} accent={block.accent} />
           {block.intro && <p className="mkt-blk__intro">{block.intro}</p>}
           <div className="mkt-check">

@@ -1,11 +1,12 @@
 import { Link, Navigate } from 'react-router-dom';
+import { ArrowUpRight } from 'lucide-react';
 import MarketingSEO from '../components/MarketingSEO';
 import MarketingPage from '../components/MarketingPage';
 import MarketingCtaBand from '../components/MarketingCtaBand';
-import { Section, SectionHeading, PrimaryButton } from '../components/ui';
-import { TopicBlockView, TopicToc } from '../components/topic/TopicBlocks';
+import ProofBadges from '../components/ProofBadges';
+import { PrimaryButton, GhostButton } from '../components/ui';
+import { TopicBlockView } from '../components/topic/TopicBlocks';
 import FaqAccordion from '../components/topic/FaqAccordion';
-import JourneyHero from '../components/journey/JourneyHero';
 import TrustBand from '../components/journey/TrustBand';
 import { getSeoTopic } from '../data/seoTopics';
 import {
@@ -14,10 +15,28 @@ import {
   softwareApplicationJsonLd,
   webPageJsonLd,
 } from '../data/pageSeo';
+import '../styles/topic-page.css';
 
 type Props = { slug: string };
 
-/** Commercial SEO/GEO lander bound to a fixed slug (not a :param catch-all). */
+/**
+ * Commercial SEO/GEO lander bound to a fixed slug (not a :param catch-all).
+ *
+ * The page used to open on a hero, then a lead paragraph, then a two-column
+ * table of contents, before the reader reached a single piece of substance.
+ * That is three things to read before the page starts, and the TOC in
+ * particular was doing a job the page is too short to need: it listed eight
+ * headings to a reader who had not yet been given a reason to want any of
+ * them. The lead stayed, because an answer-first paragraph is the one block
+ * an answer engine quotes, but it is now a panel that reads as the answer
+ * rather than as the first paragraph of the article.
+ *
+ * Measure is the other change. Everything ran at max-w-3xl, so a comparison
+ * table with four columns was squeezed into 48rem on a 1440px screen with
+ * empty gutters either side. Prose stays at a readable measure and the blocks
+ * that are actually wide (tables, figure rows, the do/avoid pair) break out
+ * of it. See topic-page.css.
+ */
 export default function SeoTopicPage({ slug }: Props) {
   const topic = getSeoTopic(slug);
 
@@ -52,111 +71,116 @@ export default function SeoTopicPage({ slug }: Props) {
           ]),
         ]}
       />
-      <MarketingPage>
-        <JourneyHero
-          eyebrow={topic.eyebrow}
-          title={topic.h1}
-          accent="WhatsApp integration"
-          subtitle={topic.subtitle}
-          trust
-          image="/marketing/features/shopify-whatsapp-inbox.webp"
-          imageAlt="A shared inbox showing a WhatsApp thread beside the Shopify order it belongs to: order number, Cash on Delivery status, and the product that was bought."
-          actions={
-            <>
+      <MarketingPage className="mkt-topic">
+        <header className="mkt-topic__hero">
+          <div className="mkt-topic__hero-inner">
+            <Link className="mkt-topic__kicker" to="/integrations">
+              Integrations
+              <ArrowUpRight size={12} strokeWidth={2.2} aria-hidden />
+            </Link>
+
+            <h1 className="mkt-topic__title">
+              Shopify <span className="mkt-hl">WhatsApp integration</span> for Indian D2C stores
+            </h1>
+
+            <p className="mkt-topic__sub">{topic.subtitle}</p>
+
+            <div className="mkt-topic__actions">
               <PrimaryButton to="/signup">Start free</PrimaryButton>
-              <Link to="/pricing" className="text-sm font-medium text-[#7C3AED] hover:underline">
-                See pricing
-              </Link>
-            </>
-          }
-        />
+              <GhostButton to="/pricing">See pricing</GhostButton>
+            </div>
 
-        <Section className="!pt-0">
-          <div className="mx-auto max-w-3xl">
-            <p className="mkt-jh-lead">{topic.answerFirst}</p>
-            {blocks.length > 0 && (
-              <div className="mt-8">
-                <TopicToc blocks={blocks} />
-              </div>
-            )}
+            <div className="mkt-topic__proof">
+              <ProofBadges compact />
+            </div>
           </div>
-        </Section>
 
-        <Section wash="soft">
-          <SectionHeading
-            title="What you can run"
-            accent="can run"
-            subtitle="Practical WhatsApp ecommerce automation on Shopify, the moment the two are connected."
-          />
-          <ul className="mx-auto grid max-w-4xl gap-4 md:grid-cols-2">
-            {topic.bullets.map((b) => (
-              <li key={b} className="mkt-feat">
-                <span className="mkt-feat__icon" aria-hidden>
-                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M20 6L9 17l-5-5" />
-                  </svg>
-                </span>
-                <p className="mkt-feat__text">{b}</p>
-              </li>
-            ))}
-          </ul>
-        </Section>
+          <figure className="mkt-topic__stage">
+            <img
+              src="/marketing/features/shopify-whatsapp-inbox.webp"
+              alt="A shared inbox showing a WhatsApp thread beside the Shopify order it belongs to: order number, Cash on Delivery status, and the product that was bought."
+              width={1200}
+              height={900}
+              loading="eager"
+              decoding="async"
+            />
+          </figure>
+        </header>
 
-        <Section>
+        {/* The answer-first block, as the answer rather than as prose. Answer
+            engines quote this paragraph; a reader who only wants the
+            definition should be able to take it and leave. */}
+        <section className="mkt-topic__answer" aria-labelledby="topic-answer-head">
+          <div className="mkt-answer">
+            <p className="mkt-answer__label" id="topic-answer-head">
+              The short answer
+            </p>
+            <p className="mkt-answer__body">{topic.answerFirst}</p>
+            <ul className="mkt-answer__chips">
+              {topic.bullets.map((b) => (
+                <li key={b}>{b}</li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        <section className="mkt-topic__trust">
           <TrustBand title="Shopify brands connected to WhatsApp with TopEdge" />
-        </Section>
+        </section>
 
         {blocks.length > 0 ? (
-          /*
-           * One Section wrapping all blocks, not one Section per block. A
-           * Section carries 7rem of vertical padding, which is a page break
-           * between unrelated things; inside a single argument it reads as
-           * drift. Blocks space themselves.
-           */
-          <Section className="!pt-4">
-            <div className="mx-auto flex max-w-3xl flex-col gap-14 md:gap-16">
-              {blocks.map((b) => (
-                <TopicBlockView key={b.id} block={b} />
-              ))}
-            </div>
-          </Section>
+          <div className="mkt-topic__article">
+            {blocks.map((b) => (
+              <TopicBlockView key={b.id} block={b} />
+            ))}
+          </div>
         ) : (
-          topic.sections.map((s) => (
-            <Section key={s.h2}>
-              <div className="mx-auto max-w-3xl">
-                <h2 className="mkt-display text-3xl font-medium tracking-tight text-[#0c1222]">{s.h2}</h2>
-                <p className="mt-4 text-base leading-relaxed text-slate-600">{s.body}</p>
-              </div>
-            </Section>
-          ))
+          <div className="mkt-topic__article">
+            {topic.sections.map((s) => (
+              <section className="mkt-blk" key={s.h2}>
+                <h2 className="mkt-blk__h2">{s.h2}</h2>
+                <p className="mkt-blk__body mkt-blk__body--lede">{s.body}</p>
+              </section>
+            ))}
+          </div>
         )}
 
-        <Section wash="soft">
-          <SectionHeading title="Questions teams ask" accent="teams ask" />
-          <div className="mx-auto max-w-3xl">
+        <section className="mkt-topic__faq" aria-labelledby="topic-faq-head">
+          <header className="mkt-topic__sec-head">
+            <h2 className="mkt-topic__sec-title" id="topic-faq-head">
+              Questions <span className="mkt-hl">teams ask</span>
+            </h2>
+            <p className="mkt-topic__sec-sub">
+              Connection steps, Meta pricing in India, COD, and how this compares with Shopify
+              abandoned cart email.
+            </p>
+          </header>
+          <div className="mkt-topic__faq-body">
             <FaqAccordion items={topic.faqs} />
           </div>
-        </Section>
+        </section>
 
-        <Section>
-          <SectionHeading title="Related pages" accent="Related" subtitle="Keep exploring WhatsApp automation for Shopify." />
-          <ul className="mx-auto flex max-w-3xl flex-wrap gap-3">
+        <section className="mkt-topic__related" aria-labelledby="topic-related-head">
+          <header className="mkt-topic__sec-head">
+            <h2 className="mkt-topic__sec-title" id="topic-related-head">
+              Keep <span className="mkt-hl">reading</span>
+            </h2>
+          </header>
+          <ul className="mkt-topic__related-list">
             {topic.related.map((r) => (
               <li key={r.href}>
-                <Link
-                  to={r.href}
-                  className="inline-flex rounded-full border border-[#efeaf8] bg-white px-4 py-2 text-sm font-medium text-[#7C3AED] hover:border-[#c4b5fd]"
-                >
+                <Link to={r.href}>
                   {r.label}
+                  <ArrowUpRight size={13} strokeWidth={2} aria-hidden />
                 </Link>
               </li>
             ))}
           </ul>
-        </Section>
+        </section>
 
         <MarketingCtaBand
-          title="Run this on your Shopify store"
-          subtitle="Start free, connect Shopify and WhatsApp, approve templates, publish your first journey."
+          title="Connect WhatsApp to your Shopify store"
+          subtitle="Start free, authorise Shopify, add your Meta credentials, approve templates, publish the first journey."
           primaryLabel="Start free"
           secondaryLabel="See pricing"
           secondaryTo="/pricing"

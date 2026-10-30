@@ -1,0 +1,385 @@
+/**
+ * /shopify-whatsapp-integration — the commercial topic lander.
+ *
+ * Two things were wrong with the old layout and both were about measure.
+ *
+ * Everything on the page, including a four-column comparison table and a
+ * three-up row of cited figures, was wrapped in max-w-3xl (48rem). On a
+ * 1440px screen that is a 48rem column with 30rem of empty gutter either
+ * side, and the table inside it wrapped every cell to three lines. Prose
+ * wants a narrow measure; tables and figure rows want the room. So prose
+ * holds at 58rem and the wide blocks break out of it, rather than one width
+ * being wrong for half the page.
+ *
+ * The second was the opening: hero, then a lead paragraph, then an eight-item
+ * table of contents, before any substance. The TOC is gone. The lead is now
+ * a panel that reads as the answer to the page's question, which is also the
+ * block an answer engine lifts.
+ *
+ * Tokens only, from marketing.css. The block internals still come from
+ * topic-blocks.css; this file sets the page frame around them.
+ */
+
+.mkt-topic {
+  background: #ffffff;
+  color: var(--mkt-ink);
+}
+
+/* ---------- hero ---------- */
+
+.mkt-topic__hero {
+  position: relative;
+  padding: clamp(5.75rem, 11vw, 7.5rem) 1.25rem 0;
+  text-align: center;
+  overflow: hidden;
+}
+
+.mkt-topic__hero::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 26rem;
+  background: radial-gradient(58% 70% at 50% 16%, rgba(124, 58, 237, 0.1), transparent 72%);
+  pointer-events: none;
+}
+
+.mkt-topic__hero-inner {
+  position: relative;
+  width: min(100%, 52rem);
+  margin: 0 auto;
+}
+
+/* A category link, not an eyebrow. It says where the page sits and it goes
+   somewhere, which is the difference between navigation and decoration. */
+.mkt-topic__kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid #e5defa;
+  background: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mkt-violet);
+  text-decoration: none;
+  transition: border-color 0.15s ease;
+}
+
+.mkt-topic__kicker:hover {
+  border-color: #c4b5fd;
+}
+
+.mkt-topic__title {
+  margin: 1.15rem 0 0;
+  font-family: var(--mkt-font);
+  font-size: clamp(1.6rem, 4vw, 2.85rem);
+  font-weight: 400;
+  letter-spacing: -0.036em;
+  line-height: 1.14;
+  color: var(--mkt-ink);
+  text-wrap: balance;
+}
+
+.mkt-topic__sub {
+  margin: 1.05rem auto 0;
+  max-width: 40rem;
+  font-size: clamp(0.95rem, 1.5vw, 1.05rem);
+  line-height: 1.6;
+  color: var(--mkt-muted);
+  text-wrap: pretty;
+}
+
+.mkt-topic__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.65rem;
+  margin-top: 1.6rem;
+}
+
+.mkt-topic__proof {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.25rem;
+}
+
+.mkt-topic__stage {
+  position: relative;
+  width: min(100%, 62rem);
+  margin: clamp(2.25rem, 4.5vw, 3.25rem) auto 0;
+  padding: 0.6rem;
+  border: 1px solid var(--mkt-border);
+  border-radius: 24px;
+  background: linear-gradient(180deg, #f8f6ff 0%, #ffffff 100%);
+  box-shadow: 0 40px 80px -60px rgba(76, 29, 149, 0.55);
+}
+
+.mkt-topic__stage img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 18px;
+}
+
+/* ---------- answer panel ---------- */
+
+.mkt-topic__answer {
+  width: min(100%, 62rem);
+  margin: clamp(2.75rem, 5.5vw, 4rem) auto 0;
+  padding-inline: 1.25rem;
+}
+
+.mkt-answer {
+  position: relative;
+  border: 1px solid #e7defa;
+  border-radius: var(--mkt-radius-card);
+  background: linear-gradient(165deg, #faf8ff 0%, #f4efff 100%);
+  padding: clamp(1.4rem, 3vw, 2rem);
+}
+
+.mkt-answer__label {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mkt-violet);
+}
+
+.mkt-answer__body {
+  margin: 0.75rem 0 0;
+  font-size: clamp(1rem, 1.6vw, 1.1rem);
+  line-height: 1.68;
+  color: var(--mkt-body);
+  text-wrap: pretty;
+}
+
+.mkt-answer__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin: 1.25rem 0 0;
+  padding: 1.25rem 0 0;
+  border-top: 1px solid #e7defa;
+  list-style: none;
+}
+
+.mkt-answer__chips li {
+  padding: 0.34rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid #e5defa;
+  background: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--mkt-body-2);
+}
+
+/* ---------- trust band ---------- */
+
+.mkt-topic__trust {
+  width: min(100%, 72rem);
+  margin: clamp(3rem, 6vw, 4.5rem) auto 0;
+  padding-inline: 1.25rem;
+}
+
+/* ---------- article ---------- */
+
+.mkt-topic__article {
+  --measure: min(100%, 58rem);
+  --wide: min(100%, 72rem);
+  width: var(--measure);
+  margin: clamp(3.25rem, 6.5vw, 5rem) auto 0;
+  padding-inline: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(3rem, 6vw, 4.5rem);
+}
+
+/*
+ * The wide blocks step outside the prose measure.
+ *
+ * A spec table, a row of cited figures and the do/avoid pair are the three
+ * shapes that were being crushed: all of them are grids whose columns need
+ * room, and none of them is read line by line the way a paragraph is. They
+ * take the full 72rem and centre themselves against the narrower column
+ * around them.
+ */
+.mkt-topic__article > .mkt-blk[data-kind='specTable'],
+.mkt-topic__article > .mkt-blk[data-kind='figures'],
+.mkt-topic__article > .mkt-blk[data-kind='checklist'] {
+  width: var(--wide);
+  margin-inline: calc((var(--wide) - 100%) / -2);
+}
+
+/* Centred block headings, with the lilac highlight, so a section on this page
+   opens the same way a section opens on the homepage. Bodies stay left: a
+   centred paragraph is unreadable past two lines. */
+.mkt-topic__article .mkt-blk__h2 {
+  text-align: center;
+  font-size: clamp(1.4rem, 2.6vw, 2rem);
+  letter-spacing: -0.03em;
+}
+
+.mkt-topic__article .mkt-blk__intro {
+  max-width: 40rem;
+  margin-inline: auto;
+  text-align: center;
+  font-size: 0.975rem;
+}
+
+.mkt-topic__article .mkt-blk__body {
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.mkt-topic__article .mkt-blk__body--lede {
+  margin-top: 1.1rem;
+}
+
+/* Prose blocks hold a narrower measure than their own heading, so a long
+   paragraph does not run to 58rem of unbroken line. */
+.mkt-topic__article > .mkt-blk[data-kind='prose'] .mkt-blk__body {
+  max-width: 46rem;
+  margin-inline: auto;
+}
+
+.mkt-topic__article .mkt-spec,
+.mkt-topic__article .mkt-figs,
+.mkt-topic__article .mkt-check {
+  margin-top: 2rem;
+}
+
+.mkt-topic__article .mkt-spec__footnote,
+.mkt-topic__article .mkt-figs + .mkt-blk__footnote {
+  text-align: center;
+}
+
+.mkt-topic__article .mkt-steps {
+  max-width: 46rem;
+  margin-inline: auto;
+  gap: 0.6rem;
+}
+
+.mkt-topic__article .mkt-callout {
+  max-width: 50rem;
+  margin-inline: auto;
+}
+
+/* ---------- section heads shared by FAQ and related ---------- */
+
+.mkt-topic__sec-head {
+  max-width: 42rem;
+  margin: 0 auto clamp(1.75rem, 3.5vw, 2.5rem);
+  text-align: center;
+}
+
+.mkt-topic__sec-title {
+  margin: 0;
+  font-family: var(--mkt-font);
+  font-size: clamp(1.4rem, 2.6vw, 2rem);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  color: var(--mkt-ink);
+  text-wrap: balance;
+}
+
+.mkt-topic__sec-sub {
+  margin: 0.85rem auto 0;
+  max-width: 36rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--mkt-muted);
+  text-wrap: pretty;
+}
+
+/* ---------- FAQ ---------- */
+
+.mkt-topic__faq {
+  width: min(100%, 62rem);
+  margin: clamp(3.5rem, 7vw, 5.5rem) auto 0;
+  padding-inline: 1.25rem;
+}
+
+.mkt-topic__faq-body {
+  max-width: 50rem;
+  margin-inline: auto;
+}
+
+/* ---------- related ---------- */
+
+.mkt-topic__related {
+  width: min(100%, 62rem);
+  margin: clamp(3.5rem, 7vw, 5.5rem) auto 0;
+  padding: 0 1.25rem clamp(3rem, 6vw, 4.5rem);
+}
+
+.mkt-topic__related-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mkt-topic__related-list a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.55rem 1rem;
+  border-radius: 999px;
+  border: 1px solid var(--mkt-border);
+  background: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--mkt-violet);
+  text-decoration: none;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.mkt-topic__related-list a:hover {
+  border-color: #c4b5fd;
+  transform: translateY(-1px);
+}
+
+/* ---------- narrow ---------- */
+
+@media (max-width: 640px) {
+  .mkt-topic__hero {
+    padding:
+      max(7.25rem, calc(env(safe-area-inset-top, 0px) + 6rem))
+      1rem
+      0;
+  }
+
+  .mkt-topic__title {
+    font-size: clamp(1.55rem, 7.5vw, 2rem);
+  }
+
+  .mkt-topic__actions > * {
+    flex: 1 1 10rem;
+    justify-content: center;
+  }
+
+  .mkt-topic__stage {
+    padding: 0.4rem;
+    border-radius: 18px;
+  }
+
+  .mkt-topic__stage img {
+    border-radius: 14px;
+  }
+
+  .mkt-topic__answer,
+  .mkt-topic__trust,
+  .mkt-topic__article,
+  .mkt-topic__faq,
+  .mkt-topic__related {
+    padding-inline: 1rem;
+  }
+}

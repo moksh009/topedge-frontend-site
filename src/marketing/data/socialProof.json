@@ -67,7 +67,7 @@
       "slug": "delitech",
       "name": "Delitech Smart Home",
       "logo": "/trust/delitech-white.png",
-      "logoColor": "/trust/delitech.png",
+      "logoColor": "/trust/delitech-color.png",
       "href": "https://delitechsmarthome.in/",
       "category": "Smart home hardware",
       "person": "Ved Patel",
@@ -79,7 +79,8 @@
         "Abandoned cart and COD confirmation running on one stack",
         "Order context beside every chat in the shared inbox"
       ],
-      "art": "/marketing/customers/customers-outcome-cart.webp"
+      "art": "/marketing/customers/customers-outcome-cart.webp",
+      "tint": "#ebe4ff"
     },
     {
       "slug": "apex-light",
@@ -96,7 +97,9 @@
         "Recovery sequences written in the brand's own voice",
         "One inbox in place of WhatsApp Web plus the Shopify admin"
       ],
-      "art": "/marketing/customers/customers-outcome-inbox.webp"
+      "art": "/marketing/customers/customers-outcome-inbox.webp",
+      "logoColor": "/trust/apex-color.png",
+      "tint": "#f4ecff"
     }
   ]
 }

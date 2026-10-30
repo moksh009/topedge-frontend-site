@@ -1,82 +1,103 @@
-/* Customers page — hero, case studies, rollout, reviews */
+/**
+ * Customers page.
+ *
+ * The previous version opened with a centred title, a paragraph restating it,
+ * then two case rows built as a 1fr/17rem split with a 3D illustration
+ * floating in the wide column. At laptop width that illustration owned a
+ * third of the page and said nothing, the copy ran at a measure that left the
+ * bullets stranded, and the whole thing read as a template with content
+ * dropped into it.
+ *
+ * What this version does instead:
+ *   - the hero carries the H1, the actions and the proof, and no restating
+ *     paragraph underneath
+ *   - every claim on the page is something a reader can click and verify:
+ *     two review platforms with their own scores, three programme badges,
+ *     two named brands with links to their live stores
+ *   - case studies are equal-height cards with a brand header, so neither
+ *     story gets a worse layout than the other and both work at phone width
+ *
+ * Tokens only, from marketing.css. Section heads reuse .mkt-hl so a heading
+ * here reads the same as a heading on the homepage.
+ */
 
 .mkt-customers {
   background: #ffffff;
-  color: #0c1222;
+  color: var(--mkt-ink);
 }
 
+/* ---------- hero ---------- */
+
 .mkt-customers__hero {
-  max-width: min(100%, 58rem);
+  position: relative;
+  max-width: min(100%, 68rem);
   margin: 0 auto;
-  padding: clamp(5.75rem, 11vw, 7.75rem) 1.25rem 0.85rem;
+  padding: clamp(5.75rem, 11vw, 7.75rem) 1.25rem 0;
   text-align: center;
 }
 
-.mkt-customers__eyebrow {
-  display: none;
+/* A single soft violet bloom behind the title. One gradient, no mesh: the
+   page is a trust page, and a busy backdrop is the first thing that makes
+   one look like a template. */
+.mkt-customers__hero::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 22rem;
+  background: radial-gradient(60% 70% at 50% 18%, rgba(124, 58, 237, 0.09), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.mkt-customers__hero > * {
+  position: relative;
+  z-index: 1;
 }
 
 .mkt-customers__title {
   margin: 0 auto;
-  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: clamp(1.45rem, 2.8vw, 2.35rem);
+  font-family: var(--mkt-font);
+  font-size: clamp(1.5rem, 3.4vw, 2.6rem);
   font-weight: 400;
   letter-spacing: -0.034em;
-  line-height: 1.15;
-  color: #0c1222;
-  max-width: 44rem;
+  line-height: 1.16;
+  color: var(--mkt-ink);
+  max-width: 24ch;
   text-wrap: balance;
 }
 
-@media (min-width: 901px) {
-  .mkt-customers__hero {
-    max-width: min(100%, 72rem);
-  }
-
-  .mkt-customers__title {
-    max-width: none;
-    width: max-content;
-    white-space: nowrap;
-    text-wrap: nowrap;
-    font-size: clamp(1.55rem, 2.15vw, 2.15rem);
-  }
+.mkt-customers__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.65rem;
+  margin-top: 1.6rem;
 }
 
-.mkt-customers__title-accent {
-  font-weight: 400;
-  color: #5b21b6;
-  background: #ede9fe;
-  border-radius: 0.5em;
-  padding: 0.04em 0.22em 0.06em;
-  box-decoration-break: clone;
-  -webkit-box-decoration-break: clone;
+.mkt-customers__score {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
 }
 
-@media (max-width: 640px) {
-  .mkt-customers__title {
-    font-size: clamp(1.35rem, 5.5vw, 1.75rem);
-    line-height: 1.18;
-  }
-}
-
-.mkt-customers__sub {
+/* The sourced numbers spelled out under the badges. The badges carry the
+   marks, this carries the claim a reader can go and check. */
+.mkt-customers__rating {
   margin: 0.75rem auto 0;
   max-width: 34rem;
-  font-size: clamp(0.95rem, 1.5vw, 1.05rem);
-  font-weight: 400;
-  line-height: 1.55;
-  color: var(--mkt-muted);
-  text-wrap: pretty;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--mkt-faint);
 }
 
-/* Trust logos on white page — transparent strip, dark marks, smooth marquee */
+.mkt-customers__rating-score {
+  font-weight: 600;
+  color: var(--mkt-ink);
+}
+
 .mkt-customers__trust {
-  width: min(100%, 36rem);
-  margin: 1.35rem auto 0;
-  padding: 0.35rem 0 0.15rem;
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
+  width: min(100%, 38rem);
+  margin: 2.25rem auto 0;
 }
 
 .mkt-customers__trust .home-trust-logos {
@@ -85,388 +106,502 @@
 
 .mkt-customers__trust .home-trust-logos__label,
 .mkt-customers__trust .home-trust-logos--on-stage .home-trust-logos__label {
-  margin-bottom: 0.7rem;
+  margin-bottom: 0.75rem;
   color: var(--mkt-faint);
   letter-spacing: 0.12em;
   text-shadow: none;
 }
 
-.mkt-customers__trust .home-trust-logos__viewport {
-  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
-}
+/* Marquee tuning is desktop-only, for the same reason as the mark size
+   below: under 768px home.css turns the marquee into a static wrapped row. */
+@media (min-width: 768px) {
+  .mkt-customers__trust .home-trust-logos__viewport {
+    mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  }
 
-.mkt-customers__trust .home-trust-logos__track {
-  gap: 2.5rem;
-  animation: home-trust-marquee 24s linear infinite;
+  .mkt-customers__trust .home-trust-logos__track {
+    gap: 2.75rem;
+    animation: home-trust-marquee 26s linear infinite;
+  }
 }
 
 .mkt-customers__trust .home-trust-logos--on-stage .home-trust-logos__item img,
 .mkt-customers__trust .home-trust-logos__item img {
-  height: 18px;
-  max-width: 100px;
-  filter: brightness(0) opacity(0.45);
+  filter: brightness(0) opacity(0.55);
   opacity: 1;
   transition: filter 0.2s ease;
 }
 
 .mkt-customers__trust .home-trust-logos__item:hover img,
 .mkt-customers__trust .home-trust-logos--on-stage .home-trust-logos__item:hover img {
-  filter: brightness(0) opacity(0.72);
-}
-@media (max-width: 900px) {
-  .mkt-customers__title {
-    font-size: clamp(1.2rem, 3.2vw, 1.55rem);
-  }}
-
-@media (max-width: 640px) {
-  .mkt-customers__title {
-    white-space: normal;
-    text-wrap: balance;
-    font-size: clamp(1.35rem, 5.5vw, 1.7rem);
-  }
-
-  /* Push title lower under the fixed nav */
-  .mkt-customers__hero {
-    padding:
-      max(7.5rem, calc(env(safe-area-inset-top, 0px) + 6.25rem))
-      1rem
-      0.65rem;
-  }
-
-  .mkt-customers__sub {
-    font-size: 0.9rem;
-    padding-inline: 0.15rem;
-  }
-
-  .mkt-customers__trust {
-    width: 100%;
-    margin-top: 1.05rem;
-    padding-inline: 0;
-  }}
-
-
-.mkt-customers__score {
-  display: flex;
-  justify-content: center;
-  margin-top: 1.1rem;
+  filter: brightness(0) opacity(0.85);
 }
 
-/* ——— Case studies ———
-   One brand per row, text and artwork side by side, alternating which side
-   the artwork takes. The old version fanned three rotated cards over a fixed
-   260px box, which clipped its own copy at every width below a laptop. */
-.mkt-customers__cases {
+/*
+ * Mark size is set above the phone breakpoint only. Below 768px home.css
+ * stops the marquee and lays the five marks out as a wrapped, centred row
+ * sized to fit one line; raising the height here as well pushed the fifth
+ * mark onto a second row of its own.
+ */
+@media (min-width: 768px) {
+  .mkt-customers__trust .home-trust-logos--on-stage .home-trust-logos__item img,
+  .mkt-customers__trust .home-trust-logos__item img {
+    height: 21px;
+    max-width: 112px;
+  }
+}
+
+/* ---------- credentials strip ---------- */
+
+.mkt-customers__creds {
   width: min(100%, 68rem);
-  margin: clamp(2.5rem, 5vw, 3.75rem) auto 0;
-  padding: 0 1.25rem;
-  display: flex;
-  flex-direction: column;
-  gap: clamp(2.5rem, 5vw, 3.75rem);
+  margin: clamp(2.25rem, 4.5vw, 3.25rem) auto 0;
+  padding-inline: 1.25rem;
 }
 
-.mkt-case {
+.mkt-creds {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 17rem);
-  align-items: center;
-  gap: clamp(1.5rem, 4vw, 3.5rem);
-  padding-top: clamp(2.5rem, 5vw, 3.75rem);
-  border-top: 1px solid #eef0f4;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid var(--mkt-border);
+  border-radius: var(--mkt-radius-card);
+  background: #fcfbff;
+  overflow: hidden;
 }
 
-.mkt-case:first-child {
-  padding-top: 0;
+@media (min-width: 820px) {
+  .mkt-creds {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.mkt-creds__item {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 1.05rem 1.25rem;
+  border-top: 1px solid var(--mkt-border);
+}
+
+.mkt-creds__item:first-child {
   border-top: 0;
 }
 
-/* Flipped rows mirror the track widths as well as the order. Re-ordering
-   alone pushed the copy into the 17rem art track, so the second story got a
-   third of the measure the first one had and set its headline over 3 lines. */
-.mkt-case--flip {
-  grid-template-columns: minmax(0, 17rem) minmax(0, 1fr);
+@media (min-width: 820px) {
+  .mkt-creds__item {
+    border-top: 0;
+    border-left: 1px solid var(--mkt-border);
+  }
+
+  .mkt-creds__item:first-child {
+    border-left: 0;
+  }
 }
 
-.mkt-case--flip .mkt-case__body {
-  order: 2;
-}
-
-.mkt-case--flip .mkt-case__art {
-  order: 1;
-}
-
-.mkt-case__brand {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
-}
-
-.mkt-case__logo {
-  display: block;
+.mkt-creds__badge {
+  flex: none;
   width: auto;
-  height: 22px;
-  max-width: 7.5rem;
+  height: 34px;
   object-fit: contain;
-  object-position: left center;
-  /* Marks ship white-on-transparent or black-on-transparent; both land here. */
-  filter: brightness(0) opacity(0.78);
 }
 
-.mkt-case__category {
-  padding-left: 0.75rem;
-  border-left: 1px solid #e2e8f0;
-  font-size: 0.75rem;
-  letter-spacing: 0.02em;
+.mkt-creds__text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.mkt-creds__text b {
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--mkt-ink);
+}
+
+.mkt-creds__text span {
+  margin-top: 0.1rem;
+  font-size: 0.78rem;
+  line-height: 1.45;
   color: var(--mkt-faint);
 }
 
-.mkt-case__headline {
+/* ---------- shared section head ---------- */
+
+.mkt-sec-head {
+  max-width: 42rem;
+  margin: 0 auto clamp(1.75rem, 3.5vw, 2.5rem);
+  text-align: center;
+}
+
+.mkt-sec-head__title {
   margin: 0;
-  font-size: clamp(1.15rem, 2.2vw, 1.55rem);
+  font-family: var(--mkt-font);
+  font-size: clamp(1.4rem, 2.6vw, 2rem);
   font-weight: 400;
   letter-spacing: -0.03em;
-  line-height: 1.25;
-  color: #0c1222;
+  line-height: 1.2;
+  color: var(--mkt-ink);
   text-wrap: balance;
 }
 
-.mkt-case__quote {
-  margin: 1rem 0 0;
+.mkt-sec-head__sub {
+  margin: 0.85rem auto 0;
+  max-width: 38rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--mkt-muted);
+  text-wrap: pretty;
+}
+
+/* ---------- case studies ---------- */
+
+.mkt-customers__cases {
+  width: min(100%, 72rem);
+  margin: clamp(3.5rem, 7vw, 5.5rem) auto 0;
+  padding-inline: 1.25rem;
+}
+
+.mkt-customers__case-grid {
+  display: grid;
+  gap: 1rem;
+  align-items: stretch;
+}
+
+@media (min-width: 900px) {
+  .mkt-customers__case-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.mkt-story {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--mkt-border);
+  border-radius: var(--mkt-radius-card);
+  background: #ffffff;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(12, 18, 34, 0.03);
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+.mkt-story:hover {
+  border-color: #ddd6fe;
+  box-shadow: 0 26px 50px -38px rgba(76, 29, 149, 0.55);
+  transform: translateY(-3px);
+}
+
+/* The brand header, not a stock cover photo. We do not have photography for
+   these catalogs, and an invented one would be the exact kind of filler this
+   page exists to replace. The brand's own mark on its own tint is honest and
+   is the thing a returning reader recognises. */
+.mkt-story__cover {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 1.25rem 1.35rem;
+  background:
+    radial-gradient(120% 140% at 85% 0%, rgba(255, 255, 255, 0.85), transparent 60%),
+    var(--tint, #f1ecff);
+  border-bottom: 1px solid rgba(12, 18, 34, 0.05);
+}
+
+.mkt-story__tile {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 14px;
+  background: #ffffff;
+  border: 1px solid rgba(12, 18, 34, 0.07);
+  box-shadow: 0 6px 16px -10px rgba(12, 18, 34, 0.35);
+  overflow: hidden;
+}
+
+.mkt-story__tile img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mkt-story__ident {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.mkt-story__ident b {
+  font-size: 0.98rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--mkt-ink);
+}
+
+.mkt-story__ident span {
+  margin-top: 0.1rem;
+  font-size: 0.78rem;
+  color: #5b5570;
+}
+
+.mkt-story__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 1.5rem 1.45rem 1.55rem;
+}
+
+.mkt-story__headline {
+  margin: 0;
+  font-family: var(--mkt-font);
+  font-size: clamp(1.1rem, 1.8vw, 1.3rem);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.3;
+  color: var(--mkt-ink);
+  text-wrap: balance;
+}
+
+.mkt-story__quote {
+  margin: 0.95rem 0 0;
   padding-left: 1rem;
   border-left: 2px solid #ddd6fe;
 }
 
-.mkt-case__quote p {
+.mkt-story__quote p {
   margin: 0;
-  font-size: 1rem;
-  line-height: 1.6;
+  font-size: 0.95rem;
+  line-height: 1.65;
   color: var(--mkt-body);
   text-wrap: pretty;
 }
 
-.mkt-case__attrib {
+.mkt-story__attrib {
   display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.2rem 0.5rem;
-  margin-top: 0.7rem;
+  align-items: center;
+  gap: 0.65rem;
+  margin-top: 1.1rem;
 }
 
-.mkt-case__person {
-  font-size: 0.8125rem;
+.mkt-story__avatar {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  background: #ede9fe;
+  color: #5b21b6;
+  font-size: 0.82rem;
   font-weight: 600;
-  color: #0c1222;
 }
 
-.mkt-case__role {
-  font-size: 0.8125rem;
+.mkt-story__who {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.mkt-story__who b {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--mkt-ink);
+}
+
+.mkt-story__who span {
+  font-size: 0.76rem;
   color: var(--mkt-faint);
 }
 
-.mkt-case__facts {
+.mkt-story__facts {
   margin: 1.35rem 0 0;
-  padding: 0;
+  padding: 1.15rem 0 0;
+  border-top: 1px solid #f2f3f7;
   list-style: none;
   display: grid;
-  gap: 0.45rem;
+  gap: 0.6rem;
+  flex: 1;
+  align-content: start;
 }
 
-.mkt-case__facts li {
-  position: relative;
-  padding-left: 1.15rem;
+.mkt-story__facts li {
+  display: grid;
+  grid-template-columns: 1rem 1fr;
+  gap: 0.6rem;
+  align-items: start;
   font-size: 0.875rem;
   line-height: 1.5;
-  color: var(--mkt-muted);
+  color: var(--mkt-body-2);
 }
 
-.mkt-case__facts li::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0.55em;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: #a78bfa;
+.mkt-story__facts svg {
+  margin-top: 0.18rem;
+  color: #7c3aed;
 }
 
-.mkt-case__site {
+.mkt-story__site {
   display: inline-flex;
+  align-self: flex-start;
   align-items: center;
-  gap: 0.25rem;
-  margin-top: 1.25rem;
+  gap: 0.3rem;
+  margin-top: 1.35rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid #ddd6fe;
+  background: #ffffff;
   font-size: 0.8125rem;
   font-weight: 500;
-  color: #7c3aed;
+  color: var(--mkt-violet);
   text-decoration: none;
+  transition: border-color 0.15s ease, transform 0.15s ease;
 }
 
-.mkt-case__site:hover {
-  text-decoration: underline;
-  text-underline-offset: 2px;
+.mkt-story__site:hover {
+  border-color: #c4b5fd;
+  transform: translateX(2px);
 }
 
-.mkt-case__art {
-  display: flex;
-  justify-content: center;
-}
+/* ---------- rollout ---------- */
 
-.mkt-case__art img {
-  display: block;
-  width: 100%;
-  max-width: 15rem;
-  height: auto;
-}
-
-/* ——— Rollout ——— */
 .mkt-customers__rollout {
-  width: min(100%, 68rem);
-  margin: clamp(3.25rem, 6vw, 4.75rem) auto 0;
-  padding: clamp(2.5rem, 5vw, 3.5rem) 1.25rem 0;
-  border-top: 1px solid #eef0f4;
+  width: min(100%, 72rem);
+  margin: clamp(3.5rem, 7vw, 5.5rem) auto 0;
+  padding-inline: 1.25rem;
 }
 
-.mkt-customers__sec-head {
-  max-width: 38rem;
-  margin-bottom: clamp(1.75rem, 3.5vw, 2.5rem);
-}
-
-.mkt-customers__sec-title {
-  margin: 0;
-  font-size: clamp(1.25rem, 2.4vw, 1.7rem);
-  font-weight: 400;
-  letter-spacing: -0.03em;
-  line-height: 1.22;
-  color: #0c1222;
-  text-wrap: balance;
-}
-
-.mkt-customers__sec-sub {
-  margin: 0.6rem 0 0;
-  font-size: 0.95rem;
-  line-height: 1.55;
-  color: var(--mkt-muted);
-  text-wrap: pretty;
-}
-
-.mkt-customers__steps {
+.mkt-steps-row {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0 2.5rem;
+  gap: 1rem;
   margin: 0;
   padding: 0;
   list-style: none;
-  counter-reset: none;
 }
 
-.mkt-customers__step {
-  padding-left: 2.5rem;
-  border-left: 1px solid #eef0f4;
+.mkt-steps-row__item {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ece7fa;
+  border-radius: var(--mkt-radius-card);
+  background: #faf9fe;
+  padding: 1.4rem 1.35rem 1.45rem;
+  transition: border-color 0.15s ease, background 0.15s ease;
 }
 
-.mkt-customers__step:first-child {
-  padding-left: 0;
-  border-left: 0;
+.mkt-steps-row__item:hover {
+  border-color: #ddd3f7;
+  background: #f7f4fd;
 }
 
-.mkt-customers__step-n {
+.mkt-steps-row__n {
   display: flex;
   align-items: baseline;
   gap: 0.5rem;
-  margin: 0 0 0.6rem;
+  margin: 0 0 0.7rem;
   font-size: 0.6875rem;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #7c3aed;
+  color: var(--mkt-violet);
 }
 
-.mkt-customers__step-n span {
+.mkt-steps-row__n span {
   font-variant-numeric: tabular-nums;
   color: #c4b5fd;
 }
 
-.mkt-customers__step-title {
+.mkt-steps-row__title {
   margin: 0;
   font-size: 1rem;
-  font-weight: 550;
+  font-weight: 600;
   letter-spacing: -0.015em;
   line-height: 1.35;
-  color: #0c1222;
+  color: var(--mkt-ink);
 }
 
-.mkt-customers__step-detail {
-  margin: 0.5rem 0 0;
+.mkt-steps-row__detail {
+  margin: 0.55rem 0 0;
   font-size: 0.875rem;
-  line-height: 1.55;
-  color: var(--mkt-muted);
+  line-height: 1.6;
+  color: var(--mkt-body-2);
+  flex: 1;
   text-wrap: pretty;
 }
 
-.mkt-customers__step-link {
+.mkt-steps-row__link {
   display: inline-flex;
+  align-self: flex-start;
   align-items: center;
   gap: 0.25rem;
-  margin-top: 0.85rem;
+  margin-top: 1rem;
   font-size: 0.8125rem;
   font-weight: 500;
-  color: #7c3aed;
+  color: var(--mkt-violet);
   text-decoration: none;
 }
 
-.mkt-customers__step-link:hover {
+.mkt-steps-row__link:hover {
   text-decoration: underline;
   text-underline-offset: 2px;
 }
 
-/* ——— Reviews ——— */
+/* ---------- reviews ---------- */
+
 .mkt-customers__reviews {
-  width: min(100%, 68rem);
-  margin: 0 auto;
-  padding: 0 1.25rem clamp(3rem, 6vw, 4.5rem);
+  margin: clamp(3.5rem, 7vw, 5.5rem) auto 0;
+  padding-bottom: clamp(3rem, 6vw, 4.5rem);
 }
 
-.mkt-customers__reviews .mkt-tp {
-  margin-top: clamp(3.25rem, 6vw, 4.75rem);
-  padding-top: clamp(2.5rem, 5vw, 3.5rem);
+/* ---------- narrow ---------- */
+
+@media (max-width: 899px) {
+  .mkt-steps-row {
+    grid-template-columns: 1fr;
+  }
 }
 
-@media (max-width: 860px) {
-  .mkt-case,
-  .mkt-case--flip {
-    grid-template-columns: 1fr;
-    gap: 1.75rem;
+@media (max-width: 640px) {
+  .mkt-customers__hero {
+    padding:
+      max(7.25rem, calc(env(safe-area-inset-top, 0px) + 6rem))
+      1rem
+      0;
   }
 
-  /* Artwork under the words at every narrow width, flipped or not. */
-  .mkt-case--flip .mkt-case__body {
-    order: 0;
+  .mkt-customers__title {
+    font-size: clamp(1.45rem, 7vw, 1.9rem);
+    max-width: none;
   }
 
-  .mkt-case__art,
-  .mkt-case--flip .mkt-case__art {
-    order: 1;
-    justify-content: flex-start;
+  .mkt-customers__actions {
+    margin-top: 1.35rem;
   }
 
-  .mkt-case__art img {
-    max-width: 11rem;
+  .mkt-customers__actions > * {
+    flex: 1 1 10rem;
+    justify-content: center;
   }
 
-  .mkt-customers__steps {
-    grid-template-columns: 1fr;
-    gap: 1.75rem;
+  .mkt-customers__trust {
+    width: 100%;
   }
 
-  .mkt-customers__step {
-    padding-left: 0;
-    padding-top: 1.75rem;
-    border-left: 0;
-    border-top: 1px solid #eef0f4;
+  .mkt-story__cover {
+    padding: 1.1rem 1.15rem;
   }
 
-  .mkt-customers__step:first-child {
-    padding-top: 0;
-    border-top: 0;
+  .mkt-story__body {
+    padding: 1.3rem 1.15rem 1.35rem;
+  }
+
+  .mkt-customers__cases,
+  .mkt-customers__rollout,
+  .mkt-customers__creds {
+    padding-inline: 1rem;
   }
 }
