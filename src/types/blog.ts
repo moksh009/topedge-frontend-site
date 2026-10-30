@@ -45,7 +45,29 @@ export interface BlogPost {
    * Store listing or its own site, so the entry resolves to an entity outside
    * this page. Leave it off rather than pointing at an anchor.
    */
-  itemList?: { name: string; url?: string; description?: string }[];
+  itemList?: {
+    name: string;
+    url?: string;
+    description?: string;
+    /**
+     * Present when the ranked thing is a product rather than a topic, which
+     * on this blog means every comparison and "best app" post. The entry is
+     * then emitted as a SoftwareApplication inside the ListItem.
+     *
+     * The audit for "bitespeed alternative" found the competitor ranking
+     * above us carrying SoftwareApplication and AggregateOffer while our
+     * software comparison pages carried neither: 13 feature pages had it,
+     * 0 of 35 blog posts did. `offerFrom` is only for a price we publish
+     * ourselves. A rival's price that our own copy calls indicative is not
+     * a number to hand a search engine as structured data.
+     */
+    software?: {
+      category?: string;
+      operatingSystem?: string;
+      offerFrom?: number;
+      currency?: string;
+    };
+  }[];
 
   /**
    * Images placed between sections, keyed by the heading they follow.

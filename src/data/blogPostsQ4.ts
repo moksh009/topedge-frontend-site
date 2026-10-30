@@ -305,6 +305,21 @@ export const blogPostsQ4: BlogPost[] = [
       'switch WhatsApp platform Shopify',
     ],
     faqs: WATI_FAQS,
+    itemList: [
+      {
+        name: 'TopEdge AI',
+        url: 'https://apps.shopify.com/topedge-ai',
+        description:
+          'Shopify-native WhatsApp automation for Indian D2C on flat INR plans, with COD confirmation, cart recovery and warranty built in and 0% markup on Meta rates.',
+        software: { category: 'BusinessApplication', operatingSystem: 'Web', offerFrom: 1999, currency: 'INR' },
+      },
+      {
+        name: 'WATI',
+        description:
+          'Support-first WhatsApp shared inbox with broadcast and automation, sold on per-agent tiers.',
+        software: { category: 'BusinessApplication', operatingSystem: 'Web' },
+      },
+    ],
     content: `
 ${verdict(`<p><strong>A WATI alternative makes sense for Shopify India when</strong> you want cart recovery and COD handled natively, without custom API work, and a bill you can forecast in ₹. It does not make sense if your main need is a large multi-agent support desk. Be honest about which of the two you are.</p>`)}
 
@@ -406,6 +421,22 @@ ${faqHtml(WATI_FAQS)}
       'WhatsApp marketing Shopify India',
     ],
     faqs: AISENSY_FAQS,
+    itemList: [
+      {
+        name: 'TopEdge AI',
+        url: 'https://apps.shopify.com/topedge-ai',
+        description:
+          'Shopify-native WhatsApp automation for Indian D2C on flat INR plans, with COD confirmation, cart recovery and warranty built in and 0% markup on Meta rates.',
+        software: { category: 'BusinessApplication', operatingSystem: 'Web', offerFrom: 1999, currency: 'INR' },
+      },
+      {
+        name: 'AiSensy',
+        url: 'https://aisensy.com/pricing',
+        description:
+          'Campaign-led WhatsApp Business API platform for broadcasts and chatbot flows, priced per plan with its own per-message rates.',
+        software: { category: 'BusinessApplication', operatingSystem: 'Web' },
+      },
+    ],
     content: `
 ${verdict(`<p><strong>AiSensy is a strong broadcast and campaign tool.</strong> Look for an alternative if you care more about native cart recovery, a COD-to-prepaid flow and predictable cost as volume grows. If most of your value is one-off broadcasts, the switch may not be worth it.</p>`)}
 
@@ -499,6 +530,22 @@ ${faqHtml(AISENSY_FAQS)}
       'Shopify WhatsApp app India',
     ],
     faqs: INTERAKT_FAQS,
+    itemList: [
+      {
+        name: 'TopEdge AI',
+        url: 'https://apps.shopify.com/topedge-ai',
+        description:
+          'Shopify-native WhatsApp automation for Indian D2C on flat INR plans, with COD confirmation, cart recovery and warranty built in and 0% markup on Meta rates.',
+        software: { category: 'BusinessApplication', operatingSystem: 'Web', offerFrom: 1999, currency: 'INR' },
+      },
+      {
+        name: 'Interakt',
+        url: 'https://www.interakt.shop/pricing/',
+        description:
+          'WhatsApp Business API platform with Shopify templates and a sales CRM, with AI agents sold as an add-on.',
+        software: { category: 'BusinessApplication', operatingSystem: 'Web' },
+      },
+    ],
     content: `
 ${verdict(`<p><strong>Interakt is a reasonable default for Indian Shopify stores.</strong> An alternative is worth testing if AI add-on cost, plan-gated COD-to-prepaid, or tier limits on custom fields and events are starting to bite. If none of those apply, staying put is the cheaper move.</p>`)}
 
@@ -588,10 +635,36 @@ ${faqHtml(INTERAKT_FAQS)}
       'Shopify WhatsApp app INR pricing',
     ],
     faqs: BITESPEED_FAQS,
+    itemList: [
+      {
+        name: 'TopEdge AI',
+        url: 'https://apps.shopify.com/topedge-ai',
+        description:
+          'Shopify-native WhatsApp automation for Indian D2C on flat INR plans, with COD confirmation, cart recovery and warranty built in and 0% markup on Meta rates.',
+        software: { category: 'BusinessApplication', operatingSystem: 'Web', offerFrom: 1999, currency: 'INR' },
+      },
+      {
+        name: 'Bitespeed',
+        description:
+          'Omnichannel marketing and support suite for larger brands, covering WhatsApp, email, SMS and web chat with AI agents sold as add-ons.',
+        software: { category: 'BusinessApplication', operatingSystem: 'Web' },
+      },
+    ],
     content: `
 ${verdict(`<p><strong>Bitespeed targets larger brands and global omnichannel stacks.</strong> If your Shopify store is below that scale, or you want to pay in rupees on a plan sized to orders, an INR-first alternative is the more practical choice. If you are a large brand that wants an AI-agent suite, Bitespeed stays in the running.</p>`)}
 
+<p>Most people searching for a <strong>Bitespeed alternative</strong> are not unhappy with the product. They have read the pricing page, found a revenue floor they do not clear yet, and are looking for something that will take their money today. That is a sizing problem, not a features problem, and it changes which questions are worth asking.</p>
 <p>Bitespeed is often named in roundups for WhatsApp-heavy markets including India. The question for a small or mid-size D2C brand is not whether it is good, but whether its pricing model fits your size.</p>
+
+<h2>When is a Bitespeed alternative the right call?</h2>
+<p>Four situations, and only the first is about money.</p>
+<ol>
+<li><strong>You are under the revenue floor.</strong> If onboarding needs roughly ₹5,00,000 monthly revenue and you are not there, the evaluation ends before it starts.</li>
+<li><strong>You only need one channel to work properly.</strong> Paying for email, SMS and web chat to get WhatsApp right is buying scope you will not switch on this quarter.</li>
+<li><strong>Your margin cannot absorb a markup on Meta.</strong> A platform percentage on conversation fees compounds with festive volume, which is exactly when you can least afford it.</li>
+<li><strong>COD is your main problem.</strong> If confirmation and RTO are what actually cost you money, judge tools on that journey rather than on channel count. The arithmetic is in <a href="/blog/cod-rto-benchmark-india-2026">the 2026 India COD and RTO benchmark</a>.</li>
+</ol>
+<p>If none of those apply, stay. Switching platforms costs a fortnight of attention, and that is real money too.</p>
 
 <h2>Where does Bitespeed pricing stop fitting?</h2>
 <ul>
@@ -631,6 +704,42 @@ ${verdict(`<p><strong>Bitespeed targets larger brands and global omnichannel sta
 </div>
 <p>On the Growth plan against a Bitespeed baseline, that is roughly <strong>₹1,40,000 a year</strong> of difference, and about ₹3,45,000 once the AI add-ons are counted. Meta’s per-message fees sit on top of both and are the same either way, except that a platform markup on the Meta line would widen the gap further.</p>
 <p>The reason to pay Bitespeed anyway is scope, and it is a real reason: email, SMS, web chat and a broader AI agent suite in one contract. The reason not to is that a store doing under ₹5,00,000 MRR is paying enterprise pricing for capacity it cannot yet use. Price the scope you will actually switch on this quarter, not the scope you might grow into.</p>
+<h2>What you give up by leaving Bitespeed</h2>
+<p>A comparison page written by one of the two products is worth reading sceptically, so here is the honest side of the ledger. Moving to a WhatsApp-first platform costs you real things:</p>
+<ul>
+<li><strong>Channel breadth.</strong> Email, SMS and web chat leave the contract. If your flows genuinely span them, you are swapping one bill for two.</li>
+<li><strong>One vendor for everything.</strong> Two tools means two support queues and two places a journey can break.</li>
+<li><strong>A packaged AI agent suite.</strong> Bring-your-own-key is cheaper and more controllable, and it is also more setup than a toggle.</li>
+<li><strong>Whatever you have already built.</strong> Templates, segments and automations do not port. Budget for rebuilding them.</li>
+</ul>
+<p>None of that is fatal, and for a store under the revenue floor it is mostly theoretical. But decide it deliberately rather than discovering it in week two.</p>
+
+<h2>How to migrate without losing a sale week</h2>
+<p>The order matters more than the speed. Run both platforms in parallel until the last step.</p>
+<ol>
+<li><strong>Export your consent list first.</strong> Opt-in records with timestamps are the one asset you cannot rebuild. Get them out before anything else, and read <a href="/blog/whatsapp-opt-in-shopify-india">WhatsApp opt-in for Shopify India</a> if yours are thin.</li>
+<li><strong>Submit templates early.</strong> Meta approval is the long pole, not the integration. Start it on day one and keep each template gated on APPROVED status. Common rejection causes: <a href="/blog/whatsapp-template-rejected-meta-shopify-fix">why Meta rejects WhatsApp templates</a>.</li>
+<li><strong>Rebuild one journey, not all of them.</strong> Pick the one that earns: cart recovery or COD confirmation. Prove it against your old numbers.</li>
+<li><strong>Run both for two weeks</strong> with the old platform's sends paused, so you can fail back without a gap.</li>
+<li><strong>Move the number last.</strong> A WhatsApp Business number can only be connected to one platform at a time, so this is the irreversible step. Do it after the journey is proven, not before.</li>
+<li><strong>Check the INR billing deadline</strong> while you are in there. Every eligible Indian WhatsApp Business Account has to be on INR billing by <strong>31 December 2026</strong> or Meta stops delivery on 1 January 2027, and that migration needs a new WABA rather than a settings change.</li>
+</ol>
+
+<h2>A ten-minute decision checklist</h2>
+<div class="mkt-blog-table-wrap">
+<table>
+<thead><tr><th>Question</th><th>If yes</th><th>If no</th></tr></thead>
+<tbody>
+<tr><td>Is your monthly revenue above ₹5,00,000?</td><td>Bitespeed will talk to you</td><td>The decision is already made</td></tr>
+<tr><td>Do email and SMS flows earn their keep today?</td><td>Breadth is worth paying for</td><td>You are buying unused scope</td></tr>
+<tr><td>Is COD more than half your orders?</td><td>Judge on the COD journey first</td><td>Judge on cart recovery first</td></tr>
+<tr><td>Can you quote your markup on Meta's rate?</td><td>Model it at festive volume</td><td>Ask for it in writing before signing</td></tr>
+<tr><td>Will anyone answer WhatsApp replies?</td><td>A shared inbox matters</td><td>Fix that before buying anything</td></tr>
+</tbody>
+</table>
+</div>
+<p>If you want the same questions asked across the whole category rather than one rival, use <a href="/blog/how-to-choose-whatsapp-app-shopify-app-store">how to choose a WhatsApp app on the Shopify App Store</a>.</p>
+
 <p class="mkt-blog-footnote">TopEdge figures are our own published yearly plan prices. Bitespeed figures are indicative public patterns from our research converted at round rupee values, not a quote: Bitespeed prices on application and your number will differ. Confirm on bitespeed.co.</p>
 
 ${faqHtml(BITESPEED_FAQS)}
@@ -828,6 +937,22 @@ ${faqHtml(OPTIN_FAQS)}
       'Shopify WhatsApp automation India',
     ],
     faqs: UPDATRR_FAQS,
+    itemList: [
+      {
+        name: 'TopEdge AI',
+        url: 'https://apps.shopify.com/topedge-ai',
+        description:
+          'Shopify-native WhatsApp automation for Indian D2C on flat INR plans, with COD confirmation, cart recovery and warranty built in and 0% markup on Meta rates.',
+        software: { category: 'BusinessApplication', operatingSystem: 'Web', offerFrom: 1999, currency: 'INR' },
+      },
+      {
+        name: 'Updatrr',
+        url: 'https://www.updatrr.com/pricing',
+        description:
+          'WhatsApp and voice recovery for Shopify with a published no-markup policy on Meta conversation fees.',
+        software: { category: 'BusinessApplication', operatingSystem: 'Web' },
+      },
+    ],
     content: `
 ${verdict(`<p><strong>Updatrr is an honest Shopify-only WhatsApp app and it does not mark up Meta rates.</strong> Switch to TopEdge AI when you want to be billed in rupees rather than dollars, want AI included on the entry plan instead of behind the $99.99 tier, or need pre-checkout visitor identity, unified multi-number profiles and warranty management. Stay on Updatrr if its three plans already cover what you run.</p>`)}
 

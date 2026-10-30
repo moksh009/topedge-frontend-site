@@ -146,6 +146,35 @@ export default function BlogPost() {
                 name: item.name,
                 ...(item.description ? { description: item.description } : {}),
                 ...(item.url ? { url: item.url } : {}),
+                // A ranked product also resolves to the product itself, not
+                // only to a position in a list.
+                ...(item.software
+                  ? {
+                      item: {
+                        '@type': 'SoftwareApplication',
+                        name: item.name,
+                        // A sellable entity carrying `offers` needs an image or
+                        // Google drops the merchant listing; seo-head-audit
+                        // fails the build on it. The post cover is the only
+                        // image we can honestly attach to every entry.
+                        image: imageAbs,
+                        ...(item.url ? { url: item.url } : {}),
+                        ...(item.description ? { description: item.description } : {}),
+                        applicationCategory: item.software.category ?? 'BusinessApplication',
+                        operatingSystem: item.software.operatingSystem ?? 'Web',
+                        ...(item.software.offerFrom
+                          ? {
+                              offers: {
+                                '@type': 'Offer',
+                                price: item.software.offerFrom,
+                                priceCurrency: item.software.currency ?? 'INR',
+                                availability: 'https://schema.org/InStock',
+                              },
+                            }
+                          : {}),
+                      },
+                    }
+                  : {}),
               })),
             })}
           </script>

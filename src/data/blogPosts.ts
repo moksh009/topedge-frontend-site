@@ -1672,6 +1672,22 @@ export const blogPosts: BlogPost[] = [
           'No. Templates belong to your WhatsApp Business Account, not to the provider, so they survive a switch as long as the new platform connects to the same WABA. This is also why connecting the wrong WABA makes a template library look empty. Check which account a platform has bound before assuming anything was lost.',
       },
     ],
+    itemList: [
+      {
+        name: 'TopEdge AI',
+        url: 'https://apps.shopify.com/topedge-ai',
+        description:
+          'Shopify-native WhatsApp automation for Indian D2C on flat INR plans, with COD confirmation, cart recovery and warranty built in and 0% markup on Meta rates.',
+        software: { category: 'BusinessApplication', operatingSystem: 'Web', offerFrom: 1999, currency: 'INR' },
+      },
+      {
+        name: 'Zoko',
+        url: 'https://www.zoko.io/',
+        description:
+          'WhatsApp commerce platform built around catalogue selling, COD flows and in-thread checkout.',
+        software: { category: 'BusinessApplication', operatingSystem: 'Web' },
+      },
+    ],
     content: `
 <p><strong>A Zoko alternative for Shopify India</strong> is worth considering when conversation metering and festival bill spikes matter more than catalog-in-chat heritage. Keep COD flows and Shopify sync; switch the platform fee to something finance can forecast in ₹. Full scorecard: <a href="/compare/zoko">TopEdge vs Zoko</a>.</p>
 
@@ -1785,6 +1801,22 @@ export const blogPosts: BlogPost[] = [
           'Price the same workload on both: your actual monthly order count, your real send volume, the number of agents you need, and the specific automations you intend to run. Then run one real test order and one real abandoned checkout on each. Feature lists rarely survive that test unchanged.',
       },
     ],
+    itemList: [
+      {
+        name: 'TopEdge AI',
+        url: 'https://apps.shopify.com/topedge-ai',
+        description:
+          'Shopify-native WhatsApp automation for Indian D2C on flat INR plans, with COD confirmation, cart recovery and warranty built in and 0% markup on Meta rates.',
+        software: { category: 'BusinessApplication', operatingSystem: 'Web', offerFrom: 1999, currency: 'INR' },
+      },
+      {
+        name: 'Getgabs',
+        url: 'https://apps.shopify.com/getgabs-whatsapp-chatbot-api',
+        description:
+          'Entry-priced WhatsApp chatbot and API app for Shopify, aimed at smaller stores.',
+        software: { category: 'BusinessApplication', operatingSystem: 'Web' },
+      },
+    ],
     content: `
 <p><strong>A Getgabs alternative</strong> is for teams that outgrew free-to-install WhatsApp entry, not for winning a sticker-price fight. Getgabs stays cheaper to start; TopEdge fits when COD → prepaid, warranty, and unified identity need to ship natively. Details: <a href="/compare/getgabs">TopEdge vs Getgabs</a>.</p>
 
@@ -1886,6 +1918,22 @@ export const blogPosts: BlogPost[] = [
         question: 'How do I decide between two WhatsApp automation platforms?',
         answer:
           'Write down the three workflows you will actually run in the first month (usually order updates, COD confirmation and cart recovery), then verify each one end to end on both platforms with a real order. Decide on what you observed, not on the comparison table.',
+      },
+    ],
+    itemList: [
+      {
+        name: 'TopEdge AI',
+        url: 'https://apps.shopify.com/topedge-ai',
+        description:
+          'Shopify-native WhatsApp automation for Indian D2C on flat INR plans, with COD confirmation, cart recovery and warranty built in and 0% markup on Meta rates.',
+        software: { category: 'BusinessApplication', operatingSystem: 'Web', offerFrom: 1999, currency: 'INR' },
+      },
+      {
+        name: 'Kanal',
+        url: 'https://getkanal.com/',
+        description:
+          'WhatsApp marketing and automation platform for Shopify, priced in USD.',
+        software: { category: 'BusinessApplication', operatingSystem: 'Web' },
       },
     ],
     content: `
@@ -2289,6 +2337,22 @@ export const blogPosts: BlogPost[] = [
         question: 'When is TopEdge the better Dondy alternative for Shopify India?',
         answer:
           'When you want 0% Meta markup, flat INR plans, and native COD → prepaid. Keep Dondy if the free widget, Klaviyo, and Elite AI matter more than the rate-card markup.',
+      },
+    ],
+    itemList: [
+      {
+        name: 'TopEdge AI',
+        url: 'https://apps.shopify.com/topedge-ai',
+        description:
+          'Shopify-native WhatsApp automation for Indian D2C on flat INR plans, with COD confirmation, cart recovery and warranty built in and 0% markup on Meta rates.',
+        software: { category: 'BusinessApplication', operatingSystem: 'Web', offerFrom: 1999, currency: 'INR' },
+      },
+      {
+        name: 'Dondy',
+        url: 'https://apps.shopify.com/dondy-marketing-ai',
+        description:
+          'WhatsApp marketing and abandoned cart automation app for Shopify, priced in USD for global stores.',
+        software: { category: 'BusinessApplication', operatingSystem: 'Web' },
       },
     ],
     content: `

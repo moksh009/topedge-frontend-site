@@ -1150,7 +1150,7 @@ const PAGES = [
     slug: 'shopify-whatsapp',
     title: 'WhatsApp Automation for Shopify | TopEdge AI',
     description:
-      'Confirm COD orders, recover abandoned carts, run campaigns and answer every chat on WhatsApp. One subscription for Indian Shopify stores. 14-day free trial, no card.',
+      'Confirm COD orders, recover abandoned carts and answer every chat on WhatsApp. One subscription for Indian Shopify stores. 14-day trial, no card.',
   },
 ];
 
