@@ -981,42 +981,6 @@
   margin: 0;
 }
 
-.mkt-blog-cta {
-  margin: 2.5rem 0 0;
-  padding: 1.35rem 1.25rem 1.5rem;
-  border: 1px solid #ece9f6;
-  border-radius: 14px;
-  background: #faf9fd;
-}
-
-@media (min-width: 640px) {
-  .mkt-blog-cta {
-    padding: 1.6rem 1.75rem;
-  }
-}
-
-.mkt-blog-cta__title {
-  font-family: var(--mkt-font);
-  font-size: 1.125rem;
-  font-weight: 560;
-  letter-spacing: -0.02em;
-  color: var(--mkt-ink);
-}
-
-.mkt-blog-cta__sub {
-  margin-top: 0.5rem;
-  font-size: 0.9375rem;
-  line-height: 1.55;
-  color: var(--mkt-muted);
-}
-
-.mkt-blog-cta__actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  margin-top: 1.25rem;
-}
-
 .mkt-blog-related {
   padding: 2.5rem 0 3.5rem;
   background: #fbfafd;

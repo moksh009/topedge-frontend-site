@@ -1,0 +1,274 @@
+/**
+ * The end of a blog post: the conversion panel, then the share row.
+ *
+ * The old end-of-post block was a pale bordered box with a heading and two
+ * buttons, sitting in the same tint as the summary card above it, so by the
+ * time a reader reached it they had already learned to skip that shape. This
+ * is a dark violet panel with a published review beside the offer, which is
+ * the one thing that makes an end-of-post CTA read as evidence rather than
+ * as an ad.
+ *
+ * Colours are the marketing violet ramp. The only colours here that are not
+ * ours are Trustpilot's, which belong to Trustpilot.
+ */
+
+.mkt-bend {
+  position: relative;
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 2.25rem);
+  margin: clamp(2.5rem, 5vw, 3.25rem) 0 0;
+  padding: clamp(1.5rem, 3.5vw, 2.4rem);
+  border-radius: 22px;
+  background:
+    radial-gradient(120% 140% at 85% 0%, rgba(167, 139, 250, 0.28), transparent 58%),
+    linear-gradient(135deg, #2e1065 0%, #4c1d95 52%, #5b21b6 100%);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+@media (min-width: 900px) {
+  .mkt-bend {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 20.5rem);
+    align-items: center;
+  }
+}
+
+/* One soft bloom, behind the content rather than over it. */
+.mkt-bend__glow {
+  position: absolute;
+  z-index: -1;
+  inset: auto -20% -60% -10%;
+  height: 20rem;
+  background: radial-gradient(50% 60% at 30% 50%, rgba(196, 181, 253, 0.26), transparent 70%);
+  pointer-events: none;
+}
+
+.mkt-bend__pitch {
+  min-width: 0;
+}
+
+.mkt-bend__title {
+  margin: 0;
+  font-family: var(--mkt-font);
+  font-size: clamp(1.35rem, 2.6vw, 1.85rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.22;
+  color: #ffffff;
+  text-wrap: balance;
+}
+
+/* The highlight is light-on-dark here, so it is a colour shift rather than
+   the lilac capsule the light sections use. A pale block on this panel would
+   read as a redaction. */
+.mkt-bend__hl {
+  color: #d8b4fe;
+}
+
+.mkt-bend__sub {
+  margin: 0.8rem 0 0;
+  max-width: 34rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: rgba(237, 233, 254, 0.82);
+  text-wrap: pretty;
+}
+
+.mkt-bend__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1.35rem;
+}
+
+.mkt-bend__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.62rem 1.25rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+}
+
+.mkt-bend__btn--primary {
+  background: #ffffff;
+  color: #4c1d95;
+  border: 1px solid #ffffff;
+}
+
+.mkt-bend__btn--primary:hover {
+  transform: translateY(-1px);
+  background: #f5f3ff;
+}
+
+.mkt-bend__btn--ghost {
+  background: transparent;
+  color: #ede9fe;
+  border: 1px solid rgba(221, 214, 254, 0.42);
+}
+
+.mkt-bend__btn--ghost:hover {
+  transform: translateY(-1px);
+  border-color: rgba(221, 214, 254, 0.8);
+}
+
+/* ---------- the review ---------- */
+
+.mkt-bend__review {
+  margin: 0;
+  padding: 1.25rem 1.3rem;
+  border-radius: 16px;
+  border: 1px solid rgba(221, 214, 254, 0.22);
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(2px);
+}
+
+.mkt-bend__stars {
+  display: flex;
+  gap: 2px;
+}
+
+.mkt-bend__star {
+  display: block;
+  border-radius: 2px;
+}
+
+.mkt-bend__score {
+  margin: 0.55rem 0 0;
+  font-size: 0.75rem;
+  line-height: 1.45;
+  color: rgba(237, 233, 254, 0.7);
+}
+
+.mkt-bend__quote {
+  margin: 0.85rem 0 0;
+}
+
+.mkt-bend__quote p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #f5f3ff;
+  text-wrap: pretty;
+}
+
+.mkt-bend__by {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 1.1rem;
+  padding-top: 0.95rem;
+  border-top: 1px solid rgba(221, 214, 254, 0.18);
+}
+
+.mkt-bend__avatar {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  background: rgba(237, 233, 254, 0.16);
+  color: #ede9fe;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.mkt-bend__by-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.mkt-bend__by-text b {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.mkt-bend__by-text span {
+  font-size: 0.72rem;
+  color: rgba(237, 233, 254, 0.62);
+}
+
+/* ---------- share row ---------- */
+
+.mkt-bshare {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1rem;
+  margin-top: 1rem;
+  padding: 0.95rem 1.15rem;
+  border: 1px solid var(--mkt-border);
+  border-radius: 16px;
+  background: #ffffff;
+}
+
+.mkt-bshare__label {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--mkt-ink);
+}
+
+.mkt-bshare__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin: 0 0 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.mkt-bshare__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* 40px, so the row clears the 44px-ish touch target once the 0.45rem gap
+     between buttons is counted. */
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--mkt-border);
+  background: #ffffff;
+  color: var(--mkt-muted);
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease,
+    transform 0.15s ease;
+}
+
+.mkt-bshare__btn:hover {
+  color: var(--mkt-violet);
+  border-color: #ddd6fe;
+  background: #faf9ff;
+  transform: translateY(-1px);
+}
+
+.mkt-bshare__btn--copy.is-copied {
+  color: #059669;
+  border-color: #cfece0;
+  background: #f4fbf7;
+}
+
+/* The canonical URL, so a reader can see what the copy button will give them
+   and read it off the page if the clipboard is blocked. */
+.mkt-bshare__url {
+  flex-basis: 100%;
+  margin: 0;
+  font-size: 0.74rem;
+  line-height: 1.45;
+  color: var(--mkt-faint);
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 599px) {
+  .mkt-bshare__list {
+    margin-left: 0;
+  }
+}

@@ -9,7 +9,6 @@ import { blogPosts } from '../data/blogPosts';
 import { filterMarketingBlogPosts, relatedBlogPosts } from '../marketing/data/blog';
 import { BLOG_CATEGORIES, groupForCategory } from '../marketing/data/blogCategories';
 import type { BlogPost as BlogPostModel } from '../types/blog';
-import { DASH_SIGNUP } from '../marketing/routes';
 import {
   articleDateModifiedIso,
   articleDatePublishedIso,
@@ -22,6 +21,7 @@ import {
 } from '../marketing/lib/blogHtml';
 import { bindCalculators } from '../marketing/lib/blogCalculators';
 import SummarizeWithAI from '../marketing/components/blog/SummarizeWithAI';
+import BlogEndCta from '../marketing/components/blog/BlogEndCta';
 import '../marketing/styles/blog.css';
 import '../marketing/styles/calculator.css';
 
@@ -307,21 +307,7 @@ export default function BlogPost() {
               </section>
             ) : null}
 
-            <aside className="mkt-blog-cta" aria-label="Get started">
-              <p className="mkt-blog-cta__title">Run this on your Shopify store</p>
-              <p className="mkt-blog-cta__sub">
-                Connect Shopify and WhatsApp, approve Meta templates, and publish cart recovery
-                journeys, free for 14 days.
-              </p>
-              <div className="mkt-blog-cta__actions">
-                <a href={DASH_SIGNUP} className="mkt-btn-primary">
-                  Start free
-                </a>
-                <Link to="/features/journeys" className="mkt-btn-ghost">
-                  See cart recovery
-                </Link>
-              </div>
-            </aside>
+            <BlogEndCta url={canonical} title={post.title} slug={post.slug} />
             </div>
           </div>
         </div>
