@@ -289,7 +289,7 @@ export default function MarketingFooter() {
                 aria-label="Meta Business Partner"
               >
                 <img
-                  src="/badges/meta-business-partner.png?v=4"
+                  src="/badges/meta-business-partner.webp?v=5"
                   alt="Meta Business Partner"
                   width={168}
                   height={96}
@@ -307,7 +307,7 @@ export default function MarketingFooter() {
                 aria-label="Shopify Available on App Store"
               >
                 <img
-                  src="/badges/shopify-app-store.png?v=4"
+                  src="/badges/shopify-app-store.webp?v=5"
                   alt="Shopify Available on App Store"
                   width={168}
                   height={96}
@@ -325,7 +325,7 @@ export default function MarketingFooter() {
                 aria-label="WhatsApp Business Partner"
               >
                 <img
-                  src="/badges/whatsapp-cloud-api.png?v=5"
+                  src="/badges/whatsapp-cloud-api.webp?v=6"
                   alt="WhatsApp Business Partner"
                   width={168}
                   height={96}

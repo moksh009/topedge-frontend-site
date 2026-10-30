@@ -70,6 +70,15 @@ export const SOURCES = {
       'A checkout counts as abandoned when it stays incomplete for more than ten minutes after the customer has given their email. Recovery emails are available on the Online Store and Buy Button channels only.',
     verified: '2026-10-21',
   },
+  shopifyAbandonedApi: {
+    id: 'shopifyAbandonedApi',
+    url: 'https://shopify.dev/docs/api/admin-graphql/latest/queries/abandonedCheckouts',
+    label: 'Shopify’s abandonedCheckouts GraphQL Admin API reference',
+    publisher: 'Shopify',
+    claim:
+      'abandonedCheckouts returns a paginated list of abandoned checkouts, where a checkout counts as abandoned once a customer has given contact information and not completed the purchase. The list covers both abandoned and recovered checkouts. Arguments: first, after, last, before, query, reverse, savedSearchId, sortKey. Fields on the returned object include abandonedCheckoutUrl, billingAddress, completedAt and createdAt. A companion abandonedCheckoutsCount query returns a count with a precision value and an optional limit.',
+    verified: '2026-10-30',
+  },
   baymardCart: {
     id: 'baymardCart',
     url: 'https://baymard.com/lists/cart-abandonment-rate',

@@ -123,6 +123,33 @@ export default function BlogPost() {
             keywords: post.keywords?.join(', '),
           })}
         </script>
+        {/*
+          Listicles also publish their ranking as an ItemList. BlogPosting
+          alone tells a machine the page is an article; it does not tell it the
+          page is a ranked shortlist, which is the thing an AI answer to
+          "best <x> app" wants to lift. Only posts that actually rank things
+          carry `itemList`, so nothing else emits an empty list.
+        */}
+        {post.itemList?.length ? (
+          <script type="application/ld+json">
+            {JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'ItemList',
+              '@id': `${canonical}#itemlist`,
+              name: post.title,
+              description: post.description,
+              itemListOrder: 'https://schema.org/ItemListOrderDescending',
+              numberOfItems: post.itemList.length,
+              itemListElement: post.itemList.map((item, i) => ({
+                '@type': 'ListItem',
+                position: i + 1,
+                name: item.name,
+                ...(item.description ? { description: item.description } : {}),
+                ...(item.url ? { url: item.url } : {}),
+              })),
+            })}
+          </script>
+        ) : null}
       </Helmet>
 
       <MarketingPage className="mkt-blog-article !bg-transparent">

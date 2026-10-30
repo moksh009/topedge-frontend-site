@@ -29,7 +29,7 @@ const ASSISTANTS = [
   {
     id: 'chatgpt',
     name: 'ChatGPT',
-    src: '/ai/chatgpt.png',
+    src: '/ai/chatgpt.webp',
     tile: false,
     url: (q: string) => `https://chatgpt.com/?q=${q}`,
   },
@@ -43,7 +43,7 @@ const ASSISTANTS = [
   {
     id: 'gemini',
     name: 'Gemini',
-    src: '/ai/gemini.png',
+    src: '/ai/gemini.webp',
     tile: false,
     url: (q: string) => `https://gemini.google.com/app?q=${q}`,
   },
@@ -57,7 +57,7 @@ const ASSISTANTS = [
   {
     id: 'grok',
     name: 'Grok',
-    src: '/ai/grok.png',
+    src: '/ai/grok.webp',
     tile: true,
     url: (q: string) => `https://grok.com/?q=${q}`,
   },

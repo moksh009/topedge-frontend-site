@@ -73,6 +73,7 @@ Product documentation lives in the TopEdge dashboard: https://dash.topedgeai.com
 
 ## Playbooks
 
+- [Best Shopify App for Abandoned Cart Recovery India](https://topedgeai.com/blog/best-shopify-app-for-abandoned-cart-recovery-india): Best Shopify app for abandoned cart recovery India: WhatsApp, email and SMS apps ranked on events, suppression, opt-in and what Meta charges per message.
 - [COD to Prepaid on WhatsApp for Shopify India 2026](https://topedgeai.com/blog/cod-to-prepaid-whatsapp-shopify-india): Convert Shopify India COD orders to UPI prepaid on WhatsApp before dispatch: the ₹68 saved per order, the ₹0.1150 against ₹0.8631 template split, and the flow.
 - [Best Updatrr Alternative for Shopify India (2026)](https://topedgeai.com/blog/updatrr-alternative-shopify-india): An Updatrr alternative for Shopify India: flat INR plans from ₹1,999/mo, a 14-day trial and BYOK AI on every plan, against USD tiers that gate AI at $99.99.
 - [Best WATI Alternative for Shopify India (2026)](https://topedgeai.com/blog/wati-alternative-shopify-india): Looking for a WATI alternative for Shopify India? What to keep, what to fix (markup, AI access, COD), and how to test a switch in one afternoon.
@@ -104,11 +105,11 @@ Product documentation lives in the TopEdge dashboard: https://dash.topedgeai.com
 - [Meta WhatsApp Cloud API Templates for Shopify](https://topedgeai.com/blog/meta-whatsapp-cloud-api-shopify-templates): A plain-English guide to Meta WhatsApp Cloud API templates for Shopify ecommerce: categories, approval tips, journey gating, and transparent rates.
 - [WhatsApp vs Email Marketing Automation for D2C India](https://topedgeai.com/blog/ecommerce-automation-whatsapp-vs-email-india): Compare WhatsApp ecommerce automation vs email for cart recovery, order updates, and campaigns: when to use each channel on Shopify in India.
 - [Shopify WhatsApp Automation: What to Automate First](https://topedgeai.com/blog/shopify-whatsapp-automation-what-to-automate-first): Prioritize Shopify WhatsApp automation that pays: abandoned cart, COD confirmation, order updates, then campaigns: a rollout order for Indian D2C ecommerce.
-- [Shopify Abandoned Cart Recovery on WhatsApp (India)](https://topedgeai.com/blog/whatsapp-abandoned-cart-recovery-shopify): WhatsApp abandoned cart recovery for Shopify: cart vs checkout, message timing, templates, opt-in rules and what to look for in a recovery tool.
+- [Shopify WhatsApp Abandoned Cart Recovery India](https://topedgeai.com/blog/whatsapp-abandoned-cart-recovery-shopify): WhatsApp abandoned cart Shopify recovery, step by step: cart vs checkout events, message timing, template rules, opt-in and what a sequence costs in India.
 
 ## Canonical URL directory
 
-All 91 indexable URLs on this domain, no trailing slash except the root.
+All 92 indexable URLs on this domain, no trailing slash except the root.
 
 - https://topedgeai.com/
 - https://topedgeai.com/pricing
@@ -168,6 +169,7 @@ All 91 indexable URLs on this domain, no trailing slash except the root.
 - https://topedgeai.com/whatsapp-journey-examples/cod-to-prepaid
 - https://topedgeai.com/whatsapp-journey-examples/order-status-updates
 - https://topedgeai.com/blog/whatsapp-abandoned-cart-recovery-shopify
+- https://topedgeai.com/blog/best-shopify-app-for-abandoned-cart-recovery-india
 - https://topedgeai.com/blog/whatsapp-automation-for-shopify
 - https://topedgeai.com/blog/best-whatsapp-apps-for-shopify
 - https://topedgeai.com/blog/shopify-whatsapp-automation-what-to-automate-first

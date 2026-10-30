@@ -86,7 +86,7 @@ export default function ReviewPlatforms({
           <ul className="mkt-rp__partners">
             <li>
               <img
-                src="/badges/meta-business-partner.png?v=4"
+                src="/badges/meta-business-partner.webp?v=5"
                 alt="Meta Business Partner"
                 width={104}
                 height={34}
@@ -96,7 +96,7 @@ export default function ReviewPlatforms({
             </li>
             <li>
               <img
-                src="/badges/shopify-app-store.png?v=4"
+                src="/badges/shopify-app-store.webp?v=5"
                 alt="Available on the Shopify App Store"
                 width={104}
                 height={34}
@@ -106,7 +106,7 @@ export default function ReviewPlatforms({
             </li>
             <li>
               <img
-                src="/badges/whatsapp-cloud-api.png?v=5"
+                src="/badges/whatsapp-cloud-api.webp?v=6"
                 alt="WhatsApp Business Platform"
                 width={104}
                 height={34}

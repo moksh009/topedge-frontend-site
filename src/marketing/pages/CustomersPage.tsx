@@ -27,19 +27,19 @@ import '../styles/customers.css';
  */
 const CREDENTIALS = [
   {
-    img: '/badges/meta-business-partner.png',
+    img: '/badges/meta-business-partner.webp',
     alt: 'Meta Business Partner',
     label: 'Meta Business Partner',
     detail: 'WhatsApp Cloud API, direct from Meta',
   },
   {
-    img: '/badges/shopify-app-store.png',
+    img: '/badges/shopify-app-store.webp',
     alt: 'Available on the Shopify App Store',
     label: 'On the Shopify App Store',
     detail: 'One-click OAuth, reviewed by Shopify',
   },
   {
-    img: '/badges/whatsapp-cloud-api.png',
+    img: '/badges/whatsapp-cloud-api.webp',
     alt: 'WhatsApp Business Platform',
     label: 'WhatsApp Business Platform',
     detail: 'Official templates, no unofficial bridges',

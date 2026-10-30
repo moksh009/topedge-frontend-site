@@ -482,9 +482,9 @@ const INCLUDED_LABELS = {
 
 // Marks that already sit in the site footer. An ad visitor has never heard of us.
 const BADGES = [
-  { src: '/badges/shopify-app-store.png?v=4', alt: 'Available on the Shopify App Store' },
-  { src: '/badges/meta-business-partner.png?v=4', alt: 'Meta Business Partner' },
-  { src: '/badges/whatsapp-cloud-api.png?v=5', alt: 'Built on the official WhatsApp Cloud API' },
+  { src: '/badges/shopify-app-store.webp?v=5', alt: 'Available on the Shopify App Store' },
+  { src: '/badges/meta-business-partner.webp?v=5', alt: 'Meta Business Partner' },
+  { src: '/badges/whatsapp-cloud-api.webp?v=6', alt: 'Built on the official WhatsApp Cloud API' },
 ];
 
 /**

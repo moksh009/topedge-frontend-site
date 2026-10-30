@@ -31,6 +31,23 @@ export interface BlogPost {
    */
   summary?: string[];
   /**
+   * Ranked picks on a listicle post, in the order they are argued on the page.
+   *
+   * This exists for the schema, not the layout: the body already renders the
+   * list as H2 sections, and repeating it in a second component would give a
+   * reader the same ranking twice. What the page could not say before is that
+   * the H2s *are* a ranking. Competing "best X apps" pages carry ItemList and
+   * win the list treatments in AI answers and rich results with it; a post
+   * that only carries BlogPosting reads to a machine as prose that happens to
+   * mention products.
+   *
+   * `url` is the thing being ranked, not the section: an app's Shopify App
+   * Store listing or its own site, so the entry resolves to an entity outside
+   * this page. Leave it off rather than pointing at an anchor.
+   */
+  itemList?: { name: string; url?: string; description?: string }[];
+
+  /**
    * Images placed between sections, keyed by the heading they follow.
    *
    * `afterHeading` is matched against the slug of an H2 (see slugifyHeading),
