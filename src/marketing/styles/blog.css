@@ -515,14 +515,14 @@
 .mkt-blog-layout {
   --mkt-blog-measure: 100%;
   --mkt-blog-body-size: 1rem;
-  --mkt-blog-body-lh: 1.75;
+  --mkt-blog-body-lh: 1.8;
 }
 
 @media (min-width: 640px) {
   .mkt-blog-layout {
     --mkt-blog-measure: 42rem;
     --mkt-blog-body-size: 1.0625rem;
-    --mkt-blog-body-lh: 1.8;
+    --mkt-blog-body-lh: 1.85;
   }
 }
 
@@ -1361,7 +1361,7 @@
  */
 .mkt-blog-summary {
   margin: 0 0 1.75rem;
-  padding: 1.15rem 1.15rem 1.25rem;
+  padding: 1.35rem 1.25rem 1.5rem;
   border: 1px solid #e9e4f5;
   border-radius: 14px;
   background: #faf9fd;
@@ -1369,7 +1369,7 @@
 
 @media (min-width: 768px) {
   .mkt-blog-summary {
-    padding: 1.4rem 1.5rem 1.5rem;
+    padding: 2rem 2.25rem 2.25rem;
   }
 }
 
@@ -1383,9 +1383,9 @@
  * in shrinking its title until nobody notices it.
  */
 .mkt-blog-summary__label {
-  margin: 0 0 0.85rem;
+  margin: 0 0 1.25rem;
   font-family: var(--mkt-font);
-  font-size: 1rem;
+  font-size: 1.0625rem;
   font-weight: 650;
   letter-spacing: -0.015em;
   line-height: 1.3;
@@ -1395,37 +1395,43 @@
 
 @media (min-width: 768px) {
   .mkt-blog-summary__label {
-    font-size: 1.125rem;
+    font-size: 1.25rem;
   }
 }
 
+/*
+ * Takeaways, spaced the way Getgabs spaces theirs: a filled tick that reads
+ * at a glance, a clear gutter between tick and text, and a full line of air
+ * between points so each one is its own thing to scan, not a wrapped run.
+ */
 .mkt-blog-summary__list {
   margin: 0;
   padding: 0;
   list-style: none;
   display: grid;
-  gap: 0.85rem;
+  gap: 1.1rem;
 }
 
 .mkt-blog-summary__list li {
   position: relative;
-  padding-left: 1.7rem;
+  padding-left: 2.25rem;
   /* Takeaways are read as text, so they sit at body size, not a step under. */
   font-size: var(--mkt-blog-body-size, 1rem);
-  line-height: 1.7;
+  line-height: 1.75;
   color: var(--mkt-body);
 }
 
-/* An inline tick rather than a dot: it reads as a takeaway, not a bullet. */
 .mkt-blog-summary__list li::before {
   content: '';
   position: absolute;
   left: 0;
-  top: 0.4em;
-  width: 1rem;
-  height: 1rem;
-  background: no-repeat center / 1rem 1rem
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%2316a34a' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 10.5l4 4 8-9'/%3E%3C/svg%3E");
+  /* Centred on the first line: (line-height - icon) / 2. */
+  top: calc((1.75em - 1.375rem) / 2);
+  width: 1.375rem;
+  height: 1.375rem;
+  border-radius: 999px;
+  background: #14532d no-repeat center / 0.8rem 0.8rem
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23ffffff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 10.5l4 4 8-9'/%3E%3C/svg%3E");
 }
 
 /* ---------- summarize this post with ---------- */

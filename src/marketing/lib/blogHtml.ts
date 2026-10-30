@@ -235,6 +235,99 @@ function insertInlineImages(root: HTMLElement, images: InlineImage[]) {
   }
 }
 
+/*
+ * Long paragraphs are broken into short ones at sentence boundaries.
+ *
+ * Getgabs and Wati keep running text to one or two sentences a paragraph
+ * (a median of about 160 characters), so a reader can scan the first words of
+ * each block and decide whether to read it. Ours were written as essays, with
+ * 300-500 character paragraphs. Doing this at render time rather than editing
+ * every post means every post, including ones not yet written, gets the same
+ * rhythm without the writer having to remember it.
+ *
+ * Only plain body paragraphs (direct children of the prose, no class) are
+ * touched: callouts, verdicts, FAQ answers, footnotes and list items keep
+ * their own shape. Splits happen only in text that sits directly in the
+ * paragraph, never inside a link or bold run, so no inline element is cut.
+ */
+const PARA_SPLIT_MIN = 150;
+const PARA_TARGET_MAX = 190;
+const PARA_MAX_SENTENCES = 2;
+const PARA_FRAGMENT_MAX = 15;
+const ABBREVIATION = /(?:\b(?:e\.g|i\.e|vs|etc|approx|Rs|No|Mr|Ms|Dr|St|Inc|Ltd|Co|Pvt|U\.S|a\.m|p\.m)|\b[A-Z])\.$/;
+
+function endsSentence(before: string): boolean {
+  return /[.!?]["”’)]*$/.test(before) && !ABBREVIATION.test(before);
+}
+
+function startsSentence(after: string): boolean {
+  return /^["“‘(]?[A-Z0-9₹]/.test(after);
+}
+
+function splitLongParagraphs(root: HTMLElement) {
+  const doc = root.ownerDocument;
+  for (const p of [...root.children]) {
+    if (p.tagName !== 'P' || p.className) continue;
+    const full = p.textContent ?? '';
+    if (full.trim().length < PARA_SPLIT_MIN) continue;
+
+    // One node list per sentence.
+    const sentences: Node[][] = [[]];
+    let offset = 0;
+    for (const node of [...p.childNodes]) {
+      if (node.nodeType !== 3) {
+        sentences[sentences.length - 1].push(node);
+        offset += node.textContent?.length ?? 0;
+        continue;
+      }
+      const data = (node as Text).data;
+      let start = 0;
+      for (const m of data.matchAll(/\s+/g)) {
+        const at = offset + (m.index ?? 0);
+        const after = full.slice(at + m[0].length);
+        if (!after || !endsSentence(full.slice(0, at)) || !startsSentence(after)) continue;
+        const piece = data.slice(start, m.index);
+        if (piece) sentences[sentences.length - 1].push(doc.createTextNode(piece));
+        sentences.push([]);
+        start = (m.index ?? 0) + m[0].length;
+      }
+      const rest = data.slice(start);
+      if (rest) sentences[sentences.length - 1].push(doc.createTextNode(rest));
+      offset += data.length;
+    }
+    if (sentences.length < 2) continue;
+
+    // Greedy grouping: up to two sentences, closing early once a block runs long.
+    // A fragment like "Contact." always stays with the sentence it answers.
+    const lengthOf = (nodes: Node[]) => nodes.reduce((n, el) => n + (el.textContent?.length ?? 0), 0);
+    const groups: Node[][] = [];
+    let current: Node[] = [];
+    let count = 0;
+    for (const sentence of sentences) {
+      const len = lengthOf(sentence);
+      const fragment = len < PARA_FRAGMENT_MAX;
+      if (count && !fragment && (count >= PARA_MAX_SENTENCES || lengthOf(current) + len > PARA_TARGET_MAX)) {
+        groups.push(current);
+        current = [];
+        count = 0;
+      }
+      if (current.length) current.push(doc.createTextNode(' '));
+      current.push(...sentence);
+      count += 1;
+    }
+    if (current.length) groups.push(current);
+    if (groups.length < 2) continue;
+
+    const blocks = groups.map((nodes, i) => {
+      const el = doc.createElement('p');
+      if (i === 0) for (const attr of [...p.attributes]) el.setAttribute(attr.name, attr.value);
+      el.append(...nodes);
+      return el;
+    });
+    p.replaceWith(...blocks);
+  }
+}
+
 /** Presentation-only rewrites of stored post HTML; falls back to the raw string without a DOM. */
 export function enhanceBlogHtml(html: string, inlineImages: InlineImage[] = []): string {
   if (!html || typeof DOMParser === 'undefined') return html;
@@ -242,6 +335,7 @@ export function enhanceBlogHtml(html: string, inlineImages: InlineImage[] = []):
   const root = doc.getElementById('root');
   if (!root) return html;
 
+  splitLongParagraphs(root);
   staticVerdicts(root);
   staticFaqs(root);
   wrapNumericRanges(root);
