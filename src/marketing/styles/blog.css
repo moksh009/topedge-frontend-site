@@ -1,5 +1,26 @@
 /* Blog index + article — theme-aligned long-form */
 
+/*
+ * Text colour on the blog runs near-black, not slate.
+ *
+ * The site-wide greys (#262f3d body, #3f4b5e, #5a6474, #69727f) are tuned for
+ * marketing sections, where most copy is a line or two under a headline. On a
+ * 3,000-word article the same greys made the page read washed out: the lede,
+ * the summary, FAQ answers, captions and table cells each landed on a
+ * different grey, so the column looked unevenly inked. Wati and Getgabs both
+ * set running text at #18181b to #202123. Re-pointing the tokens here, rather
+ * than editing each rule, keeps every component on the blog (calculators, the
+ * end CTA, related cards) on the same two values: black for anything a reader
+ * reads, and one dark grey for meta that is genuinely secondary.
+ */
+.mkt-blog-index,
+.mkt-blog-article {
+  --mkt-body: #0c1222;
+  --mkt-body-2: #0c1222;
+  --mkt-muted: #1f2937;
+  --mkt-faint: #374151;
+}
+
 .mkt-blog-index {
   background: #ffffff;
   color: var(--mkt-ink, #0c1222);
@@ -125,7 +146,7 @@
   .mkt-blog-card.is-featured .mkt-blog-card__excerpt {
     -webkit-line-clamp: 4;
     margin-top: 0.75rem;
-    font-size: 0.875rem;
+    font-size: 0.9375rem;
     max-width: 36rem;
   }
 
@@ -240,9 +261,9 @@
 }
 
 .mkt-blog-card__excerpt {
-  margin: 0.55rem 0 0;
-  font-size: 0.8125rem;
-  line-height: 1.55;
+  margin: 0.6rem 0 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
   color: var(--mkt-muted);
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -337,22 +358,36 @@
   border: 1px solid rgba(124, 58, 237, 0.12);
 }
 
+/*
+ * The title and lede sit above the article's own type, not below it.
+ *
+ * The lede was 15px and the title 32px over an 18px body, so the paragraph
+ * that introduces the post was set smaller than every paragraph after it and
+ * the h1 was barely a step above the article's h2s. Both now clear the body.
+ */
 .mkt-blog-title {
-  margin-top: 0.85rem;
+  margin-top: 0.95rem;
   font-family: var(--mkt-font);
-  font-size: clamp(1.5rem, 3vw, 2rem);
-  font-weight: 560;
-  line-height: 1.2;
+  font-size: clamp(1.75rem, 3.2vw, 2.4rem);
+  font-weight: 600;
+  line-height: 1.16;
   letter-spacing: -0.03em;
   color: var(--mkt-ink);
   text-wrap: balance;
 }
 
 .mkt-blog-lede {
-  margin-top: 0.95rem;
-  font-size: 0.9375rem;
-  line-height: 1.6;
+  margin-top: 1.1rem;
+  font-size: 1.0625rem;
+  line-height: 1.65;
   color: var(--mkt-body-2);
+  text-wrap: pretty;
+}
+
+@media (min-width: 900px) {
+  .mkt-blog-lede {
+    font-size: 1.125rem;
+  }
 }
 
 .mkt-blog-meta {
@@ -360,18 +395,18 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 0.5rem 0.85rem;
-  margin-top: 1.1rem;
-  /* 0.78rem is 12.5px. This line carries the byline, the date, the reading
-     time and the revision date — the things a reader checks before deciding
-     whether a post is worth their time — so it is set at a size those can
-     actually be read at. */
-  font-size: 0.8125rem;
+  margin-top: 1.35rem;
+  /* This line carries the byline, the date, the reading time and the
+     revision date — the things a reader checks before deciding whether a
+     post is worth their time — so it is set at a size those can actually be
+     read at. */
+  font-size: 0.875rem;
   color: var(--mkt-faint);
 }
 
 .mkt-blog-meta a {
-  color: var(--mkt-body-2);
-  font-weight: 550;
+  color: var(--mkt-ink);
+  font-weight: 600;
   text-decoration: none;
 }
 
@@ -455,11 +490,20 @@
 /*
  * Article measure and scale.
  *
- * Measured against the long-form pages readers compare us to: wati.io sets
- * 18px on a 1.63 line over a 97-character measure, getgabs.com 16px on a 2.0
- * line over 114. Both give running text more size, more leading and more
- * width than we did at 15-16px over 84 characters, which is what made the
- * page read as dense.
+ * Measured on the long-form pages readers compare us to (October 2026):
+ * wati.io sets 18px on a 1.63 line in a 672px column, getgabs.com 16px on a
+ * 2.0 line in 690px. Both columns hold roughly 70-80 characters a line.
+ *
+ * Ours had grown to 960px at 18px, about 110 characters, on the theory that
+ * a wider column filled the row. It did fill the row, but past ~85
+ * characters the eye loses its place on the return sweep to the next line,
+ * which is exactly what made the article feel odd to read even with good
+ * type and good spacing. The column is back to 42-44rem (672-704px), the
+ * same measure as the references, and the layout below centres the column
+ * and the contents rail as a pair instead of stretching the text.
+ *
+ * --mkt-blog-measure lives on .mkt-blog-layout so the summary card, the
+ * assistant row and the body all share one width and one left edge.
  *
  * --mkt-blog-rhythm is the one number the whole vertical scale derives from.
  * Paragraph gaps are a fraction of it and the space above a heading is a
@@ -468,9 +512,28 @@
  * as structure; when it collapses, a page looks cluttered however big the
  * type is.
  */
-.mkt-blog-body-wrap {
+.mkt-blog-layout {
+  --mkt-blog-measure: 100%;
   --mkt-blog-body-size: 1rem;
-  --mkt-blog-body-lh: 1.7;
+  --mkt-blog-body-lh: 1.75;
+}
+
+@media (min-width: 640px) {
+  .mkt-blog-layout {
+    --mkt-blog-measure: 42rem;
+    --mkt-blog-body-size: 1.0625rem;
+    --mkt-blog-body-lh: 1.8;
+  }
+}
+
+@media (min-width: 1100px) {
+  .mkt-blog-layout {
+    --mkt-blog-measure: 44rem;
+    --mkt-blog-body-size: 1.125rem;
+  }
+}
+
+.mkt-blog-body-wrap {
   --mkt-blog-rhythm: 1.05em;
   /*
    * The type scale, and the whole of it. Four steps: two heading sizes, body,
@@ -485,41 +548,26 @@
    * between 0.8 and 1.05em is now either body or small, and nothing new is
    * allowed in between.
    */
-  --mkt-blog-h2: 1.6em;
-  --mkt-blog-h3: 1.25em;
+  /* h2 steps down on a phone: 1.6x a 16px body is 25.6px, which in a 335px
+     column broke most section titles over three short lines. */
+  --mkt-blog-h2: 1.45em;
+  --mkt-blog-h3: 1.2em;
   --mkt-blog-small: 0.875em;
-  max-width: 44rem;
-  /* Left-aligned to column 1's own left edge, not centred inside it — centring
-     a narrower box inside a wider column left a dead gap on the left that
-     the hero above it (full column width) did not have, so the body read as
-     narrower than the page around it even after the column grew. */
+  max-width: var(--mkt-blog-measure);
   margin: 0 auto 0 0;
-  padding: 1.5rem 0 1rem;
+  padding: 2rem 0 1rem;
 }
 
-/* Width caps hold body text at 70-78 chars/line for each body size. */
 @media (min-width: 640px) {
   .mkt-blog-body-wrap {
-    --mkt-blog-body-size: 1.0625rem;
-    --mkt-blog-body-lh: 1.75;
-    max-width: 48rem;
+    --mkt-blog-h2: 1.6em;
+    --mkt-blog-h3: 1.25em;
   }
 }
 
 @media (min-width: 768px) {
   .mkt-blog-body-wrap {
-    padding: 1.75rem 0 1.5rem;
-  }
-}
-
-@media (min-width: 1100px) {
-  .mkt-blog-body-wrap {
-    --mkt-blog-body-size: 1.125rem;
-    /* 960px — the top of the 888-960px measure competitors run, named in the
-       comment above. Column 1 (1fr beside the 15rem rail) is ~992px inside
-       the shell, so this fills it rather than leaving a dead strip before
-       the contents rail. */
-    max-width: 60rem;
+    padding: 2.5rem 0 1.5rem;
   }
 }
 
@@ -528,14 +576,20 @@
   line-height: var(--mkt-blog-body-lh);
   color: var(--mkt-body);
   text-wrap: pretty;
+  overflow-wrap: break-word;
 }
 
 .mkt-blog-prose > *:first-child {
   margin-top: 0;
 }
 
+.mkt-blog-prose > *:last-child {
+  margin-bottom: 0;
+}
+
+/* About 25px at 18px: a clear paragraph break, still less than one line. */
 .mkt-blog-prose p {
-  margin: 0 0 calc(var(--mkt-blog-rhythm) * 1.3);
+  margin: 0 0 calc(var(--mkt-blog-rhythm) * 1.35);
 }
 
 .mkt-nowrap {
@@ -597,7 +651,7 @@
  * three-line bullet reads as three bullets.
  */
 .mkt-blog-prose li {
-  margin: 0.55em 0;
+  margin: 0.7em 0;
   padding-left: 0.3em;
 }
 
@@ -619,8 +673,8 @@
 }
 
 .mkt-blog-prose strong {
-  font-weight: 600;
-  color: #0f172a;
+  font-weight: 650;
+  color: var(--mkt-ink);
 }
 
 .mkt-blog-prose a {
@@ -644,8 +698,8 @@
 }
 
 .mkt-blog-prose blockquote {
-  margin: 1.75rem 0;
-  padding: 1rem 1.25rem;
+  margin: calc(var(--mkt-blog-rhythm) * 1.6) 0;
+  padding: 1.1rem 1.35rem;
   border-left: 3px solid var(--mkt-violet);
   border-radius: 0 12px 12px 0;
   background: var(--mkt-violet-light);
@@ -661,7 +715,7 @@
 }
 
 .mkt-blog-prose figure {
-  margin: 1.75rem 0;
+  margin: calc(var(--mkt-blog-rhythm) * 1.8) 0;
 }
 
 .mkt-blog-prose figcaption {
@@ -671,8 +725,8 @@
 }
 
 .mkt-blog-prose .mkt-blog-callout {
-  margin: 1.75rem 0;
-  padding: 1.15rem 1.25rem;
+  margin: calc(var(--mkt-blog-rhythm) * 1.6) 0;
+  padding: 1.15rem 1.35rem;
   border: 1px solid var(--mkt-border);
   border-radius: 14px;
   background: #faf9ff;
@@ -962,14 +1016,14 @@
 .mkt-blog-faq {
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: 0.75rem;
   margin: 1rem 0 1.5rem;
   font-size: var(--mkt-blog-body-size, 1rem);
   line-height: var(--mkt-blog-body-lh, 1.6);
 }
 
 .mkt-blog-faq :is(.mkt-blog-faq__item, details) {
-  padding: 0.85rem 1rem 0.9rem;
+  padding: 1rem 1.05rem 1.05rem;
   border: 1px solid #ebe8f5;
   border-radius: 12px;
   background: #fcfbff;
@@ -977,7 +1031,7 @@
 
 @media (min-width: 640px) {
   .mkt-blog-faq :is(.mkt-blog-faq__item, details) {
-    padding: 0.95rem 1.15rem 1rem;
+    padding: 1.15rem 1.35rem 1.2rem;
   }
 }
 
@@ -998,14 +1052,15 @@
 }
 
 .mkt-blog-faq :is(.mkt-blog-faq__item, details) > :not(.mkt-blog-faq__q, summary) {
-  margin: 0.45rem 0 0;
+  margin: 0.6em 0 0;
   font-size: 1em;
   line-height: 1.65;
   color: var(--mkt-body-2);
 }
 
+/* Same space above as a prose h2 gets, because it opens a section like one. */
 .mkt-blog-faq-block {
-  margin: 2.25rem 0 0;
+  margin: calc(var(--mkt-blog-body-size) * 3.2) 0 0;
 }
 
 .mkt-blog-faq-block__title {
@@ -1166,14 +1221,21 @@
  * text 888px (wati) to 960px (getgabs). A wider shell buys the measure back
  * without pushing the contents rail off the grid.
  */
+/*
+ * The shell is sized to the column pair, not the other way round: a 44rem
+ * text column, a 15rem contents rail and a generous gutter between them. The
+ * hero card above spans the same width, so the body starts on the card's left
+ * edge and the rail ends on its right edge.
+ */
 .mkt-blog-shell {
-  max-width: 1320px;
+  max-width: 1180px;
 }
 
 @media (min-width: 1024px) {
   .mkt-blog-layout {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 15rem;
+    grid-template-columns: minmax(0, var(--mkt-blog-measure)) 15rem;
+    justify-content: space-between;
     /* Rows: assistant row, summary, article. The contents spans all three. */
     grid-template-rows: auto auto 1fr;
     column-gap: 3rem;
@@ -1221,27 +1283,12 @@
  *
  * The summary has to sit on exactly the same measure as the prose under it, or
  * the two left edges disagree by a few pixels and the page looks assembled
- * rather than designed. These are the same max-widths .mkt-blog-body-wrap
- * carries at the same breakpoints; change them together.
+ * rather than designed. Both read --mkt-blog-measure, so they cannot drift.
  */
 .mkt-blog-layout > .mkt-blog-summary,
 .mkt-blog-layout > .mkt-blog-ai {
-  margin: 1.4rem auto 0 0;
-  max-width: 44rem;
-}
-
-@media (min-width: 640px) {
-  .mkt-blog-layout > .mkt-blog-summary,
-  .mkt-blog-layout > .mkt-blog-ai {
-    max-width: 48rem;
-  }
-}
-
-@media (min-width: 1100px) {
-  .mkt-blog-layout > .mkt-blog-summary,
-  .mkt-blog-layout > .mkt-blog-ai {
-    max-width: 60rem;
-  }
+  margin: 1.25rem auto 0 0;
+  max-width: var(--mkt-blog-measure);
 }
 
 /* ---------- contents ---------- */
@@ -1286,13 +1333,13 @@
   list-style: none;
   counter-reset: toc;
   display: grid;
-  gap: 0.4rem;
+  gap: 0.65rem;
 }
 
 .mkt-blog-toc__list a {
   display: block;
-  font-size: 0.8125rem;
-  line-height: 1.45;
+  font-size: 0.875rem;
+  line-height: 1.5;
   color: var(--mkt-body-2);
   text-decoration: none;
 }
@@ -1357,14 +1404,15 @@
   padding: 0;
   list-style: none;
   display: grid;
-  gap: 0.7rem;
+  gap: 0.85rem;
 }
 
 .mkt-blog-summary__list li {
   position: relative;
-  padding-left: 1.6rem;
-  font-size: 0.9375rem;
-  line-height: 1.65;
+  padding-left: 1.7rem;
+  /* Takeaways are read as text, so they sit at body size, not a step under. */
+  font-size: var(--mkt-blog-body-size, 1rem);
+  line-height: 1.7;
   color: var(--mkt-body);
 }
 
@@ -1373,7 +1421,7 @@
   content: '';
   position: absolute;
   left: 0;
-  top: 0.3em;
+  top: 0.4em;
   width: 1rem;
   height: 1rem;
   background: no-repeat center / 1rem 1rem
@@ -1489,7 +1537,7 @@
 /* ---------- figures between sections ---------- */
 
 .mkt-blog-figure {
-  margin: 2rem 0;
+  margin: calc(var(--mkt-blog-rhythm, 1.05em) * 1.8) 0;
 }
 
 .mkt-blog-figure picture,
@@ -1506,10 +1554,10 @@
 }
 
 .mkt-blog-figure figcaption {
-  margin-top: 0.65rem;
-  font-size: 0.8rem;
-  line-height: 1.55;
-  color: var(--mkt-faint);
+  margin-top: 0.75rem;
+  font-size: var(--mkt-blog-small, 0.875em);
+  line-height: 1.6;
+  color: var(--mkt-muted);
 }
 
 /* ===================================================================
@@ -1567,13 +1615,13 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 0.5rem;
-  margin-bottom: 0.9rem;
-  font-size: 0.8rem;
+  margin-bottom: 1rem;
+  font-size: 0.8125rem;
   color: var(--mkt-muted);
 }
 
 .mkt-blog-crumbs a {
-  color: #4b5563;
+  color: var(--mkt-body-2);
   text-decoration: none;
 }
 

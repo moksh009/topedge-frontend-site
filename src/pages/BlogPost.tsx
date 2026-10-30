@@ -314,7 +314,7 @@ export default function BlogPost() {
 
         {related.length > 0 && (
           <section className="mkt-blog-related" aria-labelledby="related-heading">
-            <div className="marketing-container" style={{ maxWidth: '76rem' }}>
+            <div className="marketing-container mkt-blog-shell">
               <h2 id="related-heading" className="mkt-blog-related__title">
                 Related playbooks
               </h2>
