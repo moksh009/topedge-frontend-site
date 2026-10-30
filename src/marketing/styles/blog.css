@@ -528,7 +528,8 @@
 
 @media (min-width: 1100px) {
   .mkt-blog-layout {
-    --mkt-blog-measure: 44rem;
+    /* 800px at 18px: about 82 characters, the top of the readable range. */
+    --mkt-blog-measure: 50rem;
     --mkt-blog-body-size: 1.125rem;
   }
 }
@@ -1228,13 +1229,13 @@
  * edge and the rail ends on its right edge.
  */
 .mkt-blog-shell {
-  max-width: 1180px;
+  max-width: 1400px;
 }
 
 @media (min-width: 1024px) {
   .mkt-blog-layout {
     display: grid;
-    grid-template-columns: minmax(0, var(--mkt-blog-measure)) 15rem;
+    grid-template-columns: minmax(0, var(--mkt-blog-measure)) 17rem;
     justify-content: space-between;
     /* Rows: assistant row, summary, article. The contents spans all three. */
     grid-template-rows: auto auto 1fr;
@@ -1293,7 +1294,12 @@
 
 /* ---------- contents ---------- */
 
-.mkt-blog-toc {
+/*
+ * Scoped to the rail itself. Two posts once carried their own in-article
+ * contents box with this same class, and the bare selector made that box
+ * sticky over the text as the reader scrolled.
+ */
+.mkt-blog-layout > .mkt-blog-toc {
   margin: 2rem 0 0;
   padding: 0.9rem 1rem;
   border: 1px solid #eceaf4;
@@ -1302,7 +1308,7 @@
 }
 
 @media (min-width: 1024px) {
-  .mkt-blog-toc {
+  .mkt-blog-layout > .mkt-blog-toc {
     position: sticky;
     /* Clears the fixed navbar and the announcement strip above it. */
     top: calc(var(--marketing-nav-h, 76px) + 1.25rem);

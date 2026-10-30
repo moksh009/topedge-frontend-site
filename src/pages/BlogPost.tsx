@@ -252,12 +252,8 @@ export default function BlogPost() {
               </aside>
             ) : null}
 
-            {/*
-              Two posts ship a hand-written "Table of contents" inside their
-              own content, using this same class. Without this guard they
-              render two lists. Same test the FAQ block below uses.
-            */}
-            {toc.length >= 3 && !(post.content || '').includes('mkt-blog-toc') ? (
+            {/* Hand-written contents lists inside posts are stripped in enhanceBlogHtml, so this is the only one. */}
+            {toc.length >= 3 ? (
               <aside className="mkt-blog-toc" aria-label="On this page">
                 <p className="mkt-blog-toc__label">On this page</p>
                 <nav>

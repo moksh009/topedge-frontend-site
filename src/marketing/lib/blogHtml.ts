@@ -335,6 +335,9 @@ export function enhanceBlogHtml(html: string, inlineImages: InlineImage[] = []):
   const root = doc.getElementById('root');
   if (!root) return html;
 
+  // The page renders its own contents rail from the headings, so a
+  // hand-written contents list inside a post would only duplicate it.
+  root.querySelectorAll('.mkt-blog-toc').forEach((el) => el.remove());
   splitLongParagraphs(root);
   staticVerdicts(root);
   staticFaqs(root);
