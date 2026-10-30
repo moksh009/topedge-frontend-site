@@ -472,6 +472,22 @@
   --mkt-blog-body-size: 1rem;
   --mkt-blog-body-lh: 1.7;
   --mkt-blog-rhythm: 1.05em;
+  /*
+   * The type scale, and the whole of it. Four steps: two heading sizes, body,
+   * and one small tier for what is genuinely secondary (captions, footnotes,
+   * table cells, meta labels).
+   *
+   * Before this the prose column carried nine sizes: 0.8, 0.8125, 0.875, 0.9,
+   * 0.95, 1, 1.05, 1.25 and 1.6em, several of them within half a pixel of
+   * each other at every breakpoint. A reader cannot see a 0.05em step as a
+   * deliberate level, so the page did not read as a hierarchy; it read as
+   * text that kept changing size for no reason. Everything that used to sit
+   * between 0.8 and 1.05em is now either body or small, and nothing new is
+   * allowed in between.
+   */
+  --mkt-blog-h2: 1.6em;
+  --mkt-blog-h3: 1.25em;
+  --mkt-blog-small: 0.875em;
   max-width: 44rem;
   /* Left-aligned to column 1's own left edge, not centred inside it — centring
      a narrower box inside a wider column left a dead gap on the left that
@@ -539,7 +555,7 @@
 .mkt-blog-prose h2 {
   margin: calc(var(--mkt-blog-rhythm) * 2) 0 calc(var(--mkt-blog-rhythm) * 0.7);
   font-family: var(--mkt-font);
-  font-size: 1.6em;
+  font-size: var(--mkt-blog-h2);
   font-weight: 650;
   line-height: 1.22;
   letter-spacing: -0.022em;
@@ -550,7 +566,7 @@
 .mkt-blog-prose h3 {
   margin: calc(var(--mkt-blog-rhythm) * 1.6) 0 calc(var(--mkt-blog-rhythm) * 0.5);
   font-family: var(--mkt-font);
-  font-size: 1.25em;
+  font-size: var(--mkt-blog-h3);
   font-weight: 650;
   line-height: 1.32;
   letter-spacing: -0.015em;
@@ -610,13 +626,21 @@
 .mkt-blog-prose a {
   color: var(--mkt-violet);
   font-weight: 500;
-  text-decoration: underline;
+  /*
+   * No rule at rest. A paragraph carrying six inline links was more underline
+   * than sentence, and the stripes broke up the line far more than the colour
+   * change does. The underline comes back on hover and on keyboard focus, so
+   * the affordance is still there for anyone who needs it.
+   */
+  text-decoration: none;
   text-underline-offset: 3px;
   text-decoration-thickness: 1px;
 }
 
-.mkt-blog-prose a:hover {
+.mkt-blog-prose a:hover,
+.mkt-blog-prose a:focus-visible {
   color: var(--mkt-violet-hover);
+  text-decoration: underline;
 }
 
 .mkt-blog-prose blockquote {
@@ -642,7 +666,7 @@
 
 .mkt-blog-prose figcaption {
   margin-top: 0.5rem;
-  font-size: 0.8125em;
+  font-size: var(--mkt-blog-small);
   color: var(--mkt-muted);
 }
 
@@ -656,7 +680,7 @@
 
 .mkt-blog-prose .mkt-blog-callout p {
   margin: 0;
-  font-size: 0.95em;
+  font-size: 1em;
 }
 
 .mkt-blog-prose .mkt-blog-verdict {
@@ -678,7 +702,7 @@
   align-items: center;
   gap: 0.5rem;
   margin: 0;
-  font-size: 0.8em;
+  font-size: var(--mkt-blog-small);
   font-weight: 600;
   letter-spacing: 0.01em;
   line-height: 1.4;
@@ -714,7 +738,7 @@
 }
 
 .mkt-blog-prose .mkt-blog-verdict .mkt-blog-verdict__lead {
-  font-size: 1.05em;
+  font-size: 1em;
   line-height: 1.5;
   color: var(--mkt-ink);
 }
@@ -741,7 +765,7 @@
 
 .mkt-blog-prose .mkt-blog-toc p {
   margin: 0 0 0.5rem;
-  font-size: 0.9em;
+  font-size: var(--mkt-blog-small);
   color: #0c1222;
 }
 
@@ -753,7 +777,7 @@
 .mkt-blog-prose .mkt-blog-toc li {
   margin: 0;
   padding-left: 0.25rem;
-  font-size: 0.95em;
+  font-size: 1em;
   line-height: 1.4;
 }
 
@@ -817,7 +841,7 @@
 .mkt-blog-prose table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.875em;
+  font-size: var(--mkt-blog-small);
   line-height: 1.55;
 }
 
@@ -889,7 +913,7 @@
     content: attr(data-label);
     display: block;
     margin-bottom: 0.1rem;
-    font-size: 0.72rem;
+    font-size: 0.78em;
     font-weight: 600;
     letter-spacing: 0.04em;
     text-transform: uppercase;
@@ -900,7 +924,7 @@
     margin-bottom: 0.2rem;
     padding: 0.6rem 0;
     border-bottom: 1px solid var(--mkt-border);
-    font-size: 1.05em;
+    font-size: 1em;
     font-weight: 600;
     color: var(--mkt-ink);
   }
@@ -910,10 +934,28 @@
   }
 }
 
+/*
+ * The sources note that closes most posts.
+ *
+ * It sits at the small tier because it is a citation, not part of the
+ * argument. What made it read as a mistake rather than a footnote was that
+ * nothing marked it as one: it was simply the paragraph after the last
+ * paragraph, in a slightly different size. The rule above it does that job,
+ * so the size change is read as deliberate.
+ */
 .mkt-blog-prose .mkt-blog-footnote {
-  font-size: 0.8125em;
+  margin: calc(var(--mkt-blog-rhythm) * 1.6) 0 0;
+  padding-top: calc(var(--mkt-blog-rhythm) * 0.9);
+  border-top: 1px solid var(--mkt-border);
+  font-size: var(--mkt-blog-small);
+  line-height: 1.6;
   color: var(--mkt-muted);
-  margin: 0.5rem 0 1.5rem;
+}
+
+.mkt-blog-prose .mkt-blog-footnote + .mkt-blog-footnote {
+  margin-top: calc(var(--mkt-blog-rhythm) * 0.6);
+  padding-top: 0;
+  border-top: 0;
 }
 
 /* Shared by inline FAQs in post content and the template's fallback FAQ block; always expanded. */
@@ -957,7 +999,7 @@
 
 .mkt-blog-faq :is(.mkt-blog-faq__item, details) > :not(.mkt-blog-faq__q, summary) {
   margin: 0.45rem 0 0;
-  font-size: 0.95em;
+  font-size: 1em;
   line-height: 1.65;
   color: var(--mkt-body-2);
 }
