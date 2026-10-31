@@ -85,11 +85,11 @@ const productColumns: NavColumn[] = [
  * navigation.
  */
 const NAV_PROMO = {
-  href: '/blog/cod-rto-benchmark-india-2026',
-  title: 'Read the 2026 COD & RTO Report',
-  blurb: 'See where your return rate stands',
-  image: '/marketing/solutions/sol-cod-hero.jpg',
-  imageAlt: 'COD and RTO benchmark report for Indian D2C brands on Shopify',
+  href: '/blog/best-shopify-app-for-abandoned-cart-recovery-india',
+  title: 'Best Shopify App for Abandoned Cart',
+  blurb: 'The 2026 India shortlist, compared',
+  image: '/blog/best-shopify-app-for-abandoned-cart-recovery-india.webp',
+  imageAlt: 'Best Shopify app for abandoned cart recovery in India, the TopEdge AI 2026 shortlist',
 } as const;
 
 const primaryLinks = [

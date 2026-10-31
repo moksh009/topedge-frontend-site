@@ -528,8 +528,9 @@
 
 @media (min-width: 1100px) {
   .mkt-blog-layout {
-    /* 800px at 18px: about 82 characters, the top of the readable range. */
-    --mkt-blog-measure: 50rem;
+    /* Fill the column up to the contents rail: a fixed 50rem left a wide
+       empty gutter beside the rail on desktop. */
+    --mkt-blog-measure: 100%;
     --mkt-blog-body-size: 1.125rem;
   }
 }
