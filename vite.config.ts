@@ -36,9 +36,48 @@ function legalStaticHtml(): Plugin {
   };
 }
 
+/**
+ * `virtual:docs-shots` = public/docs/img/shots.json, or `{}` when it does not
+ * exist yet. The docs renderer needs each screenshot's width and height in the
+ * prerendered HTML, and Vite will not import a file from public/ directly.
+ */
+function docsShots(): Plugin {
+  const id = 'virtual:docs-shots';
+  const resolved = `\0${id}`;
+  const file = path.resolve(__dirname, 'public', 'docs', 'img', 'shots.json');
+  return {
+    name: 'docs-shots',
+    resolveId(source) {
+      return source === id ? resolved : null;
+    },
+    load(source) {
+      if (source !== resolved) return null;
+      this.addWatchFile(file);
+      let json = '{}';
+      try {
+        if (fs.existsSync(file)) json = JSON.stringify(JSON.parse(fs.readFileSync(file, 'utf8')));
+      } catch (err) {
+        this.warn(`public/docs/img/shots.json is not valid JSON; rendering no screenshots (${err})`);
+      }
+      return `export default ${json};`;
+    },
+    configureServer(server) {
+      server.watcher.add(file);
+      const reload = (changed: string) => {
+        if (path.resolve(changed) !== file) return;
+        const mod = server.moduleGraph.getModuleById(resolved);
+        if (mod) server.moduleGraph.invalidateModule(mod);
+        server.ws.send({ type: 'full-reload' });
+      };
+      server.watcher.on('add', reload);
+      server.watcher.on('change', reload);
+    },
+  };
+}
+
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-  const plugins = [react(), legalStaticHtml()];
+  const plugins = [react(), legalStaticHtml(), docsShots()];
 
   // Only add visualizer in development mode
   if (mode === 'development') {

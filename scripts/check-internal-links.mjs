@@ -90,21 +90,14 @@ function main() {
   for (const file of sourceFiles()) {
     const src = fs.readFileSync(file, 'utf8');
     const rel = path.relative(root, file);
-    // Absolute links to the documentation on the dashboard host.
-    //
-    // The dashboard prerenders each doc to docs/<path>/index.html, so Netlify
-    // 301s the slashless form. The Docs link sits in the navbar AND the footer,
-    // so one missing slash spent a redirect hop on every crawlable page —
-    // Ahrefs 29 Oct 2026 reported "Page has links to redirect" on 89 pages from
-    // exactly that. Asset paths under /docs keep no slash.
+    // Absolute links to the documentation on the dashboard host. The docs live
+    // at topedgeai.com/docs since 31 Oct 2026 and the dashboard copy 301s here,
+    // so any such link is a cross-host redirect hop. Link /docs/... instead.
     const docsRe = /https:\/\/dash\.topedgeai\.com\/docs([^"'\s<)]*)/g;
     let dm;
     while ((dm = docsRe.exec(src))) {
       const tail = dm[1] || '';
-      const pathPart = tail.split(/[#?]/)[0];
-      if (/\.[a-z0-9]+$/i.test(pathPart)) continue; // asset, not a doc route
-      if (pathPart.includes(':splat')) continue; // redirect rule, not a link
-      if (pathPart.endsWith('/')) continue;
+      if (tail.includes(':splat')) continue; // redirect rule, not a link
       docsHits.push({
         url: `https://dash.topedgeai.com/docs${tail}`,
         where: `${rel}:${src.slice(0, dm.index).split('\n').length}`,
@@ -128,19 +121,83 @@ function main() {
     }
   }
 
-  if (!docsHits.length && !redirectHits.length && !slashHits.length) {
+  // --- Links inside the docs content (src/marketing/docs/content/docs.json) ---
+  // Inline [label](/path) links and `related` cards. A /docs link must name a
+  // real article (and a real heading when it carries #anchor); any other
+  // root-relative link gets the same redirect / trailing-slash checks as above.
+  const docsFile = path.join(root, 'src/marketing/docs/content/docs.json');
+  const docsContentHits = [];
+  if (fs.existsSync(docsFile)) {
+    const { articles } = JSON.parse(fs.readFileSync(docsFile, 'utf8'));
+    const pathOf = (slug) => (slug ? `/docs/${slug}` : '/docs');
+    const anchors = new Map(
+      articles.map((a) => [
+        pathOf(a.slug),
+        new Set([
+          ...a.blocks.filter((b) => b.kind === 'h2' || b.kind === 'h3').map((b) => b.id),
+          ...(a.faqs?.length ? ['faq'] : []),
+          ...(a.slug ? [] : ['browse']),
+        ]),
+      ]),
+    );
+    const linkRe = /\]\((\/[^)\s]*)\)/g;
+    for (const a of articles) {
+      const where = `docs.json ${pathOf(a.slug)}`;
+      const hrefs = [];
+      const text = JSON.stringify({ ...a, dashboard: undefined });
+      let lm;
+      while ((lm = linkRe.exec(text))) hrefs.push(lm[1]);
+      for (const b of a.blocks) {
+        if (b.kind === 'related') for (const l of b.links) if (l.href.startsWith('/')) hrefs.push(l.href);
+      }
+      for (const href of hrefs) {
+        scanned += 1;
+        const [p, frag] = href.split('#');
+        if (ASSET_EXT.test(p)) continue;
+        if (p !== '/' && p.endsWith('/')) {
+          slashHits.push({ url: href, where });
+          continue;
+        }
+        if (p === '/docs' || p.startsWith('/docs/')) {
+          if (!anchors.has(p)) {
+            docsContentHits.push({ url: href, where, why: 'no doc article has this path' });
+          } else if (frag && !/^step-\d+$/.test(frag) && !anchors.get(p).has(frag)) {
+            docsContentHits.push({ url: href, where, why: `no heading with id "${frag}" on that page` });
+          }
+          continue;
+        }
+        const hit = resolveRedirect(rules, p);
+        if (hit) redirectHits.push({ url: href, where, to: hit.to, status: hit.status });
+      }
+    }
+    // A legacy alias must never shadow a live article.
+    for (const docPath of anchors.keys()) {
+      const hit = resolveRedirect(rules, docPath);
+      if (hit) docsContentHits.push({ url: docPath, where: 'public/_redirects', why: `a live doc page is redirected to ${hit.to}` });
+    }
+  }
+
+  if (docsContentHits.length) {
+    console.error(`\n❌ ${docsContentHits.length} broken docs link(s):\n`);
+    for (const h of docsContentHits) {
+      console.error(`   ${h.where}`);
+      console.error(`      ${h.url}  →  ${h.why}`);
+    }
+  }
+
+  if (!docsHits.length && !redirectHits.length && !slashHits.length && !docsContentHits.length) {
     console.log(
-      `✅ internal links: ${scanned} checked — none hit a redirect, a trailing slash, ` +
-        `or a slashless docs URL`,
+      `✅ internal links: ${scanned} checked (site source + docs content) — none hit a redirect, ` +
+        `a trailing slash, the old dashboard docs host, or a missing doc page/anchor`,
     );
     return;
   }
 
   if (docsHits.length) {
-    console.error(`\n❌ ${docsHits.length} link(s) to the docs host without a trailing slash:\n`);
+    console.error(`\n❌ ${docsHits.length} link(s) to the old dashboard docs host:\n`);
     for (const h of docsHits) {
       console.error(`   ${h.where}`);
-      console.error(`      ${h.url}  →  add the trailing slash; the slashless form 301s`);
+      console.error(`      ${h.url}  →  link /docs/... on this site; the dashboard copy 301s here`);
     }
   }
   if (redirectHits.length) {

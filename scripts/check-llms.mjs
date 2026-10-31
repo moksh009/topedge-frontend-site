@@ -10,7 +10,8 @@
  * Asserts, for both files:
  *   1. the file exists in public/ and, when dist/ is present, in the build output
  *   2. every topedgeai.com URL in it is one of the canonical sitemap URLs
- *   3. no trailing slashes except the root, no /roi, no /docs on this domain
+ *   3. no trailing slashes except the root, no /roi, no docs on the dashboard host
+ *      (the docs live at topedgeai.com/docs since 31 Oct 2026)
  *   4. every INR figure is one the billing catalog actually publishes
  *   5. the GSTIN, GST line and 0% markup statement are present in llms.txt
  *
@@ -90,13 +91,15 @@ for (const name of FILES) {
       errors.push(`${name}: ${u} is not a canonical URL (retired, redirected, or not indexable)`);
     }
   }
-  // Anchored on //topedgeai.com so dash.topedgeai.com/docs, which is where the
-  // documentation genuinely lives, is not mistaken for the retired path here.
   if (/\/\/topedgeai\.com\/roi\b/.test(text)) {
     errors.push(`${name}: references /roi, which 301s`);
   }
-  if (/\/\/topedgeai\.com\/docs\b/.test(text)) {
-    errors.push(`${name}: references topedgeai.com/docs, which 301s to the dashboard`);
+  // Docs moved to topedgeai.com/docs on 31 Oct 2026; the dashboard copy 301s here.
+  if (/dash\.topedgeai\.com\/docs\b/.test(text)) {
+    errors.push(`${name}: references dash.topedgeai.com/docs, which 301s to topedgeai.com/docs`);
+  }
+  if (name === 'llms.txt' && !text.includes(`${SITE}/docs/quickstart`)) {
+    errors.push(`${name}: the Documentation section does not list the doc pages`);
   }
 
   // --- money --------------------------------------------------------------

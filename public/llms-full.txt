@@ -200,6 +200,351 @@ TopEdge Intent Detection routes WhatsApp chats by meaning (shipping, returns, CO
 - **How does this reduce AI cost?** Shipping, returns and COD questions are matched by intent and answered by a flow, so the model is only called for questions that genuinely need it. On a typical Indian store those three categories are most of the inbound volume.
 - **What happens when no intent matches?** It falls through to AI Brain if AI is on, or to Live Chat if it is not. Nothing is answered by guessing, and nothing is left unanswered.
 
+## Documentation
+
+### TopEdge Documentation
+
+https://topedgeai.com/docs · Get started · updated 2026-10-31
+
+TopEdge connects your Shopify store to the WhatsApp Cloud API. Order updates, COD confirmations and abandoned-cart recovery then send on their own, and every reply lands in one shared inbox. To start, connect Shopify and WhatsApp and get your message templates approved by Meta.
+
+- **Do I need the WhatsApp Business app to use TopEdge?** No. TopEdge runs on the WhatsApp Business Platform (Cloud API), which is a different product from the WhatsApp Business phone app. You can keep using the app on a different number, or enable coexistence on the same number if your WhatsApp Business Account supports it.
+- **Can I use TopEdge without Shopify?** The inbox, Flow Builder, templates, campaigns and the AI brain all work without Shopify. Order journeys, cart recovery, product catalogue and store economics need the Shopify connection, because those read order and checkout data from your store.
+- **How long does setup take?** Connecting Shopify and WhatsApp takes about 30 minutes if you already have a WhatsApp Business Account on Meta. The variable is template approval — Meta usually reviews in minutes, but a first submission can take up to 24 hours.
+
+### Quickstart: WhatsApp automation for Shopify
+
+https://topedgeai.com/docs/quickstart · Get started · updated 2026-10-31
+
+To go live, connect Shopify and WhatsApp, then submit one order-confirmation template to Meta. Once it is approved, publish the order-placed journey and place a test order on your own phone. Cart recovery, campaigns and the AI brain all build on that base.
+
+- **Why has my test WhatsApp message not arrived?** Check four things in order: the journey is Published rather than Draft, the template it uses shows Approved, the order carries a phone number in international format, and WhatsApp still shows Connected. The order detail page records a skip reason that names which of these failed.
+- **Can I test without placing a real order?** Yes for conversations — Flow Builder has a simulator that walks menus and buttons without messaging anyone. Order journeys need a real Shopify order to trigger, so most merchants place a small test order and cancel or refund it afterwards.
+- **Do I need a new phone number for WhatsApp?** Not necessarily, but the number cannot be actively registered in the WhatsApp Business app unless your WhatsApp Business Account has coexistence enabled. Many merchants use a dedicated number for automation and keep their existing one for manual chats.
+
+### Connect WhatsApp Cloud API to TopEdge
+
+https://topedgeai.com/docs/connect-whatsapp · Get started · updated 2026-10-31
+
+Connect from Settings → WhatsApp using Meta's embedded signup. It creates the access token and subscribes TopEdge to your messages for you. Send yourself a test message afterwards to confirm replies reach the inbox.
+
+- **Why is my WhatsApp inbox empty even though the channel is connected?** Connection and the message subscription are separate. TopEdge can send as soon as the token is valid, but replies only arrive once TopEdge is subscribed to your messages. Embedded signup does this for you; if the inbox stays empty, reconnect from Settings → WhatsApp.
+- **What kind of WhatsApp access token should I use?** A System User token with the whatsapp_business_messaging permission. The token offered on the Meta developer dashboard is a temporary test token that expires in roughly 24 hours, which makes the channel appear to break by itself the next day.
+- **Can I keep using the WhatsApp Business app on the same number?** Only if coexistence is enabled on your WhatsApp Business Account. Otherwise a number can be registered either on the Cloud API or in the WhatsApp Business app, not both, and embedded signup will report that the number is already in use.
+
+### Connect Shopify to TopEdge
+
+https://topedgeai.com/docs/connect-shopify · Get started · updated 2026-10-31
+
+Connect from Settings → Shopify, or open TopEdge from Shopify admin. You approve the app’s permissions once in Shopify, and orders start syncing within a minute or two. You never type your store domain; the install is always approved inside Shopify.
+
+- **Does TopEdge edit my Shopify theme?** No. Storefront tracking installs through Shopify app embeds and the web pixel extension, both of which are managed in the theme editor and removed cleanly when you disable them. TopEdge reads your theme only to check whether the opt-in embed is enabled.
+- **Why does Shopify ask me to reconnect?** Shopify requires a fresh approval whenever an app starts using a capability you have not already granted. Until you approve it, the features relying on that capability stop working — missing shipped and delivered messages are the usual symptom.
+- **Can I connect more than one Shopify store?** Each workspace binds to one Shopify store, so a second store needs its own workspace. Connecting a different store to an existing workspace releases the previous binding, which is why test stores should be disconnected before you connect the real one.
+
+### Go-live checklist before real customers
+
+https://topedgeai.com/docs/go-live-checklist · Get started · updated 2026-10-31
+
+Before going live, confirm both channels are connected and every template your journeys use is Approved. Each journey you expect to run must be Published, and marketing should target only contacts with recorded consent. Then run one real end-to-end test on a real phone.
+
+- **What is the most common reason a WhatsApp automation does not send?** A journey left in Draft. Publishing is a separate action from saving, and a saved draft looks complete in the editor while sending nothing. The second most common reason is a template that is still pending Meta approval.
+- **Do order confirmations need marketing consent?** No. Order, shipping and delivery updates are transactional and send as Utility templates, which do not require marketing opt-in. Promotional broadcasts are different and do need recorded consent from the contact.
+
+### Set up WhatsApp abandoned cart recovery
+
+https://topedgeai.com/docs/guides/abandoned-cart-recovery · Guides · updated 2026-10-31
+
+Install the three storefront tracking layers so abandoned checkouts arrive with a phone number, and get three cart-recovery templates approved. Then publish a journey on the cart abandoned trigger with waits of about 25 minutes, 6 hours and 24 hours. Recovered revenue is credited on last touch within seven days.
+
+- **How soon should the first abandoned cart message go out?** Around 25 to 30 minutes after abandonment. Sending instantly annoys customers who simply switched tabs, and waiting several hours loses the people who were still deciding. The default capture delay is 25 minutes and most stores never need to change it.
+- **Why is my abandoned cart missing a phone number?** Because the customer left before reaching a step that collects one, or because the checkout extension is not capturing. Adding to cart alone never produces a phone number. Check that all three tracking layers are green and that the TopEdge app embed is enabled on your live theme.
+- **How many cart recovery messages should I send?** Three is the standard ladder: a reminder, an objection-handling message, and a final nudge. More than three starts costing you more in conversation fees and goodwill than it recovers, and it raises your chance of being blocked or reported.
+- **Does cart recovery need marketing opt-in?** Cart recovery templates are reviewed by Meta like any other template, and promotional framing belongs in the Marketing category, which does require consent. Keep the ladder transactional in tone and treat consent as a requirement whenever a message carries an offer.
+
+### Confirm COD orders on WhatsApp to cut RTO
+
+https://topedgeai.com/docs/guides/cod-confirmation · Guides · updated 2026-10-31
+
+Publish a journey on the order placed trigger, filtered to COD, that sends an approved template with Confirm and Cancel buttons within minutes. Confirmed orders go to dispatch and silent ones get one follow-up. On Growth plans and above you can also offer a prepaid payment link that replaces the COD order with a paid one.
+
+- **Does WhatsApp COD confirmation actually reduce RTO?** It reduces the share of RTO caused by unintended and duplicate orders, which is the largest removable chunk. It cannot fix RTO caused by delivery failures, wrong addresses or buyer remorse after dispatch. Measure your own before-and-after rather than trusting a headline number.
+- **When should the COD confirmation message be sent?** Five to fifteen minutes after the order. The customer still remembers placing it, and you are well ahead of dispatch. Sending instantly feels automated and jumpy; waiting hours means the order may already be packed.
+- **What should I do when a customer never confirms?** Send exactly one follow-up, then apply your own rule. Many stores hold high-value unconfirmed COD orders for a phone call and dispatch low-value ones anyway, because the shipping cost of being wrong is smaller than the lost sale.
+- **Do I need a separate template for COD confirmation?** Yes. It needs quick-reply buttons so the customer can answer with one tap, and the body has to read as a transactional order confirmation to pass review as a Utility template. Your order confirmation template will not have the buttons.
+
+### Send Shopify order updates on WhatsApp
+
+https://topedgeai.com/docs/guides/order-status-updates · Guides · updated 2026-10-31
+
+Publish one journey per stage (order placed, shipped, delivered), each sending an approved Utility template with an image header and tracking button. Shopify order and fulfilment webhooks fire the triggers. A status change you make in the dashboard enrols the journey directly, without waiting for Shopify.
+
+- **Which trigger should I use for a Shopify order confirmation?** The order placed trigger. An order being placed is the confirmation event, and there is no separate order confirmed trigger. Expecting one is the most common reason a confirmation journey is built but never fires.
+- **Do order status messages need marketing opt-in?** No. They are transactional and send as Utility templates, which do not require marketing consent. That is exactly why they are the safest automation to start with — but it also means they must contain no promotional language at all.
+- **Why are my shipped and delivered messages not sending?** Almost always missing fulfilment permissions on the Shopify connection. Order confirmations only need order access, so confirmations keep working while shipping messages silently do nothing. Reconnect Shopify and approve the full permission list.
+
+### Build a WhatsApp welcome menu with Flow Builder
+
+https://topedgeai.com/docs/guides/build-your-first-flow · Guides · updated 2026-10-31
+
+Open Flow Builder and start from the seeded welcome flow. Add a greeting with three or four buttons for your most common questions plus a live-chat handover, then test in the simulator and publish. Saving a draft changes nothing; publishing replaces the live graph from the next inbound message.
+
+- **What is the difference between Flow Builder and Journeys?** Flow Builder handles inbound conversations — what the bot says when a customer messages you, including menus, FAQ answers and handover to an agent. Journeys handle outbound automation triggered by Shopify events such as an order being placed or a cart being abandoned.
+- **How many buttons can a WhatsApp message have?** Three quick-reply buttons per message. If you need more options, use a list node instead, which presents up to ten rows behind a single tap and reads better than two stacked button messages.
+- **Why does my flow still show the old menu after I edited it?** Because the live bot runs a snapshot frozen at publish time. Saving the canvas updates the draft only. Publish again to replace the live graph, which takes effect from the next inbound message.
+
+### Send a WhatsApp broadcast that is Meta-safe
+
+https://topedgeai.com/docs/guides/whatsapp-broadcast · Guides · updated 2026-10-31
+
+Build a segment of contacts with recorded marketing consent and pick an approved Marketing template. Run the campaign preflight to catch opt-out and template problems, then send or schedule. Start with your smallest engaged segment, because your messaging limit and quality rating depend on how the first sends land.
+
+- **Do I need opt-in to send a WhatsApp broadcast?** Yes. Promotional broadcasts use Marketing templates and require recorded consent from each contact. Transactional order updates are different — they send as Utility templates through journeys and do not need marketing consent.
+- **Why was my broadcast blocked before sending?** Preflight blocks a launch when too large a share of the audience has no recorded consent or has opted out. Fix the audience rather than the check: narrow to a consented segment, and remove any list you cannot prove consent for.
+- **How many WhatsApp broadcasts can I send?** Two separate limits apply. Your TopEdge plan caps campaign and email sends per billing cycle, and Meta caps how many unique customers you can start conversations with in 24 hours based on your quality rating and business verification.
+
+### Run a shared WhatsApp inbox with your team
+
+https://topedgeai.com/docs/guides/shared-inbox-handover · Guides · updated 2026-10-31
+
+Open a conversation in Live Chat and press Reply myself; the bot pauses so only your team replies. Within 24 hours of the customer’s last message you can send free text, and after that you must pick an approved template. Press Mark as done or Give back to bot when you finish, and automation resumes on the next inbound message.
+
+- **Why can I not send a free-form WhatsApp reply?** The customer has not messaged you in the last 24 hours, so the service window has closed. WhatsApp only allows approved templates outside that window. Once the customer replies to your template, free text works again for another 24 hours.
+- **What happens to the bot when an agent takes over?** It pauses for that conversation only, and other conversations keep running their flows. It stays paused until someone presses Give back to bot or Mark as done, which is why a thread that seems permanently silent is usually still paused.
+- **Can several agents work the same WhatsApp number?** Yes. That is the point of a shared inbox — one business number, many agents, with assignment so two people do not answer the same customer. Each reply is attributed to the agent who sent it.
+
+### Collect WhatsApp opt-in on your storefront
+
+https://topedgeai.com/docs/guides/website-opt-in · Guides · updated 2026-10-31
+
+Create a popup, spin wheel or WhatsApp widget in Opt-in tools, with consent wording that names WhatsApp marketing. Publish it, then enable the TopEdge opt-in app embed on your live Shopify theme. Each submission lands in Audience with its consent source recorded.
+
+- **What counts as valid WhatsApp marketing opt-in?** A clear, affirmative action by the customer, with wording beside it that names WhatsApp marketing from your store specifically. A pre-ticked box, a buried line in your terms, or a list you bought do not count, and relying on them puts your business number at risk.
+- **Why is my opt-in popup not showing on my Shopify store?** In order of likelihood: the tool is still a draft, the TopEdge app embed is not enabled on your live theme, an ad blocker is hiding it, or your display rules exclude the page you are testing on. Test in an incognito window with blockers off.
+- **Do customers have to opt in again to receive order updates?** No. Order, shipping and delivery updates are transactional and send as Utility templates, which do not require marketing consent. Opt-in governs promotional broadcasts only, and opting out of marketing does not stop order updates.
+
+### Train the AI to answer customer questions
+
+https://topedgeai.com/docs/guides/train-your-ai-brain · Guides · updated 2026-10-31
+
+Add your own Gemini or OpenAI key and fill in store knowledge: shipping, returns, sizing and payment. Then create intents with five to ten phrases each, written the way customers actually type. Test each intent's confidence and activate it, because an inactive intent never matches.
+
+- **Do I need my own OpenAI or Gemini key?** For AI-generated replies, yes. TopEdge uses your own key, so usage is billed to you by that provider and you keep control of which model answers your customers. Keyword-matched intents with fixed replies work without any key.
+- **How many example phrases does an intent need?** Five to ten, taken from real customer messages rather than written by you. Phrases in your own phrasing score poorly because customers do not write like the person who built the store — expect Hinglish, abbreviations and no punctuation.
+- **Should the AI handle refunds and complaints?** No. Route anything involving money, a complaint or a legal question to a human. A confidently wrong answer about a refund costs far more than the time it saved, and customers escalate it publicly.
+
+### Run digital warranty registration on WhatsApp
+
+https://topedgeai.com/docs/guides/warranty-registration · Guides · updated 2026-10-31
+
+Create a warranty batch linking Shopify products to coverage dates, then share the public registration portal, where customers verify by WhatsApp OTP. Work claims through pending, approved, shipped or rejected. Each status change sends the customer a WhatsApp update automatically.
+
+- **How do customers register a warranty?** They open your public registration portal — usually by scanning a QR on the packaging — select their product, enter their phone number and verify it with a WhatsApp OTP. The registration is then matched against the Shopify order where one exists.
+- **Do customers need an account to claim?** No. Registration and claims both work from a mobile web page with WhatsApp OTP verification, so there is no password and no app to install. That is deliberate — every extra step loses registrations.
+
+### Segment Shopify customers for WhatsApp
+
+https://topedgeai.com/docs/guides/segment-your-customers · Guides · updated 2026-10-31
+
+Build a segment in Audience → Segments by stacking conditions on order count, spend, tags, consent and recency, and watch the live matching count. Save it, then press Launch campaign to open the broadcast builder with that audience selected.
+
+- **Are TopEdge segments dynamic or a fixed list?** Dynamic. A saved segment re-evaluates its conditions, so contacts move in and out as they order, lapse or change consent. You build a segment like "lapsed 90 days" once and it stays correct without any maintenance.
+- **Why does my segment match zero customers?** Conditions combine with AND, so every rule has to be true at once. Two reasonable-looking rules — say, more than three orders and ordered in the last seven days — can easily describe nobody. Add conditions one at a time and watch the live count.
+
+### Journeys reference: triggers, nodes, publishing
+
+https://topedgeai.com/docs/reference/journeys · Reference · updated 2026-10-31
+
+A journey has one trigger, optional filters and a graph of nodes. Publishing freezes the graph and trigger, so edits change nothing until you publish again. Each enrolled customer gets their own timeline of scheduled steps, and by default a reply cancels the rest.
+
+- **Why is my published journey not sending?** Check in this order: the journey is Published rather than Draft, the template it uses is Approved right now, trigger filters do not exclude the customer, and the customer has a phone number. The order detail page records a skip reason naming the exact cause.
+- **Do trigger filters combine with AND or OR?** Always AND. Every active rule must be true for a customer to enter. This is why two reasonable-looking filters can exclude everybody — a minimum order value plus a specific product is a much narrower audience than it appears.
+- **How is recovered revenue attributed to a journey?** Last touch within seven days. If a journey message was the most recent TopEdge touch before the order, that journey is credited. The customer does not have to click the link, which avoids under-counting people who get the reminder and then visit your site directly.
+
+### Flow Builder reference: nodes and publishing
+
+https://topedgeai.com/docs/reference/flow-builder · Reference · updated 2026-10-31
+
+Flows are conversation graphs built on a canvas. The simulator walks them without messaging anyone, and publish validation blocks disconnected handles and unapproved templates. Publishing replaces the live graph from the next inbound message onward.
+
+- **How many flows can be live at once?** One flow handles inbound messages for your number, so that is the one customers meet first. Other flows can still be live as handoff targets — a journey or a live-chat node can route a customer into a specific flow by name.
+- **Why does publish say my flow has disconnected nodes?** Every output handle has to lead somewhere. A buttons node with three buttons needs three edges, even if two of them go to the same reply. Leaving one unwired means a customer could tap it and receive nothing, so publish blocks it.
+
+### Live Chat reference: inbox, takeover, filters
+
+https://topedgeai.com/docs/reference/live-chat · Reference · updated 2026-10-31
+
+Live Chat is a three-pane inbox: conversations on the left, the thread in the middle, customer context on the right. The composer accepts free text within 24 hours of the customer’s last message and needs an approved template after that. Reply myself pauses the bot for that thread only.
+
+- **Why is the send button greyed out in Live Chat?** Either the 24-hour service window has closed, so you need an approved template, or WhatsApp is disconnected. A third case is a Marketing template addressed to a contact who has opted out, which is blocked by design.
+- **Does taking over a conversation stop the bot everywhere?** No, only on that conversation. Every other thread keeps running its flows and journeys. The paused thread stays paused until someone presses Give back to bot or Mark as done.
+
+### Orders reference: status, activity, actions
+
+https://topedgeai.com/docs/reference/orders · Reference · updated 2026-10-31
+
+Orders mirrors your Shopify orders and logs every WhatsApp message sent for each one. Changing a status here starts the matching journey right away. Each order’s activity list shows what sent, what failed and why anything was skipped.
+
+- **Why does an order say the WhatsApp message was skipped?** The activity list names the reason. The usual causes are a template that is not approved at send time, an order with no phone number, trigger filters that excluded the order, or de-duplication because the message already went out on an earlier event.
+- **Does changing order status in TopEdge update Shopify?** Delivered and out-for-delivery are pushed back to Shopify as carrier events, and fulfilling an order creates a real Shopify fulfilment. If Shopify rejects an event, TopEdge keeps your local status rather than failing the change.
+
+### Audience reference: customers, segments, scores
+
+https://topedgeai.com/docs/reference/audience-crm · Reference · updated 2026-10-31
+
+Audience has three screens: Customers (every contact, with consent and spend), Segments (dynamic lists built from stacked conditions) and Lead scores (engagement ranking from your own rules). Campaigns send to segments, so this is where your marketing quality is decided.
+
+- **Why is a contact missing from Audience after they opted in?** Search by the exact number both with and without the country code, and allow a minute or two for the write. If it still is not there, confirm the opt-in tool is Published rather than a draft — a draft can preview without recording anything.
+- **Can I import a customer list into Audience?** Yes, by CSV, and you attest that every row opted in. That attestation is recorded against the import. Never import a list you did not collect yourself — messaging it produces blocks and reports that damage your business number.
+
+### Campaigns reference: broadcasts and preflight
+
+https://topedgeai.com/docs/reference/campaigns · Reference · updated 2026-10-31
+
+A campaign is one channel, one audience and one template. Preflight checks consent and template readiness before anything sends. Sends are batched and paced, not fired at once, so your WhatsApp quality rating survives the campaign.
+
+- **What is the difference between a campaign and a journey?** A campaign is a one-time send you decide to make, to an audience you pick, now or at a scheduled time. A journey is automation that runs whenever a Shopify event happens, for as long as it is published, without you touching it again.
+- **Can one campaign send on both WhatsApp and email?** No, one channel per campaign. To cover both, create two campaigns and keep the audiences from overlapping, so the same customer does not get the same message twice on two channels within minutes.
+
+### Email reference: Gmail sending and templates
+
+https://topedgeai.com/docs/reference/email · Reference · updated 2026-10-31
+
+Connect Gmail through Google sign-in, and email sends from your own mailbox. Templates are edited in a studio with live merge previews. Journey steps can send a matching email alongside each WhatsApp message, which helps when a contact has no WhatsApp consent.
+
+- **Does TopEdge send email from its own servers?** No, it sends through your connected Gmail or Google Workspace mailbox, so the From address is your own and your existing domain reputation applies. That also means your mailbox provider’s sending limits apply to campaign volume.
+- **Why will my journey not publish with an email step?** Gmail isn’t connected. A journey with an email step is blocked at publish instead of failing silently at send time. Connect Gmail in Settings, or remove the email step.
+
+### Meta Manager reference: templates and catalog
+
+https://topedgeai.com/docs/reference/meta-manager · Reference · updated 2026-10-31
+
+Meta Manager has two screens: the template Library (including Blueprints, pre-built template packs for journeys) and QR codes. Templates move draft → pending → approved or rejected. Only approved templates appear in journey and campaign pickers.
+
+- **How long does WhatsApp template approval take?** Usually minutes, but a first submission can take up to 24 hours. Plan around it: get your templates approved before you intend to launch, not on the morning you want the journey live.
+- **Why is my template library empty?** Templates belong to one WhatsApp Business Account (WABA). An empty library after Sync from Meta nearly always means TopEdge is connected to a different WABA than the one holding your templates. Check which account the connection names, then reconnect.
+- **Why was my Utility template rejected?** Almost always promotional language. Words like sale, discount, offer, percent off or free gift move a template into the Marketing category in Meta’s eyes. Rewrite it to read as a pure order update, or resubmit it as Marketing.
+
+### Opt-in tools reference: popups and widgets
+
+https://topedgeai.com/docs/reference/opt-in-tools · Reference · updated 2026-10-31
+
+Create a popup, spin wheel, mystery discount or WhatsApp widget, and set its design, consent wording and display rules. Publish it, then enable the TopEdge opt-in app embed on your live Shopify theme. Each tool has its own report of impressions and submissions.
+
+- **Does the opt-in popup require editing my Shopify theme?** No. It installs through a Shopify app embed that you enable in the theme editor, so no theme file is modified and nothing is left behind if you disable it later. The embed has to be enabled on your live theme, not a preview.
+- **Which opt-in tool converts best?** Spin wheels usually capture the most contacts on consumer brands, but the WhatsApp widget captures the highest-intent ones because the customer starts the conversation. Each tool has its own report, so compare them on your own traffic rather than trusting averages.
+
+### AI brain reference: intents, knowledge, persona
+
+https://topedgeai.com/docs/reference/ai-brain · Reference · updated 2026-10-31
+
+Add your own Gemini or OpenAI key, then fill in store knowledge and persona under Intelligence → AI. Train intents under Intelligence → Intents: each holds example phrases and an action (reply, start a flow, assign an agent, or escalate). Inactive intents never match in production.
+
+- **Can I use the AI brain without an OpenAI or Gemini key?** Partly. Intents that match on keywords and reply with fixed text work without a key. Generated answers grounded in your store knowledge need one, because that’s where the model call happens, and your provider bills you for it.
+- **Why does my intent match with low confidence?** The example phrases are worded the way you write, not the way customers do. Real messages are short, unpunctuated and often Hinglish. Paste five more phrases straight from your inbox and the score moves immediately.
+
+### Chat rules reference: routing and escalation
+
+https://topedgeai.com/docs/reference/chat-rules · Reference · updated 2026-10-31
+
+Automation Hub holds Routing: which agent or queue a conversation goes to, and the conditions that escalate it out of the bot. A smart rules engine for broader condition-and-action automation is available on workspaces where it’s enabled.
+
+- **Why does my Automation Hub only show a Routing tab?** The smart rules engine is rolled out per workspace. If only Routing appears, the rules tab is not enabled for you yet — routing, assignment and escalation all still work, and anything more complex can be handled with a condition node in Flow Builder.
+
+### Analytics reference: revenue, team, delivery
+
+https://topedgeai.com/docs/reference/analytics · Reference · updated 2026-10-31
+
+Insights has three screens: Analytics (revenue, recovery and campaigns), Team performance (agent response and resolution) and Delivery & RTO (fulfilment outcomes). Revenue uses last-touch attribution over a seven-day window, so it won’t match a click-only report.
+
+- **Why is recovered revenue different from what I expected?** Attribution is last touch within seven days, so a customer who received a reminder and then came back to your site directly still counts. That is deliberate — click-only attribution badly under-counts WhatsApp, where people often act without tapping the link.
+- **Why do TopEdge numbers not match Shopify analytics?** Different definitions. Shopify total sales includes shipping and tax, while store economics reports net of cost of goods, shipping and fees. Check you are comparing the same date range and the same measure before assuming a sync problem.
+
+### Store growth reference: tracking and carts
+
+https://topedgeai.com/docs/reference/store-growth · Reference · updated 2026-10-31
+
+Store growth has four screens: Website tracking (the three storefront layers and their health), Abandoned carts (captured carts and their recovery state), Insights (product and action signals) and Stock. Tracking must be green before any cart arrives with a phone number.
+
+- **Why do my abandoned carts have no phone number?** The customer left before reaching a step that collects one, or the checkout extension is not capturing. Adding to cart alone never yields a phone number. On a third-party checkout you need the partner webhook instead, since Shopify checkout extensions do not run there.
+- **Does website tracking slow down my storefront?** It installs through Shopify’s app embed and web pixel frameworks, which load asynchronously outside your theme’s critical path. Nothing is written into theme files, so removing it is a toggle in the theme editor rather than a code cleanup.
+
+### Commerce reference: products, margins, discounts
+
+https://topedgeai.com/docs/reference/commerce · Reference · updated 2026-10-31
+
+Commerce has three screens: Products (your synced Shopify catalogue), Economics (net margin after cost of goods, shipping, RTO and payment fees) and Discounts (live Shopify codes). Economics needs a one-time cost setup before its numbers mean anything.
+
+- **Why does store economics show a lower margin than Shopify?** Because it subtracts costs Shopify does not know about — cost of goods, shipping, payment fees and your return-to-origin rate. Shopify reports revenue and gross sales; economics reports what is actually left after an order has been delivered or returned.
+- **Do I need exact costs to use economics?** No. Reasonable estimates are far better than leaving the fields empty, which silently treats every cost as zero. Start with approximate figures, especially for RTO, and refine them once you can see which products the report flags.
+
+### Warranty hub reference: batches and claims
+
+https://topedgeai.com/docs/reference/warranty-hub · Reference · updated 2026-10-31
+
+Warranty batches link Shopify products to a validity period and coverage rules. Customers register on a public mobile portal, verified by WhatsApp OTP, and the registration is matched to their Shopify order. Claims move through pending, approved, shipped or rejected, and each change messages the customer.
+
+- **Why can a customer not find their product when registering?** The SKU is not in any warranty batch, the batch validity period does not cover their purchase date, or the product was added to Shopify after the last sync. Check the batch first, then sync products.
+
+### Settings reference: connections, team, billing
+
+https://topedgeai.com/docs/reference/settings-billing · Reference · updated 2026-10-31
+
+Settings has a tab for Workspace (brand identity, alert contacts, security), Billing (plan, cycle, invoices) and each connection: WhatsApp, Shopify, Gmail, WhatsApp shop, Meta Ads and Instagram. Brand identity supplies the store name and policy links customers see.
+
+- **Does cancelling an order give back my order allowance?** No. Orders are metered as they are ingested, and cancelling does not refund the count. A COD order that converts to prepaid is the exception worth knowing: TopEdge recognises the replacement, so one purchase is counted once rather than twice.
+- **Can I get GST invoices for TopEdge?** Yes, on every plan. Download them as PDFs from Settings → Billing. Plan prices exclude GST, which is added at the applicable rate.
+
+### The WhatsApp 24-hour service window
+
+https://topedgeai.com/docs/platform/whatsapp-service-window · Platform & policy · updated 2026-10-31
+
+When a customer messages you, a 24-hour service window opens and you can reply with anything: text, images, documents. After 24 hours with no new message from them, only approved templates will send. Their next message reopens the window for another 24 hours.
+
+- **What is the WhatsApp 24-hour rule?** When a customer messages your business, you get a 24-hour window in which you can reply with any kind of message. After 24 hours without a new message from them, only pre-approved templates will send. Their next message reopens the window for another 24 hours.
+- **Does sending a template extend the 24-hour window?** No. Only an inbound message from the customer resets the clock. But if the customer replies to your template, including by tapping a quick-reply button, a fresh 24-hour window opens.
+- **Can I send a photo to a customer after 24 hours?** Not as a free-form message. Outside the window only approved templates send, and a template can carry an image header. Once the customer replies you are back inside the window and can send media freely.
+
+### WhatsApp message template categories and rules
+
+https://topedgeai.com/docs/platform/message-templates · Platform & policy · updated 2026-10-31
+
+Utility templates are updates about something the customer did, and need no marketing consent. Marketing templates are anything promotional and need consent; Authentication is for one-time passcodes only. Meta sets the final category at review, so promotional wording in a Utility template gets it rejected.
+
+- **What is the difference between a Utility and a Marketing WhatsApp template?** Utility templates are transactional updates about something the customer already did, such as an order confirmation, and need no marketing consent. Marketing templates are promotional and require recorded consent. Meta assigns the final category at review, so promotional wording in a Utility template is rejected.
+- **Why does Meta keep rejecting my WhatsApp template?** The most common cause is promotional language in a template submitted as Utility. After that: a variable placed at the very start or end of the body, a body that is mostly placeholders with too little real text, or unrealistic sample values. The rejection reason is shown on the template row.
+- **Can an approved WhatsApp template stop working?** Yes. Meta monitors how customers react and can pause or disable a template whose quality drops, which makes previously working journeys start skipping sends. Check the skip reason on an affected order and your template quality in Meta Business Manager.
+
+### What WhatsApp automation actually costs
+
+https://topedgeai.com/docs/platform/conversation-pricing · Platform & policy · updated 2026-10-31
+
+You pay TopEdge a subscription in INR for the platform, with order and send allowances per billing cycle. Separately, Meta charges per message by template category: in India roughly ₹0.88 for Marketing, ₹0.125 for Utility, and nothing for service replies. TopEdge passes Meta’s charges through at 0% markup.
+
+- **Does TopEdge mark up WhatsApp message fees?** No. Meta’s per-message charges are passed through at 0% markup, so that part of your cost is the same with any provider. What differs between providers is the platform subscription and what it includes.
+- **Why am I getting two bills for WhatsApp automation?** Two companies are involved. TopEdge bills you for the platform in INR, with order and send allowances. Meta bills per message at its own published rates, separately.
+- **What is the cheapest way to reduce WhatsApp messaging costs?** Move anything that needn’t be promotional into Utility templates, which cost far less per message than Marketing (roughly ₹0.125 vs ₹0.88 in India). And segment every broadcast instead of sending to your whole list.
+
+### Plan limits, send caps and messaging tiers
+
+https://topedgeai.com/docs/platform/limits-and-quotas · Platform & policy · updated 2026-10-31
+
+TopEdge caps orders ingested and campaign plus email sends per billing cycle, with a warning as you approach and a block at the limit. Meta separately caps how many unique customers you can send templates to per 24 hours, based on verification and quality rating. Hitting either looks like "messages stopped sending".
+
+- **How many WhatsApp messages can I send per day?** Two limits apply. Meta caps how many unique customers you can send template messages to in a rolling 24 hours, based on your verification and quality rating. Your TopEdge plan separately caps campaign and email sends per billing cycle.
+- **What happens when I hit my plan limit?** Sends stop rather than billing you an overage. You are warned as you approach the cap and blocked at it, with the warning going to your alert contacts in Settings. Caps reset at the start of each billing cycle.
+- **How do I increase my WhatsApp messaging limit?** Complete Meta business verification, send sustained good-quality volume, and keep customers replying rather than blocking. Limits rise over time on their own; a sudden spike from a cold list does the opposite and can restrict the number.
+
+### Troubleshooting WhatsApp automation
+
+https://topedgeai.com/docs/troubleshooting · Help · updated 2026-10-31
+
+Most problems are one of four things: a journey left in Draft, a template not Approved at send time, TopEdge not receiving your messages, or storefront tracking not capturing a phone. Check those first, and read the skip reason on the affected order; it usually names the cause.
+
+- **Why is my WhatsApp automation not sending messages?** In order of likelihood: the journey is still in Draft rather than Published, the template it uses is not Approved at send time, trigger filters are excluding the customer, or the order has no phone number. The activity list on the affected order records a skip reason naming the actual cause.
+- **Why is my WhatsApp inbox empty?** Almost always because TopEdge isn't subscribed to your messages. Reconnect from Settings → WhatsApp to fix it. Sending works without it but nothing inbound arrives. Check the Webhook tab in WhatsApp settings, and test by messaging your business number from a personal phone.
+- **Who do I contact for help with TopEdge?** Use the contact page on this site. Include your store domain, what you expected, what actually happened, a screenshot of any banner, and the order number if it’s about a specific order. That usually gets a fix in one reply.
+
 ## Compare boards
 
 ### TopEdge AI vs WATI

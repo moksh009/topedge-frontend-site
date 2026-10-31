@@ -1,0 +1,134 @@
+{
+  "home-overview": {
+    "w": 1600,
+    "h": 1000
+  },
+  "settings-connections": {
+    "w": 1600,
+    "h": 1176
+  },
+  "shopify-connect": {
+    "w": 952,
+    "h": 926
+  },
+  "journeys-list": {
+    "w": 1600,
+    "h": 1176
+  },
+  "journey-cart-recovery": {
+    "w": 1600,
+    "h": 1000
+  },
+  "journey-cod": {
+    "w": 1600,
+    "h": 1000
+  },
+  "abandoned-carts": {
+    "w": 1600,
+    "h": 1176
+  },
+  "flow-builder-list": {
+    "w": 1600,
+    "h": 1176
+  },
+  "flow-builder-canvas": {
+    "w": 1600,
+    "h": 1000
+  },
+  "campaigns-list": {
+    "w": 1600,
+    "h": 1176
+  },
+  "campaign-create": {
+    "w": 1600,
+    "h": 1000
+  },
+  "inbox-thread": {
+    "w": 1600,
+    "h": 1000
+  },
+  "opt-in-tools": {
+    "w": 1600,
+    "h": 1176
+  },
+  "ai-brain-intents": {
+    "w": 1600,
+    "h": 1176
+  },
+  "ai-brain-knowledge": {
+    "w": 1600,
+    "h": 1176
+  },
+  "warranty-hub": {
+    "w": 1600,
+    "h": 1176
+  },
+  "segments": {
+    "w": 1600,
+    "h": 1176
+  },
+  "audience-customers": {
+    "w": 1600,
+    "h": 1176
+  },
+  "orders-list": {
+    "w": 1600,
+    "h": 1176
+  },
+  "email-campaigns": {
+    "w": 1600,
+    "h": 1176
+  },
+  "meta-template-library": {
+    "w": 1600,
+    "h": 1176
+  },
+  "meta-qr": {
+    "w": 1600,
+    "h": 1176
+  },
+  "chat-rules": {
+    "w": 1600,
+    "h": 1176
+  },
+  "analytics-overview": {
+    "w": 1600,
+    "h": 1176
+  },
+  "website-tracking": {
+    "w": 1600,
+    "h": 1176
+  },
+  "product-insights": {
+    "w": 1600,
+    "h": 1176
+  },
+  "commerce-products": {
+    "w": 1600,
+    "h": 1176
+  },
+  "commerce-economics": {
+    "w": 1600,
+    "h": 1176
+  },
+  "discounts": {
+    "w": 1600,
+    "h": 1176
+  },
+  "stock": {
+    "w": 1600,
+    "h": 1176
+  },
+  "settings-billing": {
+    "w": 1600,
+    "h": 1176
+  },
+  "settings-workspace": {
+    "w": 1600,
+    "h": 784
+  },
+  "team-performance": {
+    "w": 1600,
+    "h": 1176
+  }
+}

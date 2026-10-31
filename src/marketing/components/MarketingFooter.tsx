@@ -35,11 +35,10 @@ const columns: { title: string; links: FootLink[] }[] = [
       { label: 'Services', href: '/services' },
       { label: 'Customers', href: '/customers' },
       { label: 'Compare', href: '/compare' },
-      // Trailing slash required. The dashboard prerenders each doc to
-      // docs/<path>/index.html, so Netlify 301s the slashless form. This link is
-      // site-wide, so one missing slash spent a redirect hop on all 89 crawlable
-      // pages (Ahrefs 29 Oct 2026: "Page has links to redirect" x89).
-      { label: 'Docs', href: 'https://dash.topedgeai.com/docs/' },
+      // Docs moved back onto this domain on 31 Oct 2026 (topedgeai.com/docs, a
+      // subfolder, so they inherit the site's authority). Slashless like every
+      // other route: prerender writes flat docs.html, served with a 200.
+      { label: 'Docs', href: '/docs' },
       { label: 'Blog', href: '/blog' },
       { label: 'Contact', href: '/contact' },
     ],

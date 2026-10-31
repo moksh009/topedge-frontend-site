@@ -53,7 +53,58 @@ the billing catalog, which scripts/check-catalog-drift.mjs pins to the live API.
 
 ## Documentation
 
-Product documentation lives in the TopEdge dashboard: https://dash.topedgeai.com/docs/
+Setup guides and screen-by-screen reference, written for the person running the store: https://topedgeai.com/docs
+
+### Get started
+
+- [TopEdge Documentation](https://topedgeai.com/docs): Guides and reference for running WhatsApp automation on Shopify with TopEdge — setup, journeys, cart recovery, COD confirmation, templates and billing.
+- [Quickstart: WhatsApp automation for Shopify](https://topedgeai.com/docs/quickstart): Go live with TopEdge in about 30 minutes: connect Shopify and WhatsApp, approve an order template, publish one journey and send yourself a test message.
+- [Connect WhatsApp Cloud API to TopEdge](https://topedgeai.com/docs/connect-whatsapp): Connect your WhatsApp Business Account to TopEdge: embedded Meta signup, the messages webhook, permanent access tokens, and how to fix a disconnected channel.
+- [Connect Shopify to TopEdge](https://topedgeai.com/docs/connect-shopify): Install the TopEdge Shopify app, understand the permissions it asks for, verify that orders sync, and fix a store stuck on Reconnect.
+- [Go-live checklist before real customers](https://topedgeai.com/docs/go-live-checklist): The checks to run before TopEdge messages real customers: connections, approved templates, published journeys, consent, tracking and a live end-to-end test.
+
+### Guides
+
+- [Set up WhatsApp abandoned cart recovery](https://topedgeai.com/docs/guides/abandoned-cart-recovery): Capture the phone number at checkout, publish a three-message cart recovery journey on WhatsApp, and read recovered revenue instead of vanity send counts.
+- [Confirm COD orders on WhatsApp to cut RTO](https://topedgeai.com/docs/guides/cod-confirmation): Confirm cash-on-delivery orders over WhatsApp with button replies, cancel the ones nobody confirms, and offer a prepaid switch to reduce return-to-origin losses.
+- [Send Shopify order updates on WhatsApp](https://topedgeai.com/docs/guides/order-status-updates): Automate order confirmed, shipped, out for delivery and delivered messages on WhatsApp, and understand which Shopify event maps to which journey trigger.
+- [Build a WhatsApp welcome menu with Flow Builder](https://topedgeai.com/docs/guides/build-your-first-flow): Build and publish a WhatsApp bot menu that answers order, shipping and returns questions, and hands over to a human agent when it cannot help.
+- [Send a WhatsApp broadcast that is Meta-safe](https://topedgeai.com/docs/guides/whatsapp-broadcast): Send a promotional WhatsApp broadcast to a consented segment: pick the audience, use an approved Marketing template, pass preflight, and read the results.
+- [Run a shared WhatsApp inbox with your team](https://topedgeai.com/docs/guides/shared-inbox-handover): Work a shared WhatsApp inbox: take a conversation over from the bot, reply inside and outside the 24-hour window, assign to a teammate and release it back.
+- [Collect WhatsApp opt-in on your storefront](https://topedgeai.com/docs/guides/website-opt-in): Add a popup, spin wheel or WhatsApp widget to your Shopify store, write consent wording that holds up, and confirm leads land in Audience.
+- [Train the AI to answer customer questions](https://topedgeai.com/docs/guides/train-your-ai-brain): Add your own AI key, load store knowledge, train intents on real customer phrases, and test confidence before letting the AI reply to customers.
+- [Run digital warranty registration on WhatsApp](https://topedgeai.com/docs/guides/warranty-registration): Set up warranty batches, share a mobile registration portal with WhatsApp OTP, and move claims through approved, shipped or rejected with automatic updates.
+- [Segment Shopify customers for WhatsApp](https://topedgeai.com/docs/guides/segment-your-customers): Build dynamic customer segments from order history, spend, tags and consent, then launch a WhatsApp or email campaign straight from the segment.
+
+### Reference
+
+- [Journeys reference: triggers, nodes, publishing](https://topedgeai.com/docs/reference/journeys): Complete reference for TopEdge Journeys — every trigger type, trigger filter, node type, wait behaviour, publishing rule and revenue attribution window.
+- [Flow Builder reference: nodes and publishing](https://topedgeai.com/docs/reference/flow-builder): Reference for Flow Builder — the canvas, every node type, the simulator, publish validation, and how a published flow handles inbound WhatsApp messages.
+- [Live Chat reference: inbox, takeover, filters](https://topedgeai.com/docs/reference/live-chat): Reference for the TopEdge shared WhatsApp inbox — conversation list, composer rules, agent takeover, assignment, customer context and inbox filters.
+- [Orders reference: status, activity, actions](https://topedgeai.com/docs/reference/orders): Reference for the Orders screen — syncing from Shopify, changing status, reading per-order WhatsApp activity, and understanding skip reasons.
+- [Audience reference: customers, segments, scores](https://topedgeai.com/docs/reference/audience-crm): Reference for Audience — the customer table, Customer 360, dynamic segment conditions, lead scoring, consent records and bulk actions.
+- [Campaigns reference: broadcasts and preflight](https://topedgeai.com/docs/reference/campaigns): Reference for Campaigns — audience sources, template selection, the preflight checks, batching and pacing, scheduling, and the delivery metrics per campaign.
+- [Email reference: Gmail sending and templates](https://topedgeai.com/docs/reference/email): Reference for the TopEdge email channel — connecting Gmail, the template studio, merge variables, and sending email alongside WhatsApp in journeys.
+- [Meta Manager reference: templates and catalog](https://topedgeai.com/docs/reference/meta-manager): Reference for Meta Manager — creating WhatsApp templates, blueprints for journeys, submitting for approval, syncing from Meta, the product catalog and QR codes.
+- [Opt-in tools reference: popups and widgets](https://topedgeai.com/docs/reference/opt-in-tools): Reference for opt-in tools — popup, spin wheel, mystery discount and WhatsApp widget, their display rules, publishing, app embed install and per-tool reports.
+- [AI brain reference: intents, knowledge, persona](https://topedgeai.com/docs/reference/ai-brain): Reference for the AI brain — bringing your own Gemini or OpenAI key, store knowledge, bot persona, intent training, intent actions and the confidence test tool.
+- [Chat rules reference: routing and escalation](https://topedgeai.com/docs/reference/chat-rules): Reference for Automation Hub — routing conversations to agents, escalation conditions, and the smart rules engine where it is enabled on your workspace.
+- [Analytics reference: revenue, team, delivery](https://topedgeai.com/docs/reference/analytics): Reference for Insights — revenue and recovery analytics, team performance, delivery and RTO reporting, and how attribution windows change the numbers.
+- [Store growth reference: tracking and carts](https://topedgeai.com/docs/reference/store-growth): Reference for Store growth — website tracking layers, abandoned cart columns, product and action insights, stock tracking, and third-party checkout webhooks.
+- [Commerce reference: products, margins, discounts](https://topedgeai.com/docs/reference/commerce): Reference for the commerce hub — product catalogue sync, store economics with cost of goods and RTO, and Shopify discount codes used in automations.
+- [Warranty hub reference: batches and claims](https://topedgeai.com/docs/reference/warranty-hub): Reference for the warranty hub — product batches and coverage rules, the public registration portal with WhatsApp OTP, and the claim status workflow.
+- [Settings reference: connections, team, billing](https://topedgeai.com/docs/reference/settings-billing): Reference for Settings — workspace and brand identity, channel connections, team access, account security, GST invoices and changing your plan or cycle.
+
+### Platform & policy
+
+- [The WhatsApp 24-hour service window](https://topedgeai.com/docs/platform/whatsapp-service-window): What the WhatsApp 24-hour customer service window is, when you can send free-form messages, when a template is required, and how the window reopens.
+- [WhatsApp message template categories and rules](https://topedgeai.com/docs/platform/message-templates): How WhatsApp message templates work — Utility, Marketing and Authentication categories, variables, buttons, approval, and the most common rejection reasons.
+- [What WhatsApp automation actually costs](https://topedgeai.com/docs/platform/conversation-pricing): The two bills behind WhatsApp automation — your TopEdge subscription and Meta’s per-message fees — plus what drives volume and how to keep messaging costs down.
+- [Plan limits, send caps and messaging tiers](https://topedgeai.com/docs/platform/limits-and-quotas): The limits that apply to WhatsApp automation — TopEdge order and send caps per cycle, plan-gated features, Meta messaging tiers and quality rating.
+
+### Help
+
+- [Troubleshooting WhatsApp automation](https://topedgeai.com/docs/troubleshooting): Find your symptom and its fix — messages not sending, empty inbox, templates rejected, carts without phone numbers, broadcasts blocked and connection errors.
 
 ## Compare
 
@@ -109,7 +160,7 @@ Product documentation lives in the TopEdge dashboard: https://dash.topedgeai.com
 
 ## Canonical URL directory
 
-All 92 indexable URLs on this domain, no trailing slash except the root.
+All 128 indexable URLs on this domain, no trailing slash except the root.
 
 - https://topedgeai.com/
 - https://topedgeai.com/pricing
@@ -201,6 +252,42 @@ All 92 indexable URLs on this domain, no trailing slash except the root.
 - https://topedgeai.com/blog/whatsapp-opt-in-shopify-india
 - https://topedgeai.com/blog/updatrr-alternative-shopify-india
 - https://topedgeai.com/blog/cod-to-prepaid-whatsapp-shopify-india
+- https://topedgeai.com/docs
+- https://topedgeai.com/docs/quickstart
+- https://topedgeai.com/docs/connect-whatsapp
+- https://topedgeai.com/docs/connect-shopify
+- https://topedgeai.com/docs/go-live-checklist
+- https://topedgeai.com/docs/guides/abandoned-cart-recovery
+- https://topedgeai.com/docs/guides/cod-confirmation
+- https://topedgeai.com/docs/guides/order-status-updates
+- https://topedgeai.com/docs/guides/build-your-first-flow
+- https://topedgeai.com/docs/guides/whatsapp-broadcast
+- https://topedgeai.com/docs/guides/shared-inbox-handover
+- https://topedgeai.com/docs/guides/website-opt-in
+- https://topedgeai.com/docs/guides/train-your-ai-brain
+- https://topedgeai.com/docs/guides/warranty-registration
+- https://topedgeai.com/docs/guides/segment-your-customers
+- https://topedgeai.com/docs/reference/journeys
+- https://topedgeai.com/docs/reference/flow-builder
+- https://topedgeai.com/docs/reference/live-chat
+- https://topedgeai.com/docs/reference/orders
+- https://topedgeai.com/docs/reference/audience-crm
+- https://topedgeai.com/docs/reference/campaigns
+- https://topedgeai.com/docs/reference/email
+- https://topedgeai.com/docs/reference/meta-manager
+- https://topedgeai.com/docs/reference/opt-in-tools
+- https://topedgeai.com/docs/reference/ai-brain
+- https://topedgeai.com/docs/reference/chat-rules
+- https://topedgeai.com/docs/reference/analytics
+- https://topedgeai.com/docs/reference/store-growth
+- https://topedgeai.com/docs/reference/commerce
+- https://topedgeai.com/docs/reference/warranty-hub
+- https://topedgeai.com/docs/reference/settings-billing
+- https://topedgeai.com/docs/platform/whatsapp-service-window
+- https://topedgeai.com/docs/platform/message-templates
+- https://topedgeai.com/docs/platform/conversation-pricing
+- https://topedgeai.com/docs/platform/limits-and-quotas
+- https://topedgeai.com/docs/troubleshooting
 - https://topedgeai.com/privacy
 - https://topedgeai.com/terms
 

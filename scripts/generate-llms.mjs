@@ -33,7 +33,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { loadBillingCatalog } from './load-billing-catalog.mjs';
-import { getSitemapPaths } from './marketing-urls.mjs';
+import { getSitemapPaths, loadDocsContent, docPathFor } from './marketing-urls.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
@@ -66,6 +66,39 @@ const { COMPARE_COMPETITORS } = await loadTs('src/marketing/data/compareCompetit
 const { PRODUCT_PAGES: PRODUCT_PAGE_MAP } = await loadTs('src/marketing/data/productPages.ts');
 const PRODUCT_PAGES = Object.values(PRODUCT_PAGE_MAP);
 const identity = await loadTs('src/marketing/legal/companyIdentity.ts');
+
+const DOCS = loadDocsContent();
+
+/** Inline doc markup (**bold**, `code`, [label](/path)) to plain prose. */
+function docPlain(text) {
+  return String(text || '')
+    .replace(/\[([^\]]+)\]\([^)\s]+\)/g, '$1')
+    .replace(/\*\*([^*]+)\*\*/g, '$1')
+    .replace(/`([^`]+)`/g, '$1')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/** Docs in sidebar order, grouped. */
+function docGroups() {
+  const bySlug = new Map(DOCS.articles.map((a) => [a.slug, a]));
+  return DOCS.groups.map((g) => ({
+    ...g,
+    articles: g.slugs.map((s) => bySlug.get(s)).filter(Boolean),
+  }));
+}
+
+function docLines() {
+  const out = [];
+  for (const g of docGroups()) {
+    out.push(`### ${g.label}`, '');
+    for (const a of g.articles) {
+      out.push(`- [${docPlain(a.title)}](${url(docPathFor(a.slug))}): ${docPlain(a.description)}`);
+    }
+    out.push('');
+  }
+  return out;
+}
 
 const PLANS = ['launch', 'growth', 'scale']
   .map((slug) => FALLBACK_CATALOG.plans.find((p) => p.slug === slug))
@@ -200,10 +233,9 @@ const concise = [
   '',
   '## Documentation',
   '',
-  // Trailing slash: the dashboard prerenders docs/<path>/index.html, so the
-  // slashless form 301s and llms.txt would hand answer engines a redirect.
-  `Product documentation lives in the TopEdge dashboard: ${identity.COMPANY_DASHBOARD_URL}/docs/`,
+  `Setup guides and screen-by-screen reference, written for the person running the store: ${url('/docs')}`,
   '',
+  ...docLines(),
   '## Compare',
   '',
   ...compareLines(),
@@ -253,6 +285,25 @@ for (const page of PRODUCT_PAGES) {
   }
 }
 
+fullParts.push('## Documentation', '');
+for (const g of docGroups()) {
+  for (const a of g.articles) {
+    const answer = a.blocks.find((b) => b.kind === 'answer');
+    fullParts.push(
+      `### ${docPlain(a.title)}`,
+      '',
+      `${url(docPathFor(a.slug))} · ${g.label} · updated ${a.updated}`,
+      '',
+      answer ? docPlain(answer.text) : docPlain(a.description),
+      '',
+    );
+    if (a.faqs?.length) {
+      for (const f of a.faqs) fullParts.push(`- **${docPlain(f.question)}** ${docPlain(f.answer)}`);
+      fullParts.push('');
+    }
+  }
+}
+
 fullParts.push('## Compare boards', '');
 for (const slug of COMPARE_ORDER) {
   const c = COMPARE_COMPETITORS[slug];
@@ -289,5 +340,5 @@ const kb = (f) => (fs.statSync(path.join(PUBLIC, f)).size / 1024).toFixed(1);
 console.log(
   `✅ public/llms.txt (${kb('llms.txt')} KB, ${CANONICAL.length} canonical URLs) and ` +
     `public/llms-full.txt (${kb('llms-full.txt')} KB, ${PRODUCT_PAGES.length} features, ` +
-    `${COMPARE_ORDER.length} boards, ${postsByDate.length} posts)`,
+    `${COMPARE_ORDER.length} boards, ${postsByDate.length} posts, ${DOCS.articles.length} docs)`,
 );

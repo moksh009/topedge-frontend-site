@@ -6,7 +6,38 @@
  * - Only canonical, indexable URLs (no aliases that 301 elsewhere).
  * - Paths have no trailing slash (except `/`).
  * - Do NOT include `/features/shopify` — it redirects to `/integrations`.
+ *
+ * Documentation URLs are the exception: they are read from the docs content
+ * itself (src/marketing/docs/content/docs.json), so adding an article there is
+ * all it takes for it to be prerendered, sitemapped and listed in llms.txt.
  */
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const DOCS_JSON = path.resolve(
+  path.dirname(fileURLToPath(import.meta.url)),
+  '../src/marketing/docs/content/docs.json',
+);
+
+/** The docs content (groups + articles), parsed once. */
+export function loadDocsContent() {
+  return JSON.parse(fs.readFileSync(DOCS_JSON, 'utf8'));
+}
+
+/** `/docs` for the home article, `/docs/<slug>` otherwise (mirrors docPathFor in registry.ts). */
+export function docPathFor(slug) {
+  return slug ? `/docs/${slug}` : '/docs';
+}
+
+/** Every doc URL, in sidebar reading order. */
+export const DOC_PATHS = (() => {
+  const { groups, articles } = loadDocsContent();
+  const known = new Set(articles.map((a) => a.slug));
+  const ordered = groups.flatMap((g) => g.slugs).filter((s) => known.has(s));
+  const rest = articles.map((a) => a.slug).filter((s) => !ordered.includes(s));
+  return [...new Set([...ordered, ...rest])].map(docPathFor);
+})();
 /** Live feature detail pages (must match MARKETING_FEATURES slugs). */
 export const FEATURE_SLUGS = [
   'journeys',
@@ -152,6 +183,7 @@ export function getMarketingPrerenderPaths() {
     '/whatsapp-journey-examples',
     ...JOURNEY_EXAMPLE_SLUGS.map((s) => `/whatsapp-journey-examples/${s}`),
     ...BLOG_SLUGS.map((s) => `/blog/${s}`),
+    ...DOC_PATHS,
     NOT_FOUND_PRERENDER_PATH,
   ];
 }

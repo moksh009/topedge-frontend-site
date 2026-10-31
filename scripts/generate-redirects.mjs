@@ -57,7 +57,7 @@ function buildGeneratedBlock() {
   return `${BEGIN}
 # Client-only SPA shells (must stay above the 404 catch-all)
 # login/signup: noindex shells from build-static.js (never the homepage prerender)
-# /docs is not here and is not prerendered: it 301s to dash.topedgeai.com/docs.
+# /docs is not here: every doc page is prerendered (scripts/marketing-urls.mjs).
 /login  /login.html  200
 /login/  /login.html  200
 /signup  /signup.html  200
